@@ -24,7 +24,9 @@ function category(name: string) {
 
 export function docsData(model: Model) {
   const { aliases } = tailwindTheme(model);
-  const audit = auditContrast(model);
+  const fullAudit = auditContrast(model);
+  // Foundation tables rate tokens by the foundation pairs only.
+  const audit = fullAudit.filter((c) => !c.component);
 
   const worst = (name: string, mode: Mode) => {
     const checks = audit.filter((c) => c.fg === name && c.mode === mode);
@@ -38,6 +40,15 @@ export function docsData(model: Model) {
     if (checks.length === 0) return null;
     const c = checks.reduce((a, b) => (b.ratio < a.ratio ? b : a));
     return { fg: c.fg, ratio: Math.floor(c.ratio * 100) / 100, min: c.min };
+  };
+
+  // Swatch text is the DGA on-colour and default text tokens, never hardcoded hex.
+  const swatchText = {
+    white: {
+      token: "text-oncolor-primary",
+      value: tokenValue(model, "text-oncolor-primary", "light"),
+    },
+    black: { token: "text-default", value: tokenValue(model, "text-default", "light") },
   };
 
   const primitives = [...model.primitives.values()]
@@ -54,8 +65,8 @@ export function docsData(model: Model) {
         palette,
         value: resolve(model, p.value),
         utility: `${p.name.replace(/^colors-/, "")}`,
-        onWhite: floor(contrastRatio("#ffffff", resolve(model, p.value))),
-        onBlack: floor(contrastRatio("#161616", resolve(model, p.value))),
+        onWhite: floor(contrastRatio(swatchText.white.value, resolve(model, p.value))),
+        onBlack: floor(contrastRatio(swatchText.black.value, resolve(model, p.value))),
       };
     });
 
@@ -143,6 +154,7 @@ export function docsData(model: Model) {
 
   return {
     shadcn: Object.entries(SHADCN_VARS).map(([name, token]) => ({ name, token })),
+    swatchText,
     primitives,
     semantic,
     typography: { family: "IBM Plex Sans Arabic", sizes: typeSizes, weights },
@@ -161,9 +173,22 @@ export function docsData(model: Model) {
       .filter((p) => p.name.startsWith("width-") || p.name === "paragraph-max-width")
       .map((p) => ({ name: p.name, value: resolve(model, p.value) })),
     audit: {
-      checks: audit.length,
-      failing: audit.filter((c) => c.ratio < c.min).length,
+      checks: fullAudit.length,
+      failing: fullAudit.filter((c) => c.ratio < c.min).length,
     },
+    componentAudit: fullAudit
+      .filter((c) => c.component)
+      .map((c) => ({
+        component: c.component as string,
+        state: c.state as string,
+        fg: c.fg,
+        bg: c.bg,
+        on: c.on ?? null,
+        mode: c.mode,
+        ratio: floor(c.ratio),
+        min: c.min,
+        kind: c.kind,
+      })),
   };
 }
 

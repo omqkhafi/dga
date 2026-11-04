@@ -1,6 +1,6 @@
 # Roadmap
 
-Phases 0 and 1 (infrastructure and foundations) are done; see [CHANGELOG.md](CHANGELOG.md).
+Phases 0, 1 and 2 are done (released as 0.1.0); see [CHANGELOG.md](CHANGELOG.md).
 Component specs for each phase are in `docs/design-system/components/`.
 
 ## Rules for every phase
@@ -13,28 +13,30 @@ These apply to every component, so they are not repeated in each phase.
 - A docs page for each component: a preview (direction, theme and viewport toggles), usage, props and accessibility notes.
 - Covered by the install test. CHANGELOG and Deviations are updated.
 
-## Phase 2: Button and registry structure
+## Phase 2: Button, simple components and registry structure (done, 0.1.0)
 
 Agreed scope:
 
-- [ ] **`registry:base` item**, so `shadcn init` sets `iconLibrary: "hugeicons"`, `rtl: true` and the DGA style in `components.json`.
-- [ ] **Split tokens out of `dga-style`** (currently about 190 KB) into a separate item, for example `dga-tokens`, so the style item stays small and tokens can be installed on their own.
-- [ ] **Button**: Primary, Primary-Neutral, Secondary (solid and outline, plus on-colour), Subtle and Transparent, plus Destructive Primary, Subtle and Transparent. Sizes sm 24px, md 32px and lg 40px. Icon-only, leading and trailing icons, and all six states.
-- [ ] Contrast audit for the `button-*` tokens.
-- [ ] **`palettes.tsx` swatch text:** take the white and black (`#ffffff` / `#161616`) from tokens instead of hardcoding them.
+- [x] **`registry:base` item**, so `shadcn init` sets `iconLibrary: "hugeicons"`, `rtl: true` and the DGA style in `components.json`.
+- [x] **Split tokens out of `dga-style`** (currently about 190 KB) into a separate item, for example `dga-tokens`, so the style item stays small and tokens can be installed on their own.
+- [x] **Button**: Primary, Primary-Neutral, Secondary (solid and outline, plus on-colour), Subtle and Transparent, plus Destructive Primary, Subtle and Transparent. Sizes sm 24px, md 32px and lg 40px. Icon-only, leading and trailing icons, and all six states.
+- [x] Contrast audit for the `button-*` tokens.
+- [x] **Also shipped:** Spinner, Link, Badge, Tag and Status Tag, Divider, Avatar, Featured Icon and Skeleton.
+- [x] **`palettes.tsx` swatch text:** take the white and black (`#ffffff` / `#161616`) from tokens instead of hardcoding them.
 
 ### Docs site look and navigation
 
-- [ ] **Look:** 100% DGA identity in light and dark (colours, type, radius, focus ring).
-- [ ] **Navigation layout follows the owner's other sites:**
+- [x] **Look:** 100% DGA identity in light and dark (colours, type, radius, focus ring).
+- [x] **Navigation layout follows the owner's other sites:**
   - Top tabs: README / DOCS / CHANGELOG.
   - Numbered sidebar with ⌘K search.
   - "On this page" table of contents.
   - "Copy page" button.
   - Changelog page rendered from `CHANGELOG.md`.
-  - `llms.txt`.
+  - `llms.txt`, `llms-full.txt` and every page as Markdown.
+  - Sitemap and robots.
   - OG images.
-- [ ] Monospace for code only.
+- [x] Monospace for code only.
 
 ## Phase 3: Forms
 

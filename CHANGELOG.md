@@ -5,7 +5,37 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
 
 ## [Unreleased]
 
+## [0.1.0] - 2026-11-04
+
 ### Added
+
+- `dga` (`registry:base`): `npx shadcn@latest init https://dga.omqkhafi.dev/r/dga.json` sets `iconLibrary: "hugeicons"`, `rtl: true`, the `base-nova` style and the `@dga` registry in `components.json`, then installs `dga-style`.
+- `dga-tokens` (`registry:theme`): every DGA token on its own, for projects that want the tokens without components.
+- `test:install` covers three paths (`init dga.json`, `init dga-style.json`, `add dga-tokens.json`), checks `dga-style.json` stays under 10 KB, and can target the production registry with `REGISTRY_URL`.
+
+- **Button** (`@dga/button`): primary, neutral, secondary, outline, subtle and transparent; destructive and on-colour versions of each; sizes sm 24, md 32 and lg 40px; leading and trailing icons, icon-only, selected (`aria-pressed`), disabled and `loading`. 1,210 colour pairs audited.
+- **Spinner** (`@dga/spinner`): the Figma Loading indicator in seven sizes (20 to 44px), primary, neutral, on-colour and `current`. Turns slowly with reduced motion.
+- **Link** (`@dga/link`): primary, neutral and on-colour, sm and md, inline (always underlined), external (new tab, icon, screen-reader hint) and disabled. Works with Next.js `Link` through `render`. On-colour hovered, pressed and visited colours are white (contrast fix, logged in Deviations).
+- **Badge** (`@dga/badge`): from the design.dga.gov.sa CSS (not in Figma). Neutral, success, error, warning, info, purple, orange and on-colour; filled or outlined; sm 20, md 24 and lg 32px; rounded and icon-only. New `badge-*` tokens, logged in Deviations as added from site CSS.
+- **Tag** and **Status Tag** (`@dga/tag`): Tag in neutral, success, info, warning, error and on-colour; filled or outlined; xs 20, sm 24 and md 32px; rounded, icon-only and dismissible (`onDismiss`, 24px hit area). Status Tag in subtle, inverted and ghost with a coloured dot. `tag-background-on-color` darkens instead of lightens (contrast fix).
+- **Divider** (`@dga/divider`): Base UI Separator in neutral, primary, alpha-white and white; horizontal or vertical.
+- **Avatar** and **Avatar Group** (`@dga/avatar`): Base UI Avatar with image, initials or icon fallback; 24, 32, 40, 48, 64, 80 and 120px; circle or square; optional ring; stacked or spaced groups.
+- **Featured Icon** (`@dga/featured-icon`): from the design.dga.gov.sa CSS (not in Figma). Light, hard and outlined; brand, neutral, success, error, warning and info; sm 32 to xl 56px; square or circle. New `featured-icon-*` tokens, logged as added from site CSS.
+- **Skeleton** (`@dga/skeleton`): rectangle, square, circle and line in the Figma sizes, with the five Figma layouts as examples. New `skeleton-background` token. Static with reduced motion.
+- Component contrast audit (`scripts/tokens/components.ts`): every state of every component is checked in light and dark mode on each surface it can sit on, and the build fails on any regression. Each component page lists its checks and its deviations.
+- Component docs pages with previews, install commands, props tables, accessibility notes, contrast checks and deviations.
+
+- Docs site shell in the DGA identity (colours, IBM Plex Sans Arabic, radius, focus rings), light and dark, built with the registry's own components: top tabs README / DOCS / CHANGELOG, a numbered docs sidebar with the latest-release badge and ⌘K search, "On this page" table of contents, "Copy page" (and every page as Markdown at its URL plus `.md`), code blocks with file headers, and a mobile drawer.
+- `/changelog`, generated from `CHANGELOG.md`.
+- `llms.txt`, `llms-full.txt`, `sitemap.xml`, `robots.txt` and OG images for the home page and every docs page, all on `https://dga.omqkhafi.dev`.
+- Test that `package.json` `version` matches the latest CHANGELOG release.
+
+### Changed
+
+- Button token fixes for contrast (all logged on the Deviations page): on-colour secondary, outline and subtle fills darken instead of lighten; on-colour transparent and destructive labels stay white; dark-mode destructive secondary uses a red tint; new `button-label-transparent-*`, `button-label-danger-*` and on-colour destructive secondary tokens.
+- The registry build inlines `cn-*` classes with its own transform, which also covers `compoundVariants` and `cn()` arguments and fails on unknown classes. The docs site renders the transformed components from `apps/docs/registry`, the same code users install.
+- `dga-style` no longer carries the tokens (169 KB → 1 KB); it depends on `dga-tokens`, so existing `init …/dga-style.json` installs get the same result.
+- Colour swatches take their white and black text from `text-oncolor-primary` and `text-default` instead of hardcoded hex values.
 
 - Bun workspaces monorepo: `apps/docs` (Next.js 16 + Fumadocs) and `registry` (shadcn registry source).
 - Biome for lint and format, TypeScript 5.9 strict, GitHub Actions CI (lint, tests, token check, registry build and diff, typecheck, docs build).
@@ -26,3 +56,6 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
 - Fixed contrast failures across 31 tokens (39 light/dark value changes). These cover status fills, gold and lavender text, link hover/pressed/visited states, dark-mode links, icon colours and on-colour text. Added `--text-on-gold`.
 - Body text sizes no longer shrink on mobile; display sizes follow the Figma modes.
 - Dropped the legacy site-CSS radius set; `rounded-2xl` and above clamp to `radius-xl`. Dropped italic weight tokens (IBM Plex Sans Arabic has no italic).
+
+[Unreleased]: https://github.com/omqkhafi/dga/compare/v0.1.0...HEAD
+[0.1.0]: https://github.com/omqkhafi/dga/releases/tag/v0.1.0

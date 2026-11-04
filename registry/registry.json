@@ -4,10 +4,31 @@
   "homepage": "https://dga.omqkhafi.dev",
   "items": [
     {
+      "name": "dga",
+      "type": "registry:base",
+      "title": "DGA UI",
+      "description": "Sets up DGA UI: the DGA style and tokens, Hugeicons, RTL, and the @dga registry in components.json.",
+      "extends": "none",
+      "config": {
+        "style": "base-nova",
+        "iconLibrary": "hugeicons",
+        "rtl": true,
+        "tailwind": {
+          "baseColor": "neutral",
+          "cssVariables": true
+        },
+        "registries": {
+          "@dga": "{{REGISTRY_URL}}/r/{name}.json"
+        }
+      },
+      "registryDependencies": ["{{REGISTRY_URL}}/r/dga-style.json"],
+      "docs": "DGA style installed. Set <html dir=\"rtl\" lang=\"ar\"> for Arabic, and use data-theme=\"dark\" or the .dark class for dark mode. Docs: https://dga.omqkhafi.dev/docs"
+    },
+    {
       "name": "dga-style",
       "type": "registry:style",
       "title": "DGA style",
-      "description": "DGA unified design system tokens (light, dark, responsive), Tailwind v4 theme, IBM Plex Sans Arabic and Hugeicons. Built on Base UI.",
+      "description": "DGA style: Base UI, Hugeicons, IBM Plex Sans Arabic, the cn helper and the cn-* component style map. Pulls in dga-tokens.",
       "extends": "none",
       "dependencies": [
         "@base-ui/react",
@@ -19,11 +40,20 @@
       "devDependencies": ["shadcn", "tw-animate-css"],
       "registryDependencies": [
         "{{REGISTRY_URL}}/r/utils.json",
-        "{{REGISTRY_URL}}/r/font-ibm-plex-sans-arabic.json"
+        "{{REGISTRY_URL}}/r/font-ibm-plex-sans-arabic.json",
+        "{{REGISTRY_URL}}/r/dga-tokens.json"
       ],
       "cssVars": {},
       "css": {},
       "docs": "DGA style installed. Set <html dir=\"rtl\" lang=\"ar\"> for Arabic, and use data-theme=\"dark\" or the .dark class for dark mode. Docs: https://dga.omqkhafi.dev/docs"
+    },
+    {
+      "name": "dga-tokens",
+      "type": "registry:theme",
+      "title": "DGA tokens",
+      "description": "Every DGA design token as CSS variables: light and dark themes, responsive modes, the Tailwind v4 theme and the shadcn variable mapping. Install on its own to use the tokens without components.",
+      "cssVars": {},
+      "css": {}
     },
     {
       "name": "utils",
@@ -52,6 +82,146 @@
         "subsets": ["arabic", "latin"],
         "dependency": "@fontsource/ibm-plex-sans-arabic"
       }
+    },
+    {
+      "name": "spinner",
+      "type": "registry:ui",
+      "title": "Spinner",
+      "description": "DGA Loading indicator: seven sizes, primary, neutral and on-colour.",
+      "dependencies": ["class-variance-authority"],
+      "registryDependencies": ["{{REGISTRY_URL}}/r/utils.json"],
+      "files": [
+        {
+          "path": "bases/base/ui/spinner.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "button",
+      "type": "registry:ui",
+      "title": "Button",
+      "description": "DGA Button on Base UI: primary, neutral, secondary, outline, subtle and transparent, destructive and on-colour, three sizes, icon-only and loading.",
+      "dependencies": ["@base-ui/react", "class-variance-authority"],
+      "registryDependencies": ["{{REGISTRY_URL}}/r/utils.json", "{{REGISTRY_URL}}/r/spinner.json"],
+      "files": [
+        {
+          "path": "bases/base/ui/button.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "link",
+      "type": "registry:ui",
+      "title": "Link",
+      "description": "DGA Link: primary, neutral and on-colour, two sizes, inline, external and disabled. Works with Next.js Link through the render prop.",
+      "dependencies": [
+        "@base-ui/react",
+        "@hugeicons/react",
+        "@hugeicons/core-free-icons",
+        "class-variance-authority"
+      ],
+      "registryDependencies": ["{{REGISTRY_URL}}/r/utils.json"],
+      "files": [
+        {
+          "path": "bases/base/ui/link.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "badge",
+      "type": "registry:ui",
+      "title": "Badge",
+      "description": "DGA Badge (from the design.dga.gov.sa CSS): seven colours and on-colour, filled or outlined, sm/md/lg, rounded and icon-only.",
+      "dependencies": ["@base-ui/react", "class-variance-authority"],
+      "registryDependencies": ["{{REGISTRY_URL}}/r/utils.json"],
+      "files": [
+        {
+          "path": "bases/base/ui/badge.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "tag",
+      "type": "registry:ui",
+      "title": "Tag",
+      "description": "DGA Tag and Status Tag: neutral, success, info, warning, error and on-colour; filled or outlined; xs/sm/md; rounded, icon-only and dismissible. Status Tag: subtle, inverted and ghost with a dot.",
+      "dependencies": [
+        "@hugeicons/react",
+        "@hugeicons/core-free-icons",
+        "class-variance-authority"
+      ],
+      "registryDependencies": ["{{REGISTRY_URL}}/r/utils.json"],
+      "files": [
+        {
+          "path": "bases/base/ui/tag.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "divider",
+      "type": "registry:ui",
+      "title": "Divider",
+      "description": "DGA Divider on Base UI Separator: neutral, primary, alpha-white and white; horizontal or vertical.",
+      "dependencies": ["@base-ui/react", "class-variance-authority"],
+      "registryDependencies": ["{{REGISTRY_URL}}/r/utils.json"],
+      "files": [
+        {
+          "path": "bases/base/ui/divider.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "avatar",
+      "type": "registry:ui",
+      "title": "Avatar",
+      "description": "DGA Avatar on Base UI: image, initials or icon, 24 to 120px, circle or square, optional ring; Avatar Group stacked or spaced.",
+      "dependencies": [
+        "@base-ui/react",
+        "@hugeicons/react",
+        "@hugeicons/core-free-icons",
+        "class-variance-authority"
+      ],
+      "registryDependencies": ["{{REGISTRY_URL}}/r/utils.json"],
+      "files": [
+        {
+          "path": "bases/base/ui/avatar.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "featured-icon",
+      "type": "registry:ui",
+      "title": "Featured Icon",
+      "description": "DGA Featured Icon (from the design.dga.gov.sa CSS): light, hard and outlined in six colours, sm to xl, square or circle.",
+      "dependencies": ["class-variance-authority"],
+      "registryDependencies": ["{{REGISTRY_URL}}/r/utils.json"],
+      "files": [
+        {
+          "path": "bases/base/ui/featured-icon.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "skeleton",
+      "type": "registry:ui",
+      "title": "Skeleton",
+      "description": "DGA Skeleton: rectangle, square, circle and line placeholders in the Figma sizes. Static with reduced motion.",
+      "dependencies": ["class-variance-authority"],
+      "registryDependencies": ["{{REGISTRY_URL}}/r/utils.json"],
+      "files": [
+        {
+          "path": "bases/base/ui/skeleton.tsx",
+          "type": "registry:ui"
+        }
+      ]
     }
   ]
 }

@@ -28,14 +28,14 @@ jobs:
       - name: Registry build
         run: bun run registry:build
       - name: Registry output is committed
-        run: git diff --exit-code -- apps/docs/public/r registry
+        run: git diff --exit-code -- apps/docs/public/r apps/docs/registry apps/docs/lib/generated registry
       - name: Typecheck
         run: bun run typecheck
       - name: Docs build
         run: bun run --filter docs build
 
   install:
-    name: Install dga-style in a fresh Next.js app
+    name: Install the registry in fresh Next.js apps
     runs-on: ubuntu-latest
     needs: check
     steps:

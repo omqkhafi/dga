@@ -1,0 +1,73 @@
+---
+title: Tag
+description: Labels for categories, filters and statuses. Tag and Status Tag, filled or outlined, three sizes, optionally removable.
+---
+
+Tags label content by category or show the filters a user has picked. Status tags show the state of an item, task or request.
+
+<Preview name="tag-variants" title="Tag" />
+
+## Installation
+
+<ComponentInstall name="tag" />
+
+## Usage
+
+```tsx title="page.tsx"
+import { StatusTag, Tag } from "@/components/ui/tag";
+
+<Tag variant="info">تقنية</Tag>
+<StatusTag variant="success">مكتمل</StatusTag>
+```
+
+## Removable
+
+Pass `onDismiss` to add a close button. Give it a specific name with `dismissLabel`, such as "إزالة الرياض", so screen-reader users know which filter it removes. Move focus to a sensible place after the tag is removed (for example the next tag or the filter field).
+
+<Preview name="tag-dismiss" title="Removable" />
+
+## Status Tag
+
+`subtle` (default) sits on a tint, `inverted` on a solid fill and `ghost` has no fill. All three start with a coloured dot.
+
+<Preview name="status-tags" title="Status Tag" />
+
+## Props
+
+### Tag
+
+<TypeTable
+  type={{
+    variant: { type: '"neutral" | "success" | "info" | "warning" | "error" | "on-color"', default: '"neutral"' },
+    size: { type: '"xs" | "sm" | "md"', default: '"sm"', description: "20, 24 and 32px." },
+    outlined: { type: "boolean", default: "false" },
+    rounded: { type: "boolean", default: "false" },
+    iconOnly: { type: "boolean", default: "false", description: "Needs an aria-label." },
+    onDismiss: { type: "() => void", description: "Adds a trailing close button." },
+    dismissLabel: { type: "string", default: '"Remove"' },
+  }}
+/>
+
+### StatusTag
+
+<TypeTable
+  type={{
+    variant: { type: '"neutral" | "success" | "info" | "warning" | "error"', default: '"neutral"' },
+    appearance: { type: '"subtle" | "inverted" | "ghost"', default: '"subtle"' },
+    size: { type: '"xs" | "sm" | "md"', default: '"sm"' },
+  }}
+/>
+
+## Accessibility
+
+- Tags are `<span>`s and are read as text. Put the meaning in the label; the colour and dot are extras (WCAG 1.4.1).
+- The close button is a real `<button>` with its own name and a 24px hit area (WCAG 2.5.8).
+- Use [Button](/docs/components/button) with `aria-pressed` for tags the user can toggle on and off.
+
+### Contrast
+
+<ComponentContrast component="tag" />
+
+## Deviations from DGA
+
+<ComponentDeviations component="tag" />

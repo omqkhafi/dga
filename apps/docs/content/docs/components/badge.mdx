@@ -1,0 +1,60 @@
+---
+title: Badge
+description: A short label for a status, count or category. Seven colours, filled or outlined, three sizes.
+---
+
+A badge is a short, non-interactive label: a status, a count or a category. For labels the user can remove or select, use a [Tag](/docs/components/tag).
+
+<Preview name="badge-variants" title="Colours" />
+
+<Callout title="Not in the DGA Figma file">
+  The badge comes from the design.dga.gov.sa CSS. Its tokens are added from the site CSS and listed under [Deviations](#deviations-from-dga).
+</Callout>
+
+## Installation
+
+<ComponentInstall name="badge" />
+
+## Usage
+
+```tsx title="page.tsx"
+import { Badge } from "@/components/ui/badge";
+
+<Badge variant="success">مقبول</Badge>
+```
+
+## Sizes, shape and icons
+
+`sm` is 20px, `md` 24px (default) and `lg` 32px high. `rounded` makes a pill, which suits counts. `iconOnly` makes a square (or circle) badge and needs an `aria-label`.
+
+<Preview name="badge-sizes" title="Sizes" />
+
+## Props
+
+<TypeTable
+  type={{
+    variant: {
+      type: '"neutral" | "success" | "error" | "warning" | "info" | "purple" | "orange" | "on-color"',
+      default: '"neutral"',
+    },
+    size: { type: '"sm" | "md" | "lg"', default: '"md"' },
+    outlined: { type: "boolean", default: "false" },
+    rounded: { type: "boolean", default: "false" },
+    iconOnly: { type: "boolean", default: "false", description: "Needs an aria-label." },
+    render: { type: "ReactElement | function", description: "Render as another element." },
+  }}
+/>
+
+## Accessibility
+
+- A `<span>` with no role. The text is read in place, so put the meaning in the text, not only in the colour (WCAG 1.4.1).
+- For a count, add context for screen readers, for example `<Badge>3<span className="sr-only"> unread</span></Badge>`.
+- Icon-only badges need an `aria-label`, or `aria-hidden` if they are decorative.
+
+### Contrast
+
+<ComponentContrast component="badge" />
+
+## Deviations from DGA
+
+<ComponentDeviations component="badge" />

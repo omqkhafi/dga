@@ -1,6 +1,8 @@
 import { tokens } from "@/lib/tokens";
 import { ContrastBadge, Swatch } from "./contrast";
 
+const { white, black } = tokens.swatchText;
+
 const LABELS: [RegExp, string][] = [
   [/^primary-sa-flag$/, "SA Flag green (primary)"],
   [/^secondary-gold$/, "Gold (secondary)"],
@@ -43,7 +45,7 @@ export function PrimitivePalettes({
           <h4 className="text-sm font-semibold text-foreground">{name}</h4>
           <ul className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
             {swatches.map((s) => {
-              const white = s.onWhite >= s.onBlack;
+              const useWhite = s.onWhite >= s.onBlack;
               return (
                 <li
                   key={s.name}
@@ -51,7 +53,10 @@ export function PrimitivePalettes({
                 >
                   <div
                     className="flex h-16 items-end justify-end p-2 text-xs font-semibold"
-                    style={{ backgroundColor: s.value, color: white ? "#ffffff" : "#161616" }}
+                    style={{
+                      backgroundColor: s.value,
+                      color: useWhite ? white.value : black.value,
+                    }}
                   >
                     Aa
                   </div>
@@ -66,10 +71,13 @@ export function PrimitivePalettes({
                       {s.value}
                     </span>
                     <div className="flex flex-wrap gap-1">
-                      <ContrastBadge ratio={s.onWhite} label="White text on this colour" />
+                      <ContrastBadge
+                        ratio={s.onWhite}
+                        label={`White (${white.value}, ${white.token}) text on this colour`}
+                      />
                       <ContrastBadge
                         ratio={s.onBlack}
-                        label="Black (#161616) text on this colour"
+                        label={`Black (${black.value}, ${black.token}) text on this colour`}
                       />
                     </div>
                   </div>
@@ -80,8 +88,9 @@ export function PrimitivePalettes({
         </section>
       ))}
       <p className="text-xs text-muted-foreground">
-        Each swatch shows the contrast of white and of black (#161616) text on it. Translucent
-        swatches are measured over white.
+        Each swatch shows the contrast of white (<code>{white.token}</code>, {white.value}) and of
+        black (<code>{black.token}</code>, {black.value}) text on it. Translucent swatches are
+        measured over white.
       </p>
     </div>
   );

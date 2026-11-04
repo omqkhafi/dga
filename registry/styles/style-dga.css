@@ -1,10 +1,621 @@
 /*
- * DGA style map. Components use stable semantic classes (cn-button, cn-button-variant-default …)
- * and this file maps them to Tailwind utilities on DGA tokens. scripts/build-registry.ts inlines
- * these classes into each component at build time (same pipeline as shadcn's base styles).
+ * DGA style map. Components use stable semantic classes (cn-button, cn-button-primary …)
+ * and this file maps them to Tailwind utilities on DGA tokens. scripts/style-map.ts inlines
+ * these classes into each component at build time, and fails on a class missing here.
  *
  * Rules: logical properties only (ms/me/ps/pe/start/end), DGA token utilities only.
+ * Every colour pair used here is listed in scripts/tokens/components.ts and audited.
  */
 .style-dga {
-  /* Components start in Phase 2 (Button first). */
+  /* ------------------------------------------------------------------------------------
+   * Spinner (Figma: Loading). Track + 25% indicator arc.
+   * ---------------------------------------------------------------------------------- */
+  .cn-spinner {
+    @apply inline-flex shrink-0 items-center justify-center;
+  }
+  .cn-spinner-svg {
+    @apply size-full animate-spin motion-reduce:animate-[spin_3s_linear_infinite];
+  }
+  .cn-spinner-track {
+    @apply stroke-border-neutral-secondary;
+  }
+  .cn-spinner-indicator {
+    @apply stroke-icon-primary;
+  }
+  .cn-spinner-size-2xs {
+    @apply size-5;
+  }
+  .cn-spinner-size-xs {
+    @apply size-6;
+  }
+  .cn-spinner-size-sm {
+    @apply size-7;
+  }
+  .cn-spinner-size-md {
+    @apply size-8;
+  }
+  .cn-spinner-size-lg {
+    @apply size-9;
+  }
+  .cn-spinner-size-xl {
+    @apply size-10;
+  }
+  .cn-spinner-size-2xl {
+    @apply size-11;
+  }
+  .cn-spinner-variant-primary {
+    @apply [&_circle:last-child]:stroke-icon-primary;
+  }
+  .cn-spinner-variant-neutral {
+    @apply [&_circle:last-child]:stroke-icon-default;
+  }
+  .cn-spinner-variant-on-color {
+    @apply [&_circle:first-child]:stroke-alpha-white-40 [&_circle:last-child]:stroke-icon-oncolor;
+  }
+  .cn-spinner-variant-current {
+    @apply [&_circle:first-child]:stroke-current/25 [&_circle:last-child]:stroke-current;
+  }
+
+  /* ------------------------------------------------------------------------------------
+   * Button. Sizes sm 24 / md 32 / lg 40px, radius-sm, Text xs/sm/md Medium.
+   * States: hover, active (pressed), aria-pressed / data-selected (selected),
+   * focus-visible (focused), data-disabled (disabled).
+   * ---------------------------------------------------------------------------------- */
+  .cn-button {
+    @apply relative inline-flex shrink-0 cursor-pointer items-center justify-center rounded-sm border border-transparent font-medium whitespace-nowrap transition-colors select-none;
+    @apply focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-offset-1 focus-visible:outline-border-black;
+    @apply data-disabled:cursor-not-allowed data-loading:cursor-progress;
+    @apply [&_svg]:pointer-events-none [&_svg]:shrink-0;
+    @apply data-loading:[&>[data-icon=inline-start]]:hidden;
+  }
+  .cn-button-size-sm {
+    @apply h-6 gap-buttons-sm-gap px-buttons-sm-padding text-xs;
+    @apply [&_svg:not([class*='size-'])]:size-4 [&_[data-slot=spinner]]:size-4;
+  }
+  .cn-button-size-md {
+    @apply h-8 gap-buttons-md-gap px-buttons-md-padding text-sm;
+    @apply [&_svg:not([class*='size-'])]:size-5 [&_[data-slot=spinner]]:size-5;
+  }
+  .cn-button-size-lg {
+    @apply h-10 gap-buttons-lg-gap px-buttons-lg-padding text-md;
+    @apply [&_svg:not([class*='size-'])]:size-6 [&_[data-slot=spinner]]:size-6;
+  }
+  .cn-button-icon-only {
+    @apply px-0 data-loading:[&>svg]:hidden;
+  }
+  .cn-button-icon-only-sm {
+    @apply size-6;
+  }
+  .cn-button-icon-only-md {
+    @apply size-8;
+  }
+  .cn-button-icon-only-lg {
+    @apply size-10;
+  }
+
+  /* Primary (brand) */
+  .cn-button-primary {
+    @apply bg-button-background-primary-default text-text-oncolor-primary;
+    @apply hover:bg-button-background-primary-hovered active:bg-button-background-primary-pressed;
+    @apply aria-pressed:bg-button-background-primary-selected data-selected:bg-button-background-primary-selected;
+    @apply data-disabled:bg-background-disabled data-disabled:text-text-default-disabled;
+  }
+  /* Primary-Neutral (black) */
+  .cn-button-neutral {
+    @apply bg-button-background-black-default text-text-oncolor-primary;
+    @apply hover:bg-button-background-black-hovered active:bg-button-background-black-pressed;
+    @apply aria-pressed:bg-button-background-black-selected data-selected:bg-button-background-black-selected;
+    @apply data-disabled:bg-background-disabled data-disabled:text-text-default-disabled;
+  }
+  /* Secondary-Solid. Figma: hovered uses the pressed fill. */
+  .cn-button-secondary {
+    @apply bg-button-background-neutral-default text-text-default;
+    @apply hover:bg-button-background-neutral-pressed active:bg-button-background-neutral-pressed;
+    @apply aria-pressed:bg-button-background-neutral-selected data-selected:bg-button-background-neutral-selected;
+    @apply data-disabled:bg-background-disabled data-disabled:text-text-default-disabled;
+  }
+  /* Secondary-Outline */
+  .cn-button-outline {
+    @apply border-border-neutral-primary bg-transparent text-text-default;
+    @apply hover:border-border-neutral-secondary hover:bg-button-background-neutral-default;
+    @apply active:border-border-neutral-primary active:bg-button-background-neutral-pressed;
+    @apply aria-pressed:bg-button-background-neutral-selected data-selected:bg-button-background-neutral-selected;
+    @apply data-disabled:border-border-neutral-secondary data-disabled:bg-transparent data-disabled:text-text-default-disabled;
+  }
+  /* Subtle */
+  .cn-button-subtle {
+    @apply bg-transparent text-text-default;
+    @apply hover:bg-button-background-neutral-default active:bg-button-background-neutral-pressed;
+    @apply aria-pressed:bg-button-background-neutral-selected data-selected:bg-button-background-neutral-selected;
+    @apply data-disabled:bg-transparent data-disabled:text-text-default-disabled;
+  }
+  /* Transparent: the label changes colour instead of the fill. */
+  .cn-button-transparent {
+    @apply bg-transparent text-text-default;
+    @apply hover:text-button-label-transparent-hovered active:text-button-label-transparent-pressed;
+    @apply aria-pressed:text-button-label-transparent-selected data-selected:text-button-label-transparent-selected;
+    @apply data-disabled:text-text-default-disabled;
+  }
+
+  /* On-colour (on brand fills). Focus ring is white in both modes. */
+  .cn-button-primary-on-color {
+    @apply bg-button-background-oncolor-default text-text-default focus-visible:outline-icon-oncolor;
+    @apply hover:bg-button-background-oncolor-hovered active:bg-button-background-oncolor-pressed;
+    @apply aria-pressed:bg-button-background-oncolor-pressed data-selected:bg-button-background-oncolor-pressed;
+    @apply data-disabled:bg-button-background-disabled-on-color data-disabled:text-text-default-oncolor-disabled;
+  }
+  .cn-button-neutral-on-color {
+    @apply bg-button-background-oncolor-default text-text-default focus-visible:outline-icon-oncolor;
+    @apply hover:bg-button-background-oncolor-hovered active:bg-button-background-oncolor-pressed;
+    @apply aria-pressed:bg-button-background-oncolor-selected data-selected:bg-button-background-oncolor-selected;
+    @apply data-disabled:bg-button-background-disabled-on-color data-disabled:text-text-default-oncolor-disabled;
+  }
+  .cn-button-secondary-on-color {
+    @apply bg-button-background-transparent-hovered text-text-oncolor-primary focus-visible:outline-icon-oncolor;
+    @apply hover:bg-button-background-transparent-hovered active:bg-button-background-transparent-pressed;
+    @apply aria-pressed:bg-button-background-transparent-selected data-selected:bg-button-background-transparent-selected;
+    @apply data-disabled:bg-button-background-disabled-on-color data-disabled:text-text-default-oncolor-disabled;
+  }
+  .cn-button-outline-on-color {
+    @apply border-border-white-40 bg-transparent text-text-oncolor-primary focus-visible:outline-icon-oncolor;
+    @apply hover:bg-button-background-transparent-hovered active:bg-button-background-transparent-pressed;
+    @apply aria-pressed:bg-button-background-transparent-selected data-selected:bg-button-background-transparent-selected;
+    @apply data-disabled:border-icon-default-oncolor-disabled data-disabled:bg-transparent data-disabled:text-text-default-oncolor-disabled;
+  }
+  .cn-button-subtle-on-color {
+    @apply bg-transparent text-text-oncolor-primary focus-visible:outline-icon-oncolor;
+    @apply hover:bg-button-background-transparent-hovered active:bg-button-background-transparent-pressed;
+    @apply aria-pressed:bg-button-background-transparent-selected data-selected:bg-button-background-transparent-selected;
+    @apply data-disabled:bg-transparent data-disabled:text-text-default-oncolor-disabled;
+  }
+  /* The label stays white; the state is an underline (see Deviations). */
+  .cn-button-transparent-on-color {
+    @apply bg-transparent text-text-oncolor-primary underline-offset-4 focus-visible:outline-icon-oncolor;
+    @apply hover:underline active:underline active:opacity-80;
+    @apply aria-pressed:underline data-selected:underline;
+    @apply data-disabled:no-underline data-disabled:opacity-100 data-disabled:text-text-default-oncolor-disabled;
+  }
+
+  /* Destructive */
+  .cn-button-primary-destructive {
+    @apply bg-button-background-danger-primary-default text-text-oncolor-primary;
+    @apply hover:bg-button-background-danger-primary-hovered active:bg-button-background-danger-primary-pressed;
+    @apply aria-pressed:bg-button-background-danger-primary-selected data-selected:bg-button-background-danger-primary-selected;
+    @apply data-disabled:bg-background-disabled data-disabled:text-text-default-disabled;
+  }
+  .cn-button-secondary-destructive {
+    @apply bg-button-background-danger-secondary-default text-text-error;
+    @apply hover:bg-button-background-danger-secondary-hovered active:bg-button-background-danger-secondary-pressed;
+    @apply aria-pressed:bg-button-background-danger-secondary-selected data-selected:bg-button-background-danger-secondary-selected;
+    @apply data-disabled:bg-background-disabled data-disabled:text-text-default-disabled;
+  }
+  .cn-button-outline-destructive {
+    @apply border-border-error-light bg-transparent text-text-error;
+    @apply hover:bg-button-background-danger-secondary-hovered active:bg-button-background-danger-secondary-pressed;
+    @apply aria-pressed:bg-button-background-danger-secondary-selected data-selected:bg-button-background-danger-secondary-selected;
+    @apply data-disabled:border-border-neutral-secondary data-disabled:bg-transparent data-disabled:text-text-default-disabled;
+  }
+  .cn-button-subtle-destructive {
+    @apply bg-transparent text-text-error;
+    @apply hover:bg-button-background-danger-secondary-hovered active:bg-button-background-danger-secondary-pressed;
+    @apply aria-pressed:bg-button-background-danger-secondary-selected data-selected:bg-button-background-danger-secondary-selected;
+    @apply data-disabled:bg-transparent data-disabled:text-text-default-disabled;
+  }
+  .cn-button-transparent-destructive {
+    @apply bg-transparent text-button-label-danger-default;
+    @apply hover:text-button-label-danger-hovered active:text-button-label-danger-pressed;
+    @apply aria-pressed:text-button-label-danger-selected data-selected:text-button-label-danger-selected;
+    @apply data-disabled:text-text-default-disabled;
+  }
+  .cn-button-primary-destructive-on-color {
+    @apply bg-button-background-danger-primary-default text-text-oncolor-primary focus-visible:outline-icon-oncolor;
+    @apply hover:bg-button-background-danger-primary-hovered active:bg-button-background-danger-primary-pressed;
+    @apply aria-pressed:bg-button-background-danger-primary-selected data-selected:bg-button-background-danger-primary-selected;
+    @apply data-disabled:bg-button-background-disabled-on-color data-disabled:text-text-default-oncolor-disabled;
+  }
+  .cn-button-secondary-destructive-on-color {
+    @apply bg-button-background-danger-secondary-oncolor-default text-button-label-danger-secondary-oncolor focus-visible:outline-icon-oncolor;
+    @apply hover:bg-button-background-danger-secondary-oncolor-hovered active:bg-button-background-danger-secondary-oncolor-pressed;
+    @apply aria-pressed:bg-button-background-danger-secondary-oncolor-selected data-selected:bg-button-background-danger-secondary-oncolor-selected;
+    @apply data-disabled:bg-button-background-disabled-on-color data-disabled:text-text-default-oncolor-disabled;
+  }
+  .cn-button-outline-destructive-on-color {
+    @apply border-border-error-light bg-transparent text-button-label-danger-primary-default-oncolor focus-visible:outline-icon-oncolor;
+    @apply hover:bg-button-background-transparent-hovered hover:text-button-label-danger-primary-hovered-oncolor;
+    @apply active:bg-button-background-transparent-pressed active:text-button-label-danger-primary-pressed-oncolor;
+    @apply aria-pressed:bg-button-background-transparent-selected data-selected:bg-button-background-transparent-selected;
+    @apply data-disabled:border-icon-default-oncolor-disabled data-disabled:bg-transparent data-disabled:text-text-default-oncolor-disabled;
+  }
+  .cn-button-subtle-destructive-on-color {
+    @apply bg-transparent text-button-label-danger-primary-default-oncolor focus-visible:outline-icon-oncolor;
+    @apply hover:bg-button-background-transparent-hovered hover:text-button-label-danger-primary-hovered-oncolor;
+    @apply active:bg-button-background-transparent-pressed active:text-button-label-danger-primary-pressed-oncolor;
+    @apply aria-pressed:bg-button-background-transparent-selected data-selected:bg-button-background-transparent-selected;
+    @apply data-disabled:bg-transparent data-disabled:text-text-default-oncolor-disabled;
+  }
+  .cn-button-transparent-destructive-on-color {
+    @apply bg-transparent text-button-label-danger-primary-default-oncolor underline-offset-4 focus-visible:outline-icon-oncolor;
+    @apply hover:underline active:underline active:opacity-80;
+    @apply aria-pressed:underline data-selected:underline;
+    @apply data-disabled:no-underline data-disabled:opacity-100 data-disabled:text-text-default-oncolor-disabled;
+  }
+
+  /* ------------------------------------------------------------------------------------
+   * Link. md: Text md, 20px icon, gap 8. sm: Text sm, 16px icon, gap 4.
+   * Underlined on hover and pressed; inline links are always underlined.
+   * ---------------------------------------------------------------------------------- */
+  .cn-link {
+    @apply inline-flex cursor-pointer items-center rounded-xs font-normal underline-offset-4 transition-colors;
+    @apply hover:underline active:underline;
+    @apply focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-offset-2 focus-visible:outline-border-black;
+    @apply data-disabled:pointer-events-none data-disabled:no-underline data-disabled:text-text-default-disabled;
+    @apply [&_svg]:shrink-0 [&_svg]:rtl:-scale-x-100;
+  }
+  .cn-link-size-md {
+    @apply gap-link-md-gap text-md [&_svg]:size-5;
+  }
+  .cn-link-size-sm {
+    @apply gap-link-sm-gap text-sm [&_svg]:size-4;
+  }
+  .cn-link-inline {
+    @apply inline underline [&_svg]:ms-1 [&_svg]:inline [&_svg]:align-[-0.125em];
+  }
+  .cn-link-variant-primary {
+    @apply text-link-primary hover:text-link-primary-hovered active:text-link-primary-pressed visited:text-link-primary-visited;
+  }
+  /* Figma: visited neutral links use the primary visited colour. */
+  .cn-link-variant-neutral {
+    @apply text-link-neutral hover:text-link-neutral-hovered active:text-link-neutral-pressed visited:text-link-primary-visited;
+  }
+  .cn-link-variant-on-color {
+    @apply text-link-oncolor hover:text-link-oncolor-hovered active:text-link-oncolor-pressed visited:text-link-oncolor-visited focus-visible:outline-icon-oncolor;
+    @apply data-disabled:text-link-oncolor-disabled;
+  }
+  .cn-link-icon {
+    @apply pointer-events-none;
+  }
+
+  /* ------------------------------------------------------------------------------------
+   * Badge (site CSS .badge; not in Figma). sm 20 / md 24 / lg 32px, radius-xs or full.
+   * Colours come from --badge-* variables set by the variant class.
+   * ---------------------------------------------------------------------------------- */
+  .cn-badge {
+    @apply inline-flex h-6 shrink-0 items-center justify-center gap-1 rounded-xs border px-3 font-medium whitespace-nowrap;
+    @apply border-(--badge-border) bg-(--badge-bg) text-(--badge-fg);
+    @apply [&_svg]:pointer-events-none [&_svg]:shrink-0;
+  }
+  .cn-badge-size-sm {
+    @apply h-5 px-2 text-2xs [&_svg:not([class*='size-'])]:size-2.5;
+  }
+  .cn-badge-size-md {
+    @apply h-6 text-xs [&_svg:not([class*='size-'])]:size-3.5;
+  }
+  .cn-badge-size-lg {
+    @apply h-8 text-sm [&_svg:not([class*='size-'])]:size-4.5;
+  }
+  .cn-badge-outlined {
+    @apply border-(--badge-border-outlined) bg-transparent;
+  }
+  .cn-badge-rounded {
+    @apply rounded-full;
+  }
+  .cn-badge-icon-only {
+    @apply aspect-square px-0;
+  }
+  .cn-badge-variant-neutral {
+    @apply [--badge-bg:var(--badge-neutral-background)] [--badge-border:var(--badge-neutral-border)] [--badge-border-outlined:var(--badge-neutral-border-outlined)] [--badge-fg:var(--badge-neutral-text)];
+  }
+  .cn-badge-variant-success {
+    @apply [--badge-bg:var(--badge-success-background)] [--badge-border:var(--badge-success-border)] [--badge-border-outlined:var(--badge-success-border-outlined)] [--badge-fg:var(--badge-success-text)];
+  }
+  .cn-badge-variant-error {
+    @apply [--badge-bg:var(--badge-error-background)] [--badge-border:var(--badge-error-border)] [--badge-border-outlined:var(--badge-error-border-outlined)] [--badge-fg:var(--badge-error-text)];
+  }
+  .cn-badge-variant-warning {
+    @apply [--badge-bg:var(--badge-warning-background)] [--badge-border:var(--badge-warning-border)] [--badge-border-outlined:var(--badge-warning-border-outlined)] [--badge-fg:var(--badge-warning-text)];
+  }
+  .cn-badge-variant-info {
+    @apply [--badge-bg:var(--badge-info-background)] [--badge-border:var(--badge-info-border)] [--badge-border-outlined:var(--badge-info-border-outlined)] [--badge-fg:var(--badge-info-text)];
+  }
+  .cn-badge-variant-purple {
+    @apply [--badge-bg:var(--badge-purple-background)] [--badge-border:var(--badge-purple-border)] [--badge-border-outlined:var(--badge-purple-border-outlined)] [--badge-fg:var(--badge-purple-text)];
+  }
+  .cn-badge-variant-orange {
+    @apply [--badge-bg:var(--badge-orange-background)] [--badge-border:var(--badge-orange-border)] [--badge-border-outlined:var(--badge-orange-border-outlined)] [--badge-fg:var(--badge-orange-text)];
+  }
+  .cn-badge-variant-on-color {
+    @apply [--badge-bg:var(--badge-on-color-background)] [--badge-border:transparent] [--badge-border-outlined:var(--badge-on-color-border-outlined)] [--badge-fg:var(--text-oncolor-primary)];
+  }
+
+  /* ------------------------------------------------------------------------------------
+   * Tag. xs 20 / sm 24 / md 32px, radius-sm or full, SemiBold. Colours from --tag-*.
+   * ---------------------------------------------------------------------------------- */
+  .cn-tag {
+    @apply inline-flex shrink-0 items-center justify-center gap-1 rounded-sm border font-semibold whitespace-nowrap;
+    @apply border-(--tag-border) bg-(--tag-bg) text-(--tag-fg) [&_svg]:shrink-0 [&_svg]:text-(--tag-icon);
+  }
+  .cn-tag-size-xs {
+    @apply h-5 px-2 text-2xs [&_svg:not([class*='size-'])]:size-3;
+  }
+  .cn-tag-size-sm {
+    @apply h-6 px-2 text-xs [&_svg:not([class*='size-'])]:size-3.5;
+  }
+  .cn-tag-size-md {
+    @apply h-8 px-3 text-sm [&_svg:not([class*='size-'])]:size-4.5;
+  }
+  .cn-tag-outlined {
+    @apply border-(--tag-border-outlined) bg-transparent;
+  }
+  .cn-tag-rounded {
+    @apply rounded-full;
+  }
+  .cn-tag-icon-only {
+    @apply aspect-square px-0.5;
+  }
+  .cn-tag-dismiss {
+    @apply relative -me-1 inline-flex size-4 cursor-pointer items-center justify-center rounded-xs text-(--tag-icon) hover:bg-alpha-black-10;
+    /* 24px hit area (WCAG 2.5.8). */
+    @apply after:absolute after:-inset-1;
+    @apply focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-border-black;
+    @apply [&_svg]:size-3;
+  }
+  .cn-tag-variant-neutral {
+    @apply [--tag-bg:var(--tag-background-neutral-light)] [--tag-border:var(--border-neutral-secondary)] [--tag-border-outlined:var(--tag-border-neutral)] [--tag-fg:var(--tag-text-neutral)] [--tag-icon:var(--icon-default)];
+  }
+  .cn-tag-variant-success {
+    @apply [--tag-bg:var(--tag-background-success-light)] [--tag-border:var(--tag-border-success-light)] [--tag-border-outlined:var(--tag-border-success)] [--tag-fg:var(--tag-text-success)] [--tag-icon:var(--tag-icon-success)];
+  }
+  .cn-tag-variant-info {
+    @apply [--tag-bg:var(--tag-background-info-light)] [--tag-border:var(--tag-border-info-light)] [--tag-border-outlined:var(--tag-border-info)] [--tag-fg:var(--tag-text-info)] [--tag-icon:var(--tag-icon-info)];
+  }
+  .cn-tag-variant-warning {
+    @apply [--tag-bg:var(--tag-background-warning-light)] [--tag-border:var(--tag-border-warning-light)] [--tag-border-outlined:var(--tag-border-warning)] [--tag-fg:var(--tag-text-warning)] [--tag-icon:var(--tag-icon-warning)];
+  }
+  .cn-tag-variant-error {
+    @apply [--tag-bg:var(--tag-background-error-light)] [--tag-border:var(--tag-border-error-light)] [--tag-border-outlined:var(--tag-border-error)] [--tag-fg:var(--tag-text-error)] [--tag-icon:var(--tag-icon-error)];
+  }
+  .cn-tag-variant-on-color {
+    @apply [--tag-bg:var(--tag-background-on-color)] [--tag-border:transparent] [--tag-border-outlined:var(--tag-border-on-color)] [--tag-fg:var(--text-oncolor-primary)] [--tag-icon:var(--icon-oncolor)];
+    @apply [&_.cn-tag-dismiss]:focus-visible:outline-icon-oncolor;
+  }
+
+  /* ------------------------------------------------------------------------------------
+   * Status Tag. xs 20 / sm 24 / md 32px, radius-full, gap 8, Text Medium.
+   * ---------------------------------------------------------------------------------- */
+  .cn-status-tag {
+    @apply inline-flex shrink-0 items-center gap-2 rounded-full font-medium whitespace-nowrap;
+  }
+  .cn-status-tag-dot {
+    @apply size-2 shrink-0 rounded-full bg-(--status-dot);
+  }
+  .cn-status-tag-size-xs {
+    @apply h-5 px-2 text-xs;
+  }
+  .cn-status-tag-size-sm {
+    @apply h-6 px-2 text-sm;
+  }
+  .cn-status-tag-size-md {
+    @apply h-8 px-4 text-md;
+  }
+  .cn-status-tag-subtle {
+    @apply bg-(--status-bg) text-(--status-fg);
+  }
+  .cn-status-tag-ghost {
+    @apply bg-transparent px-0 text-tag-text-neutral;
+  }
+  .cn-status-tag-inverted {
+    @apply bg-(--status-solid) text-text-oncolor-primary [&>span:first-child]:bg-tag-dot;
+  }
+  .cn-status-tag-variant-neutral {
+    @apply [--status-bg:var(--tag-background-neutral-light)] [--status-dot:var(--icon-default)] [--status-fg:var(--tag-text-neutral)] [--status-solid:var(--tag-background-neutral)];
+  }
+  .cn-status-tag-variant-success {
+    @apply [--status-bg:var(--tag-background-success-light)] [--status-dot:var(--tag-icon-success)] [--status-fg:var(--tag-text-success)] [--status-solid:var(--tag-background-success)];
+  }
+  .cn-status-tag-variant-info {
+    @apply [--status-bg:var(--tag-background-info-light)] [--status-dot:var(--tag-icon-info)] [--status-fg:var(--tag-text-info)] [--status-solid:var(--tag-background-info)];
+  }
+  .cn-status-tag-variant-warning {
+    @apply [--status-bg:var(--tag-background-warning-light)] [--status-dot:var(--tag-icon-warning)] [--status-fg:var(--tag-text-warning)] [--status-solid:var(--tag-background-warning)];
+  }
+  .cn-status-tag-variant-error {
+    @apply [--status-bg:var(--tag-background-error-light)] [--status-dot:var(--tag-icon-error)] [--status-fg:var(--tag-text-error)] [--status-solid:var(--tag-background-error)];
+  }
+
+  /* ------------------------------------------------------------------------------------
+   * Divider. 1px, horizontal or vertical.
+   * ---------------------------------------------------------------------------------- */
+  .cn-divider {
+    @apply shrink-0 border-0;
+  }
+  .cn-divider-horizontal {
+    @apply h-px w-full;
+  }
+  .cn-divider-vertical {
+    @apply w-px self-stretch;
+  }
+  .cn-divider-variant-neutral {
+    @apply bg-border-neutral-secondary;
+  }
+  .cn-divider-variant-primary {
+    @apply bg-border-primary;
+  }
+  .cn-divider-variant-alpha-white {
+    @apply bg-border-oncolor-transparent-30;
+  }
+  .cn-divider-variant-white {
+    @apply bg-icon-oncolor;
+  }
+
+  /* ------------------------------------------------------------------------------------
+   * Avatar. 24–120px, circle or radius-md square, optional white ring (2px, 4px at 120).
+   * ---------------------------------------------------------------------------------- */
+  .cn-avatar {
+    @apply relative inline-flex shrink-0 items-center justify-center overflow-hidden rounded-full bg-button-background-neutral-default text-text-default select-none;
+  }
+  .cn-avatar-square {
+    @apply rounded-md;
+  }
+  .cn-avatar-bordered {
+    @apply ring-2 ring-border-white;
+  }
+  .cn-avatar-image {
+    @apply size-full object-cover;
+  }
+  .cn-avatar-fallback {
+    @apply flex size-full items-center justify-center;
+  }
+  .cn-avatar-initials {
+    @apply leading-none uppercase [unicode-bidi:plaintext];
+  }
+  .cn-avatar-icon {
+    @apply text-icon-default;
+  }
+  .cn-avatar-size-24 {
+    @apply size-6 text-2xs font-bold [&_svg]:size-4;
+  }
+  .cn-avatar-size-32 {
+    @apply size-8 text-xs font-semibold [&_svg]:size-6;
+  }
+  .cn-avatar-size-40 {
+    @apply size-10 text-sm font-semibold [&_svg]:size-8;
+  }
+  .cn-avatar-size-48 {
+    @apply size-12 text-md font-semibold [&_svg]:size-8;
+  }
+  .cn-avatar-size-64 {
+    @apply size-16 text-xl font-medium [&_svg]:size-10;
+  }
+  .cn-avatar-size-80 {
+    @apply size-20 text-display-sm font-normal [&_svg]:size-14;
+  }
+  .cn-avatar-size-120 {
+    @apply size-30 text-display-md font-normal [&_svg]:size-20;
+  }
+  .cn-avatar-bordered-120 {
+    @apply ring-4;
+  }
+  .cn-avatar-group {
+    @apply flex items-center gap-2;
+  }
+  /* Figma: stacked avatars overlap by 4px with a white ring. */
+  .cn-avatar-group-stacked {
+    @apply gap-0 *:not-first:-ms-1 *:ring-2 *:ring-border-white;
+  }
+
+  /* ------------------------------------------------------------------------------------
+   * Featured Icon (site CSS .featured-icon; not in Figma). sm 32 / md 40 / lg 48 / xl 56px.
+   * ---------------------------------------------------------------------------------- */
+  .cn-featured-icon {
+    @apply inline-flex shrink-0 items-center justify-center rounded-sm border border-transparent [&_svg]:shrink-0;
+  }
+  .cn-featured-icon-size-sm {
+    @apply size-8 [&_svg:not([class*='size-'])]:size-4;
+  }
+  .cn-featured-icon-size-md {
+    @apply size-10 [&_svg:not([class*='size-'])]:size-5;
+  }
+  .cn-featured-icon-size-lg {
+    @apply size-12 [&_svg:not([class*='size-'])]:size-6;
+  }
+  .cn-featured-icon-size-xl {
+    @apply size-14 [&_svg:not([class*='size-'])]:size-7;
+  }
+  .cn-featured-icon-circle {
+    @apply rounded-full;
+  }
+  .cn-featured-icon-light {
+    @apply bg-(--fi-light) text-(--fi-icon);
+  }
+  .cn-featured-icon-hard {
+    @apply bg-(--fi-hard) text-icon-oncolor;
+  }
+  .cn-featured-icon-outlined {
+    @apply border-(--fi-border) bg-transparent text-(--fi-icon);
+  }
+  .cn-featured-icon-variant-brand {
+    @apply [--fi-border:var(--featured-icon-brand-border)] [--fi-hard:var(--featured-icon-brand-background)] [--fi-icon:var(--featured-icon-brand-icon)] [--fi-light:var(--featured-icon-brand-background-light)];
+  }
+  .cn-featured-icon-variant-neutral {
+    @apply [--fi-border:var(--featured-icon-neutral-border)] [--fi-hard:var(--featured-icon-neutral-background)] [--fi-icon:var(--featured-icon-neutral-icon)] [--fi-light:var(--featured-icon-neutral-background-light)];
+  }
+  .cn-featured-icon-variant-success {
+    @apply [--fi-border:var(--featured-icon-success-border)] [--fi-hard:var(--featured-icon-success-background)] [--fi-icon:var(--featured-icon-success-icon)] [--fi-light:var(--featured-icon-success-background-light)];
+  }
+  .cn-featured-icon-variant-error {
+    @apply [--fi-border:var(--featured-icon-error-border)] [--fi-hard:var(--featured-icon-error-background)] [--fi-icon:var(--featured-icon-error-icon)] [--fi-light:var(--featured-icon-error-background-light)];
+  }
+  .cn-featured-icon-variant-warning {
+    @apply [--fi-border:var(--featured-icon-warning-border)] [--fi-hard:var(--featured-icon-warning-background)] [--fi-icon:var(--featured-icon-warning-icon)] [--fi-light:var(--featured-icon-warning-background-light)];
+  }
+  .cn-featured-icon-variant-info {
+    @apply [--fi-border:var(--featured-icon-info-border)] [--fi-hard:var(--featured-icon-info-background)] [--fi-icon:var(--featured-icon-info-icon)] [--fi-light:var(--featured-icon-info-background-light)];
+  }
+
+  /* ------------------------------------------------------------------------------------
+   * Skeleton. Pulses between two neutral steps; static with reduced motion.
+   * ---------------------------------------------------------------------------------- */
+  .cn-skeleton {
+    @apply min-w-0 animate-pulse bg-skeleton-background motion-reduce:animate-none;
+  }
+  .cn-skeleton-rectangle {
+    @apply h-10 w-full rounded-sm;
+  }
+  .cn-skeleton-rectangle-sm {
+    @apply h-6;
+  }
+  .cn-skeleton-rectangle-md {
+    @apply h-8;
+  }
+  .cn-skeleton-rectangle-lg {
+    @apply h-10;
+  }
+  .cn-skeleton-line {
+    @apply h-3.5 w-full rounded-full;
+  }
+  .cn-skeleton-line-sm {
+    @apply h-3.5;
+  }
+  .cn-skeleton-line-lg {
+    @apply h-5.5;
+  }
+  .cn-skeleton-square {
+    @apply size-16 shrink-0 rounded-none;
+  }
+  .cn-skeleton-circle {
+    @apply size-16 shrink-0 rounded-full;
+  }
+  .cn-skeleton-box-24 {
+    @apply size-6;
+  }
+  .cn-skeleton-box-48 {
+    @apply size-12;
+  }
+  .cn-skeleton-box-64 {
+    @apply size-16;
+  }
+  .cn-skeleton-box-80 {
+    @apply size-20;
+  }
+  .cn-skeleton-box-120 {
+    @apply size-30;
+  }
+  .cn-skeleton-box-170 {
+    @apply size-42.5;
+  }
+  .cn-skeleton-box-240 {
+    @apply size-60;
+  }
+  .cn-skeleton-square-radius-xs {
+    @apply rounded-xs;
+  }
+  .cn-skeleton-square-radius-sm {
+    @apply rounded-sm;
+  }
+  .cn-skeleton-square-radius-md {
+    @apply rounded-md;
+  }
+  .cn-skeleton-square-radius-lg {
+    @apply rounded-lg;
+  }
 }

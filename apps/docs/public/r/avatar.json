@@ -1,0 +1,23 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "avatar",
+  "title": "Avatar",
+  "description": "DGA Avatar on Base UI: image, initials or icon, 24 to 120px, circle or square, optional ring; Avatar Group stacked or spaced.",
+  "dependencies": [
+    "@base-ui/react",
+    "@hugeicons/react",
+    "@hugeicons/core-free-icons",
+    "class-variance-authority"
+  ],
+  "registryDependencies": [
+    "https://dga.omqkhafi.dev/r/utils.json"
+  ],
+  "files": [
+    {
+      "path": "bases/base/ui/avatar.tsx",
+      "content": "\"use client\";\n\nimport { Avatar as AvatarPrimitive } from \"@base-ui/react/avatar\";\nimport { UserIcon } from \"@hugeicons/core-free-icons\";\nimport { HugeiconsIcon } from \"@hugeicons/react\";\nimport { cva, type VariantProps } from \"class-variance-authority\";\nimport type * as React from \"react\";\nimport { cn } from \"@/registry/bases/base/lib/utils\";\n\nconst avatarVariants = cva(\"relative inline-flex shrink-0 items-center justify-center overflow-hidden rounded-full bg-button-background-neutral-default text-text-default select-none\", {\n  variants: {\n    size: {\n      24: \"size-6 text-2xs font-bold [&_svg]:size-4\",\n      32: \"size-8 text-xs font-semibold [&_svg]:size-6\",\n      40: \"size-10 text-sm font-semibold [&_svg]:size-8\",\n      48: \"size-12 text-md font-semibold [&_svg]:size-8\",\n      64: \"size-16 text-xl font-medium [&_svg]:size-10\",\n      80: \"size-20 text-display-sm font-normal [&_svg]:size-14\",\n      120: \"size-30 text-display-md font-normal [&_svg]:size-20\",\n    },\n    square: { true: \"rounded-md\", false: \"\" },\n    bordered: { true: \"ring-2 ring-border-white\", false: \"\" },\n  },\n  compoundVariants: [{ size: 120, bordered: true, class: \"ring-4\" }],\n  defaultVariants: { size: 40, square: false, bordered: false },\n});\n\ntype AvatarProps = AvatarPrimitive.Root.Props &\n  VariantProps<typeof avatarVariants> & {\n    /** Image URL. Falls back to the initials or icon if it is missing or fails to load. */\n    src?: string;\n    /** Alternative text for the image. Use the person's name. */\n    alt?: string;\n    /** One or two letters shown when there is no image. */\n    initials?: string;\n  };\n\n/** A person's picture, initials or a generic user icon. */\nfunction Avatar({\n  className,\n  size,\n  square,\n  bordered,\n  src,\n  alt = \"\",\n  initials,\n  children,\n  ...props\n}: AvatarProps) {\n  return (\n    <AvatarPrimitive.Root\n      data-slot=\"avatar\"\n      className={cn(avatarVariants({ size, square, bordered }), className)}\n      {...props}\n    >\n      {src ? <AvatarPrimitive.Image src={src} alt={alt} className=\"size-full object-cover\" /> : null}\n      <AvatarPrimitive.Fallback className=\"flex size-full items-center justify-center\">\n        {children ??\n          (initials ? (\n            <span className=\"leading-none uppercase [unicode-bidi:plaintext]\">{initials}</span>\n          ) : (\n            <HugeiconsIcon icon={UserIcon} className=\"text-icon-default\" aria-hidden />\n          ))}\n      </AvatarPrimitive.Fallback>\n    </AvatarPrimitive.Root>\n  );\n}\n\ntype AvatarGroupProps = React.ComponentProps<\"div\"> & {\n  /** Overlap the avatars (Figma: Stacked). */\n  stacked?: boolean;\n};\n\n/** A row of avatars. Put an Avatar with initials like \"+3\" last for the remainder. */\nfunction AvatarGroup({ className, stacked = true, ...props }: AvatarGroupProps) {\n  return (\n    <div\n      data-slot=\"avatar-group\"\n      className={cn(\"flex items-center gap-2\", stacked ? \"gap-0 *:not-first:-ms-1 *:ring-2 *:ring-border-white\" : \"\", className)}\n      {...props}\n    />\n  );\n}\n\nexport type { AvatarGroupProps, AvatarProps };\nexport { Avatar, AvatarGroup, avatarVariants };\n",
+      "type": "registry:ui"
+    }
+  ],
+  "type": "registry:ui"
+}

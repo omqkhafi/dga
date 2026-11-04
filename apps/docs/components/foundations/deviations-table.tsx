@@ -84,15 +84,13 @@ export function DeviationsTable() {
                   <span className="me-2 text-xs font-medium text-muted-foreground lg:hidden">
                     DGA original:
                   </span>
-                  <span className="font-mono text-xs break-words text-muted-foreground">
-                    {d.original}
-                  </span>
+                  <span className="text-xs break-words text-muted-foreground">{d.original}</span>
                 </td>
                 <td className="align-top lg:px-3 lg:py-2">
                   <span className="me-2 text-xs font-medium text-muted-foreground lg:hidden">
                     Ours:
                   </span>
-                  <span className="font-mono text-xs break-words text-foreground">{d.ours}</span>
+                  <span className="text-xs break-words text-foreground">{d.ours}</span>
                 </td>
                 <td className="align-top text-sm text-primary-paragraph lg:w-1/3 lg:px-3 lg:py-2">
                   {d.reason}

@@ -1,0 +1,62 @@
+---
+title: Avatar
+description: A person's picture, initials or a generic icon. Seven sizes, circle or square, and avatar groups.
+---
+
+An avatar represents a person: their picture, their initials or a generic user icon. Built on the [Base UI Avatar](https://base-ui.com/react/components/avatar), which shows the fallback while the image loads and if it fails.
+
+<Preview name="avatar" title="Avatar" />
+
+## Installation
+
+<ComponentInstall name="avatar" />
+
+## Usage
+
+```tsx title="page.tsx"
+import { Avatar, AvatarGroup } from "@/components/ui/avatar";
+
+<Avatar src="/people/noura.jpg" alt="نورة القحطاني" initials="ن ق" />
+
+<AvatarGroup>
+  <Avatar size={32} src="/people/noura.jpg" alt="نورة" />
+  <Avatar size={32} initials="+3" aria-label="3 أشخاص آخرون" />
+</AvatarGroup>
+```
+
+## Props
+
+### Avatar
+
+<TypeTable
+  type={{
+    src: { type: "string", description: "Image URL." },
+    alt: { type: "string", default: '""', description: "The person's name. Leave empty if the name is shown next to the avatar." },
+    initials: { type: "string", description: "Shown when there is no image. Without it, a user icon is shown." },
+    size: { type: "24 | 32 | 40 | 48 | 64 | 80 | 120", default: "40" },
+    square: { type: "boolean", default: "false", description: "radius-md instead of a circle." },
+    bordered: { type: "boolean", default: "false", description: "A white ring (2px, 4px at 120)." },
+  }}
+/>
+
+### AvatarGroup
+
+<TypeTable
+  type={{
+    stacked: { type: "boolean", default: "true", description: "Overlap by 4px with a white ring (Figma: Stacked)." },
+  }}
+/>
+
+## Accessibility
+
+- Give the image an `alt` with the person's name, unless the name is already shown next to it (then use `alt=""`).
+- Initials are read as text. For a "+3" overflow avatar, add an `aria-label` such as "3 more people".
+- The fallback icon is hidden from screen readers.
+
+### Contrast
+
+<ComponentContrast component="avatar" />
+
+## Deviations from DGA
+
+<ComponentDeviations component="avatar" />

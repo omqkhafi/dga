@@ -1,0 +1,68 @@
+---
+title: Link
+description: Takes the user to another page or section. Primary, neutral and on-colour, two sizes, inline and external.
+---
+
+Links take the user to another page, or to a section on the same page. Use a [Button](/docs/components/button) for actions.
+
+<Preview name="link-variants" title="Styles and sizes" />
+
+## Installation
+
+<ComponentInstall name="link" />
+
+## Usage
+
+```tsx title="app/page.tsx"
+import NextLink from "next/link";
+import { Link } from "@/components/ui/link";
+
+<Link render={<NextLink href="/services" />}>الخدمات</Link>
+```
+
+Without `render`, `Link` renders a plain `<a>`.
+
+## Inline
+
+Inside running text, set `inline`. Inline links are always underlined, so they can be told apart without colour (WCAG 1.4.1).
+
+<Preview name="link-inline" title="Inline" />
+
+## External
+
+`external` opens the link in a new tab with `rel="noopener noreferrer"`, adds the external-link icon (mirrored in RTL) and tells screen readers that it opens a new tab. Translate the hint with `externalLabel` on Arabic pages:
+
+```tsx title="page.tsx"
+<Link href="https://dga.gov.sa" external externalLabel="(يفتح في علامة تبويب جديدة)">
+  هيئة الحكومة الرقمية
+</Link>
+```
+
+## Props
+
+<TypeTable
+  type={{
+    variant: { type: '"primary" | "neutral" | "on-color"', default: '"primary"' },
+    size: { type: '"sm" | "md"', default: '"md"', description: "Text sm (14px) or Text md (16px)." },
+    inline: { type: "boolean", default: "false", description: "Always underlined, for links inside text." },
+    external: { type: "boolean", default: "false" },
+    externalLabel: { type: "string", default: '"(opens in a new tab)"' },
+    disabled: { type: "boolean", default: "false", description: "Removes the href and sets aria-disabled." },
+    render: { type: "ReactElement | function", description: "Render as another element, for example Next.js Link." },
+  }}
+/>
+
+## Accessibility
+
+- A real `<a href>`, so it works with the keyboard, middle-click and "open in new tab".
+- Visited links change colour (`link-primary-visited`). Hover and pressed also underline the link.
+- The focus ring shows for keyboard focus only: 2px `border-black` with a 2px offset, white on brand fills.
+- A disabled link has no `href`, cannot be focused and is announced as disabled.
+
+### Contrast
+
+<ComponentContrast component="link" />
+
+## Deviations from DGA
+
+<ComponentDeviations component="link" />

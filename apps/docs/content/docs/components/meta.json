@@ -1,0 +1,14 @@
+{
+  "title": "Components",
+  "pages": [
+    "button",
+    "spinner",
+    "link",
+    "badge",
+    "tag",
+    "divider",
+    "avatar",
+    "featured-icon",
+    "skeleton"
+  ]
+}

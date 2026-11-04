@@ -18,12 +18,12 @@ export function ContrastBadge({
     <span
       title={label}
       className={cn(
-        "inline-flex items-center gap-1 rounded-xs px-1.5 py-0.5 font-mono text-xs font-medium whitespace-nowrap",
+        "inline-flex items-center gap-1 rounded-xs px-1.5 py-0.5 text-xs font-medium tabular-nums whitespace-nowrap",
         pass ? "bg-success-50 text-success" : "bg-error-50 text-error",
         className,
       )}
     >
-      {ratio.toFixed(2)}:1 <span className="font-sans font-semibold">{level}</span>
+      {ratio.toFixed(2)}:1 <span className="font-semibold">{level}</span>
     </span>
   );
 }

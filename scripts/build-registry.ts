@@ -1,6 +1,7 @@
 // Builds the installable registry into apps/docs/public/r.
 //
-// 1. Fill dga-style's cssVars/css from the token model (tokens.json is the only source).
+// 1. Fill dga-tokens' cssVars/css from the token model (tokens.json is the only source).
+//    dga-style only carries the CSS imports and depends on dga-tokens, so it stays small.
 // 2. Inline the cn-* style map (registry/styles/style-dga.css) into every component,
 //    the same way shadcn builds its base-nova/base-* styles.
 // 3. Run `shadcn build` on the composed registry.
@@ -10,7 +11,7 @@
 import { cpSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { $ } from "bun";
-import { createStyleMap, transformStyle } from "shadcn/utils";
+import { inlineStyles, loadStyleMap } from "./style-map";
 import {
   BASE_LAYER,
   DARK_VARIANT,
@@ -42,7 +43,7 @@ type Registry = { items: RegistryItem[]; [key: string]: unknown };
 const toObject = (vars: Vars) => Object.fromEntries(vars);
 const toDeclarations = (vars: Vars) => Object.fromEntries(vars.map(([k, v]) => [`--${k}`, v]));
 
-export function styleFields() {
+export function tokenFields() {
   const model = buildModel();
   const failing = auditContrast(model).filter((c) => c.ratio < c.min);
   if (failing.length > 0)
@@ -60,8 +61,6 @@ export function styleFields() {
       dark: toObject(shadcnVars()),
     },
     css: {
-      '@import "tw-animate-css"': {},
-      '@import "shadcn/tailwind.css"': {},
       [DARK_VARIANT.replace(/;$/, "")]: {},
       ":root": { "color-scheme": "light", ...toDeclarations(dgaOnly(rootVars(model))) },
       [`@media (width >= ${MODE_MIN_WIDTH.tablet})`]: { ":root": toDeclarations(tablet) },
@@ -79,24 +78,31 @@ export function styleFields() {
   };
 }
 
+export function styleFields() {
+  return {
+    css: { '@import "tw-animate-css"': {}, '@import "shadcn/tailwind.css"': {} },
+  };
+}
+
 export async function composeRegistry(outDir: string, registryUrl = DEFAULT_REGISTRY_URL) {
   const source = readFileSync(join(ROOT, "registry", "registry.json"), "utf8").replaceAll(
     "{{REGISTRY_URL}}",
     registryUrl.replace(/\/$/, ""),
   );
   const registry = JSON.parse(source) as Registry;
-  const styleMap = createStyleMap(
+  const styleMap = loadStyleMap(
     readFileSync(join(ROOT, "registry", "styles", "style-dga.css"), "utf8"),
   );
 
   for (const item of registry.items) {
+    if (item.name === "dga-tokens") Object.assign(item, tokenFields());
     if (item.name === "dga-style") Object.assign(item, styleFields());
     for (const file of item.files ?? []) {
       const from = join(ROOT, "registry", file.path);
       const to = join(outDir, file.path);
       mkdirSync(dirname(to), { recursive: true });
       if (/\.tsx?$/.test(file.path)) {
-        writeFileSync(to, await transformStyle(readFileSync(from, "utf8"), { styleMap }));
+        writeFileSync(to, inlineStyles(readFileSync(from, "utf8"), styleMap, file.path));
       } else {
         cpSync(from, to);
       }
@@ -107,6 +113,23 @@ export async function composeRegistry(outDir: string, registryUrl = DEFAULT_REGI
   return registry;
 }
 
+/**
+ * The docs site renders the same transformed components users install, from
+ * apps/docs/registry/bases/base (imports like @/registry/bases/base/ui/button resolve there).
+ */
+export function writeDocsCopies(workDir: string, registry: Registry) {
+  const target = join(ROOT, "apps", "docs", "registry");
+  rmSync(target, { recursive: true, force: true });
+  for (const item of registry.items) {
+    for (const file of item.files ?? []) {
+      if (!/\.tsx?$/.test(file.path)) continue;
+      const to = join(target, file.path);
+      mkdirSync(dirname(to), { recursive: true });
+      cpSync(join(workDir, file.path), to);
+    }
+  }
+}
+
 if (import.meta.main) {
   const registryUrl = process.env.REGISTRY_URL ?? DEFAULT_REGISTRY_URL;
   const output = process.env.REGISTRY_OUTPUT ?? join(ROOT, "apps", "docs", "public", "r");
@@ -115,6 +138,7 @@ if (import.meta.main) {
   mkdirSync(work, { recursive: true });
 
   const registry = await composeRegistry(work, registryUrl);
+  if (!process.env.REGISTRY_OUTPUT) writeDocsCopies(work, registry);
   rmSync(output, { recursive: true, force: true });
   await $`${join(ROOT, "node_modules", ".bin", "shadcn")} build ${join(work, "registry.json")} --output ${output} --cwd ${work}`.quiet();
   rmSync(work, { recursive: true, force: true });

@@ -1,0 +1,43 @@
+---
+title: Divider
+description: A thin line that separates content into sections. Horizontal or vertical, four colours.
+---
+
+A divider separates content into sections so the page is easier to scan. Built on the [Base UI Separator](https://base-ui.com/react/components/separator).
+
+<Preview name="divider" title="Divider" />
+
+## Installation
+
+<ComponentInstall name="divider" />
+
+## Usage
+
+```tsx title="page.tsx"
+import { Divider } from "@/components/ui/divider";
+
+<Divider />
+<Divider orientation="vertical" />
+```
+
+## Props
+
+<TypeTable
+  type={{
+    variant: { type: '"neutral" | "primary" | "alpha-white" | "white"', default: '"neutral"', description: "alpha-white and white are for brand fills." },
+    orientation: { type: '"horizontal" | "vertical"', default: '"horizontal"' },
+  }}
+/>
+
+## Accessibility
+
+- Renders `role="separator"` with `aria-orientation`, so screen readers announce the break between sections.
+- If the line is purely visual (for example between items that are already grouped), pass `role="none"`.
+
+### Contrast
+
+<ComponentContrast component="divider" />
+
+## Deviations from DGA
+
+<ComponentDeviations component="divider" />

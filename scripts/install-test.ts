@@ -1,9 +1,15 @@
-// End-to-end install test: serves a locally built registry, creates a fresh Next.js app,
-// runs `shadcn init <dga-style url>`, checks what landed in the project, and builds it.
-//   bun run test:install          (needs network for create-next-app and npm installs)
-//   KEEP=1 bun run test:install   keep the temp app for inspection
+// End-to-end install test. Builds the registry, serves it locally, and installs it into fresh
+// Next.js apps three ways:
+//   1. `shadcn init <url>/r/dga.json`          the registry:base item (recommended path)
+//   2. `shadcn init <url>/r/dga-style.json`    the style item on its own (Phase 1 path)
+//   3. `shadcn add  <url>/r/dga-tokens.json`   tokens only, no components
+// Path 1 also adds every registry:ui component and renders them on a page. Every app must build.
+//
+//   bun run test:install                                   local registry (needs network for npm)
+//   REGISTRY_URL=https://dga.omqkhafi.dev bun run test:install   test the production registry
+//   KEEP=1 bun run test:install                            keep the temp apps for inspection
 
-import { mkdtempSync, readFileSync, rmSync } from "node:fs";
+import { cpSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { $ } from "bun";
@@ -15,49 +21,59 @@ const SHADCN_VERSION = (
     devDependencies: Record<string, string>;
   }
 ).devDependencies.shadcn;
+/** dga-style must stay small; the tokens live in dga-tokens. */
+const STYLE_MAX_BYTES = 10_000;
+
+type Item = { name: string; type: string };
+const registryItems = (
+  JSON.parse(readFileSync(join(ROOT, "registry", "registry.json"), "utf8")) as { items: Item[] }
+).items;
+const components = registryItems.filter((i) => i.type === "registry:ui").map((i) => i.name);
 
 const work = mkdtempSync(join(tmpdir(), "dga-install-"));
 const registryDir = join(work, "serve");
-const app = join(work, "app");
 const failures: string[] = [];
 const check = (ok: boolean, message: string) => {
   console.log(`${ok ? "✓" : "✗"} ${message}`);
   if (!ok) failures.push(message);
 };
 
-const server = Bun.serve({
-  port: 0,
-  async fetch(req) {
-    const file = Bun.file(join(registryDir, new URL(req.url).pathname));
-    return (await file.exists()) ? new Response(file) : new Response("Not found", { status: 404 });
-  },
+const remote = process.env.REGISTRY_URL;
+const server = remote
+  ? undefined
+  : Bun.serve({
+      port: 0,
+      async fetch(req) {
+        const file = Bun.file(join(registryDir, new URL(req.url).pathname));
+        return (await file.exists())
+          ? new Response(file)
+          : new Response("Not found", { status: 404 });
+      },
+    });
+const url = (remote ?? `http://localhost:${server?.port}`).replace(/\/$/, "");
+const shadcn = `shadcn@${SHADCN_VERSION}`;
+
+type Pkg = { dependencies: Record<string, string>; devDependencies: Record<string, string> };
+const reader = (app: string) => ({
+  text: (path: string) => readFileSync(join(app, path), "utf8"),
+  json: <T>(path: string) => JSON.parse(readFileSync(join(app, path), "utf8")) as T,
 });
-const url = `http://localhost:${server.port}`;
 
-try {
-  console.log(`→ registry at ${url}, app in ${app}`);
-  await $`bun ${join(ROOT, "scripts", "build-registry.ts")}`
-    .env({ ...process.env, REGISTRY_URL: url, REGISTRY_OUTPUT: join(registryDir, "r") })
-    .quiet();
+function checkTokens(label: string, css: string) {
+  check(css.includes("--background-body:"), `${label}: globals.css has DGA semantic tokens`);
+  check(css.includes('[data-theme="dark"]'), `${label}: globals.css has the dark scope`);
+  check(css.includes("@media (width >= 48rem)"), `${label}: globals.css has the tablet mode`);
+  check(css.includes("--text-color-primary:"), `${label}: globals.css has the short aliases`);
+  check(!css.includes("--color-colors-"), `${label}: no junk --color-colors-* entries`);
+}
 
-  await $`bunx create-next-app@${NEXT_VERSION} ${app} --ts --tailwind --app --src-dir --import-alias ${"@/*"} --use-bun --no-eslint --yes --disable-git`.quiet();
-  await $`bunx shadcn@${SHADCN_VERSION} init ${url}/r/dga-style.json --base base --rtl --yes --no-monorepo < /dev/null`
-    .cwd(app)
-    .quiet();
-
-  const read = (path: string) => readFileSync(join(app, path), "utf8");
-  const utils = read("src/lib/utils.ts");
-  const pkg = JSON.parse(read("package.json")) as {
-    dependencies: Record<string, string>;
-    devDependencies: Record<string, string>;
-  };
-  const css = read("src/app/globals.css");
-  const layout = read("src/app/layout.tsx");
-
-  check(/from\s+["']cn["']/.test(utils), 'lib/utils.ts imports cn from "cn"');
-  check(!/clsx|tailwind-merge/.test(utils), "lib/utils.ts does not use clsx or tailwind-merge");
+function checkStyle(label: string, app: string) {
+  const r = reader(app);
+  const utils = r.text("src/lib/utils.ts");
+  const pkg = r.json<Pkg>("package.json");
+  check(/from\s+["']cn["']/.test(utils), `${label}: lib/utils.ts imports cn from "cn"`);
   const ours = readFileSync(join(ROOT, "registry", "bases", "base", "lib", "utils.ts"), "utf8");
-  check(utils.trim() === ours.trim(), "lib/utils.ts is the @dga utils item, not shadcn's");
+  check(utils.trim() === ours.trim(), `${label}: lib/utils.ts is the @dga utils item`);
   for (const dep of [
     "cn",
     "@base-ui/react",
@@ -65,23 +81,142 @@ try {
     "@hugeicons/core-free-icons",
     "class-variance-authority",
   ]) {
-    check(dep in pkg.dependencies, `dependency ${dep} installed`);
+    check(dep in pkg.dependencies, `${label}: dependency ${dep} installed`);
   }
   for (const dep of ["clsx", "tailwind-merge"]) {
-    check(!(dep in pkg.dependencies), `dependency ${dep} not installed`);
+    check(!(dep in pkg.dependencies), `${label}: dependency ${dep} not installed`);
   }
-  check(css.includes("--background-body:"), "globals.css has DGA semantic tokens");
-  check(css.includes('[data-theme="dark"]'), 'globals.css has the [data-theme="dark"] scope');
-  check(css.includes("@media (width >= 48rem)"), "globals.css has the tablet mode");
-  check(css.includes("--text-color-primary:"), "globals.css has the short aliases");
-  check(!css.includes("--color-colors-"), "globals.css has no junk --color-colors-* entries");
-  check(layout.includes("IBM_Plex_Sans_Arabic"), "layout.tsx loads IBM Plex Sans Arabic");
+  const css = r.text("src/app/globals.css");
+  check(css.includes('@import "tw-animate-css"'), `${label}: globals.css imports tw-animate-css`);
+  checkTokens(label, css);
+  check(
+    r.text("src/app/layout.tsx").includes("IBM_Plex_Sans_Arabic"),
+    `${label}: layout.tsx loads IBM Plex Sans Arabic`,
+  );
+}
 
-  const build = await $`bun run build`.cwd(app).nothrow().quiet();
-  check(build.exitCode === 0, "the app builds");
-  if (build.exitCode !== 0) console.error(build.stderr.toString() || build.stdout.toString());
+async function build(label: string, app: string) {
+  const result = await $`bun run build`.cwd(app).nothrow().quiet();
+  check(result.exitCode === 0, `${label}: the app builds`);
+  if (result.exitCode !== 0) console.error(result.stderr.toString() || result.stdout.toString());
+}
+
+/** A page that renders every component, so the build type-checks their public API. */
+function smokePage(names: string[]) {
+  const pascal = (n: string) => n.replace(/(^|-)(\w)/g, (_, __, c: string) => c.toUpperCase());
+  const imports = names.map((n) => `import * as ${pascal(n)}Module from "@/components/ui/${n}";`);
+  const uses = names.map((n) => `  ${pascal(n)}Module,`);
+  return `${imports.join("\n")}
+
+const modules = [
+${uses.join("\n")}
+];
+
+export default function Page() {
+  return <main>{modules.length} DGA components installed</main>;
+}
+`;
+}
+
+try {
+  if (!remote) {
+    console.log(`→ building registry for ${url}`);
+    await $`bun ${join(ROOT, "scripts", "build-registry.ts")}`
+      .env({ ...process.env, REGISTRY_URL: url, REGISTRY_OUTPUT: join(registryDir, "r") })
+      .quiet();
+  }
+  console.log(`→ registry at ${url}, apps in ${work}`);
+
+  const styleSize = (await (await fetch(`${url}/r/dga-style.json`)).text()).length;
+  check(styleSize < STYLE_MAX_BYTES, `dga-style.json is small (${styleSize} bytes)`);
+
+  // One create-next-app, copied for each path.
+  const template = join(work, "template");
+  await $`bunx create-next-app@${NEXT_VERSION} ${template} --ts --tailwind --app --src-dir --import-alias ${"@/*"} --use-bun --no-eslint --yes --disable-git`.quiet();
+  // Copy without node_modules: its .bin links point at the template and would load a second React.
+  const fresh = async (name: string) => {
+    const app = join(work, name);
+    cpSync(template, app, { recursive: true, filter: (src) => !src.includes("/node_modules") });
+    await $`bun install`.cwd(app).quiet();
+    return app;
+  };
+
+  // 1. registry:base
+  {
+    const label = "dga";
+    const app = await fresh(label);
+    await $`bunx ${shadcn} init ${url}/r/dga.json --yes --no-monorepo < /dev/null`.cwd(app).quiet();
+    const config = reader(app).json<{
+      style: string;
+      iconLibrary: string;
+      rtl: boolean;
+      registries: Record<string, string>;
+    }>("components.json");
+    check(config.iconLibrary === "hugeicons", `${label}: components.json iconLibrary is hugeicons`);
+    check(config.rtl === true, `${label}: components.json rtl is true`);
+    check(config.style === "base-nova", `${label}: components.json style is base-nova`);
+    check(
+      config.registries?.["@dga"] === `${url}/r/{name}.json`,
+      `${label}: components.json has the @dga registry`,
+    );
+    checkStyle(label, app);
+    if (components.length > 0) {
+      const add =
+        await $`bunx ${shadcn} add ${components.map((c) => `@dga/${c}`)} --yes --overwrite < /dev/null`
+          .cwd(app)
+          .nothrow()
+          .quiet();
+      check(add.exitCode === 0, `${label}: shadcn add @dga/{${components.join(",")}}`);
+      if (add.exitCode !== 0) console.error(add.stderr.toString() || add.stdout.toString());
+      for (const c of components) {
+        const source = reader(app).text(`src/components/ui/${c}.tsx`);
+        check(!/\bcn-[a-z]/.test(source.replace(/data-slot=|"cn"/g, "")), `${c}: cn-* inlined`);
+        check(!/clsx|tailwind-merge/.test(source), `${c}: no clsx or tailwind-merge`);
+      }
+      writeFileSync(join(app, "src/app/page.tsx"), smokePage(components));
+    }
+    await build(label, app);
+  }
+
+  // 2. registry:style on its own
+  {
+    const label = "dga-style";
+    const app = await fresh(label);
+    await $`bunx ${shadcn} init ${url}/r/dga-style.json --base base --rtl --yes --no-monorepo < /dev/null`
+      .cwd(app)
+      .quiet();
+    checkStyle(label, app);
+    await build(label, app);
+  }
+
+  // 3. tokens only
+  {
+    const label = "dga-tokens";
+    const app = await fresh(label);
+    writeFileSync(
+      join(app, "components.json"),
+      JSON.stringify({
+        $schema: "https://ui.shadcn.com/schema.json",
+        style: "base-nova",
+        rsc: true,
+        tsx: true,
+        tailwind: {
+          config: "",
+          css: "src/app/globals.css",
+          baseColor: "neutral",
+          cssVariables: true,
+        },
+        aliases: { components: "@/components", utils: "@/lib/utils" },
+      }),
+    );
+    await $`bunx ${shadcn} add ${url}/r/dga-tokens.json --yes < /dev/null`.cwd(app).quiet();
+    checkTokens(label, reader(app).text("src/app/globals.css"));
+    const pkg = reader(app).json<Pkg>("package.json");
+    check(!("@base-ui/react" in pkg.dependencies), `${label}: no component dependencies`);
+    await build(label, app);
+  }
 } finally {
-  server.stop(true);
+  server?.stop(true);
   if (!process.env.KEEP) rmSync(work, { recursive: true, force: true });
 }
 

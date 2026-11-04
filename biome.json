@@ -8,6 +8,7 @@
       "!tokens",
       "!docs/design-system",
       "!apps/docs/public/r",
+      "!apps/docs/registry",
       "!registry/styles/dga/tokens.css",
       "!registry/styles/dga/theme.css",
       "!apps/docs/lib/generated",

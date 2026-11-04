@@ -1,0 +1,53 @@
+---
+title: Featured Icon
+description: An icon in a tinted container that leads cards, empty states and dialogs. Light, hard and outlined, six colours.
+---
+
+A featured icon draws attention to a card, an empty state or a dialog, and hints at its meaning with colour.
+
+<Preview name="featured-icon" title="Featured Icon" />
+
+<Callout title="Not in the DGA Figma file">
+  The featured icon comes from the design.dga.gov.sa CSS. Its tokens are added from the site CSS and listed under [Deviations](#deviations-from-dga).
+</Callout>
+
+## Installation
+
+<ComponentInstall name="featured-icon" />
+
+## Usage
+
+```tsx title="page.tsx"
+import { CheckmarkCircle02Icon } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
+import { FeaturedIcon } from "@/components/ui/featured-icon";
+
+<FeaturedIcon variant="success">
+  <HugeiconsIcon icon={CheckmarkCircle02Icon} />
+</FeaturedIcon>
+```
+
+## Props
+
+<TypeTable
+  type={{
+    variant: { type: '"brand" | "neutral" | "success" | "error" | "warning" | "info"', default: '"brand"' },
+    appearance: { type: '"light" | "hard" | "outlined"', default: '"light"' },
+    size: { type: '"sm" | "md" | "lg" | "xl"', default: '"xl"', description: "32, 40, 48 and 56px; icons 16 to 28px." },
+    circle: { type: "boolean", default: "false" },
+  }}
+/>
+
+## Accessibility
+
+- Decorative by default (`aria-hidden`), because the text next to it carries the meaning.
+- If the icon alone carries meaning, pass `role="img"` and an `aria-label`; it is then announced.
+- Icons are checked at 3:1 against their fill and the page surface.
+
+### Contrast
+
+<ComponentContrast component="featured-icon" />
+
+## Deviations from DGA
+
+<ComponentDeviations component="featured-icon" />

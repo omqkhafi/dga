@@ -1,0 +1,127 @@
+---
+title: Button
+description: Triggers an action. Six styles, destructive and on-colour versions, three sizes, icon-only and loading.
+---
+
+Buttons trigger an action. The label says what happens when the button is pressed. Built on the [Base UI Button](https://base-ui.com/react/components/button).
+
+<Preview name="button-variants" title="Styles" />
+
+## Installation
+
+<ComponentInstall name="button" />
+
+This also installs [Spinner](/docs/components/spinner) for the loading state.
+
+## Usage
+
+```tsx title="app/page.tsx"
+import { Button } from "@/components/ui/button";
+
+export default function Page() {
+  return <Button>إرسال الطلب</Button>;
+}
+```
+
+## Styles
+
+| Style | Use it for |
+| --- | --- |
+| `primary` | The main action on a page or section. One per view. |
+| `neutral` | A strong action that should not use the brand colour (Figma: Primary-Neutral). |
+| `secondary` | Supporting actions next to a primary button (Figma: Secondary-Solid). |
+| `outline` | Supporting actions on busy backgrounds (Figma: Secondary-Outline). |
+| `subtle` | Low-emphasis actions in toolbars and tables. |
+| `transparent` | Text-like actions. The label changes colour on hover. |
+
+## Destructive
+
+Add `destructive` for actions that delete or cannot be undone. Every style except `neutral` has a destructive version; `neutral` falls back to destructive `primary`.
+
+<Preview name="button-destructive" title="Destructive" />
+
+## On colour
+
+Add `onColor` when the button sits on a brand fill (`background-primary`, the nav header). On brand fills, destructive labels are white; the label text carries the meaning.
+
+<Preview name="button-on-color" title="On colour" />
+
+## Sizes
+
+`sm` is 24px, `md` 32px (default) and `lg` 40px high.
+
+<Preview name="button-sizes" title="Sizes" />
+
+## Icons
+
+Put a [Hugeicons](/docs/foundations/icons) icon before or after the label and mark it with `data-icon="inline-start"` or `data-icon="inline-end"`. Icons are sized to the button (16, 20 and 24px). Add `rtl:-scale-x-100` to arrows and other directional icons so they mirror in Arabic.
+
+For an icon-only button, set `iconOnly` and give it an `aria-label`.
+
+```tsx title="page.tsx"
+<Button>
+  <HugeiconsIcon icon={Download04Icon} data-icon="inline-start" />
+  تنزيل
+</Button>
+
+<Button variant="secondary" iconOnly aria-label="الإعدادات">
+  <HugeiconsIcon icon={Settings02Icon} />
+</Button>
+```
+
+<Preview name="button-icons" title="Icons" />
+
+## States
+
+Hover, pressed and keyboard focus come from the browser. Use `aria-pressed` for toggle buttons (or `data-selected` inside menus and groups), `disabled` to block the action, and `loading` while an action runs.
+
+<Preview name="button-states" title="Selected, disabled and loading" />
+
+`loading` replaces the leading icon with a spinner, keeps the button's width, sets `aria-busy="true"` and ignores clicks. The button stays focusable so keyboard users keep their place.
+
+## As a link
+
+To make a link look like a button, render an anchor with the `render` prop:
+
+```tsx title="page.tsx"
+<Button nativeButton={false} render={<a href="/services" />}>
+  الخدمات
+</Button>
+```
+
+## Props
+
+<TypeTable
+  type={{
+    variant: {
+      type: '"primary" | "neutral" | "secondary" | "outline" | "subtle" | "transparent"',
+      default: '"primary"',
+    },
+    size: { type: '"sm" | "md" | "lg"', default: '"md"' },
+    destructive: { type: "boolean", default: "false", description: "Destructive version of the style." },
+    onColor: { type: "boolean", default: "false", description: "For buttons on brand fills." },
+    iconOnly: { type: "boolean", default: "false", description: "Square button. Needs an aria-label." },
+    loading: { type: "boolean", default: "false", description: "Shows a spinner, sets aria-busy and ignores clicks." },
+    disabled: { type: "boolean", default: "false" },
+    focusableWhenDisabled: { type: "boolean", default: "false", description: "From Base UI." },
+    render: { type: "ReactElement | function", description: "Render as another element (from Base UI)." },
+  }}
+/>
+
+`buttonVariants()` is exported for styling other elements as buttons.
+
+## Accessibility
+
+- Renders a native `<button type="button">`. Enter and Space activate it.
+- The focus ring shows for keyboard focus only (`:focus-visible`): 2px, `border-black` (white in dark mode, and white on brand fills), with a 1px gap.
+- Icon-only buttons need an `aria-label`. Icons are hidden from screen readers.
+- `loading` sets `aria-busy` and `aria-disabled`; the spinner is decorative because the button already announces the busy state.
+- Every state is checked for contrast below.
+
+### Contrast
+
+<ComponentContrast component="button" />
+
+## Deviations from DGA
+
+<ComponentDeviations component="button" />
