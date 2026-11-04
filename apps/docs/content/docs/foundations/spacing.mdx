@@ -1,0 +1,51 @@
+---
+title: Spacing
+description: The 4px spacing scale, component spacing tokens, breakpoints, grids and logical properties.
+---
+
+DGA spacing is a 4px scale. Tailwind's spacing step is also 4px (0.25rem), so every DGA step maps directly to a numeric utility: `--spacing-4` (16px) is `p-4`, `--spacing-80` (320px) is `p-80`.
+
+<Preview name="spacing" title="Responsive spacing tokens and logical properties" />
+
+## Scale
+
+<SpacingScale />
+
+## T-shirt aliases
+
+Figma also names steps by size. They map onto the numeric scale, so use the numeric utility.
+
+<SpacingTokens kind="tshirt" />
+
+## Component and layout tokens
+
+These tokens change with the viewport. Each one has a utility for every spacing property: `p-card-lg-padding`, `gap-section-gap`, `px-buttons-md-padding` and so on.
+
+<SpacingTokens kind="semantic" />
+
+## Breakpoints
+
+Figma defines Desktop, Tablet and Mobile modes but no pixel widths. DGA UI uses the widths below; the reasoning is in [Deviations](/docs/deviations).
+
+<BreakpointTable />
+
+## Grids
+
+<GridTable />
+
+The page container is 1280px wide (`max-w-content`) with 32px padding on desktop and 16px on mobile. Paragraphs cap at 720px (`max-w-paragraph`).
+
+## RTL and logical properties
+
+Use logical utilities only, so one layout works in Arabic and English:
+
+| Use | Not |
+| --- | --- |
+| `ms-*`, `me-*` | `ml-*`, `mr-*` |
+| `ps-*`, `pe-*` | `pl-*`, `pr-*` |
+| `start-*`, `end-*` | `left-*`, `right-*` |
+| `border-s`, `border-e` | `border-l`, `border-r` |
+| `rounded-s-*`, `rounded-e-*` | `rounded-l-*`, `rounded-r-*` |
+| `text-start`, `text-end` | `text-left`, `text-right` |
+
+The repository's tests fail on any physical left/right utility or CSS property.

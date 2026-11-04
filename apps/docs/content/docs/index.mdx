@@ -1,0 +1,27 @@
+---
+title: Introduction
+description: A shadcn registry for the Saudi DGA unified design system, built on Base UI and Tailwind CSS v4.
+---
+
+DGA UI brings the [DGA unified design system](https://design.dga.gov.sa) (Platforms Code, منصات الكود الموحد) to the shadcn ecosystem. You install it with the shadcn CLI, and the code lands in your project, ready to change.
+
+<Preview name="service-card" title="DGA tokens in a service page" />
+
+## Principles
+
+- **Figma is the source of truth.** Every token comes from the DGA Foundations Figma file. Where the published site CSS disagrees, Figma wins.
+- **Correct by default.** Every foundation colour pair meets WCAG 2.1 AA in light and dark mode. Where DGA's values fall short, we fix them and log the change on [Deviations from DGA](/docs/deviations).
+- **Arabic first.** Layouts use logical properties only (`ms-*`, `pe-*`, `start-*`), so a single component works in RTL and LTR.
+- **The current shadcn pattern.** Components are built on [Base UI](https://base-ui.com) and use stable semantic classes (`cn-button`, `cn-button-variant-*`). The `dga` style maps those classes to DGA tokens at build time.
+
+## What's included
+
+| | |
+| --- | --- |
+| `dga-style` | Tokens (light, dark, responsive), the Tailwind v4 theme, the shadcn variable mapping and IBM Plex Sans Arabic. |
+| Foundations | [Colors](/docs/foundations/colors), [Typography](/docs/foundations/typography), [Spacing](/docs/foundations/spacing), [Radius](/docs/foundations/radius), [Shadows](/docs/foundations/shadows) and [Icons](/docs/foundations/icons). |
+| Components | Coming next, starting with Button. |
+
+## Status
+
+DGA UI is not an official DGA product. It follows the public DGA guidelines and Figma kits, and lists every place where it differs.

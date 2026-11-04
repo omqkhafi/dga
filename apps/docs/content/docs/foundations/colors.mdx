@@ -1,0 +1,64 @@
+---
+title: Colors
+description: DGA primitives, semantic tokens for light and dark, and their WCAG contrast ratios.
+---
+
+DGA colours come in two layers. **Primitives** are the raw palettes (SA Flag green, gold, lavender, neutral, status). **Semantic tokens** (`--text-primary`, `--background-body` …) point at primitives and switch between light and dark. Use semantic tokens in components so dark mode works on its own.
+
+<Preview name="service-card" title="Semantic tokens in context" />
+
+<Preview name="status-colors" title="Status colours and fills" />
+
+## Utilities
+
+Every semantic token has two Tailwind utilities.
+
+| Kind | Rule | Example |
+| --- | --- | --- |
+| Figma-identical | `{utility}-{token name}`, one-to-one with the Figma variable | `text-text-primary`, `bg-background-body`, `border-border-primary` |
+| Short alias | The token name without its category prefix | `text-primary`, `bg-body`, `border-primary` |
+
+Short aliases exist only for `background-*`, `text-*` and `border-*` tokens. An alias is skipped when it would hide a palette colour (`bg-white`, `bg-neutral-50` stay the raw palette) or change a shadcn utility's meaning (`bg-primary`, `bg-secondary` stay shadcn). In those cases use the Figma-identical form.
+
+```tsx
+<p className="text-primary-paragraph">…</p>      {/* alias */}
+<p className="text-text-primary-paragraph">…</p> {/* Figma-identical, same colour */}
+```
+
+## Semantic tokens
+
+The badge shows the lowest contrast ratio from the [audited pairs](/docs/deviations#how-contrast-is-checked) in that mode, for example a text token on body, white and card surfaces. For fills, it shows the on-colour text on top. Tokens marked **changed** differ from Figma; see [Deviations](/docs/deviations).
+
+<SemanticColors initialCategory="Text" />
+
+## Short aliases
+
+<AliasTable />
+
+## shadcn variables
+
+shadcn components use `--background`, `--primary` and the rest. DGA UI maps each one to a DGA semantic token, so shadcn and DGA utilities always agree.
+
+<ShadcnMapping />
+
+## Primitives
+
+Palette utilities use the Figma name (`bg-primary-sa-flag-600-primary`) or a short hue name for the brand colours (`bg-sa-flag-600`, `bg-gold-600`, `bg-lavender-500`, `bg-white`, `bg-black`).
+
+### Brand and neutral
+
+<PrimitivePalettes filter="brand" />
+
+### Status
+
+<PrimitivePalettes filter="status" />
+
+### Alpha
+
+<PrimitivePalettes filter="alpha" />
+
+### Extended
+
+These palettes ship with the design.dga.gov.sa CSS but are not in Figma. They are kept for compatibility.
+
+<PrimitivePalettes filter="extended" />

@@ -1,0 +1,29 @@
+---
+title: Icons
+description: Hugeicons, the DGA icon set, with RTL mirroring rules.
+---
+
+DGA uses [Hugeicons](https://hugeicons.com). `dga-style` installs `@hugeicons/react` and the free stroke-rounded set, `@hugeicons/core-free-icons`.
+
+<Preview name="icons" title="Icons and RTL mirroring" />
+
+## Usage
+
+```tsx
+import { HugeiconsIcon } from "@hugeicons/react";
+import { ArrowRight01Icon } from "@hugeicons/core-free-icons";
+
+<HugeiconsIcon icon={ArrowRight01Icon} size={20} className="rtl:-scale-x-100" aria-hidden />
+```
+
+- **Sizes.** Use 16, 20 or 24px inside controls, matching the DGA button sizes sm, md and lg.
+- **Colour.** Icons inherit `currentColor`. Use the icon tokens (`text-icon-default`, `text-icon-primary`, `text-icon-success` …), which meet 3:1 on every surface.
+- **Labels.** Decorative icons get `aria-hidden`. Icon-only buttons need an `aria-label`.
+
+## Mirroring in RTL
+
+Mirror icons that show direction or movement: arrows, chevrons, "next" and "back", breadcrumb separators. Add `rtl:-scale-x-100`. Do not mirror logos, checkmarks, media controls (play is the same in Arabic), clocks or numbers.
+
+## Browse
+
+<IconBrowser />

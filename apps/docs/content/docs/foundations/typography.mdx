@@ -1,0 +1,44 @@
+---
+title: Typography
+description: IBM Plex Sans Arabic, the DGA type scale and its responsive modes.
+---
+
+DGA uses **IBM Plex Sans Arabic** for Arabic and Latin text, in four weights. `dga-style` loads it with `next/font` (Arabic and Latin subsets) and exposes it as `font-sans`.
+
+<Preview name="typography" title="Type scale" />
+
+Switch the viewport: display sizes follow the Figma Desktop, Tablet and Mobile modes.
+
+## Scale
+
+<TypeScaleTable />
+
+Body sizes (`text-xl` to `text-2xs`) keep their desktop values on every viewport. Figma's Mobile mode shrinks `text-md` to 12px and `text-xs` to 8px, which is too small to read; see [Deviations](/docs/deviations). Display sizes `md` and larger use -2% letter spacing, as in Figma.
+
+## Weights
+
+<Preview name="weights" title="Weights" />
+
+<WeightTable />
+
+Figma also lists italic styles. IBM Plex Sans Arabic has no italic, so those tokens are not emitted.
+
+## Usage
+
+```tsx
+<h1 className="text-display-lg font-bold text-display">…</h1>
+<p className="text-md text-primary-paragraph">…</p>
+<span className="text-sm text-secondary-paragraph">…</span>
+```
+
+Each `text-*` size sets its line height too. Arabic diacritics need those line heights, so avoid `leading-none` on Arabic text.
+
+## Responsive modes
+
+The type tokens change at these widths (mobile-first):
+
+| Mode | Applies from |
+| --- | --- |
+| Mobile | 0px |
+| Tablet | 768px (`md`) |
+| Desktop | 1024px (`lg`) |
