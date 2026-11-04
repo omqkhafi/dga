@@ -1,8 +1,7 @@
 # Roadmap
 
 Phases 0 and 1 (infrastructure and foundations) are done; see [CHANGELOG.md](CHANGELOG.md).
-Phase 2 is agreed. Phases 3–8 are a **proposal**, grouped from the DGA component specs in
-`docs/design-system/components/`, and may change.
+Component specs for each phase are in `docs/design-system/components/`.
 
 ## Rules for every phase
 
@@ -37,32 +36,34 @@ Agreed scope:
   - OG images.
 - [ ] Monospace for code only.
 
-## Phase 3: Forms and inputs (proposed)
+## Phase 3: Forms
 
-Text input, Textarea, Number input, Dropdown input (select and combobox), Search box, Checkbox, Radio, Switch, Slider, Date picker (Gregorian and Hijri), File upload, and a Field wrapper for label, helper and error text.
+Input, Textarea, Checkbox, Radio, Switch, Select, Number Input, Search Box, File Upload, Field (label, helper text, error).
 
 - Audit for the `field-*`, `control-*` and `textarea-*` tokens. This includes non-text contrast of 3:1 for input boundaries, as WCAG 1.4.11 requires.
 
-## Phase 4: Feedback and status (proposed)
+## Phase 4: Interactive on Base UI
 
-Inline alert, Notification, Notification toast, Tooltip, Modal, Progress bar (linear and circular), Progress indicator, Loading and Spinner, Skeleton, Rating.
+Dialog, Drawer, Tooltip, Menu, Tabs, Accordion, Content Switcher, Toast, Notification, Inline Alert.
 
-## Phase 5: Content and data display (proposed)
+## Phase 5: Navigation and data display
 
-Card, Accordion, Tabs, Content switcher, Tags, Chip, Badge, Avatar (and group), Featured icon, Divider, List, Structured list, Table and Data table, Quote, Code snippet, Metric, Carousel, Charts (tokens and colour palette).
+Breadcrumbs, Pagination, Table of Content, Card, List, Table, Data Table, Rating, Progress, Stepper.
 
-## Phase 6: Navigation and UI shell (proposed)
+## Phase 6: Composite
 
-Link, Breadcrumb, Pagination, Menu, Slide-out menu, Filtration, Radial stepper, Floating button, and the UI shell: Nav header, Second-level nav header, Nav drawer, Footer, Table of content. Also the Digital stamp (the unified-platform verification mark).
+Header with slide-out menu, Footer, Date Picker (Hijri and Gregorian), Carousel, Filtration.
 
-## Phase 7: Templates and blocks (proposed)
+## Phase 7: Page templates as blocks
 
-`registry:block` items for the DGA templates: Home, Service page, Form page, Content page, Search, FAQ, Help, Contact us, About, Sitemap, 404, Feedback and rating section ("Was this page helpful?"), Cookies banner. Mobile variants come from the Mobile Components Figma file.
+`registry:block` items: Home, Service, Form, FAQ, Contact, 404, Cookies banner, Rating.
 
-## Phase 8: Hardening and 1.0 (proposed)
+## Phase 8: Mobile components (as needed)
+
+Tab Bar, Navigation Bar, Banner, from the DGA Mobile Components Figma file.
+
+## Release
 
 - Accessibility audit: axe in CI, plus manual screen-reader passes (VoiceOver, NVDA) in Arabic and English.
 - Visual regression tests for previews in every direction, theme and viewport.
-- Registry extras: MCP and "Open in v0", and the registry index and search.
-- Versioning and release process, and the production deployment of dga.omqkhafi.dev.
 - 1.0 release.
