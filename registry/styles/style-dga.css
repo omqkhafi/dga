@@ -1,0 +1,10 @@
+/*
+ * DGA style map. Components use stable semantic classes (cn-button, cn-button-variant-default …)
+ * and this file maps them to Tailwind utilities on DGA tokens. scripts/build-registry.ts inlines
+ * these classes into each component at build time (same pipeline as shadcn's base styles).
+ *
+ * Rules: logical properties only (ms/me/ps/pe/start/end), DGA token utilities only.
+ */
+.style-dga {
+  /* Components start in Phase 2 (Button first). */
+}

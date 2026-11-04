@@ -1,0 +1,41 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "name": "dga",
+  "homepage": "https://dga.omqkhafi.dev",
+  "items": [
+    {
+      "name": "dga-style",
+      "type": "registry:style",
+      "title": "DGA style",
+      "description": "DGA unified design system tokens (light, dark, responsive), Tailwind v4 theme, IBM Plex Sans Arabic and Hugeicons. Built on Base UI.",
+      "extends": "none",
+      "dependencies": [
+        "@base-ui/react",
+        "@hugeicons/core-free-icons",
+        "@hugeicons/react",
+        "class-variance-authority",
+        "cn"
+      ],
+      "devDependencies": ["shadcn", "tw-animate-css"],
+      "registryDependencies": ["utils", "{{REGISTRY_URL}}/r/font-ibm-plex-sans-arabic.json"],
+      "cssVars": {},
+      "css": {},
+      "docs": "DGA style installed. Set <html dir=\"rtl\" lang=\"ar\"> for Arabic, and use data-theme=\"dark\" or the .dark class for dark mode. Docs: https://dga.omqkhafi.dev/docs"
+    },
+    {
+      "name": "font-ibm-plex-sans-arabic",
+      "type": "registry:font",
+      "title": "IBM Plex Sans Arabic",
+      "description": "The DGA typeface for Arabic and Latin, weights 400 to 700.",
+      "font": {
+        "family": "'IBM Plex Sans Arabic', sans-serif",
+        "provider": "google",
+        "import": "IBM_Plex_Sans_Arabic",
+        "variable": "--font-sans",
+        "weight": ["400", "500", "600", "700"],
+        "subsets": ["arabic", "latin"],
+        "dependency": "@fontsource/ibm-plex-sans-arabic"
+      }
+    }
+  ]
+}

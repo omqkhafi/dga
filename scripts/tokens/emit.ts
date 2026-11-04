@@ -58,7 +58,7 @@ export const SHADCN_VARS: Record<string, string> = {
   "sidebar-ring": "border-black",
 };
 
-const shadcnVars = (): Vars => [
+export const shadcnVars = (): Vars => [
   ...Object.entries(SHADCN_VARS).map(([k, v]) => [k, `var(--${v})`] as [string, string]),
   ["radius", "var(--radius-sm)"],
 ];
@@ -255,6 +255,8 @@ export function tailwindTheme(model: Model) {
     `var(--radius-${r})`,
   ]);
   radius.push(["radius-card", "var(--card-radius)"]);
+  // shadcn class names above xl clamp to the largest DGA radius.
+  for (const r of ["2xl", "3xl", "4xl"]) radius.push([`radius-${r}`, "var(--radius-xl)"]);
 
   const shadows: Vars = model.shadows.map((s) => [s.name, `var(--${s.name})`]);
   const blurs: Vars = model.blurs.map((b) => [

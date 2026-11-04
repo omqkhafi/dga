@@ -809,6 +809,9 @@
   --radius-xl: var(--radius-xl);
   --radius-full: var(--radius-full);
   --radius-card: var(--card-radius);
+  --radius-2xl: var(--radius-xl);
+  --radius-3xl: var(--radius-xl);
+  --radius-4xl: var(--radius-xl);
 
   /* shadows */
   --shadow-xs: var(--shadow-xs);

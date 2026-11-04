@@ -414,7 +414,7 @@
     "area": "Tokens",
     "item": "--radius-xxs, --radius-2xl, --radius-3xl, --radius-4xl",
     "original": "Legacy site-CSS radius set (2, 16, 20, 24px)",
-    "ours": "Dropped",
+    "ours": "Dropped. rounded-2xl, rounded-3xl and rounded-4xl clamp to radius-xl (24px) so shadcn class names still work.",
     "reason": "Not in Figma, and it clashes with the Figma scale (site radius-2xl is 16px, the same as Figma radius-lg)."
   },
   {
