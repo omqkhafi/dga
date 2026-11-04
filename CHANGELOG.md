@@ -23,6 +23,11 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
 - Component contrast audit (`scripts/tokens/components.ts`): every state of every component is checked in light and dark mode on each surface it can sit on, and the build fails on any regression. Each component page lists its checks and its deviations.
 - Component docs pages with previews, install commands, props tables, accessibility notes, contrast checks and deviations.
 
+- Docs site shell in the DGA identity (colours, IBM Plex Sans Arabic, radius, focus rings), light and dark, built with the registry's own components: top tabs README / DOCS / CHANGELOG, a numbered docs sidebar with the latest-release badge and ⌘K search, "On this page" table of contents, "Copy page" (and every page as Markdown at its URL plus `.md`), code blocks with file headers, and a mobile drawer.
+- `/changelog`, generated from `CHANGELOG.md`.
+- `llms.txt`, `llms-full.txt`, `sitemap.xml`, `robots.txt` and OG images for the home page and every docs page, all on `https://dga.omqkhafi.dev`.
+- Test that `package.json` `version` matches the latest CHANGELOG release.
+
 ### Changed
 
 - Button token fixes for contrast (all logged on the Deviations page): on-colour secondary, outline and subtle fills darken instead of lighten; on-colour transparent and destructive labels stay white; dark-mode destructive secondary uses a red tint; new `button-label-transparent-*`, `button-label-danger-*` and on-colour destructive secondary tokens.

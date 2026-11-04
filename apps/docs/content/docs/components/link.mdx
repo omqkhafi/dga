@@ -32,7 +32,7 @@ Inside running text, set `inline`. Inline links are always underlined, so they c
 
 `external` opens the link in a new tab with `rel="noopener noreferrer"`, adds the external-link icon (mirrored in RTL) and tells screen readers that it opens a new tab. Translate the hint with `externalLabel` on Arabic pages:
 
-```tsx
+```tsx title="page.tsx"
 <Link href="https://dga.gov.sa" external externalLabel="(يفتح في علامة تبويب جديدة)">
   هيئة الحكومة الرقمية
 </Link>

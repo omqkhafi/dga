@@ -22,7 +22,7 @@ export function ComponentDeviations({ component }: { component: string }) {
           {rows.map((d, i) => (
             // biome-ignore lint/suspicious/noArrayIndexKey: items repeat per mode
             <tr key={`${d.item}-${i}`}>
-              <td className="px-3 py-2 align-top font-mono text-xs break-words">{d.item}</td>
+              <td className="px-3 py-2 align-top text-xs font-medium break-words">{d.item}</td>
               <td className="px-3 py-2 align-top text-xs text-muted-foreground">{d.original}</td>
               <td className="px-3 py-2 align-top text-xs">{d.ours}</td>
               <td className="px-3 py-2 align-top text-xs text-text-primary-paragraph">

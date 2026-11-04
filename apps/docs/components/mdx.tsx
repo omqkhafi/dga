@@ -1,3 +1,4 @@
+import { CodeBlock, Pre } from "fumadocs-ui/components/codeblock";
 import { Step, Steps } from "fumadocs-ui/components/steps";
 import { Tab, Tabs } from "fumadocs-ui/components/tabs";
 import { TypeTable } from "fumadocs-ui/components/type-table";
@@ -27,6 +28,12 @@ import { Preview } from "./preview/preview";
 export function getMDXComponents(components?: MDXComponents) {
   return {
     ...defaultMdxComponents,
+    // Every code block gets a file header, like the owner's other docs sites.
+    pre: ({ title, ...props }) => (
+      <CodeBlock title={title ?? "Code"} {...props}>
+        <Pre>{props.children}</Pre>
+      </CodeBlock>
+    ),
     Step,
     Steps,
     Tab,

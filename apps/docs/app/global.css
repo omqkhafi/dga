@@ -24,3 +24,31 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* Docs shell: DGA identity on top of the Fumadocs content components. */
+/* Unlayered, so they win over the Fumadocs utility classes. */
+/* Code blocks and tabs use the DGA card radius (radius-md, 8px). */
+figure.shiki,
+[data-slot="tabs"],
+.prose [role="tablist"] + div {
+  border-radius: var(--radius-md);
+}
+figure.shiki figcaption {
+  font-family: var(--font-family-text);
+}
+/* Links in running text: link-primary, always underlined (WCAG 1.4.1). */
+.prose a:not([data-slot]):not([data-card]) {
+  color: var(--link-primary);
+  text-decoration-line: underline;
+  text-decoration-color: currentColor;
+  text-underline-offset: 4px;
+  text-decoration-thickness: 1px;
+}
+.prose a:not([data-slot]):not([data-card]):hover {
+  color: var(--link-primary-hovered);
+}
+.prose a:not([data-slot]):focus-visible {
+  outline: 2px solid var(--border-black);
+  outline-offset: 2px;
+  border-radius: var(--radius-xs);
+}

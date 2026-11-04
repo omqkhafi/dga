@@ -58,7 +58,7 @@ Put a [Hugeicons](/docs/foundations/icons) icon before or after the label and ma
 
 For an icon-only button, set `iconOnly` and give it an `aria-label`.
 
-```tsx
+```tsx title="page.tsx"
 <Button>
   <HugeiconsIcon icon={Download04Icon} data-icon="inline-start" />
   تنزيل
@@ -83,7 +83,7 @@ Hover, pressed and keyboard focus come from the browser. Use `aria-pressed` for 
 
 To make a link look like a button, render an anchor with the `render` prop:
 
-```tsx
+```tsx title="page.tsx"
 <Button nativeButton={false} render={<a href="/services" />}>
   الخدمات
 </Button>

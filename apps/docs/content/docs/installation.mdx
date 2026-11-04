@@ -12,7 +12,7 @@ DGA UI needs a React project with Tailwind CSS v4. These steps use Next.js. Othe
 
 ### Create a Next.js app
 
-```bash
+```bash title="Terminal"
 npx create-next-app@latest my-app --ts --tailwind --app
 ```
 
@@ -21,7 +21,7 @@ npx create-next-app@latest my-app --ts --tailwind --app
 
 ### Initialise DGA UI
 
-```bash
+```bash title="Terminal"
 npx shadcn@latest init https://dga.omqkhafi.dev/r/dga.json
 ```
 
@@ -45,7 +45,7 @@ Use `lang="en" dir="ltr"` for English pages. Components need no other change.
 
 If the project already has a `components.json`, add the style directly:
 
-```bash
+```bash title="Terminal"
 npx shadcn@latest add https://dga.omqkhafi.dev/r/dga-style.json
 ```
 
@@ -55,7 +55,7 @@ The CLI merges DGA's values into your `globals.css`. Your existing shadcn variab
 
 To use the DGA tokens without any components (for example in an existing design system), add just the tokens:
 
-```bash
+```bash title="Terminal"
 npx shadcn@latest add https://dga.omqkhafi.dev/r/dga-tokens.json
 ```
 
@@ -73,7 +73,7 @@ npx shadcn@latest add https://dga.omqkhafi.dev/r/dga-tokens.json
 
 Then install items by name:
 
-```bash
+```bash title="Terminal"
 npx shadcn@latest add @dga/button @dga/badge
 ```
 
@@ -81,7 +81,7 @@ npx shadcn@latest add @dga/button @dga/badge
 
 Dark tokens apply under either `.dark` (next-themes, shadcn) or `[data-theme="dark"]` (the DGA site convention). Both work on `<html>` or on any element, so a single section can be dark.
 
-```tsx
+```tsx title="page.tsx"
 <section data-theme="dark">…</section>
 ```
 
