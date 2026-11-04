@@ -1,0 +1,171 @@
+import { Button as ButtonPrimitive } from "@base-ui/react/button";
+import { cva, type VariantProps } from "class-variance-authority";
+import { cn } from "@/registry/bases/base/lib/utils";
+import { Spinner } from "@/registry/bases/base/ui/spinner";
+
+const buttonVariants = cva("relative inline-flex shrink-0 cursor-pointer items-center justify-center rounded-sm border border-transparent font-medium whitespace-nowrap transition-colors select-none focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-offset-1 focus-visible:outline-border-black data-disabled:cursor-not-allowed data-loading:cursor-progress [&_svg]:pointer-events-none [&_svg]:shrink-0 data-loading:[&>[data-icon=inline-start]]:hidden", {
+  variants: {
+    variant: {
+      primary: "",
+      neutral: "",
+      secondary: "",
+      outline: "",
+      subtle: "",
+      transparent: "",
+    },
+    size: {
+      sm: "h-6 gap-buttons-sm-gap px-buttons-sm-padding text-xs [&_svg:not([class*='size-'])]:size-4 [&_[data-slot=spinner]]:size-4",
+      md: "h-8 gap-buttons-md-gap px-buttons-md-padding text-sm [&_svg:not([class*='size-'])]:size-5 [&_[data-slot=spinner]]:size-5",
+      lg: "h-10 gap-buttons-lg-gap px-buttons-lg-padding text-md [&_svg:not([class*='size-'])]:size-6 [&_[data-slot=spinner]]:size-6",
+    },
+    destructive: { true: "", false: "" },
+    onColor: { true: "", false: "" },
+    iconOnly: { true: "px-0 data-loading:[&>svg]:hidden", false: "" },
+  },
+  compoundVariants: [
+    { variant: "primary", destructive: false, onColor: false, class: "bg-button-background-primary-default text-text-oncolor-primary hover:bg-button-background-primary-hovered active:bg-button-background-primary-pressed aria-pressed:bg-button-background-primary-selected data-selected:bg-button-background-primary-selected data-disabled:bg-background-disabled data-disabled:text-text-default-disabled" },
+    { variant: "neutral", destructive: false, onColor: false, class: "bg-button-background-black-default text-text-oncolor-primary hover:bg-button-background-black-hovered active:bg-button-background-black-pressed aria-pressed:bg-button-background-black-selected data-selected:bg-button-background-black-selected data-disabled:bg-background-disabled data-disabled:text-text-default-disabled" },
+    { variant: "secondary", destructive: false, onColor: false, class: "bg-button-background-neutral-default text-text-default hover:bg-button-background-neutral-pressed active:bg-button-background-neutral-pressed aria-pressed:bg-button-background-neutral-selected data-selected:bg-button-background-neutral-selected data-disabled:bg-background-disabled data-disabled:text-text-default-disabled" },
+    { variant: "outline", destructive: false, onColor: false, class: "border-border-neutral-primary bg-transparent text-text-default hover:border-border-neutral-secondary hover:bg-button-background-neutral-default active:border-border-neutral-primary active:bg-button-background-neutral-pressed aria-pressed:bg-button-background-neutral-selected data-selected:bg-button-background-neutral-selected data-disabled:border-border-neutral-secondary data-disabled:bg-transparent data-disabled:text-text-default-disabled" },
+    { variant: "subtle", destructive: false, onColor: false, class: "bg-transparent text-text-default hover:bg-button-background-neutral-default active:bg-button-background-neutral-pressed aria-pressed:bg-button-background-neutral-selected data-selected:bg-button-background-neutral-selected data-disabled:bg-transparent data-disabled:text-text-default-disabled" },
+    {
+      variant: "transparent",
+      destructive: false,
+      onColor: false,
+      class: "bg-transparent text-text-default hover:text-button-label-transparent-hovered active:text-button-label-transparent-pressed aria-pressed:text-button-label-transparent-selected data-selected:text-button-label-transparent-selected data-disabled:text-text-default-disabled",
+    },
+    { variant: "primary", destructive: false, onColor: true, class: "bg-button-background-oncolor-default text-text-default focus-visible:outline-icon-oncolor hover:bg-button-background-oncolor-hovered active:bg-button-background-oncolor-pressed aria-pressed:bg-button-background-oncolor-pressed data-selected:bg-button-background-oncolor-pressed data-disabled:bg-button-background-disabled-on-color data-disabled:text-text-default-oncolor-disabled" },
+    { variant: "neutral", destructive: false, onColor: true, class: "bg-button-background-oncolor-default text-text-default focus-visible:outline-icon-oncolor hover:bg-button-background-oncolor-hovered active:bg-button-background-oncolor-pressed aria-pressed:bg-button-background-oncolor-selected data-selected:bg-button-background-oncolor-selected data-disabled:bg-button-background-disabled-on-color data-disabled:text-text-default-oncolor-disabled" },
+    {
+      variant: "secondary",
+      destructive: false,
+      onColor: true,
+      class: "bg-button-background-transparent-hovered text-text-oncolor-primary focus-visible:outline-icon-oncolor hover:bg-button-background-transparent-hovered active:bg-button-background-transparent-pressed aria-pressed:bg-button-background-transparent-selected data-selected:bg-button-background-transparent-selected data-disabled:bg-button-background-disabled-on-color data-disabled:text-text-default-oncolor-disabled",
+    },
+    { variant: "outline", destructive: false, onColor: true, class: "border-border-white-40 bg-transparent text-text-oncolor-primary focus-visible:outline-icon-oncolor hover:bg-button-background-transparent-hovered active:bg-button-background-transparent-pressed aria-pressed:bg-button-background-transparent-selected data-selected:bg-button-background-transparent-selected data-disabled:border-icon-default-oncolor-disabled data-disabled:bg-transparent data-disabled:text-text-default-oncolor-disabled" },
+    { variant: "subtle", destructive: false, onColor: true, class: "bg-transparent text-text-oncolor-primary focus-visible:outline-icon-oncolor hover:bg-button-background-transparent-hovered active:bg-button-background-transparent-pressed aria-pressed:bg-button-background-transparent-selected data-selected:bg-button-background-transparent-selected data-disabled:bg-transparent data-disabled:text-text-default-oncolor-disabled" },
+    {
+      variant: "transparent",
+      destructive: false,
+      onColor: true,
+      class: "bg-transparent text-text-oncolor-primary underline-offset-4 focus-visible:outline-icon-oncolor hover:underline active:underline active:opacity-80 aria-pressed:underline data-selected:underline data-disabled:no-underline data-disabled:opacity-100 data-disabled:text-text-default-oncolor-disabled",
+    },
+    {
+      variant: "primary",
+      destructive: true,
+      onColor: false,
+      class: "bg-button-background-danger-primary-default text-text-oncolor-primary hover:bg-button-background-danger-primary-hovered active:bg-button-background-danger-primary-pressed aria-pressed:bg-button-background-danger-primary-selected data-selected:bg-button-background-danger-primary-selected data-disabled:bg-background-disabled data-disabled:text-text-default-disabled",
+    },
+    {
+      variant: "secondary",
+      destructive: true,
+      onColor: false,
+      class: "bg-button-background-danger-secondary-default text-text-error hover:bg-button-background-danger-secondary-hovered active:bg-button-background-danger-secondary-pressed aria-pressed:bg-button-background-danger-secondary-selected data-selected:bg-button-background-danger-secondary-selected data-disabled:bg-background-disabled data-disabled:text-text-default-disabled",
+    },
+    {
+      variant: "outline",
+      destructive: true,
+      onColor: false,
+      class: "border-border-error-light bg-transparent text-text-error hover:bg-button-background-danger-secondary-hovered active:bg-button-background-danger-secondary-pressed aria-pressed:bg-button-background-danger-secondary-selected data-selected:bg-button-background-danger-secondary-selected data-disabled:border-border-neutral-secondary data-disabled:bg-transparent data-disabled:text-text-default-disabled",
+    },
+    {
+      variant: "subtle",
+      destructive: true,
+      onColor: false,
+      class: "bg-transparent text-text-error hover:bg-button-background-danger-secondary-hovered active:bg-button-background-danger-secondary-pressed aria-pressed:bg-button-background-danger-secondary-selected data-selected:bg-button-background-danger-secondary-selected data-disabled:bg-transparent data-disabled:text-text-default-disabled",
+    },
+    {
+      variant: "transparent",
+      destructive: true,
+      onColor: false,
+      class: "bg-transparent text-button-label-danger-default hover:text-button-label-danger-hovered active:text-button-label-danger-pressed aria-pressed:text-button-label-danger-selected data-selected:text-button-label-danger-selected data-disabled:text-text-default-disabled",
+    },
+    {
+      variant: "primary",
+      destructive: true,
+      onColor: true,
+      class: "bg-button-background-danger-primary-default text-text-oncolor-primary focus-visible:outline-icon-oncolor hover:bg-button-background-danger-primary-hovered active:bg-button-background-danger-primary-pressed aria-pressed:bg-button-background-danger-primary-selected data-selected:bg-button-background-danger-primary-selected data-disabled:bg-button-background-disabled-on-color data-disabled:text-text-default-oncolor-disabled",
+    },
+    {
+      variant: "secondary",
+      destructive: true,
+      onColor: true,
+      class: "bg-button-background-danger-secondary-oncolor-default text-button-label-danger-secondary-oncolor focus-visible:outline-icon-oncolor hover:bg-button-background-danger-secondary-oncolor-hovered active:bg-button-background-danger-secondary-oncolor-pressed aria-pressed:bg-button-background-danger-secondary-oncolor-selected data-selected:bg-button-background-danger-secondary-oncolor-selected data-disabled:bg-button-background-disabled-on-color data-disabled:text-text-default-oncolor-disabled",
+    },
+    {
+      variant: "outline",
+      destructive: true,
+      onColor: true,
+      class: "border-border-error-light bg-transparent text-button-label-danger-primary-default-oncolor focus-visible:outline-icon-oncolor hover:bg-button-background-transparent-hovered hover:text-button-label-danger-primary-hovered-oncolor active:bg-button-background-transparent-pressed active:text-button-label-danger-primary-pressed-oncolor aria-pressed:bg-button-background-transparent-selected data-selected:bg-button-background-transparent-selected data-disabled:border-icon-default-oncolor-disabled data-disabled:bg-transparent data-disabled:text-text-default-oncolor-disabled",
+    },
+    {
+      variant: "subtle",
+      destructive: true,
+      onColor: true,
+      class: "bg-transparent text-button-label-danger-primary-default-oncolor focus-visible:outline-icon-oncolor hover:bg-button-background-transparent-hovered hover:text-button-label-danger-primary-hovered-oncolor active:bg-button-background-transparent-pressed active:text-button-label-danger-primary-pressed-oncolor aria-pressed:bg-button-background-transparent-selected data-selected:bg-button-background-transparent-selected data-disabled:bg-transparent data-disabled:text-text-default-oncolor-disabled",
+    },
+    {
+      variant: "transparent",
+      destructive: true,
+      onColor: true,
+      class: "bg-transparent text-button-label-danger-primary-default-oncolor underline-offset-4 focus-visible:outline-icon-oncolor hover:underline active:underline active:opacity-80 aria-pressed:underline data-selected:underline data-disabled:no-underline data-disabled:opacity-100 data-disabled:text-text-default-oncolor-disabled",
+    },
+    { iconOnly: true, size: "sm", class: "size-6" },
+    { iconOnly: true, size: "md", class: "size-8" },
+    { iconOnly: true, size: "lg", class: "size-10" },
+  ],
+  defaultVariants: {
+    variant: "primary",
+    size: "md",
+    destructive: false,
+    onColor: false,
+    iconOnly: false,
+  },
+});
+
+type ButtonProps = ButtonPrimitive.Props &
+  VariantProps<typeof buttonVariants> & {
+    /**
+     * Shows a spinner in place of the leading icon (or the icon, for icon-only buttons),
+     * sets aria-busy and ignores clicks. The button keeps its width and stays focusable.
+     */
+    loading?: boolean;
+  };
+
+function Button({
+  className,
+  variant = "primary",
+  size = "md",
+  destructive = false,
+  onColor = false,
+  iconOnly = false,
+  loading = false,
+  children,
+  onClick,
+  ...props
+}: ButtonProps) {
+  // Figma has no destructive neutral button: it falls back to destructive primary.
+  const style = destructive && variant === "neutral" ? "primary" : variant;
+  return (
+    <ButtonPrimitive
+      data-slot="button"
+      data-variant={style}
+      data-size={size}
+      data-loading={loading || undefined}
+      aria-busy={loading || undefined}
+      aria-disabled={loading || undefined}
+      onClick={loading ? (event) => event.preventDefault() : onClick}
+      className={cn(
+        buttonVariants({ variant: style, size, destructive, onColor, iconOnly }),
+        className,
+      )}
+      {...props}
+    >
+      {loading ? <Spinner variant="current" size={null} label={null} /> : null}
+      {children}
+    </ButtonPrimitive>
+  );
+}
+
+export type { ButtonProps };
+export { Button, buttonVariants };

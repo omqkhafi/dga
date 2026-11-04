@@ -24,7 +24,9 @@ function category(name: string) {
 
 export function docsData(model: Model) {
   const { aliases } = tailwindTheme(model);
-  const audit = auditContrast(model);
+  const fullAudit = auditContrast(model);
+  // Foundation tables rate tokens by the foundation pairs only.
+  const audit = fullAudit.filter((c) => !c.component);
 
   const worst = (name: string, mode: Mode) => {
     const checks = audit.filter((c) => c.fg === name && c.mode === mode);
@@ -171,9 +173,22 @@ export function docsData(model: Model) {
       .filter((p) => p.name.startsWith("width-") || p.name === "paragraph-max-width")
       .map((p) => ({ name: p.name, value: resolve(model, p.value) })),
     audit: {
-      checks: audit.length,
-      failing: audit.filter((c) => c.ratio < c.min).length,
+      checks: fullAudit.length,
+      failing: fullAudit.filter((c) => c.ratio < c.min).length,
     },
+    componentAudit: fullAudit
+      .filter((c) => c.component)
+      .map((c) => ({
+        component: c.component as string,
+        state: c.state as string,
+        fg: c.fg,
+        bg: c.bg,
+        on: c.on ?? null,
+        mode: c.mode,
+        ratio: floor(c.ratio),
+        min: c.min,
+        kind: c.kind,
+      })),
   };
 }
 

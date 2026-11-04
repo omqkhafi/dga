@@ -1,8 +1,8 @@
 import { describe, expect, test } from "bun:test";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
-import { createStyleMap, transformStyle } from "shadcn/utils";
 import { styleFields, tokenFields } from "./build-registry";
+import { inlineStyles, loadStyleMap } from "./style-map";
 import { ROOT } from "./tokens/source";
 
 describe("dga-tokens registry item", () => {
@@ -58,11 +58,20 @@ test("registry dependencies point at @dga items by URL, never bare shadcn names"
   expect(registry.items.find((i) => i.name === "utils")).toBeDefined();
 });
 
-test("cn-* classes are inlined from the style map", async () => {
-  const map = createStyleMap(".style-dga { .cn-demo { @apply ms-2 bg-primary; } }");
-  const out = await transformStyle('export const A = () => <div className="cn-demo flex" />', {
-    styleMap: map,
-  });
-  expect(out).toContain("ms-2 bg-primary flex");
+test("cn-* classes are inlined from the style map, including compound variants and cn()", () => {
+  const map = loadStyleMap(
+    ".style-dga { .cn-demo { @apply ms-2 bg-primary; } .cn-x { @apply p-1; } }",
+  );
+  const out = inlineStyles(
+    'const v = cva("cn-demo flex", { compoundVariants: [{ a: 1, class: "cn-x" }] }); cn("cn-x", ok && "cn-demo")',
+    map,
+  );
+  expect(out).toContain('"ms-2 bg-primary flex"');
+  expect(out).toContain('class: "p-1"');
+  expect(out).toContain('cn("p-1", ok && "ms-2 bg-primary")');
   expect(out).not.toContain("cn-demo");
+});
+
+test("an unknown cn-* class fails the build", () => {
+  expect(() => inlineStyles('cva("cn-missing")', {})).toThrow(/cn-missing/);
 });

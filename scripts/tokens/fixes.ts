@@ -1,3 +1,5 @@
+import { COMPONENT_ADDITIONS, COMPONENT_DEVIATIONS, COMPONENT_OVERRIDES } from "./component-fixes";
+
 // Every place where DGA UI intentionally differs from the DGA Figma source.
 // Each entry is applied by the generator AND listed on the docs "Deviations from DGA" page,
 // so the two can never drift apart.
@@ -9,7 +11,8 @@ export type DeviationArea =
   | "Typography"
   | "Tokens"
   | "Theming"
-  | "Tailwind";
+  | "Tailwind"
+  | "Components";
 
 export type Deviation = {
   area: DeviationArea;
@@ -19,6 +22,8 @@ export type Deviation = {
   ours: string;
   reason: string;
   status?: "fixed" | "unresolved" | "pending";
+  /** Component the change belongs to, so its docs page can list it. */
+  component?: string;
 };
 
 // ---------------------------------------------------------------------------
@@ -100,6 +105,7 @@ export type Override = {
   mode: "light" | "dark" | "both";
   to: string;
   reason: string;
+  component?: string;
 };
 
 const linkFamilies = (
@@ -285,15 +291,23 @@ export const OVERRIDES: Override[] = [
     "{colors-neutral-400}",
     "Neutral-500 on dark card is 3.04:1. Neutral-400 gives 5.78:1.",
   ),
+  ...COMPONENT_OVERRIDES,
 ];
 
 /** Tokens DGA UI adds that do not exist in Figma. */
-export const ADDITIONS: {
+export type Addition = {
   name: string;
   light: string;
   dark: string;
   reason: string;
-}[] = [
+  /** Defaults to "Contrast". Tokens taken from the site CSS use "Tokens". */
+  area?: DeviationArea;
+  /** "Added from site CSS" for tokens taken from design.dga.gov.sa. */
+  original?: string;
+  component?: string;
+};
+
+export const ADDITIONS: Addition[] = [
   {
     name: "text-on-gold",
     light: "{colors-base-black}",
@@ -301,6 +315,7 @@ export const ADDITIONS: {
     reason:
       "White on the gold fill (background-secondary, gold-600) is 2.30:1. Text on gold uses black (7.85:1), which keeps the brand gold fill.",
   },
+  ...COMPONENT_ADDITIONS,
 ];
 
 // ---------------------------------------------------------------------------
@@ -436,4 +451,5 @@ export const OTHER_DEVIATIONS: Deviation[] = [
     reason:
       "White itself is only 4.57–4.83:1 on the 600-level fills, so no lower opacity can pass there. On deep fills 80% and 70% white pass AA.",
   },
+  ...COMPONENT_DEVIATIONS,
 ];

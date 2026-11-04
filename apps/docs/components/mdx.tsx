@@ -1,7 +1,11 @@
 import { Step, Steps } from "fumadocs-ui/components/steps";
 import { Tab, Tabs } from "fumadocs-ui/components/tabs";
+import { TypeTable } from "fumadocs-ui/components/type-table";
 import defaultMdxComponents from "fumadocs-ui/mdx";
 import type { MDXComponents } from "mdx/types";
+import { ComponentContrast } from "./docs/contrast";
+import { ComponentDeviations } from "./docs/deviations";
+import { ComponentInstall } from "./docs/install";
 import { DeviationsTable } from "./foundations/deviations-table";
 import { IconBrowser } from "./foundations/icon-browser";
 import { PrimitivePalettes } from "./foundations/palettes";
@@ -28,6 +32,7 @@ export function getMDXComponents(components?: MDXComponents) {
     Tab,
     Tabs,
     Preview,
+    TypeTable,
     PrimitivePalettes,
     SemanticColors,
     ShadcnMapping,
@@ -42,6 +47,9 @@ export function getMDXComponents(components?: MDXComponents) {
     ShadowTable,
     IconBrowser,
     DeviationsTable,
+    ComponentInstall,
+    ComponentContrast,
+    ComponentDeviations,
     ...components,
   } satisfies MDXComponents;
 }

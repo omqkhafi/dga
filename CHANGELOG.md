@@ -11,8 +11,15 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
 - `dga-tokens` (`registry:theme`): every DGA token on its own, for projects that want the tokens without components.
 - `test:install` covers three paths (`init dga.json`, `init dga-style.json`, `add dga-tokens.json`), checks `dga-style.json` stays under 10 KB, and can target the production registry with `REGISTRY_URL`.
 
+- **Button** (`@dga/button`): primary, neutral, secondary, outline, subtle and transparent; destructive and on-colour versions of each; sizes sm 24, md 32 and lg 40px; leading and trailing icons, icon-only, selected (`aria-pressed`), disabled and `loading`. 1,210 colour pairs audited.
+- **Spinner** (`@dga/spinner`): the Figma Loading indicator in seven sizes (20 to 44px), primary, neutral, on-colour and `current`. Turns slowly with reduced motion.
+- Component contrast audit (`scripts/tokens/components.ts`): every state of every component is checked in light and dark mode on each surface it can sit on, and the build fails on any regression. Each component page lists its checks and its deviations.
+- Component docs pages with previews, install commands, props tables, accessibility notes, contrast checks and deviations.
+
 ### Changed
 
+- Button token fixes for contrast (all logged on the Deviations page): on-colour secondary, outline and subtle fills darken instead of lighten; on-colour transparent and destructive labels stay white; dark-mode destructive secondary uses a red tint; new `button-label-transparent-*`, `button-label-danger-*` and on-colour destructive secondary tokens.
+- The registry build inlines `cn-*` classes with its own transform, which also covers `compoundVariants` and `cn()` arguments and fails on unknown classes. The docs site renders the transformed components from `apps/docs/registry`, the same code users install.
 - `dga-style` no longer carries the tokens (169 KB → 1 KB); it depends on `dga-tokens`, so existing `init …/dga-style.json` installs get the same result.
 - Colour swatches take their white and black text from `text-oncolor-primary` and `text-default` instead of hardcoded hex values.
 

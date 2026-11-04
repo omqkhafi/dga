@@ -678,6 +678,19 @@
   --color-icon-secondary: var(--icon-secondary);
   --color-icon-tertiary: var(--icon-tertiary);
   --color-text-on-gold: var(--text-on-gold);
+  --color-button-label-transparent-hovered: var(--button-label-transparent-hovered);
+  --color-button-label-transparent-pressed: var(--button-label-transparent-pressed);
+  --color-button-label-transparent-selected: var(--button-label-transparent-selected);
+  --color-button-label-danger-default: var(--button-label-danger-default);
+  --color-button-label-danger-hovered: var(--button-label-danger-hovered);
+  --color-button-label-danger-pressed: var(--button-label-danger-pressed);
+  --color-button-label-danger-selected: var(--button-label-danger-selected);
+  --color-button-background-danger-secondary-oncolor-default: var(--button-background-danger-secondary-oncolor-default);
+  --color-button-background-danger-secondary-oncolor-hovered: var(--button-background-danger-secondary-oncolor-hovered);
+  --color-button-background-danger-secondary-oncolor-pressed: var(--button-background-danger-secondary-oncolor-pressed);
+  --color-button-background-danger-secondary-oncolor-selected: var(--button-background-danger-secondary-oncolor-selected);
+  --color-button-background-danger-secondary-oncolor-focused: var(--button-background-danger-secondary-oncolor-focused);
+  --color-button-label-danger-secondary-oncolor: var(--button-label-danger-secondary-oncolor);
 
   /* aliases */
   --background-color-body: var(--background-body);

@@ -82,6 +82,34 @@
         "subsets": ["arabic", "latin"],
         "dependency": "@fontsource/ibm-plex-sans-arabic"
       }
+    },
+    {
+      "name": "spinner",
+      "type": "registry:ui",
+      "title": "Spinner",
+      "description": "DGA Loading indicator: seven sizes, primary, neutral and on-colour.",
+      "dependencies": ["class-variance-authority"],
+      "registryDependencies": ["{{REGISTRY_URL}}/r/utils.json"],
+      "files": [
+        {
+          "path": "bases/base/ui/spinner.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "button",
+      "type": "registry:ui",
+      "title": "Button",
+      "description": "DGA Button on Base UI: primary, neutral, secondary, outline, subtle and transparent, destructive and on-colour, three sizes, icon-only and loading.",
+      "dependencies": ["@base-ui/react", "class-variance-authority"],
+      "registryDependencies": ["{{REGISTRY_URL}}/r/utils.json", "{{REGISTRY_URL}}/r/spinner.json"],
+      "files": [
+        {
+          "path": "bases/base/ui/button.tsx",
+          "type": "registry:ui"
+        }
+      ]
     }
   ]
 }

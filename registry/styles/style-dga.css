@@ -1,10 +1,242 @@
 /*
- * DGA style map. Components use stable semantic classes (cn-button, cn-button-variant-default …)
- * and this file maps them to Tailwind utilities on DGA tokens. scripts/build-registry.ts inlines
- * these classes into each component at build time (same pipeline as shadcn's base styles).
+ * DGA style map. Components use stable semantic classes (cn-button, cn-button-primary …)
+ * and this file maps them to Tailwind utilities on DGA tokens. scripts/style-map.ts inlines
+ * these classes into each component at build time, and fails on a class missing here.
  *
  * Rules: logical properties only (ms/me/ps/pe/start/end), DGA token utilities only.
+ * Every colour pair used here is listed in scripts/tokens/components.ts and audited.
  */
 .style-dga {
-  /* Components start in Phase 2 (Button first). */
+  /* ------------------------------------------------------------------------------------
+   * Spinner (Figma: Loading). Track + 25% indicator arc.
+   * ---------------------------------------------------------------------------------- */
+  .cn-spinner {
+    @apply inline-flex shrink-0 items-center justify-center;
+  }
+  .cn-spinner-svg {
+    @apply size-full animate-spin motion-reduce:animate-[spin_3s_linear_infinite];
+  }
+  .cn-spinner-track {
+    @apply stroke-border-neutral-secondary;
+  }
+  .cn-spinner-indicator {
+    @apply stroke-icon-primary;
+  }
+  .cn-spinner-size-2xs {
+    @apply size-5;
+  }
+  .cn-spinner-size-xs {
+    @apply size-6;
+  }
+  .cn-spinner-size-sm {
+    @apply size-7;
+  }
+  .cn-spinner-size-md {
+    @apply size-8;
+  }
+  .cn-spinner-size-lg {
+    @apply size-9;
+  }
+  .cn-spinner-size-xl {
+    @apply size-10;
+  }
+  .cn-spinner-size-2xl {
+    @apply size-11;
+  }
+  .cn-spinner-variant-primary {
+    @apply [&_circle:last-child]:stroke-icon-primary;
+  }
+  .cn-spinner-variant-neutral {
+    @apply [&_circle:last-child]:stroke-icon-default;
+  }
+  .cn-spinner-variant-on-color {
+    @apply [&_circle:first-child]:stroke-alpha-white-40 [&_circle:last-child]:stroke-icon-oncolor;
+  }
+  .cn-spinner-variant-current {
+    @apply [&_circle:first-child]:stroke-current/25 [&_circle:last-child]:stroke-current;
+  }
+
+  /* ------------------------------------------------------------------------------------
+   * Button. Sizes sm 24 / md 32 / lg 40px, radius-sm, Text xs/sm/md Medium.
+   * States: hover, active (pressed), aria-pressed / data-selected (selected),
+   * focus-visible (focused), data-disabled (disabled).
+   * ---------------------------------------------------------------------------------- */
+  .cn-button {
+    @apply relative inline-flex shrink-0 cursor-pointer items-center justify-center rounded-sm border border-transparent font-medium whitespace-nowrap transition-colors select-none;
+    @apply focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-offset-1 focus-visible:outline-border-black;
+    @apply data-disabled:cursor-not-allowed data-loading:cursor-progress;
+    @apply [&_svg]:pointer-events-none [&_svg]:shrink-0;
+    @apply data-loading:[&>[data-icon=inline-start]]:hidden;
+  }
+  .cn-button-size-sm {
+    @apply h-6 gap-buttons-sm-gap px-buttons-sm-padding text-xs;
+    @apply [&_svg:not([class*='size-'])]:size-4 [&_[data-slot=spinner]]:size-4;
+  }
+  .cn-button-size-md {
+    @apply h-8 gap-buttons-md-gap px-buttons-md-padding text-sm;
+    @apply [&_svg:not([class*='size-'])]:size-5 [&_[data-slot=spinner]]:size-5;
+  }
+  .cn-button-size-lg {
+    @apply h-10 gap-buttons-lg-gap px-buttons-lg-padding text-md;
+    @apply [&_svg:not([class*='size-'])]:size-6 [&_[data-slot=spinner]]:size-6;
+  }
+  .cn-button-icon-only {
+    @apply px-0 data-loading:[&>svg]:hidden;
+  }
+  .cn-button-icon-only-sm {
+    @apply size-6;
+  }
+  .cn-button-icon-only-md {
+    @apply size-8;
+  }
+  .cn-button-icon-only-lg {
+    @apply size-10;
+  }
+
+  /* Primary (brand) */
+  .cn-button-primary {
+    @apply bg-button-background-primary-default text-text-oncolor-primary;
+    @apply hover:bg-button-background-primary-hovered active:bg-button-background-primary-pressed;
+    @apply aria-pressed:bg-button-background-primary-selected data-selected:bg-button-background-primary-selected;
+    @apply data-disabled:bg-background-disabled data-disabled:text-text-default-disabled;
+  }
+  /* Primary-Neutral (black) */
+  .cn-button-neutral {
+    @apply bg-button-background-black-default text-text-oncolor-primary;
+    @apply hover:bg-button-background-black-hovered active:bg-button-background-black-pressed;
+    @apply aria-pressed:bg-button-background-black-selected data-selected:bg-button-background-black-selected;
+    @apply data-disabled:bg-background-disabled data-disabled:text-text-default-disabled;
+  }
+  /* Secondary-Solid. Figma: hovered uses the pressed fill. */
+  .cn-button-secondary {
+    @apply bg-button-background-neutral-default text-text-default;
+    @apply hover:bg-button-background-neutral-pressed active:bg-button-background-neutral-pressed;
+    @apply aria-pressed:bg-button-background-neutral-selected data-selected:bg-button-background-neutral-selected;
+    @apply data-disabled:bg-background-disabled data-disabled:text-text-default-disabled;
+  }
+  /* Secondary-Outline */
+  .cn-button-outline {
+    @apply border-border-neutral-primary bg-transparent text-text-default;
+    @apply hover:border-border-neutral-secondary hover:bg-button-background-neutral-default;
+    @apply active:border-border-neutral-primary active:bg-button-background-neutral-pressed;
+    @apply aria-pressed:bg-button-background-neutral-selected data-selected:bg-button-background-neutral-selected;
+    @apply data-disabled:border-border-neutral-secondary data-disabled:bg-transparent data-disabled:text-text-default-disabled;
+  }
+  /* Subtle */
+  .cn-button-subtle {
+    @apply bg-transparent text-text-default;
+    @apply hover:bg-button-background-neutral-default active:bg-button-background-neutral-pressed;
+    @apply aria-pressed:bg-button-background-neutral-selected data-selected:bg-button-background-neutral-selected;
+    @apply data-disabled:bg-transparent data-disabled:text-text-default-disabled;
+  }
+  /* Transparent: the label changes colour instead of the fill. */
+  .cn-button-transparent {
+    @apply bg-transparent text-text-default;
+    @apply hover:text-button-label-transparent-hovered active:text-button-label-transparent-pressed;
+    @apply aria-pressed:text-button-label-transparent-selected data-selected:text-button-label-transparent-selected;
+    @apply data-disabled:text-text-default-disabled;
+  }
+
+  /* On-colour (on brand fills). Focus ring is white in both modes. */
+  .cn-button-primary-on-color {
+    @apply bg-button-background-oncolor-default text-text-default focus-visible:outline-icon-oncolor;
+    @apply hover:bg-button-background-oncolor-hovered active:bg-button-background-oncolor-pressed;
+    @apply aria-pressed:bg-button-background-oncolor-pressed data-selected:bg-button-background-oncolor-pressed;
+    @apply data-disabled:bg-button-background-disabled-on-color data-disabled:text-text-default-oncolor-disabled;
+  }
+  .cn-button-neutral-on-color {
+    @apply bg-button-background-oncolor-default text-text-default focus-visible:outline-icon-oncolor;
+    @apply hover:bg-button-background-oncolor-hovered active:bg-button-background-oncolor-pressed;
+    @apply aria-pressed:bg-button-background-oncolor-selected data-selected:bg-button-background-oncolor-selected;
+    @apply data-disabled:bg-button-background-disabled-on-color data-disabled:text-text-default-oncolor-disabled;
+  }
+  .cn-button-secondary-on-color {
+    @apply bg-button-background-transparent-hovered text-text-oncolor-primary focus-visible:outline-icon-oncolor;
+    @apply hover:bg-button-background-transparent-hovered active:bg-button-background-transparent-pressed;
+    @apply aria-pressed:bg-button-background-transparent-selected data-selected:bg-button-background-transparent-selected;
+    @apply data-disabled:bg-button-background-disabled-on-color data-disabled:text-text-default-oncolor-disabled;
+  }
+  .cn-button-outline-on-color {
+    @apply border-border-white-40 bg-transparent text-text-oncolor-primary focus-visible:outline-icon-oncolor;
+    @apply hover:bg-button-background-transparent-hovered active:bg-button-background-transparent-pressed;
+    @apply aria-pressed:bg-button-background-transparent-selected data-selected:bg-button-background-transparent-selected;
+    @apply data-disabled:border-icon-default-oncolor-disabled data-disabled:bg-transparent data-disabled:text-text-default-oncolor-disabled;
+  }
+  .cn-button-subtle-on-color {
+    @apply bg-transparent text-text-oncolor-primary focus-visible:outline-icon-oncolor;
+    @apply hover:bg-button-background-transparent-hovered active:bg-button-background-transparent-pressed;
+    @apply aria-pressed:bg-button-background-transparent-selected data-selected:bg-button-background-transparent-selected;
+    @apply data-disabled:bg-transparent data-disabled:text-text-default-oncolor-disabled;
+  }
+  /* The label stays white; the state is an underline (see Deviations). */
+  .cn-button-transparent-on-color {
+    @apply bg-transparent text-text-oncolor-primary underline-offset-4 focus-visible:outline-icon-oncolor;
+    @apply hover:underline active:underline active:opacity-80;
+    @apply aria-pressed:underline data-selected:underline;
+    @apply data-disabled:no-underline data-disabled:opacity-100 data-disabled:text-text-default-oncolor-disabled;
+  }
+
+  /* Destructive */
+  .cn-button-primary-destructive {
+    @apply bg-button-background-danger-primary-default text-text-oncolor-primary;
+    @apply hover:bg-button-background-danger-primary-hovered active:bg-button-background-danger-primary-pressed;
+    @apply aria-pressed:bg-button-background-danger-primary-selected data-selected:bg-button-background-danger-primary-selected;
+    @apply data-disabled:bg-background-disabled data-disabled:text-text-default-disabled;
+  }
+  .cn-button-secondary-destructive {
+    @apply bg-button-background-danger-secondary-default text-text-error;
+    @apply hover:bg-button-background-danger-secondary-hovered active:bg-button-background-danger-secondary-pressed;
+    @apply aria-pressed:bg-button-background-danger-secondary-selected data-selected:bg-button-background-danger-secondary-selected;
+    @apply data-disabled:bg-background-disabled data-disabled:text-text-default-disabled;
+  }
+  .cn-button-outline-destructive {
+    @apply border-border-error-light bg-transparent text-text-error;
+    @apply hover:bg-button-background-danger-secondary-hovered active:bg-button-background-danger-secondary-pressed;
+    @apply aria-pressed:bg-button-background-danger-secondary-selected data-selected:bg-button-background-danger-secondary-selected;
+    @apply data-disabled:border-border-neutral-secondary data-disabled:bg-transparent data-disabled:text-text-default-disabled;
+  }
+  .cn-button-subtle-destructive {
+    @apply bg-transparent text-text-error;
+    @apply hover:bg-button-background-danger-secondary-hovered active:bg-button-background-danger-secondary-pressed;
+    @apply aria-pressed:bg-button-background-danger-secondary-selected data-selected:bg-button-background-danger-secondary-selected;
+    @apply data-disabled:bg-transparent data-disabled:text-text-default-disabled;
+  }
+  .cn-button-transparent-destructive {
+    @apply bg-transparent text-button-label-danger-default;
+    @apply hover:text-button-label-danger-hovered active:text-button-label-danger-pressed;
+    @apply aria-pressed:text-button-label-danger-selected data-selected:text-button-label-danger-selected;
+    @apply data-disabled:text-text-default-disabled;
+  }
+  .cn-button-primary-destructive-on-color {
+    @apply bg-button-background-danger-primary-default text-text-oncolor-primary focus-visible:outline-icon-oncolor;
+    @apply hover:bg-button-background-danger-primary-hovered active:bg-button-background-danger-primary-pressed;
+    @apply aria-pressed:bg-button-background-danger-primary-selected data-selected:bg-button-background-danger-primary-selected;
+    @apply data-disabled:bg-button-background-disabled-on-color data-disabled:text-text-default-oncolor-disabled;
+  }
+  .cn-button-secondary-destructive-on-color {
+    @apply bg-button-background-danger-secondary-oncolor-default text-button-label-danger-secondary-oncolor focus-visible:outline-icon-oncolor;
+    @apply hover:bg-button-background-danger-secondary-oncolor-hovered active:bg-button-background-danger-secondary-oncolor-pressed;
+    @apply aria-pressed:bg-button-background-danger-secondary-oncolor-selected data-selected:bg-button-background-danger-secondary-oncolor-selected;
+    @apply data-disabled:bg-button-background-disabled-on-color data-disabled:text-text-default-oncolor-disabled;
+  }
+  .cn-button-outline-destructive-on-color {
+    @apply border-border-error-light bg-transparent text-button-label-danger-primary-default-oncolor focus-visible:outline-icon-oncolor;
+    @apply hover:bg-button-background-transparent-hovered hover:text-button-label-danger-primary-hovered-oncolor;
+    @apply active:bg-button-background-transparent-pressed active:text-button-label-danger-primary-pressed-oncolor;
+    @apply aria-pressed:bg-button-background-transparent-selected data-selected:bg-button-background-transparent-selected;
+    @apply data-disabled:border-icon-default-oncolor-disabled data-disabled:bg-transparent data-disabled:text-text-default-oncolor-disabled;
+  }
+  .cn-button-subtle-destructive-on-color {
+    @apply bg-transparent text-button-label-danger-primary-default-oncolor focus-visible:outline-icon-oncolor;
+    @apply hover:bg-button-background-transparent-hovered hover:text-button-label-danger-primary-hovered-oncolor;
+    @apply active:bg-button-background-transparent-pressed active:text-button-label-danger-primary-pressed-oncolor;
+    @apply aria-pressed:bg-button-background-transparent-selected data-selected:bg-button-background-transparent-selected;
+    @apply data-disabled:bg-transparent data-disabled:text-text-default-oncolor-disabled;
+  }
+  .cn-button-transparent-destructive-on-color {
+    @apply bg-transparent text-button-label-danger-primary-default-oncolor underline-offset-4 focus-visible:outline-icon-oncolor;
+    @apply hover:underline active:underline active:opacity-80;
+    @apply aria-pressed:underline data-selected:underline;
+    @apply data-disabled:no-underline data-disabled:opacity-100 data-disabled:text-text-default-oncolor-disabled;
+  }
 }

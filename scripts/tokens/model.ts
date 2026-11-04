@@ -1,6 +1,7 @@
 // Applies DGA UI fixes to the Figma source and resolves token values.
 
 import { contrastRatio } from "./color";
+import { type ComponentPair, componentPairs } from "./components";
 import {
   ADDITIONS,
   type Deviation,
@@ -43,6 +44,7 @@ export function buildModel(source = loadSource()): Model {
         ours: describe(override.to),
         reason: override.reason,
         status: "fixed",
+        component: override.component,
       });
     }
   }
@@ -55,13 +57,16 @@ export function buildModel(source = loadSource()): Model {
       dark: addition.dark,
       source: "dga-ui",
     });
+    const light = describe(addition.light);
+    const dark = describe(addition.dark);
     deviations.push({
-      area: "Contrast",
+      area: addition.area ?? "Contrast",
       item: `--${addition.name} (new)`,
-      original: "—",
-      ours: describe(addition.light),
+      original: addition.original ?? "—",
+      ours: light === dark ? light : `${light} (light), ${dark} (dark)`,
       reason: addition.reason,
       status: "fixed",
+      component: addition.component,
     });
   }
 
@@ -122,6 +127,10 @@ export type ContrastCheck = {
   ratio: number;
   min: number;
   kind: "text" | "non-text";
+  /** Set for component-level pairs (scripts/tokens/components.ts). */
+  component?: string;
+  state?: string;
+  on?: string;
 };
 
 const SURFACES = ["background-white", "background-body", "background-card"];
@@ -212,12 +221,16 @@ export function contrastPairs(model: Model) {
 
 export function auditContrast(model: Model): ContrastCheck[] {
   const results: ContrastCheck[] = [];
-  for (const pair of contrastPairs(model)) {
+  const pairs: (ReturnType<typeof contrastPairs>[number] & Partial<ComponentPair>)[] = [
+    ...contrastPairs(model),
+    ...componentPairs(),
+  ];
+  for (const pair of pairs) {
     for (const mode of pair.modes ?? (["light", "dark"] as Mode[])) {
       const fg = tokenValue(model, pair.fg, mode);
       const bg = tokenValue(model, pair.bg, mode);
-      // Translucent backgrounds sit on the page body.
-      const base = tokenValue(model, "background-body", mode);
+      // Translucent backgrounds sit on the page body unless the pair names a surface.
+      const base = tokenValue(model, pair.on ?? "background-body", mode);
       results.push({
         fg: pair.fg,
         bg: pair.bg,
@@ -225,6 +238,7 @@ export function auditContrast(model: Model): ContrastCheck[] {
         ratio: contrastRatio(fg, bg, base),
         min: pair.min,
         kind: pair.kind,
+        ...(pair.component && { component: pair.component, state: pair.state, on: pair.on }),
       });
     }
   }
