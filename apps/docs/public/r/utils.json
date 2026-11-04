@@ -1,0 +1,17 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "utils",
+  "title": "Utils",
+  "description": "The cn helper, re-exported from the cn package (replaces clsx + tailwind-merge).",
+  "dependencies": [
+    "cn"
+  ],
+  "files": [
+    {
+      "path": "bases/base/lib/utils.ts",
+      "content": "export { cn } from \"cn\";\n",
+      "type": "registry:lib"
+    }
+  ],
+  "type": "registry:lib"
+}

@@ -1,0 +1,90 @@
+---
+title: Installation
+description: Add the DGA style to a new or existing project with the shadcn CLI.
+---
+
+DGA UI needs a React project with Tailwind CSS v4. These steps use Next.js. Other frameworks are covered at the end.
+
+## New project
+
+<Steps>
+<Step>
+
+### Create a Next.js app
+
+```bash
+npx create-next-app@latest my-app --ts --tailwind --app
+```
+
+</Step>
+<Step>
+
+### Initialise with the DGA style
+
+```bash
+npx shadcn@latest init https://dga.omqkhafi.dev/r/dga-style.json --base base --rtl
+```
+
+This writes `components.json` and installs `@base-ui/react`, `cn`, `class-variance-authority` and Hugeicons. It also adds every DGA token, the dark theme and the responsive modes to `globals.css`, and sets up IBM Plex Sans Arabic with `next/font`.
+
+</Step>
+<Step>
+
+### Set the language and direction
+
+```tsx title="app/layout.tsx"
+<html lang="ar" dir="rtl">
+```
+
+Use `lang="en" dir="ltr"` for English pages. Components need no other change.
+
+</Step>
+</Steps>
+
+## Existing shadcn project
+
+If the project already has a `components.json`, add the style directly:
+
+```bash
+npx shadcn@latest add https://dga.omqkhafi.dev/r/dga-style.json
+```
+
+The CLI merges DGA's values into your `globals.css`. Your existing shadcn variables (`--background`, `--primary` …) now point at DGA tokens.
+
+## Use the `@dga` namespace
+
+Register the namespace once in `components.json`:
+
+```json title="components.json"
+{
+  "registries": {
+    "@dga": "https://dga.omqkhafi.dev/r/{name}.json"
+  }
+}
+```
+
+Then install items by name:
+
+```bash
+npx shadcn@latest add @dga/dga-style
+```
+
+## Dark mode
+
+Dark tokens apply under either `.dark` (next-themes, shadcn) or `[data-theme="dark"]` (the DGA site convention). Both work on `<html>` or on any element, so a single section can be dark.
+
+```tsx
+<section data-theme="dark">…</section>
+```
+
+## Other frameworks
+
+For Vite, React Router or TanStack Start, run the same `init` command. Outside Next.js the CLI installs the font from `@fontsource/ibm-plex-sans-arabic` instead of `next/font`.
+
+## What gets installed
+
+| Item | Type | Contents |
+| --- | --- | --- |
+| [`dga-style`](/r/dga-style.json) | `registry:style` | Tokens, theme, shadcn mapping, base layer, dependencies |
+| [`utils`](/r/utils.json) | `registry:lib` | `lib/utils.ts`, which re-exports `cn` from the `cn` package (no clsx or tailwind-merge) |
+| [`font-ibm-plex-sans-arabic`](/r/font-ibm-plex-sans-arabic.json) | `registry:font` | IBM Plex Sans Arabic 400–700, Arabic and Latin subsets |

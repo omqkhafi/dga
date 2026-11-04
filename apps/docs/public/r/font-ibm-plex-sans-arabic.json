@@ -1,0 +1,24 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "font-ibm-plex-sans-arabic",
+  "title": "IBM Plex Sans Arabic",
+  "description": "The DGA typeface for Arabic and Latin, weights 400 to 700.",
+  "type": "registry:font",
+  "font": {
+    "family": "'IBM Plex Sans Arabic', sans-serif",
+    "provider": "google",
+    "import": "IBM_Plex_Sans_Arabic",
+    "variable": "--font-sans",
+    "weight": [
+      "400",
+      "500",
+      "600",
+      "700"
+    ],
+    "subsets": [
+      "arabic",
+      "latin"
+    ],
+    "dependency": "@fontsource/ibm-plex-sans-arabic"
+  }
+}

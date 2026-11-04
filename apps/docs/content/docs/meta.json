@@ -1,0 +1,11 @@
+{
+  "title": "DGA UI",
+  "pages": [
+    "---Getting started---",
+    "index",
+    "installation",
+    "deviations",
+    "---Foundations---",
+    "...foundations"
+  ]
+}
