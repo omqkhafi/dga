@@ -16,7 +16,7 @@
     "tw-animate-css"
   ],
   "registryDependencies": [
-    "utils",
+    "https://dga.omqkhafi.dev/r/utils.json",
     "https://dga.omqkhafi.dev/r/font-ibm-plex-sans-arabic.json"
   ],
   "cssVars": {

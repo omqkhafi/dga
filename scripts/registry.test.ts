@@ -1,6 +1,9 @@
 import { describe, expect, test } from "bun:test";
+import { readFileSync } from "node:fs";
+import { join } from "node:path";
 import { createStyleMap, transformStyle } from "shadcn/utils";
 import { styleFields } from "./build-registry";
+import { ROOT } from "./tokens/source";
 
 describe("dga-style registry item", () => {
   const fields = styleFields();
@@ -24,6 +27,18 @@ describe("dga-style registry item", () => {
     expect(fields.cssVars.theme["text-color-primary"]).toBe("var(--text-primary)");
     expect(fields.cssVars.theme["background-color-body"]).toBe("var(--background-body)");
   });
+});
+
+test("registry dependencies point at @dga items by URL, never bare shadcn names", () => {
+  const registry = JSON.parse(readFileSync(join(ROOT, "registry", "registry.json"), "utf8")) as {
+    items: { name: string; registryDependencies?: string[] }[];
+  };
+  for (const item of registry.items) {
+    for (const dep of item.registryDependencies ?? []) {
+      expect(dep).toStartWith("{{REGISTRY_URL}}/r/");
+    }
+  }
+  expect(registry.items.find((i) => i.name === "utils")).toBeDefined();
 });
 
 test("cn-* classes are inlined from the style map", async () => {

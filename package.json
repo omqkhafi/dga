@@ -16,7 +16,8 @@
     "typecheck": "tsc -p tsconfig.json && bun run --filter '*' typecheck",
     "lint": "biome ci .",
     "format": "biome check --write .",
-    "test": "bun test scripts"
+    "test": "bun test scripts",
+    "test:install": "bun scripts/install-test.ts"
   },
   "devDependencies": {
     "@biomejs/biome": "2.6.5",

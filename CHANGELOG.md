@@ -14,6 +14,8 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
 - Contrast audit: 466 foundation pairs are checked against WCAG 2.1 AA in both modes, and the build fails on any regression.
 - Breakpoints sm 640, md 768, lg 1024, xl 1280, 2xl 1536 (px).
 - `@dga` registry with `dga-style` (`registry:style`) and `font-ibm-plex-sans-arabic` (`registry:font`). Install with `npx shadcn@latest init https://dga.omqkhafi.dev/r/dga-style.json`.
+- `utils` (`registry:lib`): `lib/utils.ts` re-exports `cn` from the `cn` package. `dga-style` depends on it by URL instead of shadcn's bare `utils`.
+- `bun run test:install`: creates a fresh Next.js app, installs `dga-style` from a local registry, checks the result (including that `lib/utils.ts` is ours and imports from `cn`) and builds it. It also runs in CI.
 - Registry build that inlines the `cn-*` style map into components (the shadcn base-style pipeline), ready for Phase 2.
 - Docs: Introduction, Installation, Deviations from DGA, and foundation pages for Colors, Typography, Spacing, Radius, Shadows and Icons. Every preview has direction, theme and viewport toggles.
 - Test that fails on physical left/right utilities or CSS anywhere in the registry or docs source.
