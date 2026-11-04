@@ -6,7 +6,7 @@
 // Path 1 also adds every registry:ui component and renders them on a page. Every app must build.
 //
 //   bun run test:install                                   local registry (needs network for npm)
-//   REGISTRY_URL=https://dga.omqkhafi.dev bun run test:install   test the production registry
+//   DGA_REGISTRY_URL=https://dga.omqkhafi.dev bun run test:install   test the production registry
 //   KEEP=1 bun run test:install                            keep the temp apps for inspection
 
 import { cpSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
@@ -38,7 +38,8 @@ const check = (ok: boolean, message: string) => {
   if (!ok) failures.push(message);
 };
 
-const remote = process.env.REGISTRY_URL;
+// Not REGISTRY_URL: the shadcn CLI reads that as its own default registry.
+const remote = process.env.DGA_REGISTRY_URL;
 const server = remote
   ? undefined
   : Bun.serve({

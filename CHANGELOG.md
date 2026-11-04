@@ -5,13 +5,17 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
 
 ## [Unreleased]
 
+### Fixed
+
+- `test:install` takes the production registry from `DGA_REGISTRY_URL` instead of `REGISTRY_URL`, which the shadcn CLI also reads as its own default registry.
+
 ## [0.1.0] - 2026-11-04
 
 ### Added
 
 - `dga` (`registry:base`): `npx shadcn@latest init https://dga.omqkhafi.dev/r/dga.json` sets `iconLibrary: "hugeicons"`, `rtl: true`, the `base-nova` style and the `@dga` registry in `components.json`, then installs `dga-style`.
 - `dga-tokens` (`registry:theme`): every DGA token on its own, for projects that want the tokens without components.
-- `test:install` covers three paths (`init dga.json`, `init dga-style.json`, `add dga-tokens.json`), checks `dga-style.json` stays under 10 KB, and can target the production registry with `REGISTRY_URL`.
+- `test:install` covers three paths (`init dga.json`, `init dga-style.json`, `add dga-tokens.json`), checks `dga-style.json` stays under 10 KB, and can target the production registry with `DGA_REGISTRY_URL`.
 
 - **Button** (`@dga/button`): primary, neutral, secondary, outline, subtle and transparent; destructive and on-colour versions of each; sizes sm 24, md 32 and lg 40px; leading and trailing icons, icon-only, selected (`aria-pressed`), disabled and `loading`. 1,210 colour pairs audited.
 - **Spinner** (`@dga/spinner`): the Figma Loading indicator in seven sizes (20 to 44px), primary, neutral, on-colour and `current`. Turns slowly with reduced motion.
