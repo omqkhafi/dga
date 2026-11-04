@@ -14,6 +14,7 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
 - **Button** (`@dga/button`): primary, neutral, secondary, outline, subtle and transparent; destructive and on-colour versions of each; sizes sm 24, md 32 and lg 40px; leading and trailing icons, icon-only, selected (`aria-pressed`), disabled and `loading`. 1,210 colour pairs audited.
 - **Spinner** (`@dga/spinner`): the Figma Loading indicator in seven sizes (20 to 44px), primary, neutral, on-colour and `current`. Turns slowly with reduced motion.
 - **Link** (`@dga/link`): primary, neutral and on-colour, sm and md, inline (always underlined), external (new tab, icon, screen-reader hint) and disabled. Works with Next.js `Link` through `render`. On-colour hovered, pressed and visited colours are white (contrast fix, logged in Deviations).
+- **Badge** (`@dga/badge`): from the design.dga.gov.sa CSS (not in Figma). Neutral, success, error, warning, info, purple, orange and on-colour; filled or outlined; sm 20, md 24 and lg 32px; rounded and icon-only. New `badge-*` tokens, logged in Deviations as added from site CSS.
 - Component contrast audit (`scripts/tokens/components.ts`): every state of every component is checked in light and dark mode on each surface it can sit on, and the build fails on any regression. Each component page lists its checks and its deviations.
 - Component docs pages with previews, install commands, props tables, accessibility notes, contrast checks and deviations.
 

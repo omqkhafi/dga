@@ -353,6 +353,59 @@ function linkPairs(): ComponentPair[] {
   );
 }
 
+const BADGE_COLORS = ["neutral", "success", "error", "warning", "info", "purple", "orange"];
+
+/** Badge label (and icon) on its filled tint and, outlined, on the page surface. */
+function badgePairs(): ComponentPair[] {
+  const pairs: ComponentPair[] = [];
+  for (const color of BADGE_COLORS) {
+    for (const surface of SURFACES) {
+      const fg = `badge-${color}-text`;
+      pairs.push(
+        {
+          component: "badge",
+          state: `${color} / filled`,
+          fg,
+          bg: `badge-${color}-background`,
+          on: surface,
+          min: 4.5,
+          kind: "text",
+        },
+        {
+          component: "badge",
+          state: `${color} / outlined`,
+          fg,
+          bg: surface,
+          min: 4.5,
+          kind: "text",
+        },
+      );
+    }
+  }
+  for (const surface of ON_COLOR_SURFACES) {
+    pairs.push(
+      {
+        component: "badge",
+        state: "on-color / filled",
+        fg: "text-oncolor-primary",
+        bg: "badge-on-color-background",
+        on: surface,
+        min: 4.5,
+        kind: "text",
+      },
+      {
+        component: "badge",
+        state: "on-color / outlined",
+        fg: "text-oncolor-primary",
+        bg: surface,
+        min: 4.5,
+        kind: "text",
+      },
+    );
+  }
+  return pairs;
+}
+
 export function componentPairs(): ComponentPair[] {
-  return [...buttonPairs(), ...spinnerPairs(), ...linkPairs()];
+  return [...buttonPairs(), ...spinnerPairs(), ...linkPairs(), ...badgePairs()];
 }

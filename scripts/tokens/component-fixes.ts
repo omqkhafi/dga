@@ -157,7 +157,99 @@ COMPONENT_ADDITIONS.push(
   },
 );
 
+// ---------------------------------------------------------------------------
+// Badge: not in the Figma file. Tokens taken from the design.dga.gov.sa .badge CSS,
+// mapped to DGA palettes (brand → primary-sa-flag, purple → tertiary-lavender).
+// Dark-mode values are ours: the site CSS has no dark mode.
+// ---------------------------------------------------------------------------
+
+/** Badge colours and their DGA palette. */
+export const BADGE_COLORS = {
+  neutral: "neutral",
+  success: "primary-sa-flag",
+  error: "red",
+  warning: "yellow",
+  info: "blue",
+  purple: "tertiary-lavender",
+  orange: "orange",
+} as const;
+
+const PRIMARY_STEP: Record<string, string> = {
+  "primary-sa-flag": "600",
+  "tertiary-lavender": "500",
+};
+const step = (palette: string, n: string) =>
+  `{colors-${palette}-${n}${PRIMARY_STEP[palette] === n ? "-primary" : ""}}`;
+const SITE_CSS = "Added from site CSS (.badge)";
+
+for (const [color, palette] of Object.entries(BADGE_COLORS)) {
+  const neutral = color === "neutral";
+  const parts: [string, string, string, string][] = [
+    ["background", "50", neutral ? "800" : "950", "fill"],
+    ["border", "200", neutral ? "700" : "800", "border"],
+    ["text", "700", "200", "label and icon"],
+    ["border-outlined", "500", "400", "outlined border"],
+  ];
+  for (const [part, light, dark, what] of parts) {
+    COMPONENT_ADDITIONS.push({
+      name: `badge-${color}-${part}`,
+      light: step(palette, light),
+      dark: step(palette, dark),
+      area: "Tokens",
+      original: SITE_CSS,
+      reason: `Badge ${color} ${what}: ${palette}-${light} as on the site; ${palette}-${dark} in dark mode.`,
+      component: "badge",
+    });
+  }
+}
+COMPONENT_ADDITIONS.push(
+  {
+    name: "badge-on-color-background",
+    light: "{colors-alpha-alpha-black-20}",
+    dark: "{colors-alpha-alpha-black-20}",
+    area: "Tokens",
+    original: "Added from site CSS (.badge--on-color: white 30%)",
+    reason:
+      "White text on white-30 over the brand fill is 3.13:1. A black-20 tint keeps the badge visible and gives 6.30:1.",
+    component: "badge",
+  },
+  {
+    name: "badge-on-color-border-outlined",
+    light: "{colors-alpha-alpha-white-90}",
+    dark: "{colors-alpha-alpha-white-90}",
+    area: "Tokens",
+    original: SITE_CSS,
+    reason: "On-colour outlined border, white 90% as on the site.",
+    component: "badge",
+  },
+);
+
 export const COMPONENT_DEVIATIONS: Deviation[] = [
+  {
+    area: "Components",
+    item: "Badge",
+    original: "Not in the DGA Figma file. Defined only in the design.dga.gov.sa CSS (.badge).",
+    ours: "Built from the site CSS: sizes sm 20, md 24 and lg 32px, filled and outlined, square and rounded, icon-only. Colours map to DGA palettes (brand → success, purple → lavender).",
+    reason:
+      "The badge is used across DGA sites. Figma is the source of truth where it exists; here only the site CSS does.",
+    component: "badge",
+  },
+  {
+    area: "Components",
+    item: "Badge: pink",
+    original: ".badge--pink and .badge--pink-outlined",
+    ours: "Dropped",
+    reason: "DGA has no pink palette, in Figma or in the token set.",
+    component: "badge",
+  },
+  {
+    area: "Components",
+    item: "Badge: on-colour outlined label",
+    original: "White 90% text",
+    ours: "White text (text-oncolor-primary)",
+    reason: "White 90% on the brand fill is 4.16:1; white is 4.57:1 or better.",
+    component: "badge",
+  },
   {
     area: "Components",
     item: "Link: focus ring and disabled",

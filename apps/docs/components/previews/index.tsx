@@ -1,4 +1,5 @@
 import type { ComponentType } from "react";
+import { BadgeSizes, BadgeVariants } from "./badge";
 import {
   ButtonDestructive,
   ButtonIcons,
@@ -38,6 +39,8 @@ export const previews = {
   "spinner-sizes": SpinnerSizes,
   "link-variants": LinkVariants,
   "link-inline": LinkInline,
+  "badge-variants": BadgeVariants,
+  "badge-sizes": BadgeSizes,
 } satisfies Record<string, ComponentType>;
 
 export const previewNames = Object.keys(previews);

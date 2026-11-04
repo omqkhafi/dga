@@ -781,6 +781,276 @@
     "component": "button"
   },
   {
+    "area": "Tokens",
+    "item": "--badge-neutral-background (new)",
+    "original": "Added from site CSS (.badge)",
+    "ours": "--colors-neutral-50 (light), --colors-neutral-800 (dark)",
+    "reason": "Badge neutral fill: neutral-50 as on the site; neutral-800 in dark mode.",
+    "status": "fixed",
+    "component": "badge"
+  },
+  {
+    "area": "Tokens",
+    "item": "--badge-neutral-border (new)",
+    "original": "Added from site CSS (.badge)",
+    "ours": "--colors-neutral-200 (light), --colors-neutral-700 (dark)",
+    "reason": "Badge neutral border: neutral-200 as on the site; neutral-700 in dark mode.",
+    "status": "fixed",
+    "component": "badge"
+  },
+  {
+    "area": "Tokens",
+    "item": "--badge-neutral-text (new)",
+    "original": "Added from site CSS (.badge)",
+    "ours": "--colors-neutral-700 (light), --colors-neutral-200 (dark)",
+    "reason": "Badge neutral label and icon: neutral-700 as on the site; neutral-200 in dark mode.",
+    "status": "fixed",
+    "component": "badge"
+  },
+  {
+    "area": "Tokens",
+    "item": "--badge-neutral-border-outlined (new)",
+    "original": "Added from site CSS (.badge)",
+    "ours": "--colors-neutral-500 (light), --colors-neutral-400 (dark)",
+    "reason": "Badge neutral outlined border: neutral-500 as on the site; neutral-400 in dark mode.",
+    "status": "fixed",
+    "component": "badge"
+  },
+  {
+    "area": "Tokens",
+    "item": "--badge-success-background (new)",
+    "original": "Added from site CSS (.badge)",
+    "ours": "--colors-primary-sa-flag-50 (light), --colors-primary-sa-flag-950 (dark)",
+    "reason": "Badge success fill: primary-sa-flag-50 as on the site; primary-sa-flag-950 in dark mode.",
+    "status": "fixed",
+    "component": "badge"
+  },
+  {
+    "area": "Tokens",
+    "item": "--badge-success-border (new)",
+    "original": "Added from site CSS (.badge)",
+    "ours": "--colors-primary-sa-flag-200 (light), --colors-primary-sa-flag-800 (dark)",
+    "reason": "Badge success border: primary-sa-flag-200 as on the site; primary-sa-flag-800 in dark mode.",
+    "status": "fixed",
+    "component": "badge"
+  },
+  {
+    "area": "Tokens",
+    "item": "--badge-success-text (new)",
+    "original": "Added from site CSS (.badge)",
+    "ours": "--colors-primary-sa-flag-700 (light), --colors-primary-sa-flag-200 (dark)",
+    "reason": "Badge success label and icon: primary-sa-flag-700 as on the site; primary-sa-flag-200 in dark mode.",
+    "status": "fixed",
+    "component": "badge"
+  },
+  {
+    "area": "Tokens",
+    "item": "--badge-success-border-outlined (new)",
+    "original": "Added from site CSS (.badge)",
+    "ours": "--colors-primary-sa-flag-500 (light), --colors-primary-sa-flag-400 (dark)",
+    "reason": "Badge success outlined border: primary-sa-flag-500 as on the site; primary-sa-flag-400 in dark mode.",
+    "status": "fixed",
+    "component": "badge"
+  },
+  {
+    "area": "Tokens",
+    "item": "--badge-error-background (new)",
+    "original": "Added from site CSS (.badge)",
+    "ours": "--colors-red-50 (light), --colors-red-950 (dark)",
+    "reason": "Badge error fill: red-50 as on the site; red-950 in dark mode.",
+    "status": "fixed",
+    "component": "badge"
+  },
+  {
+    "area": "Tokens",
+    "item": "--badge-error-border (new)",
+    "original": "Added from site CSS (.badge)",
+    "ours": "--colors-red-200 (light), --colors-red-800 (dark)",
+    "reason": "Badge error border: red-200 as on the site; red-800 in dark mode.",
+    "status": "fixed",
+    "component": "badge"
+  },
+  {
+    "area": "Tokens",
+    "item": "--badge-error-text (new)",
+    "original": "Added from site CSS (.badge)",
+    "ours": "--colors-red-700 (light), --colors-red-200 (dark)",
+    "reason": "Badge error label and icon: red-700 as on the site; red-200 in dark mode.",
+    "status": "fixed",
+    "component": "badge"
+  },
+  {
+    "area": "Tokens",
+    "item": "--badge-error-border-outlined (new)",
+    "original": "Added from site CSS (.badge)",
+    "ours": "--colors-red-500 (light), --colors-red-400 (dark)",
+    "reason": "Badge error outlined border: red-500 as on the site; red-400 in dark mode.",
+    "status": "fixed",
+    "component": "badge"
+  },
+  {
+    "area": "Tokens",
+    "item": "--badge-warning-background (new)",
+    "original": "Added from site CSS (.badge)",
+    "ours": "--colors-yellow-50 (light), --colors-yellow-950 (dark)",
+    "reason": "Badge warning fill: yellow-50 as on the site; yellow-950 in dark mode.",
+    "status": "fixed",
+    "component": "badge"
+  },
+  {
+    "area": "Tokens",
+    "item": "--badge-warning-border (new)",
+    "original": "Added from site CSS (.badge)",
+    "ours": "--colors-yellow-200 (light), --colors-yellow-800 (dark)",
+    "reason": "Badge warning border: yellow-200 as on the site; yellow-800 in dark mode.",
+    "status": "fixed",
+    "component": "badge"
+  },
+  {
+    "area": "Tokens",
+    "item": "--badge-warning-text (new)",
+    "original": "Added from site CSS (.badge)",
+    "ours": "--colors-yellow-700 (light), --colors-yellow-200 (dark)",
+    "reason": "Badge warning label and icon: yellow-700 as on the site; yellow-200 in dark mode.",
+    "status": "fixed",
+    "component": "badge"
+  },
+  {
+    "area": "Tokens",
+    "item": "--badge-warning-border-outlined (new)",
+    "original": "Added from site CSS (.badge)",
+    "ours": "--colors-yellow-500 (light), --colors-yellow-400 (dark)",
+    "reason": "Badge warning outlined border: yellow-500 as on the site; yellow-400 in dark mode.",
+    "status": "fixed",
+    "component": "badge"
+  },
+  {
+    "area": "Tokens",
+    "item": "--badge-info-background (new)",
+    "original": "Added from site CSS (.badge)",
+    "ours": "--colors-blue-50 (light), --colors-blue-950 (dark)",
+    "reason": "Badge info fill: blue-50 as on the site; blue-950 in dark mode.",
+    "status": "fixed",
+    "component": "badge"
+  },
+  {
+    "area": "Tokens",
+    "item": "--badge-info-border (new)",
+    "original": "Added from site CSS (.badge)",
+    "ours": "--colors-blue-200 (light), --colors-blue-800 (dark)",
+    "reason": "Badge info border: blue-200 as on the site; blue-800 in dark mode.",
+    "status": "fixed",
+    "component": "badge"
+  },
+  {
+    "area": "Tokens",
+    "item": "--badge-info-text (new)",
+    "original": "Added from site CSS (.badge)",
+    "ours": "--colors-blue-700 (light), --colors-blue-200 (dark)",
+    "reason": "Badge info label and icon: blue-700 as on the site; blue-200 in dark mode.",
+    "status": "fixed",
+    "component": "badge"
+  },
+  {
+    "area": "Tokens",
+    "item": "--badge-info-border-outlined (new)",
+    "original": "Added from site CSS (.badge)",
+    "ours": "--colors-blue-500 (light), --colors-blue-400 (dark)",
+    "reason": "Badge info outlined border: blue-500 as on the site; blue-400 in dark mode.",
+    "status": "fixed",
+    "component": "badge"
+  },
+  {
+    "area": "Tokens",
+    "item": "--badge-purple-background (new)",
+    "original": "Added from site CSS (.badge)",
+    "ours": "--colors-tertiary-lavender-50 (light), --colors-tertiary-lavender-950 (dark)",
+    "reason": "Badge purple fill: tertiary-lavender-50 as on the site; tertiary-lavender-950 in dark mode.",
+    "status": "fixed",
+    "component": "badge"
+  },
+  {
+    "area": "Tokens",
+    "item": "--badge-purple-border (new)",
+    "original": "Added from site CSS (.badge)",
+    "ours": "--colors-tertiary-lavender-200 (light), --colors-tertiary-lavender-800 (dark)",
+    "reason": "Badge purple border: tertiary-lavender-200 as on the site; tertiary-lavender-800 in dark mode.",
+    "status": "fixed",
+    "component": "badge"
+  },
+  {
+    "area": "Tokens",
+    "item": "--badge-purple-text (new)",
+    "original": "Added from site CSS (.badge)",
+    "ours": "--colors-tertiary-lavender-700 (light), --colors-tertiary-lavender-200 (dark)",
+    "reason": "Badge purple label and icon: tertiary-lavender-700 as on the site; tertiary-lavender-200 in dark mode.",
+    "status": "fixed",
+    "component": "badge"
+  },
+  {
+    "area": "Tokens",
+    "item": "--badge-purple-border-outlined (new)",
+    "original": "Added from site CSS (.badge)",
+    "ours": "--colors-tertiary-lavender-500-primary (light), --colors-tertiary-lavender-400 (dark)",
+    "reason": "Badge purple outlined border: tertiary-lavender-500 as on the site; tertiary-lavender-400 in dark mode.",
+    "status": "fixed",
+    "component": "badge"
+  },
+  {
+    "area": "Tokens",
+    "item": "--badge-orange-background (new)",
+    "original": "Added from site CSS (.badge)",
+    "ours": "--colors-orange-50 (light), --colors-orange-950 (dark)",
+    "reason": "Badge orange fill: orange-50 as on the site; orange-950 in dark mode.",
+    "status": "fixed",
+    "component": "badge"
+  },
+  {
+    "area": "Tokens",
+    "item": "--badge-orange-border (new)",
+    "original": "Added from site CSS (.badge)",
+    "ours": "--colors-orange-200 (light), --colors-orange-800 (dark)",
+    "reason": "Badge orange border: orange-200 as on the site; orange-800 in dark mode.",
+    "status": "fixed",
+    "component": "badge"
+  },
+  {
+    "area": "Tokens",
+    "item": "--badge-orange-text (new)",
+    "original": "Added from site CSS (.badge)",
+    "ours": "--colors-orange-700 (light), --colors-orange-200 (dark)",
+    "reason": "Badge orange label and icon: orange-700 as on the site; orange-200 in dark mode.",
+    "status": "fixed",
+    "component": "badge"
+  },
+  {
+    "area": "Tokens",
+    "item": "--badge-orange-border-outlined (new)",
+    "original": "Added from site CSS (.badge)",
+    "ours": "--colors-orange-500 (light), --colors-orange-400 (dark)",
+    "reason": "Badge orange outlined border: orange-500 as on the site; orange-400 in dark mode.",
+    "status": "fixed",
+    "component": "badge"
+  },
+  {
+    "area": "Tokens",
+    "item": "--badge-on-color-background (new)",
+    "original": "Added from site CSS (.badge--on-color: white 30%)",
+    "ours": "--colors-alpha-alpha-black-20",
+    "reason": "White text on white-30 over the brand fill is 3.13:1. A black-20 tint keeps the badge visible and gives 6.30:1.",
+    "status": "fixed",
+    "component": "badge"
+  },
+  {
+    "area": "Tokens",
+    "item": "--badge-on-color-border-outlined (new)",
+    "original": "Added from site CSS (.badge)",
+    "ours": "--colors-alpha-alpha-white-90",
+    "reason": "On-colour outlined border, white 90% as on the site.",
+    "status": "fixed",
+    "component": "badge"
+  },
+  {
     "area": "Naming",
     "item": "Figma group \"Font Wieght\"",
     "original": "Font Wieght/font-weight-*",
@@ -871,6 +1141,30 @@
     "original": "No usage rule (80% and 70% white)",
     "ours": "Use only on deep fills: nav header, pressed/selected primary, black. On mid-tone fills use --text-oncolor-primary.",
     "reason": "White itself is only 4.57–4.83:1 on the 600-level fills, so no lower opacity can pass there. On deep fills 80% and 70% white pass AA."
+  },
+  {
+    "area": "Components",
+    "item": "Badge",
+    "original": "Not in the DGA Figma file. Defined only in the design.dga.gov.sa CSS (.badge).",
+    "ours": "Built from the site CSS: sizes sm 20, md 24 and lg 32px, filled and outlined, square and rounded, icon-only. Colours map to DGA palettes (brand → success, purple → lavender).",
+    "reason": "The badge is used across DGA sites. Figma is the source of truth where it exists; here only the site CSS does.",
+    "component": "badge"
+  },
+  {
+    "area": "Components",
+    "item": "Badge: pink",
+    "original": ".badge--pink and .badge--pink-outlined",
+    "ours": "Dropped",
+    "reason": "DGA has no pink palette, in Figma or in the token set.",
+    "component": "badge"
+  },
+  {
+    "area": "Components",
+    "item": "Badge: on-colour outlined label",
+    "original": "White 90% text",
+    "ours": "White text (text-oncolor-primary)",
+    "reason": "White 90% on the brand fill is 4.16:1; white is 4.57:1 or better.",
+    "component": "badge"
   },
   {
     "area": "Components",

@@ -129,6 +129,20 @@
           "type": "registry:ui"
         }
       ]
+    },
+    {
+      "name": "badge",
+      "type": "registry:ui",
+      "title": "Badge",
+      "description": "DGA Badge (from the design.dga.gov.sa CSS): seven colours and on-colour, filled or outlined, sm/md/lg, rounded and icon-only.",
+      "dependencies": ["@base-ui/react", "class-variance-authority"],
+      "registryDependencies": ["{{REGISTRY_URL}}/r/utils.json"],
+      "files": [
+        {
+          "path": "bases/base/ui/badge.tsx",
+          "type": "registry:ui"
+        }
+      ]
     }
   ]
 }

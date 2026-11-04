@@ -1,0 +1,21 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "badge",
+  "title": "Badge",
+  "description": "DGA Badge (from the design.dga.gov.sa CSS): seven colours and on-colour, filled or outlined, sm/md/lg, rounded and icon-only.",
+  "dependencies": [
+    "@base-ui/react",
+    "class-variance-authority"
+  ],
+  "registryDependencies": [
+    "https://dga.omqkhafi.dev/r/utils.json"
+  ],
+  "files": [
+    {
+      "path": "bases/base/ui/badge.tsx",
+      "content": "import { mergeProps } from \"@base-ui/react/merge-props\";\nimport { useRender } from \"@base-ui/react/use-render\";\nimport { cva, type VariantProps } from \"class-variance-authority\";\nimport type * as React from \"react\";\nimport { cn } from \"@/registry/bases/base/lib/utils\";\n\nconst badgeVariants = cva(\"inline-flex h-6 shrink-0 items-center justify-center gap-1 rounded-xs border px-3 font-medium whitespace-nowrap border-(--badge-border) bg-(--badge-bg) text-(--badge-fg) [&_svg]:pointer-events-none [&_svg]:shrink-0\", {\n  variants: {\n    variant: {\n      neutral: \"[--badge-bg:var(--badge-neutral-background)] [--badge-border:var(--badge-neutral-border)] [--badge-border-outlined:var(--badge-neutral-border-outlined)] [--badge-fg:var(--badge-neutral-text)]\",\n      success: \"[--badge-bg:var(--badge-success-background)] [--badge-border:var(--badge-success-border)] [--badge-border-outlined:var(--badge-success-border-outlined)] [--badge-fg:var(--badge-success-text)]\",\n      error: \"[--badge-bg:var(--badge-error-background)] [--badge-border:var(--badge-error-border)] [--badge-border-outlined:var(--badge-error-border-outlined)] [--badge-fg:var(--badge-error-text)]\",\n      warning: \"[--badge-bg:var(--badge-warning-background)] [--badge-border:var(--badge-warning-border)] [--badge-border-outlined:var(--badge-warning-border-outlined)] [--badge-fg:var(--badge-warning-text)]\",\n      info: \"[--badge-bg:var(--badge-info-background)] [--badge-border:var(--badge-info-border)] [--badge-border-outlined:var(--badge-info-border-outlined)] [--badge-fg:var(--badge-info-text)]\",\n      purple: \"[--badge-bg:var(--badge-purple-background)] [--badge-border:var(--badge-purple-border)] [--badge-border-outlined:var(--badge-purple-border-outlined)] [--badge-fg:var(--badge-purple-text)]\",\n      orange: \"[--badge-bg:var(--badge-orange-background)] [--badge-border:var(--badge-orange-border)] [--badge-border-outlined:var(--badge-orange-border-outlined)] [--badge-fg:var(--badge-orange-text)]\",\n      \"on-color\": \"[--badge-bg:var(--badge-on-color-background)] [--badge-border:transparent] [--badge-border-outlined:var(--badge-on-color-border-outlined)] [--badge-fg:var(--text-oncolor-primary)]\",\n    },\n    size: {\n      sm: \"h-5 px-2 text-2xs [&_svg:not([class*='size-'])]:size-2.5\",\n      md: \"h-6 text-xs [&_svg:not([class*='size-'])]:size-3.5\",\n      lg: \"h-8 text-sm [&_svg:not([class*='size-'])]:size-4.5\",\n    },\n    outlined: { true: \"border-(--badge-border-outlined) bg-transparent\", false: \"\" },\n    rounded: { true: \"rounded-full\", false: \"\" },\n    iconOnly: { true: \"aspect-square px-0\", false: \"\" },\n  },\n  defaultVariants: {\n    variant: \"neutral\",\n    size: \"md\",\n    outlined: false,\n    rounded: false,\n    iconOnly: false,\n  },\n});\n\ntype BadgeProps = useRender.ComponentProps<\"span\"> & VariantProps<typeof badgeVariants>;\n\n/** A short, non-interactive label for status, counts or categories. */\nfunction Badge({\n  className,\n  variant,\n  size,\n  outlined,\n  rounded,\n  iconOnly,\n  render,\n  ...props\n}: BadgeProps) {\n  return useRender({\n    defaultTagName: \"span\",\n    render,\n    props: mergeProps<\"span\">(\n      {\n        \"data-slot\": \"badge\",\n        className: cn(badgeVariants({ variant, size, outlined, rounded, iconOnly }), className),\n      } as React.ComponentProps<\"span\">,\n      props,\n    ),\n  });\n}\n\nexport type { BadgeProps };\nexport { Badge, badgeVariants };\n",
+      "type": "registry:ui"
+    }
+  ],
+  "type": "registry:ui"
+}

@@ -274,4 +274,56 @@
   .cn-link-icon {
     @apply pointer-events-none;
   }
+
+  /* ------------------------------------------------------------------------------------
+   * Badge (site CSS .badge; not in Figma). sm 20 / md 24 / lg 32px, radius-xs or full.
+   * Colours come from --badge-* variables set by the variant class.
+   * ---------------------------------------------------------------------------------- */
+  .cn-badge {
+    @apply inline-flex h-6 shrink-0 items-center justify-center gap-1 rounded-xs border px-3 font-medium whitespace-nowrap;
+    @apply border-(--badge-border) bg-(--badge-bg) text-(--badge-fg);
+    @apply [&_svg]:pointer-events-none [&_svg]:shrink-0;
+  }
+  .cn-badge-size-sm {
+    @apply h-5 px-2 text-2xs [&_svg:not([class*='size-'])]:size-2.5;
+  }
+  .cn-badge-size-md {
+    @apply h-6 text-xs [&_svg:not([class*='size-'])]:size-3.5;
+  }
+  .cn-badge-size-lg {
+    @apply h-8 text-sm [&_svg:not([class*='size-'])]:size-4.5;
+  }
+  .cn-badge-outlined {
+    @apply border-(--badge-border-outlined) bg-transparent;
+  }
+  .cn-badge-rounded {
+    @apply rounded-full;
+  }
+  .cn-badge-icon-only {
+    @apply aspect-square px-0;
+  }
+  .cn-badge-variant-neutral {
+    @apply [--badge-bg:var(--badge-neutral-background)] [--badge-border:var(--badge-neutral-border)] [--badge-border-outlined:var(--badge-neutral-border-outlined)] [--badge-fg:var(--badge-neutral-text)];
+  }
+  .cn-badge-variant-success {
+    @apply [--badge-bg:var(--badge-success-background)] [--badge-border:var(--badge-success-border)] [--badge-border-outlined:var(--badge-success-border-outlined)] [--badge-fg:var(--badge-success-text)];
+  }
+  .cn-badge-variant-error {
+    @apply [--badge-bg:var(--badge-error-background)] [--badge-border:var(--badge-error-border)] [--badge-border-outlined:var(--badge-error-border-outlined)] [--badge-fg:var(--badge-error-text)];
+  }
+  .cn-badge-variant-warning {
+    @apply [--badge-bg:var(--badge-warning-background)] [--badge-border:var(--badge-warning-border)] [--badge-border-outlined:var(--badge-warning-border-outlined)] [--badge-fg:var(--badge-warning-text)];
+  }
+  .cn-badge-variant-info {
+    @apply [--badge-bg:var(--badge-info-background)] [--badge-border:var(--badge-info-border)] [--badge-border-outlined:var(--badge-info-border-outlined)] [--badge-fg:var(--badge-info-text)];
+  }
+  .cn-badge-variant-purple {
+    @apply [--badge-bg:var(--badge-purple-background)] [--badge-border:var(--badge-purple-border)] [--badge-border-outlined:var(--badge-purple-border-outlined)] [--badge-fg:var(--badge-purple-text)];
+  }
+  .cn-badge-variant-orange {
+    @apply [--badge-bg:var(--badge-orange-background)] [--badge-border:var(--badge-orange-border)] [--badge-border-outlined:var(--badge-orange-border-outlined)] [--badge-fg:var(--badge-orange-text)];
+  }
+  .cn-badge-variant-on-color {
+    @apply [--badge-bg:var(--badge-on-color-background)] [--badge-border:transparent] [--badge-border-outlined:var(--badge-on-color-border-outlined)] [--badge-fg:var(--text-oncolor-primary)];
+  }
 }

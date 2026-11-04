@@ -691,6 +691,36 @@
   --color-button-background-danger-secondary-oncolor-selected: var(--button-background-danger-secondary-oncolor-selected);
   --color-button-background-danger-secondary-oncolor-focused: var(--button-background-danger-secondary-oncolor-focused);
   --color-button-label-danger-secondary-oncolor: var(--button-label-danger-secondary-oncolor);
+  --color-badge-neutral-background: var(--badge-neutral-background);
+  --color-badge-neutral-border: var(--badge-neutral-border);
+  --color-badge-neutral-text: var(--badge-neutral-text);
+  --color-badge-neutral-border-outlined: var(--badge-neutral-border-outlined);
+  --color-badge-success-background: var(--badge-success-background);
+  --color-badge-success-border: var(--badge-success-border);
+  --color-badge-success-text: var(--badge-success-text);
+  --color-badge-success-border-outlined: var(--badge-success-border-outlined);
+  --color-badge-error-background: var(--badge-error-background);
+  --color-badge-error-border: var(--badge-error-border);
+  --color-badge-error-text: var(--badge-error-text);
+  --color-badge-error-border-outlined: var(--badge-error-border-outlined);
+  --color-badge-warning-background: var(--badge-warning-background);
+  --color-badge-warning-border: var(--badge-warning-border);
+  --color-badge-warning-text: var(--badge-warning-text);
+  --color-badge-warning-border-outlined: var(--badge-warning-border-outlined);
+  --color-badge-info-background: var(--badge-info-background);
+  --color-badge-info-border: var(--badge-info-border);
+  --color-badge-info-text: var(--badge-info-text);
+  --color-badge-info-border-outlined: var(--badge-info-border-outlined);
+  --color-badge-purple-background: var(--badge-purple-background);
+  --color-badge-purple-border: var(--badge-purple-border);
+  --color-badge-purple-text: var(--badge-purple-text);
+  --color-badge-purple-border-outlined: var(--badge-purple-border-outlined);
+  --color-badge-orange-background: var(--badge-orange-background);
+  --color-badge-orange-border: var(--badge-orange-border);
+  --color-badge-orange-text: var(--badge-orange-text);
+  --color-badge-orange-border-outlined: var(--badge-orange-border-outlined);
+  --color-badge-on-color-background: var(--badge-on-color-background);
+  --color-badge-on-color-border-outlined: var(--badge-on-color-border-outlined);
 
   /* aliases */
   --background-color-body: var(--background-body);
