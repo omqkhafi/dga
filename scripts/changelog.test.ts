@@ -22,7 +22,9 @@ test("package.json version matches the latest CHANGELOG release", () => {
 });
 
 test("parser splits headings and keeps bodies", () => {
-  const parsed = parseChangelog("# T\n\n## [Unreleased]\n\n- a\n\n## [1.2.0] - 2026-01-02\n\n### Added\n\n- b\n");
+  const parsed = parseChangelog(
+    "# T\n\n## [Unreleased]\n\n- a\n\n## [1.2.0] - 2026-01-02\n\n### Added\n\n- b\n",
+  );
   expect(parsed.map((r) => r.version)).toEqual(["Unreleased", "1.2.0"]);
   expect(parsed[1]?.date).toBe("2026-01-02");
   expect(parsed[1]?.body).toContain("- b");

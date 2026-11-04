@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 };
 
 export default function ChangelogPage() {
-  const releases = getReleases();
+  const releases = getReleases().filter((r) => r.body.length > 0);
   const latest = latestVersion();
   return (
     <div className="flex flex-1 flex-col md:flex-row">

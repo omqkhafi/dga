@@ -428,12 +428,12 @@ export const OTHER_DEVIATIONS: Deviation[] = [
   },
   {
     area: "Contrast",
-    item: "Component-level pairs (buttons, chips, fields, tables…)",
-    original: "Not audited yet",
-    ours: "Audited per component as each one lands (Phase 2+)",
+    item: "Component-level pairs",
+    original: "Not audited",
+    ours: "Every state of every component, on each surface it can sit on, in light and dark mode (scripts/tokens/components.ts). Phase 2: Button, Spinner, Link, Badge, Tag, Avatar and Featured Icon.",
     reason:
-      "Phase 1 audits foundation tokens only: text, links and icons on surfaces, and on-colour text on fills.",
-    status: "pending",
+      "Foundation pairs alone miss component states such as hovered labels and on-colour fills. Each component page lists its checks.",
+    status: "fixed",
   },
   {
     area: "Contrast",
