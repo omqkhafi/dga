@@ -1069,6 +1069,231 @@
     "component": "badge"
   },
   {
+    "area": "Tokens",
+    "item": "--featured-icon-brand-background (new)",
+    "original": "Added from site CSS (.featured-icon)",
+    "ours": "--colors-primary-sa-flag-600-primary",
+    "reason": "Featured icon brand hard fill (white icon): primary-sa-flag-600.",
+    "status": "fixed",
+    "component": "featured-icon"
+  },
+  {
+    "area": "Tokens",
+    "item": "--featured-icon-brand-background-light (new)",
+    "original": "Added from site CSS (.featured-icon)",
+    "ours": "--colors-primary-sa-flag-50 (light), --colors-primary-sa-flag-950 (dark)",
+    "reason": "Featured icon brand light fill: primary-sa-flag-50, primary-sa-flag-950 in dark mode.",
+    "status": "fixed",
+    "component": "featured-icon"
+  },
+  {
+    "area": "Tokens",
+    "item": "--featured-icon-brand-icon (new)",
+    "original": "Added from site CSS (.featured-icon)",
+    "ours": "--colors-primary-sa-flag-600-primary (light), --colors-primary-sa-flag-300 (dark)",
+    "reason": "Featured icon brand icon on the light fill and outlined: primary-sa-flag-600, primary-sa-flag-300 in dark mode.",
+    "status": "fixed",
+    "component": "featured-icon"
+  },
+  {
+    "area": "Tokens",
+    "item": "--featured-icon-brand-border (new)",
+    "original": "Added from site CSS (.featured-icon)",
+    "ours": "--colors-primary-sa-flag-200 (light), --colors-primary-sa-flag-800 (dark)",
+    "reason": "Featured icon brand outlined border: primary-sa-flag-200, primary-sa-flag-800 in dark mode.",
+    "status": "fixed",
+    "component": "featured-icon"
+  },
+  {
+    "area": "Tokens",
+    "item": "--featured-icon-neutral-background (new)",
+    "original": "Added from site CSS (.featured-icon)",
+    "ours": "--colors-neutral-500",
+    "reason": "Featured icon neutral hard fill (white icon): neutral-500.",
+    "status": "fixed",
+    "component": "featured-icon"
+  },
+  {
+    "area": "Tokens",
+    "item": "--featured-icon-neutral-background-light (new)",
+    "original": "Added from site CSS (.featured-icon)",
+    "ours": "--colors-neutral-100 (light), --colors-neutral-800 (dark)",
+    "reason": "Featured icon neutral light fill: neutral-100, neutral-800 in dark mode.",
+    "status": "fixed",
+    "component": "featured-icon"
+  },
+  {
+    "area": "Tokens",
+    "item": "--featured-icon-neutral-icon (new)",
+    "original": "Added from site CSS (.featured-icon)",
+    "ours": "--colors-neutral-500 (light), --colors-neutral-300 (dark)",
+    "reason": "Featured icon neutral icon on the light fill and outlined: neutral-500, neutral-300 in dark mode.",
+    "status": "fixed",
+    "component": "featured-icon"
+  },
+  {
+    "area": "Tokens",
+    "item": "--featured-icon-neutral-border (new)",
+    "original": "Added from site CSS (.featured-icon)",
+    "ours": "--colors-neutral-200 (light), --colors-neutral-700 (dark)",
+    "reason": "Featured icon neutral outlined border: neutral-200, neutral-700 in dark mode.",
+    "status": "fixed",
+    "component": "featured-icon"
+  },
+  {
+    "area": "Tokens",
+    "item": "--featured-icon-success-background (new)",
+    "original": "Added from site CSS (.featured-icon)",
+    "ours": "--colors-green-700",
+    "reason": "Featured icon success hard fill (white icon): green-700.",
+    "status": "fixed",
+    "component": "featured-icon"
+  },
+  {
+    "area": "Tokens",
+    "item": "--featured-icon-success-background-light (new)",
+    "original": "Added from site CSS (.featured-icon)",
+    "ours": "--colors-green-50 (light), --colors-green-950 (dark)",
+    "reason": "Featured icon success light fill: green-50, green-950 in dark mode.",
+    "status": "fixed",
+    "component": "featured-icon"
+  },
+  {
+    "area": "Tokens",
+    "item": "--featured-icon-success-icon (new)",
+    "original": "Added from site CSS (.featured-icon)",
+    "ours": "--colors-green-700 (light), --colors-green-300 (dark)",
+    "reason": "Featured icon success icon on the light fill and outlined: green-700, green-300 in dark mode.",
+    "status": "fixed",
+    "component": "featured-icon"
+  },
+  {
+    "area": "Tokens",
+    "item": "--featured-icon-success-border (new)",
+    "original": "Added from site CSS (.featured-icon)",
+    "ours": "--colors-green-200 (light), --colors-green-800 (dark)",
+    "reason": "Featured icon success outlined border: green-200, green-800 in dark mode.",
+    "status": "fixed",
+    "component": "featured-icon"
+  },
+  {
+    "area": "Tokens",
+    "item": "--featured-icon-error-background (new)",
+    "original": "Added from site CSS (.featured-icon)",
+    "ours": "--colors-red-600",
+    "reason": "Featured icon error hard fill (white icon): red-600.",
+    "status": "fixed",
+    "component": "featured-icon"
+  },
+  {
+    "area": "Tokens",
+    "item": "--featured-icon-error-background-light (new)",
+    "original": "Added from site CSS (.featured-icon)",
+    "ours": "--colors-red-50 (light), --colors-red-950 (dark)",
+    "reason": "Featured icon error light fill: red-50, red-950 in dark mode.",
+    "status": "fixed",
+    "component": "featured-icon"
+  },
+  {
+    "area": "Tokens",
+    "item": "--featured-icon-error-icon (new)",
+    "original": "Added from site CSS (.featured-icon)",
+    "ours": "--colors-red-600 (light), --colors-red-300 (dark)",
+    "reason": "Featured icon error icon on the light fill and outlined: red-600, red-300 in dark mode.",
+    "status": "fixed",
+    "component": "featured-icon"
+  },
+  {
+    "area": "Tokens",
+    "item": "--featured-icon-error-border (new)",
+    "original": "Added from site CSS (.featured-icon)",
+    "ours": "--colors-red-200 (light), --colors-red-800 (dark)",
+    "reason": "Featured icon error outlined border: red-200, red-800 in dark mode.",
+    "status": "fixed",
+    "component": "featured-icon"
+  },
+  {
+    "area": "Tokens",
+    "item": "--featured-icon-warning-background (new)",
+    "original": "Added from site CSS (.featured-icon)",
+    "ours": "--colors-yellow-700",
+    "reason": "Featured icon warning hard fill (white icon): yellow-700.",
+    "status": "fixed",
+    "component": "featured-icon"
+  },
+  {
+    "area": "Tokens",
+    "item": "--featured-icon-warning-background-light (new)",
+    "original": "Added from site CSS (.featured-icon)",
+    "ours": "--colors-yellow-50 (light), --colors-yellow-950 (dark)",
+    "reason": "Featured icon warning light fill: yellow-50, yellow-950 in dark mode.",
+    "status": "fixed",
+    "component": "featured-icon"
+  },
+  {
+    "area": "Tokens",
+    "item": "--featured-icon-warning-icon (new)",
+    "original": "Added from site CSS (.featured-icon)",
+    "ours": "--colors-yellow-700 (light), --colors-yellow-300 (dark)",
+    "reason": "Featured icon warning icon on the light fill and outlined: yellow-700, yellow-300 in dark mode.",
+    "status": "fixed",
+    "component": "featured-icon"
+  },
+  {
+    "area": "Tokens",
+    "item": "--featured-icon-warning-border (new)",
+    "original": "Added from site CSS (.featured-icon)",
+    "ours": "--colors-yellow-200 (light), --colors-yellow-800 (dark)",
+    "reason": "Featured icon warning outlined border: yellow-200, yellow-800 in dark mode.",
+    "status": "fixed",
+    "component": "featured-icon"
+  },
+  {
+    "area": "Tokens",
+    "item": "--featured-icon-info-background (new)",
+    "original": "Added from site CSS (.featured-icon)",
+    "ours": "--colors-blue-600",
+    "reason": "Featured icon info hard fill (white icon): blue-600.",
+    "status": "fixed",
+    "component": "featured-icon"
+  },
+  {
+    "area": "Tokens",
+    "item": "--featured-icon-info-background-light (new)",
+    "original": "Added from site CSS (.featured-icon)",
+    "ours": "--colors-blue-50 (light), --colors-blue-950 (dark)",
+    "reason": "Featured icon info light fill: blue-50, blue-950 in dark mode.",
+    "status": "fixed",
+    "component": "featured-icon"
+  },
+  {
+    "area": "Tokens",
+    "item": "--featured-icon-info-icon (new)",
+    "original": "Added from site CSS (.featured-icon)",
+    "ours": "--colors-blue-600 (light), --colors-blue-300 (dark)",
+    "reason": "Featured icon info icon on the light fill and outlined: blue-600, blue-300 in dark mode.",
+    "status": "fixed",
+    "component": "featured-icon"
+  },
+  {
+    "area": "Tokens",
+    "item": "--featured-icon-info-border (new)",
+    "original": "Added from site CSS (.featured-icon)",
+    "ours": "--colors-blue-200 (light), --colors-blue-800 (dark)",
+    "reason": "Featured icon info outlined border: blue-200, blue-800 in dark mode.",
+    "status": "fixed",
+    "component": "featured-icon"
+  },
+  {
+    "area": "Tokens",
+    "item": "--skeleton-background (new)",
+    "original": "No fill token on the Figma Skeleton components",
+    "ours": "--colors-neutral-200 (light), --colors-neutral-700 (dark)",
+    "reason": "Placeholder fill: neutral-200, neutral-700 in dark mode.",
+    "status": "fixed",
+    "component": "skeleton"
+  },
+  {
     "area": "Naming",
     "item": "Figma group \"Font Wieght\"",
     "original": "Font Wieght/font-weight-*",
@@ -1159,6 +1384,54 @@
     "original": "No usage rule (80% and 70% white)",
     "ours": "Use only on deep fills: nav header, pressed/selected primary, black. On mid-tone fills use --text-oncolor-primary.",
     "reason": "White itself is only 4.57–4.83:1 on the 600-level fills, so no lower opacity can pass there. On deep fills 80% and 70% white pass AA."
+  },
+  {
+    "area": "Components",
+    "item": "Featured Icon",
+    "original": "Not in the DGA Figma file. Defined only in the design.dga.gov.sa CSS (.featured-icon).",
+    "ours": "Built from the site CSS: hard, light and outlined; brand, neutral, success, error, warning and info; sm 32, md 40, lg 48 and xl 56px; square or circle.",
+    "reason": "Figma is the source of truth where it exists; here only the site CSS does.",
+    "component": "featured-icon"
+  },
+  {
+    "area": "Components",
+    "item": "Featured Icon: hard warning and success",
+    "original": "Hard warning: white on warning-400. Hard success: white on brand-600 (the same as brand).",
+    "ours": "Hard warning uses yellow-700; hard success uses green-700 (DGA status green).",
+    "reason": "White on yellow-400 is 1.9:1, below the 3:1 non-text minimum. Success uses the status palette so it differs from brand, as the site's semantic block (text-success) does.",
+    "component": "featured-icon"
+  },
+  {
+    "area": "Components",
+    "item": "Skeleton: composite types",
+    "original": "Five composite Skeleton Components (Image Button and Text, Icon and List, Image Content and Button, Chart and Content, Image Profile Content and Button)",
+    "ours": "One Skeleton primitive (rectangle, square, circle, line) and the five layouts as copy-paste examples on the docs page",
+    "reason": "The composites are layouts of the primitives; real pages need their own shapes.",
+    "component": "skeleton"
+  },
+  {
+    "area": "Components",
+    "item": "Skeleton: animation",
+    "original": "Static",
+    "ours": "Pulses (opacity); static with reduced motion",
+    "reason": "A gentle pulse shows that content is loading. prefers-reduced-motion turns it off.",
+    "component": "skeleton"
+  },
+  {
+    "area": "Components",
+    "item": "Divider: colours",
+    "original": "Neutral, Primary, Alpha-white and White, with no colour tokens in the export",
+    "ours": "neutral → border-neutral-secondary, primary → border-primary, alpha-white → border-oncolor-transparent-30, white → icon-oncolor (white in both modes)",
+    "reason": "Mapped to the closest semantic border tokens. border-white flips to black in dark mode, so white uses a token that stays white.",
+    "component": "divider"
+  },
+  {
+    "area": "Components",
+    "item": "Avatar: sizes and text",
+    "original": "Initials use Text xs/Semibold on every size in the export",
+    "ours": "Text style per size from the site CSS: 24 Text 2xs Bold, 32 Text xs SemiBold, 40 Text sm SemiBold, 48 Text md SemiBold, 64 Text xl Medium, 80 Display sm, 120 Display md",
+    "reason": "One text size cannot fit avatars from 24 to 120px.",
+    "component": "avatar"
   },
   {
     "area": "Components",

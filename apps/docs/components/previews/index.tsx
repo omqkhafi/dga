@@ -9,6 +9,13 @@ import {
   ButtonVariants,
 } from "./button";
 import {
+  AvatarDemo,
+  DividerDemo,
+  FeaturedIconDemo,
+  SkeletonDemo,
+  SkeletonLayouts,
+} from "./display";
+import {
   IconsDemo,
   RadiusDemo,
   ShadowsDemo,
@@ -45,6 +52,11 @@ export const previews = {
   "tag-variants": TagVariants,
   "tag-dismiss": TagDismiss,
   "status-tags": StatusTags,
+  divider: DividerDemo,
+  avatar: AvatarDemo,
+  "featured-icon": FeaturedIconDemo,
+  skeleton: SkeletonDemo,
+  "skeleton-layouts": SkeletonLayouts,
 } satisfies Record<string, ComponentType>;
 
 export const previewNames = Object.keys(previews);

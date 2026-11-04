@@ -161,6 +161,67 @@
           "type": "registry:ui"
         }
       ]
+    },
+    {
+      "name": "divider",
+      "type": "registry:ui",
+      "title": "Divider",
+      "description": "DGA Divider on Base UI Separator: neutral, primary, alpha-white and white; horizontal or vertical.",
+      "dependencies": ["@base-ui/react", "class-variance-authority"],
+      "registryDependencies": ["{{REGISTRY_URL}}/r/utils.json"],
+      "files": [
+        {
+          "path": "bases/base/ui/divider.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "avatar",
+      "type": "registry:ui",
+      "title": "Avatar",
+      "description": "DGA Avatar on Base UI: image, initials or icon, 24 to 120px, circle or square, optional ring; Avatar Group stacked or spaced.",
+      "dependencies": [
+        "@base-ui/react",
+        "@hugeicons/react",
+        "@hugeicons/core-free-icons",
+        "class-variance-authority"
+      ],
+      "registryDependencies": ["{{REGISTRY_URL}}/r/utils.json"],
+      "files": [
+        {
+          "path": "bases/base/ui/avatar.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "featured-icon",
+      "type": "registry:ui",
+      "title": "Featured Icon",
+      "description": "DGA Featured Icon (from the design.dga.gov.sa CSS): light, hard and outlined in six colours, sm to xl, square or circle.",
+      "dependencies": ["class-variance-authority"],
+      "registryDependencies": ["{{REGISTRY_URL}}/r/utils.json"],
+      "files": [
+        {
+          "path": "bases/base/ui/featured-icon.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "skeleton",
+      "type": "registry:ui",
+      "title": "Skeleton",
+      "description": "DGA Skeleton: rectangle, square, circle and line placeholders in the Figma sizes. Static with reduced motion.",
+      "dependencies": ["class-variance-authority"],
+      "registryDependencies": ["{{REGISTRY_URL}}/r/utils.json"],
+      "files": [
+        {
+          "path": "bases/base/ui/skeleton.tsx",
+          "type": "registry:ui"
+        }
+      ]
     }
   ]
 }

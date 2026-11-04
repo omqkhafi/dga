@@ -1,0 +1,21 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "divider",
+  "title": "Divider",
+  "description": "DGA Divider on Base UI Separator: neutral, primary, alpha-white and white; horizontal or vertical.",
+  "dependencies": [
+    "@base-ui/react",
+    "class-variance-authority"
+  ],
+  "registryDependencies": [
+    "https://dga.omqkhafi.dev/r/utils.json"
+  ],
+  "files": [
+    {
+      "path": "bases/base/ui/divider.tsx",
+      "content": "import { Separator as SeparatorPrimitive } from \"@base-ui/react/separator\";\nimport { cva, type VariantProps } from \"class-variance-authority\";\nimport { cn } from \"@/registry/bases/base/lib/utils\";\n\nconst dividerVariants = cva(\"shrink-0 border-0\", {\n  variants: {\n    variant: {\n      neutral: \"bg-border-neutral-secondary\",\n      primary: \"bg-border-primary\",\n      \"alpha-white\": \"bg-border-oncolor-transparent-30\",\n      white: \"bg-icon-oncolor\",\n    },\n    orientation: {\n      horizontal: \"h-px w-full\",\n      vertical: \"w-px self-stretch\",\n    },\n  },\n  defaultVariants: { variant: \"neutral\", orientation: \"horizontal\" },\n});\n\ntype DividerProps = SeparatorPrimitive.Props & VariantProps<typeof dividerVariants>;\n\n/** Separates content into sections. Announced as a separator; pass role=\"none\" if purely visual. */\nfunction Divider({ className, variant, orientation = \"horizontal\", ...props }: DividerProps) {\n  return (\n    <SeparatorPrimitive\n      data-slot=\"divider\"\n      orientation={orientation ?? \"horizontal\"}\n      className={cn(dividerVariants({ variant, orientation }), className)}\n      {...props}\n    />\n  );\n}\n\nexport type { DividerProps };\nexport { Divider, dividerVariants };\n",
+      "type": "registry:ui"
+    }
+  ],
+  "type": "registry:ui"
+}

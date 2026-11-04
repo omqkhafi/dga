@@ -442,6 +442,74 @@ function tagPairs(): ComponentPair[] {
   return pairs;
 }
 
+const FEATURED_ICON_COLORS = ["brand", "neutral", "success", "error", "warning", "info"];
+
+/** Featured icons are non-text graphics: 3:1. */
+function featuredIconPairs(): ComponentPair[] {
+  return FEATURED_ICON_COLORS.flatMap((color) =>
+    SURFACES.flatMap((surface): ComponentPair[] => [
+      {
+        component: "featured-icon",
+        state: `${color} / hard`,
+        fg: "icon-oncolor",
+        bg: `featured-icon-${color}-background`,
+        on: surface,
+        min: 3,
+        kind: "non-text",
+      },
+      {
+        component: "featured-icon",
+        state: `${color} / light`,
+        fg: `featured-icon-${color}-icon`,
+        bg: `featured-icon-${color}-background-light`,
+        on: surface,
+        min: 3,
+        kind: "non-text",
+      },
+      {
+        component: "featured-icon",
+        state: `${color} / outlined`,
+        fg: `featured-icon-${color}-icon`,
+        bg: surface,
+        min: 3,
+        kind: "non-text",
+      },
+    ]),
+  );
+}
+
+/** Avatar initials and icon on the avatar fill. */
+function avatarPairs(): ComponentPair[] {
+  return SURFACES.flatMap((surface): ComponentPair[] => [
+    {
+      component: "avatar",
+      state: "initials / text",
+      fg: "text-default",
+      bg: "button-background-neutral-default",
+      on: surface,
+      min: 4.5,
+      kind: "text",
+    },
+    {
+      component: "avatar",
+      state: "icon / icon",
+      fg: "icon-default",
+      bg: "button-background-neutral-default",
+      on: surface,
+      min: 3,
+      kind: "non-text",
+    },
+  ]);
+}
+
 export function componentPairs(): ComponentPair[] {
-  return [...buttonPairs(), ...spinnerPairs(), ...linkPairs(), ...badgePairs(), ...tagPairs()];
+  return [
+    ...buttonPairs(),
+    ...spinnerPairs(),
+    ...linkPairs(),
+    ...badgePairs(),
+    ...tagPairs(),
+    ...featuredIconPairs(),
+    ...avatarPairs(),
+  ];
 }

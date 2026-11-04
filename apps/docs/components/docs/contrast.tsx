@@ -28,6 +28,14 @@ export function ComponentContrast({ component }: { component: string }) {
     groups.set(group, [...(groups.get(group) ?? []), [state, row]]);
   }
   const failing = checks.filter((c) => c.ratio < c.min).length;
+  if (checks.length === 0) {
+    return (
+      <p>
+        No contrast pairs: this component is decorative. Content that carries meaning must not rely
+        on it (WCAG 1.4.11 applies only to graphics needed to understand the content).
+      </p>
+    );
+  }
   return (
     <div className="not-prose my-6 flex flex-col gap-3">
       <p className="text-sm text-text-primary-paragraph">

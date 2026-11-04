@@ -237,7 +237,109 @@ COMPONENT_ADDITIONS.push(
   },
 );
 
+// ---------------------------------------------------------------------------
+// Featured Icon: not in the Figma file. Tokens from the design.dga.gov.sa
+// .featured-icon CSS (its semantic block: text-success, icon-info …).
+// ---------------------------------------------------------------------------
+
+export const FEATURED_ICON_COLORS = {
+  brand: { palette: "primary-sa-flag", hard: "600", fg: "600" },
+  neutral: { palette: "neutral", hard: "500", fg: "500" },
+  success: { palette: "green", hard: "700", fg: "700" },
+  error: { palette: "red", hard: "600", fg: "600" },
+  warning: { palette: "yellow", hard: "700", fg: "700" },
+  info: { palette: "blue", hard: "600", fg: "600" },
+} as const;
+
+for (const [color, { palette, hard, fg }] of Object.entries(FEATURED_ICON_COLORS)) {
+  const neutral = color === "neutral";
+  const parts: [string, string, string, string][] = [
+    ["background", hard, hard, "hard fill (white icon)"],
+    ["background-light", neutral ? "100" : "50", neutral ? "800" : "950", "light fill"],
+    ["icon", fg, "300", "icon on the light fill and outlined"],
+    ["border", "200", neutral ? "700" : "800", "outlined border"],
+  ];
+  for (const [part, light, dark, what] of parts) {
+    COMPONENT_ADDITIONS.push({
+      name: `featured-icon-${color}-${part}`,
+      light: step(palette, light),
+      dark: step(palette, dark),
+      area: "Tokens",
+      original: "Added from site CSS (.featured-icon)",
+      reason: `Featured icon ${color} ${what}: ${palette}-${light}${light === dark ? "" : `, ${palette}-${dark} in dark mode`}.`,
+      component: "featured-icon",
+    });
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Skeleton: the Figma components have no fill token.
+// ---------------------------------------------------------------------------
+
+COMPONENT_ADDITIONS.push({
+  name: "skeleton-background",
+  light: "{colors-neutral-200}",
+  dark: "{colors-neutral-700}",
+  area: "Tokens",
+  original: "No fill token on the Figma Skeleton components",
+  reason: "Placeholder fill: neutral-200, neutral-700 in dark mode.",
+  component: "skeleton",
+});
+
 export const COMPONENT_DEVIATIONS: Deviation[] = [
+  {
+    area: "Components",
+    item: "Featured Icon",
+    original:
+      "Not in the DGA Figma file. Defined only in the design.dga.gov.sa CSS (.featured-icon).",
+    ours: "Built from the site CSS: hard, light and outlined; brand, neutral, success, error, warning and info; sm 32, md 40, lg 48 and xl 56px; square or circle.",
+    reason: "Figma is the source of truth where it exists; here only the site CSS does.",
+    component: "featured-icon",
+  },
+  {
+    area: "Components",
+    item: "Featured Icon: hard warning and success",
+    original:
+      "Hard warning: white on warning-400. Hard success: white on brand-600 (the same as brand).",
+    ours: "Hard warning uses yellow-700; hard success uses green-700 (DGA status green).",
+    reason:
+      "White on yellow-400 is 1.9:1, below the 3:1 non-text minimum. Success uses the status palette so it differs from brand, as the site's semantic block (text-success) does.",
+    component: "featured-icon",
+  },
+  {
+    area: "Components",
+    item: "Skeleton: composite types",
+    original:
+      "Five composite Skeleton Components (Image Button and Text, Icon and List, Image Content and Button, Chart and Content, Image Profile Content and Button)",
+    ours: "One Skeleton primitive (rectangle, square, circle, line) and the five layouts as copy-paste examples on the docs page",
+    reason: "The composites are layouts of the primitives; real pages need their own shapes.",
+    component: "skeleton",
+  },
+  {
+    area: "Components",
+    item: "Skeleton: animation",
+    original: "Static",
+    ours: "Pulses (opacity); static with reduced motion",
+    reason: "A gentle pulse shows that content is loading. prefers-reduced-motion turns it off.",
+    component: "skeleton",
+  },
+  {
+    area: "Components",
+    item: "Divider: colours",
+    original: "Neutral, Primary, Alpha-white and White, with no colour tokens in the export",
+    ours: "neutral → border-neutral-secondary, primary → border-primary, alpha-white → border-oncolor-transparent-30, white → icon-oncolor (white in both modes)",
+    reason:
+      "Mapped to the closest semantic border tokens. border-white flips to black in dark mode, so white uses a token that stays white.",
+    component: "divider",
+  },
+  {
+    area: "Components",
+    item: "Avatar: sizes and text",
+    original: "Initials use Text xs/Semibold on every size in the export",
+    ours: "Text style per size from the site CSS: 24 Text 2xs Bold, 32 Text xs SemiBold, 40 Text sm SemiBold, 48 Text md SemiBold, 64 Text xl Medium, 80 Display sm, 120 Display md",
+    reason: "One text size cannot fit avatars from 24 to 120px.",
+    component: "avatar",
+  },
   {
     area: "Components",
     item: "Tag: text size",

@@ -421,4 +421,201 @@
   .cn-status-tag-variant-error {
     @apply [--status-bg:var(--tag-background-error-light)] [--status-dot:var(--tag-icon-error)] [--status-fg:var(--tag-text-error)] [--status-solid:var(--tag-background-error)];
   }
+
+  /* ------------------------------------------------------------------------------------
+   * Divider. 1px, horizontal or vertical.
+   * ---------------------------------------------------------------------------------- */
+  .cn-divider {
+    @apply shrink-0 border-0;
+  }
+  .cn-divider-horizontal {
+    @apply h-px w-full;
+  }
+  .cn-divider-vertical {
+    @apply w-px self-stretch;
+  }
+  .cn-divider-variant-neutral {
+    @apply bg-border-neutral-secondary;
+  }
+  .cn-divider-variant-primary {
+    @apply bg-border-primary;
+  }
+  .cn-divider-variant-alpha-white {
+    @apply bg-border-oncolor-transparent-30;
+  }
+  .cn-divider-variant-white {
+    @apply bg-icon-oncolor;
+  }
+
+  /* ------------------------------------------------------------------------------------
+   * Avatar. 24–120px, circle or radius-md square, optional white ring (2px, 4px at 120).
+   * ---------------------------------------------------------------------------------- */
+  .cn-avatar {
+    @apply relative inline-flex shrink-0 items-center justify-center overflow-hidden rounded-full bg-button-background-neutral-default text-text-default select-none;
+  }
+  .cn-avatar-square {
+    @apply rounded-md;
+  }
+  .cn-avatar-bordered {
+    @apply ring-2 ring-border-white;
+  }
+  .cn-avatar-image {
+    @apply size-full object-cover;
+  }
+  .cn-avatar-fallback {
+    @apply flex size-full items-center justify-center;
+  }
+  .cn-avatar-initials {
+    @apply leading-none uppercase [unicode-bidi:plaintext];
+  }
+  .cn-avatar-icon {
+    @apply text-icon-default;
+  }
+  .cn-avatar-size-24 {
+    @apply size-6 text-2xs font-bold [&_svg]:size-4;
+  }
+  .cn-avatar-size-32 {
+    @apply size-8 text-xs font-semibold [&_svg]:size-6;
+  }
+  .cn-avatar-size-40 {
+    @apply size-10 text-sm font-semibold [&_svg]:size-8;
+  }
+  .cn-avatar-size-48 {
+    @apply size-12 text-md font-semibold [&_svg]:size-8;
+  }
+  .cn-avatar-size-64 {
+    @apply size-16 text-xl font-medium [&_svg]:size-10;
+  }
+  .cn-avatar-size-80 {
+    @apply size-20 text-display-sm font-normal [&_svg]:size-14;
+  }
+  .cn-avatar-size-120 {
+    @apply size-30 text-display-md font-normal [&_svg]:size-20;
+  }
+  .cn-avatar-bordered-120 {
+    @apply ring-4;
+  }
+  .cn-avatar-group {
+    @apply flex items-center gap-2;
+  }
+  /* Figma: stacked avatars overlap by 4px with a white ring. */
+  .cn-avatar-group-stacked {
+    @apply gap-0 *:not-first:-ms-1 *:ring-2 *:ring-border-white;
+  }
+
+  /* ------------------------------------------------------------------------------------
+   * Featured Icon (site CSS .featured-icon; not in Figma). sm 32 / md 40 / lg 48 / xl 56px.
+   * ---------------------------------------------------------------------------------- */
+  .cn-featured-icon {
+    @apply inline-flex shrink-0 items-center justify-center rounded-sm border border-transparent [&_svg]:shrink-0;
+  }
+  .cn-featured-icon-size-sm {
+    @apply size-8 [&_svg:not([class*='size-'])]:size-4;
+  }
+  .cn-featured-icon-size-md {
+    @apply size-10 [&_svg:not([class*='size-'])]:size-5;
+  }
+  .cn-featured-icon-size-lg {
+    @apply size-12 [&_svg:not([class*='size-'])]:size-6;
+  }
+  .cn-featured-icon-size-xl {
+    @apply size-14 [&_svg:not([class*='size-'])]:size-7;
+  }
+  .cn-featured-icon-circle {
+    @apply rounded-full;
+  }
+  .cn-featured-icon-light {
+    @apply bg-(--fi-light) text-(--fi-icon);
+  }
+  .cn-featured-icon-hard {
+    @apply bg-(--fi-hard) text-icon-oncolor;
+  }
+  .cn-featured-icon-outlined {
+    @apply border-(--fi-border) bg-transparent text-(--fi-icon);
+  }
+  .cn-featured-icon-variant-brand {
+    @apply [--fi-border:var(--featured-icon-brand-border)] [--fi-hard:var(--featured-icon-brand-background)] [--fi-icon:var(--featured-icon-brand-icon)] [--fi-light:var(--featured-icon-brand-background-light)];
+  }
+  .cn-featured-icon-variant-neutral {
+    @apply [--fi-border:var(--featured-icon-neutral-border)] [--fi-hard:var(--featured-icon-neutral-background)] [--fi-icon:var(--featured-icon-neutral-icon)] [--fi-light:var(--featured-icon-neutral-background-light)];
+  }
+  .cn-featured-icon-variant-success {
+    @apply [--fi-border:var(--featured-icon-success-border)] [--fi-hard:var(--featured-icon-success-background)] [--fi-icon:var(--featured-icon-success-icon)] [--fi-light:var(--featured-icon-success-background-light)];
+  }
+  .cn-featured-icon-variant-error {
+    @apply [--fi-border:var(--featured-icon-error-border)] [--fi-hard:var(--featured-icon-error-background)] [--fi-icon:var(--featured-icon-error-icon)] [--fi-light:var(--featured-icon-error-background-light)];
+  }
+  .cn-featured-icon-variant-warning {
+    @apply [--fi-border:var(--featured-icon-warning-border)] [--fi-hard:var(--featured-icon-warning-background)] [--fi-icon:var(--featured-icon-warning-icon)] [--fi-light:var(--featured-icon-warning-background-light)];
+  }
+  .cn-featured-icon-variant-info {
+    @apply [--fi-border:var(--featured-icon-info-border)] [--fi-hard:var(--featured-icon-info-background)] [--fi-icon:var(--featured-icon-info-icon)] [--fi-light:var(--featured-icon-info-background-light)];
+  }
+
+  /* ------------------------------------------------------------------------------------
+   * Skeleton. Pulses between two neutral steps; static with reduced motion.
+   * ---------------------------------------------------------------------------------- */
+  .cn-skeleton {
+    @apply min-w-0 animate-pulse bg-skeleton-background motion-reduce:animate-none;
+  }
+  .cn-skeleton-rectangle {
+    @apply h-10 w-full rounded-sm;
+  }
+  .cn-skeleton-rectangle-sm {
+    @apply h-6;
+  }
+  .cn-skeleton-rectangle-md {
+    @apply h-8;
+  }
+  .cn-skeleton-rectangle-lg {
+    @apply h-10;
+  }
+  .cn-skeleton-line {
+    @apply h-3.5 w-full rounded-full;
+  }
+  .cn-skeleton-line-sm {
+    @apply h-3.5;
+  }
+  .cn-skeleton-line-lg {
+    @apply h-5.5;
+  }
+  .cn-skeleton-square {
+    @apply size-16 shrink-0 rounded-none;
+  }
+  .cn-skeleton-circle {
+    @apply size-16 shrink-0 rounded-full;
+  }
+  .cn-skeleton-box-24 {
+    @apply size-6;
+  }
+  .cn-skeleton-box-48 {
+    @apply size-12;
+  }
+  .cn-skeleton-box-64 {
+    @apply size-16;
+  }
+  .cn-skeleton-box-80 {
+    @apply size-20;
+  }
+  .cn-skeleton-box-120 {
+    @apply size-30;
+  }
+  .cn-skeleton-box-170 {
+    @apply size-42.5;
+  }
+  .cn-skeleton-box-240 {
+    @apply size-60;
+  }
+  .cn-skeleton-square-radius-xs {
+    @apply rounded-xs;
+  }
+  .cn-skeleton-square-radius-sm {
+    @apply rounded-sm;
+  }
+  .cn-skeleton-square-radius-md {
+    @apply rounded-md;
+  }
+  .cn-skeleton-square-radius-lg {
+    @apply rounded-lg;
+  }
 }
