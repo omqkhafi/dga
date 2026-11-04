@@ -406,6 +406,42 @@ function badgePairs(): ComponentPair[] {
   return pairs;
 }
 
+const TAG_COLORS = ["neutral", "success", "info", "warning", "error"];
+
+/** Tag and Status Tag, per the Figma state tables in tags.md. */
+function tagPairs(): ComponentPair[] {
+  const pairs: ComponentPair[] = [];
+  const add = (state: string, fg: string, bg: string, on?: string, min = 4.5) =>
+    pairs.push({
+      component: "tag",
+      state,
+      fg,
+      bg,
+      on,
+      min,
+      kind: min === 3 ? "non-text" : "text",
+    });
+  for (const color of TAG_COLORS) {
+    const fg = `tag-text-${color}`;
+    const icon = color === "neutral" ? "icon-default" : `tag-icon-${color}`;
+    for (const surface of SURFACES) {
+      add(`${color} / filled`, fg, `tag-background-${color}-light`, surface);
+      add(`${color} / filled (icon)`, icon, `tag-background-${color}-light`, surface, 3);
+      add(`${color} / outlined`, fg, surface);
+      add(`${color} / outlined (icon)`, icon, surface, undefined, 3);
+      add(`status ${color} / subtle`, fg, `tag-background-${color}-light`, surface);
+      add(`status ${color} / ghost`, "tag-text-neutral", surface);
+      add(`status ${color} / ghost (dot)`, icon, surface, undefined, 3);
+      add(`status ${color} / inverted`, "text-oncolor-primary", `tag-background-${color}`, surface);
+    }
+  }
+  for (const surface of ON_COLOR_SURFACES) {
+    add("on-color / filled", "text-oncolor-primary", "tag-background-on-color", surface);
+    add("on-color / outlined", "text-oncolor-primary", surface);
+  }
+  return pairs;
+}
+
 export function componentPairs(): ComponentPair[] {
-  return [...buttonPairs(), ...spinnerPairs(), ...linkPairs(), ...badgePairs()];
+  return [...buttonPairs(), ...spinnerPairs(), ...linkPairs(), ...badgePairs(), ...tagPairs()];
 }

@@ -326,4 +326,99 @@
   .cn-badge-variant-on-color {
     @apply [--badge-bg:var(--badge-on-color-background)] [--badge-border:transparent] [--badge-border-outlined:var(--badge-on-color-border-outlined)] [--badge-fg:var(--text-oncolor-primary)];
   }
+
+  /* ------------------------------------------------------------------------------------
+   * Tag. xs 20 / sm 24 / md 32px, radius-sm or full, SemiBold. Colours from --tag-*.
+   * ---------------------------------------------------------------------------------- */
+  .cn-tag {
+    @apply inline-flex shrink-0 items-center justify-center gap-1 rounded-sm border font-semibold whitespace-nowrap;
+    @apply border-(--tag-border) bg-(--tag-bg) text-(--tag-fg) [&_svg]:shrink-0 [&_svg]:text-(--tag-icon);
+  }
+  .cn-tag-size-xs {
+    @apply h-5 px-2 text-2xs [&_svg:not([class*='size-'])]:size-3;
+  }
+  .cn-tag-size-sm {
+    @apply h-6 px-2 text-xs [&_svg:not([class*='size-'])]:size-3.5;
+  }
+  .cn-tag-size-md {
+    @apply h-8 px-3 text-sm [&_svg:not([class*='size-'])]:size-4.5;
+  }
+  .cn-tag-outlined {
+    @apply border-(--tag-border-outlined) bg-transparent;
+  }
+  .cn-tag-rounded {
+    @apply rounded-full;
+  }
+  .cn-tag-icon-only {
+    @apply aspect-square px-0.5;
+  }
+  .cn-tag-dismiss {
+    @apply relative -me-1 inline-flex size-4 cursor-pointer items-center justify-center rounded-xs text-(--tag-icon) hover:bg-alpha-black-10;
+    /* 24px hit area (WCAG 2.5.8). */
+    @apply after:absolute after:-inset-1;
+    @apply focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-border-black;
+    @apply [&_svg]:size-3;
+  }
+  .cn-tag-variant-neutral {
+    @apply [--tag-bg:var(--tag-background-neutral-light)] [--tag-border:var(--border-neutral-secondary)] [--tag-border-outlined:var(--tag-border-neutral)] [--tag-fg:var(--tag-text-neutral)] [--tag-icon:var(--icon-default)];
+  }
+  .cn-tag-variant-success {
+    @apply [--tag-bg:var(--tag-background-success-light)] [--tag-border:var(--tag-border-success-light)] [--tag-border-outlined:var(--tag-border-success)] [--tag-fg:var(--tag-text-success)] [--tag-icon:var(--tag-icon-success)];
+  }
+  .cn-tag-variant-info {
+    @apply [--tag-bg:var(--tag-background-info-light)] [--tag-border:var(--tag-border-info-light)] [--tag-border-outlined:var(--tag-border-info)] [--tag-fg:var(--tag-text-info)] [--tag-icon:var(--tag-icon-info)];
+  }
+  .cn-tag-variant-warning {
+    @apply [--tag-bg:var(--tag-background-warning-light)] [--tag-border:var(--tag-border-warning-light)] [--tag-border-outlined:var(--tag-border-warning)] [--tag-fg:var(--tag-text-warning)] [--tag-icon:var(--tag-icon-warning)];
+  }
+  .cn-tag-variant-error {
+    @apply [--tag-bg:var(--tag-background-error-light)] [--tag-border:var(--tag-border-error-light)] [--tag-border-outlined:var(--tag-border-error)] [--tag-fg:var(--tag-text-error)] [--tag-icon:var(--tag-icon-error)];
+  }
+  .cn-tag-variant-on-color {
+    @apply [--tag-bg:var(--tag-background-on-color)] [--tag-border:transparent] [--tag-border-outlined:var(--tag-border-on-color)] [--tag-fg:var(--text-oncolor-primary)] [--tag-icon:var(--icon-oncolor)];
+    @apply [&_.cn-tag-dismiss]:focus-visible:outline-icon-oncolor;
+  }
+
+  /* ------------------------------------------------------------------------------------
+   * Status Tag. xs 20 / sm 24 / md 32px, radius-full, gap 8, Text Medium.
+   * ---------------------------------------------------------------------------------- */
+  .cn-status-tag {
+    @apply inline-flex shrink-0 items-center gap-2 rounded-full font-medium whitespace-nowrap;
+  }
+  .cn-status-tag-dot {
+    @apply size-2 shrink-0 rounded-full bg-(--status-dot);
+  }
+  .cn-status-tag-size-xs {
+    @apply h-5 px-2 text-xs;
+  }
+  .cn-status-tag-size-sm {
+    @apply h-6 px-2 text-sm;
+  }
+  .cn-status-tag-size-md {
+    @apply h-8 px-4 text-md;
+  }
+  .cn-status-tag-subtle {
+    @apply bg-(--status-bg) text-(--status-fg);
+  }
+  .cn-status-tag-ghost {
+    @apply bg-transparent px-0 text-tag-text-neutral;
+  }
+  .cn-status-tag-inverted {
+    @apply bg-(--status-solid) text-text-oncolor-primary [&>span:first-child]:bg-tag-dot;
+  }
+  .cn-status-tag-variant-neutral {
+    @apply [--status-bg:var(--tag-background-neutral-light)] [--status-dot:var(--icon-default)] [--status-fg:var(--tag-text-neutral)] [--status-solid:var(--tag-background-neutral)];
+  }
+  .cn-status-tag-variant-success {
+    @apply [--status-bg:var(--tag-background-success-light)] [--status-dot:var(--tag-icon-success)] [--status-fg:var(--tag-text-success)] [--status-solid:var(--tag-background-success)];
+  }
+  .cn-status-tag-variant-info {
+    @apply [--status-bg:var(--tag-background-info-light)] [--status-dot:var(--tag-icon-info)] [--status-fg:var(--tag-text-info)] [--status-solid:var(--tag-background-info)];
+  }
+  .cn-status-tag-variant-warning {
+    @apply [--status-bg:var(--tag-background-warning-light)] [--status-dot:var(--tag-icon-warning)] [--status-fg:var(--tag-text-warning)] [--status-solid:var(--tag-background-warning)];
+  }
+  .cn-status-tag-variant-error {
+    @apply [--status-bg:var(--tag-background-error-light)] [--status-dot:var(--tag-icon-error)] [--status-fg:var(--tag-text-error)] [--status-solid:var(--tag-background-error)];
+  }
 }

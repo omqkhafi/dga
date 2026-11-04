@@ -143,6 +143,24 @@
           "type": "registry:ui"
         }
       ]
+    },
+    {
+      "name": "tag",
+      "type": "registry:ui",
+      "title": "Tag",
+      "description": "DGA Tag and Status Tag: neutral, success, info, warning, error and on-colour; filled or outlined; xs/sm/md; rounded, icon-only and dismissible. Status Tag: subtle, inverted and ghost with a dot.",
+      "dependencies": [
+        "@hugeicons/react",
+        "@hugeicons/core-free-icons",
+        "class-variance-authority"
+      ],
+      "registryDependencies": ["{{REGISTRY_URL}}/r/utils.json"],
+      "files": [
+        {
+          "path": "bases/base/ui/tag.tsx",
+          "type": "registry:ui"
+        }
+      ]
     }
   ]
 }

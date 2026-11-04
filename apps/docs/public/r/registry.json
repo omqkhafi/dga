@@ -1811,7 +1811,7 @@
           "--tag-border-error-light": "var(--colors-red-200)",
           "--tag-border-neutral": "var(--colors-neutral-600)",
           "--tag-border-neutral-light": "var(--colors-neutral-50)",
-          "--tag-background-on-color": "var(--colors-alpha-alpha-white-20)",
+          "--tag-background-on-color": "var(--colors-alpha-alpha-black-20)",
           "--tag-border-on-color": "var(--colors-alpha-alpha-white-60)",
           "--tag-text-success": "var(--colors-green-800)",
           "--tag-text-info": "var(--colors-blue-800)",
@@ -2327,7 +2327,7 @@
           "--tag-border-error-light": "var(--colors-red-200)",
           "--tag-border-neutral": "var(--colors-neutral-600)",
           "--tag-border-neutral-light": "var(--colors-neutral-50)",
-          "--tag-background-on-color": "var(--colors-alpha-alpha-white-20)",
+          "--tag-background-on-color": "var(--colors-alpha-alpha-black-20)",
           "--tag-border-on-color": "var(--colors-alpha-alpha-white-60)",
           "--tag-text-success": "var(--colors-green-800)",
           "--tag-text-info": "var(--colors-blue-800)",
@@ -2786,7 +2786,7 @@
           "--tag-border-error-light": "var(--colors-red-200)",
           "--tag-border-neutral": "var(--colors-neutral-300)",
           "--tag-border-neutral-light": "var(--colors-neutral-800)",
-          "--tag-background-on-color": "var(--colors-alpha-alpha-white-20)",
+          "--tag-background-on-color": "var(--colors-alpha-alpha-black-20)",
           "--tag-border-on-color": "var(--colors-alpha-alpha-white-60)",
           "--tag-text-success": "var(--colors-green-400)",
           "--tag-text-info": "var(--colors-blue-400)",
@@ -3129,6 +3129,26 @@
       "files": [
         {
           "path": "bases/base/ui/badge.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "tag",
+      "type": "registry:ui",
+      "title": "Tag",
+      "description": "DGA Tag and Status Tag: neutral, success, info, warning, error and on-colour; filled or outlined; xs/sm/md; rounded, icon-only and dismissible. Status Tag: subtle, inverted and ghost with a dot.",
+      "dependencies": [
+        "@hugeicons/react",
+        "@hugeicons/core-free-icons",
+        "class-variance-authority"
+      ],
+      "registryDependencies": [
+        "https://dga.omqkhafi.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "bases/base/ui/tag.tsx",
           "type": "registry:ui"
         }
       ]

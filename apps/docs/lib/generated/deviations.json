@@ -657,6 +657,24 @@
   },
   {
     "area": "Contrast",
+    "item": "--tag-background-on-color (light)",
+    "original": "--colors-alpha-alpha-white-20",
+    "ours": "--colors-alpha-alpha-black-20",
+    "reason": "White label on white-20 over the brand fill is 3.34:1. A black-20 tint keeps the tag visible and gives 6.30:1.",
+    "status": "fixed",
+    "component": "tag"
+  },
+  {
+    "area": "Contrast",
+    "item": "--tag-background-on-color (dark)",
+    "original": "--colors-alpha-alpha-white-20",
+    "ours": "--colors-alpha-alpha-black-20",
+    "reason": "White label on white-20 over the brand fill is 3.34:1. A black-20 tint keeps the tag visible and gives 6.30:1.",
+    "status": "fixed",
+    "component": "tag"
+  },
+  {
+    "area": "Contrast",
     "item": "--text-on-gold (new)",
     "original": "—",
     "ours": "--colors-base-black",
@@ -1141,6 +1159,30 @@
     "original": "No usage rule (80% and 70% white)",
     "ours": "Use only on deep fills: nav header, pressed/selected primary, black. On mid-tone fills use --text-oncolor-primary.",
     "reason": "White itself is only 4.57–4.83:1 on the 600-level fills, so no lower opacity can pass there. On deep fills 80% and 70% white pass AA."
+  },
+  {
+    "area": "Components",
+    "item": "Tag: text size",
+    "original": "Text 2xs/SemiBold on every size in the exported variant table",
+    "ours": "Text sm (md, 32px), Text xs (sm, 24px) and Text 2xs (xs, 20px), SemiBold",
+    "reason": "The export lists one sample text style. A 10px label in a 32px tag is hard to read; the sizes follow the site CSS (.tag--lg uses 14px).",
+    "component": "tag"
+  },
+  {
+    "area": "Components",
+    "item": "Tag: dismiss",
+    "original": "Optional trailing icon",
+    "ours": "onDismiss adds a trailing close button (Cancel icon) with an aria-label (dismissLabel). The tag itself is not interactive.",
+    "reason": "Removable filter tags need a real button for keyboard and screen-reader users.",
+    "component": "tag"
+  },
+  {
+    "area": "Components",
+    "item": "Status Tag: ghost and dot",
+    "original": "Ghost: neutral label with no fill",
+    "ours": "Every status tag starts with a coloured dot (tag-icon-*; tag-dot on inverted) so ghost tags still show their colour.",
+    "reason": "Ghost tags would otherwise all look the same; the dot is decorative and the label carries the status.",
+    "component": "tag"
   },
   {
     "area": "Components",

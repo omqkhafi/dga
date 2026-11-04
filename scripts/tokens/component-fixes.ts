@@ -91,6 +91,19 @@ COMPONENT_OVERRIDES.push(
   ),
 );
 
+// ---------------------------------------------------------------------------
+// Tag
+// ---------------------------------------------------------------------------
+
+COMPONENT_OVERRIDES.push({
+  token: "tag-background-on-color",
+  mode: "both",
+  to: "{colors-alpha-alpha-black-20}",
+  reason:
+    "White label on white-20 over the brand fill is 3.34:1. A black-20 tint keeps the tag visible and gives 6.30:1.",
+  component: "tag",
+});
+
 export const COMPONENT_ADDITIONS: Addition[] = [
   // Transparent buttons: Figma colours the label with the primary fill tokens, which do not
   // change in dark mode.
@@ -225,6 +238,32 @@ COMPONENT_ADDITIONS.push(
 );
 
 export const COMPONENT_DEVIATIONS: Deviation[] = [
+  {
+    area: "Components",
+    item: "Tag: text size",
+    original: "Text 2xs/SemiBold on every size in the exported variant table",
+    ours: "Text sm (md, 32px), Text xs (sm, 24px) and Text 2xs (xs, 20px), SemiBold",
+    reason:
+      "The export lists one sample text style. A 10px label in a 32px tag is hard to read; the sizes follow the site CSS (.tag--lg uses 14px).",
+    component: "tag",
+  },
+  {
+    area: "Components",
+    item: "Tag: dismiss",
+    original: "Optional trailing icon",
+    ours: "onDismiss adds a trailing close button (Cancel icon) with an aria-label (dismissLabel). The tag itself is not interactive.",
+    reason: "Removable filter tags need a real button for keyboard and screen-reader users.",
+    component: "tag",
+  },
+  {
+    area: "Components",
+    item: "Status Tag: ghost and dot",
+    original: "Ghost: neutral label with no fill",
+    ours: "Every status tag starts with a coloured dot (tag-icon-*; tag-dot on inverted) so ghost tags still show their colour.",
+    reason:
+      "Ghost tags would otherwise all look the same; the dot is decorative and the label carries the status.",
+    component: "tag",
+  },
   {
     area: "Components",
     item: "Badge",

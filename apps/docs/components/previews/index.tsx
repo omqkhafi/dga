@@ -20,6 +20,7 @@ import { LinkInline, LinkVariants } from "./link";
 import { ServiceCard } from "./service-card";
 import { SpinnerSizes } from "./spinner";
 import { StatusColors } from "./status";
+import { StatusTags, TagDismiss, TagVariants } from "./tag";
 
 export const previews = {
   "service-card": ServiceCard,
@@ -41,6 +42,9 @@ export const previews = {
   "link-inline": LinkInline,
   "badge-variants": BadgeVariants,
   "badge-sizes": BadgeSizes,
+  "tag-variants": TagVariants,
+  "tag-dismiss": TagDismiss,
+  "status-tags": StatusTags,
 } satisfies Record<string, ComponentType>;
 
 export const previewNames = Object.keys(previews);

@@ -731,7 +731,7 @@
   --tag-border-error-light: var(--colors-red-200);
   --tag-border-neutral: var(--colors-neutral-600);
   --tag-border-neutral-light: var(--colors-neutral-50);
-  --tag-background-on-color: var(--colors-alpha-alpha-white-20);
+  --tag-background-on-color: var(--colors-alpha-alpha-black-20);
   --tag-border-on-color: var(--colors-alpha-alpha-white-60);
   --tag-text-success: var(--colors-green-800);
   --tag-text-info: var(--colors-blue-800);
@@ -1284,7 +1284,7 @@
   --tag-border-error-light: var(--colors-red-200);
   --tag-border-neutral: var(--colors-neutral-600);
   --tag-border-neutral-light: var(--colors-neutral-50);
-  --tag-background-on-color: var(--colors-alpha-alpha-white-20);
+  --tag-background-on-color: var(--colors-alpha-alpha-black-20);
   --tag-border-on-color: var(--colors-alpha-alpha-white-60);
   --tag-text-success: var(--colors-green-800);
   --tag-text-info: var(--colors-blue-800);
@@ -1745,7 +1745,7 @@
   --tag-border-error-light: var(--colors-red-200);
   --tag-border-neutral: var(--colors-neutral-300);
   --tag-border-neutral-light: var(--colors-neutral-800);
-  --tag-background-on-color: var(--colors-alpha-alpha-white-20);
+  --tag-background-on-color: var(--colors-alpha-alpha-black-20);
   --tag-border-on-color: var(--colors-alpha-alpha-white-60);
   --tag-text-success: var(--colors-green-400);
   --tag-text-info: var(--colors-blue-400);
