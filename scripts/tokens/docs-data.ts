@@ -40,6 +40,15 @@ export function docsData(model: Model) {
     return { fg: c.fg, ratio: Math.floor(c.ratio * 100) / 100, min: c.min };
   };
 
+  // Swatch text is the DGA on-colour and default text tokens, never hardcoded hex.
+  const swatchText = {
+    white: {
+      token: "text-oncolor-primary",
+      value: tokenValue(model, "text-oncolor-primary", "light"),
+    },
+    black: { token: "text-default", value: tokenValue(model, "text-default", "light") },
+  };
+
   const primitives = [...model.primitives.values()]
     .filter((p) => p.name.startsWith("colors-") && /^#|^\{/.test(p.value))
     .map((p) => {
@@ -54,8 +63,8 @@ export function docsData(model: Model) {
         palette,
         value: resolve(model, p.value),
         utility: `${p.name.replace(/^colors-/, "")}`,
-        onWhite: floor(contrastRatio("#ffffff", resolve(model, p.value))),
-        onBlack: floor(contrastRatio("#161616", resolve(model, p.value))),
+        onWhite: floor(contrastRatio(swatchText.white.value, resolve(model, p.value))),
+        onBlack: floor(contrastRatio(swatchText.black.value, resolve(model, p.value))),
       };
     });
 
@@ -143,6 +152,7 @@ export function docsData(model: Model) {
 
   return {
     shadcn: Object.entries(SHADCN_VARS).map(([name, token]) => ({ name, token })),
+    swatchText,
     primitives,
     semantic,
     typography: { family: "IBM Plex Sans Arabic", sizes: typeSizes, weights },
