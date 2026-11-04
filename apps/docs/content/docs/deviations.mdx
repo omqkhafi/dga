@@ -1,0 +1,23 @@
+---
+title: Deviations from DGA
+description: Every place DGA UI differs from the DGA Figma source, with the original value, ours, and the reason.
+---
+
+DGA UI follows the DGA Foundations Figma file. When a value is wrong (a typo, a contrast failure, a missing definition), we change it and record the change here. This page is generated from the same list the token build uses (`scripts/tokens/fixes.ts`), so the two cannot drift apart.
+
+<DeviationsTable />
+
+## How contrast is checked
+
+The token build fails if any of these pairs is below WCAG 2.1 AA, in light or dark mode:
+
+- Text and link colours on `background-white`, `background-body` and `background-card` (4.5:1).
+- Icons and link icons on the same surfaces (3:1, non-text).
+- `text-oncolor-primary` and `icon-oncolor` on every solid fill (primary, status, nav header, button fills).
+- Status text on its own tinted background (`text-success` on `background-success-50`, and so on).
+
+Disabled states are exempt (WCAG 1.4.3). Component-level pairs are checked as each component is added.
+
+## Site CSS vs Figma
+
+`tokens/TOKEN_CONFLICTS.md` lists the 39 material and 87 rounding-only differences between Figma and the design.dga.gov.sa CSS. Figma is used in every case.
