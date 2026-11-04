@@ -4,10 +4,31 @@
   "homepage": "https://dga.omqkhafi.dev",
   "items": [
     {
+      "name": "dga",
+      "type": "registry:base",
+      "title": "DGA UI",
+      "description": "Sets up DGA UI: the DGA style and tokens, Hugeicons, RTL, and the @dga registry in components.json.",
+      "extends": "none",
+      "config": {
+        "style": "base-nova",
+        "iconLibrary": "hugeicons",
+        "rtl": true,
+        "tailwind": {
+          "baseColor": "neutral",
+          "cssVariables": true
+        },
+        "registries": {
+          "@dga": "{{REGISTRY_URL}}/r/{name}.json"
+        }
+      },
+      "registryDependencies": ["{{REGISTRY_URL}}/r/dga-style.json"],
+      "docs": "DGA style installed. Set <html dir=\"rtl\" lang=\"ar\"> for Arabic, and use data-theme=\"dark\" or the .dark class for dark mode. Docs: https://dga.omqkhafi.dev/docs"
+    },
+    {
       "name": "dga-style",
       "type": "registry:style",
       "title": "DGA style",
-      "description": "DGA unified design system tokens (light, dark, responsive), Tailwind v4 theme, IBM Plex Sans Arabic and Hugeicons. Built on Base UI.",
+      "description": "DGA style: Base UI, Hugeicons, IBM Plex Sans Arabic, the cn helper and the cn-* component style map. Pulls in dga-tokens.",
       "extends": "none",
       "dependencies": [
         "@base-ui/react",
@@ -19,11 +40,20 @@
       "devDependencies": ["shadcn", "tw-animate-css"],
       "registryDependencies": [
         "{{REGISTRY_URL}}/r/utils.json",
-        "{{REGISTRY_URL}}/r/font-ibm-plex-sans-arabic.json"
+        "{{REGISTRY_URL}}/r/font-ibm-plex-sans-arabic.json",
+        "{{REGISTRY_URL}}/r/dga-tokens.json"
       ],
       "cssVars": {},
       "css": {},
       "docs": "DGA style installed. Set <html dir=\"rtl\" lang=\"ar\"> for Arabic, and use data-theme=\"dark\" or the .dark class for dark mode. Docs: https://dga.omqkhafi.dev/docs"
+    },
+    {
+      "name": "dga-tokens",
+      "type": "registry:theme",
+      "title": "DGA tokens",
+      "description": "Every DGA design token as CSS variables: light and dark themes, responsive modes, the Tailwind v4 theme and the shadcn variable mapping. Install on its own to use the tokens without components.",
+      "cssVars": {},
+      "css": {}
     },
     {
       "name": "utils",

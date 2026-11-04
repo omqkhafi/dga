@@ -19,13 +19,13 @@ npx create-next-app@latest my-app --ts --tailwind --app
 </Step>
 <Step>
 
-### Initialise with the DGA style
+### Initialise DGA UI
 
 ```bash
-npx shadcn@latest init https://dga.omqkhafi.dev/r/dga-style.json --base base --rtl
+npx shadcn@latest init https://dga.omqkhafi.dev/r/dga.json
 ```
 
-This writes `components.json` and installs `@base-ui/react`, `cn`, `class-variance-authority` and Hugeicons. It also adds every DGA token, the dark theme and the responsive modes to `globals.css`, and sets up IBM Plex Sans Arabic with `next/font`.
+`dga` is a `registry:base` item. It writes `components.json` with `iconLibrary: "hugeicons"`, `rtl: true`, the Base UI style and the `@dga` registry, so `npx shadcn@latest add @dga/button` works straight away. It installs `@base-ui/react`, `cn`, `class-variance-authority` and Hugeicons. It also adds every DGA token, the dark theme and the responsive modes to `globals.css`, and sets up IBM Plex Sans Arabic with `next/font`.
 
 </Step>
 <Step>
@@ -51,9 +51,17 @@ npx shadcn@latest add https://dga.omqkhafi.dev/r/dga-style.json
 
 The CLI merges DGA's values into your `globals.css`. Your existing shadcn variables (`--background`, `--primary` …) now point at DGA tokens.
 
+## Tokens only
+
+To use the DGA tokens without any components (for example in an existing design system), add just the tokens:
+
+```bash
+npx shadcn@latest add https://dga.omqkhafi.dev/r/dga-tokens.json
+```
+
 ## Use the `@dga` namespace
 
-Register the namespace once in `components.json`:
+`init …/dga.json` registers it for you. In other projects, register it once in `components.json`:
 
 ```json title="components.json"
 {
@@ -66,7 +74,7 @@ Register the namespace once in `components.json`:
 Then install items by name:
 
 ```bash
-npx shadcn@latest add @dga/dga-style
+npx shadcn@latest add @dga/button @dga/badge
 ```
 
 ## Dark mode
@@ -85,6 +93,8 @@ For Vite, React Router or TanStack Start, run the same `init` command. Outside N
 
 | Item | Type | Contents |
 | --- | --- | --- |
-| [`dga-style`](/r/dga-style.json) | `registry:style` | Tokens, theme, shadcn mapping, base layer, dependencies |
+| [`dga`](/r/dga.json) | `registry:base` | `components.json` settings (Hugeicons, RTL, Base UI style, `@dga` registry); pulls in `dga-style` |
+| [`dga-style`](/r/dga-style.json) | `registry:style` | Dependencies, CSS imports and the `cn-*` component style map; pulls in `dga-tokens`, `utils` and the font |
+| [`dga-tokens`](/r/dga-tokens.json) | `registry:theme` | Every token, light and dark themes, responsive modes, Tailwind theme, shadcn mapping, base layer |
 | [`utils`](/r/utils.json) | `registry:lib` | `lib/utils.ts`, which re-exports `cn` from the `cn` package (no clsx or tailwind-merge) |
 | [`font-ibm-plex-sans-arabic`](/r/font-ibm-plex-sans-arabic.json) | `registry:font` | IBM Plex Sans Arabic 400–700, Arabic and Latin subsets |

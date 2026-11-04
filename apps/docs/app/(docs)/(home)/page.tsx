@@ -27,7 +27,7 @@ export default function HomePage() {
       </section>
       <section className="rounded-md border border-border bg-card p-4">
         <code className="block overflow-x-auto font-mono text-sm text-foreground">
-          npx shadcn@latest init https://dga.omqkhafi.dev/r/dga-style.json --base base --rtl
+          npx shadcn@latest init https://dga.omqkhafi.dev/r/dga.json
         </code>
       </section>
     </main>

@@ -1,6 +1,7 @@
 // Builds the installable registry into apps/docs/public/r.
 //
-// 1. Fill dga-style's cssVars/css from the token model (tokens.json is the only source).
+// 1. Fill dga-tokens' cssVars/css from the token model (tokens.json is the only source).
+//    dga-style only carries the CSS imports and depends on dga-tokens, so it stays small.
 // 2. Inline the cn-* style map (registry/styles/style-dga.css) into every component,
 //    the same way shadcn builds its base-nova/base-* styles.
 // 3. Run `shadcn build` on the composed registry.
@@ -42,7 +43,7 @@ type Registry = { items: RegistryItem[]; [key: string]: unknown };
 const toObject = (vars: Vars) => Object.fromEntries(vars);
 const toDeclarations = (vars: Vars) => Object.fromEntries(vars.map(([k, v]) => [`--${k}`, v]));
 
-export function styleFields() {
+export function tokenFields() {
   const model = buildModel();
   const failing = auditContrast(model).filter((c) => c.ratio < c.min);
   if (failing.length > 0)
@@ -60,8 +61,6 @@ export function styleFields() {
       dark: toObject(shadcnVars()),
     },
     css: {
-      '@import "tw-animate-css"': {},
-      '@import "shadcn/tailwind.css"': {},
       [DARK_VARIANT.replace(/;$/, "")]: {},
       ":root": { "color-scheme": "light", ...toDeclarations(dgaOnly(rootVars(model))) },
       [`@media (width >= ${MODE_MIN_WIDTH.tablet})`]: { ":root": toDeclarations(tablet) },
@@ -79,6 +78,12 @@ export function styleFields() {
   };
 }
 
+export function styleFields() {
+  return {
+    css: { '@import "tw-animate-css"': {}, '@import "shadcn/tailwind.css"': {} },
+  };
+}
+
 export async function composeRegistry(outDir: string, registryUrl = DEFAULT_REGISTRY_URL) {
   const source = readFileSync(join(ROOT, "registry", "registry.json"), "utf8").replaceAll(
     "{{REGISTRY_URL}}",
@@ -90,6 +95,7 @@ export async function composeRegistry(outDir: string, registryUrl = DEFAULT_REGI
   );
 
   for (const item of registry.items) {
+    if (item.name === "dga-tokens") Object.assign(item, tokenFields());
     if (item.name === "dga-style") Object.assign(item, styleFields());
     for (const file of item.files ?? []) {
       const from = join(ROOT, "registry", file.path);

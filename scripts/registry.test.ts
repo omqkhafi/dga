@@ -2,11 +2,11 @@ import { describe, expect, test } from "bun:test";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { createStyleMap, transformStyle } from "shadcn/utils";
-import { styleFields } from "./build-registry";
+import { styleFields, tokenFields } from "./build-registry";
 import { ROOT } from "./tokens/source";
 
-describe("dga-style registry item", () => {
-  const fields = styleFields();
+describe("dga-tokens registry item", () => {
+  const fields = tokenFields();
 
   test("cssVars only carries shadcn variables (the CLI turns every key into a colour)", () => {
     expect(Object.keys(fields.cssVars.light)).toContain("primary");
@@ -27,6 +27,23 @@ describe("dga-style registry item", () => {
     expect(fields.cssVars.theme["text-color-primary"]).toBe("var(--text-primary)");
     expect(fields.cssVars.theme["background-color-body"]).toBe("var(--background-body)");
   });
+});
+
+test("dga-style stays small: only imports, tokens come from dga-tokens", () => {
+  const style = styleFields();
+  expect(Object.keys(style.css)).toEqual([
+    '@import "tw-animate-css"',
+    '@import "shadcn/tailwind.css"',
+  ]);
+  const registry = JSON.parse(readFileSync(join(ROOT, "registry", "registry.json"), "utf8")) as {
+    items: { name: string; type: string; registryDependencies?: string[]; config?: unknown }[];
+  };
+  const item = registry.items.find((i) => i.name === "dga-style");
+  expect(item?.registryDependencies).toContain("{{REGISTRY_URL}}/r/dga-tokens.json");
+  const base = registry.items.find((i) => i.name === "dga");
+  expect(base?.type).toBe("registry:base");
+  expect(base?.config).toMatchObject({ iconLibrary: "hugeicons", rtl: true });
+  expect(base?.registryDependencies).toContain("{{REGISTRY_URL}}/r/dga-style.json");
 });
 
 test("registry dependencies point at @dga items by URL, never bare shadcn names", () => {

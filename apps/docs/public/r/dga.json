@@ -1,0 +1,24 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "extends": "none",
+  "name": "dga",
+  "title": "DGA UI",
+  "description": "Sets up DGA UI: the DGA style and tokens, Hugeicons, RTL, and the @dga registry in components.json.",
+  "registryDependencies": [
+    "https://dga.omqkhafi.dev/r/dga-style.json"
+  ],
+  "docs": "DGA style installed. Set <html dir=\"rtl\" lang=\"ar\"> for Arabic, and use data-theme=\"dark\" or the .dark class for dark mode. Docs: https://dga.omqkhafi.dev/docs",
+  "type": "registry:base",
+  "config": {
+    "style": "base-nova",
+    "tailwind": {
+      "baseColor": "neutral",
+      "cssVariables": true
+    },
+    "iconLibrary": "hugeicons",
+    "rtl": true,
+    "registries": {
+      "@dga": "https://dga.omqkhafi.dev/r/{name}.json"
+    }
+  }
+}
