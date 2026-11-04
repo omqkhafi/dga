@@ -1,0 +1,26 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+@import "fumadocs-ui/css/shadcn.css";
+@import "fumadocs-ui/css/preset.css";
+
+/* The same tokens and theme the dga-style registry item installs. */
+@import "../../../registry/styles/dga/tokens.css";
+@import "../../../registry/styles/dga/theme.css";
+
+@source "../../../registry";
+/* Type sizes rendered from generated data in the typography preview. */
+@source inline("text-display-{2xl,xl,lg,md,sm,xs} text-{xl,lg,md,sm,xs,2xs}");
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  html {
+    font-family: var(--font-family-text);
+    scrollbar-gutter: stable;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}

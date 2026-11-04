@@ -1,10 +1,12 @@
 // Data the docs site renders (swatches, scales, deviations). Generated, never hand-edited.
 
+import { contrastRatio } from "./color";
 import { ITALIC_WEIGHTS, SHADCN_VARS, tailwindTheme } from "./emit";
 import { BREAKPOINTS, MODE_MIN_WIDTH } from "./fixes";
 import { auditContrast, type Model, resolve, tokenValue } from "./model";
 import type { Mode } from "./source";
 
+const floor = (ratio: number) => Math.floor(ratio * 100) / 100;
 const ref = (value: string) => /^\{([^}]+)\}$/.exec(value)?.[1] ?? null;
 
 function category(name: string) {
@@ -52,6 +54,8 @@ export function docsData(model: Model) {
         palette,
         value: resolve(model, p.value),
         utility: `${p.name.replace(/^colors-/, "")}`,
+        onWhite: floor(contrastRatio("#ffffff", resolve(model, p.value))),
+        onBlack: floor(contrastRatio("#161616", resolve(model, p.value))),
       };
     });
 
