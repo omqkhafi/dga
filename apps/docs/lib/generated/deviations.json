@@ -603,6 +603,60 @@
   },
   {
     "area": "Contrast",
+    "item": "--link-oncolor-hovered (light)",
+    "original": "--colors-alpha-alpha-white-80",
+    "ours": "--colors-base-white",
+    "reason": "Translucent white (60–90%) on the brand fill is 2.73–4.21:1. On-colour links stay white; hovered and pressed are shown by the underline.",
+    "status": "fixed",
+    "component": "link"
+  },
+  {
+    "area": "Contrast",
+    "item": "--link-oncolor-hovered (dark)",
+    "original": "--colors-alpha-alpha-white-80",
+    "ours": "--colors-base-white",
+    "reason": "Translucent white (60–90%) on the brand fill is 2.73–4.21:1. On-colour links stay white; hovered and pressed are shown by the underline.",
+    "status": "fixed",
+    "component": "link"
+  },
+  {
+    "area": "Contrast",
+    "item": "--link-oncolor-pressed (light)",
+    "original": "--colors-alpha-alpha-white-60",
+    "ours": "--colors-base-white",
+    "reason": "Translucent white (60–90%) on the brand fill is 2.73–4.21:1. On-colour links stay white; hovered and pressed are shown by the underline.",
+    "status": "fixed",
+    "component": "link"
+  },
+  {
+    "area": "Contrast",
+    "item": "--link-oncolor-pressed (dark)",
+    "original": "--colors-alpha-alpha-white-60",
+    "ours": "--colors-base-white",
+    "reason": "Translucent white (60–90%) on the brand fill is 2.73–4.21:1. On-colour links stay white; hovered and pressed are shown by the underline.",
+    "status": "fixed",
+    "component": "link"
+  },
+  {
+    "area": "Contrast",
+    "item": "--link-oncolor-visited (light)",
+    "original": "--colors-alpha-alpha-white-90",
+    "ours": "--colors-base-white",
+    "reason": "Translucent white (60–90%) on the brand fill is 2.73–4.21:1. On-colour links stay white; hovered and pressed are shown by the underline.",
+    "status": "fixed",
+    "component": "link"
+  },
+  {
+    "area": "Contrast",
+    "item": "--link-oncolor-visited (dark)",
+    "original": "--colors-alpha-alpha-white-90",
+    "ours": "--colors-base-white",
+    "reason": "Translucent white (60–90%) on the brand fill is 2.73–4.21:1. On-colour links stay white; hovered and pressed are shown by the underline.",
+    "status": "fixed",
+    "component": "link"
+  },
+  {
+    "area": "Contrast",
     "item": "--text-on-gold (new)",
     "original": "—",
     "ours": "--colors-base-black",
@@ -817,6 +871,22 @@
     "original": "No usage rule (80% and 70% white)",
     "ours": "Use only on deep fills: nav header, pressed/selected primary, black. On mid-tone fills use --text-oncolor-primary.",
     "reason": "White itself is only 4.57–4.83:1 on the 600-level fills, so no lower opacity can pass there. On deep fills 80% and 70% white pass AA."
+  },
+  {
+    "area": "Components",
+    "item": "Link: focus ring and disabled",
+    "original": "Focused: border-black stroke (border-white on colour). Disabled: a separate variant.",
+    "ours": "2px outline on :focus-visible with a 2px offset (white on colour, both modes). disabled removes the href and sets aria-disabled.",
+    "reason": "Keyboard-only focus (WCAG 2.4.7). A link without an href cannot be followed or focused.",
+    "component": "link"
+  },
+  {
+    "area": "Components",
+    "item": "Link: external",
+    "original": "Optional swap icon",
+    "ours": "external opens a new tab with rel=\"noopener noreferrer\", shows the external-link icon (mirrored in RTL) and adds \"(opens in a new tab)\" for screen readers.",
+    "reason": "WCAG 3.2.5: warn before opening a new window.",
+    "component": "link"
   },
   {
     "area": "Components",

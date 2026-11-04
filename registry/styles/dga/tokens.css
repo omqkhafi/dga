@@ -512,9 +512,9 @@
   --link-neutral-pressed: var(--colors-neutral-600);
   --link-neutral-visited: var(--colors-neutral-600);
   --link-oncolor: var(--colors-base-white);
-  --link-oncolor-hovered: var(--colors-alpha-alpha-white-80);
-  --link-oncolor-pressed: var(--colors-alpha-alpha-white-60);
-  --link-oncolor-visited: var(--colors-alpha-alpha-white-90);
+  --link-oncolor-hovered: var(--colors-base-white);
+  --link-oncolor-pressed: var(--colors-base-white);
+  --link-oncolor-visited: var(--colors-base-white);
   --link-oncolor-disabled: var(--colors-alpha-alpha-white-30);
   --icon-oncolor: var(--colors-base-white);
   --background-primary-50: var(--colors-primary-sa-flag-50);
@@ -1035,9 +1035,9 @@
   --link-neutral-pressed: var(--colors-neutral-600);
   --link-neutral-visited: var(--colors-neutral-600);
   --link-oncolor: var(--colors-base-white);
-  --link-oncolor-hovered: var(--colors-alpha-alpha-white-80);
-  --link-oncolor-pressed: var(--colors-alpha-alpha-white-60);
-  --link-oncolor-visited: var(--colors-alpha-alpha-white-90);
+  --link-oncolor-hovered: var(--colors-base-white);
+  --link-oncolor-pressed: var(--colors-base-white);
+  --link-oncolor-visited: var(--colors-base-white);
   --link-oncolor-disabled: var(--colors-alpha-alpha-white-30);
   --icon-oncolor: var(--colors-base-white);
   --background-primary-50: var(--colors-primary-sa-flag-50);
@@ -1466,9 +1466,9 @@
   --link-neutral-pressed: var(--colors-neutral-400);
   --link-neutral-visited: var(--colors-neutral-300);
   --link-oncolor: var(--colors-base-white);
-  --link-oncolor-hovered: var(--colors-alpha-alpha-white-80);
-  --link-oncolor-pressed: var(--colors-alpha-alpha-white-60);
-  --link-oncolor-visited: var(--colors-alpha-alpha-white-90);
+  --link-oncolor-hovered: var(--colors-base-white);
+  --link-oncolor-pressed: var(--colors-base-white);
+  --link-oncolor-visited: var(--colors-base-white);
   --link-oncolor-disabled: var(--colors-alpha-alpha-white-30);
   --icon-oncolor: var(--colors-base-white);
   --background-primary-50: var(--colors-alpha-alpha-600-primary-10);

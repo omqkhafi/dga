@@ -15,6 +15,7 @@ import {
   TypographyDemo,
   WeightsDemo,
 } from "./foundations";
+import { LinkInline, LinkVariants } from "./link";
 import { ServiceCard } from "./service-card";
 import { SpinnerSizes } from "./spinner";
 import { StatusColors } from "./status";
@@ -35,6 +36,8 @@ export const previews = {
   "button-icons": ButtonIcons,
   "button-states": ButtonStates,
   "spinner-sizes": SpinnerSizes,
+  "link-variants": LinkVariants,
+  "link-inline": LinkInline,
 } satisfies Record<string, ComponentType>;
 
 export const previewNames = Object.keys(previews);

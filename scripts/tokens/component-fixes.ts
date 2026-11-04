@@ -74,6 +74,23 @@ export const COMPONENT_OVERRIDES: Override[] = [
   ),
 ];
 
+// ---------------------------------------------------------------------------
+// Link
+// ---------------------------------------------------------------------------
+
+COMPONENT_OVERRIDES.push(
+  ...(["hovered", "pressed", "visited"] as const).map(
+    (state): Override => ({
+      token: `link-oncolor-${state}`,
+      mode: "both",
+      to: "{colors-base-white}",
+      reason:
+        "Translucent white (60–90%) on the brand fill is 2.73–4.21:1. On-colour links stay white; hovered and pressed are shown by the underline.",
+      component: "link",
+    }),
+  ),
+);
+
 export const COMPONENT_ADDITIONS: Addition[] = [
   // Transparent buttons: Figma colours the label with the primary fill tokens, which do not
   // change in dark mode.
@@ -141,6 +158,24 @@ COMPONENT_ADDITIONS.push(
 );
 
 export const COMPONENT_DEVIATIONS: Deviation[] = [
+  {
+    area: "Components",
+    item: "Link: focus ring and disabled",
+    original:
+      "Focused: border-black stroke (border-white on colour). Disabled: a separate variant.",
+    ours: "2px outline on :focus-visible with a 2px offset (white on colour, both modes). disabled removes the href and sets aria-disabled.",
+    reason:
+      "Keyboard-only focus (WCAG 2.4.7). A link without an href cannot be followed or focused.",
+    component: "link",
+  },
+  {
+    area: "Components",
+    item: "Link: external",
+    original: "Optional swap icon",
+    ours: 'external opens a new tab with rel="noopener noreferrer", shows the external-link icon (mirrored in RTL) and adds "(opens in a new tab)" for screen readers.',
+    reason: "WCAG 3.2.5: warn before opening a new window.",
+    component: "link",
+  },
   {
     area: "Components",
     item: "Button: destructive states",

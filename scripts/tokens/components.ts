@@ -288,6 +288,71 @@ function spinnerPairs(): ComponentPair[] {
   );
 }
 
+/** Link text in every state, and its focus ring, on each surface it can sit on. */
+function linkPairs(): ComponentPair[] {
+  const variants: [string, string[], string[], string][] = [
+    [
+      "primary",
+      [
+        "link-primary",
+        "link-primary-hovered",
+        "link-primary-pressed",
+        "link-primary-visited",
+        "link-primary-focused",
+      ],
+      SURFACES,
+      "border-black",
+    ],
+    [
+      "neutral",
+      [
+        "link-neutral",
+        "link-neutral-hovered",
+        "link-neutral-pressed",
+        "link-primary-visited",
+        "link-neutral-focused",
+      ],
+      SURFACES,
+      "border-black",
+    ],
+    [
+      "on-color",
+      [
+        "link-oncolor",
+        "link-oncolor-hovered",
+        "link-oncolor-pressed",
+        "link-oncolor-visited",
+        "link-oncolor-focused",
+      ],
+      ON_COLOR_SURFACES,
+      "icon-oncolor",
+    ],
+  ];
+  const names = ["default", "hovered", "pressed", "visited", "focused"];
+  return variants.flatMap(([variant, tokens, surfaces, ring]) =>
+    surfaces.flatMap((bg): ComponentPair[] => [
+      ...tokens.map(
+        (fg, i): ComponentPair => ({
+          component: "link",
+          state: `${variant} / ${names[i]}`,
+          fg,
+          bg,
+          min: 4.5,
+          kind: "text",
+        }),
+      ),
+      {
+        component: "link",
+        state: `${variant} / focus ring`,
+        fg: ring,
+        bg,
+        min: 3,
+        kind: "non-text",
+      },
+    ]),
+  );
+}
+
 export function componentPairs(): ComponentPair[] {
-  return [...buttonPairs(), ...spinnerPairs()];
+  return [...buttonPairs(), ...spinnerPairs(), ...linkPairs()];
 }

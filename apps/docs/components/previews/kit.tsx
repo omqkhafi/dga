@@ -13,7 +13,11 @@ export function Row({
 }) {
   return (
     <div className="flex flex-col gap-2">
-      {label ? <p className="text-xs font-medium text-text-secondary-paragraph">{label}</p> : null}
+      {label ? (
+        <p className="text-xs font-medium text-text-secondary-paragraph">
+          <bdi>{label}</bdi>
+        </p>
+      ) : null}
       <div className={cn("flex flex-wrap items-center gap-3", className)}>{children}</div>
     </div>
   );

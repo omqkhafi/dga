@@ -110,6 +110,25 @@
           "type": "registry:ui"
         }
       ]
+    },
+    {
+      "name": "link",
+      "type": "registry:ui",
+      "title": "Link",
+      "description": "DGA Link: primary, neutral and on-colour, two sizes, inline, external and disabled. Works with Next.js Link through the render prop.",
+      "dependencies": [
+        "@base-ui/react",
+        "@hugeicons/react",
+        "@hugeicons/core-free-icons",
+        "class-variance-authority"
+      ],
+      "registryDependencies": ["{{REGISTRY_URL}}/r/utils.json"],
+      "files": [
+        {
+          "path": "bases/base/ui/link.tsx",
+          "type": "registry:ui"
+        }
+      ]
     }
   ]
 }
