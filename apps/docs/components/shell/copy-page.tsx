@@ -1,23 +1,55 @@
 "use client";
 
-import { Menu } from "@base-ui/react/menu";
 import {
   ArrowDown01Icon,
   ArrowUpRight01Icon,
   ChatGptIcon,
+  ClaudeIcon,
+  CodeXmlIcon,
+  CommandLineIcon,
   Copy01Icon,
+  Cursor01Icon,
   File01Icon,
-  SparklesIcon,
   Tick02Icon,
 } from "@hugeicons/core-free-icons";
 import { useState } from "react";
 import { useT } from "@/lib/locale-context";
 import { siteUrl } from "@/lib/shared";
 import { Button } from "@/registry/bases/base/ui/button";
+import { Menu, MenuContent, MenuItem, MenuTrigger } from "@/registry/bases/base/ui/menu";
 import { Icon } from "./icon";
 
-const item =
-  "flex min-h-10 cursor-pointer items-center gap-2 rounded-sm px-2 text-sm text-text-default outline-none data-highlighted:bg-button-background-neutral-default data-highlighted:outline-2 data-highlighted:-outline-offset-2 data-highlighted:outline-border-black";
+/** One "Open in …" link: the label key, the icon, and where it goes. App schemes stay in this window. */
+function assistantLinks(prompt: string) {
+  const link = (base: string, key: string) => `${base}?${new URLSearchParams({ [key]: prompt })}`;
+  return [
+    {
+      key: "copy.chatgpt",
+      icon: ChatGptIcon,
+      href: link("https://chatgpt.com/", "q"),
+      external: true,
+    },
+    { key: "copy.codex", icon: CodeXmlIcon, href: link("codex://new", "prompt"), external: false },
+    {
+      key: "copy.claude",
+      icon: ClaudeIcon,
+      href: link("https://claude.ai/new", "q"),
+      external: true,
+    },
+    {
+      key: "copy.claudeCode",
+      icon: CommandLineIcon,
+      href: link("claude-cli://open", "q"),
+      external: false,
+    },
+    {
+      key: "copy.cursor",
+      icon: Cursor01Icon,
+      href: link("https://cursor.com/link/prompt", "text"),
+      external: true,
+    },
+  ] as const;
+}
 
 /**
  * "Copy page": copies the page as Markdown (from /docs/<slug>.md), and a menu with
@@ -37,7 +69,7 @@ export function CopyPage({ markdownUrl }: { markdownUrl: string }) {
       setState("idle");
     }
   };
-  const prompt = encodeURIComponent(t("copy.prompt", { url: `${siteUrl}${markdownUrl}` }));
+  const assistants = assistantLinks(t("copy.prompt", { url: `${siteUrl}${markdownUrl}` }));
   return (
     <div className="flex shrink-0 items-center">
       <Button
@@ -50,8 +82,8 @@ export function CopyPage({ markdownUrl }: { markdownUrl: string }) {
         <Icon icon={state === "copied" ? Tick02Icon : Copy01Icon} data-icon="inline-start" />
         {state === "copied" ? t("copy.copied") : t("copy.page")}
       </Button>
-      <Menu.Root>
-        <Menu.Trigger
+      <Menu>
+        <MenuTrigger
           render={
             <Button
               variant="outline"
@@ -63,44 +95,39 @@ export function CopyPage({ markdownUrl }: { markdownUrl: string }) {
           }
         >
           <Icon icon={ArrowDown01Icon} />
-        </Menu.Trigger>
-        <Menu.Portal>
-          <Menu.Positioner align="end" sideOffset={4} className="z-50">
-            <Menu.Popup className="w-60 rounded-md border border-border-neutral-primary bg-background-menu p-1 shadow-lg outline-none">
-              <Menu.Item className={item} onClick={copy}>
-                <Icon icon={Copy01Icon} />
-                {t("copy.markdown")}
-              </Menu.Item>
-              <Menu.LinkItem className={item} href={markdownUrl}>
-                <Icon icon={File01Icon} />
-                {t("copy.view")}
-              </Menu.LinkItem>
-              <Menu.LinkItem
-                className={item}
-                href={`https://chatgpt.com/?q=${prompt}`}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <Icon icon={ChatGptIcon} />
-                {t("copy.chatgpt")}
-                <Icon icon={ArrowUpRight01Icon} className="ms-auto  rtl:-scale-x-100" />
-                <span className="sr-only">{t("newTab")}</span>
-              </Menu.LinkItem>
-              <Menu.LinkItem
-                className={item}
-                href={`https://claude.ai/new?q=${prompt}`}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <Icon icon={SparklesIcon} />
-                {t("copy.claude")}
-                <Icon icon={ArrowUpRight01Icon} className="ms-auto  rtl:-scale-x-100" />
-                <span className="sr-only">{t("newTab")}</span>
-              </Menu.LinkItem>
-            </Menu.Popup>
-          </Menu.Positioner>
-        </Menu.Portal>
-      </Menu.Root>
+        </MenuTrigger>
+        <MenuContent align="end" className="w-60">
+          <MenuItem onClick={copy}>
+            <Icon icon={Copy01Icon} />
+            {t("copy.markdown")}
+          </MenuItem>
+          <MenuItem render={<a href={markdownUrl} />} nativeButton={false}>
+            <Icon icon={File01Icon} />
+            {t("copy.view")}
+          </MenuItem>
+          {assistants.map((assistant) => (
+            <MenuItem
+              key={assistant.key}
+              render={
+                <a
+                  href={assistant.href}
+                  {...(assistant.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+                />
+              }
+              nativeButton={false}
+            >
+              <Icon icon={assistant.icon} />
+              {t(assistant.key)}
+              {assistant.external ? (
+                <>
+                  <Icon icon={ArrowUpRight01Icon} className="ms-auto rtl:-scale-x-100" />
+                  <span className="sr-only">{t("newTab")}</span>
+                </>
+              ) : null}
+            </MenuItem>
+          ))}
+        </MenuContent>
+      </Menu>
       <span aria-live="polite" className="sr-only">
         {state === "copied" ? t("copy.done") : ""}
       </span>

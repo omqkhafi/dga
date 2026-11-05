@@ -11,9 +11,16 @@ import { dirOf, i18n, isLocale } from "@/lib/i18n";
 import { LocaleProvider } from "@/lib/locale-context";
 import { siteUrl } from "@/lib/shared";
 import { source } from "@/lib/source";
+import { WEBMCP_GUARD } from "@/lib/webmcp";
 import "../global.css";
 
 export const dynamicParams = false;
+
+/** The few strings fumadocs-ui renders itself (the heading anchor button), in Arabic. */
+const fumadocsStrings = {
+  "Copy Anchor Link(heading anchor)(aria-label)": "نسخ رابط العنوان",
+  "Copied Anchor Link(heading anchor)(aria-label)": "تم نسخ رابط العنوان",
+};
 
 export function generateStaticParams() {
   return i18n.languages.map((lang) => ({ lang }));
@@ -50,9 +57,28 @@ export default async function Layout({ children, params }: LayoutProps<"/[lang]"
 
   return (
     <html lang={lang} dir={dir} className={ibmPlexSansArabic.variable} suppressHydrationWarning>
+      <head>
+        {/* The same discovery the HTTP Link header carries, for an agent that reads the HTML. */}
+        <link
+          rel="describedby"
+          type="text/plain"
+          href={`/${lang}/llms.txt`}
+          title={dictionary["llms.title"]}
+        />
+        <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
+        <link
+          rel="agent-skills"
+          type="application/json"
+          href="/.well-known/agent-skills/index.json"
+        />
+      </head>
       <body className="flex min-h-screen flex-col bg-background-body text-text-default">
         <LocaleProvider lang={lang} dictionary={dictionary}>
-          <RootProvider dir={dir} search={{ SearchDialog }}>
+          <RootProvider
+            dir={dir}
+            search={{ SearchDialog }}
+            i18n={{ locale: lang, translations: lang === "ar" ? fumadocsStrings : undefined }}
+          >
             <a
               href="#main"
               className="sr-only z-50 rounded-sm bg-background-white px-3 py-2 focus:not-sr-only focus:fixed focus:start-2 focus:top-2"
@@ -64,6 +90,10 @@ export default async function Layout({ children, params }: LayoutProps<"/[lang]"
             <Footer lang={lang} version={version} />
           </RootProvider>
         </LocaleProvider>
+        <script
+          // biome-ignore lint/security/noDangerouslySetInnerHtml: a fixed string, no user input
+          dangerouslySetInnerHTML={{ __html: WEBMCP_GUARD }}
+        />
       </body>
     </html>
   );

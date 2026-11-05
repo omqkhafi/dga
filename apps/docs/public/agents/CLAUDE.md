@@ -1,0 +1,3 @@
+<!-- BEGIN PLATFORM-CODE -->
+@AGENTS.md
+<!-- END PLATFORM-CODE -->

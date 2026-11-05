@@ -1,7 +1,6 @@
 "use client";
 
 import {
-  CheckmarkCircle02Icon,
   Moon02Icon,
   Sun03Icon,
   TextAlignLeftIcon,
@@ -10,76 +9,32 @@ import {
 import type { IconSvgElement } from "@hugeicons/react";
 import { cn } from "cn";
 import { useTheme } from "next-themes";
-import { useEffect, useId, useState } from "react";
+import { useEffect, useState } from "react";
 import { Icon } from "@/components/shell/icon";
+import { getDictionary, type Key, translate } from "@/lib/dictionary";
+import type { Locale } from "@/lib/i18n";
+import { dirOf } from "@/lib/i18n";
 import { useLocale, useT } from "@/lib/locale-context";
 import { Button } from "@/registry/bases/base/ui/button";
-import { FeaturedIcon } from "@/registry/bases/base/ui/featured-icon";
+import { ContentSwitcher, ContentSwitcherItem } from "@/registry/bases/base/ui/content-switcher";
+import { Field, FieldContent, FieldDescription, FieldLabel } from "@/registry/bases/base/ui/field";
+import { InlineAlert } from "@/registry/bases/base/ui/inline-alert";
+import { Input } from "@/registry/bases/base/ui/input";
 import { Link } from "@/registry/bases/base/ui/link";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/registry/bases/base/ui/select";
+import { Switch } from "@/registry/bases/base/ui/switch";
 import { StatusTag, Tag } from "@/registry/bases/base/ui/tag";
 
-type Dir = "ltr" | "rtl";
 type Mode = "light" | "dark";
 
-const COPY = {
-  ltr: {
-    lang: "en",
-    title: "Renew national address",
-    intro: "Update the address linked to your National ID.",
-    building: "Building number",
-    buildingValue: "7421",
-    postal: "Postal code",
-    postalValue: "12643",
-    district: "District",
-    districtValue: "Al Olaya, Riyadh",
-    tags: ["Residential", "Riyadh"],
-    status: "Address verified",
-    submit: "Submit request",
-    draft: "Save draft",
-    reference: "Reference RNA-24810",
-    notice: "Request received",
-    noticeBody: "We will message you within 2 working days.",
-    track: "Track request",
-  },
-  rtl: {
-    lang: "ar",
-    title: "تجديد العنوان الوطني",
-    intro: "حدّث العنوان المرتبط برقم هويتك الوطنية.",
-    building: "رقم المبنى",
-    buildingValue: "٧٤٢١",
-    postal: "الرمز البريدي",
-    postalValue: "١٢٦٤٣",
-    district: "الحي",
-    districtValue: "العليا، الرياض",
-    tags: ["سكني", "الرياض"],
-    status: "تم التحقق من العنوان",
-    submit: "إرسال الطلب",
-    draft: "حفظ المسودة",
-    reference: "رقم المرجع ٢٤٨١٠",
-    notice: "تم استلام طلبك",
-    noticeBody: "سنراسلك خلال يومي عمل.",
-    track: "تتبع الطلب",
-  },
-} as const;
-
-function Field({ label, value, className }: { label: string; value: string; className?: string }) {
-  const id = useId();
-  return (
-    <div className={cn("flex flex-col gap-1.5", className)}>
-      <label htmlFor={id} className="text-sm font-medium text-field-text-label">
-        {label}
-      </label>
-      <input
-        id={id}
-        defaultValue={value}
-        className="h-10 rounded-sm border border-field-border-default bg-field-background-default px-3 text-md text-field-text-filled outline-none transition-colors duration-150 hover:border-field-border-hovered focus-visible:outline-2 focus-visible:outline-offset-0 focus-visible:outline-border-black"
-      />
-    </div>
-  );
-}
-
-/** One group of toggle buttons: a real radio-like set, with aria-pressed. */
-function Toggle<T extends string>({
+/** A group of two options on the registry Content Switcher. */
+function Switcher<T extends string>({
   label,
   value,
   options,
@@ -91,61 +46,57 @@ function Toggle<T extends string>({
   onChange: (value: T) => void;
 }) {
   return (
-    <fieldset className="inline-flex rounded-sm bg-background-neutral-100 p-0.5">
-      <legend className="sr-only">{label}</legend>
+    <ContentSwitcher
+      size="sm"
+      aria-label={label}
+      value={value}
+      onValueChange={(next) => onChange(next as T)}
+    >
       {options.map((o) => (
-        <button
-          key={o.value}
-          type="button"
-          aria-pressed={o.value === value}
-          onClick={() => onChange(o.value)}
-          className={cn(
-            "inline-flex min-h-8 items-center gap-1.5 rounded-xs px-2.5 text-[0.8125rem] font-medium",
-            o.value === value
-              ? "bg-background-card text-text-default shadow-xs"
-              : "text-text-primary-paragraph hover:text-text-default",
-          )}
-        >
+        <ContentSwitcherItem key={o.value} value={o.value}>
           <Icon icon={o.icon} />
           {o.label}
-        </button>
+        </ContentSwitcherItem>
       ))}
-    </fieldset>
+    </ContentSwitcher>
   );
 }
 
 /**
- * A government service form in English or Arabic, light or dark, switched in place. The panel
+ * A government service form in English or Arabic, light or dark, switched in place. Every
+ * visible control is a registry component (Field, Input, Select, Switch, Tag, Inline Alert,
+ * Button). The card opens in the page language and the whole card, status text and calls to
+ * action included, follows the language switch: one language per view, never a mix. The panel
  * carries its own `dir` and `data-theme`, so only the card changes, not the page around it.
- * The notification under it always uses the other direction, so both scripts are on screen.
  */
 export function HeroCard() {
   const { resolvedTheme } = useTheme();
-  const { dir: pageDir, lang } = useLocale();
+  const { lang: pageLang } = useLocale();
   const t = useT();
-  // The card opens in the page language: Arabic on /ar, English on /en.
-  const [dir, setDir] = useState<Dir>(pageDir);
+  const [cardLang, setCardLang] = useState<Locale>(pageLang);
   const [chosen, setChosen] = useState<Mode | null>(null);
   const [mounted, setMounted] = useState(false);
   useEffect(() => setMounted(true), []);
   const mode: Mode = chosen ?? (mounted && resolvedTheme === "dark" ? "dark" : "light");
-  const other: Dir = dir === "ltr" ? "rtl" : "ltr";
-  const c = COPY[dir];
-  const n = COPY[other];
+  const dir = dirOf(cardLang);
+  const dictionary = getDictionary(cardLang);
+  const c = (key: Key) => translate(dictionary, key);
+  const districts = [c("hero.card.district1"), c("hero.card.district2"), c("hero.card.district3")];
+  const items = districts.map((label, i) => ({ value: String(i + 1), label }));
 
   return (
     <div className="flex min-w-0 flex-col gap-4">
       <div className="flex flex-wrap items-center gap-2">
-        <Toggle
+        <Switcher
           label={t("hero.language")}
-          value={dir}
-          onChange={setDir}
+          value={cardLang}
+          onChange={setCardLang}
           options={[
-            { value: "ltr", label: "English", icon: TextAlignLeftIcon },
-            { value: "rtl", label: "العربية", icon: TextAlignRightIcon },
+            { value: "en", label: t("hero.lang.en"), icon: TextAlignLeftIcon },
+            { value: "ar", label: t("hero.lang.ar"), icon: TextAlignRightIcon },
           ]}
         />
-        <Toggle
+        <Switcher
           label={t("hero.theme")}
           value={mode}
           onChange={setChosen}
@@ -159,7 +110,7 @@ export function HeroCard() {
       <div
         data-theme={mode}
         dir={dir}
-        lang={c.lang}
+        lang={cardLang}
         className={cn(
           mode === "dark" && "dark",
           "flex flex-col gap-6 rounded-lg border border-border-neutral-secondary bg-background-card p-6 text-text-default",
@@ -168,64 +119,81 @@ export function HeroCard() {
       >
         <header className="flex items-start justify-between gap-4">
           <div className="flex flex-col gap-1">
-            <h2 className="t-h3 text-text-display">{c.title}</h2>
-            <p className="text-sm text-text-primary-paragraph">{c.intro}</p>
+            <h2 className="t-h3 text-text-display">{c("hero.card.title")}</h2>
+            <p className="text-sm text-text-primary-paragraph">{c("hero.card.intro")}</p>
           </div>
           <StatusTag variant="success" size="sm">
-            {c.status}
+            {c("hero.card.status")}
           </StatusTag>
         </header>
 
         <form
           className="grid grid-cols-1 gap-4 sm:grid-cols-2"
           onSubmit={(e) => e.preventDefault()}
-          key={dir}
+          key={cardLang}
         >
-          <Field label={c.building} value={c.buildingValue} />
-          <Field label={c.postal} value={c.postalValue} />
-          <Field label={c.district} value={c.districtValue} className="sm:col-span-2" />
+          <Field name="building">
+            <FieldLabel>{c("hero.card.building")}</FieldLabel>
+            <Input inputMode="numeric" defaultValue={c("hero.card.buildingValue")} />
+            <FieldDescription>{c("hero.card.buildingHint")}</FieldDescription>
+          </Field>
+          <Field name="postal">
+            <FieldLabel>{c("hero.card.postal")}</FieldLabel>
+            <Input inputMode="numeric" defaultValue={c("hero.card.postalValue")} />
+          </Field>
+          <Field name="district" className="sm:col-span-2">
+            <FieldLabel>{c("hero.card.district")}</FieldLabel>
+            <Select items={items} defaultValue="1">
+              <SelectTrigger>
+                <SelectValue placeholder={c("hero.card.districtPlaceholder")} />
+              </SelectTrigger>
+              <SelectContent>
+                {items.map((item) => (
+                  <SelectItem key={item.value} value={item.value}>
+                    {item.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </Field>
+          <Field orientation="horizontal" className="items-center justify-between sm:col-span-2">
+            <FieldContent>
+              <FieldLabel>{c("hero.card.sms")}</FieldLabel>
+            </FieldContent>
+            <Switch name="sms" defaultChecked />
+          </Field>
           <div className="flex flex-wrap items-center gap-2 sm:col-span-2">
-            {c.tags.map((tag, i) => (
-              <Tag key={tag} variant="neutral" outlined={i === 1} size="sm">
-                {tag}
-              </Tag>
-            ))}
+            <Tag variant="neutral" size="sm">
+              {c("hero.card.tag1")}
+            </Tag>
+            <Tag variant="neutral" outlined size="sm">
+              {c("hero.card.tag2")}
+            </Tag>
           </div>
           <div className="flex flex-wrap items-center justify-between gap-3 border-t border-border-neutral-secondary pt-4 sm:col-span-2">
-            <span className="text-[0.8125rem] text-text-secondary-paragraph">{c.reference}</span>
+            <span className="text-[0.8125rem] text-text-secondary-paragraph">
+              {c("hero.card.reference")}
+            </span>
             <div className="flex gap-2">
               <Button variant="outline" type="button">
-                {c.draft}
+                {c("hero.card.draft")}
               </Button>
-              <Button type="submit">{c.submit}</Button>
+              <Button type="submit">{c("hero.card.submit")}</Button>
             </div>
           </div>
         </form>
-      </div>
 
-      <div
-        data-theme={mode}
-        dir={other}
-        lang={n.lang}
-        className={cn(
-          mode === "dark" && "dark",
-          "flex items-start gap-3 rounded-md border border-border-neutral-secondary bg-background-card p-4 text-text-default",
-        )}
-      >
-        <FeaturedIcon variant="success" size="md">
-          <Icon icon={CheckmarkCircle02Icon} />
-        </FeaturedIcon>
-        <div className="flex min-w-0 flex-1 flex-col gap-0.5">
-          <p className="text-md font-semibold text-text-display">{n.notice}</p>
-          <p className="text-sm text-text-primary-paragraph">{n.noticeBody}</p>
-        </div>
-        <Link
-          href={`/${lang}/docs/components/featured-icon`}
-          size="sm"
-          className="shrink-0 self-center"
+        <InlineAlert
+          variant="success"
+          title={c("hero.card.noticeTitle")}
+          actions={
+            <Link href={`/${pageLang}/docs/components/inline-alert`} size="sm" className="w-fit">
+              {c("hero.card.track")}
+            </Link>
+          }
         >
-          {n.track}
-        </Link>
+          {c("hero.card.noticeBody")}
+        </InlineAlert>
       </div>
       <p className="text-[0.8125rem] text-text-secondary-paragraph">{t("hero.note")}</p>
     </div>

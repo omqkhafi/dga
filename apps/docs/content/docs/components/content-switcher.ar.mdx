@@ -1,7 +1,7 @@
 ---
 title: Content Switcher
 description: "صف قصير من خيارين إلى أربعة يبدّل العرض تحته. ثلاثة أحجام ونسخة للألوان الداكنة، ويبقى خيار واحد مختارًا دائمًا."
-sourceHash: 8a82acbe8480
+sourceHash: e0fe11f1957f
 ---
 
 <Preview name="content-switcher-basic" title="مبدّل المحتوى" />
@@ -48,6 +48,12 @@ export function PeriodSwitcher() {
 يلائم `onColor` خلفية بلون العلامة: مسار أسود شفاف وخيار مختار أبيض.
 
 <Preview compact name="content-switcher-on-color" title="على لون العلامة" />
+
+### معطّل وبأيقونات ومُدار [#disabled-icons-and-controlled]
+
+يبقى الخيار المعطّل ظاهرًا ولا يمكن اختياره. ضع أيقونة أولًا في الخيار حين تفيد، ومرّر `value` مع `onValueChange` لتملك التحديد.
+
+<Preview compact name="content-switcher-states" title="معطّل وبأيقونات ومُدار" />
 
 ## RTL [#rtl]
 

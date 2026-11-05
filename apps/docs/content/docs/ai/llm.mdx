@@ -1,0 +1,54 @@
+---
+title: Docs for agents
+description: Every page as Markdown, plus llms.txt, llms-full.txt and llms.json for each language.
+---
+
+The docs are written for people and published for agents. Every page has a Markdown twin, and the whole site is indexed per language, so an agent never has to scrape HTML.
+
+## Endpoints
+
+| What | URL |
+| --- | --- |
+| One page | `/{lang}/docs/<slug>.md` |
+| Index of every page | `/{lang}/llms.txt` |
+| Every page in one file | `/{lang}/llms-full.txt` |
+| Every page as JSON | `/{lang}/llms.json` |
+| Agent skills | `/.well-known/agent-skills/index.json` |
+
+`{lang}` is `en` or `ar`. For example, the English Button page is `https://dga.omqkhafi.dev/en/docs/components/button.md`. The address without a language, `/llms.txt`, is English.
+
+Every Markdown page ends with a link to the `llms.txt` of its language.
+
+## Ask for Markdown
+
+Request a docs page with `Accept: text/markdown` and you get the Markdown twin at the same URL.
+
+```bash title="Terminal"
+curl -H "Accept: text/markdown" https://dga.omqkhafi.dev/en/docs/installation
+```
+
+The response carries `Vary: Accept`, so caches keep the HTML and the Markdown apart.
+
+## Discovery
+
+Pages also announce these files themselves.
+
+- An HTTP `Link` header with `describedby` for `llms.txt`, `sitemap` for the sitemap, `agent-skills` for the skills index, and an `alternate` for the page's Markdown twin.
+- The same relations as `<link>` tags in the page head.
+- `/webmcp.js`, which registers `search_docs`, `get_page` and `list_pages` in browsers that support WebMCP.
+
+## Use it
+
+Give an agent the index first, then let it open the pages it needs.
+
+```text title="Prompt"
+Read https://dga.omqkhafi.dev/en/llms.txt, then read the Button and Field pages
+and build a citizen service request form.
+```
+
+Each page's Copy page menu does the same: copy the Markdown, open it, or hand it to an assistant.
+
+## Related
+
+- [Set up your agent](/docs/ai/skills): the skill, AGENTS.md and CLAUDE.md.
+- [MCP server](/docs/ai/mcp): the shadcn MCP server over this registry.

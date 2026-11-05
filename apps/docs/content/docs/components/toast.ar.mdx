@@ -1,7 +1,7 @@
 ---
 title: Toast
 description: "رسالة قصيرة تظهر عند حافة الشاشة وتزول وحدها (في DGA: Notification Toast). خمسة أنواع وإجراء وزر إغلاق، وتُعلَن لقارئ الشاشة."
-sourceHash: 69c9ebc210ca
+sourceHash: f06a8acd907f
 ---
 
 <Preview name="toast-demo" title="إشعار منبثق" minHeight={340} />
@@ -59,6 +59,12 @@ export function SubmitButton() {
 اضغط زرًا لإضافة إشعار. يُعلَن `error` و`warning` فورًا (`priority: "high"`) وغيرهما بأدب. وللنجاح هنا إجراء.
 
 <Preview compact name="toast-demo" title="الأنواع" minHeight={340} />
+
+### المهلة والأولوية والإجراءات [#timeout-priority-and-actions]
+
+يُغلق الإشعار تلقائيًا بعد ست ثوانٍ. مرّر `timeout: 0` إلى `toast.add` ليبقى حتى يغلقه الشخص، و`actionProps` لإضافة زر. التحذيرات والأخطاء تستخدم `priority: "high"` فيعلنها قارئ الشاشة فورًا، وغيرها ينتظر دوره. يظهر ثلاثة إشعارات فقط في وقت واحد (`limit` على Toaster)، ويصطف الباقي خلفها.
+
+<Preview compact name="toast-behaviour" title="المهلة والأولوية والإجراءات" minHeight={340} />
 
 ## RTL [#rtl]
 

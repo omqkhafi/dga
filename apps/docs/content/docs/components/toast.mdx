@@ -20,7 +20,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
   return (
     <>
       {children}
-      <Toaster closeLabel="إغلاق" regionLabel="الإشعارات" />
+      <Toaster closeLabel="Close" regionLabel="Notifications" />
     </>
   );
 }
@@ -31,12 +31,12 @@ export function SubmitButton() {
       onClick={() =>
         toast.add({
           type: "success",
-          title: "تم إرسال الطلب",
-          description: "رقمك المرجعي ٢٤٨١٠.",
+          title: "Request submitted",
+          description: "Your reference number is 24810.",
         })
       }
     >
-      إرسال
+      Submit
     </Button>
   );
 }
@@ -58,6 +58,12 @@ Use a Toast to confirm something that just happened and needs no reply: a reques
 Press a button to add a toast. `error` and `warning` are announced at once (`priority: "high"`), the others politely. Success here has an action.
 
 <Preview compact name="toast-demo" title="Kinds" minHeight={340} />
+
+### Timeout, priority and actions
+
+A toast closes by itself after six seconds. Pass `timeout: 0` to `toast.add` to keep it until the person closes it, and `actionProps` to add a button. Warnings and errors use `priority: "high"`, so a screen reader announces them at once; the others wait their turn. Only three toasts show at once (`limit` on Toaster), and the rest queue behind them.
+
+<Preview compact name="toast-behaviour" title="Timeout, priority and actions" minHeight={340} />
 
 ## RTL
 

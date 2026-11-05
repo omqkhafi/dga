@@ -26,16 +26,16 @@ import {
 export function RequestActions() {
   return (
     <Menu>
-      <MenuTrigger render={<Button variant="outline" />}>الإجراءات</MenuTrigger>
+      <MenuTrigger render={<Button variant="outline" />}>Actions</MenuTrigger>
       <MenuContent>
         <MenuItem>
           <HugeiconsIcon icon={Edit02Icon} aria-hidden />
-          تعديل الطلب
+          Edit request
         </MenuItem>
         <MenuSeparator />
         <MenuItem>
           <HugeiconsIcon icon={Delete02Icon} aria-hidden />
-          سحب الطلب
+          Withdraw request
         </MenuItem>
       </MenuContent>
     </Menu>
@@ -67,6 +67,12 @@ MenuCheckboxItem turns something on or off. MenuRadioGroup with MenuRadioItem ch
 MenuSub opens a second list beside its item, on the end side. It opens with Enter, Space or the arrow that points at it, and closes with the opposite arrow.
 
 <Preview compact name="menu-submenu" title="Submenu" minHeight={300} />
+
+### Stay open and controlled
+
+A checkbox or radio item can set `closeOnClick={false}` so the menu stays open while the person changes several options. Pass `open` and `onOpenChange` to Menu to read or set its state. An ordinary item still closes the menu.
+
+<Preview compact name="menu-states" title="Stay open and controlled" minHeight={300} />
 
 ## RTL
 

@@ -1,7 +1,7 @@
 ---
 title: Dialog
 description: "نافذة فوق الصفحة لقرار أو مهمة قصيرة. ثلاثة عروض وزر إغلاق، ويُحبس التركيز فيها ثم يعود إلى الزر."
-sourceHash: 292cce8d875c
+sourceHash: 08fceb6ab4ec
 ---
 
 <Preview name="dialog-basic" title="نافذة حوار" minHeight={360} />
@@ -68,6 +68,18 @@ export function CancelRequest() {
 ضع الحقول في DialogBody. وتُمرَّر النافذة إن زاد طولها على الشاشة. ويُسمّى Field داخلها ويُربط كالمعتاد.
 
 <Preview compact name="dialog-form" title="مع نموذج" minHeight={480} />
+
+### يجب الرد عليه [#must-be-answered]
+
+اضبط `disablePointerDismissal` على Dialog لقرار لا يمكن تخطيه: لا يغلق النقر خارج النافذة النافذةَ بعد الآن، ويظل Escape يغلقها. اقرنه بـ `showCloseButton={false}` فلا يبقى للخروج إلا الإجراءات في التذييل.
+
+<Preview compact name="dialog-required" title="يجب الرد عليه" minHeight={360} />
+
+### مُدار [#controlled]
+
+مرّر `open` و`onOpenChange` لتملك الحالة: افتح النافذة من شيفرتك، وأغلقها حين ينتهي الطلب. الزر المشغّل اختياري.
+
+<Preview compact name="dialog-controlled" title="مُدار" minHeight={360} />
 
 ## RTL [#rtl]
 

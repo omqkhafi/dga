@@ -1,7 +1,7 @@
 ---
 title: Drawer
 description: "لوحة تنزلق من بداية الشاشة أو نهايتها أو أعلاها أو أسفلها (في DGA: Slideout Menu). بيضاء أو رمادية، وتُغلق بالسحب، وتنعكس مع اتجاه الصفحة."
-sourceHash: 05c45a7fe240
+sourceHash: d6b2eb69c912
 ---
 
 <Preview name="drawer-sides" title="جهات اللوحة" minHeight={420} />
@@ -66,6 +66,12 @@ export function FilterDrawer() {
 النمط الرمادي، ولوحة `start` فيها قائمة روابط. والروابط أزرار عادية تعرض `<a>`.
 
 <Preview compact name="drawer-nav" title="التنقل" minHeight={420} />
+
+### مُدار، دون زر في الزاوية [#controlled]
+
+مرّر `open` و`onOpenChange` لفتح الدرج من شيفرتك، واضبط `showCloseButton={false}` حين يحمل التذييل إجراء إغلاق أصلًا. ويظل Escape والنقر على الصفحة خلفه يغلقانه.
+
+<Preview compact name="drawer-controlled" title="مُدار" minHeight={420} />
 
 ## RTL [#rtl]
 

@@ -91,7 +91,7 @@ export default async function Page(props: PageProps<"/[lang]/docs/[[...slug]]">)
                   </p>
                 ) : null}
               </div>
-              {isComponent ? <Thumb slug={slug} /> : null}
+              {isComponent ? <Thumb slug={slug} lang={lang} /> : null}
             </div>
             <p className="-mt-3 text-[0.8125rem] text-text-secondary-paragraph">
               {version ? t("page.version", { version }) : t("release.unreleased")}
@@ -109,20 +109,7 @@ export default async function Page(props: PageProps<"/[lang]/docs/[[...slug]]">)
                 </>
               ) : null}
             </p>
-            <div className="flex flex-wrap items-center justify-between gap-x-6 gap-y-3">
-              {links.length > 0 ? (
-                <ul className="flex flex-wrap gap-x-6 gap-y-1">
-                  {links.map((l) => (
-                    <li key={l.label}>
-                      <Link size="sm" variant="neutral" external href={l.href}>
-                        {l.label}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              ) : (
-                <span />
-              )}
+            <div className="flex justify-end">
               <CopyPage markdownUrl={markdownUrl} />
             </div>
           </header>
@@ -152,6 +139,29 @@ export default async function Page(props: PageProps<"/[lang]/docs/[[...slug]]">)
                       >
                         {p.data.title}
                       </Button>
+                    </li>
+                  ))}
+                </ul>
+              </nav>
+            ) : null}
+            {links.length > 0 ? (
+              <nav aria-label={t("page.references")} className="flex flex-col gap-2">
+                <h2 className="text-sm font-semibold text-text-default">{t("page.references")}</h2>
+                <p className="text-[0.8125rem] text-text-secondary-paragraph">
+                  {t("page.referencesNote")}
+                </p>
+                <ul className="flex flex-wrap gap-x-6 gap-y-1">
+                  {links.map((l) => (
+                    <li key={l.label}>
+                      <Link
+                        size="sm"
+                        variant="neutral"
+                        external
+                        externalLabel={t("newTab")}
+                        href={l.href}
+                      >
+                        {l.label}
+                      </Link>
                     </li>
                   ))}
                 </ul>
@@ -203,6 +213,7 @@ export default async function Page(props: PageProps<"/[lang]/docs/[[...slug]]">)
               size="sm"
               variant="neutral"
               external
+              externalLabel={t("newTab")}
               href={`${repo}/blob/${gitConfig.branch}/apps/docs/content/docs/${page.path}`}
             >
               {t("page.edit")}
@@ -244,6 +255,13 @@ export async function generateMetadata(
       url: `${siteUrl}${page.url}`,
       locale: params.lang === "ar" ? "ar_SA" : "en_US",
     },
-    alternates: { canonical: page.url, languages },
+    alternates: {
+      canonical: page.url,
+      languages,
+      // The page's Markdown twin, for an agent that reads the HTML head.
+      types: {
+        "text/markdown": `/${params.lang}/docs${rest ? `/${rest}` : "/index"}.md`,
+      },
+    },
   };
 }

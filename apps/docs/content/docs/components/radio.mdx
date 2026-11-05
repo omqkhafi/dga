@@ -21,17 +21,17 @@ export function ContactField() {
   return (
     <Field name="contact">
       <FieldSet render={<RadioGroup defaultValue="sms" />}>
-        <FieldLegend>وسيلة التواصل المفضلة</FieldLegend>
+        <FieldLegend>Preferred contact method</FieldLegend>
         <FieldItem>
           <FieldLabel>
             <Radio value="sms" />
-            رسالة نصية
+            Text message
           </FieldLabel>
         </FieldItem>
         <FieldItem>
           <FieldLabel>
             <Radio value="email" />
-            البريد الإلكتروني
+            Email
           </FieldLabel>
         </FieldItem>
       </FieldSet>

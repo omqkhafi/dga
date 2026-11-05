@@ -24,17 +24,17 @@ import {
 } from "@/components/ui/select";
 
 const services = [
-  { value: "issue", label: "إصدار رخصة" },
-  { value: "renew", label: "تجديد رخصة" },
+  { value: "issue", label: "Issue a licence" },
+  { value: "renew", label: "Renew a licence" },
 ];
 
 export function ServiceField() {
   return (
     <Field name="service">
-      <FieldLabel required>الخدمة</FieldLabel>
+      <FieldLabel required>Service</FieldLabel>
       <Select items={services} required>
         <SelectTrigger>
-          <SelectValue placeholder="اختر خدمة" />
+          <SelectValue placeholder="Choose a service" />
         </SelectTrigger>
         <SelectContent>
           {services.map((s) => (

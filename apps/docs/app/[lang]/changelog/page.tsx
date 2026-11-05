@@ -55,7 +55,12 @@ export default async function ChangelogPage({ params }: PageProps<"/[lang]/chang
           <div className="flex items-center justify-between py-2">
             <dt className="t-eyebrow text-text-secondary-paragraph">{t("changelog.source")}</dt>
             <dd>
-              <Link size="sm" external href={`${githubUrl}/blob/main/CHANGELOG.md`}>
+              <Link
+                size="sm"
+                external
+                externalLabel={t("newTab")}
+                href={`${githubUrl}/blob/main/CHANGELOG.md`}
+              >
                 CHANGELOG.md
               </Link>
             </dd>

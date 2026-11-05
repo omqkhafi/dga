@@ -26,7 +26,7 @@ import {
 } from "@/registry/bases/base/ui/select";
 import { Switch } from "@/registry/bases/base/ui/switch";
 import { Textarea } from "@/registry/bases/base/ui/textarea";
-import { Bi, useDirection } from "./bi";
+import { Bi, useLanguage } from "./bi";
 
 type Errors = Partial<Record<"name" | "id" | "service" | "details" | "consent", boolean>>;
 
@@ -36,7 +36,7 @@ type Errors = Partial<Record<"name" | "id" | "service" | "details" | "consent", 
  * in the view; in English every digit is Western.
  */
 export function ServiceRequestForm() {
-  const rtl = useDirection() === "rtl";
+  const rtl = useLanguage() === "ar";
   const [errors, setErrors] = useState<Errors>({ id: true });
   const [sent, setSent] = useState(false);
   const services = [

@@ -5,6 +5,36 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
 
 ## [Unreleased]
 
+## [0.4.1] - 2026-11-05
+
+Polish and AI Resources. The docs get a section for coding agents, and the home page, the preview chrome and the Phase 4 pages are tidied from the owner's review notes. No registry component changes.
+
+### Added
+
+- **AI Resources** in the sidebar, after Components, in English and Arabic:
+  - **Set up your agent** (`/docs/ai/skills`): the `platform-code` skill, published at `/.well-known/agent-skills/platform-code/SKILL.md` and listed in `/.well-known/agent-skills/index.json` with its `sha256` digest (discovery schema 0.2.0). It teaches the install commands, reading `llms.txt` and the Markdown twins, RTL with logical properties, DGA tokens only, the digit rules, reading Deviations before changing a colour, using only registry components and wrapping controls in Field. It documents the install into `.claude/skills/platform-code/` and `.agents/skills/platform-code/`, and offers `AGENTS.md` and a `CLAUDE.md` `@AGENTS.md` block as downloads, each between `BEGIN` and `END` markers.
+  - **Docs for agents** (`/docs/ai/llm`): every endpoint per language.
+  - **MCP server** (`/docs/ai/mcp`): the official shadcn MCP server over the `@dga` registry, `shadcn mcp init --client claude|cursor|vscode`, and manual `.mcp.json`, `.cursor/mcp.json` and `.vscode/mcp.json` configs.
+  - Linked from Installation and the docs index in both languages.
+- **Machine endpoints:**
+  - `/{lang}/llms.json` and `/llms.json` (slug, title, description, HTML and Markdown URLs); the AI pages are grouped under their own localised heading in `llms.txt`, and the preamble of each `llms.txt` is in its language.
+  - Every Markdown twin, `llms-full.txt` included, ends with a link to the `llms.txt` of its language.
+  - `Accept: text/markdown` on a docs HTML URL returns the Markdown twin, with `Vary: Accept`.
+  - An HTTP `Link` header (`describedby` for `llms.txt`, `sitemap`, `agent-skills`, and `alternate` for the page's Markdown) and the same relations as `<link>` tags.
+  - Both `llms.txt` files and the skills index are in the sitemap.
+  - `/webmcp.js` registers `search_docs`, `get_page` and `list_pages` in browsers that support WebMCP; an inline guard downloads it only when they do.
+- **Copy page menu** now has Copy Markdown, View Markdown, Open in ChatGPT, Open in Codex, Open in Claude, Open in Claude Code and Open in Cursor, in both languages, built on the registry Menu. The prompt points at the page's absolute Markdown URL.
+- **Self-contained state coverage** for Dialog (must be answered, controlled), Drawer (controlled, no corner button), Tooltip (no arrow, title, disabled), Menu (stay open, controlled), Tabs (manual activation, no divider, flush, controlled), Content Switcher (disabled, icons, controlled), Toast (timeout, priority, action, queue), Notification and Inline Alert (no icon, dismissed): a live preview and a section on each page, in both languages.
+- **Tests:** `bun test` covers the skill digest, the discovery relations, the Copy menu strings, the AI pages and locale purity (dictionaries and every docs page). `bun run test:e2e` covers the AI pages, the skills index and digest, `llms.json`, `llms.txt`, `Accept: text/markdown`, the `Link` header, WebMCP, the Copy menu, locale purity of 18 pages in both languages (previews included), the hero, the RTL comparison layout, the preview toolbar and centred previews.
+
+### Changed
+
+- **Home hero on real components:** the hero card is built from Field, Input, Select, Switch, Tag, Status Tag, Inline Alert, Button and Content Switcher, with no plain markup, and the "plain markup" note is gone. Its status text, labels and calls to action follow the page language and the language switch on the card, so a view is never a mix of English and Arabic.
+- **Locale purity:** English pages, shell, previews and hero contain no Arabic, and Arabic ones no English words, apart from code, package, prop and component names, URLs and product names. The home eyebrow is one language (the product name in that language), the 404 page shows one language, the code samples on English pages use English text, and the preview content follows the page language while the LTR/RTL toggle only changes the direction.
+- **RTL comparisons:** the LTR and RTL panels are laid out at their own width and fill the available width with no trailing dead space, and stack on narrow screens. This applies to every component page.
+- **Preview toolbar** is built from the registry Content Switcher and Button at one height (32px); the small icon buttons of the header and the area filter on the Deviations page use the registry Button, and the area names are in the page language.
+- **Single-trigger previews** (Dialog, Drawer, Menu) are centred in the preview.
+- **Outbound links as references only:** Base UI docs, DGA Figma and Source moved from the top of each component page to a References block at the end, which says that every state is documented on the page.
 ## [0.4.0] - 2026-11-05
 
 Phase 4: Interactive. Ten components on Base UI, each in English and Arabic, and a fix for how Input, Textarea, Select, Number Input and Search Box behave on hover, press and focus.

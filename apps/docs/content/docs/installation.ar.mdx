@@ -1,7 +1,7 @@
 ---
 title: التثبيت
 description: أضف نمط DGA إلى مشروع جديد أو قائم عبر سطر أوامر shadcn.
-sourceHash: 98d90fbe0747
+sourceHash: a54dc40eee7b
 ---
 
 يحتاج كود المنصات إلى مشروع React مع Tailwind CSS v4. تستخدم هذه الخطوات Next.js، وتُذكر الأطر الأخرى في الختام.
@@ -13,7 +13,7 @@ sourceHash: 98d90fbe0747
 
 ### أنشئ تطبيق Next.js
 
-```bash title="Terminal"
+```bash title="الطرفية"
 npx create-next-app@latest my-app --ts --tailwind --app
 ```
 
@@ -22,7 +22,7 @@ npx create-next-app@latest my-app --ts --tailwind --app
 
 ### هيّئ كود المنصات
 
-```bash title="Terminal"
+```bash title="الطرفية"
 npx shadcn@latest init https://dga.omqkhafi.dev/r/dga.json
 ```
 
@@ -46,7 +46,7 @@ npx shadcn@latest init https://dga.omqkhafi.dev/r/dga.json
 
 إن كان في المشروع ملف `components.json`، فأضف النمط مباشرة:
 
-```bash title="Terminal"
+```bash title="الطرفية"
 npx shadcn@latest add https://dga.omqkhafi.dev/r/dga-style.json
 ```
 
@@ -56,7 +56,7 @@ npx shadcn@latest add https://dga.omqkhafi.dev/r/dga-style.json
 
 لاستخدام رموز DGA دون أي مكوّن (مثلًا في نظام تصميم قائم)، أضف الرموز وحدها:
 
-```bash title="Terminal"
+```bash title="الطرفية"
 npx shadcn@latest add https://dga.omqkhafi.dev/r/dga-tokens.json
 ```
 
@@ -74,7 +74,7 @@ npx shadcn@latest add https://dga.omqkhafi.dev/r/dga-tokens.json
 
 ثم ثبّت العناصر بأسمائها:
 
-```bash title="Terminal"
+```bash title="الطرفية"
 npx shadcn@latest add @dga/button @dga/badge
 ```
 
@@ -89,6 +89,10 @@ npx shadcn@latest add @dga/button @dga/badge
 ## أطر أخرى [#other-frameworks]
 
 مع Vite أو React Router أو TanStack Start، شغّل أمر `init` نفسه. وخارج Next.js يثبّت سطر الأوامر الخط من `@fontsource/ibm-plex-sans-arabic` بدل `next/font`.
+
+## جهّز وكيل الذكاء الاصطناعي [#set-up-your-ai-agent]
+
+يبني وكيل البرمجة أفضل حين تكون قواعد المشروع أمامه. تثبّت صفحة [إعداد الوكيل](/docs/ai/skills) المهارة وملفي `AGENTS.md` و`CLAUDE.md`، وتسرد [التوثيق للوكلاء](/docs/ai/llm) كل صفحة بصيغة Markdown، ويتيح [خادم MCP](/docs/ai/mcp) لمساعد أن يتصفح مكوّنات `@dga` ويضيفها.
 
 ## ما يُثبَّت [#what-gets-installed]
 

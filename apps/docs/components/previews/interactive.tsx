@@ -72,8 +72,8 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/registry/bases/base/ui/tooltip";
-import { Bi, useBi, useDirection, useUi } from "./bi";
-import { Row, Stack } from "./kit";
+import { Bi, useBi, useLanguage, useUi } from "./bi";
+import { Center, Row, Stack } from "./kit";
 
 /** The close button's accessible name, from the locale dictionary. */
 function useClose() {
@@ -85,32 +85,34 @@ function useClose() {
 export function DialogBasic() {
   const close = useClose();
   return (
-    <Dialog>
-      <DialogTrigger render={<Button variant="outline" />}>
-        <Bi en="Cancel request" ar="إلغاء الطلب" />
-      </DialogTrigger>
-      <DialogContent closeLabel={close}>
-        <DialogHeader>
-          <DialogTitle>
-            <Bi en="Cancel this request?" ar="إلغاء هذا الطلب؟" />
-          </DialogTitle>
-          <DialogDescription>
-            <Bi
-              en="Request 24810 will be withdrawn. You can submit it again later."
-              ar="سيُسحب الطلب ٢٤٨١٠. يمكنك تقديمه مرة أخرى لاحقًا."
-            />
-          </DialogDescription>
-        </DialogHeader>
-        <DialogFooter>
-          <DialogClose render={<Button variant="outline" />}>
-            <Bi en="Keep request" ar="الإبقاء على الطلب" />
-          </DialogClose>
-          <DialogClose render={<Button destructive />}>
-            <Bi en="Cancel request" ar="إلغاء الطلب" />
-          </DialogClose>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
+    <Center>
+      <Dialog>
+        <DialogTrigger render={<Button variant="outline" />}>
+          <Bi en="Cancel request" ar="إلغاء الطلب" />
+        </DialogTrigger>
+        <DialogContent closeLabel={close}>
+          <DialogHeader>
+            <DialogTitle>
+              <Bi en="Cancel this request?" ar="إلغاء هذا الطلب؟" />
+            </DialogTitle>
+            <DialogDescription>
+              <Bi
+                en="Request 24810 will be withdrawn. You can submit it again later."
+                ar="سيُسحب الطلب ٢٤٨١٠. يمكنك تقديمه مرة أخرى لاحقًا."
+              />
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter>
+            <DialogClose render={<Button variant="outline" />}>
+              <Bi en="Keep request" ar="الإبقاء على الطلب" />
+            </DialogClose>
+            <DialogClose render={<Button destructive />}>
+              <Bi en="Cancel request" ar="إلغاء الطلب" />
+            </DialogClose>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+    </Center>
   );
 }
 
@@ -151,51 +153,53 @@ export function DialogForm() {
   const close = useClose();
   const t = useBi();
   return (
-    <Dialog>
-      <DialogTrigger render={<Button />}>
-        <Bi en="Update contact details" ar="تحديث بيانات التواصل" />
-      </DialogTrigger>
-      <DialogContent closeLabel={close}>
-        <DialogHeader>
-          <DialogTitle>
-            <Bi en="Contact details" ar="بيانات التواصل" />
-          </DialogTitle>
-          <DialogDescription>
-            <Bi
-              en="We use these to send updates about your request."
-              ar="نستخدمها لإرسال تحديثات عن طلبك."
-            />
-          </DialogDescription>
-        </DialogHeader>
-        <DialogBody>
-          <Field name="mobile">
-            <FieldLabel>
-              <Bi en="Mobile number" ar="رقم الجوال" />
-            </FieldLabel>
-            <Input
-              type="tel"
-              inputMode="tel"
-              dir="ltr"
-              placeholder={t("5X XXX XXXX", "٥X XXX XXXX")}
-            />
-          </Field>
-          <Field name="email">
-            <FieldLabel>
-              <Bi en="Email" ar="البريد الإلكتروني" />
-            </FieldLabel>
-            <Input type="email" dir="ltr" placeholder="name@example.gov.sa" />
-          </Field>
-        </DialogBody>
-        <DialogFooter>
-          <DialogClose render={<Button variant="outline" />}>
-            <Bi en="Cancel" ar="إلغاء" />
-          </DialogClose>
-          <DialogClose render={<Button />}>
-            <Bi en="Save" ar="حفظ" />
-          </DialogClose>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
+    <Center>
+      <Dialog>
+        <DialogTrigger render={<Button />}>
+          <Bi en="Update contact details" ar="تحديث بيانات التواصل" />
+        </DialogTrigger>
+        <DialogContent closeLabel={close}>
+          <DialogHeader>
+            <DialogTitle>
+              <Bi en="Contact details" ar="بيانات التواصل" />
+            </DialogTitle>
+            <DialogDescription>
+              <Bi
+                en="We use these to send updates about your request."
+                ar="نستخدمها لإرسال تحديثات عن طلبك."
+              />
+            </DialogDescription>
+          </DialogHeader>
+          <DialogBody>
+            <Field name="mobile">
+              <FieldLabel>
+                <Bi en="Mobile number" ar="رقم الجوال" />
+              </FieldLabel>
+              <Input
+                type="tel"
+                inputMode="tel"
+                dir="ltr"
+                placeholder={t("5X XXX XXXX", "٥X XXX XXXX")}
+              />
+            </Field>
+            <Field name="email">
+              <FieldLabel>
+                <Bi en="Email" ar="البريد الإلكتروني" />
+              </FieldLabel>
+              <Input type="email" dir="ltr" placeholder="name@example.gov.sa" />
+            </Field>
+          </DialogBody>
+          <DialogFooter>
+            <DialogClose render={<Button variant="outline" />}>
+              <Bi en="Cancel" ar="إلغاء" />
+            </DialogClose>
+            <DialogClose render={<Button />}>
+              <Bi en="Save" ar="حفظ" />
+            </DialogClose>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+    </Center>
   );
 }
 
@@ -254,32 +258,34 @@ const NAV = [
 export function DrawerNav() {
   const close = useClose();
   return (
-    <Drawer side="start">
-      <DrawerTrigger render={<Button variant="outline" />}>
-        <Bi en="Open menu" ar="فتح القائمة" />
-      </DrawerTrigger>
-      <DrawerContent tone="gray" closeLabel={close}>
-        <DrawerHeader>
-          <DrawerTitle>
-            <Bi en="Services" ar="الخدمات" />
-          </DrawerTitle>
-        </DrawerHeader>
-        <nav aria-label="Main" className="flex flex-col gap-1">
-          {NAV.map((item) => (
-            <Button
-              key={item.en}
-              variant="transparent"
-              nativeButton={false}
-              render={<a href="#top" />}
-              className="justify-start"
-            >
-              <HugeiconsIcon icon={item.icon} data-icon="inline-start" />
-              <Bi en={item.en} ar={item.ar} />
-            </Button>
-          ))}
-        </nav>
-      </DrawerContent>
-    </Drawer>
+    <Center>
+      <Drawer side="start">
+        <DrawerTrigger render={<Button variant="outline" />}>
+          <Bi en="Open menu" ar="فتح القائمة" />
+        </DrawerTrigger>
+        <DrawerContent tone="gray" closeLabel={close}>
+          <DrawerHeader>
+            <DrawerTitle>
+              <Bi en="Services" ar="الخدمات" />
+            </DrawerTitle>
+          </DrawerHeader>
+          <nav aria-label="Main" className="flex flex-col gap-1">
+            {NAV.map((item) => (
+              <Button
+                key={item.en}
+                variant="transparent"
+                nativeButton={false}
+                render={<a href="#top" />}
+                className="justify-start"
+              >
+                <HugeiconsIcon icon={item.icon} data-icon="inline-start" />
+                <Bi en={item.en} ar={item.ar} />
+              </Button>
+            ))}
+          </nav>
+        </DrawerContent>
+      </Drawer>
+    </Center>
   );
 }
 
@@ -376,33 +382,35 @@ function ItemIcon({ icon }: { icon: typeof Edit02Icon }) {
 export function MenuBasic() {
   const t = useBi();
   return (
-    <Menu>
-      <MenuTrigger render={<Button variant="outline" />}>
-        <Bi en="Actions" ar="الإجراءات" />
-      </MenuTrigger>
-      <MenuContent>
-        <MenuItem>
-          <ItemIcon icon={Edit02Icon} />
-          <Bi en="Edit request" ar="تعديل الطلب" />
-          <MenuShortcut>E</MenuShortcut>
-        </MenuItem>
-        <MenuItem>
-          <ItemIcon icon={Copy01Icon} />
-          <Bi en="Duplicate" ar="نسخ" />
-          <MenuShortcut>D</MenuShortcut>
-        </MenuItem>
-        <MenuItem disabled>
-          <ItemIcon icon={Share08Icon} />
-          <Bi en="Share" ar="مشاركة" />
-        </MenuItem>
-        <MenuSeparator />
-        <MenuItem>
-          <ItemIcon icon={Delete02Icon} />
-          <Bi en="Withdraw request" ar="سحب الطلب" />
-        </MenuItem>
-      </MenuContent>
-      <span className="sr-only">{t("Menu", "قائمة")}</span>
-    </Menu>
+    <Center>
+      <Menu>
+        <MenuTrigger render={<Button variant="outline" />}>
+          <Bi en="Actions" ar="الإجراءات" />
+        </MenuTrigger>
+        <MenuContent>
+          <MenuItem>
+            <ItemIcon icon={Edit02Icon} />
+            <Bi en="Edit request" ar="تعديل الطلب" />
+            <MenuShortcut>E</MenuShortcut>
+          </MenuItem>
+          <MenuItem>
+            <ItemIcon icon={Copy01Icon} />
+            <Bi en="Duplicate" ar="نسخ" />
+            <MenuShortcut>D</MenuShortcut>
+          </MenuItem>
+          <MenuItem disabled>
+            <ItemIcon icon={Share08Icon} />
+            <Bi en="Share" ar="مشاركة" />
+          </MenuItem>
+          <MenuSeparator />
+          <MenuItem>
+            <ItemIcon icon={Delete02Icon} />
+            <Bi en="Withdraw request" ar="سحب الطلب" />
+          </MenuItem>
+        </MenuContent>
+        <span className="sr-only">{t("Menu", "قائمة")}</span>
+      </Menu>
+    </Center>
   );
 }
 
@@ -410,73 +418,77 @@ export function MenuGroups() {
   const [alerts, setAlerts] = useState(true);
   const [view, setView] = useState("list");
   return (
-    <Menu>
-      <MenuTrigger render={<Button variant="outline" />}>
-        <HugeiconsIcon icon={Settings02Icon} data-icon="inline-start" />
-        <Bi en="View" ar="العرض" />
-      </MenuTrigger>
-      <MenuContent>
-        <MenuGroup>
-          <MenuLabel>
-            <Bi en="Layout" ar="التخطيط" />
-          </MenuLabel>
-          <MenuRadioGroup value={view} onValueChange={setView}>
-            <MenuRadioItem value="list">
-              <Bi en="List" ar="قائمة" />
-            </MenuRadioItem>
-            <MenuRadioItem value="cards">
-              <Bi en="Cards" ar="بطاقات" />
-            </MenuRadioItem>
-          </MenuRadioGroup>
-        </MenuGroup>
-        <MenuSeparator />
-        <MenuGroup>
-          <MenuLabel>
-            <Bi en="Notifications" ar="الإشعارات" />
-          </MenuLabel>
-          <MenuCheckboxItem checked={alerts} onCheckedChange={setAlerts}>
-            <Bi en="Request updates" ar="تحديثات الطلب" />
-          </MenuCheckboxItem>
-        </MenuGroup>
-      </MenuContent>
-    </Menu>
+    <Center>
+      <Menu>
+        <MenuTrigger render={<Button variant="outline" />}>
+          <HugeiconsIcon icon={Settings02Icon} data-icon="inline-start" />
+          <Bi en="View" ar="العرض" />
+        </MenuTrigger>
+        <MenuContent>
+          <MenuGroup>
+            <MenuLabel>
+              <Bi en="Layout" ar="التخطيط" />
+            </MenuLabel>
+            <MenuRadioGroup value={view} onValueChange={setView}>
+              <MenuRadioItem value="list">
+                <Bi en="List" ar="قائمة" />
+              </MenuRadioItem>
+              <MenuRadioItem value="cards">
+                <Bi en="Cards" ar="بطاقات" />
+              </MenuRadioItem>
+            </MenuRadioGroup>
+          </MenuGroup>
+          <MenuSeparator />
+          <MenuGroup>
+            <MenuLabel>
+              <Bi en="Notifications" ar="الإشعارات" />
+            </MenuLabel>
+            <MenuCheckboxItem checked={alerts} onCheckedChange={setAlerts}>
+              <Bi en="Request updates" ar="تحديثات الطلب" />
+            </MenuCheckboxItem>
+          </MenuGroup>
+        </MenuContent>
+      </Menu>
+    </Center>
   );
 }
 
 export function MenuSubmenu() {
   return (
-    <Menu>
-      <MenuTrigger render={<Button variant="outline" />}>
-        <Bi en="Move request" ar="نقل الطلب" />
-      </MenuTrigger>
-      <MenuContent>
-        <MenuItem>
-          <ItemIcon icon={UserIcon} />
-          <Bi en="Assign to me" ar="إسناد إليّ" />
-        </MenuItem>
-        <MenuSub>
-          <MenuSubTrigger>
-            <ItemIcon icon={FolderOpenIcon} />
-            <Bi en="Move to" ar="نقل إلى" />
-          </MenuSubTrigger>
-          <MenuSubContent>
-            <MenuItem>
-              <Bi en="Inbox" ar="الوارد" />
-            </MenuItem>
-            <MenuItem>
-              <Bi en="Under review" ar="قيد المراجعة" />
-            </MenuItem>
-            <MenuItem>
-              <Bi en="Archive" ar="الأرشيف" />
-            </MenuItem>
-          </MenuSubContent>
-        </MenuSub>
-        <MenuItem>
-          <ItemIcon icon={Calendar03Icon} />
-          <Bi en="Schedule" ar="جدولة" />
-        </MenuItem>
-      </MenuContent>
-    </Menu>
+    <Center>
+      <Menu>
+        <MenuTrigger render={<Button variant="outline" />}>
+          <Bi en="Move request" ar="نقل الطلب" />
+        </MenuTrigger>
+        <MenuContent>
+          <MenuItem>
+            <ItemIcon icon={UserIcon} />
+            <Bi en="Assign to me" ar="إسناد إليّ" />
+          </MenuItem>
+          <MenuSub>
+            <MenuSubTrigger>
+              <ItemIcon icon={FolderOpenIcon} />
+              <Bi en="Move to" ar="نقل إلى" />
+            </MenuSubTrigger>
+            <MenuSubContent>
+              <MenuItem>
+                <Bi en="Inbox" ar="الوارد" />
+              </MenuItem>
+              <MenuItem>
+                <Bi en="Under review" ar="قيد المراجعة" />
+              </MenuItem>
+              <MenuItem>
+                <Bi en="Archive" ar="الأرشيف" />
+              </MenuItem>
+            </MenuSubContent>
+          </MenuSub>
+          <MenuItem>
+            <ItemIcon icon={Calendar03Icon} />
+            <Bi en="Schedule" ar="جدولة" />
+          </MenuItem>
+        </MenuContent>
+      </Menu>
+    </Center>
   );
 }
 
@@ -809,7 +821,7 @@ export function NotificationKinds() {
 
 export function InlineAlertKinds() {
   const ui = useUi();
-  const dir = useDirection();
+  const arabic = useLanguage() === "ar";
   const kinds = [
     ["neutral", "Draft saved", "حُفظت المسودة", "You can continue later.", "يمكنك المتابعة لاحقًا."],
     [
@@ -841,7 +853,7 @@ export function InlineAlertKinds() {
       "تم رفض بطاقتك. جرّب بطاقة أخرى.",
     ],
   ] as const;
-  const rtl = dir === "rtl";
+  const rtl = arabic;
   return (
     <div className="grid gap-4 lg:grid-cols-2">
       {([false, true] as const).map((tinted) => (

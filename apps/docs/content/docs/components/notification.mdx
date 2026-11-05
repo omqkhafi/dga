@@ -18,12 +18,12 @@ export function MaintenanceNotice() {
   return (
     <Notification
       variant="warning"
-      title="تنبيه:"
+      title="Notice:"
       dismissible
-      dismissLabel="تجاهل"
-      action={<a href="/status">التفاصيل</a>}
+      dismissLabel="Dismiss"
+      action={<a href="/status">Details</a>}
     >
-      ستتوقف البوابة للصيانة يوم الجمعة.
+      The portal will be down for maintenance on Friday.
     </Notification>
   );
 }
@@ -44,6 +44,12 @@ Use a Notification at the top of a page or section for something that concerns a
 `variant` is `neutral`, `info`, `success`, `warning` or `critical`. Each is a 50 tint with text and an icon in the kind's colour. Dismiss one to see it go.
 
 <Preview compact name="notification-kinds" title="Kinds" />
+
+### Without an icon and dismissed
+
+`hideIcon` removes the status icon: the colour and the bold title still carry the kind. After the person dismisses a notification `onDismiss` runs and nothing is rendered in its place, so keep the state in the page if you need to bring it back.
+
+<Preview compact name="notification-states" title="Without an icon and dismissed" />
 
 ## RTL
 

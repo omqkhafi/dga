@@ -26,19 +26,22 @@ import {
   type Viewport,
 } from "@/lib/preview";
 import { Button } from "@/registry/bases/base/ui/button";
+import { ContentSwitcher, ContentSwitcherItem } from "@/registry/bases/base/ui/content-switcher";
 
 type Option<T extends string> = { value: T; label: string; icon: IconSvgElement };
 
+/**
+ * One group of the toolbar, on the registry Content Switcher (32px). The label is the group's
+ * accessible name; icon-only groups keep each option's name as aria-label and title.
+ */
 function Segmented<T extends string>({
-  label,
   legend,
   value,
   options,
   onChange,
   iconOnly = false,
 }: {
-  label: string;
-  /** Visible to screen readers: the name of the group. */
+  /** The name of the group, for screen readers. */
   legend: string;
   value: T;
   options: Option<T>[];
@@ -47,34 +50,25 @@ function Segmented<T extends string>({
   iconOnly?: boolean;
 }) {
   return (
-    <fieldset className="inline-flex items-center rounded-sm border border-border bg-background p-0.5">
-      <legend className="sr-only">{legend}</legend>
+    <ContentSwitcher
+      size="sm"
+      aria-label={legend}
+      value={value}
+      onValueChange={(next) => onChange(next as T)}
+    >
       {options.map((option) => (
-        <label
+        <ContentSwitcherItem
           key={option.value}
+          value={option.value}
           title={option.label}
-          className={cn(
-            "inline-flex min-h-7 cursor-pointer items-center gap-1 rounded-xs px-2 py-1 text-[0.8125rem] font-medium text-muted-foreground transition-colors",
-            "has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-border-black",
-            option.value === value
-              ? "bg-primary text-primary-foreground"
-              : "hover:bg-accent hover:text-accent-foreground active:bg-button-background-neutral-pressed",
-          )}
+          aria-label={option.label}
+          className="px-2.5"
         >
-          <input
-            type="radio"
-            className="sr-only"
-            name={label}
-            value={option.value}
-            checked={option.value === value}
-            onChange={() => onChange(option.value)}
-          />
           <Icon icon={option.icon} />
-          <span className={iconOnly ? "sr-only" : "hidden sm:inline"}>{option.label}</span>
-          {iconOnly ? null : <span className="sr-only sm:hidden">{option.label}</span>}
-        </label>
+          {iconOnly ? null : <span className="hidden sm:inline">{option.label}</span>}
+        </ContentSwitcherItem>
       ))}
-    </fieldset>
+    </ContentSwitcher>
   );
 }
 
@@ -140,7 +134,8 @@ export function PreviewFrame({
   title,
   dir,
   theme,
-  width,
+  width: widthProp,
+  fill = false,
   minHeight = 64,
   chrome = 0,
   reloadKey = 0,
@@ -151,8 +146,10 @@ export function PreviewFrame({
   title: string;
   dir: Direction;
   theme: Theme;
-  /** Viewport width the content is laid out at. */
+  /** Viewport width the content is laid out at. Ignored when `fill` is set. */
   width: number;
+  /** Lay the content out at the container's own width, so the frame has no unused space. */
+  fill?: boolean;
   minHeight?: number;
   /** Pixels of the container the frame must leave free (for a device outline). */
   chrome?: number;
@@ -164,23 +161,25 @@ export function PreviewFrame({
 }) {
   const frame = useRef<HTMLIFrameElement>(null);
   const box = useRef<HTMLDivElement>(null);
-  const { dir: pageDir } = useLocale();
+  const { dir: pageDir, lang } = useLocale();
   const near = useNear(box);
   const [available, setAvailable] = useState(0);
-  const cacheKey = `${name}:${width}`;
+  // A filled frame is laid out at the width it is given (never narrower than a small phone).
+  const width = fill ? Math.max(240, Math.floor(available) || widthProp) : widthProp;
+  const cacheKey = `${name}:${fill ? "fill" : width}`;
   const [height, setHeight] = useState(() => heightCache.get(cacheKey) ?? minHeight);
   const [loaded, setLoaded] = useState(false);
   // The source is built once, in the theme the docs have when the frame first loads.
   const [src, setSrc] = useState<string | null>(null);
   // biome-ignore lint/correctness/useExhaustiveDependencies: the first theme and direction are enough for src.
   useEffect(() => {
-    if (near && src === null) setSrc(`/preview/${name}?dir=${dir}&theme=${theme}`);
+    if (near && src === null) setSrc(`/preview/${name}?dir=${dir}&theme=${theme}&lang=${lang}`);
   }, [near, src]);
   // biome-ignore lint/correctness/useExhaustiveDependencies: reload on key change only.
   useEffect(() => {
     if (reloadKey > 0) {
       setLoaded(false);
-      setSrc(`/preview/${name}?dir=${dir}&theme=${theme}&r=${reloadKey}`);
+      setSrc(`/preview/${name}?dir=${dir}&theme=${theme}&lang=${lang}&r=${reloadKey}`);
     }
   }, [reloadKey]);
 
@@ -211,10 +210,10 @@ export function PreviewFrame({
   }, [minHeight, cacheKey]);
 
   const post = () => {
-    const message: PreviewMessage = { type: "dga-preview:set", dir, theme };
+    const message: PreviewMessage = { type: "dga-preview:set", dir, theme, lang };
     frame.current?.contentWindow?.postMessage(message, window.location.origin);
   };
-  useEffect(post, [dir, theme]);
+  useEffect(post, [dir, theme, lang]);
 
   const scale = available > 0 ? Math.min(1, (available - chrome) / width) : 1;
   const scaled = height * scale;
@@ -291,7 +290,7 @@ export function Preview({
 }) {
   const docsTheme = useDocsTheme();
   const t = useT();
-  const { dir: pageDir } = useLocale();
+  const { dir: pageDir, lang } = useLocale();
   const { directions, themes, viewports } = useOptions();
   // The preview opens in the page's own direction: RTL on Arabic pages.
   const initialDir: Direction = defaultDir ?? pageDir;
@@ -332,7 +331,7 @@ export function Preview({
 
   const label = title ?? name;
   const other: Direction = dir === "ltr" ? "rtl" : "ltr";
-  const fullscreenHref = `/preview/${name}?dir=${dir}&theme=${activeTheme}`;
+  const fullscreenHref = `/preview/${name}?dir=${dir}&theme=${activeTheme}&lang=${lang}`;
 
   return (
     <figure
@@ -379,18 +378,16 @@ export function Preview({
           </div>
         </>
       ) : (
-        <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-1.5 border-b border-border bg-muted px-3 py-1.5">
+        <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-2 border-b border-border bg-muted px-3 py-2">
           <figcaption className="text-sm font-medium text-foreground">{label}</figcaption>
-          <div className="flex flex-wrap items-center gap-1.5">
+          <div className="flex flex-wrap items-center gap-2">
             <Segmented
-              label={`${name}-direction`}
               legend={t("preview.direction")}
               value={dir}
               options={directions}
               onChange={setDir}
             />
             <Segmented
-              label={`${name}-theme`}
               legend={t("preview.theme")}
               value={activeTheme}
               options={themes}
@@ -398,17 +395,16 @@ export function Preview({
               iconOnly
             />
             <Segmented
-              label={`${name}-viewport`}
               legend={t("preview.viewport")}
               value={viewport}
               options={viewports}
               onChange={setViewport}
               iconOnly
             />
-            <div className="flex items-center gap-0.5">
+            <div className="flex items-center gap-1">
               <Button
-                variant="subtle"
-                size="sm"
+                variant="outline"
+                size="md"
                 iconOnly
                 onClick={reset}
                 aria-label={t("preview.reset", { name: label })}
@@ -417,8 +413,8 @@ export function Preview({
                 <Icon icon={Refresh01Icon} />
               </Button>
               <Button
-                variant="subtle"
-                size="sm"
+                variant="outline"
+                size="md"
                 iconOnly
                 nativeButton={false}
                 aria-label={t("preview.fullscreen", { name: label })}
@@ -480,26 +476,29 @@ export function DirectionCompare({
   const t = useT();
   const theme = useDocsTheme() ?? "light";
   return (
-    <div className="not-prose my-6 grid gap-4 md:grid-cols-2">
-      {(["ltr", "rtl"] as const).map((dir) => (
-        <figure
-          key={dir}
-          className="overflow-hidden rounded-md border border-border bg-card"
-          data-preview-direction={dir}
-        >
-          <figcaption className="border-b border-border bg-muted px-3 py-1 text-[0.8125rem] font-medium text-foreground">
-            {dir === "ltr" ? t("preview.comparisonLtr") : t("preview.comparisonRtl")}
-          </figcaption>
-          <PreviewFrame
-            name={name}
-            title={`${title} (${dir.toUpperCase()})`}
-            dir={dir}
-            theme={theme}
-            width={VIEWPORTS.mobile.width}
-            minHeight={minHeight}
-          />
-        </figure>
-      ))}
+    <div className="not-prose @container my-6">
+      <div className="grid grid-cols-1 gap-4 @min-[36rem]:grid-cols-2">
+        {(["ltr", "rtl"] as const).map((dir) => (
+          <figure
+            key={dir}
+            className="overflow-hidden rounded-md border border-border bg-card"
+            data-preview-direction={dir}
+          >
+            <figcaption className="border-b border-border bg-muted px-3 py-1 text-[0.8125rem] font-medium text-foreground">
+              {dir === "ltr" ? t("preview.comparisonLtr") : t("preview.comparisonRtl")}
+            </figcaption>
+            <PreviewFrame
+              name={name}
+              title={`${title} (${dir.toUpperCase()})`}
+              dir={dir}
+              theme={theme}
+              width={VIEWPORTS.mobile.width}
+              minHeight={minHeight}
+              fill
+            />
+          </figure>
+        ))}
+      </div>
     </div>
   );
 }

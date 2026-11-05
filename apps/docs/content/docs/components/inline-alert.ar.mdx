@@ -1,7 +1,7 @@
 ---
 title: Inline Alert
 description: "رسالة داخل الصفحة بجانب ما تخصه. خمسة أنواع على تعبئة بيضاء أو مظللة وعنوان ونص وإجراءان على الأكثر وزر إغلاق."
-sourceHash: c16a181bce11
+sourceHash: 286fca01c439
 ---
 
 <Preview name="inline-alert-kinds" title="تنبيه مضمّن" />
@@ -45,6 +45,12 @@ export function DocumentsNeeded() {
 الأنواع الخمسة على تعبئة بيضاء (يسارًا) و`tinted` (يمينًا). ويمكن تجاهل تنبيهي المعلومة والتنبيه؛ وللنجاح والمدمّر إجراءات.
 
 <Preview compact name="inline-alert-kinds" title="أبيض ومظلل" />
+
+### دون أيقونة ومُغلق [#without-an-icon-and-dismissed]
+
+تزيل `hideIcon` أيقونة الحالة: ويبقى الشريط والعنوان حاملين للنوع. ويُعلَن التنبيه المدمّر أو التحذيري فورًا. وبعد إغلاقه تُستدعى `onDismiss` ولا يُعرض شيء مكانه.
+
+<Preview compact name="inline-alert-states" title="دون أيقونة ومُغلق" />
 
 ## RTL [#rtl]
 

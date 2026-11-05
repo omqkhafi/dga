@@ -75,17 +75,17 @@ export function StatusColors() {
               s.solid,
             )}
           >
-            {s.key}
+            <Bi ar={s.ar} en={s.en} />
           </span>
         ))}
         <span className="rounded-sm bg-primary px-3 py-1.5 text-sm font-medium text-primary-foreground">
-          primary
+          <Bi en="Primary" ar="أساسي" />
         </span>
         <span className="rounded-sm bg-background-secondary px-3 py-1.5 text-sm font-medium text-on-gold">
-          gold
+          <Bi en="Gold" ar="ذهبي" />
         </span>
         <span className="rounded-sm bg-tertiary px-3 py-1.5 text-sm font-medium text-oncolor-primary">
-          lavender
+          <Bi en="Lavender" ar="خزامي" />
         </span>
       </div>
     </div>

@@ -13,7 +13,7 @@ import { Avatar, AvatarGroup } from "@/registry/bases/base/ui/avatar";
 import { Divider } from "@/registry/bases/base/ui/divider";
 import { FeaturedIcon, type FeaturedIconProps } from "@/registry/bases/base/ui/featured-icon";
 import { Skeleton } from "@/registry/bases/base/ui/skeleton";
-import { Bi, useBi, useDirection } from "./bi";
+import { Bi, useBi, useLanguage } from "./bi";
 import { OnColorSurface, Row, Stack } from "./kit";
 
 export function DividerDemo() {
@@ -49,7 +49,7 @@ const SIZES = [24, 32, 40, 48, 64, 80, 120] as const;
 
 export function AvatarDemo() {
   const t = useBi();
-  const rtl = useDirection() === "rtl";
+  const rtl = useLanguage() === "ar";
   return (
     <Stack>
       <Row label={<Bi en="Image" ar="صورة" />}>
@@ -79,13 +79,13 @@ export function AvatarDemo() {
       <Row label={<Bi en="Avatar group: stacked and spaced" ar="مجموعة صور: متراكبة ومتباعدة" />}>
         <AvatarGroup>
           <Avatar size={32} src="/avatar-sample.svg" alt={t("Noura", "نورة")} />
-          <Avatar size={32} initials="AK" />
+          <Avatar size={32} initials={t("AK", "أ ك")} />
           <Avatar size={32} initials="SM" />
           <Avatar size={32} initials="+3" aria-label={t("3 more", "3 أخرى")} />
         </AvatarGroup>
         <AvatarGroup stacked={false}>
           <Avatar size={32} src="/avatar-sample.svg" alt={t("Noura", "نورة")} />
-          <Avatar size={32} initials="AK" />
+          <Avatar size={32} initials={t("AK", "أ ك")} />
           <Avatar size={32}>
             <HugeiconsIcon icon={UserIcon} className="size-6 text-icon-default" aria-hidden />
           </Avatar>

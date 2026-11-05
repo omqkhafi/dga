@@ -1,0 +1,108 @@
+---
+title: MCP server
+description: Use the official shadcn MCP server with the @dga registry to browse, search and install components from an assistant.
+---
+
+Platform Code is a shadcn registry, so the official shadcn MCP server works with it as is. There is no custom server: the assistant asks the shadcn server, and the server reads `@dga`.
+
+## Register the registry
+
+Add `@dga` to `components.json`. `npx shadcn@latest init https://dga.omqkhafi.dev/r/dga.json` already does this.
+
+```json title="components.json"
+{
+  "registries": {
+    "@dga": "https://dga.omqkhafi.dev/r/{name}.json"
+  }
+}
+```
+
+## Set up the server
+
+The CLI writes the configuration for your client.
+
+<Tabs items={["Claude Code", "Cursor", "VS Code"]}>
+<Tab value="Claude Code">
+
+```bash title="Terminal"
+npx shadcn@latest mcp init --client claude
+```
+
+</Tab>
+<Tab value="Cursor">
+
+```bash title="Terminal"
+npx shadcn@latest mcp init --client cursor
+```
+
+</Tab>
+<Tab value="VS Code">
+
+```bash title="Terminal"
+npx shadcn@latest mcp init --client vscode
+```
+
+</Tab>
+</Tabs>
+
+## Configure by hand
+
+Or add the server to the file your client reads. The command is `npx` with the arguments `shadcn@latest` and `mcp`.
+
+<Tabs items={["Claude Code", "Cursor", "VS Code"]}>
+<Tab value="Claude Code">
+
+```json title=".mcp.json"
+{
+  "mcpServers": {
+    "shadcn": {
+      "command": "npx",
+      "args": ["shadcn@latest", "mcp"]
+    }
+  }
+}
+```
+
+</Tab>
+<Tab value="Cursor">
+
+```json title=".cursor/mcp.json"
+{
+  "mcpServers": {
+    "shadcn": {
+      "command": "npx",
+      "args": ["shadcn@latest", "mcp"]
+    }
+  }
+}
+```
+
+</Tab>
+<Tab value="VS Code">
+
+```json title=".vscode/mcp.json"
+{
+  "servers": {
+    "shadcn": {
+      "command": "npx",
+      "args": ["shadcn@latest", "mcp"]
+    }
+  }
+}
+```
+
+</Tab>
+</Tabs>
+
+Restart the client after you save the file.
+
+## Example prompts
+
+- "List the components in the @dga registry."
+- "Add @dga/button and @dga/field to this project."
+- "Build a citizen service request form with @dga components, in Arabic and English."
+
+## Related
+
+- [Set up your agent](/docs/ai/skills): the rules the assistant follows once it can install components.
+- [Docs for agents](/docs/ai/llm): the Markdown and JSON the assistant can read.

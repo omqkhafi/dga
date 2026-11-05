@@ -73,7 +73,7 @@ export function ComponentContrast({
                     scope="row"
                     className="px-3 py-1.5 text-start text-[0.8125rem] font-normal text-text-default"
                   >
-                    <span dir="ltr" className="inline-block">
+                    <span dir="ltr" lang="en" className="inline-block">
                       {row.state}
                     </span>
                   </th>

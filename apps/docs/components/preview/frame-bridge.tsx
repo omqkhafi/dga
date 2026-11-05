@@ -10,7 +10,7 @@ export function FrameBridge() {
     const onMessage = (event: MessageEvent) => {
       if (event.origin !== window.location.origin || !isPreviewMessage(event.data)) return;
       if (event.data.type === "dga-preview:set")
-        applyPreviewState(root, event.data.dir, event.data.theme);
+        applyPreviewState(root, event.data.dir, event.data.theme, event.data.lang);
     };
     window.addEventListener("message", onMessage);
 
@@ -31,13 +31,14 @@ export function FrameBridge() {
   return null;
 }
 
-/** Inline script that applies ?dir=&theme= before first paint, to avoid a flash. */
+/** Inline script that applies ?dir=&theme=&lang= before first paint, to avoid a flash. */
 export const initialStateScript = `(() => {
   const p = new URLSearchParams(location.search);
   const dir = p.get("dir") === "rtl" ? "rtl" : "ltr";
   const theme = p.get("theme") === "dark" ? "dark" : "light";
   const r = document.documentElement;
-  r.dir = dir; r.lang = dir === "rtl" ? "ar" : "en"; r.dataset.theme = theme;
+  const lang = p.get("lang") === "ar" ? "ar" : p.get("lang") === "en" ? "en" : dir === "rtl" ? "ar" : "en";
+  r.dir = dir; r.lang = lang; r.dataset.theme = theme;
   r.classList.toggle("dark", theme === "dark"); r.style.colorScheme = theme;
 })();`;
 

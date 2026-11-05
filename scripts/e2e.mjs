@@ -13,8 +13,15 @@
 //      and Tabs work with the keyboard alone in /en and /ar (focus trap and return, submenu side,
 //      arrow keys that follow the direction), Drawer flips with the direction, and Toast is a live
 //      region.
+//   7. AI Resources: the AI pages, the skills index and its digest, llms.json, llms.txt,
+//      Accept: text/markdown, the Link header, WebMCP and the Copy page menu.
+//   8. Polish: locale purity (no Arabic on English pages, no English words on Arabic ones,
+//      previews and the hero card included), the hero on registry components, RTL comparisons
+//      with no dead space, one size in the preview toolbar and centred single-trigger previews.
 //   4. Forms: every form component page fits at 375 and 1280 px in both languages, and the
 //      service request form can be completed with the keyboard alone in /en and /ar.
+import { createHash } from "node:crypto";
+import { readFileSync } from "node:fs";
 import { chromium } from "playwright";
 
 const BASE = process.env.E2E_BASE_URL ?? "http://localhost:3000";
@@ -84,6 +91,10 @@ async function layoutChecks() {
     ["/ar", "rtl", "ar", "كود المنصات"],
     ["/en/docs/components/button", "ltr", "en", "Platform Code"],
     ["/ar/docs/components/button", "rtl", "ar", "كود المنصات"],
+    ["/en/docs/ai/skills", "ltr", "en", "Platform Code"],
+    ["/ar/docs/ai/mcp", "rtl", "ar", "كود المنصات"],
+    ["/en/docs/components/badge", "ltr", "en", "Platform Code"],
+    ["/ar/docs/components/dialog", "rtl", "ar", "كود المنصات"],
   ];
   const issues = new Set();
   for (const width of [375, 768, 1024, 1280]) {
@@ -640,8 +651,464 @@ async function keyboardChecks() {
   }
 }
 
+// ---------------------------------------------------------------- AI Resources
+
+async function aiResourceChecks() {
+  const get = async (path, headers = {}) => {
+    const res = await fetch(`${BASE}${path}`, { headers, redirect: "manual" });
+    return { res, text: await res.text() };
+  };
+  for (const path of [
+    "/en/docs/ai/skills",
+    "/en/docs/ai/llm",
+    "/ar/docs/ai/mcp",
+    "/ar/docs/ai/skills",
+  ]) {
+    check((await get(path)).res.status === 200, `${path} returns 200`);
+  }
+
+  // The skills index points at SKILL.md, and its digest is the sha256 of the served bytes.
+  const index = await get("/.well-known/agent-skills/index.json");
+  check(index.res.status === 200, "the skills index returns 200");
+  const skills = JSON.parse(index.text);
+  check(
+    skills.$schema === "https://schemas.agentskills.io/discovery/0.2.0/schema.json",
+    "the skills index names the discovery schema",
+  );
+  const entry = skills.skills?.[0];
+  check(
+    entry?.url === "/.well-known/agent-skills/platform-code/SKILL.md",
+    "the index points at SKILL.md",
+  );
+  const skill = await fetch(`${BASE}${entry?.url}`);
+  check(skill.status === 200, "SKILL.md returns 200");
+  const bytes = Buffer.from(await skill.arrayBuffer());
+  check(
+    entry?.digest === `sha256:${createHash("sha256").update(bytes).digest("hex")}`,
+    "the index digest matches the served SKILL.md bytes",
+  );
+
+  // llms.json in both languages and the bare English address.
+  for (const path of ["/en/llms.json", "/ar/llms.json", "/llms.json"]) {
+    const { res, text } = await get(path);
+    check(res.status === 200, `${path} returns 200`);
+    const data = JSON.parse(text);
+    check(
+      data.pages.some(
+        (p) =>
+          p.slug === "ai/skills" &&
+          p.html.includes("/docs/ai/skills") &&
+          p.markdown.endsWith("/docs/ai/skills.md"),
+      ),
+      `${path} lists ai/skills with its HTML and Markdown URLs`,
+    );
+  }
+
+  // llms.txt lists every page, the AI pages under their own heading.
+  for (const lang of ["en", "ar"]) {
+    const catalog = JSON.parse((await get(`/${lang}/llms.json`)).text);
+    const txt = (await get(`/${lang}/llms.txt`)).text;
+    check(
+      catalog.pages.every((p) => txt.includes(p.markdown)),
+      `/${lang}/llms.txt lists every page of llms.json (${catalog.pages.length})`,
+    );
+    for (const slug of ["skills", "llm", "mcp"]) {
+      check(
+        txt.includes(`/${lang}/docs/ai/${slug}.md`),
+        `/${lang}/llms.txt lists /docs/ai/${slug}`,
+      );
+    }
+    check(
+      txt.includes(lang === "en" ? "## AI Resources" : "## موارد الذكاء الاصطناعي"),
+      `/${lang}/llms.txt groups the AI pages under their localised heading`,
+    );
+  }
+  check(
+    (await get("/llms.txt")).text.includes("/en/docs/ai/skills.md"),
+    "bare /llms.txt is English",
+  );
+
+  // Accept: text/markdown on the HTML URL returns the Markdown twin, and varies on Accept.
+  for (const [path, title, lang] of [
+    ["/en/docs/installation", "# Installation", "en"],
+    ["/ar/docs/ai/mcp", "# خادم MCP", "ar"],
+    ["/en/docs", "# Introduction", "en"],
+  ]) {
+    const { res, text } = await get(path, { Accept: "text/markdown" });
+    check(res.status === 200, `${path} with Accept: text/markdown returns 200`);
+    check(
+      (res.headers.get("content-type") ?? "").startsWith("text/markdown"),
+      `${path}: content-type is text/markdown`,
+    );
+    check(text.startsWith(title), `${path}: the body is the Markdown twin ("${title}")`);
+    check(
+      (res.headers.get("vary") ?? "").toLowerCase().includes("accept"),
+      `${path}: Vary includes Accept`,
+    );
+    check(
+      text.trimEnd().endsWith(`/${lang}/llms.txt)`),
+      `${path}: the Markdown ends with a link to /${lang}/llms.txt`,
+    );
+  }
+  const html = await get("/en/docs/installation", { Accept: "text/html" });
+  check(
+    (html.res.headers.get("content-type") ?? "").startsWith("text/html"),
+    "Accept: text/html still returns HTML",
+  );
+  const twin = await get("/en/docs/installation.md");
+  check(
+    twin.res.status === 200 && twin.text.trimEnd().endsWith("/en/llms.txt)"),
+    "the .md URL ends with the index link",
+  );
+
+  // The Link header names the discovery files and the page's own Markdown twin.
+  const link = html.res.headers.get("link") ?? "";
+  for (const needle of [
+    '</en/llms.txt>; rel="describedby"',
+    '</sitemap.xml>; rel="sitemap"',
+    '</.well-known/agent-skills/index.json>; rel="agent-skills"',
+    '</en/docs/installation.md>; rel="alternate"; type="text/markdown"',
+  ]) {
+    check(link.includes(needle), `the Link header has ${needle}`);
+  }
+  check(
+    (html.res.headers.get("vary") ?? "").toLowerCase().includes("accept"),
+    "docs HTML varies on Accept",
+  );
+  check(
+    (await get("/en/llms.txt")).res.headers.get("link")?.includes('rel="agent-skills"') === true,
+    "llms.txt carries the Link header",
+  );
+  check(
+    /<link[^>]+rel="agent-skills"/.test(html.text),
+    "the HTML head has the agent-skills <link>",
+  );
+  check(
+    /<link[^>]+rel="alternate"[^>]+text\/markdown/.test(html.text) ||
+      /<link[^>]+text\/markdown[^>]+rel="alternate"/.test(html.text),
+    "the HTML head has the Markdown alternate <link>",
+  );
+
+  // Sitemap and WebMCP.
+  const sitemap = (await get("/sitemap/en.xml")).text;
+  for (const url of ["/en/llms.txt", "/ar/llms.txt", "/.well-known/agent-skills/index.json"]) {
+    check(sitemap.includes(url), `the sitemap includes ${url}`);
+  }
+  const webmcp = await get("/webmcp.js");
+  check(
+    webmcp.res.status === 200 &&
+      ["search_docs", "get_page", "list_pages"].every((n) => webmcp.text.includes(n)),
+    "/webmcp.js registers search_docs, get_page and list_pages",
+  );
+
+  // The Copy page menu shows every item, in both languages.
+  const labels = {
+    en: [
+      "Copy Markdown",
+      "View Markdown",
+      "Open in ChatGPT",
+      "Open in Codex",
+      "Open in Claude",
+      "Open in Claude Code",
+      "Open in Cursor",
+    ],
+    ar: [
+      "نسخ Markdown",
+      "عرض Markdown",
+      "فتح في ChatGPT",
+      "فتح في Codex",
+      "فتح في Claude",
+      "فتح في Claude Code",
+      "فتح في Cursor",
+    ],
+  };
+  for (const lang of ["en", "ar"]) {
+    const context = await browser.newContext({ viewport: { width: 1280, height: 800 } });
+    const page = await context.newPage();
+    await page.goto(`${BASE}/${lang}/docs/installation`, { waitUntil: "networkidle" });
+    await page.locator("main button[aria-haspopup=menu]").first().click();
+    await page.getByRole("menu").waitFor({ state: "visible" });
+    const items = await page.getByRole("menuitem").allTextContents();
+    for (const label of labels[lang]) {
+      check(
+        items.some((i) => i.trim().startsWith(label)),
+        `${lang}: the Copy page menu shows "${label}"`,
+      );
+    }
+    const href = await page.getByRole("menuitem", { name: labels[lang][2] }).getAttribute("href");
+    check(
+      decodeURIComponent(href ?? "").includes(
+        `${BASE.startsWith("http://localhost") ? "https://dga.omqkhafi.dev" : BASE}/${lang}/docs/installation.md`,
+      ),
+      `${lang}: the prompt points at the page's absolute Markdown URL`,
+    );
+    await context.close();
+  }
+}
+
+// --------------------------------------------------------------------- Polish
+
+const ALLOWED = new Set(
+  JSON.parse(readFileSync(new URL("./locale-allowlist.json", import.meta.url), "utf8")).map((w) =>
+    w.toLowerCase(),
+  ),
+);
+// The digits (Arabic-Indic U+0660 to U+0669, Persian U+06F0 to U+06F9) are not words.
+const ARABIC = /[\u0600-\u065F\u066D-\u06EF\u06FA-\u06FF\u0750-\u077F\uFB50-\uFDFF\uFE70-\uFEFF]/;
+
+/** Visible text of a frame, without code, keys, icons and the language switcher (an endonym). */
+const visibleText = (frame, pageLang) =>
+  frame.evaluate((pageLang) => {
+    // Code, keys, icons, monospace identifiers, the language switcher (an endonym), and runs the
+    // page marks as another language (lang="en" on an Arabic page: the logged Deviations reasons
+    // and the Figma role names, which are the English record).
+    const skip = `pre,code,kbd,samp,script,style,svg,noscript,.font-mono,[data-skip-purity],a[hreflang],[lang]:not([lang=${pageLang}])`;
+    const out = [];
+    const walk = (node) => {
+      if (node.nodeType === 3) return out.push(node.textContent);
+      if (node.nodeType !== 1 || node.matches(skip)) return;
+      for (const child of node.childNodes) walk(child);
+    };
+    walk(document.body);
+    return out.join(" ");
+  }, pageLang);
+
+const latinWords = (text) =>
+  (
+    text
+      .replace(/`[^`]*`/g, " ") // inline code, as written in the API descriptions
+      .replace(/https?:\/\/\S+/g, " ")
+      .replace(/[\w.-]+(\/[\w.-]+)+/g, " ") // a path, such as app/page.tsx or omqkhafi/dga
+      .replace(/\w+="[^"]*"/g, " ") // a prop, such as size="sm"
+      .replace(/[\w.-]+\.(md|json|txt|tsx?|mdx|css|js)\b/g, " ") // a file name
+      .match(/[A-Za-z][\w.+-]*/g) ?? []
+  ).filter((raw) => {
+    const w = raw.replace(/[.-]+$/, "");
+    if (w.length < 2 || ALLOWED.has(w.toLowerCase())) return false;
+    if (/^[A-Z][a-z0-9]+([A-Z][a-z0-9]*)+$/.test(w) || /^[a-z]+[A-Z]\w*$/.test(w)) return false;
+    if (/^[a-z0-9]+(-[a-z0-9]+)+$/.test(w) || /^[a-z0-9-]+(\.[a-z0-9-]+)+$/.test(w)) return false;
+    if (/^v\d/.test(w) || /^[a-f0-9]{6,}$/.test(w) || /^\d/.test(w)) return false;
+    return true;
+  });
+
+async function scrollThrough(page) {
+  const height = await page.evaluate(() => document.documentElement.scrollHeight);
+  for (let y = 0; y < height; y += 500) {
+    await page.evaluate((top) => window.scrollTo(0, top), y);
+    await page.waitForTimeout(60);
+  }
+  await page.evaluate(() => window.scrollTo(0, 0));
+  await page.waitForLoadState("networkidle", { timeout: 8000 }).catch(() => {});
+  await page.waitForTimeout(800);
+}
+
+async function polishChecks() {
+  const pages = [
+    "",
+    "/docs",
+    "/docs/installation",
+    "/docs/ai/skills",
+    "/docs/ai/mcp",
+    "/docs/deviations",
+    "/docs/foundations/colors",
+    "/docs/foundations/typography",
+    "/docs/components/button",
+    "/docs/components/badge",
+    "/docs/components/dialog",
+    "/docs/components/drawer",
+    "/docs/components/tooltip",
+    "/docs/components/menu",
+    "/docs/components/tabs",
+    "/docs/components/accordion",
+    "/docs/components/content-switcher",
+    "/docs/components/toast",
+    "/docs/components/notification",
+    "/docs/components/inline-alert",
+    "/docs/components/input",
+    "/docs/components/file-upload",
+  ];
+  for (const lang of ["en", "ar"]) {
+    const context = await browser.newContext({ viewport: { width: 1280, height: 900 } });
+    const page = await context.newPage();
+    const issues = [];
+    page.on("console", (m) => {
+      if (["error", "warning"].includes(m.type()))
+        issues.push(`${m.type()}: ${m.text().slice(0, 140)}`);
+    });
+    page.on("pageerror", (e) => issues.push(e.message.slice(0, 140)));
+    page.on("response", (r) => {
+      if (r.status() >= 400) issues.push(`${r.status()} ${r.url()}`);
+    });
+    for (const path of pages) {
+      const url = `${BASE}/${lang}${path}`;
+      await page.goto(url, { waitUntil: "networkidle" });
+      await scrollThrough(page);
+      const texts = [];
+      for (const frame of page.frames()) texts.push(await visibleText(frame, lang));
+      const text = texts.join(" ");
+      if (lang === "en") {
+        const found = text.match(new RegExp(`.{0,30}${ARABIC.source}+.{0,30}`));
+        check(!found, `${lang}${path}: no Arabic on the page, previews included (${found?.[0]})`);
+      } else {
+        const words = [...new Set(latinWords(text))];
+        check(
+          words.length === 0,
+          `${lang}${path}: no English words on the page, previews included (${words.slice(0, 8).join(", ")})`,
+        );
+      }
+      check(
+        (await page.evaluate(
+          () => document.documentElement.scrollWidth - document.documentElement.clientWidth,
+        )) <= 1,
+        `${lang}${path}: no horizontal scroll`,
+      );
+    }
+    check(
+      issues.length === 0,
+      `${lang}: the polish pass logs nothing to the console: ${issues.slice(0, 3).join(" | ")}`,
+    );
+    await context.close();
+  }
+
+  // The hero is built from registry components and keeps one language, whatever the toggle says.
+  for (const lang of ["en", "ar"]) {
+    const context = await browser.newContext({ viewport: { width: 1280, height: 900 } });
+    const page = await context.newPage();
+    await page.goto(`${BASE}/${lang}`, { waitUntil: "networkidle" });
+    const card = page.locator("main section").first().locator("[data-theme][dir]").first();
+    check(
+      (await card.locator("[data-slot=field]").count()) >= 3,
+      `${lang}: the hero card uses Field`,
+    );
+    check(
+      (await card.locator("[data-slot=input]").count()) >= 2,
+      `${lang}: the hero card uses Input`,
+    );
+    check(
+      (await card.locator("[data-slot=select-trigger]").count()) === 1,
+      `${lang}: the hero card uses Select`,
+    );
+    check(
+      (await card.locator("[data-slot=switch]").count()) === 1,
+      `${lang}: the hero card uses Switch`,
+    );
+    check(
+      (await card.locator("[data-slot=button]").count()) >= 2,
+      `${lang}: the hero card uses Button`,
+    );
+    check(
+      (await card.locator("[data-slot=inline-alert]").count()) === 1,
+      `${lang}: the hero card uses Inline Alert`,
+    );
+    check(
+      !(await page.locator("body").textContent()).includes("plain markup"),
+      `${lang}: no "plain markup" note`,
+    );
+    const eyebrow = await page.locator(".t-eyebrow").first().textContent();
+    check(
+      lang === "en" ? !ARABIC.test(eyebrow) : latinWords(eyebrow).length === 0,
+      `${lang}: the home eyebrow is one language ("${eyebrow}")`,
+    );
+    for (const target of ["en", "ar"]) {
+      const name = await page
+        .locator("[data-slot=content-switcher]")
+        .first()
+        .locator("button")
+        .nth(target === "en" ? 0 : 1);
+      await name.click();
+      await page.waitForTimeout(200);
+      const text = (await card.textContent()) ?? "";
+      check(
+        target === "en" ? !ARABIC.test(text) : latinWords(text).length === 0,
+        `${lang}: with the hero language switched to ${target}, the card, its status and its calls to action are ${target} only (${text.slice(0, 40).replace(/\n/g, " ")})`,
+      );
+    }
+    await context.close();
+  }
+
+  // Preview chrome: one size in the toolbar, centred lone triggers, RTL panels without dead space.
+  for (const lang of ["en", "ar"]) {
+    const context = await browser.newContext({ viewport: { width: 1280, height: 900 } });
+    const page = await context.newPage();
+    await page.goto(`${BASE}/${lang}/docs/components/dialog`, { waitUntil: "networkidle" });
+    await scrollThrough(page);
+    const toolbar = await page.evaluate(() => {
+      const bar = document.querySelector("figure[data-preview] > div");
+      const controls = [
+        ...bar.querySelectorAll(
+          "[data-slot=content-switcher], [data-slot=button], a[class*=cn-button]",
+        ),
+      ];
+      return controls.map((el) => Math.round(el.getBoundingClientRect().height));
+    });
+    check(
+      toolbar.length >= 5 && new Set(toolbar).size === 1,
+      `${lang}: every control in the preview toolbar is one height (${toolbar.join(", ")})`,
+    );
+    check(
+      (await page
+        .locator("figure[data-preview] > div [role=radio], figure[data-preview] > div fieldset")
+        .count()) === 0 ||
+        (await page.locator("figure[data-preview] > div fieldset").count()) === 0,
+      `${lang}: the toolbar has no hand-made radio fieldsets`,
+    );
+    const frame = page.frames().find((f) => f.url().includes("/preview/dialog-basic"));
+    const centred = await frame.evaluate(() => {
+      const b = document.querySelector("main button");
+      const r = b.getBoundingClientRect();
+      return Math.abs((r.left + r.right) / 2 - window.innerWidth / 2);
+    });
+    check(
+      centred < 4,
+      `${lang}: the lone Dialog trigger is centred in its preview (off by ${Math.round(centred)}px)`,
+    );
+    await context.close();
+  }
+  for (const width of [1280, 375]) {
+    const context = await browser.newContext({ viewport: { width, height: 900 } });
+    const page = await context.newPage();
+    await page.goto(`${BASE}/en/docs/components/badge`, { waitUntil: "networkidle" });
+    await page
+      .locator("#rtl")
+      .scrollIntoViewIfNeeded()
+      .catch(() => {});
+    await scrollThrough(page);
+    const compare = await page.evaluate(() => {
+      const figures = [...document.querySelectorAll("[data-preview-direction]")];
+      return figures.map((fig) => {
+        const frame = fig.querySelector("iframe");
+        const f = fig.getBoundingClientRect();
+        const i = frame.getBoundingClientRect();
+        return {
+          top: Math.round(f.top),
+          width: Math.round(f.width),
+          frame: Math.round(i.width) * 1,
+          scale: i.width / frame.offsetWidth,
+        };
+      });
+    });
+    check(compare.length === 2, `badge @${width}: two RTL comparison panels`);
+    for (const c of compare) {
+      check(
+        Math.abs(c.width - 2 - c.frame) <= 3,
+        `badge @${width}: the panel is filled by its frame, no dead space (${c.width} vs ${c.frame})`,
+      );
+    }
+    if (width === 375)
+      check(compare[1].top > compare[0].top + 40, "badge @375: the two panels are stacked");
+    else
+      check(
+        Math.abs(compare[1].top - compare[0].top) < 4,
+        "badge @1280: the two panels sit side by side",
+      );
+    await context.close();
+  }
+}
+
 await localeChecks();
 await layoutChecks();
+await aiResourceChecks();
+await polishChecks();
 await discoveryChecks();
 await formPageChecks();
 await fieldStateChecks();
