@@ -71,7 +71,7 @@ The text, placeholder and adornments start on the right. Typed Arabic aligns rig
 | <kbd>Shift</kbd> + <kbd>Tab</kbd> | Moves focus back. |
 
 - A native `<input>`: always label it with a [Field](/docs/components/field); a placeholder is not a label.
-- Focus is a 2px outline outside the border (`border-black`, white in dark mode), at least 3:1 on every fill.
+- Focus is a 2px outline outside the border (`border-black`, white in dark mode) plus the 2px underline, at least 3:1 on every fill. Pressed (mouse or touch down) shows the pressed fill and a half-width underline.
 - The border is 3:1 or better against the page in every state, light and dark (WCAG 1.4.11).
 - Errors set `aria-invalid` and show an icon with the message. Read-only fields stay focusable; disabled ones do not.
 - Adornment icons are decorative (`aria-hidden`). A suffix button needs its own `aria-label`.
@@ -84,7 +84,7 @@ The text, placeholder and adornments start on the right. Typed Arabic aligns rig
 
 - Filled lighter and darker keep their border in every state (Figma has none until hover).
 - Read-only is a dashed border in the default border colour (3:1) instead of the pale grey.
-- Focus is a 2px outline instead of a shadow and underline, which also works in dark mode.
+- Pressed uses the pressed fill and a half-width underline; focus keeps the 2px underline and adds a 2px outline instead of a shadow, which also works in dark mode.
 - `field-border-default` is neutral-500 (was neutral-400, 2.6:1 on white) and the placeholder is neutral-600 in light mode.
 
 <ComponentDeviations component="input" />

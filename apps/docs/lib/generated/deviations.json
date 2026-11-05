@@ -3438,10 +3438,10 @@
   },
   {
     "area": "Components",
-    "item": "Input, Textarea, Select: focus",
-    "original": "shadow-md and a 2px underline that grows in from the start.",
-    "ours": "A 2px outline in border-black (white in dark mode), 1px outside the border, and the border takes field-border-pressed.",
-    "reason": "Shadows are off in dark mode (the focus cue would vanish) and the underline is not a 3:1 focus indicator on every fill. An outline is visible in both modes and in forced colours.",
+    "item": "Input, Textarea, Select: focus and pressed",
+    "original": "Focus: shadow-md and a 2px underline that grows in from the start. Pressed: underline at half width and field-background-pressed.",
+    "ours": "Pressed (mouse or touch down) uses field-background-pressed and a half-width 2px underline, as in Figma. Focus keeps the full 2px underline (Input and Select) and the border takes field-border-pressed, and adds a 2px outline in border-black (white in dark mode) 1px outside the border. No shadow.",
+    "reason": "Shadows are off in dark mode, so the focus cue would vanish, and the underline alone is not a 3:1 focus indicator on every fill. The outline is visible in both modes and in forced colours; the underline keeps the DGA look.",
     "component": "input"
   },
   {

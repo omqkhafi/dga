@@ -59,8 +59,33 @@ export function formPairs(): ComponentPair[] {
           component,
           `pressed text${name}`,
           "field-text-pressed",
-          "field-background-default",
+          "field-background-pressed",
           4.5,
+          surface,
+        );
+        add(
+          component,
+          `pressed placeholder${name}`,
+          "field-text-placeholder",
+          "field-background-pressed",
+          4.5,
+          surface,
+        );
+        add(
+          component,
+          `pressed prefix and suffix text${name}`,
+          "text-primary-paragraph",
+          "field-background-pressed",
+          4.5,
+          surface,
+        );
+        add(
+          component,
+          `underline, focused and pressed${name}`,
+          "field-border-pressed",
+          bg,
+          3,
+          surface,
         );
         add(component, `placeholder${name}`, "field-text-placeholder", bg, 4.5, surface);
         add(component, `prefix and suffix text${name}`, "text-primary-paragraph", bg, 4.5, surface);

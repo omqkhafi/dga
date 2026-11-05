@@ -666,10 +666,12 @@
    * ---------------------------------------------------------------------------------- */
   .cn-input {
     @apply relative flex w-full min-w-0 items-center gap-2 rounded-sm border border-field-border-default bg-field-background-default px-3 text-field-text-filled transition-colors;
-    @apply hover:border-field-border-hovered;
+    @apply hover:border-field-border-hovered active:bg-field-background-pressed;
+    @apply after:pointer-events-none after:absolute after:inset-x-0 after:-bottom-px after:h-0.5 after:w-0 after:rounded-b-sm after:bg-field-border-pressed after:transition-[width] after:duration-200 motion-reduce:after:transition-none;
+    @apply active:after:w-1/2 has-[input:focus]:after:w-full has-[[aria-invalid=true]]:after:bg-field-border-error;
     @apply has-[input:focus-visible]:border-field-border-pressed has-[input:focus-visible]:outline-2 has-[input:focus-visible]:outline-solid has-[input:focus-visible]:outline-offset-1 has-[input:focus-visible]:outline-border-black;
     @apply has-[input[readonly]]:border-dashed has-[input[readonly]]:border-field-border-default has-[input[readonly]]:bg-field-background-default has-[input[readonly]]:text-field-text-readonly has-[input[readonly]]:hover:border-field-border-default;
-    @apply has-[input:disabled]:cursor-not-allowed has-[input:disabled]:border-border-disabled has-[input:disabled]:text-text-default-disabled;
+    @apply has-[input:disabled]:cursor-not-allowed has-[input:disabled]:border-border-disabled has-[input:disabled]:bg-field-background-default has-[input:disabled]:text-text-default-disabled has-[input:disabled]:after:hidden has-[input[readonly]]:after:hidden has-[input[readonly]]:active:bg-field-background-default;
     @apply has-[[aria-invalid=true]]:border-field-border-error;
     @apply motion-reduce:transition-none;
   }
@@ -726,9 +728,9 @@
    * ---------------------------------------------------------------------------------- */
   .cn-textarea {
     @apply block min-h-20 w-full min-w-0 rounded-sm border border-field-border-default bg-field-background-default px-4 py-3 text-sm text-field-text-filled transition-colors outline-none placeholder:text-field-text-placeholder;
-    @apply hover:border-field-border-hovered;
+    @apply hover:border-field-border-hovered active:bg-field-background-pressed;
     @apply focus-visible:border-field-border-pressed focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-offset-1 focus-visible:outline-border-black;
-    @apply read-only:border-dashed read-only:border-field-border-default read-only:bg-field-background-default read-only:text-field-text-readonly read-only:hover:border-field-border-default;
+    @apply read-only:border-dashed read-only:border-field-border-default read-only:bg-field-background-default read-only:text-field-text-readonly read-only:hover:border-field-border-default read-only:active:bg-field-background-default disabled:active:bg-field-background-default;
     @apply disabled:cursor-not-allowed disabled:border-border-disabled disabled:text-text-default-disabled disabled:placeholder:text-text-default-disabled;
     @apply aria-invalid:border-field-border-error;
     @apply motion-reduce:transition-none;
@@ -745,8 +747,11 @@
    * ---------------------------------------------------------------------------------- */
   .cn-select-trigger {
     @apply relative flex w-full min-w-0 cursor-pointer items-center justify-between gap-2 rounded-sm border border-field-border-default bg-field-background-default px-3 text-start text-field-text-filled transition-colors;
-    @apply hover:border-field-border-hovered data-popup-open:border-field-border-pressed;
+    @apply hover:border-field-border-hovered active:bg-field-background-pressed data-popup-open:border-field-border-pressed;
+    @apply after:pointer-events-none after:absolute after:inset-x-0 after:-bottom-px after:h-0.5 after:w-0 after:rounded-b-sm after:bg-field-border-pressed after:transition-[width] after:duration-200 motion-reduce:after:transition-none;
+    @apply active:after:w-1/2 focus-visible:after:w-full data-popup-open:after:w-full data-invalid:after:bg-field-border-error;
     @apply focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-offset-1 focus-visible:outline-border-black;
+    @apply data-readonly:after:hidden data-readonly:active:bg-field-background-default data-disabled:after:hidden data-disabled:active:bg-field-background-default;
     @apply data-readonly:cursor-default data-readonly:border-dashed data-readonly:border-field-border-default data-readonly:text-field-text-readonly data-readonly:hover:border-field-border-default;
     @apply data-disabled:cursor-not-allowed data-disabled:border-border-disabled data-disabled:text-text-default-disabled;
     @apply data-invalid:border-field-border-error;
