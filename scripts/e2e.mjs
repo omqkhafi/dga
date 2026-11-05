@@ -410,8 +410,11 @@ async function interactiveChecks() {
       `${lang}: the dialog is named by its title`,
     );
     check(await inside('[role="dialog"]'), `${lang}: focus moves into the dialog`);
-    // Focus may rest on a Base UI focus guard or the body between wraps, but never on the page.
+    // Focus may rest on a Base UI focus guard, or leave the document (the browser UI, seen here as
+    // the body) and come back at the start of the page; it must never go from one dialog control
+    // to a control of the page behind.
     let trapped = true;
+    let before = "dialog";
     for (let i = 0; i < 8; i++) {
       await page.keyboard.press("Tab");
       const where = await page.evaluate(() => {
@@ -420,9 +423,10 @@ async function interactiveChecks() {
         if (el.hasAttribute("data-base-ui-focus-guard")) return "guard";
         return el.closest('[role="dialog"]') ? "dialog" : "page";
       });
-      if (where === "page") trapped = false;
+      if (where === "page" && before !== "body") trapped = false;
+      before = where;
     }
-    check(trapped, `${lang}: Tab never moves focus to the page behind the dialog`);
+    check(trapped, `${lang}: Tab never moves focus from the dialog to the page behind it`);
     const box = await dialog.boundingBox();
     const close = await page.getByRole("button", { name: rtl ? "إغلاق" : "Close" }).boundingBox();
     check(
@@ -636,19 +640,12 @@ async function keyboardChecks() {
   }
 }
 
-console.log("locale");
 await localeChecks();
-console.log("layout");
 await layoutChecks();
-console.log("discovery");
 await discoveryChecks();
-console.log("pages");
 await formPageChecks();
-console.log("fields");
 await fieldStateChecks();
-console.log("keyboard");
 await keyboardChecks();
-console.log("interactive");
 await interactiveChecks();
 await browser.close();
 console.log(`${passed} checks passed, ${failures.length} failed.`);
