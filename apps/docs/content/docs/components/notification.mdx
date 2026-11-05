@@ -1,0 +1,79 @@
+---
+title: Notification
+description: "A full-width banner for a message about the whole page. Five kinds, a bold lead-in, an action and a close button, announced as a live region."
+---
+
+<Preview name="notification-kinds" title="Notification" />
+
+## Installation
+
+<ComponentInstall name="notification" />
+
+## Usage
+
+```tsx title="page.tsx"
+import { Notification } from "@/components/ui/notification";
+
+export function MaintenanceNotice() {
+  return (
+    <Notification
+      variant="warning"
+      title="تنبيه:"
+      dismissible
+      dismissLabel="تجاهل"
+      action={<a href="/status">التفاصيل</a>}
+    >
+      ستتوقف البوابة للصيانة يوم الجمعة.
+    </Notification>
+  );
+}
+```
+
+Use a Notification at the top of a page or section for something that concerns all of it: planned maintenance, a new service, an account problem. It stays until the person dismisses it or the cause is gone. For a message tied to one form or card use an [Inline Alert](/docs/components/inline-alert); for something that just happened use a [Toast](/docs/components/toast). Mount a Notification when it applies, not before: a live region is announced when its content appears. Start it with a short bold `title` ("Important:").
+
+## Anatomy
+
+- **Banner** (`role="status"`, or `role="alert"` for `critical`): full width, padding 8 by 24px, radius-xs, a 2px bottom border in the kind's colour.
+- **Icon** (optional), **title** (bold lead-in) and the message.
+- **Action** (a link or a small Button) and **close button**, on the end side.
+
+## Examples
+
+### Kinds
+
+`variant` is `neutral`, `info`, `success`, `warning` or `critical`. Each is a 50 tint with text and an icon in the kind's colour. Dismiss one to see it go.
+
+<Preview compact name="notification-kinds" title="Kinds" />
+
+## RTL
+
+The icon is on the right, the action and close button on the left, and the text starts on the right. Nothing is flipped by hand.
+
+<DirectionCompare name="notification-kinds" title="Notification" />
+
+## Accessibility
+
+| Key | Action |
+| --- | --- |
+| <kbd>Tab</kbd> | Moves focus to the action, then to the close button. |
+| <kbd>Enter</kbd> | Presses the focused link or button. |
+| <kbd>Space</kbd> | Presses the focused button. |
+
+- A live region: `critical` has `role="alert"` and interrupts; the others are `role="status"` and wait for a pause. Focus does not move.
+- The kind is shown by the icon and the lead-in as well as colour. Text is 4.5:1 and icons 3:1 or better on the tint, light and dark.
+- The close button has an accessible name (`dismissLabel`) and a 2px focus outline. Links in the message keep their underline.
+
+## API Reference
+
+<ApiReference component="notification" />
+
+## Deviations from DGA
+
+- Figma colours the icon `icon-oncolor` (white) on a 50 tint: 1.0 to 1.1:1, so it cannot be seen. The icon uses the kind's icon colour.
+- The CSS draws success in the brand green where Figma uses the success tokens; Figma wins. Every kind is announced as a live region.
+
+<ComponentDeviations component="notification" />
+
+## Contrast
+
+<ComponentContrast component="notification" />

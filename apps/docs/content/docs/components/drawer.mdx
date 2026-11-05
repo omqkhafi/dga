@@ -1,0 +1,101 @@
+---
+title: Drawer
+description: "A panel that slides in from the start, end, top or bottom of the screen (DGA: Slideout Menu). White or gray, closes by swipe, and flips with the page direction."
+---
+
+<Preview name="drawer-sides" title="Drawer sides" minHeight={420} />
+
+## Installation
+
+<ComponentInstall name="drawer" />
+
+## Usage
+
+```tsx title="page.tsx"
+import { Button } from "@/components/ui/button";
+import {
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerDescription,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from "@/components/ui/drawer";
+
+export function FilterDrawer() {
+  return (
+    <Drawer side="start">
+      <DrawerTrigger render={<Button variant="outline" />}>التصفية</DrawerTrigger>
+      <DrawerContent closeLabel="إغلاق">
+        <DrawerHeader>
+          <DrawerTitle>التصفية</DrawerTitle>
+          <DrawerDescription>اختر ما يظهر في قائمة الطلبات.</DrawerDescription>
+        </DrawerHeader>
+        <DrawerFooter>
+          <DrawerClose render={<Button />}>تطبيق</DrawerClose>
+        </DrawerFooter>
+      </DrawerContent>
+    </Drawer>
+  );
+}
+```
+
+Use a Drawer for content that sits beside the page and should not leave it: a navigation menu on a phone, filters, a details panel. For a decision that must be answered, use a [Dialog](/docs/components/dialog). `side` is `start`, `end`, `top` or `bottom`. `start` and `end` follow the page direction, so a `start` drawer is on the left in English and on the right in Arabic, and swiping toward that edge closes it. Give it a DrawerTitle.
+
+## Anatomy
+
+- **Backdrop**: dims the page and makes it inert.
+- **Content**: the panel, 346px wide on the sides and full width at the top or bottom. White (`background-menu`) or gray (`neutral-100`).
+- **Header**: DrawerTitle and DrawerDescription.
+- **Footer**: DrawerFooter, pushed to the bottom, with the actions on the end side.
+- **Close button**: in the corner, on the end side.
+
+## Examples
+
+### Sides
+
+The four sides. Open the first one in each direction and compare where it appears.
+
+<Preview compact name="drawer-sides" title="Sides" minHeight={420} />
+
+### Navigation
+
+The gray tone, a `start` drawer with a list of links. Links are ordinary buttons that render an `<a>`.
+
+<Preview compact name="drawer-nav" title="Navigation" minHeight={420} />
+
+## RTL
+
+`start` and `end` swap: the same drawer slides in from the right on Arabic pages, with its border on the left, and a swipe toward the right closes it. The slide animation mirrors with it.
+
+<DirectionCompare name="drawer-sides" title="Drawer" minHeight={420} />
+
+## Accessibility
+
+| Key | Action |
+| --- | --- |
+| <kbd>Tab</kbd> | Moves focus to the next control inside the drawer. Focus stays inside. |
+| <kbd>Shift</kbd> + <kbd>Tab</kbd> | Moves focus back. |
+| <kbd>Escape</kbd> | Closes the drawer and returns focus to the control that opened it. |
+
+- Built on Base UI Drawer: a modal dialog with `aria-labelledby` and `aria-describedby`. The page behind is inert and its scroll is locked.
+- Focus is trapped inside and returns to the trigger on close. Swiping is an extra way to close it, never the only one.
+- The close button has an accessible name (`closeLabel`). Text and icons are 4.5:1 and 3:1 or better on the white and gray surfaces, in light and dark.
+- With reduced motion the drawer appears without sliding.
+
+## API Reference
+
+<ApiReference component="drawer" />
+
+## Deviations from DGA
+
+- Figma's Slideout Menu is a 346px panel that is part of the layout. This is a modal drawer: focus trap, Escape and swipe. The side panel in your layout is a navigation list, not this.
+- The border next to the page is logical (`border-e` or `border-s`). DGA's `border-right` and slide direction are physical, so they would be on the wrong side in Arabic.
+
+<ComponentDeviations component="drawer" />
+
+## Contrast
+
+<ComponentContrast component="drawer" />

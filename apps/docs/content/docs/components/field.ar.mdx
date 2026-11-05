@@ -23,7 +23,7 @@ export function NationalIdField({ error }: { error?: string }) {
     <Field name="nationalId" invalid={Boolean(error)}>
       <FieldLabel required>رقم الهوية الوطنية</FieldLabel>
       <Input required inputMode="numeric" />
-      <FieldDescription>10 أرقام تبدأ بالرقم 1 أو 2.</FieldDescription>
+      <FieldDescription>١٠ أرقام تبدأ بالرقم ١ أو ٢.</FieldDescription>
       <FieldError match={Boolean(error)}>{error}</FieldError>
     </Field>
   );

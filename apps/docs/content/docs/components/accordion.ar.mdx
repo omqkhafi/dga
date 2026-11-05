@@ -1,0 +1,88 @@
+---
+title: Accordion
+description: "يعرض أقسام المحتوى ويخفيها تحت عناوينها. ثلاثة أحجام وسهم في البداية أو النهاية وبلا إطار، وفتح قسم واحد أو عدة أقسام."
+sourceHash: a2ac9c02b9a0
+---
+
+<Preview name="accordion-basic" title="الأكورديون" />
+
+## التثبيت [#installation]
+
+<ComponentInstall name="accordion" />
+
+## الاستخدام [#usage]
+
+```tsx title="page.tsx"
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+
+export function ServiceFaq() {
+  return (
+    <Accordion defaultValue={["eligibility"]}>
+      <AccordionItem value="eligibility">
+        <AccordionTrigger>من يستطيع التقديم؟</AccordionTrigger>
+        <AccordionContent>المواطنون والمقيمون ممن لديهم هوية سارية.</AccordionContent>
+      </AccordionItem>
+      <AccordionItem value="time">
+        <AccordionTrigger>كم تستغرق المعالجة؟</AccordionTrigger>
+        <AccordionContent>تُنجز معظم الطلبات خلال ٥ أيام عمل.</AccordionContent>
+      </AccordionItem>
+    </Accordion>
+  );
+}
+```
+
+استخدم Accordion لمحتوى يتصفحه الناس بعناوينه ولا يفتحون منه إلا جزءًا: أسئلة وأجوبة أو أقسام نموذج طويل. ولا تخفِ ما يجب أن يقرأه الجميع. يُفتح قسم واحد في كل مرة افتراضيًا؛ وضبط `multiple` يتيح فتح عدة أقسام.
+
+## البنية [#anatomy]
+
+- **العنصر**: قسم واحد، وفوقه خط بسمك 1px. وتعرّفه `value`.
+- **الزر** (`<button>` في عنوان): نص md بخط شبه عريض، وسهم يدور عند فتح القسم.
+- **اللوحة** (`role="region"`): المحتوى. وتحرّك ارتفاعها.
+
+## أمثلة [#examples]
+
+### الأحجام والسهم في البداية وبلا إطار [#sizes-leading-and-flush]
+
+يحدد `size` حشوة العنوان: `sm` ‏8px و`md` ‏12px و`lg` ‏16px. ويضع `iconPosition="leading"` السهم أولًا. ويُبقي `flush` الخطوط على بعد 16px من الحواف. ويتيح `multiple` بقاء عدة أقسام مفتوحة.
+
+<Preview compact name="accordion-variants" title="الأحجام والسهم في البداية وبلا إطار" />
+
+## RTL [#rtl]
+
+يقع السهم في جهة النهاية (اليسار بالعربية)، أو في جهة البداية مع `iconPosition="leading"`. وتُزاح نصوص اللوحة بحشوة منطقية لتحاذي نص العنوان. ولا حاجة إلى أي تجاوزات لـ `[dir=rtl]`.
+
+<DirectionCompare name="accordion-basic" title="الأكورديون" />
+
+## إمكانية الوصول [#accessibility]
+
+| المفتاح | الإجراء |
+| --- | --- |
+| <kbd>Tab</kbd> | ينقل التركيز إلى العنوان التالي. |
+| <kbd>Enter</kbd> | يفتح القسم المركَّز أو يغلقه. |
+| <kbd>Space</kbd> | يفتح القسم المركَّز أو يغلقه. |
+
+- مبنية على Base UI Accordion: كل عنوان `<button>` مع `aria-expanded` و`aria-controls` داخل عنصر عنوان؛ واللوحة `region` تسمّيها. واللوحة المغلقة مخفية عن قارئ الشاشة. وكما يطلب نمط WAI-ARIA يكفي Tab وEnter وSpace.
+- تظهر حالة الفتح من دوران السهم ومن اللوحة نفسها لا من اللون. والتركيز حد بسمك 2px داخل العنوان.
+- النص بنسبة 4.5:1 والسهم 3:1 أو أفضل في كل حالة، فاتحًا وداكنًا. ولا يمكن فتح القسم المعطّل.
+- تفتح اللوحة وتغلق بتحريك ارتفاعها؛ ومع تقليل الحركة تفتح فورًا.
+
+## مرجع API [#api-reference]
+
+<ApiReference component="accordion" />
+
+## الاختلافات عن DGA [#deviations-from-dga]
+
+- يكرر CSS في DGA كل قاعدة حشوة للجسم لـ `[dir=rtl]` و`html[lang=ar]` (اثنتا عشرة قاعدة). أما الحشوة المنطقية (`ps` و`pe`) فلا تحتاج إلى أي منها.
+- الخط بلا إطار هامش 16px على كل جانب؛ بينما ترسمه DGA بتدرج `border-image` عند 16px و382px، ولا يلائم إلا عرضًا واحدًا.
+- يستخدم القسم المعطّل `text-default-disabled` بدل `neutral-300` مع `!important`.
+
+<ComponentDeviations component="accordion" />
+
+## التباين [#contrast]
+
+<ComponentContrast component="accordion" />

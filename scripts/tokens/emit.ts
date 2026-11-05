@@ -132,12 +132,29 @@ export function themeVars(model: Model, mode: Mode): Vars {
   return vars;
 }
 
+/**
+ * Figma stores a font weight as the name of the font style ("Semibold"), which is not a CSS
+ * font-weight: `font-weight: Semibold` is invalid and falls back to 400, so every font-medium,
+ * font-semibold and font-bold rendered as regular. CSS needs the number.
+ */
+export const FONT_WEIGHT_NUMBERS: Record<string, string> = {
+  regular: "400",
+  medium: "500",
+  semibold: "600",
+  bold: "700",
+};
+
+export const fontWeightNumber = (name: string, value: string) => {
+  const key = /^(?:primitive-)?font-weight-(regular|medium|semibold|bold)$/.exec(name)?.[1];
+  return key ? (FONT_WEIGHT_NUMBERS[key] ?? value) : value;
+};
+
 function primitiveVars(model: Model): Vars {
   const vars: Vars = [];
   for (const [name, primitive] of model.primitives) {
     if (ITALIC_WEIGHTS.test(name)) continue;
     const value = name.startsWith("primitive-font-family-") ? FONT_STACK : toCss(primitive.value);
-    vars.push([name, value]);
+    vars.push([name, fontWeightNumber(name, value)]);
   }
   return vars;
 }

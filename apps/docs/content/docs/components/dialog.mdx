@@ -1,0 +1,105 @@
+---
+title: Dialog
+description: "A window over the page for a decision or a short task. Three widths, a close button, and focus trapped inside and returned to the trigger."
+---
+
+<Preview name="dialog-basic" title="Dialog" minHeight={360} />
+
+## Installation
+
+<ComponentInstall name="dialog" />
+
+## Usage
+
+```tsx title="page.tsx"
+import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+
+export function CancelRequest() {
+  return (
+    <Dialog>
+      <DialogTrigger render={<Button variant="outline" />}>إلغاء الطلب</DialogTrigger>
+      <DialogContent closeLabel="إغلاق">
+        <DialogHeader>
+          <DialogTitle>إلغاء هذا الطلب؟</DialogTitle>
+          <DialogDescription>سيُسحب الطلب ٢٤٨١٠. يمكنك تقديمه مرة أخرى لاحقًا.</DialogDescription>
+        </DialogHeader>
+        <DialogFooter>
+          <DialogClose render={<Button variant="outline" />}>الإبقاء على الطلب</DialogClose>
+          <DialogClose render={<Button destructive />}>إلغاء الطلب</DialogClose>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+  );
+}
+```
+
+Use a Dialog when the person must answer or finish something before going on: confirm a destructive action, edit a few fields, read terms. Do not use it for a message that needs no answer (use [Toast](/docs/components/toast) or [Inline Alert](/docs/components/inline-alert)) or for a long page of content. Always give it a DialogTitle: it names the dialog for screen readers. Put the main action last, and name actions by what they do ("Cancel request"), not "Yes" and "No". `closeLabel` is the accessible name of the close button; translate it on Arabic pages.
+
+## Anatomy
+
+- **Backdrop**: dims the page and makes it inert.
+- **Content** (`role="dialog"`): the card. 600px wide by default, at most the height of the screen, scrolling inside.
+- **Header**: DialogTitle and DialogDescription.
+- **Body** (optional): DialogBody, for fields or text.
+- **Footer**: the actions, aligned to the end. DialogClose closes the dialog.
+- **Close button**: in the corner, on the end side.
+
+## Examples
+
+### Sizes
+
+`size` is `sm` (400px), `md` (600px, the DGA width) or `lg` (800px). All of them shrink to fit a phone.
+
+<Preview compact name="dialog-sizes" title="Sizes" minHeight={360} />
+
+### With a form
+
+Put fields in DialogBody. The dialog scrolls when it is taller than the screen. A Field inside is labelled and wired as usual.
+
+<Preview compact name="dialog-form" title="With a form" minHeight={480} />
+
+## RTL
+
+The close button moves to the left, the footer actions are aligned to the left, and the window fades and scales the same way. Nothing is mirrored by hand: the layout uses `start` and `end`.
+
+<DirectionCompare name="dialog-basic" title="Dialog" minHeight={360} />
+
+## Accessibility
+
+| Key | Action |
+| --- | --- |
+| <kbd>Tab</kbd> | Moves focus to the next control inside the dialog. At the last control it goes back to the first: focus never leaves the dialog. |
+| <kbd>Shift</kbd> + <kbd>Tab</kbd> | Moves focus back. |
+| <kbd>Escape</kbd> | Closes the dialog and returns focus to the control that opened it. |
+| <kbd>Enter</kbd> | Presses the focused button. |
+
+- Built on Base UI Dialog: `role="dialog"`, `aria-modal`, `aria-labelledby` (DialogTitle) and `aria-describedby` (DialogDescription).
+- Focus moves into the dialog when it opens, is trapped there, and returns to the trigger when it closes. The page behind is inert and its scroll is locked.
+- Set `disablePointerDismissal` on Dialog for a decision that must be answered, so a click outside does not close it. Escape still closes it.
+- The close button has an accessible name (`closeLabel`). Titles and text are 4.5:1 and icons 3:1 or better, in light and dark.
+- The window fades and scales in; with reduced motion it appears without animation.
+
+## API Reference
+
+<ApiReference component="dialog" />
+
+## Deviations from DGA
+
+- The Figma file draws only a 600px card. The close button, the focus trap, the Escape key and the `sm` and `lg` widths are added.
+- The backdrop is `alpha-black-50`. On phones the card is 100% wide minus 16px of page padding.
+
+<ComponentDeviations component="dialog" />
+
+## Contrast
+
+<ComponentContrast component="dialog" />

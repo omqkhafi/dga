@@ -392,6 +392,15 @@ export const OTHER_DEVIATIONS: Deviation[] = [
     reason: "Typo: Wieght → Weight. Only the Figma group name was wrong.",
   },
   {
+    area: "Typography",
+    item: "--font-weight-* and --primitive-font-weight-*",
+    original: "The Figma variable holds the font style name: Regular, Medium, Semibold, Bold.",
+    ours: "400, 500, 600, 700.",
+    reason:
+      "CSS needs a number or a keyword: font-weight: Semibold is invalid, so font-medium, font-semibold and font-bold all fell back to 400 and every label, heading and tab rendered regular. Found while building the Phase 4 components, and fixed for all of them.",
+    status: "fixed",
+  },
+  {
     area: "Breakpoints",
     item: "sm / md / lg / xl / 2xl",
     original: "Not defined. Figma has Desktop, Tablet and Mobile modes with no pixel widths.",

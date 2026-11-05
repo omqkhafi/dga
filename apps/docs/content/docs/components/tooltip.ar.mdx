@@ -1,0 +1,93 @@
+---
+title: Tooltip
+description: "تلميح قصير لعنصر، عند التمرير وتركيز لوحة المفاتيح. فاتح أو داكن، مع عنوان وسهم اختياريين، وموضع ينعكس في RTL."
+sourceHash: 328fa6b129c7
+---
+
+<Preview name="tooltip-placements" title="المواضع" minHeight={280} />
+
+## التثبيت [#installation]
+
+<ComponentInstall name="tooltip" />
+
+## الاستخدام [#usage]
+
+```tsx title="page.tsx"
+import { Button } from "@/components/ui/button";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+
+export function SaveHint() {
+  return (
+    <TooltipProvider>
+      <Tooltip>
+        <TooltipTrigger render={<Button variant="outline" />}>المسودات</TooltipTrigger>
+        <TooltipContent side="end" title="المسودات">يفتح المسودات المحفوظة.</TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
+  );
+}
+```
+
+استخدم Tooltip لتسمية زر بأيقونة فقط أو لإضافة تلميح قصير لعنصر. اجعله جملة واحدة. فهو تلميح لمستخدمي الفأرة ولوحة المفاتيح المبصرين، وليس مكانًا للروابط أو الأزرار أو أي شيء يجب أن يقرأه الناس: فلا يعتمد عليه قارئ الشاشة ولا شاشات اللمس. وضع TooltipProvider حول التطبيق أو شريط الأدوات ليفتح التلميح الثاني فورًا أثناء انتقال المؤشر. ولعلامة الاستفهام التي تشرح تسمية استخدم TooltipHelp: فهي تفتح بالنقر واللمس أيضًا ويقرؤها قارئ الشاشة.
+
+## البنية [#anatomy]
+
+- **الزر**: العنصر الذي يصفه التلميح. أي زر أو رابط أو حقل.
+- **الفقاعة**: عرضها 240px على الأكثر (و160px على الأقل)، وانحناؤها radius-xs و`shadow-lg`.
+- **العنوان** (اختياري): بخط عريض فوق النص.
+- **السهم**: الرأس بحجم 14px نحو العنصر. أوقفه بـ `showArrow={false}`.
+- **أيقونة المساعدة**: TooltipHelp، زر علامة استفهام بحجم 20px يفتح الفقاعة نفسها بوصفها popover.
+
+## أمثلة [#examples]
+
+### النمطان [#tones]
+
+قيمة `tone` إما `light` (أبيض) أو `dark` (التلميح المعكوس). وفي الوضع الداكن يتبادلان. مرّر على الأزرار أو ركّز عليها.
+
+<Preview compact name="tooltip-basic" title="النمطان" minHeight={120} />
+
+### أيقونة المساعدة [#help-icon]
+
+TooltipHelp بجانب تسمية. وهو زر حقيقي له اسم يفتح عند التمرير والتركيز والنقر واللمس، فيصل إلى النص مستخدمو لوحة المفاتيح واللمس وقارئ الشاشة.
+
+<Preview compact name="tooltip-help" title="أيقونة المساعدة" minHeight={200} />
+
+## RTL [#rtl]
+
+يقبل `side` القيمتين `start` و`end` إضافة إلى `top` و`bottom`. وهما جهتا النص، فيفتح `end` إلى اليسار في الصفحات العربية ويتبعه السهم. و`align="start"` يحاذي الحافة اليمنى للعنصر في RTL.
+
+<DirectionCompare name="tooltip-placements" title="التلميح" minHeight={280} />
+
+## إمكانية الوصول [#accessibility]
+
+| المفتاح | الإجراء |
+| --- | --- |
+| <kbd>Tab</kbd> | تركيز العنصر يفتح التلميح. والانتقال عنه يغلقه. |
+| <kbd>Escape</kbd> | يغلق التلميح دون تحريك التركيز. |
+| <kbd>Enter</kbd> | على أيقونة المساعدة يفتح الشرح (ويغلقه ثانية). |
+
+- التلميح لمستخدمي الفأرة ولوحة المفاتيح المبصرين (وتقول Base UI الشيء نفسه): فضع كل ما هو مهم في نص الصفحة. ويحتاج العنصر بأيقونة فقط إلى `aria-label` لأن التلميح لا يسمّيه.
+- TooltipHelp عبارة عن popover، فيفتح أيضًا بالنقر وEnter واللمس، ويُعلَن بوصفه نافذة منبثقة بعنوانها ونصها، ويغلقه Escape. وله اسم (`label`).
+- يفتح عند تركيز لوحة المفاتيح وعند التمرير، ويبقى مفتوحًا ما دام المؤشر على الفقاعة، ويغلقه Escape (WCAG 1.4.13: قابل للإغلاق وللتمرير ودائم).
+- النص بنسبة 4.5:1 أو أفضل على النمطين، فاتحًا وداكنًا. وأيقونة المساعدة 3:1 أو أفضل على كل سطح ولها حلقة تركيز.
+- تظهر الفقاعة بالتلاشي؛ ومع تقليل الحركة تظهر دون حركة.
+
+## مرجع API [#api-reference]
+
+<ApiReference component="tooltip" />
+
+## الاختلافات عن DGA [#deviations-from-dga]
+
+- ترسم DGA الموضع بهامش مادي 14px لكل اتجاه. أما هنا فـ `start` و`end` منطقيتان، فتتبادلان بالعربية ويتبعهما السهم.
+- ويفتح أيضًا عند تركيز لوحة المفاتيح. وتُبنى أيقونة المساعدة popover يفتح عند التمرير ليقرأها مستخدمو اللمس وقارئ الشاشة أيضًا؛ أما Figma فتعرض التمرير فقط.
+
+<ComponentDeviations component="tooltip" />
+
+## التباين [#contrast]
+
+<ComponentContrast component="tooltip" />

@@ -55,6 +55,7 @@ export const en = {
   "search.suggest.deviations": "Deviations from DGA",
   "search.crumb.components": "Components",
   "search.crumb.forms": "Forms",
+  "search.crumb.interactive": "Interactive",
   "search.crumb.foundations": "Foundations",
   "search.crumb.docs": "Docs",
 
@@ -405,6 +406,24 @@ export const en = {
   "bento.termsLink": "service terms",
   "bento.privacy": "Privacy",
   "bento.accessibility": "Accessibility statement",
+
+  // Component previews: default strings of the components, by page language
+  "ui.optional": "Optional",
+  "ui.clearSearch": "Clear search",
+  "ui.decrease": "Decrease",
+  "ui.increase": "Increase",
+  "ui.dropFiles": "Drag files here, or choose files",
+  "ui.dropping": "Drop the files to add them",
+  "ui.uploaded": "Uploaded",
+  "ui.uploading": "Uploading",
+  "ui.removeFile": "Remove {name}",
+  "ui.rejectedType": "This file type is not accepted.",
+  "ui.rejectedSize": "This file is too large.",
+  "ui.rejectedCount": "Too many files.",
+  "ui.loading": "Loading",
+  "ui.close": "Close",
+  "ui.dismiss": "Dismiss",
+  "ui.notifications": "Notifications",
 } as const;
 
 export type Dictionary = { [K in keyof typeof en]: string };

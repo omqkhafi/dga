@@ -809,6 +809,7 @@
           "color-featured-icon-info-border": "var(--featured-icon-info-border)",
           "color-skeleton-background": "var(--skeleton-background)",
           "color-control-thumb": "var(--control-thumb)",
+          "color-field-text-placeholder-tinted": "var(--field-text-placeholder-tinted)",
           "color-control-icon-neutral": "var(--control-icon-neutral)",
           "background-color-body": "var(--background-body)",
           "background-color-brand-light": "var(--background-brand-light)",
@@ -1326,10 +1327,10 @@
           "--line-height-20": "20px",
           "--line-height-18": "18px",
           "--line-height-14": "14px",
-          "--primitive-font-weight-bold": "Bold",
-          "--primitive-font-weight-semibold": "Semibold",
-          "--primitive-font-weight-medium": "Medium",
-          "--primitive-font-weight-regular": "Regular",
+          "--primitive-font-weight-bold": "700",
+          "--primitive-font-weight-semibold": "600",
+          "--primitive-font-weight-medium": "500",
+          "--primitive-font-weight-regular": "400",
           "--paragraph-spacing-72": "72px",
           "--paragraph-spacing-60": "60px",
           "--paragraph-spacing-48": "48px",
@@ -1629,7 +1630,7 @@
           "--background-white": "var(--colors-base-white)",
           "--background-neutral-50": "var(--colors-neutral-50)",
           "--text-primary": "var(--colors-primary-sa-flag-600-primary)",
-          "--field-text-placeholder": "var(--colors-neutral-600)",
+          "--field-text-placeholder": "var(--text-secondary-paragraph)",
           "--button-background-primary-pressed": "var(--colors-primary-sa-flag-900)",
           "--button-background-primary-default": "var(--colors-primary-sa-flag-600-primary)",
           "--button-background-primary-hovered": "var(--colors-primary-sa-flag-700)",
@@ -1807,7 +1808,7 @@
           "--field-border-default": "var(--colors-neutral-500)",
           "--field-border-hovered": "var(--colors-neutral-700)",
           "--field-border-pressed": "var(--colors-neutral-950)",
-          "--field-border-error": "var(--border-error)",
+          "--field-border-error": "var(--colors-red-600)",
           "--field-text-readonly": "var(--text-default)",
           "--field-text-hovered": "var(--text-default)",
           "--field-text-pressed": "var(--text-primary-paragraph)",
@@ -2076,6 +2077,7 @@
           "--featured-icon-info-border": "var(--colors-blue-200)",
           "--skeleton-background": "var(--colors-neutral-200)",
           "--control-thumb": "var(--colors-base-white)",
+          "--field-text-placeholder-tinted": "var(--colors-neutral-600)",
           "--control-icon-neutral": "var(--colors-base-white)"
         },
         "@media (width >= 48rem)": {
@@ -2173,7 +2175,7 @@
           "--background-white": "var(--colors-base-white)",
           "--background-neutral-50": "var(--colors-neutral-50)",
           "--text-primary": "var(--colors-primary-sa-flag-600-primary)",
-          "--field-text-placeholder": "var(--colors-neutral-600)",
+          "--field-text-placeholder": "var(--text-secondary-paragraph)",
           "--button-background-primary-pressed": "var(--colors-primary-sa-flag-900)",
           "--button-background-primary-default": "var(--colors-primary-sa-flag-600-primary)",
           "--button-background-primary-hovered": "var(--colors-primary-sa-flag-700)",
@@ -2351,7 +2353,7 @@
           "--field-border-default": "var(--colors-neutral-500)",
           "--field-border-hovered": "var(--colors-neutral-700)",
           "--field-border-pressed": "var(--colors-neutral-950)",
-          "--field-border-error": "var(--border-error)",
+          "--field-border-error": "var(--colors-red-600)",
           "--field-text-readonly": "var(--text-default)",
           "--field-text-hovered": "var(--text-default)",
           "--field-text-pressed": "var(--text-primary-paragraph)",
@@ -2620,6 +2622,7 @@
           "--featured-icon-info-border": "var(--colors-blue-200)",
           "--skeleton-background": "var(--colors-neutral-200)",
           "--control-thumb": "var(--colors-base-white)",
+          "--field-text-placeholder-tinted": "var(--colors-neutral-600)",
           "--control-icon-neutral": "var(--colors-base-white)",
           "--background": "var(--background-body)",
           "--foreground": "var(--text-default)",
@@ -3107,6 +3110,7 @@
           "--featured-icon-info-border": "var(--colors-blue-800)",
           "--skeleton-background": "var(--colors-neutral-dark-700)",
           "--control-thumb": "var(--colors-base-white)",
+          "--field-text-placeholder-tinted": "var(--field-text-placeholder)",
           "--control-icon-neutral": "var(--colors-neutral-dark-950)",
           "--background": "var(--background-body)",
           "--foreground": "var(--text-default)",
@@ -3582,6 +3586,237 @@
       "files": [
         {
           "path": "bases/base/ui/file-upload.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "direction",
+      "type": "registry:lib",
+      "title": "Direction",
+      "description": "useDocumentDirection and AutoDirection: tells Base UI which way the page reads (the dir attribute of html), so arrow keys, submenus and tooltips follow RTL.",
+      "dependencies": [
+        "@base-ui/react"
+      ],
+      "files": [
+        {
+          "path": "bases/base/lib/direction.tsx",
+          "type": "registry:lib"
+        }
+      ]
+    },
+    {
+      "name": "dialog",
+      "type": "registry:ui",
+      "title": "Dialog",
+      "description": "DGA Modal on Base UI Dialog: sm, md and lg, a close button, header, body and footer. Focus is trapped and returns to the trigger, Escape closes it.",
+      "dependencies": [
+        "@base-ui/react",
+        "@hugeicons/react",
+        "@hugeicons/core-free-icons",
+        "class-variance-authority"
+      ],
+      "registryDependencies": [
+        "https://dga.omqkhafi.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "bases/base/ui/dialog.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "drawer",
+      "type": "registry:ui",
+      "title": "Drawer",
+      "description": "DGA Slideout Menu on Base UI Drawer: slides in from the start, end, top or bottom (start and end flip in RTL), white or gray, closes by swipe.",
+      "dependencies": [
+        "@base-ui/react",
+        "@hugeicons/react",
+        "@hugeicons/core-free-icons",
+        "class-variance-authority"
+      ],
+      "registryDependencies": [
+        "https://dga.omqkhafi.dev/r/utils.json",
+        "https://dga.omqkhafi.dev/r/direction.json"
+      ],
+      "files": [
+        {
+          "path": "bases/base/ui/drawer.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "tooltip",
+      "type": "registry:ui",
+      "title": "Tooltip",
+      "description": "DGA Tooltip and Help Icon on Base UI Tooltip: light and dark, optional title, a beak, placement that mirrors in RTL; shows on hover and keyboard focus.",
+      "dependencies": [
+        "@base-ui/react",
+        "@hugeicons/react",
+        "@hugeicons/core-free-icons",
+        "class-variance-authority"
+      ],
+      "registryDependencies": [
+        "https://dga.omqkhafi.dev/r/utils.json",
+        "https://dga.omqkhafi.dev/r/direction.json"
+      ],
+      "files": [
+        {
+          "path": "bases/base/ui/tooltip.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "menu",
+      "type": "registry:ui",
+      "title": "Menu",
+      "description": "DGA Menu on Base UI Menu: items with icons and trailing text, checkbox and radio items, groups, separators and submenus that mirror in RTL. Roving focus with arrow keys.",
+      "dependencies": [
+        "@base-ui/react",
+        "@hugeicons/react",
+        "@hugeicons/core-free-icons",
+        "class-variance-authority"
+      ],
+      "registryDependencies": [
+        "https://dga.omqkhafi.dev/r/utils.json",
+        "https://dga.omqkhafi.dev/r/direction.json"
+      ],
+      "files": [
+        {
+          "path": "bases/base/ui/menu.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "tabs",
+      "type": "registry:ui",
+      "title": "Tabs",
+      "description": "DGA Tabs on Base UI Tabs: horizontal and vertical, sm, md and lg, with icons, a divider and flush. Arrow keys follow the page direction.",
+      "dependencies": [
+        "@base-ui/react",
+        "@hugeicons/react",
+        "@hugeicons/core-free-icons",
+        "class-variance-authority"
+      ],
+      "registryDependencies": [
+        "https://dga.omqkhafi.dev/r/utils.json",
+        "https://dga.omqkhafi.dev/r/direction.json"
+      ],
+      "files": [
+        {
+          "path": "bases/base/ui/tabs.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "accordion",
+      "type": "registry:ui",
+      "title": "Accordion",
+      "description": "DGA Accordion on Base UI Accordion: sm, md and lg, leading or trailing chevron, flush, single or multiple open.",
+      "dependencies": [
+        "@base-ui/react",
+        "@hugeicons/react",
+        "@hugeicons/core-free-icons",
+        "class-variance-authority"
+      ],
+      "registryDependencies": [
+        "https://dga.omqkhafi.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "bases/base/ui/accordion.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "content-switcher",
+      "type": "registry:ui",
+      "title": "Content Switcher",
+      "description": "DGA Content Switcher on Base UI Toggle Group: two to four options, sm, md and lg, and on-colour. One option is always chosen.",
+      "dependencies": [
+        "@base-ui/react",
+        "@hugeicons/react",
+        "@hugeicons/core-free-icons",
+        "class-variance-authority"
+      ],
+      "registryDependencies": [
+        "https://dga.omqkhafi.dev/r/utils.json",
+        "https://dga.omqkhafi.dev/r/direction.json"
+      ],
+      "files": [
+        {
+          "path": "bases/base/ui/content-switcher.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "toast",
+      "type": "registry:ui",
+      "title": "Toast",
+      "description": "DGA Notification Toast on Base UI Toast: neutral, info, success, warning and error, an action and a close button. Announced to screen readers, swipe to dismiss, bottom end of the screen.",
+      "dependencies": [
+        "@base-ui/react",
+        "@hugeicons/react",
+        "@hugeicons/core-free-icons",
+        "class-variance-authority"
+      ],
+      "registryDependencies": [
+        "https://dga.omqkhafi.dev/r/utils.json",
+        "https://dga.omqkhafi.dev/r/direction.json"
+      ],
+      "files": [
+        {
+          "path": "bases/base/ui/toast.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "notification",
+      "type": "registry:ui",
+      "title": "Notification",
+      "description": "DGA Notification: a full-width banner in five kinds, with a lead-in, an action and a close button. Announced as a live region.",
+      "dependencies": [
+        "@base-ui/react",
+        "@hugeicons/react",
+        "@hugeicons/core-free-icons",
+        "class-variance-authority"
+      ],
+      "registryDependencies": [
+        "https://dga.omqkhafi.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "bases/base/ui/notification.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "inline-alert",
+      "type": "registry:ui",
+      "title": "Inline Alert",
+      "description": "DGA Inline Alert: five kinds on a white or tinted fill, a title, text, up to two actions and a close button. Announced as a live region.",
+      "dependencies": [
+        "@base-ui/react",
+        "@hugeicons/react",
+        "@hugeicons/core-free-icons",
+        "class-variance-authority"
+      ],
+      "registryDependencies": [
+        "https://dga.omqkhafi.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "bases/base/ui/inline-alert.tsx",
           "type": "registry:ui"
         }
       ]

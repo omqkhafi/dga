@@ -1,0 +1,80 @@
+---
+title: Inline Alert
+description: "رسالة داخل الصفحة بجانب ما تخصه. خمسة أنواع على تعبئة بيضاء أو مظللة وعنوان ونص وإجراءان على الأكثر وزر إغلاق."
+sourceHash: c16a181bce11
+---
+
+<Preview name="inline-alert-kinds" title="تنبيه مضمّن" />
+
+## التثبيت [#installation]
+
+<ComponentInstall name="inline-alert" />
+
+## الاستخدام [#usage]
+
+```tsx title="page.tsx"
+import { Button } from "@/components/ui/button";
+import { InlineAlert } from "@/components/ui/inline-alert";
+
+export function DocumentsNeeded() {
+  return (
+    <InlineAlert
+      variant="info"
+      title="مستندات مطلوبة"
+      actions={<Button size="sm">إرفاق مستند</Button>}
+    >
+      أرفق عقد الإيجار قبل التقديم.
+    </InlineAlert>
+  );
+}
+```
+
+استخدم Inline Alert لرسالة تنتمي إلى مكان واحد: نموذج فيه مشكلة أو بطاقة تحتاج خطوة أو قسم فيه تنبيه. وهو جزء من الصفحة، فلا يتحرك ولا يختفي وحده. وللصفحة كلها استخدم [Notification](/docs/components/notification)؛ وللحدث الذي وقع للتو استخدم [Toast](/docs/components/toast). أعطه `title` قصيرًا وجملة أو جملتين من النص و`actions` اثنين على الأكثر: الرئيس أولًا. ويلوّن `tinted` التعبئة والنص بلون النوع؛ والافتراضي بطاقة بيضاء بشريط ملون.
+
+## البنية [#anatomy]
+
+- **التنبيه** (`role="status"` أو `role="alert"` لـ `warning` و`destructive`): انحناء radius-md وحد 1px وحشوة 16 في 24px.
+- **الشريط**: 8px في جهة البداية، بلون النوع (الدرجة 400).
+- **الأيقونة** و**العنوان** و**النص**.
+- **الإجراءات** تحت النص (اثنان على الأكثر) و**زر الإغلاق** في جهة النهاية.
+
+## أمثلة [#examples]
+
+### أبيض ومظلل [#white-and-tinted]
+
+الأنواع الخمسة على تعبئة بيضاء (يسارًا) و`tinted` (يمينًا). ويمكن تجاهل تنبيهي المعلومة والتنبيه؛ وللنجاح والمدمّر إجراءات.
+
+<Preview compact name="inline-alert-kinds" title="أبيض ومظلل" />
+
+## RTL [#rtl]
+
+الشريط والأيقونة على اليمين، وزر الإغلاق على اليسار، وتبدأ الإجراءات من اليمين. وعرض التنبيه بعرض حاويته.
+
+<DirectionCompare name="inline-alert-kinds" title="تنبيه مضمّن" />
+
+## إمكانية الوصول [#accessibility]
+
+| المفتاح | الإجراء |
+| --- | --- |
+| <kbd>Tab</kbd> | ينقل التركيز عبر الإجراءات ثم إلى زر الإغلاق. |
+| <kbd>Enter</kbd> | يضغط الزر أو الرابط المركَّز. |
+| <kbd>Space</kbd> | يضغط الزر المركَّز. |
+
+- منطقة حية: لـ `destructive` و`warning` الدور `role="alert"` وتقاطع؛ وغيرهما `role="status"`. ولا يتحرك التركيز. أضفه عند انطباقه ليُعلَن.
+- يظهر النوع من الأيقونة والعنوان لا من لون الشريط وحده. والعنوان والنص بنسبة 4.5:1 والأيقونات 3:1 أو أفضل على التعبئتين البيضاء والمظللة، فاتحًا وداكنًا.
+- لزر الإغلاق اسم (`dismissLabel`) وحد تركيز بسمك 2px.
+
+## مرجع API [#api-reference]
+
+<ApiReference component="inline-alert" />
+
+## الاختلافات عن DGA [#deviations-from-dga]
+
+- الشريط المحايد هو `border-neutral-primary`؛ بينما ترسمه DGA أبيض على تنبيه أبيض فلا يُرى.
+- في Figma يستبدل تنبيها المعلومة والتنبيه المظللان اللذان فيهما زر إغلاق أيقونة النوع بأيقونة عادية. أما هنا فالأيقونة دائمًا أيقونة النوع، فلا يغيّر إضافة زر الإغلاق شيئًا آخر.
+
+<ComponentDeviations component="inline-alert" />
+
+## التباين [#contrast]
+
+<ComponentContrast component="inline-alert" />

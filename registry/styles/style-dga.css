@@ -661,19 +661,27 @@
 
   /* ------------------------------------------------------------------------------------
    * Input (also the box of Search Box and Number Input). Heights md 32 / lg 40px, radius-sm,
-   * 1px border. Text md 14 / lg 16px. Focus: 2px outline outside the border.
-   * States: hover, focus, filled, read-only, disabled, error (aria-invalid).
+   * 1px border. Text md 14 / lg 16px.
+   * States follow the DGA CSS (.input, .active, .focus):
+   *   hover    border-field-border-hovered
+   *   pressed  (:active) pressed fill, pressed border, 2px underline at half width (scaleX .5)
+   *   focus    pressed border, shadow-md (none in dark mode) and the underline at full width
+   * The underline is a full-width bar scaled from its centre (--field-underline), so it grows
+   * out to both sides in LTR and RTL alike. There is no outline: the underline, the border and
+   * the shadow are the focus cue. Pressed is :active and focus is :focus, so the half underline
+   * shows during the press before the focus chrome takes over (the focus rules say not-active).
+   * --field-placeholder is neutral-500 (DGA); on the pressed and darker fills it is the -tinted
+   * token, because neutral-500 is 4.34:1 there (see Deviations).
    * ---------------------------------------------------------------------------------- */
   .cn-input {
-    @apply relative flex w-full min-w-0 items-center gap-2 rounded-sm border border-field-border-default bg-field-background-default px-3 text-field-text-filled transition-colors;
-    @apply hover:border-field-border-hovered active:bg-field-background-pressed;
-    @apply after:pointer-events-none after:absolute after:inset-x-0 after:-bottom-px after:h-0.5 after:w-0 after:rounded-b-sm after:bg-field-border-pressed after:transition-[width] after:duration-200 motion-reduce:after:transition-none;
-    @apply active:after:w-1/2 has-[input:focus]:after:w-full has-[[aria-invalid=true]]:after:bg-field-border-error;
-    @apply has-[input:focus-visible]:border-field-border-pressed has-[input:focus-visible]:outline-2 has-[input:focus-visible]:outline-solid has-[input:focus-visible]:outline-offset-1 has-[input:focus-visible]:outline-border-black;
-    @apply has-[input[readonly]]:border-dashed has-[input[readonly]]:border-field-border-default has-[input[readonly]]:bg-field-background-default has-[input[readonly]]:text-field-text-readonly has-[input[readonly]]:hover:border-field-border-default;
-    @apply has-[input:disabled]:cursor-not-allowed has-[input:disabled]:border-border-disabled has-[input:disabled]:bg-field-background-default has-[input:disabled]:text-text-default-disabled has-[input:disabled]:after:hidden has-[input[readonly]]:after:hidden has-[input[readonly]]:active:bg-field-background-default;
-    @apply has-[[aria-invalid=true]]:border-field-border-error;
-    @apply motion-reduce:transition-none;
+    @apply relative flex w-full min-w-0 items-center gap-2 rounded-sm border border-field-border-default bg-field-background-default px-3 text-field-text-filled transition-[background-color,border-color,box-shadow] duration-200 ease-[ease-in-out] [--field-placeholder:var(--field-text-placeholder)] [--field-underline:0] [outline:0_none];
+    @apply hover:border-field-border-hovered active:border-field-border-pressed active:bg-field-background-pressed active:[--field-placeholder:var(--field-text-placeholder-tinted)] active:[--field-underline:0.5];
+    @apply has-[input:focus]:border-field-border-pressed has-[input:focus]:not-active:shadow-md has-[input:focus]:not-active:[--field-underline:1];
+    @apply after:pointer-events-none after:absolute after:inset-x-0 after:-bottom-px after:h-0.5 after:origin-center after:rounded-b-sm after:bg-field-border-pressed after:transition-transform after:duration-200 after:ease-[ease-in-out] after:[transform:scaleX(var(--field-underline))];
+    @apply has-[[aria-invalid=true]]:border-field-border-error! has-[[aria-invalid=true]]:after:bg-field-border-error;
+    @apply has-[input[readonly]:not(:focus)]:border-border-neutral-primary has-[input[readonly]]:bg-field-background-default has-[input[readonly]]:text-field-text-readonly has-[input[readonly]]:active:bg-field-background-default has-[input[readonly]]:active:[--field-underline:0] has-[input[readonly]]:shadow-none;
+    @apply has-[input:disabled]:cursor-not-allowed has-[input:disabled]:border-border-disabled has-[input:disabled]:bg-field-background-default has-[input:disabled]:text-text-default-disabled has-[input:disabled]:shadow-none has-[input:disabled]:after:hidden;
+    @apply motion-reduce:transition-none motion-reduce:after:transition-none;
   }
   .cn-input-size-md {
     @apply h-8 text-sm;
@@ -683,15 +691,21 @@
     @apply h-10 text-md;
     @apply [&_svg:not([class*='size-'])]:size-6;
   }
-  /* Filled lighter and darker keep a visible border (WCAG 1.4.11), see Deviations. */
+  /*
+   * Filled lighter and darker (DGA): no border at rest (kept transparent so the box does not
+   * shift), the default border on hover, focus and press, the default fill on focus and the
+   * pressed fill on press. Darker also uses the tinted placeholder at rest.
+   */
   .cn-input-lighter {
-    @apply bg-field-background-lighter focus-visible:bg-field-background-default has-[input:focus-visible]:bg-field-background-default;
+    @apply border-transparent bg-field-background-lighter hover:border-field-border-default active:border-field-border-default has-[input:focus]:border-field-border-default has-[input:focus]:bg-field-background-default;
+    @apply has-[input[readonly]:not(:focus)]:border-border-neutral-primary has-[input[readonly]]:bg-field-background-lighter has-[input:disabled]:border-border-disabled has-[input:disabled]:bg-field-background-lighter;
   }
   .cn-input-darker {
-    @apply bg-field-background-darker focus-visible:bg-field-background-default has-[input:focus-visible]:bg-field-background-default;
+    @apply border-transparent bg-field-background-darker [--field-placeholder:var(--field-text-placeholder-tinted)] hover:border-field-border-default active:border-field-border-default has-[input:focus]:border-field-border-default has-[input:focus]:bg-field-background-default;
+    @apply has-[input[readonly]:not(:focus)]:border-border-neutral-primary has-[input[readonly]]:bg-field-background-darker has-[input:disabled]:border-border-disabled has-[input:disabled]:bg-field-background-darker;
   }
   .cn-input-field {
-    @apply h-full min-w-0 flex-1 bg-transparent p-0 text-inherit outline-none placeholder:text-field-text-placeholder;
+    @apply h-full min-w-0 flex-1 bg-transparent p-0 text-inherit [outline:0_none] placeholder:text-(--field-placeholder);
     @apply disabled:cursor-not-allowed disabled:text-text-default-disabled disabled:placeholder:text-text-default-disabled;
     @apply read-only:text-field-text-readonly;
     @apply [&::-webkit-search-cancel-button]:appearance-none [&::-webkit-search-decoration]:appearance-none;
@@ -724,47 +738,62 @@
   }
 
   /* ------------------------------------------------------------------------------------
-   * Textarea. Same box as Input; padding 16 / 12px, resizable in height.
+   * Textarea. The same box and states as Input (see there): a wrapper carries the border, fill,
+   * shadow and the centre-out underline, and the <textarea> inside it has no chrome of its own.
+   * Padding 16 / 12px, resizable in height.
    * ---------------------------------------------------------------------------------- */
   .cn-textarea {
-    @apply block min-h-20 w-full min-w-0 rounded-sm border border-field-border-default bg-field-background-default px-4 py-3 text-sm text-field-text-filled transition-colors outline-none placeholder:text-field-text-placeholder;
-    @apply hover:border-field-border-hovered active:bg-field-background-pressed;
-    @apply focus-visible:border-field-border-pressed focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-offset-1 focus-visible:outline-border-black;
-    @apply read-only:border-dashed read-only:border-field-border-default read-only:bg-field-background-default read-only:text-field-text-readonly read-only:hover:border-field-border-default read-only:active:bg-field-background-default disabled:active:bg-field-background-default;
-    @apply disabled:cursor-not-allowed disabled:border-border-disabled disabled:text-text-default-disabled disabled:placeholder:text-text-default-disabled;
-    @apply aria-invalid:border-field-border-error;
-    @apply motion-reduce:transition-none;
+    @apply relative flex w-full min-w-0 rounded-sm border border-field-border-default bg-field-background-default text-sm text-field-text-filled transition-[background-color,border-color,box-shadow] duration-200 ease-[ease-in-out] [--field-placeholder:var(--field-text-placeholder)] [--field-underline:0] [outline:0_none];
+    @apply hover:border-field-border-hovered active:border-field-border-pressed active:bg-field-background-pressed active:[--field-placeholder:var(--field-text-placeholder-tinted)] active:[--field-underline:0.5];
+    @apply has-[textarea:focus]:border-field-border-pressed has-[textarea:focus]:not-active:shadow-md has-[textarea:focus]:not-active:[--field-underline:1];
+    @apply after:pointer-events-none after:absolute after:inset-x-0 after:-bottom-px after:h-0.5 after:origin-center after:rounded-b-sm after:bg-field-border-pressed after:transition-transform after:duration-200 after:ease-[ease-in-out] after:[transform:scaleX(var(--field-underline))];
+    @apply has-[[aria-invalid=true]]:border-field-border-error! has-[[aria-invalid=true]]:after:bg-field-border-error;
+    @apply has-[textarea[readonly]:not(:focus)]:border-border-neutral-primary has-[textarea[readonly]]:bg-field-background-default has-[textarea[readonly]]:text-field-text-readonly has-[textarea[readonly]]:active:bg-field-background-default has-[textarea[readonly]]:active:[--field-underline:0] has-[textarea[readonly]]:shadow-none;
+    @apply has-[textarea:disabled]:cursor-not-allowed has-[textarea:disabled]:border-border-disabled has-[textarea:disabled]:bg-field-background-default has-[textarea:disabled]:text-text-default-disabled has-[textarea:disabled]:shadow-none has-[textarea:disabled]:after:hidden;
+    @apply motion-reduce:transition-none motion-reduce:after:transition-none;
+  }
+  .cn-textarea-lighter {
+    @apply border-transparent bg-field-background-lighter hover:border-field-border-default active:border-field-border-default has-[textarea:focus]:border-field-border-default has-[textarea:focus]:bg-field-background-default;
+    @apply has-[textarea[readonly]:not(:focus)]:border-border-neutral-primary has-[textarea[readonly]]:bg-field-background-lighter has-[textarea:disabled]:border-border-disabled has-[textarea:disabled]:bg-field-background-lighter;
+  }
+  .cn-textarea-darker {
+    @apply border-transparent bg-field-background-darker [--field-placeholder:var(--field-text-placeholder-tinted)] hover:border-field-border-default active:border-field-border-default has-[textarea:focus]:border-field-border-default has-[textarea:focus]:bg-field-background-default;
+    @apply has-[textarea[readonly]:not(:focus)]:border-border-neutral-primary has-[textarea[readonly]]:bg-field-background-darker has-[textarea:disabled]:border-border-disabled has-[textarea:disabled]:bg-field-background-darker;
+  }
+  .cn-textarea-field {
+    @apply block min-h-20 w-full min-w-0 resize-none rounded-sm border-0 bg-transparent px-4 py-3 text-inherit [outline:0_none] placeholder:text-(--field-placeholder);
+    @apply read-only:text-field-text-readonly disabled:cursor-not-allowed disabled:text-text-default-disabled disabled:placeholder:text-text-default-disabled;
   }
   .cn-textarea-resize-none {
-    @apply resize-none;
+    @apply [&_textarea]:resize-none;
   }
   .cn-textarea-resize-vertical {
-    @apply resize-y;
+    @apply [&_textarea]:resize-y;
   }
 
   /* ------------------------------------------------------------------------------------
    * Select (Figma: Dropdown Input). Trigger = Input box; popup on the card surface.
    * ---------------------------------------------------------------------------------- */
   .cn-select-trigger {
-    @apply relative flex w-full min-w-0 cursor-pointer items-center justify-between gap-2 rounded-sm border border-field-border-default bg-field-background-default px-3 text-start text-field-text-filled transition-colors;
-    @apply hover:border-field-border-hovered active:bg-field-background-pressed data-popup-open:border-field-border-pressed;
-    @apply after:pointer-events-none after:absolute after:inset-x-0 after:-bottom-px after:h-0.5 after:w-0 after:rounded-b-sm after:bg-field-border-pressed after:transition-[width] after:duration-200 motion-reduce:after:transition-none;
-    @apply active:after:w-1/2 focus-visible:after:w-full data-popup-open:after:w-full data-invalid:after:bg-field-border-error;
-    @apply focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-offset-1 focus-visible:outline-border-black;
-    @apply data-readonly:after:hidden data-readonly:active:bg-field-background-default data-disabled:after:hidden data-disabled:active:bg-field-background-default;
-    @apply data-readonly:cursor-default data-readonly:border-dashed data-readonly:border-field-border-default data-readonly:text-field-text-readonly data-readonly:hover:border-field-border-default;
-    @apply data-disabled:cursor-not-allowed data-disabled:border-border-disabled data-disabled:text-text-default-disabled;
-    @apply data-invalid:border-field-border-error;
-    @apply motion-reduce:transition-none;
+    @apply relative flex w-full min-w-0 cursor-pointer items-center justify-between gap-2 rounded-sm border border-field-border-default bg-field-background-default px-3 text-start text-field-text-filled transition-[background-color,border-color,box-shadow] duration-200 ease-[ease-in-out] [--field-placeholder:var(--field-text-placeholder)] [--field-underline:0] [outline:0_none];
+    @apply hover:border-field-border-hovered active:border-field-border-pressed active:bg-field-background-pressed active:[--field-placeholder:var(--field-text-placeholder-tinted)] active:[--field-underline:0.5];
+    @apply focus:border-field-border-pressed focus:not-active:shadow-md focus:not-active:[--field-underline:1] data-popup-open:border-field-border-pressed data-popup-open:not-active:shadow-md data-popup-open:not-active:[--field-underline:1];
+    @apply after:pointer-events-none after:absolute after:inset-x-0 after:-bottom-px after:h-0.5 after:origin-center after:rounded-b-sm after:bg-field-border-pressed after:transition-transform after:duration-200 after:ease-[ease-in-out] after:[transform:scaleX(var(--field-underline))];
+    @apply data-invalid:border-field-border-error! data-invalid:after:bg-field-border-error;
+    @apply data-readonly:cursor-default data-readonly:border-border-neutral-primary data-readonly:text-field-text-readonly data-readonly:shadow-none data-readonly:hover:border-border-neutral-primary data-readonly:active:border-border-neutral-primary data-readonly:active:bg-field-background-default data-readonly:active:[--field-underline:0] data-readonly:focus:border-field-border-pressed data-readonly:focus:[--field-underline:1];
+    @apply data-disabled:cursor-not-allowed data-disabled:border-border-disabled data-disabled:text-text-default-disabled data-disabled:shadow-none data-disabled:after:hidden data-disabled:active:bg-field-background-default;
+    @apply motion-reduce:transition-none motion-reduce:after:transition-none;
   }
   .cn-select-lighter {
-    @apply bg-field-background-lighter focus-visible:bg-field-background-default data-popup-open:bg-field-background-default;
+    @apply border-transparent bg-field-background-lighter hover:border-field-border-default active:border-field-border-default focus:border-field-border-default focus:bg-field-background-default data-popup-open:border-field-border-default data-popup-open:bg-field-background-default;
+    @apply data-readonly:border-border-neutral-primary data-readonly:bg-field-background-lighter data-disabled:border-border-disabled data-disabled:bg-field-background-lighter;
   }
   .cn-select-darker {
-    @apply bg-field-background-darker focus-visible:bg-field-background-default data-popup-open:bg-field-background-default;
+    @apply border-transparent bg-field-background-darker [--field-placeholder:var(--field-text-placeholder-tinted)] hover:border-field-border-default active:border-field-border-default focus:border-field-border-default focus:bg-field-background-default data-popup-open:border-field-border-default data-popup-open:bg-field-background-default;
+    @apply data-readonly:border-border-neutral-primary data-readonly:bg-field-background-darker data-disabled:border-border-disabled data-disabled:bg-field-background-darker;
   }
   .cn-select-value {
-    @apply min-w-0 flex-1 truncate text-start data-placeholder:text-field-text-placeholder in-data-disabled:text-text-default-disabled;
+    @apply min-w-0 flex-1 truncate text-start data-placeholder:text-(--field-placeholder) in-data-disabled:text-text-default-disabled;
   }
   .cn-select-icon {
     @apply inline-flex shrink-0 text-icon-default-500 transition-transform data-popup-open:rotate-180 motion-reduce:transition-none;
@@ -940,5 +969,460 @@
     @apply inline-flex size-8 shrink-0 cursor-pointer items-center justify-center rounded-sm text-icon-default transition-colors [&_svg]:size-5;
     @apply hover:bg-button-background-neutral-default active:bg-button-background-neutral-pressed;
     @apply focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-offset-1 focus-visible:outline-border-black;
+  }
+
+  /* ------------------------------------------------------------------------------------
+   * Dialog (Figma: Modal). Card on background-white, radius-md, shadow-3xl, padding 24 (16 on
+   * mobile), gap 8, 600px wide (sm 400, lg 800), 100% minus the viewport padding on phones.
+   * Backdrop alpha-black-50. The title is Text lg Semibold in text-display.
+   * ---------------------------------------------------------------------------------- */
+  .cn-dialog-backdrop {
+    @apply fixed inset-0 z-50 bg-alpha-black-50 transition-opacity duration-200 data-ending-style:opacity-0 data-starting-style:opacity-0 motion-reduce:transition-none;
+  }
+  .cn-dialog-viewport {
+    @apply fixed inset-0 z-50 flex items-center justify-center overflow-y-auto p-4;
+  }
+  .cn-dialog {
+    @apply relative flex max-h-[calc(100dvh-2rem)] w-full flex-col gap-modal-gap overflow-y-auto rounded-md bg-background-white p-modal-padding text-text-default shadow-3xl outline-hidden;
+    @apply transition-[opacity,scale] duration-200 data-ending-style:scale-95 data-ending-style:opacity-0 data-starting-style:scale-95 data-starting-style:opacity-0 motion-reduce:transition-none;
+  }
+  .cn-dialog-size-sm {
+    @apply max-w-100;
+  }
+  .cn-dialog-size-md {
+    @apply max-w-150;
+  }
+  .cn-dialog-size-lg {
+    @apply max-w-200;
+  }
+  .cn-dialog-close,
+  .cn-drawer-close {
+    @apply absolute end-4 top-4 inline-flex size-8 cursor-pointer items-center justify-center rounded-sm text-icon-default transition-colors;
+    @apply hover:bg-button-background-neutral-hovered active:bg-button-background-neutral-pressed;
+    @apply focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-offset-1 focus-visible:outline-border-black;
+    @apply [&_svg]:size-5 motion-reduce:transition-none;
+  }
+  .cn-dialog-header,
+  .cn-drawer-header {
+    @apply flex flex-col gap-modal-gap pe-10;
+  }
+  .cn-dialog-title,
+  .cn-drawer-title {
+    @apply m-0 text-lg font-semibold text-text-display;
+  }
+  .cn-dialog-description,
+  .cn-drawer-description {
+    @apply m-0 text-md text-text-primary-paragraph;
+  }
+  .cn-dialog-body {
+    @apply flex flex-col gap-4;
+  }
+  .cn-dialog-footer,
+  .cn-drawer-footer {
+    @apply flex flex-col-reverse gap-3 pt-modal-content-bottom-padding sm:flex-row sm:flex-wrap sm:justify-end;
+  }
+
+  /* ------------------------------------------------------------------------------------
+   * Drawer (Figma: Slideout Menu). 346px wide on the sides, background-menu (gray: neutral-100),
+   * shadow-lg, a 1px border on the edge next to the page. start and end follow the direction.
+   * ---------------------------------------------------------------------------------- */
+  .cn-drawer-backdrop {
+    @apply fixed inset-0 z-50 bg-alpha-black-50 transition-opacity duration-300 data-ending-style:opacity-0 data-starting-style:opacity-0 data-swiping:duration-0 motion-reduce:transition-none;
+    opacity: calc(1 - var(--drawer-swipe-progress, 0));
+  }
+  .cn-drawer-viewport {
+    @apply fixed inset-0 z-50 flex items-stretch;
+    @apply data-[side=start]:justify-start data-[side=end]:justify-end data-[side=top]:flex-col data-[side=top]:justify-start data-[side=bottom]:flex-col data-[side=bottom]:justify-end;
+  }
+  .cn-drawer {
+    @apply relative flex flex-col overflow-y-auto overscroll-contain text-text-default shadow-lg outline-hidden;
+    @apply [transform:translate(var(--drawer-swipe-movement-x,0px),var(--drawer-swipe-movement-y,0px))] transition-[transform,translate] duration-300 ease-out data-swiping:duration-0 data-swiping:select-none motion-reduce:transition-none;
+  }
+  .cn-drawer-side-start {
+    @apply h-full w-86.5 max-w-[calc(100vw-3rem)] border-e border-border-neutral-primary;
+    @apply data-ending-style:-translate-x-full data-starting-style:-translate-x-full rtl:data-ending-style:translate-x-full rtl:data-starting-style:translate-x-full;
+  }
+  .cn-drawer-side-end {
+    @apply h-full w-86.5 max-w-[calc(100vw-3rem)] border-s border-border-neutral-primary;
+    @apply data-ending-style:translate-x-full data-starting-style:translate-x-full rtl:data-ending-style:-translate-x-full rtl:data-starting-style:-translate-x-full;
+  }
+  .cn-drawer-side-top {
+    @apply max-h-[80dvh] w-full border-b border-border-neutral-primary;
+    @apply data-ending-style:-translate-y-full data-starting-style:-translate-y-full;
+  }
+  .cn-drawer-side-bottom {
+    @apply max-h-[80dvh] w-full border-t border-border-neutral-primary;
+    @apply data-ending-style:translate-y-full data-starting-style:translate-y-full;
+  }
+  .cn-drawer-tone-white {
+    @apply bg-background-menu;
+  }
+  .cn-drawer-tone-gray {
+    @apply bg-background-neutral-100;
+  }
+  .cn-drawer-inner {
+    @apply flex min-h-0 flex-1 flex-col gap-4 p-6;
+  }
+  .cn-drawer-footer {
+    @apply mt-auto;
+  }
+
+  /* ------------------------------------------------------------------------------------
+   * Tooltip. At most 240px (min 160), radius-xs, shadow-lg, Text xs. Light: white (neutral-800
+   * in dark mode); dark (inverted): neutral-800 (white in dark mode). 14px beak, 8px padding.
+   * ---------------------------------------------------------------------------------- */
+  .cn-tooltip-positioner {
+    @apply z-50;
+  }
+  .cn-tooltip {
+    @apply relative flex w-max max-w-60 min-w-40 flex-col gap-1 rounded-xs bg-(--tt-bg) p-tooltip-padding text-xs text-(--tt-text) shadow-lg outline-hidden;
+    @apply origin-(--transform-origin) transition-[opacity,scale] duration-150 data-ending-style:scale-95 data-ending-style:opacity-0 data-starting-style:scale-95 data-starting-style:opacity-0 motion-reduce:transition-none;
+  }
+  .cn-tooltip-tone-light {
+    @apply [--tt-bg:var(--tooltip-background-light)] [--tt-heading:var(--tooltip-text-heading-light)] [--tt-text:var(--tooltip-text-paragraph-light)];
+  }
+  .cn-tooltip-tone-dark {
+    @apply [--tt-bg:var(--tooltip-background-dark)] [--tt-heading:var(--tooltip-text-heading-dark)] [--tt-text:var(--tooltip-text-paragraph-dark)];
+  }
+  .cn-tooltip-title {
+    @apply block text-xs font-semibold text-(--tt-heading);
+  }
+  .cn-tooltip-text {
+    @apply block;
+  }
+  .cn-tooltip-arrow {
+    @apply flex text-(--tt-bg);
+    /* logical-ok: Base UI positions the bubble by physical side, so the beak sits on a physical edge. */
+    @apply data-[side=bottom]:-top-2.25 data-[side=top]:-bottom-2.25 data-[side=top]:rotate-180 data-[side=left]:-right-3.25 data-[side=left]:rotate-90 data-[side=right]:-left-3.25 data-[side=right]:-rotate-90; /* logical-ok */
+  }
+  .cn-tooltip-help {
+    @apply inline-flex size-5 shrink-0 cursor-help items-center justify-center rounded-full border-0 bg-transparent p-0 text-icon-default-500 transition-colors;
+    @apply hover:text-icon-default data-popup-open:text-icon-default;
+    @apply focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-offset-1 focus-visible:outline-border-black;
+    @apply [&_svg]:size-5 motion-reduce:transition-none;
+  }
+
+  /* ------------------------------------------------------------------------------------
+   * Menu. Surface background-menu, 1px border, radius-md, shadow-2xl. Items 40px (padding 8,
+   * gap 8), radius-sm, Text md. States: hover and highlighted (neutral hovered), pressed,
+   * focused (2px black outline, keyboard), selected (primary-50, text-primary), disabled.
+   * ---------------------------------------------------------------------------------- */
+  .cn-menu-positioner {
+    @apply z-50 outline-hidden;
+  }
+  .cn-menu {
+    @apply max-h-(--available-height) min-w-52 origin-(--transform-origin) overflow-y-auto rounded-md border border-border-neutral-primary bg-background-menu p-1 text-text-default shadow-2xl outline-hidden;
+    @apply transition-[opacity,scale] duration-100 data-ending-style:scale-95 data-ending-style:opacity-0 data-starting-style:scale-95 data-starting-style:opacity-0 motion-reduce:transition-none;
+  }
+  .cn-menu-item {
+    @apply relative flex min-h-10 w-full cursor-pointer items-center gap-button-menu-gap rounded-sm px-button-menu-h-padding py-button-menu-v-padding text-start text-md text-text-default outline-hidden select-none;
+    @apply data-highlighted:bg-button-background-neutral-hovered active:bg-button-background-neutral-pressed data-popup-open:bg-button-background-neutral-hovered;
+    @apply focus-visible:outline-2 focus-visible:outline-solid focus-visible:-outline-offset-2 focus-visible:outline-border-black;
+    @apply data-disabled:cursor-not-allowed data-disabled:bg-transparent data-disabled:text-text-default-disabled data-disabled:[&_svg]:text-icon-default-disabled;
+    @apply [&_svg]:size-5 [&_svg]:shrink-0 [&_svg]:text-icon-default;
+  }
+  .cn-menu-item-selectable {
+    @apply data-checked:bg-background-primary-50 data-checked:text-text-primary data-checked:[&_svg]:text-icon-primary;
+  }
+  .cn-menu-indicator {
+    @apply ms-auto inline-flex shrink-0;
+  }
+  .cn-menu-dot {
+    @apply size-2.5! fill-current;
+  }
+  .cn-menu-group {
+    @apply flex flex-col;
+  }
+  .cn-menu-label {
+    @apply px-button-menu-h-padding py-1.5 text-xs font-bold text-text-display;
+  }
+  .cn-menu-separator {
+    @apply -mx-1 my-1 h-px bg-border-neutral-secondary;
+  }
+  .cn-menu-shortcut {
+    @apply ms-auto ps-4 text-sm text-text-primary-paragraph in-data-disabled:text-text-default-disabled;
+  }
+  .cn-menu-chevron {
+    @apply ms-auto rtl:-scale-x-100;
+  }
+
+  /* ------------------------------------------------------------------------------------
+   * Tabs. Horizontal: Text sm, Medium (Bold when selected), padding 12/16 (md), 8/12 (sm),
+   * 16 (lg), radius-sm, a 3px neutral-300 divider and a 3px primary bar under the selected tab.
+   * Vertical: padding 6/12 (md), 2/6 (sm), 8/12 (lg), a 3px bar on the start side.
+   * States: hover (neutral hovered), pressed, focused (2px black outline), selected, disabled.
+   * ---------------------------------------------------------------------------------- */
+  .cn-tabs {
+    @apply flex w-full min-w-0 flex-col gap-4;
+  }
+  .cn-tabs-vertical {
+    @apply flex-row items-start gap-6;
+  }
+  .cn-tabs-list {
+    @apply relative flex min-w-0 shrink-0 gap-0.75;
+    @apply data-[orientation=horizontal]:flex-row data-[orientation=vertical]:flex-col;
+  }
+  .cn-tabs-scroll {
+    @apply data-[orientation=horizontal]:overflow-x-auto;
+  }
+  .cn-tabs-divider {
+    @apply data-[orientation=horizontal]:shadow-[inset_0_-3px_0_0_var(--border-neutral-primary)] data-[orientation=vertical]:shadow-[inset_-3px_0_0_0_var(--border-neutral-primary)] data-[orientation=vertical]:rtl:shadow-[inset_3px_0_0_0_var(--border-neutral-primary)];
+  }
+  .cn-tabs-flush {
+    @apply data-[orientation=horizontal]:ps-0;
+  }
+  .cn-tab {
+    @apply relative inline-flex shrink-0 cursor-pointer items-center justify-center gap-tab-button-gap rounded-sm border-0 bg-transparent px-(--tab-px) py-(--tab-py) text-(length:--tab-text) font-medium whitespace-nowrap text-text-primary-paragraph transition-colors select-none;
+    @apply hover:bg-button-background-neutral-hovered hover:text-text-default active:bg-button-background-neutral-pressed active:text-text-default;
+    @apply focus-visible:z-10 focus-visible:outline-2 focus-visible:outline-solid focus-visible:-outline-offset-2 focus-visible:outline-border-black;
+    @apply data-active:font-bold data-active:text-text-default data-active:hover:bg-transparent data-active:active:bg-button-background-neutral-pressed;
+    @apply data-disabled:cursor-not-allowed data-disabled:bg-transparent data-disabled:text-text-default-disabled data-disabled:hover:bg-transparent;
+    @apply [&_svg]:size-(--tab-icon) [&_svg]:shrink-0 [&_svg]:text-unselected-tab-icon data-active:[&_svg]:text-icon-default data-disabled:[&_svg]:text-icon-default-disabled;
+    @apply after:pointer-events-none after:absolute after:rounded-full after:bg-border-primary after:opacity-0 after:transition-opacity data-active:after:opacity-100 motion-reduce:transition-none motion-reduce:after:transition-none;
+    @apply data-[orientation=horizontal]:after:inset-x-0 data-[orientation=horizontal]:after:bottom-0 data-[orientation=horizontal]:after:h-0.75;
+    @apply data-[orientation=vertical]:justify-start data-[orientation=vertical]:after:inset-y-2 data-[orientation=vertical]:after:end-0 data-[orientation=vertical]:after:min-h-4 data-[orientation=vertical]:after:w-0.75;
+    @apply data-[orientation=vertical]:hover:after:bg-border-neutral-primary data-[orientation=vertical]:hover:after:opacity-100 data-[orientation=vertical]:active:after:opacity-100 data-[orientation=vertical]:data-active:after:bg-border-primary;
+  }
+  .cn-tabs-size-sm {
+    @apply [--tab-icon:1rem] [--tab-px:var(--spacing-horizontal-tab-sm-button-h-padding)] [--tab-py:var(--spacing-horizontal-tab-sm-button-v-padding)] [--tab-text:var(--text-sm)];
+    @apply data-[orientation=vertical]:[--tab-px:var(--spacing-vertical-tab-sm-button-h-padding)] data-[orientation=vertical]:[--tab-py:var(--spacing-vertical-tab-sm-button-v-padding)];
+  }
+  .cn-tabs-size-md {
+    @apply [--tab-icon:1.25rem] [--tab-px:var(--spacing-horizontal-tab-md-button-h-padding)] [--tab-py:var(--spacing-horizontal-tab-md-button-v-padding)] [--tab-text:var(--text-sm)];
+    @apply data-[orientation=vertical]:[--tab-px:var(--spacing-vertical-tab-md-button-h-padding)] data-[orientation=vertical]:[--tab-py:var(--spacing-vertical-tab-md-button-v-padding)];
+  }
+  .cn-tabs-size-lg {
+    @apply [--tab-icon:1.5rem] [--tab-px:var(--spacing-horizontal-tab-md-button-h-padding)] [--tab-py:var(--spacing-horizontal-tab-md-button-h-padding)] [--tab-text:var(--text-md)];
+    @apply data-[orientation=vertical]:[--tab-px:var(--spacing-vertical-tab-md-button-h-padding)] data-[orientation=vertical]:[--tab-py:0.5rem];
+  }
+  .cn-tabs-content {
+    @apply min-w-0 flex-1 text-text-default outline-hidden;
+    @apply focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-offset-2 focus-visible:outline-border-black;
+  }
+
+  /* ------------------------------------------------------------------------------------
+   * Accordion. 1px neutral-primary line above each item, header padding 16 (lg), 12 (md) or
+   * 8 (sm), Text md Semibold, a chevron that turns. Focus: 2px black outline. Flush: the line
+   * stops 16px short of the edges. Disabled: neutral-300 text and chevron.
+   * ---------------------------------------------------------------------------------- */
+  .cn-accordion {
+    @apply flex w-full min-w-0 flex-col border-b border-border-neutral-primary;
+  }
+  .cn-accordion-item {
+    @apply border-t border-border-neutral-primary;
+  }
+  .cn-accordion-header {
+    @apply m-0 flex;
+  }
+  .cn-accordion-trigger {
+    @apply flex w-full cursor-pointer items-center justify-between gap-4 border-0 bg-transparent px-(--acc-px) py-(--acc-py) text-start text-md font-semibold text-text-default transition-colors;
+    @apply hover:bg-button-background-neutral-hovered active:bg-button-background-neutral-pressed;
+    @apply focus-visible:z-10 focus-visible:outline-2 focus-visible:outline-solid focus-visible:-outline-offset-2 focus-visible:outline-border-black;
+    @apply data-disabled:cursor-not-allowed data-disabled:bg-transparent data-disabled:text-text-default-disabled data-disabled:[&_svg]:text-icon-default-disabled;
+    @apply motion-reduce:transition-none;
+  }
+  .cn-accordion-title {
+    @apply min-w-0 flex-1;
+  }
+  .cn-accordion-chevron {
+    @apply size-5 shrink-0 text-icon-default transition-transform in-data-panel-open:rotate-180 motion-reduce:transition-none;
+  }
+  .cn-accordion-size-sm {
+    @apply [--acc-px:var(--spacing-accordion-lg-header-padding)] [--acc-py:var(--spacing-accordion-sm-header-padding)];
+  }
+  .cn-accordion-size-md {
+    @apply [--acc-px:var(--spacing-accordion-lg-header-padding)] [--acc-py:var(--spacing-accordion-md-header-padding)];
+  }
+  .cn-accordion-size-lg {
+    @apply [--acc-px:var(--spacing-accordion-lg-header-padding)] [--acc-py:var(--spacing-accordion-lg-header-padding)];
+  }
+  .cn-accordion-leading {
+    @apply [--acc-body-ps:3rem] [--acc-body-pe:var(--acc-px)] [&_[data-slot=accordion-trigger]]:flex-row-reverse [&_[data-slot=accordion-trigger]]:justify-end;
+  }
+  .cn-accordion-trailing {
+    @apply [--acc-body-pe:3rem] [--acc-body-ps:var(--acc-px)];
+  }
+  .cn-accordion-flush {
+    @apply border-b-0 [&_[data-slot=accordion-item]]:mx-4 [&_[data-slot=accordion-trigger]]:rounded-sm;
+  }
+  .cn-accordion-panel {
+    @apply h-(--accordion-panel-height) overflow-hidden text-md text-text-primary-paragraph transition-[height] duration-200 ease-out data-ending-style:h-0 data-starting-style:h-0 motion-reduce:transition-none;
+  }
+  .cn-accordion-body {
+    @apply pt-accordion-sm-header-padding pe-(--acc-body-pe) pb-6 ps-(--acc-body-ps);
+  }
+
+  /* ------------------------------------------------------------------------------------
+   * Content Switcher. Heights 32 / 40 / 48px, Text md. The track is neutral-100 with a
+   * 1px border; the chosen option is the primary fill with an on-colour label (it keeps that fill
+   * on hover and press). On-colour: a translucent black track (white on the brand fill would lose
+   * contrast if lightened) and a white chosen option with a dark green label, for brand fills.
+   * ---------------------------------------------------------------------------------- */
+  .cn-switcher {
+    @apply inline-flex w-fit max-w-full items-stretch rounded-sm border border-border-neutral-primary bg-background-neutral-100 p-0.5;
+  }
+  .cn-switcher-item {
+    @apply inline-flex min-w-0 flex-1 cursor-pointer items-center justify-center gap-2 rounded-xs border-0 bg-transparent px-4 text-md font-medium whitespace-nowrap text-text-default transition-colors select-none;
+    @apply hover:bg-button-background-neutral-hovered active:bg-button-background-neutral-pressed;
+    @apply focus-visible:z-10 focus-visible:outline-2 focus-visible:outline-solid focus-visible:-outline-offset-2 focus-visible:outline-border-black;
+    @apply data-pressed:bg-button-background-primary-default data-pressed:text-text-oncolor-primary data-pressed:hover:bg-button-background-primary-default data-pressed:active:bg-button-background-primary-default;
+    @apply data-disabled:cursor-not-allowed data-disabled:bg-transparent data-disabled:text-text-default-disabled data-disabled:hover:bg-transparent data-pressed:data-disabled:bg-background-disabled;
+    @apply [&_svg]:size-5 [&_svg]:shrink-0 motion-reduce:transition-none;
+  }
+  .cn-switcher-size-sm {
+    @apply h-8 [&_[data-slot=content-switcher-item]]:text-sm;
+  }
+  .cn-switcher-size-md {
+    @apply h-10;
+  }
+  .cn-switcher-size-lg {
+    @apply h-12;
+  }
+  .cn-switcher-on-color {
+    @apply border-alpha-white-40 bg-alpha-alpha-black-20;
+    @apply [&_[data-slot=content-switcher-item]]:text-text-oncolor-primary [&_[data-slot=content-switcher-item]]:hover:bg-alpha-alpha-black-30 [&_[data-slot=content-switcher-item]]:active:bg-alpha-alpha-black-40;
+    @apply [&_[data-slot=content-switcher-item]]:focus-visible:outline-base-white;
+    @apply [&_[data-slot=content-switcher-item][data-pressed]]:bg-base-white [&_[data-slot=content-switcher-item][data-pressed]]:text-primary-sa-flag-700 [&_[data-slot=content-switcher-item][data-pressed]]:hover:bg-base-white [&_[data-slot=content-switcher-item][data-pressed]]:active:bg-base-white;
+  }
+
+  /* ------------------------------------------------------------------------------------
+   * Toast (Figma: Notification Toast). 484px wide (full width on phones), radius-md, shadow-3xl,
+   * background-notification-white, padding 16/24 (16 on phones), an 8px bar on the start side
+   * in the kind's 400 colour, Text md Semibold title.
+   * ---------------------------------------------------------------------------------- */
+  .cn-toaster {
+    @apply fixed inset-x-4 bottom-4 z-60 flex flex-col items-end gap-3 outline-hidden sm:inset-x-auto sm:end-6 sm:bottom-6 sm:w-121;
+    @apply pointer-events-none [&>*]:pointer-events-auto;
+  }
+  .cn-toast {
+    @apply relative w-full overflow-hidden rounded-md bg-background-notification-white text-text-display shadow-3xl select-none;
+    @apply [transform:translate(var(--toast-swipe-movement-x,0px),var(--toast-swipe-movement-y,0px))] transition-[transform,opacity] duration-300 ease-out data-ending-style:opacity-0 data-limited:hidden data-starting-style:translate-y-4 data-starting-style:opacity-0 motion-reduce:transition-none;
+    @apply before:absolute before:inset-y-0 before:start-0 before:w-2 before:bg-(--toast-bar);
+  }
+  .cn-toast-neutral {
+    @apply [--toast-bar:var(--border-neutral-primary)] [--toast-icon:var(--icon-default)];
+  }
+  .cn-toast-info {
+    @apply [--toast-bar:var(--colors-blue-400)] [--toast-icon:var(--icon-info)];
+  }
+  .cn-toast-success {
+    @apply [--toast-bar:var(--colors-green-400)] [--toast-icon:var(--icon-success)];
+  }
+  .cn-toast-warning {
+    @apply [--toast-bar:var(--colors-yellow-400)] [--toast-icon:var(--icon-warning)];
+  }
+  .cn-toast-error {
+    @apply [--toast-bar:var(--colors-red-400)] [--toast-icon:var(--icon-error)];
+  }
+  .cn-toast-content {
+    @apply flex items-start gap-4 py-notification-toast-v-padding pe-4 ps-[calc(var(--spacing-notification-toast-desktop-h-padding)+0.5rem)];
+  }
+  .cn-toast-icon {
+    @apply mt-0.5 size-6 shrink-0 text-(--toast-icon);
+  }
+  .cn-toast-text {
+    @apply flex min-w-0 flex-1 flex-col gap-1;
+  }
+  .cn-toast-title {
+    @apply m-0 text-md font-semibold text-text-display;
+  }
+  .cn-toast-description {
+    @apply m-0 text-sm text-text-primary-paragraph;
+  }
+  .cn-toast-action {
+    @apply mt-2 inline-flex h-8 w-fit cursor-pointer items-center rounded-sm border border-button-border-neutral bg-button-background-neutral-default px-3 text-sm font-medium text-text-default transition-colors;
+    @apply hover:bg-button-background-neutral-pressed focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-offset-1 focus-visible:outline-border-black motion-reduce:transition-none;
+  }
+  .cn-toast-close {
+    @apply -me-1 inline-flex size-8 shrink-0 cursor-pointer items-center justify-center rounded-sm border-0 bg-transparent text-icon-default transition-colors;
+    @apply hover:bg-button-background-neutral-hovered active:bg-button-background-neutral-pressed;
+    @apply focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-offset-1 focus-visible:outline-border-black;
+    @apply [&_svg]:size-5 motion-reduce:transition-none;
+  }
+
+  /* ------------------------------------------------------------------------------------
+   * Notification. Full-width banner: padding 8/24, radius-xs, a 2px bottom border in the kind's
+   * colour, 50 tint fill, Text md. The lead-in is Bold. Critical, warning, success, info, neutral.
+   * ---------------------------------------------------------------------------------- */
+  .cn-notification {
+    @apply flex w-full items-center gap-notification-gap rounded-xs border-b-2 px-notification-alert-h-padding py-notification-alert-v-padding text-md;
+    @apply border-(--n-border) bg-(--n-bg) text-(--n-text);
+  }
+  .cn-notification-neutral {
+    @apply [--n-bg:var(--background-neutral-50)] [--n-border:var(--colors-neutral-400)] [--n-icon:var(--icon-default)] [--n-text:var(--text-primary-paragraph)];
+  }
+  .cn-notification-info {
+    @apply [--n-bg:var(--background-info-50)] [--n-border:var(--colors-blue-400)] [--n-icon:var(--icon-info)] [--n-text:var(--text-info)];
+  }
+  .cn-notification-success {
+    @apply [--n-bg:var(--background-success-50)] [--n-border:var(--colors-green-400)] [--n-icon:var(--icon-success)] [--n-text:var(--text-success)];
+  }
+  .cn-notification-warning {
+    @apply [--n-bg:var(--background-warning-50)] [--n-border:var(--colors-yellow-400)] [--n-icon:var(--icon-warning)] [--n-text:var(--text-warning)];
+  }
+  .cn-notification-critical {
+    @apply [--n-bg:var(--background-error-50)] [--n-border:var(--colors-red-400)] [--n-icon:var(--icon-error)] [--n-text:var(--text-error)];
+  }
+  .cn-notification-icon {
+    @apply size-6 shrink-0 text-(--n-icon);
+  }
+  .cn-notification-text {
+    @apply m-0 min-w-0 flex-1;
+  }
+  .cn-notification-title {
+    @apply font-bold;
+  }
+  .cn-notification-action {
+    @apply shrink-0 text-sm [&_a]:text-inherit [&_a]:underline;
+  }
+  .cn-notification-close,
+  .cn-alert-close {
+    @apply -me-1 inline-flex size-8 shrink-0 cursor-pointer items-center justify-center rounded-sm border-0 bg-transparent text-icon-default transition-colors;
+    @apply hover:bg-alpha-black-10 active:bg-alpha-black-20;
+    @apply focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-offset-1 focus-visible:outline-border-black;
+    @apply [&_svg]:size-5 motion-reduce:transition-none;
+  }
+
+  /* ------------------------------------------------------------------------------------
+   * Inline Alert. Radius-md, 1px neutral-primary border, padding 16/24 (16 on phones), gap 16,
+   * an 8px bar on the start side in the kind's 400 colour. White fill, or a 25 tint with the
+   * kind's light border (tinted). Title Text md Semibold.
+   * ---------------------------------------------------------------------------------- */
+  .cn-alert {
+    @apply relative flex w-full items-start gap-notification-gap overflow-hidden rounded-md border border-(--a-border) bg-(--a-bg) py-notification-padding pe-4 ps-[calc(var(--spacing-notification-h-padding)+0.5rem)] text-(--a-title) [--a-text:var(--text-primary-paragraph)] [--a-title:var(--text-display)];
+    @apply before:absolute before:inset-y-0 before:start-0 before:w-2 before:bg-(--a-bar);
+  }
+  .cn-alert-neutral {
+    @apply [--a-bar:var(--border-neutral-primary)] [--a-bg:var(--background-notification-white)] [--a-border:var(--border-neutral-primary)] [--a-icon:var(--icon-default)] [--a-tint-bg:var(--background-neutral-25)] [--a-tint-border:var(--border-neutral-primary)] [--a-tint-text:var(--text-display)];
+  }
+  .cn-alert-info {
+    @apply [--a-bar:var(--colors-blue-400)] [--a-bg:var(--background-notification-white)] [--a-border:var(--border-neutral-primary)] [--a-icon:var(--icon-info)] [--a-tint-bg:var(--background-info-25)] [--a-tint-border:var(--border-info-light)] [--a-tint-text:var(--text-info)];
+  }
+  .cn-alert-success {
+    @apply [--a-bar:var(--colors-green-400)] [--a-bg:var(--background-notification-white)] [--a-border:var(--border-neutral-primary)] [--a-icon:var(--icon-success)] [--a-tint-bg:var(--background-success-25)] [--a-tint-border:var(--border-success-light)] [--a-tint-text:var(--text-success)];
+  }
+  .cn-alert-warning {
+    @apply [--a-bar:var(--colors-yellow-400)] [--a-bg:var(--background-notification-white)] [--a-border:var(--border-neutral-primary)] [--a-icon:var(--icon-warning)] [--a-tint-bg:var(--background-warning-25)] [--a-tint-border:var(--border-warning-light)] [--a-tint-text:var(--text-warning)];
+  }
+  .cn-alert-destructive {
+    @apply [--a-bar:var(--colors-red-400)] [--a-bg:var(--background-notification-white)] [--a-border:var(--border-neutral-primary)] [--a-icon:var(--icon-error)] [--a-tint-bg:var(--background-error-25)] [--a-tint-border:var(--border-error-light)] [--a-tint-text:var(--text-error)];
+  }
+  .cn-alert-tinted {
+    @apply [--a-bg:var(--a-tint-bg)] [--a-border:var(--a-tint-border)] [--a-text:var(--a-tint-text)] [--a-title:var(--a-tint-text)];
+  }
+  .cn-alert-icon {
+    @apply mt-0.5 size-6 shrink-0 text-(--a-icon);
+  }
+  .cn-alert-body {
+    @apply flex min-w-0 flex-1 flex-col gap-1;
+  }
+  .cn-alert-title {
+    @apply m-0 text-md font-semibold;
+  }
+  .cn-alert-text {
+    @apply text-sm text-(--a-text);
+  }
+  .cn-alert-actions {
+    @apply mt-2 flex flex-wrap items-center gap-3;
   }
 }

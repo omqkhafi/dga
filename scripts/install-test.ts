@@ -45,6 +45,20 @@ const FORM_ITEMS = [
   "file-upload",
 ];
 
+/** The Phase 4 interactive items, plus the direction library file they share. */
+const INTERACTIVE_ITEMS = [
+  "dialog",
+  "drawer",
+  "tooltip",
+  "menu",
+  "tabs",
+  "accordion",
+  "content-switcher",
+  "toast",
+  "notification",
+  "inline-alert",
+];
+
 const work = mkdtempSync(join(tmpdir(), "dga-install-"));
 const registryDir = join(work, "serve");
 const failures: string[] = [];
@@ -186,6 +200,9 @@ try {
       for (const item of FORM_ITEMS) {
         check(components.includes(item), `${label}: the registry has the form item ${item}`);
       }
+      for (const item of INTERACTIVE_ITEMS) {
+        check(components.includes(item), `${label}: the registry has the interactive item ${item}`);
+      }
       if (add.exitCode !== 0) console.error(add.stderr.toString() || add.stdout.toString());
       for (const c of components) {
         const source = reader(app).text(`src/components/ui/${c}.tsx`);
@@ -236,6 +253,48 @@ export default function Page() {
       <FieldLabel>Quantity</FieldLabel>
       <NumberInput defaultValue={1} />
     </Field>
+  );
+}
+`,
+    );
+    await build(label, app);
+  }
+
+  // 4b. one interactive control on its own: the direction helper it needs comes with it
+  {
+    const label = "dga-interactive-control";
+    const app = await fresh(label);
+    await $`bunx ${shadcn} init ${url}/r/dga.json --yes --no-monorepo < /dev/null`.cwd(app).quiet();
+    const add = await $`bunx ${shadcn} add @dga/tabs --yes < /dev/null`.cwd(app).nothrow().quiet();
+    check(add.exitCode === 0, `${label}: shadcn add @dga/tabs`);
+    if (add.exitCode !== 0) console.error(add.stderr.toString() || add.stdout.toString());
+    const r = reader(app);
+    let direction = "";
+    try {
+      direction = r.text("src/lib/direction.tsx");
+    } catch {}
+    check(
+      direction.includes("AutoDirection"),
+      `${label}: lib/direction.tsx was installed with tabs`,
+    );
+    const tabs = r.text("src/components/ui/tabs.tsx");
+    check(tabs.startsWith('"use client"'), `${label}: tabs.tsx is a client component`);
+    check(tabs.includes("@/lib/direction"), `${label}: tabs.tsx imports the direction helper`);
+    check(!/\bcn-[a-z]/.test(tabs.replace(/data-slot=|"cn"/g, "")), `${label}: cn-* inlined`);
+    writeFileSync(
+      join(app, "src/app/page.tsx"),
+      `import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+
+export default function Page() {
+  return (
+    <Tabs defaultValue="a">
+      <TabsList aria-label="Sections">
+        <TabsTrigger value="a">A</TabsTrigger>
+        <TabsTrigger value="b">B</TabsTrigger>
+      </TabsList>
+      <TabsContent value="a">One</TabsContent>
+      <TabsContent value="b">Two</TabsContent>
+    </Tabs>
   );
 }
 `,

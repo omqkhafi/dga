@@ -20,6 +20,17 @@
     "checkbox",
     "radio",
     "switch",
-    "file-upload"
+    "file-upload",
+    "---التفاعلية---",
+    "dialog",
+    "drawer",
+    "tooltip",
+    "menu",
+    "tabs",
+    "accordion",
+    "content-switcher",
+    "toast",
+    "notification",
+    "inline-alert"
   ]
 }

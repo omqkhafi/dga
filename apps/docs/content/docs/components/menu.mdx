@@ -1,0 +1,109 @@
+---
+title: Menu
+description: "A list of actions on a temporary surface. Icons and trailing text, checkbox and radio items, groups and submenus, with arrow-key navigation."
+---
+
+<Preview name="menu-basic" title="Menu" minHeight={300} />
+
+## Installation
+
+<ComponentInstall name="menu" />
+
+## Usage
+
+```tsx title="page.tsx"
+import { Edit02Icon, Delete02Icon } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
+import { Button } from "@/components/ui/button";
+import {
+  Menu,
+  MenuContent,
+  MenuItem,
+  MenuSeparator,
+  MenuTrigger,
+} from "@/components/ui/menu";
+
+export function RequestActions() {
+  return (
+    <Menu>
+      <MenuTrigger render={<Button variant="outline" />}>الإجراءات</MenuTrigger>
+      <MenuContent>
+        <MenuItem>
+          <HugeiconsIcon icon={Edit02Icon} aria-hidden />
+          تعديل الطلب
+        </MenuItem>
+        <MenuSeparator />
+        <MenuItem>
+          <HugeiconsIcon icon={Delete02Icon} aria-hidden />
+          سحب الطلب
+        </MenuItem>
+      </MenuContent>
+    </Menu>
+  );
+}
+```
+
+Use a Menu for a set of actions on one thing: a table row, a card, a profile. For choosing a value that is saved in a form, use [Select](/docs/components/select). Items run an action when they are chosen. Put an icon first (it is decorative), the label, then optional trailing content such as MenuShortcut. For a link, render an anchor: `<MenuItem render={<a href="/" />}>`. Keep the menu to about seven items; split a longer one with MenuSeparator and MenuGroup.
+
+## Anatomy
+
+- **Trigger**: the button that opens the menu.
+- **Menu** (`role="menu"`): `background-menu`, a 1px border, radius-md, `shadow-2xl`.
+- **Item** (`role="menuitem"`): 40px high, 8px padding, an optional icon and trailing content.
+- **Checkbox and radio items**: show a check mark or a dot on the end side when chosen.
+- **Group and label**, **separator**: structure for longer menus.
+- **Submenu**: MenuSub with a MenuSubTrigger (chevron) and MenuSubContent.
+
+## Examples
+
+### Checkbox and radio items
+
+MenuCheckboxItem turns something on or off. MenuRadioGroup with MenuRadioItem chooses one. Groups get a MenuLabel.
+
+<Preview compact name="menu-groups" title="Checkbox and radio items" minHeight={300} />
+
+### Submenu
+
+MenuSub opens a second list beside its item, on the end side. It opens with Enter, Space or the arrow that points at it, and closes with the opposite arrow.
+
+<Preview compact name="menu-submenu" title="Submenu" minHeight={300} />
+
+## RTL
+
+Menus align to the start edge of the trigger (the right edge in Arabic). A submenu opens on the end side, so on the left, and its chevron is mirrored. Left and Right swap: Left opens a submenu in Arabic. Digits and shortcuts stay left to right.
+
+<DirectionCompare name="menu-submenu" title="Menu" minHeight={300} />
+
+## Accessibility
+
+| Key | Action |
+| --- | --- |
+| <kbd>Enter</kbd> | On the trigger, opens the menu and focuses the first item. On an item, chooses it. |
+| <kbd>Space</kbd> | Chooses the focused item (or opens the menu from the trigger). |
+| <kbd>ArrowDown</kbd> | Opens the menu from the trigger; moves to the next item. |
+| <kbd>ArrowUp</kbd> | Moves to the previous item. |
+| <kbd>Home</kbd> | Moves to the first item (and End to the last). |
+| <kbd>ArrowRight</kbd> | Opens a submenu (ArrowLeft in Arabic); the opposite arrow closes it. |
+| <kbd>A to Z</kbd> | Moves to the next item that starts with that letter. |
+| <kbd>Escape</kbd> | Closes the menu and returns focus to the trigger. |
+
+- Built on Base UI Menu: `role="menu"`, items with `role="menuitem"`, `menuitemcheckbox` and `menuitemradio`, and the trigger has `aria-haspopup` and `aria-expanded`.
+- Only one item is in the tab order at a time (roving focus); the arrow keys move between items and focus returns to the trigger on close.
+- Hover and keyboard highlight show a fill; keyboard focus adds a 2px outline inside the item (3:1 or better). A selected item has a tint, a check mark or a dot, so it never relies on colour alone.
+- Text is 4.5:1 and icons 3:1 or better in every state, in light and dark. A disabled item stays in the arrow-key order so it can be found, but cannot be chosen.
+
+## API Reference
+
+<ApiReference component="menu" />
+
+## Deviations from DGA
+
+- Figma's hover fill is `button-background-neutral-hovered`; the CSS also sets `neutral-100` on the same selector. Figma wins. The 2px focus border is an inset outline for keyboard focus only.
+- Disabled items use `text-default-disabled`, not `opacity: .5` as in the CSS: opacity would fade the focus ring and the check mark too.
+- Submenus, checkbox items and radio items are added; the five trail variants are one slot (any element after the label).
+
+<ComponentDeviations component="menu" />
+
+## Contrast
+
+<ComponentContrast component="menu" />

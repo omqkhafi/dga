@@ -32,6 +32,20 @@ export const FORM_COMPONENTS = [
   "file-upload",
 ];
 
+/** The interactive components, listed under "Interactive" in the sidebar, search and llms.txt. */
+export const INTERACTIVE_COMPONENTS = [
+  "dialog",
+  "drawer",
+  "tooltip",
+  "menu",
+  "tabs",
+  "accordion",
+  "content-switcher",
+  "toast",
+  "notification",
+  "inline-alert",
+];
+
 /** Components that are used together, for the "Related" row on each component page. */
 export const RELATED: Record<string, string[]> = {
   button: ["link", "spinner", "badge"],
@@ -53,6 +67,16 @@ export const RELATED: Record<string, string[]> = {
   radio: ["checkbox", "select", "field"],
   switch: ["checkbox", "radio", "field"],
   "file-upload": ["field", "input", "button"],
+  dialog: ["drawer", "button", "toast"],
+  drawer: ["dialog", "menu", "button"],
+  tooltip: ["menu", "button", "dialog"],
+  menu: ["button", "tooltip", "tabs"],
+  tabs: ["content-switcher", "accordion", "menu"],
+  accordion: ["tabs", "content-switcher"],
+  "content-switcher": ["tabs", "accordion"],
+  toast: ["notification", "inline-alert", "dialog"],
+  notification: ["inline-alert", "toast"],
+  "inline-alert": ["notification", "toast", "field"],
 };
 
 export const FIGMA_URL =

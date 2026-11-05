@@ -1,0 +1,110 @@
+---
+title: Menu
+description: "قائمة إجراءات على سطح مؤقت. أيقونات ونص في النهاية وعناصر مربع اختيار وراديو ومجموعات وقوائم فرعية، مع تنقل بمفاتيح الأسهم."
+sourceHash: 08734a102205
+---
+
+<Preview name="menu-basic" title="القائمة" minHeight={300} />
+
+## التثبيت [#installation]
+
+<ComponentInstall name="menu" />
+
+## الاستخدام [#usage]
+
+```tsx title="page.tsx"
+import { Edit02Icon, Delete02Icon } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
+import { Button } from "@/components/ui/button";
+import {
+  Menu,
+  MenuContent,
+  MenuItem,
+  MenuSeparator,
+  MenuTrigger,
+} from "@/components/ui/menu";
+
+export function RequestActions() {
+  return (
+    <Menu>
+      <MenuTrigger render={<Button variant="outline" />}>الإجراءات</MenuTrigger>
+      <MenuContent>
+        <MenuItem>
+          <HugeiconsIcon icon={Edit02Icon} aria-hidden />
+          تعديل الطلب
+        </MenuItem>
+        <MenuSeparator />
+        <MenuItem>
+          <HugeiconsIcon icon={Delete02Icon} aria-hidden />
+          سحب الطلب
+        </MenuItem>
+      </MenuContent>
+    </Menu>
+  );
+}
+```
+
+استخدم Menu لمجموعة إجراءات على شيء واحد: صف في جدول أو بطاقة أو ملف شخصي. ولاختيار قيمة تُحفظ في نموذج استخدم [Select](/docs/components/select). وتنفّذ العناصر إجراءً عند اختيارها. ضع أيقونة أولًا (وهي زخرفية) ثم التسمية ثم محتوى اختياريًا في النهاية مثل MenuShortcut. وللرابط اعرض عنصر `a`: `<MenuItem render={<a href="/" />}>`. وأبقِ القائمة في نحو سبعة عناصر؛ وقسّم الأطول بـ MenuSeparator وMenuGroup.
+
+## البنية [#anatomy]
+
+- **الزر**: الذي يفتح القائمة.
+- **القائمة** (`role="menu"`): `background-menu` وحد بسمك 1px وانحناء radius-md و`shadow-2xl`.
+- **العنصر** (`role="menuitem"`): بارتفاع 40px وحشوة 8px، وأيقونة ومحتوى في النهاية اختياريان.
+- **عناصر مربع الاختيار والراديو**: تعرض علامة صح أو نقطة في جهة النهاية عند اختيارها.
+- **المجموعة والعنوان** و**الفاصل**: بنية للقوائم الأطول.
+- **القائمة الفرعية**: MenuSub مع MenuSubTrigger (سهم) وMenuSubContent.
+
+## أمثلة [#examples]
+
+### عناصر مربع الاختيار والراديو [#checkbox-and-radio-items]
+
+يشغّل MenuCheckboxItem شيئًا أو يوقفه. ويختار MenuRadioGroup مع MenuRadioItem خيارًا واحدًا. وتحصل المجموعات على MenuLabel.
+
+<Preview compact name="menu-groups" title="عناصر مربع الاختيار والراديو" minHeight={300} />
+
+### قائمة فرعية [#submenu]
+
+يفتح MenuSub قائمة ثانية بجانب عنصرها في جهة النهاية. وتُفتح بـ Enter أو Space أو السهم المتجه إليها، وتُغلق بالسهم المعاكس.
+
+<Preview compact name="menu-submenu" title="قائمة فرعية" minHeight={300} />
+
+## RTL [#rtl]
+
+تُحاذى القوائم إلى حافة بداية الزر (الحافة اليمنى بالعربية). وتفتح القائمة الفرعية في جهة النهاية أي على اليسار، ويُعكس سهمها. ويتبادل اليمين واليسار: فاليسار يفتح قائمة فرعية بالعربية. وتبقى الأرقام والاختصارات من اليسار إلى اليمين.
+
+<DirectionCompare name="menu-submenu" title="القائمة" minHeight={300} />
+
+## إمكانية الوصول [#accessibility]
+
+| المفتاح | الإجراء |
+| --- | --- |
+| <kbd>Enter</kbd> | على الزر يفتح القائمة ويركّز العنصر الأول. وعلى عنصر يختاره. |
+| <kbd>Space</kbd> | يختار العنصر المركَّز (أو يفتح القائمة من الزر). |
+| <kbd>ArrowDown</kbd> | يفتح القائمة من الزر؛ وينتقل إلى العنصر التالي. |
+| <kbd>ArrowUp</kbd> | ينتقل إلى العنصر السابق. |
+| <kbd>Home</kbd> | ينتقل إلى العنصر الأول (وEnd إلى الأخير). |
+| <kbd>ArrowRight</kbd> | يفتح قائمة فرعية (ArrowLeft بالعربية)؛ ويغلقها السهم المعاكس. |
+| <kbd>A to Z</kbd> | ينتقل إلى العنصر التالي الذي يبدأ بذلك الحرف. |
+| <kbd>Escape</kbd> | يغلق القائمة ويعيد التركيز إلى الزر. |
+
+- مبنية على Base UI Menu: `role="menu"` وعناصر بـ `role="menuitem"` و`menuitemcheckbox` و`menuitemradio`، وللزر `aria-haspopup` و`aria-expanded`.
+- عنصر واحد فقط في ترتيب Tab في كل مرة (تركيز متنقل)؛ وتنقل الأسهم بين العناصر ويعود التركيز إلى الزر عند الإغلاق.
+- يعرض التمرير والتمييز بلوحة المفاتيح تعبئة؛ ويضيف تركيز لوحة المفاتيح حدًا بسمك 2px داخل العنصر (بنسبة 3:1 أو أفضل). وللعنصر المحدد تظليل وعلامة صح أو نقطة، فلا يعتمد على اللون وحده.
+- النص بنسبة 4.5:1 والأيقونات 3:1 أو أفضل في كل حالة، فاتحًا وداكنًا. ويبقى العنصر المعطّل في ترتيب مفاتيح الأسهم ليمكن العثور عليه، لكن لا يمكن اختياره.
+
+## مرجع API [#api-reference]
+
+<ApiReference component="menu" />
+
+## الاختلافات عن DGA [#deviations-from-dga]
+
+- تعبئة التمرير في Figma هي `button-background-neutral-hovered`، بينما يضبط CSS أيضًا `neutral-100` على المحدد نفسه. ويُعتمد Figma. وحد التركيز بسمك 2px مخطط داخلي لتركيز لوحة المفاتيح فقط.
+- تستخدم العناصر المعطّلة `text-default-disabled` لا `opacity: .5` كما في CSS: فالشفافية تُبهت حلقة التركيز وعلامة الصح أيضًا.
+- أُضيفت القوائم الفرعية وعناصر مربع الاختيار والراديو؛ وصُيّرت متغيرات النهاية الخمسة فتحة واحدة (أي عنصر بعد التسمية).
+
+<ComponentDeviations component="menu" />
+
+## التباين [#contrast]
+
+<ComponentContrast component="menu" />

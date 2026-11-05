@@ -1,4 +1,120 @@
 {
+  "accordion": [
+    {
+      "name": "Accordion",
+      "description": "Shows and hides sections of content under their headings (DGA: Accordion). Each heading is a button: Tab moves between headings and Enter or Space opens or closes the section. One section is open at a time unless you set `multiple`.",
+      "descriptionAr": "يعرض أقسام المحتوى ويخفيها تحت عناوينها (في DGA: Accordion). كل عنوان زر: ينقل Tab بين العناوين ويفتح Enter أو Space القسم أو يغلقه. ويُفتح قسم واحد في كل مرة ما لم تضبط `multiple`.",
+      "inherits": {
+        "name": "Accordion",
+        "url": "https://base-ui.com/react/components/accordion"
+      },
+      "props": [
+        {
+          "name": "size",
+          "type": "\"sm\" | \"md\" | \"lg\"",
+          "default": "\"lg\"",
+          "required": false,
+          "description": "Header padding: `sm` 8px, `md` 12px, `lg` 16px (DGA).",
+          "descriptionAr": "حشوة العنوان: `sm` ‏8px، و`md` ‏12px، و`lg` ‏16px (كما في DGA)."
+        },
+        {
+          "name": "iconPosition",
+          "type": "\"trailing\" | \"leading\"",
+          "default": "\"trailing\"",
+          "required": false,
+          "description": "Where the chevron sits: `trailing` (default) or `leading`.",
+          "descriptionAr": "موضع السهم: `trailing` في النهاية (الافتراضي) أو `leading` في البداية."
+        },
+        {
+          "name": "flush",
+          "type": "boolean",
+          "default": "false",
+          "required": false,
+          "description": "The lines stop 16px short of the edges.",
+          "descriptionAr": "تتوقف الخطوط على بعد 16px من الحواف."
+        },
+        {
+          "name": "multiple",
+          "type": "boolean",
+          "default": null,
+          "required": false,
+          "description": "Whether multiple items can be open at the same time.",
+          "descriptionAr": "يتيح فتح عدة عناصر معًا. الافتراضي `false`."
+        },
+        {
+          "name": "value",
+          "type": "string[]",
+          "default": null,
+          "required": false,
+          "description": "The controlled value of the item(s) that should be expanded. To render an uncontrolled accordion, use the `defaultValue` prop instead.",
+          "descriptionAr": "قيم العناصر المفتوحة بتحكّم خارجي."
+        },
+        {
+          "name": "defaultValue",
+          "type": "string[]",
+          "default": null,
+          "required": false,
+          "description": "The uncontrolled value of the item(s) that should be initially expanded. To render a controlled accordion, use the `value` prop instead.",
+          "descriptionAr": "العناصر المفتوحة في البداية (دون تحكم)."
+        },
+        {
+          "name": "onValueChange",
+          "type": "(value: string[]) => void",
+          "default": null,
+          "required": false,
+          "description": "Event handler called when an accordion item is expanded or collapsed. Provides the new value as an argument.",
+          "descriptionAr": "تُستدعى بقيم العناصر المفتوحة."
+        }
+      ]
+    },
+    {
+      "name": "AccordionContent",
+      "description": "The content of a section. It animates its height and is hidden from screen readers while closed.",
+      "descriptionAr": "محتوى القسم. يحرّك ارتفاعه ويُخفى عن قارئ الشاشة وهو مغلق.",
+      "inherits": {
+        "name": "Accordion",
+        "url": "https://base-ui.com/react/components/accordion"
+      },
+      "props": []
+    },
+    {
+      "name": "AccordionItem",
+      "description": "One section: a heading and its panel. Give it a `value` to control which are open.",
+      "descriptionAr": "قسم واحد: عنوان ولوحته. أعطه `value` للتحكم في المفتوح.",
+      "inherits": {
+        "name": "Accordion",
+        "url": "https://base-ui.com/react/components/accordion"
+      },
+      "props": [
+        {
+          "name": "value",
+          "type": "string",
+          "default": null,
+          "required": false,
+          "description": "A unique value that identifies this accordion item. If no value is provided, a unique ID will be generated automatically. Use when controlling the accordion programmatically, or to set an initial open state.",
+          "descriptionAr": "ما يعرّف العنصر. الافتراضي موضعه."
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "default": null,
+          "required": false,
+          "description": "Whether the component should ignore user interaction.",
+          "descriptionAr": "لا يمكن فتح القسم ولا إغلاقه."
+        }
+      ]
+    },
+    {
+      "name": "AccordionTrigger",
+      "description": "The heading button. It shows a chevron that turns when the section is open.",
+      "descriptionAr": "زر العنوان. يعرض سهمًا يدور عند فتح القسم.",
+      "inherits": {
+        "name": "Accordion",
+        "url": "https://base-ui.com/react/components/accordion"
+      },
+      "props": []
+    }
+  ],
   "avatar": [
     {
       "name": "Avatar",
@@ -299,6 +415,244 @@
       ]
     }
   ],
+  "content-switcher": [
+    {
+      "name": "ContentSwitcher",
+      "description": "A short row of two to four options that switch the view below it (DGA: Content Switcher). One option is always chosen. One option is in the tab order; the arrow keys move between options (Left and Right swap on Arabic pages). Name it with `aria-label`.",
+      "descriptionAr": "صف قصير من خيارين إلى أربعة يبدّل العرض تحته (في DGA: Content Switcher). يبقى خيار واحد مختارًا دائمًا. وخيار واحد في ترتيب Tab؛ وتنقل مفاتيح الأسهم بين الخيارات (يمين ويسار يتبادلان في الصفحات العربية). سمّه بـ `aria-label`.",
+      "inherits": {
+        "name": "Toggle",
+        "url": "https://base-ui.com/react/components/toggle"
+      },
+      "props": [
+        {
+          "name": "size",
+          "type": "\"sm\" | \"md\" | \"lg\"",
+          "default": "\"md\"",
+          "required": false,
+          "description": "Height: `sm` 32px, `md` 40px, `lg` 48px.",
+          "descriptionAr": "الارتفاع: `sm` ‏32px، و`md` ‏40px، و`lg` ‏48px."
+        },
+        {
+          "name": "onColor",
+          "type": "boolean",
+          "default": "false",
+          "required": false,
+          "description": "For brand fills (`background-primary`, the nav header).",
+          "descriptionAr": "للخلفيات ذات لون العلامة (`background-primary`، وترويسة التنقل)."
+        },
+        {
+          "name": "value",
+          "type": "string",
+          "default": null,
+          "required": false,
+          "description": "The chosen option (controlled).",
+          "descriptionAr": "الخيار المختار بتحكّم خارجي."
+        },
+        {
+          "name": "defaultValue",
+          "type": "string",
+          "default": null,
+          "required": false,
+          "description": "The option chosen at first (uncontrolled). The first option if you leave it out.",
+          "descriptionAr": "الخيار المختار في البداية (دون تحكم). الأول إن لم تحدده."
+        },
+        {
+          "name": "onValueChange",
+          "type": "(value: string) => void",
+          "default": null,
+          "required": false,
+          "description": "Called with the new value. One option is always chosen, so it is never empty.",
+          "descriptionAr": "تُستدعى بالقيمة الجديدة. يبقى خيار مختار دائمًا فلا تكون فارغة."
+        }
+      ]
+    },
+    {
+      "name": "ContentSwitcherItem",
+      "description": "One option. Its `value` is what ContentSwitcher reports. Put an icon first if you need one.",
+      "descriptionAr": "خيار واحد. قيمته `value` هي ما يبلّغ عنه ContentSwitcher. ضع أيقونة أولًا إن لزمت.",
+      "inherits": {
+        "name": "Toggle",
+        "url": "https://base-ui.com/react/components/toggle"
+      },
+      "props": [
+        {
+          "name": "value",
+          "type": "string",
+          "default": null,
+          "required": true,
+          "description": "A unique string that identifies the toggle when used inside a toggle group. What this option is called in code.",
+          "descriptionAr": "ما يعرّف الخيار."
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "default": null,
+          "required": false,
+          "description": "Whether the component should ignore user interaction.",
+          "descriptionAr": "لا يمكن اختيار الخيار."
+        }
+      ]
+    }
+  ],
+  "dialog": [
+    {
+      "name": "Dialog",
+      "description": "A window over the page for a decision or a short task (DGA: Modal). Compose it from DialogTrigger and DialogContent. Focus moves into the window and stays there, the page behind it is inert, Escape closes it, and focus returns to the trigger.",
+      "descriptionAr": "نافذة فوق الصفحة لقرار أو مهمة قصيرة (في DGA: Modal). يدخل التركيز إليها ويبقى فيها، والصفحة خلفها معطّلة، ويغلقها Escape، ويعود التركيز إلى الزر الذي فتحها.",
+      "inherits": {
+        "name": "Dialog",
+        "url": "https://base-ui.com/react/components/dialog"
+      },
+      "props": [
+        {
+          "name": "defaultOpen",
+          "type": "boolean",
+          "default": null,
+          "required": false,
+          "description": "Whether the dialog is initially open. To render a controlled dialog, use the `open` prop instead.",
+          "descriptionAr": "مفتوحة في البداية (دون تحكم)."
+        },
+        {
+          "name": "disablePointerDismissal",
+          "type": "boolean",
+          "default": null,
+          "required": false,
+          "description": "Whether to prevent the dialog from closing on outside presses. For non-modal dialogs, this also prevents the dialog from closing when focus moves outside of it.",
+          "descriptionAr": "يمنع الإغلاق بالنقر خارجها. استخدمه لقرار لا بد من الإجابة عنه؛ ويبقى Escape والأزرار تغلقها."
+        },
+        {
+          "name": "modal",
+          "type": "boolean | \"trap-focus\"",
+          "default": null,
+          "required": false,
+          "description": "Determines if the dialog enters a modal state when open. - `true`: user interaction is limited to just the dialog: focus is trapped, document page scroll is locked, and pointer interactions on outside elements are disabled. - `false`: user interaction with the rest of the document is allowed. - `'trap-focus'`: focus is trapped inside the dialog, but document page scroll is not locked and pointer interactions outside of it remain enabled. When `modal` is `true` or `'trap-focus'`, render `<Dialog.Close>` inside `<Dialog.Popup>` so touch screen readers can escape the popup.",
+          "descriptionAr": "القيمة `true` (الافتراضية) تعطّل الصفحة خلفها وتقفل تمريرها."
+        },
+        {
+          "name": "onOpenChange",
+          "type": "(open: boolean) => void",
+          "default": null,
+          "required": false,
+          "description": "Event handler called when the dialog is opened or closed.",
+          "descriptionAr": "تُستدعى عند فتحها أو إغلاقها."
+        },
+        {
+          "name": "open",
+          "type": "boolean",
+          "default": null,
+          "required": false,
+          "description": "Whether the dialog is currently open.",
+          "descriptionAr": "حالة الفتح بتحكّم خارجي."
+        }
+      ]
+    },
+    {
+      "name": "DialogBody",
+      "description": "The scrollable middle of a tall dialog.",
+      "descriptionAr": "الجزء الأوسط القابل للتمرير في نافذة طويلة.",
+      "inherits": {
+        "name": "Dialog",
+        "url": "https://base-ui.com/react/components/dialog"
+      },
+      "props": []
+    },
+    {
+      "name": "DialogClose",
+      "description": "Closes the dialog. Render a Button with it: `<DialogClose render={<Button />}>`.",
+      "descriptionAr": "يغلق النافذة. اعرض Button معه: `<DialogClose render={<Button />}>`.",
+      "inherits": {
+        "name": "Dialog",
+        "url": "https://base-ui.com/react/components/dialog"
+      },
+      "props": []
+    },
+    {
+      "name": "DialogContent",
+      "description": "The window: a dimmed backdrop and the card. It is centred and scrolls when it is too tall.",
+      "descriptionAr": "النافذة: خلفية معتمة والبطاقة. في المنتصف، وتُمرَّر إن زاد طولها.",
+      "inherits": {
+        "name": "Dialog",
+        "url": "https://base-ui.com/react/components/dialog"
+      },
+      "props": [
+        {
+          "name": "size",
+          "type": "\"sm\" | \"md\" | \"lg\"",
+          "default": "\"md\"",
+          "required": false,
+          "description": "Width: `sm` 400px, `md` 600px (DGA), `lg` 800px. All shrink to fit a phone.",
+          "descriptionAr": "العرض: `sm` ‏400px، و`md` ‏600px (كما في DGA)، و`lg` ‏800px. وكلها تتقلص لتناسب الجوال."
+        },
+        {
+          "name": "showCloseButton",
+          "type": "boolean",
+          "default": "true",
+          "required": false,
+          "description": "Shows the close button in the corner. Turn it off when the footer has its own.",
+          "descriptionAr": "يعرض زر الإغلاق في الزاوية. أوقفه إن كان للتذييل زر خاص به."
+        },
+        {
+          "name": "closeLabel",
+          "type": "string",
+          "default": "\"Close\"",
+          "required": false,
+          "description": "Accessible name of the close button. Translate it on Arabic pages.",
+          "descriptionAr": "الاسم الذي يقرؤه قارئ الشاشة لزر الإغلاق. ترجمه في الصفحات العربية."
+        }
+      ]
+    },
+    {
+      "name": "DialogDescription",
+      "description": "Explains the dialog. Linked to the dialog with `aria-describedby`.",
+      "descriptionAr": "يشرح النافذة. مرتبط بها عبر `aria-describedby`.",
+      "inherits": {
+        "name": "Dialog",
+        "url": "https://base-ui.com/react/components/dialog"
+      },
+      "props": []
+    },
+    {
+      "name": "DialogFooter",
+      "description": "The actions, aligned to the end. Put the main action last.",
+      "descriptionAr": "الإجراءات، محاذاة إلى النهاية. ضع الإجراء الرئيس أخيرًا.",
+      "inherits": {
+        "name": "Dialog",
+        "url": "https://base-ui.com/react/components/dialog"
+      },
+      "props": []
+    },
+    {
+      "name": "DialogHeader",
+      "description": "Groups the title and description at the top of the window.",
+      "descriptionAr": "يجمع العنوان والوصف في أعلى النافذة.",
+      "inherits": {
+        "name": "Dialog",
+        "url": "https://base-ui.com/react/components/dialog"
+      },
+      "props": []
+    },
+    {
+      "name": "DialogTitle",
+      "description": "The name of the dialog. Screen readers announce it when the dialog opens.",
+      "descriptionAr": "اسم النافذة. يقرؤه قارئ الشاشة عند فتحها.",
+      "inherits": {
+        "name": "Dialog",
+        "url": "https://base-ui.com/react/components/dialog"
+      },
+      "props": []
+    },
+    {
+      "name": "DialogTrigger",
+      "description": "The button that opens the dialog.",
+      "descriptionAr": "الزر الذي يفتح النافذة.",
+      "inherits": {
+        "name": "Dialog",
+        "url": "https://base-ui.com/react/components/dialog"
+      },
+      "props": []
+    }
+  ],
   "divider": [
     {
       "name": "Divider",
@@ -326,6 +680,146 @@
           "descriptionAr": "اتجاه الفاصل."
         }
       ]
+    }
+  ],
+  "drawer": [
+    {
+      "name": "Drawer",
+      "description": "A panel that slides in from an edge of the screen (DGA: Slideout Menu). It is a modal dialog: focus is trapped inside, Escape closes it and focus returns to the trigger. On touch screens it can be swiped closed.",
+      "descriptionAr": "لوحة تنزلق من حافة الشاشة (في DGA: Slideout Menu). هي نافذة معتمة: يُحبس التركيز فيها ويغلقها Escape ويعود التركيز إلى الزر. وعلى شاشات اللمس تُغلق بالسحب.",
+      "inherits": {
+        "name": "Drawer",
+        "url": "https://base-ui.com/react/components/drawer"
+      },
+      "props": [
+        {
+          "name": "side",
+          "type": "\"start\" | \"end\" | \"top\" | \"bottom\"",
+          "default": "\"end\"",
+          "required": false,
+          "description": "The edge the drawer slides in from. `start` and `end` follow the page direction, so a `start` drawer is on the right on Arabic pages. Closing by swipe follows it.",
+          "descriptionAr": "الحافة التي تنزلق منها. تتبع `start` و`end` اتجاه الصفحة، فتكون `start` على اليمين في الصفحات العربية. ويتبعها اتجاه السحب للإغلاق."
+        },
+        {
+          "name": "defaultOpen",
+          "type": "boolean",
+          "default": null,
+          "required": false,
+          "description": "Whether the drawer is initially open. To render a controlled drawer, use the `open` prop instead.",
+          "descriptionAr": "مفتوحة في البداية (دون تحكم)."
+        },
+        {
+          "name": "onOpenChange",
+          "type": "(open: boolean) => void",
+          "default": null,
+          "required": false,
+          "description": "Event handler called when the drawer is opened or closed.",
+          "descriptionAr": "تُستدعى عند فتحها أو إغلاقها."
+        },
+        {
+          "name": "open",
+          "type": "boolean",
+          "default": null,
+          "required": false,
+          "description": "Whether the drawer is currently open.",
+          "descriptionAr": "حالة الفتح بتحكّم خارجي."
+        }
+      ]
+    },
+    {
+      "name": "DrawerClose",
+      "description": "Closes the drawer. Render a Button with it: `<DrawerClose render={<Button />}>`.",
+      "descriptionAr": "يغلق اللوحة. اعرض Button معه: `<DrawerClose render={<Button />}>`.",
+      "inherits": {
+        "name": "Drawer",
+        "url": "https://base-ui.com/react/components/drawer"
+      },
+      "props": []
+    },
+    {
+      "name": "DrawerContent",
+      "description": "The panel: a dimmed backdrop and the card, 346px wide on the sides and full width at the top or bottom.",
+      "descriptionAr": "اللوحة: خلفية معتمة والبطاقة، بعرض 346px على الجانبين وبعرض كامل في الأعلى أو الأسفل.",
+      "inherits": {
+        "name": "Drawer",
+        "url": "https://base-ui.com/react/components/drawer"
+      },
+      "props": [
+        {
+          "name": "tone",
+          "type": "\"white\" | \"gray\"",
+          "default": "\"white\"",
+          "required": false,
+          "description": "Surface: `white` (background-menu) or `gray` (neutral-100).",
+          "descriptionAr": "السطح: `white` ‏(background-menu) أو `gray` ‏(neutral-100)."
+        },
+        {
+          "name": "showCloseButton",
+          "type": "boolean",
+          "default": "true",
+          "required": false,
+          "description": "Shows the close button in the corner.",
+          "descriptionAr": "يعرض زر الإغلاق في الزاوية."
+        },
+        {
+          "name": "closeLabel",
+          "type": "string",
+          "default": "\"Close\"",
+          "required": false,
+          "description": "Accessible name of the close button. Translate it on Arabic pages.",
+          "descriptionAr": "الاسم الذي يقرؤه قارئ الشاشة لزر الإغلاق. ترجمه في الصفحات العربية."
+        }
+      ]
+    },
+    {
+      "name": "DrawerDescription",
+      "description": "Explains the drawer. Linked to it with `aria-describedby`.",
+      "descriptionAr": "يشرح اللوحة. مرتبط بها عبر `aria-describedby`.",
+      "inherits": {
+        "name": "Drawer",
+        "url": "https://base-ui.com/react/components/drawer"
+      },
+      "props": []
+    },
+    {
+      "name": "DrawerFooter",
+      "description": "The actions at the bottom of the panel, aligned to the end.",
+      "descriptionAr": "الإجراءات في أسفل اللوحة، محاذاة إلى النهاية.",
+      "inherits": {
+        "name": "Drawer",
+        "url": "https://base-ui.com/react/components/drawer"
+      },
+      "props": []
+    },
+    {
+      "name": "DrawerHeader",
+      "description": "Groups the title and description at the top of the panel.",
+      "descriptionAr": "يجمع العنوان والوصف في أعلى اللوحة.",
+      "inherits": {
+        "name": "Drawer",
+        "url": "https://base-ui.com/react/components/drawer"
+      },
+      "props": []
+    },
+    {
+      "name": "DrawerTitle",
+      "description": "The name of the drawer. Screen readers announce it when the drawer opens.",
+      "descriptionAr": "اسم اللوحة. يقرؤه قارئ الشاشة عند فتحها.",
+      "inherits": {
+        "name": "Drawer",
+        "url": "https://base-ui.com/react/components/drawer"
+      },
+      "props": []
+    },
+    {
+      "name": "DrawerTrigger",
+      "description": "The button that opens the drawer.",
+      "descriptionAr": "الزر الذي يفتح اللوحة.",
+      "inherits": {
+        "name": "Drawer",
+        "url": "https://base-ui.com/react/components/drawer"
+      },
+      "props": []
     }
   ],
   "featured-icon": [
@@ -671,6 +1165,80 @@
       ]
     }
   ],
+  "inline-alert": [
+    {
+      "name": "InlineAlert",
+      "description": "A message inside the page next to what it is about (DGA: Inline Alert): a form, a card, a section. A coloured bar on the start side and an icon carry the kind, so colour is never the only cue. `destructive` and `warning` are announced at once (`role=\"alert\"`), the others politely (`role=\"status\"`). Mount it when it applies so it is announced.",
+      "descriptionAr": "رسالة داخل الصفحة بجانب ما تخصه (في DGA: Inline Alert): نموذج أو بطاقة أو قسم. يحمل النوعَ شريط ملون في جهة البداية مع أيقونة، فلا يكون اللون الإشارة الوحيدة. تُعلَن `destructive` و`warning` فورًا (`role=\"alert\"`) وغيرهما بأدب (`role=\"status\"`). أضفها عند انطباقها لتُعلَن.",
+      "inherits": null,
+      "props": [
+        {
+          "name": "variant",
+          "type": "\"neutral\" | \"destructive\" | \"warning\" | \"success\" | \"info\"",
+          "default": "\"neutral\"",
+          "required": false,
+          "description": "Kind: `neutral`, `info`, `success`, `warning` or `destructive`.",
+          "descriptionAr": "النوع: `neutral` أو `info` أو `success` أو `warning` أو `destructive`."
+        },
+        {
+          "name": "tinted",
+          "type": "boolean",
+          "default": "false",
+          "required": false,
+          "description": "Tinted fill and text in the kind's colour instead of white.",
+          "descriptionAr": "تعبئة ونص بلون النوع بدل الأبيض."
+        },
+        {
+          "name": "title",
+          "type": "string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<AwaitedReactNode>",
+          "default": null,
+          "required": true,
+          "description": "The short heading of the alert.",
+          "descriptionAr": "العنوان القصير للتنبيه."
+        },
+        {
+          "name": "hideIcon",
+          "type": "boolean",
+          "default": null,
+          "required": false,
+          "description": "Hides the status icon.",
+          "descriptionAr": "يخفي أيقونة الحالة."
+        },
+        {
+          "name": "actions",
+          "type": "string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<AwaitedReactNode>",
+          "default": null,
+          "required": false,
+          "description": "Buttons or links under the text (at most two).",
+          "descriptionAr": "أزرار أو روابط تحت النص (اثنان على الأكثر)."
+        },
+        {
+          "name": "onDismiss",
+          "type": "() => void",
+          "default": null,
+          "required": false,
+          "description": "Called after the alert is dismissed.",
+          "descriptionAr": "تُستدعى بعد إغلاق التنبيه."
+        },
+        {
+          "name": "dismissible",
+          "type": "boolean",
+          "default": null,
+          "required": false,
+          "description": "Shows the close button. The alert hides itself, then calls `onDismiss`.",
+          "descriptionAr": "يعرض زر الإغلاق. يخفي التنبيه نفسه ثم يستدعي `onDismiss`."
+        },
+        {
+          "name": "dismissLabel",
+          "type": "string",
+          "default": "\"Dismiss\"",
+          "required": false,
+          "description": "Accessible name of the close button. Translate it on Arabic pages.",
+          "descriptionAr": "الاسم الذي يقرؤه قارئ الشاشة لزر الإغلاق. ترجمه في الصفحات العربية."
+        }
+      ]
+    }
+  ],
   "input": [
     {
       "name": "Input",
@@ -858,6 +1426,307 @@
           "required": false,
           "description": "Renders without an href, with aria-disabled.",
           "descriptionAr": "يُعرض بلا href ومع aria-disabled."
+        }
+      ]
+    }
+  ],
+  "menu": [
+    {
+      "name": "Menu",
+      "description": "A list of actions on a temporary surface (DGA: Menu). Arrow keys move through the items, Home and End jump to the first and last, typing a letter jumps to a match, Escape closes it and focus returns to the trigger. Submenus open on the end side and mirror on Arabic pages. A disabled item can still be reached with the arrow keys, but it cannot be chosen.",
+      "descriptionAr": "قائمة إجراءات على سطح مؤقت (في DGA: Menu). تنقل مفاتيح الأسهم بين العناصر، وHome وEnd إلى الأول والأخير، وحرف يقفز إلى المطابق، ويغلقها Escape ويعود التركيز إلى الزر. وتفتح القوائم الفرعية في جهة النهاية وتنعكس في الصفحات العربية.",
+      "inherits": {
+        "name": "Menu",
+        "url": "https://base-ui.com/react/components/menu"
+      },
+      "props": [
+        {
+          "name": "open",
+          "type": "boolean",
+          "default": null,
+          "required": false,
+          "description": "Whether the menu is currently open.",
+          "descriptionAr": "حالة الفتح بتحكّم خارجي."
+        },
+        {
+          "name": "defaultOpen",
+          "type": "boolean",
+          "default": null,
+          "required": false,
+          "description": "Whether the menu is initially open. To render a controlled menu, use the `open` prop instead.",
+          "descriptionAr": "مفتوحة في البداية (دون تحكم)."
+        },
+        {
+          "name": "onOpenChange",
+          "type": "(open: boolean) => void",
+          "default": null,
+          "required": false,
+          "description": "Event handler called when the menu is opened or closed.",
+          "descriptionAr": "تُستدعى عند فتحها أو إغلاقها."
+        }
+      ]
+    },
+    {
+      "name": "MenuCheckboxItem",
+      "description": "An item that can be turned on and off. It shows a check mark while it is on.",
+      "descriptionAr": "عنصر يمكن تشغيله وإيقافه. يعرض علامة صح عند تشغيله.",
+      "inherits": {
+        "name": "Menu",
+        "url": "https://base-ui.com/react/components/menu"
+      },
+      "props": [
+        {
+          "name": "checked",
+          "type": "boolean",
+          "default": null,
+          "required": false,
+          "description": "Whether the checkbox item is currently ticked. To render an uncontrolled checkbox item, use the `defaultChecked` prop instead.",
+          "descriptionAr": "حالة التشغيل بتحكّم خارجي."
+        },
+        {
+          "name": "onCheckedChange",
+          "type": "(checked: boolean) => void",
+          "default": null,
+          "required": false,
+          "description": "Event handler called when the checkbox item is ticked or unticked.",
+          "descriptionAr": "تُستدعى عند تشغيله أو إيقافه."
+        }
+      ]
+    },
+    {
+      "name": "MenuContent",
+      "description": "The popup list. It opens below the trigger, aligned to its start side.",
+      "descriptionAr": "القائمة المنبثقة. تفتح أسفل الزر، محاذاة لجهة بدايته.",
+      "inherits": {
+        "name": "Menu",
+        "url": "https://base-ui.com/react/components/menu"
+      },
+      "props": []
+    },
+    {
+      "name": "MenuGroup",
+      "description": "Groups related items under a MenuLabel.",
+      "descriptionAr": "يجمع عناصر مترابطة تحت MenuLabel.",
+      "inherits": {
+        "name": "Menu",
+        "url": "https://base-ui.com/react/components/menu"
+      },
+      "props": []
+    },
+    {
+      "name": "MenuItem",
+      "description": "One action. Put an icon first, the label, then an optional MenuShortcut, Tag or Switch. Use `render` to make it a link: `<MenuItem render={<a href=\"/\" />}>`.",
+      "descriptionAr": "إجراء واحد. ضع أيقونة أولًا ثم التسمية ثم MenuShortcut أو Tag أو Switch اختياريًا. واستخدم `render` ليكون رابطًا: `<MenuItem render={<a href=\"/\" />}>`.",
+      "inherits": {
+        "name": "Menu",
+        "url": "https://base-ui.com/react/components/menu"
+      },
+      "props": [
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "default": null,
+          "required": false,
+          "description": "Whether the component should ignore user interaction.",
+          "descriptionAr": "لا يمكن اختيار العنصر. ويبقى في ترتيب مفاتيح الأسهم ليمكن العثور عليه."
+        },
+        {
+          "name": "closeOnClick",
+          "type": "boolean",
+          "default": null,
+          "required": false,
+          "description": "Whether to close the menu when the item is clicked.",
+          "descriptionAr": "هل يغلق اختياره القائمة. الافتراضي `true`."
+        },
+        {
+          "name": "onClick",
+          "type": "(event) => void",
+          "default": null,
+          "required": false,
+          "description": "The click handler for the menu item.",
+          "descriptionAr": "تُستدعى عند اختيار العنصر بالفأرة أو لوحة المفاتيح."
+        }
+      ]
+    },
+    {
+      "name": "MenuLabel",
+      "description": "The heading of a MenuGroup.",
+      "descriptionAr": "عنوان MenuGroup.",
+      "inherits": {
+        "name": "Menu",
+        "url": "https://base-ui.com/react/components/menu"
+      },
+      "props": []
+    },
+    {
+      "name": "MenuRadioGroup",
+      "description": "Groups MenuRadioItem options so only one is chosen.",
+      "descriptionAr": "يجمع خيارات MenuRadioItem ليُختار واحد فقط.",
+      "inherits": {
+        "name": "Menu",
+        "url": "https://base-ui.com/react/components/menu"
+      },
+      "props": [
+        {
+          "name": "onValueChange",
+          "type": "(value: string) => void",
+          "default": null,
+          "required": false,
+          "description": "Function called when the selected value changes.",
+          "descriptionAr": "تُستدعى بالقيمة المختارة حديثًا."
+        },
+        {
+          "name": "value",
+          "type": "string",
+          "default": null,
+          "required": false,
+          "description": "The controlled value of the radio item that should be currently selected. To render an uncontrolled radio group, use the `defaultValue` prop instead.",
+          "descriptionAr": "القيمة المختارة."
+        }
+      ]
+    },
+    {
+      "name": "MenuRadioItem",
+      "description": "One option of a MenuRadioGroup. The chosen one shows a dot.",
+      "descriptionAr": "خيار في MenuRadioGroup. يعرض الخيار المختار نقطة.",
+      "inherits": {
+        "name": "Menu",
+        "url": "https://base-ui.com/react/components/menu"
+      },
+      "props": [
+        {
+          "name": "value",
+          "type": "string",
+          "default": null,
+          "required": true,
+          "description": "Value of the radio item. This is the value that will be set in the MenuRadioGroup when the item is selected.",
+          "descriptionAr": "قيمة هذا الخيار."
+        }
+      ]
+    },
+    {
+      "name": "MenuSeparator",
+      "description": "A line between groups of items.",
+      "descriptionAr": "خط بين مجموعات العناصر.",
+      "inherits": {
+        "name": "Menu",
+        "url": "https://base-ui.com/react/components/menu"
+      },
+      "props": []
+    },
+    {
+      "name": "MenuShortcut",
+      "description": "Trailing text of an item, such as a shortcut or a count. Digits and symbols stay left to right.",
+      "descriptionAr": "نص في نهاية العنصر، كاختصار أو عدد. تبقى الأرقام والرموز من اليسار إلى اليمين.",
+      "inherits": {
+        "name": "Menu",
+        "url": "https://base-ui.com/react/components/menu"
+      },
+      "props": []
+    },
+    {
+      "name": "MenuSub",
+      "description": "Groups a MenuSubTrigger and its MenuSubContent.",
+      "descriptionAr": "يجمع MenuSubTrigger مع MenuSubContent.",
+      "inherits": {
+        "name": "Menu",
+        "url": "https://base-ui.com/react/components/menu"
+      },
+      "props": []
+    },
+    {
+      "name": "MenuSubContent",
+      "description": "The submenu list. It opens beside its trigger on the end side.",
+      "descriptionAr": "القائمة الفرعية. تفتح بجانب عنصرها في جهة النهاية.",
+      "inherits": {
+        "name": "Menu",
+        "url": "https://base-ui.com/react/components/menu"
+      },
+      "props": []
+    },
+    {
+      "name": "MenuSubTrigger",
+      "description": "An item that opens a submenu. Its chevron points to the end side and mirrors in RTL.",
+      "descriptionAr": "عنصر يفتح قائمة فرعية. سهمه نحو جهة النهاية وينعكس في RTL.",
+      "inherits": {
+        "name": "Menu",
+        "url": "https://base-ui.com/react/components/menu"
+      },
+      "props": []
+    },
+    {
+      "name": "MenuTrigger",
+      "description": "The button that opens the menu. Render your own Button with `render`.",
+      "descriptionAr": "الزر الذي يفتح القائمة. اعرض Button الخاص بك عبر `render`.",
+      "inherits": {
+        "name": "Menu",
+        "url": "https://base-ui.com/react/components/menu"
+      },
+      "props": []
+    }
+  ],
+  "notification": [
+    {
+      "name": "Notification",
+      "description": "A full-width banner for a message that concerns the whole page (DGA: Notification), at the top of the page or a section. It is a live region: `critical` is announced at once (`role=\"alert\"`), the others politely (`role=\"status\"`). Mount it when the message applies, not before, so it is announced.",
+      "descriptionAr": "شريط بعرض كامل لرسالة تخص الصفحة كلها (في DGA: Notification)، في أعلى الصفحة أو قسم منها. هو منطقة حية: تُعلَن `critical` فورًا (`role=\"alert\"`) وغيرها بأدب (`role=\"status\"`). أضفه عند انطباق الرسالة لا قبله ليُعلَن.",
+      "inherits": null,
+      "props": [
+        {
+          "name": "variant",
+          "type": "\"neutral\" | \"critical\" | \"success\" | \"warning\" | \"info\"",
+          "default": "\"neutral\"",
+          "required": false,
+          "description": "Kind: `neutral`, `info`, `success`, `warning` or `critical`.",
+          "descriptionAr": "النوع: `neutral` أو `info` أو `success` أو `warning` أو `critical`."
+        },
+        {
+          "name": "title",
+          "type": "string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<AwaitedReactNode>",
+          "default": null,
+          "required": false,
+          "description": "Bold lead-in text before the message, such as \"Important:\".",
+          "descriptionAr": "نص افتتاحي بخط عريض قبل الرسالة، مثل «مهم:»."
+        },
+        {
+          "name": "hideIcon",
+          "type": "boolean",
+          "default": null,
+          "required": false,
+          "description": "Hides the status icon.",
+          "descriptionAr": "يخفي أيقونة الحالة."
+        },
+        {
+          "name": "action",
+          "type": "string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<AwaitedReactNode>",
+          "default": null,
+          "required": false,
+          "description": "A link or a small Button after the message.",
+          "descriptionAr": "رابط أو Button صغير بعد الرسالة."
+        },
+        {
+          "name": "onDismiss",
+          "type": "() => void",
+          "default": null,
+          "required": false,
+          "description": "Called after the notification is dismissed.",
+          "descriptionAr": "تُستدعى بعد إغلاق الإشعار."
+        },
+        {
+          "name": "dismissible",
+          "type": "boolean",
+          "default": null,
+          "required": false,
+          "description": "Shows the close button. The notification hides itself, then calls `onDismiss`.",
+          "descriptionAr": "يعرض زر الإغلاق. يخفي الإشعار نفسه ثم يستدعي `onDismiss`."
+        },
+        {
+          "name": "dismissLabel",
+          "type": "string",
+          "default": "\"Dismiss\"",
+          "required": false,
+          "description": "Accessible name of the close button. Translate it on Arabic pages.",
+          "descriptionAr": "الاسم الذي يقرؤه قارئ الشاشة لزر الإغلاق. ترجمه في الصفحات العربية."
         }
       ]
     }
@@ -1592,6 +2461,148 @@
       ]
     }
   ],
+  "tabs": [
+    {
+      "name": "Tabs",
+      "description": "Switches between related panels of content on one page (DGA: Tabs). One tab is in the tab order; the arrow keys move between tabs (Left and Right swap on Arabic pages, Up and Down in a vertical list), and Home and End jump to the first and last. A tab opens its panel on focus.",
+      "descriptionAr": "ينتقل بين لوحات محتوى مترابطة في صفحة واحدة (في DGA: Tabs). تبويب واحد فقط في ترتيب Tab؛ وتنقل مفاتيح الأسهم بين التبويبات (يمين ويسار يتبادلان في الصفحات العربية، وأعلى وأسفل في القائمة العمودية)، وHome وEnd إلى الأول والأخير. ويفتح التبويب لوحته عند التركيز.",
+      "inherits": {
+        "name": "Tabs",
+        "url": "https://base-ui.com/react/components/tabs"
+      },
+      "props": [
+        {
+          "name": "orientation",
+          "type": "\"horizontal\" | \"vertical\"",
+          "default": "\"horizontal\"",
+          "required": false,
+          "description": "The component orientation (layout flow direction).",
+          "descriptionAr": "اتجاه القائمة. تستخدم التبويبات العمودية مفتاحي أعلى وأسفل."
+        },
+        {
+          "name": "defaultValue",
+          "type": "string | number",
+          "default": null,
+          "required": false,
+          "description": "The default value. Use when the component is not controlled. When the value is `null`, no Tab will be active.",
+          "descriptionAr": "التبويب المحدد في البداية (دون تحكم)."
+        },
+        {
+          "name": "onValueChange",
+          "type": "(value) => void",
+          "default": null,
+          "required": false,
+          "description": "Callback invoked when new value is being set. The event `reason` is `'none'` for user-initiated changes, such as a click or keyboard navigation; `'initial'` for the first automatic selection or fallback in uncontrolled roots when `defaultValue` is omitted or `undefined`, including when the implicit initial value is disabled or missing; `'disabled'` for automatic fallback when the selected tab becomes disabled in uncontrolled roots; or `'missing'` for automatic fallback when the selected tab is removed, or when an explicit `defaultValue` never matches a mounted tab in uncontrolled roots. For automatic changes, the selected value can be `null` when no enabled Tab is available as a fallback. Automatic changes cannot be canceled; calling `eventDetails.cancel()` for `'initial'`, `'disabled'`, or `'missing'` has no effect.",
+          "descriptionAr": "تُستدعى بقيمة التبويب الذي حُدد."
+        },
+        {
+          "name": "value",
+          "type": "string | number",
+          "default": null,
+          "required": false,
+          "description": "The value of the currently active `Tab`. Use when the component is controlled. When the value is `null`, no Tab will be active.",
+          "descriptionAr": "التبويب المحدد بتحكّم خارجي."
+        }
+      ]
+    },
+    {
+      "name": "TabsContent",
+      "description": "The content a tab shows. It is hidden while its tab is not selected.",
+      "descriptionAr": "المحتوى الذي يعرضه التبويب. يُخفى ما دام تبويبه غير محدد.",
+      "inherits": {
+        "name": "Tabs",
+        "url": "https://base-ui.com/react/components/tabs"
+      },
+      "props": [
+        {
+          "name": "value",
+          "type": "string | number",
+          "default": null,
+          "required": true,
+          "description": "The value of the TabPanel. It will be shown when the Tab with the corresponding value is active.",
+          "descriptionAr": "قيمة التبويب الذي تنتمي إليه هذه اللوحة."
+        }
+      ]
+    },
+    {
+      "name": "TabsList",
+      "description": "The row (or column, in a vertical Tabs) of tabs. Give it an `aria-label` when there are several lists.",
+      "descriptionAr": "صف التبويبات (أو عمودها في Tabs عمودي). أعطه `aria-label` عند وجود أكثر من قائمة.",
+      "inherits": {
+        "name": "Tabs",
+        "url": "https://base-ui.com/react/components/tabs"
+      },
+      "props": [
+        {
+          "name": "size",
+          "type": "\"sm\" | \"md\" | \"lg\"",
+          "default": "\"md\"",
+          "required": false,
+          "description": "Padding and text: `sm`, `md` or `lg`.",
+          "descriptionAr": "التباعد والنص: `sm` أو `md` أو `lg`."
+        },
+        {
+          "name": "divider",
+          "type": "boolean",
+          "default": "true",
+          "required": false,
+          "description": "A 3px line under (or beside) the list. Default `true`.",
+          "descriptionAr": "خط بسمك 3px تحت القائمة (أو بجانبها). الافتراضي `true`."
+        },
+        {
+          "name": "flush",
+          "type": "boolean",
+          "default": "false",
+          "required": false,
+          "description": "No inline padding at the start of the list.",
+          "descriptionAr": "بلا حشوة جانبية في بداية القائمة."
+        },
+        {
+          "name": "scrollable",
+          "type": "boolean",
+          "default": "true",
+          "required": false,
+          "description": "Scrolls sideways instead of wrapping when the tabs do not fit.",
+          "descriptionAr": "تُمرَّر جانبيًا بدل الالتفاف عندما لا تتسع التبويبات."
+        },
+        {
+          "name": "activateOnFocus",
+          "type": "boolean",
+          "default": "true",
+          "required": false,
+          "description": "Whether to automatically change the active tab on arrow key focus. Otherwise, tabs will be activated using <kbd>Enter</kbd> or <kbd>Space</kbd> key press.",
+          "descriptionAr": "يفتح التبويب لوحته بمجرد أن تركّزه مفاتيح الأسهم. الافتراضي `true`؛ واضبط `false` لفتحها بـ Enter أو Space."
+        }
+      ]
+    },
+    {
+      "name": "TabsTrigger",
+      "description": "One tab. Put an icon first and the label after it.",
+      "descriptionAr": "تبويب واحد. ضع أيقونة أولًا ثم التسمية.",
+      "inherits": {
+        "name": "Tabs",
+        "url": "https://base-ui.com/react/components/tabs"
+      },
+      "props": [
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "default": null,
+          "required": false,
+          "description": "Whether the Tab is disabled. If a first Tab on a `<Tabs.List>` is disabled, it won't initially be selected. Instead, the next enabled Tab will be selected. However, it does not work like this during server-side rendering, as it is not known during pre-rendering which Tabs are disabled. To work around it, ensure that `defaultValue` or `value` on `<Tabs.Root>` is set to an enabled Tab's value.",
+          "descriptionAr": "لا يمكن تحديد التبويب. ويبقى في ترتيب مفاتيح الأسهم ليمكن العثور عليه."
+        },
+        {
+          "name": "value",
+          "type": "string | number",
+          "default": null,
+          "required": true,
+          "description": "The value of the Tab.",
+          "descriptionAr": "ما يعرّف التبويب. وتظهر اللوحة ذات القيمة نفسها."
+        }
+      ]
+    }
+  ],
   "tag": [
     {
       "name": "StatusTag",
@@ -1717,6 +2728,22 @@
           "descriptionAr": "`vertical` يتيح للمستخدم سحب الزاوية لتغيير الارتفاع. و`none` يثبّته."
         },
         {
+          "name": "className",
+          "type": "string",
+          "default": null,
+          "required": false,
+          "description": "Class names for the box around the field (border, fill and underline).",
+          "descriptionAr": "أصناف الإطار المحيط بالحقل (الحد والتعبئة والخط السفلي)."
+        },
+        {
+          "name": "inputClassName",
+          "type": "string",
+          "default": null,
+          "required": false,
+          "description": "Class names for the native `<textarea>`.",
+          "descriptionAr": "أصناف عنصر `<textarea>` الأصلي."
+        },
+        {
           "name": "rows",
           "type": "number",
           "default": "4",
@@ -1773,6 +2800,211 @@
           "descriptionAr": "قيمة متحكَّم بها."
         }
       ]
+    }
+  ],
+  "toast": [
+    {
+      "name": "Toaster",
+      "description": "Put one Toaster at the root of the app (DGA: Notification Toast). It lists the toasts at the bottom end of the screen: bottom right on English pages, bottom left on Arabic pages. A toast is announced to screen readers when it appears (a polite live region, assertive for errors and warnings), stays while it is hovered or focused, and can be swiped away.",
+      "descriptionAr": "ضع Toaster واحدًا في جذر التطبيق (في DGA: Notification Toast). يعرض الإشعارات في نهاية أسفل الشاشة: أسفل اليمين في الصفحات الإنجليزية وأسفل اليسار في العربية. يُعلَن كل إشعار لقارئ الشاشة عند ظهوره (منطقة حية مهذبة، وعاجلة للأخطاء والتنبيهات)، ويبقى ما دام عليه المؤشر أو التركيز، ويمكن سحبه لإزالته.",
+      "inherits": {
+        "name": "Toast",
+        "url": "https://base-ui.com/react/components/toast"
+      },
+      "props": [
+        {
+          "name": "limit",
+          "type": "number",
+          "default": "3",
+          "required": false,
+          "description": "The most toasts shown at once.",
+          "descriptionAr": "أكثر عدد من الإشعارات يُعرض معًا. الافتراضي 3."
+        },
+        {
+          "name": "timeout",
+          "type": "number",
+          "default": "6000",
+          "required": false,
+          "description": "How long a toast stays, in milliseconds. `0` keeps it until it is closed.",
+          "descriptionAr": "مدة بقاء الإشعار بالملّي ثانية. القيمة `0` تُبقيه حتى يُغلق."
+        },
+        {
+          "name": "closeLabel",
+          "type": "string",
+          "default": "\"Close\"",
+          "required": false,
+          "description": "Accessible name of the close button. Translate it on Arabic pages.",
+          "descriptionAr": "الاسم الذي يقرؤه قارئ الشاشة لزر الإغلاق. ترجمه في الصفحات العربية."
+        },
+        {
+          "name": "regionLabel",
+          "type": "string",
+          "default": "\"Notifications\"",
+          "required": false,
+          "description": "Accessible name of the region that holds the toasts. Translate it on Arabic pages.",
+          "descriptionAr": "الاسم الذي يقرؤه قارئ الشاشة للمنطقة التي تحمل الإشعارات. ترجمه في الصفحات العربية."
+        }
+      ]
+    }
+  ],
+  "tooltip": [
+    {
+      "name": "Tooltip",
+      "description": "A short hint for an element, shown on hover and on keyboard focus (DGA: Tooltip). Tooltips are for sighted mouse and keyboard users: screen readers and touch screens do not rely on them, so they never hold the only copy of something people need, and they are not for interactive content. An icon-only trigger still needs an `aria-label`.",
+      "descriptionAr": "تلميح قصير لعنصر، يظهر عند التمرير وعند تركيز لوحة المفاتيح (في DGA: Tooltip). التلميحات لمستخدمي الفأرة ولوحة المفاتيح المبصرين: فلا يعتمد عليها قارئ الشاشة ولا شاشات اللمس، فلا تحمل النسخة الوحيدة مما يحتاجه الناس، وليست للمحتوى التفاعلي. ويحتاج العنصر بأيقونة فقط إلى `aria-label`.",
+      "inherits": {
+        "name": "Popover",
+        "url": "https://base-ui.com/react/components/popover"
+      },
+      "props": [
+        {
+          "name": "open",
+          "type": "boolean",
+          "default": null,
+          "required": false,
+          "description": "Whether the tooltip is currently open.",
+          "descriptionAr": "حالة الفتح بتحكّم خارجي."
+        },
+        {
+          "name": "defaultOpen",
+          "type": "boolean",
+          "default": null,
+          "required": false,
+          "description": "Whether the tooltip is initially open. To render a controlled tooltip, use the `open` prop instead.",
+          "descriptionAr": "مفتوح في البداية (دون تحكم)."
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "default": null,
+          "required": false,
+          "description": "Whether the tooltip is disabled.",
+          "descriptionAr": "لا يفتح أبدًا."
+        }
+      ]
+    },
+    {
+      "name": "TooltipContent",
+      "description": "The bubble. It is at most 240px wide and keeps clear of the screen edges.",
+      "descriptionAr": "الفقاعة. عرضها 240px على الأكثر وتبقى بعيدة عن حواف الشاشة.",
+      "inherits": {
+        "name": "Popover",
+        "url": "https://base-ui.com/react/components/popover"
+      },
+      "props": [
+        {
+          "name": "tone",
+          "type": "\"light\" | \"dark\"",
+          "default": "\"light\"",
+          "required": false,
+          "description": "`light` is white (neutral-800 in dark mode); `dark` is the inverted tooltip.",
+          "descriptionAr": "`light` أبيض (neutral-800 في الوضع الداكن)؛ و`dark` التلميح المعكوس."
+        },
+        {
+          "name": "title",
+          "type": "string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<AwaitedReactNode>",
+          "default": null,
+          "required": false,
+          "description": "A bold heading above the text.",
+          "descriptionAr": "عنوان بخط عريض فوق النص."
+        },
+        {
+          "name": "side",
+          "type": "\"top\" | \"bottom\" | \"start\" | \"end\"",
+          "default": "\"top\"",
+          "required": false,
+          "description": "Where it opens. `start` and `end` are the sides of the text, so they swap on Arabic pages.",
+          "descriptionAr": "الجهة التي يفتح عليها. `start` و`end` جهتا النص، فتتبادلان في الصفحات العربية."
+        },
+        {
+          "name": "showArrow",
+          "type": "boolean",
+          "default": "true",
+          "required": false,
+          "description": "Shows the beak that points to the trigger.",
+          "descriptionAr": "يعرض السهم الذي يشير إلى العنصر."
+        }
+      ]
+    },
+    {
+      "name": "TooltipHelp",
+      "description": "The DGA Help Icon: a 20px question-mark button next to a label, with an explanation in the same bubble as a Tooltip. It is a Popover that also opens on hover, not a Tooltip: the button exists to show the text, so keyboard, touch and screen reader users must be able to open and read it too.",
+      "descriptionAr": "أيقونة المساعدة في DGA: زر بعلامة استفهام بحجم 20px بجانب تسمية، يفتح شرحًا في فقاعة التلميح نفسها. وهو Popover يفتح أيضًا عند التمرير لا Tooltip: فالزر موجود ليعرض النص، فيجب أن يستطيع فتحه وقراءته مستخدمو لوحة المفاتيح واللمس وقارئ الشاشة.",
+      "inherits": {
+        "name": "Popover",
+        "url": "https://base-ui.com/react/components/popover"
+      },
+      "props": [
+        {
+          "name": "tone",
+          "type": "\"light\" | \"dark\"",
+          "default": "\"light\"",
+          "required": false,
+          "description": "`light` is white (neutral-800 in dark mode); `dark` is the inverted tooltip.",
+          "descriptionAr": "`light` أبيض (neutral-800 في الوضع الداكن)؛ و`dark` التلميح المعكوس."
+        },
+        {
+          "name": "label",
+          "type": "string",
+          "default": "\"More information\"",
+          "required": false,
+          "description": "Accessible name of the icon button. Translate it on Arabic pages.",
+          "descriptionAr": "الاسم الذي يقرؤه قارئ الشاشة للزر. ترجمه في الصفحات العربية."
+        },
+        {
+          "name": "title",
+          "type": "string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<AwaitedReactNode>",
+          "default": null,
+          "required": false,
+          "description": "A bold heading above the text.",
+          "descriptionAr": "عنوان بخط عريض فوق النص."
+        },
+        {
+          "name": "side",
+          "type": "\"top\" | \"bottom\" | \"start\" | \"end\"",
+          "default": "\"top\"",
+          "required": false,
+          "description": "Where it opens. `start` and `end` are the sides of the text, so they swap on Arabic pages.",
+          "descriptionAr": "الجهة التي يفتح عليها. `start` و`end` جهتا النص، فتتبادلان في الصفحات العربية."
+        },
+        {
+          "name": "children",
+          "type": "string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<AwaitedReactNode>",
+          "default": null,
+          "required": true,
+          "description": "The explanation. It opens on hover, focus, click and touch, and screen readers can read it.",
+          "descriptionAr": "الشرح. يفتح عند التمرير والتركيز والنقر واللمس، ويستطيع قارئ الشاشة قراءته."
+        }
+      ]
+    },
+    {
+      "name": "TooltipProvider",
+      "description": "Sets how long people hover before a tooltip opens, and lets the next one open at once while they move between triggers. Wrap the page or a toolbar with it.",
+      "descriptionAr": "يحدد مدة التمرير قبل فتح التلميح، ويتيح فتح التالي فورًا عند الانتقال بين العناصر. ضعه حول الصفحة أو شريط أدوات.",
+      "inherits": {
+        "name": "Popover",
+        "url": "https://base-ui.com/react/components/popover"
+      },
+      "props": [
+        {
+          "name": "delay",
+          "type": "number",
+          "default": "300",
+          "required": false,
+          "description": "How long to wait before opening the tooltip on hover. Specified in milliseconds.",
+          "descriptionAr": "بالملّي ثانية قبل فتح التلميح عند التمرير. الافتراضي 300."
+        }
+      ]
+    },
+    {
+      "name": "TooltipTrigger",
+      "description": "The element the tooltip describes. Render your own button or link with `render`.",
+      "descriptionAr": "العنصر الذي يصفه التلميح. اعرض الزر أو الرابط الخاص بك عبر `render`.",
+      "inherits": {
+        "name": "Popover",
+        "url": "https://base-ui.com/react/components/popover"
+      },
+      "props": []
     }
   ]
 }

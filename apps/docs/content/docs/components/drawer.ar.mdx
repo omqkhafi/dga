@@ -1,0 +1,102 @@
+---
+title: Drawer
+description: "لوحة تنزلق من بداية الشاشة أو نهايتها أو أعلاها أو أسفلها (في DGA: Slideout Menu). بيضاء أو رمادية، وتُغلق بالسحب، وتنعكس مع اتجاه الصفحة."
+sourceHash: 05c45a7fe240
+---
+
+<Preview name="drawer-sides" title="جهات اللوحة" minHeight={420} />
+
+## التثبيت [#installation]
+
+<ComponentInstall name="drawer" />
+
+## الاستخدام [#usage]
+
+```tsx title="page.tsx"
+import { Button } from "@/components/ui/button";
+import {
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerDescription,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from "@/components/ui/drawer";
+
+export function FilterDrawer() {
+  return (
+    <Drawer side="start">
+      <DrawerTrigger render={<Button variant="outline" />}>التصفية</DrawerTrigger>
+      <DrawerContent closeLabel="إغلاق">
+        <DrawerHeader>
+          <DrawerTitle>التصفية</DrawerTitle>
+          <DrawerDescription>اختر ما يظهر في قائمة الطلبات.</DrawerDescription>
+        </DrawerHeader>
+        <DrawerFooter>
+          <DrawerClose render={<Button />}>تطبيق</DrawerClose>
+        </DrawerFooter>
+      </DrawerContent>
+    </Drawer>
+  );
+}
+```
+
+استخدم Drawer لمحتوى يقع بجانب الصفحة ولا ينبغي أن يغادرها: قائمة تنقل على الجوال أو مرشحات أو لوحة تفاصيل. ولقرار لا بد من الإجابة عنه استخدم [Dialog](/docs/components/dialog). قيمة `side` هي `start` أو `end` أو `top` أو `bottom`. وتتبع `start` و`end` اتجاه الصفحة، فاللوحة `start` على اليسار في الإنجليزية وعلى اليمين في العربية، ويغلقها السحب نحو تلك الحافة. وأعطها DrawerTitle.
+
+## البنية [#anatomy]
+
+- **الخلفية**: تعتّم الصفحة وتعطّلها.
+- **المحتوى**: اللوحة، بعرض 346px على الجانبين وعرض كامل في الأعلى أو الأسفل. بيضاء (`background-menu`) أو رمادية (`neutral-100`).
+- **الترويسة**: DrawerTitle وDrawerDescription.
+- **التذييل**: DrawerFooter، مدفوع إلى الأسفل، والإجراءات في جهة النهاية.
+- **زر الإغلاق**: في الزاوية، في جهة النهاية.
+
+## أمثلة [#examples]
+
+### الجهات [#sides]
+
+الجهات الأربع. افتح الأولى في كل اتجاه وقارن موضع ظهورها.
+
+<Preview compact name="drawer-sides" title="الجهات" minHeight={420} />
+
+### التنقل [#navigation]
+
+النمط الرمادي، ولوحة `start` فيها قائمة روابط. والروابط أزرار عادية تعرض `<a>`.
+
+<Preview compact name="drawer-nav" title="التنقل" minHeight={420} />
+
+## RTL [#rtl]
+
+تتبادل `start` و`end`: فاللوحة نفسها تنزلق من اليمين في الصفحات العربية وحدّها على اليسار، ويغلقها السحب نحو اليمين. وتنعكس حركة الانزلاق معها.
+
+<DirectionCompare name="drawer-sides" title="اللوحة" minHeight={420} />
+
+## إمكانية الوصول [#accessibility]
+
+| المفتاح | الإجراء |
+| --- | --- |
+| <kbd>Tab</kbd> | ينقل التركيز إلى العنصر التالي داخل اللوحة. ويبقى التركيز داخلها. |
+| <kbd>Shift</kbd> + <kbd>Tab</kbd> | يعيد التركيز إلى الخلف. |
+| <kbd>Escape</kbd> | يغلق اللوحة ويعيد التركيز إلى العنصر الذي فتحها. |
+
+- مبنية على Base UI Drawer: نافذة معتمة مع `aria-labelledby` و`aria-describedby`. والصفحة خلفها معطّلة وتمريرها مقفل.
+- يُحبس التركيز داخلها ويعود إلى الزر عند الإغلاق. والسحب وسيلة إضافية للإغلاق لا الوحيدة.
+- لزر الإغلاق اسم (`closeLabel`). والنصوص بنسبة 4.5:1 والأيقونات 3:1 أو أفضل على السطحين الأبيض والرمادي، فاتحًا وداكنًا.
+- ومع تقليل الحركة تظهر اللوحة دون انزلاق.
+
+## مرجع API [#api-reference]
+
+<ApiReference component="drawer" />
+
+## الاختلافات عن DGA [#deviations-from-dga]
+
+- Slideout Menu في Figma لوحة بعرض 346px جزء من التخطيط. أما هذه فلوحة معتمة: حبس تركيز وEscape وسحب. أما اللوحة الجانبية في تخطيطك فقائمة تنقل لا هذه.
+- الحد المجاور للصفحة منطقي (`border-e` أو `border-s`). أما `border-right` واتجاه الانزلاق في DGA فماديان، فيكونان في الجهة الخاطئة بالعربية.
+
+<ComponentDeviations component="drawer" />
+
+## التباين [#contrast]
+
+<ComponentContrast component="drawer" />

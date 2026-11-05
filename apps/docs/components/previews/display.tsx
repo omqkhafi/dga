@@ -13,7 +13,7 @@ import { Avatar, AvatarGroup } from "@/registry/bases/base/ui/avatar";
 import { Divider } from "@/registry/bases/base/ui/divider";
 import { FeaturedIcon, type FeaturedIconProps } from "@/registry/bases/base/ui/featured-icon";
 import { Skeleton } from "@/registry/bases/base/ui/skeleton";
-import { Bi, useDirection } from "./bi";
+import { Bi, useBi, useDirection } from "./bi";
 import { OnColorSurface, Row, Stack } from "./kit";
 
 export function DividerDemo() {
@@ -48,33 +48,43 @@ export function DividerDemo() {
 const SIZES = [24, 32, 40, 48, 64, 80, 120] as const;
 
 export function AvatarDemo() {
+  const t = useBi();
   const rtl = useDirection() === "rtl";
   return (
     <Stack>
-      <Row label="Image">
+      <Row label={<Bi en="Image" ar="صورة" />}>
         {SIZES.map((size) => (
-          <Avatar key={size} size={size} src="/avatar-sample.svg" alt="Noura Al-Qahtani" />
+          <Avatar
+            key={size}
+            size={size}
+            src="/avatar-sample.svg"
+            alt={t("Noura Al-Qahtani", "نورة القحطاني")}
+          />
         ))}
       </Row>
-      <Row label="Initials">
+      <Row label={<Bi en="Initials" ar="أحرف" />}>
         {SIZES.map((size) => (
           <Avatar key={size} size={size} initials={rtl ? "ن ق" : "NQ"} />
         ))}
       </Row>
-      <Row label="Icon, square, broken image falls back">
+      <Row
+        label={
+          <Bi en="Icon, square, broken image falls back" ar="أيقونة، مربع، وبديل عند تعذر الصورة" />
+        }
+      >
         {SIZES.map((size) => (
           <Avatar key={size} size={size} square src="/missing.png" alt="" />
         ))}
       </Row>
-      <Row label="Avatar group: stacked and spaced">
+      <Row label={<Bi en="Avatar group: stacked and spaced" ar="مجموعة صور: متراكبة ومتباعدة" />}>
         <AvatarGroup>
-          <Avatar size={32} src="/avatar-sample.svg" alt="Noura" />
+          <Avatar size={32} src="/avatar-sample.svg" alt={t("Noura", "نورة")} />
           <Avatar size={32} initials="AK" />
           <Avatar size={32} initials="SM" />
-          <Avatar size={32} initials="+3" aria-label="3 more" />
+          <Avatar size={32} initials="+3" aria-label={t("3 more", "3 أخرى")} />
         </AvatarGroup>
         <AvatarGroup stacked={false}>
-          <Avatar size={32} src="/avatar-sample.svg" alt="Noura" />
+          <Avatar size={32} src="/avatar-sample.svg" alt={t("Noura", "نورة")} />
           <Avatar size={32} initials="AK" />
           <Avatar size={32}>
             <HugeiconsIcon icon={UserIcon} className="size-6 text-icon-default" aria-hidden />
@@ -107,7 +117,7 @@ export function FeaturedIconDemo() {
           ))}
         </Row>
       ))}
-      <Row label="Sizes sm, md, lg, xl; circle">
+      <Row label={<Bi en="Sizes sm, md, lg, xl; circle" ar="الأحجام sm وmd وlg وxl؛ دائرة" />}>
         {(["sm", "md", "lg", "xl"] as const).map((size) => (
           <FeaturedIcon key={size} size={size}>
             <HugeiconsIcon icon={StarIcon} />
@@ -126,7 +136,7 @@ export function FeaturedIconDemo() {
 export function SkeletonDemo() {
   return (
     <Stack>
-      <Row label="Rectangle sm, md, lg; line sm, lg">
+      <Row label={<Bi en="Rectangle sm, md, lg; line sm, lg" ar="مستطيل sm وmd وlg؛ سطر sm وlg" />}>
         <div className="flex w-full max-w-sm flex-col gap-3">
           <Skeleton size="sm" className="w-24" />
           <Skeleton size="md" className="w-32" />
@@ -135,7 +145,7 @@ export function SkeletonDemo() {
           <Skeleton shape="line" size="lg" className="w-3/4" />
         </div>
       </Row>
-      <Row label="Square and circle 24 to 120">
+      <Row label={<Bi en="Square and circle 24 to 120" ar="مربع ودائرة من 24 إلى 120" />}>
         {([24, 48, 64, 80, 120] as const).map((size) => (
           <Skeleton key={size} shape="square" size={size} />
         ))}

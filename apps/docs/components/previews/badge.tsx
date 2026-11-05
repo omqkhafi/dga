@@ -3,7 +3,7 @@
 import { CheckmarkCircle02Icon, StarIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { Badge, type BadgeProps } from "@/registry/bases/base/ui/badge";
-import { Bi } from "./bi";
+import { Bi, useBi } from "./bi";
 import { OnColorSurface, Row, Stack } from "./kit";
 
 type Variant = NonNullable<BadgeProps["variant"]>;
@@ -20,14 +20,14 @@ const COLORS: { value: Variant; en: string; ar: string }[] = [
 export function BadgeVariants() {
   return (
     <Stack>
-      <Row label="Filled">
+      <Row label={<Bi en="Filled" ar="مملوء" />}>
         {COLORS.map((c) => (
           <Badge key={c.value} variant={c.value}>
             <Bi en={c.en} ar={c.ar} />
           </Badge>
         ))}
       </Row>
-      <Row label="Outlined">
+      <Row label={<Bi en="Outlined" ar="بحدود" />}>
         {COLORS.map((c) => (
           <Badge key={c.value} variant={c.value} outlined>
             <Bi en={c.en} ar={c.ar} />
@@ -47,6 +47,7 @@ export function BadgeVariants() {
 }
 
 export function BadgeSizes() {
+  const t = useBi();
   return (
     <Stack>
       {(["sm", "md", "lg"] as const).map((size) => (
@@ -58,10 +59,10 @@ export function BadgeSizes() {
           <Badge size={size} variant="info" rounded>
             12
           </Badge>
-          <Badge size={size} variant="warning" iconOnly aria-label="Featured">
+          <Badge size={size} variant="warning" iconOnly aria-label={t("Featured", "مميز")}>
             <HugeiconsIcon icon={StarIcon} />
           </Badge>
-          <Badge size={size} variant="purple" iconOnly rounded aria-label="Featured">
+          <Badge size={size} variant="purple" iconOnly rounded aria-label={t("Featured", "مميز")}>
             <HugeiconsIcon icon={StarIcon} />
           </Badge>
         </Row>
