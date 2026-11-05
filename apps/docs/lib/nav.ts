@@ -1,8 +1,9 @@
 import type * as PageTree from "fumadocs-core/page-tree";
+import type { Locale } from "./i18n";
 import { source } from "./source";
 
 /** Pages in sidebar order (folders flattened), for Previous and Next. */
-export function orderedPages(): { name: string; url: string }[] {
+export function orderedPages(lang: Locale): { name: string; url: string }[] {
   const pages: { name: string; url: string }[] = [];
   const walk = (nodes: PageTree.Node[]) => {
     for (const node of nodes) {
@@ -13,7 +14,7 @@ export function orderedPages(): { name: string; url: string }[] {
       }
     }
   };
-  walk(source.getPageTree().children);
+  walk(source.getPageTree(lang).children);
   return pages;
 }
 

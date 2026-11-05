@@ -1,0 +1,52 @@
+---
+title: المسافات
+description: سلّم المسافات بوحدة 4px، ورموز مسافات المكوّنات، ونقاط التوقف، والشبكات، والخصائص المنطقية.
+sourceHash: f2e8a5965240
+---
+
+مسافات DGA سلّم بوحدة 4px. وخطوة المسافات في Tailwind هي 4px أيضًا (0.25rem)، فتقابل كل خطوة في DGA أداة رقمية مباشرة: `--spacing-4` (‏16px) هو `p-4`، و`--spacing-80` (‏320px) هو `p-80`.
+
+<Preview name="spacing" title="رموز المسافات المتجاوبة والخصائص المنطقية" />
+
+## السلّم [#scale]
+
+<SpacingScale />
+
+## الأسماء بمقاسات الملابس [#t-shirt-aliases]
+
+يسمّي Figma الخطوات أيضًا بالمقاسات. وهي تقابل السلّم الرقمي، لذلك استخدم الأداة الرقمية.
+
+<SpacingTokens kind="tshirt" />
+
+## رموز المكوّنات والتخطيط [#component-and-layout-tokens]
+
+تتغير هذه الرموز مع حجم العرض. ولكل منها أداة لكل خاصية مسافة: `p-card-lg-padding` و`gap-section-gap` و`px-buttons-md-padding` وهكذا.
+
+<SpacingTokens kind="semantic" />
+
+## نقاط التوقف [#breakpoints]
+
+يعرّف Figma أنماط الحاسوب واللوحي والجوال دون عروض بالبكسل. ويستخدم DGA UI العروض أدناه؛ وتسبيب ذلك في صفحة [الاختلافات](/docs/deviations).
+
+<BreakpointTable />
+
+## الشبكات [#grids]
+
+<GridTable />
+
+عرض حاوية الصفحة 1280px (`max-w-content`) مع حشوة 32px على الحاسوب و16px على الجوال. وتتوقف الفقرات عند 720px (`max-w-paragraph`).
+
+## اتجاه RTL والخصائص المنطقية [#rtl-and-logical-properties]
+
+استخدم الأدوات المنطقية فقط، ليعمل تخطيط واحد بالعربية والإنجليزية:
+
+| استخدم | لا تستخدم |
+| --- | --- |
+| `ms-*` و`me-*` | `ml-*` و`mr-*` |
+| `ps-*` و`pe-*` | `pl-*` و`pr-*` |
+| `start-*` و`end-*` | `left-*` و`right-*` |
+| `border-s` و`border-e` | `border-l` و`border-r` |
+| `rounded-s-*` و`rounded-e-*` | `rounded-l-*` و`rounded-r-*` |
+| `text-start` و`text-end` | `text-left` و`text-right` |
+
+تفشل اختبارات المستودع عند أي أداة أو خاصية CSS فيزيائية لليسار أو اليمين.

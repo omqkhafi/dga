@@ -1,0 +1,71 @@
+---
+title: Tag
+description: تسميات للفئات والمرشحات والحالات. Tag وStatus Tag، مملوءان أو بحد فقط، وثلاثة أحجام، وقابلان للإزالة اختياريًا.
+sourceHash: a7235d88f5b9
+---
+
+<Preview name="tag-variants" title="Tag" />
+
+## التثبيت [#installation]
+
+<ComponentInstall name="tag" />
+
+## الاستخدام [#usage]
+
+```tsx title="page.tsx"
+import { StatusTag, Tag } from "@/components/ui/tag";
+
+<Tag variant="info">تقنية</Tag>
+<StatusTag variant="success">مكتمل</StatusTag>
+```
+
+تصنّف Tag المحتوى حسب الفئة أو تعرض المرشحات التي اختارها المستخدم. وتعرض Status Tag حالة عنصر أو مهمة أو طلب.
+
+## البنية [#anatomy]
+
+- **Tag**: عنصر `<span>` مع أيقونة وزر إغلاق اختياريين.
+- **StatusTag**: عنصر `<span>` فيه نقطة ملونة والتسمية.
+- **Close button** (اختياري): عنصر `<button>` حقيقي بمساحة نقر 24px.
+
+## أمثلة [#examples]
+
+### القابل للإزالة [#removable]
+
+مرّر `onDismiss` لإضافة زر إغلاق. وأعطه اسمًا محددًا عبر `dismissLabel`، مثل «إزالة الرياض»، وانقل التركيز إلى موضع مناسب بعد إزالة الوسم.
+
+<Preview compact name="tag-dismiss" title="القابل للإزالة" />
+
+### Status Tag [#status-tag]
+
+يقع `subtle` (الافتراضي) على تظليل خفيف، و`inverted` على تعبئة مصمتة، و`ghost` بلا تعبئة. وتبدأ الثلاثة بنقطة ملونة.
+
+<Preview compact name="status-tags" title="Status Tag" />
+
+## اتجاه RTL [#rtl]
+
+تقع النقطة والأيقونة وزر الإغلاق على جهتي البداية والنهاية المنطقيتين.
+
+<DirectionCompare name="tag-dismiss" title="الوسوم القابلة للإزالة" />
+
+## إمكانية الوصول [#accessibility]
+
+| المفتاح | الإجراء |
+| --- | --- |
+| <kbd>Tab</kbd> | ينقل التركيز إلى زر الإغلاق في الوسم القابل للإزالة. |
+| <kbd>Enter</kbd> أو <kbd>Space</kbd> | يزيل الوسم. |
+
+- الوسوم عناصر `<span>` وتُقرأ كنص. ضع المعنى في التسمية؛ أما اللون والنقطة فإضافة (WCAG 1.4.1).
+- لزر الإغلاق اسمه الخاص ومساحة نقر 24px (WCAG 2.5.8).
+- استخدم [Button](/docs/components/button) مع `aria-pressed` للوسوم التي يبدّلها المستخدم.
+
+## مرجع API [#api-reference]
+
+<ApiReference component="tag" />
+
+## الاختلافات عن DGA [#deviations-from-dga]
+
+<ComponentDeviations component="tag" />
+
+## التباين [#contrast]
+
+<ComponentContrast component="tag" />

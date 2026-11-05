@@ -1,4 +1,6 @@
 import type { ReactNode } from "react";
+import { getT } from "@/lib/dictionary";
+import type { Locale } from "@/lib/i18n";
 import { tokens } from "@/lib/tokens";
 import { Swatch } from "./contrast";
 import { SemanticTable } from "./semantic-table";
@@ -53,7 +55,9 @@ const Code = ({ children }: { children: ReactNode }) => (
   <code className="font-mono text-xs text-foreground">{children}</code>
 );
 const Muted = ({ children }: { children: ReactNode }) => (
-  <span className="font-mono text-xs text-muted-foreground">{children}</span>
+  <span dir="ltr" className="inline-block font-mono text-xs text-muted-foreground">
+    {children}
+  </span>
 );
 
 export function SemanticColors({
@@ -64,11 +68,12 @@ export function SemanticColors({
   return <SemanticTable tokens={tokens.semantic} initialCategory={initialCategory} />;
 }
 
-export function ShadcnMapping() {
+export function ShadcnMapping({ lang = "en" }: { lang?: Locale } = {}) {
+  const t = getT(lang);
   const byName = new Map(tokens.semantic.map((t) => [t.name, t]));
   return (
     <ResponsiveTable
-      columns={["shadcn variable", "DGA token", "Light", "Dark"]}
+      columns={[t("col.shadcnVar"), t("col.dgaToken"), t("col.light"), t("col.dark")]}
       rows={tokens.shadcn.map((s) => {
         const t = byName.get(s.token);
         return {
@@ -85,7 +90,8 @@ export function ShadcnMapping() {
   );
 }
 
-export function AliasTable() {
+export function AliasTable({ lang = "en" }: { lang?: Locale } = {}) {
+  const t = getT(lang);
   const rows = tokens.semantic.flatMap((t) =>
     t.aliases.map((alias) => ({
       key: alias,
@@ -99,14 +105,25 @@ export function AliasTable() {
     })),
   );
   return (
-    <ResponsiveTable columns={["Short alias", "Figma-identical utility", "Token"]} rows={rows} />
+    <ResponsiveTable
+      columns={[t("col.shortAlias"), t("col.figmaUtility"), t("col.token")]}
+      rows={rows}
+    />
   );
 }
 
-export function TypeScaleTable() {
+export function TypeScaleTable({ lang = "en" }: { lang?: Locale } = {}) {
+  const t = getT(lang);
   return (
     <ResponsiveTable
-      columns={["Utility", "Figma style", "Desktop", "Tablet", "Mobile", "Letter spacing"]}
+      columns={[
+        t("col.utility"),
+        t("col.figmaStyle"),
+        t("col.desktop"),
+        t("col.tablet"),
+        t("col.mobile"),
+        t("col.letterSpacing"),
+      ]}
       rows={tokens.typography.sizes.map((s) => ({
         key: s.key,
         cells: [
@@ -128,7 +145,8 @@ export function TypeScaleTable() {
   );
 }
 
-export function WeightTable() {
+export function WeightTable({ lang = "en" }: { lang?: Locale } = {}) {
+  const t = getT(lang);
   const utility: Record<string, string> = {
     "font-weight-regular": "font-regular (font-normal)",
     "font-weight-medium": "font-medium",
@@ -137,7 +155,7 @@ export function WeightTable() {
   };
   return (
     <ResponsiveTable
-      columns={["Token", "Value", "Utility"]}
+      columns={[t("col.token"), t("col.value"), t("col.utility")]}
       rows={tokens.typography.weights.map((w) => ({
         key: w.name,
         cells: [
@@ -170,7 +188,14 @@ export function SpacingScale() {
   );
 }
 
-export function SpacingTokens({ kind }: { kind: "tshirt" | "semantic" }) {
+export function SpacingTokens({
+  kind,
+  lang = "en",
+}: {
+  kind: "tshirt" | "semantic";
+  lang?: Locale;
+}) {
+  const tr = getT(lang);
   const list = tokens.spacing.tokens.filter((t) =>
     kind === "tshirt" ? t.name.startsWith("spacing-") : !t.name.startsWith("spacing-"),
   );
@@ -178,8 +203,8 @@ export function SpacingTokens({ kind }: { kind: "tshirt" | "semantic" }) {
     <ResponsiveTable
       columns={
         kind === "tshirt"
-          ? ["Token", "Same as", "Value"]
-          : ["Utility", "Desktop", "Tablet", "Mobile"]
+          ? [tr("col.token"), tr("col.sameAs"), tr("col.value")]
+          : [tr("col.utility"), tr("col.desktop"), tr("col.tablet"), tr("col.mobile")]
       }
       rows={list.map((t) => ({
         key: t.name,
@@ -201,14 +226,15 @@ export function SpacingTokens({ kind }: { kind: "tshirt" | "semantic" }) {
   );
 }
 
-export function BreakpointTable() {
+export function BreakpointTable({ lang = "en" }: { lang?: Locale } = {}) {
+  const t = getT(lang);
   const modes: Record<string, string> = {
-    md: "Figma Tablet mode starts",
-    lg: "Figma Desktop mode starts",
+    md: t("bp.md"),
+    lg: t("bp.lg"),
   };
   return (
     <ResponsiveTable
-      columns={["Prefix", "Min width", "Notes"]}
+      columns={[t("col.prefix"), t("col.minWidth"), t("col.notes")]}
       rows={tokens.breakpoints.map((b) => ({
         key: b.name,
         cells: [
@@ -225,10 +251,17 @@ export function BreakpointTable() {
   );
 }
 
-export function GridTable() {
+export function GridTable({ lang = "en" }: { lang?: Locale } = {}) {
+  const t = getT(lang);
   return (
     <ResponsiveTable
-      columns={["Figma grid", "Columns", "Gutter", "Margin", "Content width"]}
+      columns={[
+        t("col.figmaGrid"),
+        t("col.columns"),
+        t("col.gutter"),
+        t("col.margin"),
+        t("col.contentWidth"),
+      ]}
       rows={tokens.grids.map((g) => ({
         key: g.name,
         cells: [
@@ -236,17 +269,18 @@ export function GridTable() {
           <Muted key="c">{g.columns}</Muted>,
           <Muted key="g">{g.gutter}px</Muted>,
           <Muted key="m">{g.margin}px</Muted>,
-          <Muted key="w">{g.content ? `${g.content}px` : "fluid"}</Muted>,
+          <Muted key="w">{g.content ? `${g.content}px` : t("grid.fluid")}</Muted>,
         ],
       }))}
     />
   );
 }
 
-export function RadiusTable() {
+export function RadiusTable({ lang = "en" }: { lang?: Locale } = {}) {
+  const t = getT(lang);
   return (
     <ResponsiveTable
-      columns={["Utility", "Token", "Value"]}
+      columns={[t("col.utility"), t("col.token"), t("col.value")]}
       rows={tokens.radius.map((r) => ({
         key: r.name,
         cells: [
@@ -261,10 +295,11 @@ export function RadiusTable() {
   );
 }
 
-export function ShadowTable() {
+export function ShadowTable({ lang = "en" }: { lang?: Locale } = {}) {
+  const t = getT(lang);
   return (
     <ResponsiveTable
-      columns={["Utility", "Value"]}
+      columns={[t("col.utility"), t("col.value")]}
       rows={[
         ...tokens.shadows.map((s) => ({
           key: s.name,

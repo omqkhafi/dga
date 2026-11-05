@@ -1,3 +1,5 @@
+import { getT } from "@/lib/dictionary";
+import type { Locale } from "@/lib/i18n";
 import { getPageMarkdown, source } from "@/lib/source";
 
 /** One searchable unit: a page, or one heading section of a page. */
@@ -14,11 +16,6 @@ export type SearchEntry = {
   text: string;
 };
 
-const GROUPS: Record<string, string> = {
-  components: "Components",
-  foundations: "Foundations",
-};
-
 const strip = (markdown: string) =>
   markdown
     .replace(/```[\s\S]*?```/g, " ") // code fences
@@ -32,12 +29,18 @@ const strip = (markdown: string) =>
     .replace(/\s+/g, " ")
     .trim();
 
-/** Built once at build time (see app/search-index.json). Small enough to ship whole. */
-export async function buildSearchIndex(): Promise<SearchEntry[]> {
+/** One index per locale, built at build time (see app/search-index/[lang]). Small enough to ship whole. */
+export async function buildSearchIndex(lang: Locale): Promise<SearchEntry[]> {
+  const t = getT(lang);
   const entries: SearchEntry[] = [];
-  for (const page of source.getPages()) {
-    const segment = page.slugs[0] ?? "";
-    const crumb = GROUPS[segment] ?? "Docs";
+  for (const page of source.getPages(lang)) {
+    const segment = page.slugs.length > 1 ? (page.slugs[0] ?? "") : "";
+    const crumb =
+      segment === "components"
+        ? t("search.crumb.components")
+        : segment === "foundations"
+          ? t("search.crumb.foundations")
+          : t("search.crumb.docs");
     const base = { page: page.data.title, pageUrl: page.url, crumb };
     const pageEntry: SearchEntry = {
       ...base,

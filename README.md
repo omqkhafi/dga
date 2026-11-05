@@ -1,0 +1,39 @@
+# DGA UI
+
+The Saudi Digital Government Authority (DGA) design system as copy-paste React components, installed with the shadcn CLI. Built on Base UI and Tailwind CSS v4, in Arabic and English (RTL and LTR), light and dark, to WCAG 2.1 AA.
+
+This is not an official DGA product. Its tokens come from the DGA Figma file and design.dga.gov.sa; every place where this project differs from them is listed on the Deviations page.
+
+**Docs:** <https://dga.omqkhafi.dev> — [English](https://dga.omqkhafi.dev/en) · [العربية](https://dga.omqkhafi.dev/ar)
+
+## Install
+
+```bash
+npx shadcn@latest init https://dga.omqkhafi.dev/r/dga.json
+npx shadcn@latest add @dga/button
+```
+
+## Languages
+
+The documentation is published in English and Arabic. Both are first-class: every page, every UI string and every Open Graph image exists in both, and a new component is not done until both are written (see [ROADMAP.md](ROADMAP.md)). Arabic follows its own typography rules (line height 1.8, no letter spacing, Western digits in technical values); they are documented under Foundations > Typography.
+
+## Repository
+
+| Path                         | What is in it                                                                                     |
+| ---------------------------- | ------------------------------------------------------------------------------------------------- |
+| `registry/`                  | Component source and the DGA shadcn style.                                                        |
+| `tokens/`, `scripts/tokens/` | Figma tokens and the generator that turns them into CSS, with the contrast audit.                 |
+| `apps/docs/`                 | The documentation site (Next.js, Fumadocs). Arabic pages are `*.ar.mdx` next to the English ones. |
+| `docs/design-system/`        | Component specs from the DGA Figma file.                                                          |
+
+## Develop
+
+```bash
+bun install
+bun run dev                 # docs site on http://localhost:3000
+bun run lint && bun run typecheck && bun run test
+bun run translations:check  # English and Arabic pages are in sync
+bun run build
+```
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) and [CHANGELOG.md](CHANGELOG.md). Licence: MIT.

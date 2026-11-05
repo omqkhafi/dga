@@ -3,6 +3,7 @@
 import { Search01Icon } from "@hugeicons/core-free-icons";
 import { useSearchContext } from "fumadocs-ui/contexts/search";
 import { useEffect, useState } from "react";
+import { useT } from "@/lib/locale-context";
 import { Button } from "@/registry/bases/base/ui/button";
 import { Icon } from "./icon";
 
@@ -15,6 +16,7 @@ export function SearchButton({
   /** Called before the dialog opens, for example to close a drawer that sits on top. */
   onOpen?: () => void;
 }) {
+  const t = useT();
   const { setOpenSearch } = useSearchContext();
   const [mac, setMac] = useState(true);
   useEffect(() => setMac(/Mac|iPhone|iPad/.test(navigator.platform)), []);
@@ -23,7 +25,7 @@ export function SearchButton({
       <Button
         variant="subtle"
         iconOnly
-        aria-label="Search"
+        aria-label={t("search.button")}
         onClick={() => {
           onOpen?.();
           setOpenSearch(true);
@@ -43,8 +45,11 @@ export function SearchButton({
       }}
     >
       <Icon icon={Search01Icon} data-icon="inline-start" />
-      Search
-      <kbd className="ms-auto rounded-xs border border-border-neutral-secondary px-1.5 font-sans text-xs font-medium">
+      {t("search.button")}
+      <kbd
+        dir="ltr"
+        className="ms-auto rounded-xs border border-border-neutral-secondary px-1.5 font-sans text-xs font-medium"
+      >
         {mac ? "⌘" : "Ctrl "}K
       </kbd>
     </Button>

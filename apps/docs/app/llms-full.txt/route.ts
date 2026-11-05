@@ -1,10 +1,7 @@
-import { getPageMarkdown, source } from "@/lib/source";
+import { llmsFull, textHeaders } from "@/lib/llms";
 
 export const revalidate = false;
 
 export async function GET() {
-  const pages = await Promise.all(source.getPages().map((page) => getPageMarkdown(page)));
-  return new Response(pages.join("\n\n---\n\n"), {
-    headers: { "Content-Type": "text/plain; charset=utf-8" },
-  });
+  return new Response(await llmsFull("en"), { headers: textHeaders });
 }

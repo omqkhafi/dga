@@ -4,6 +4,7 @@ import { Tabs } from "@base-ui/react/tabs";
 import { Copy01Icon, Tick02Icon } from "@hugeicons/core-free-icons";
 import { type ReactNode, useEffect, useState } from "react";
 import { Icon } from "@/components/shell/icon";
+import { useT } from "@/lib/locale-context";
 import { Button } from "@/registry/bases/base/ui/button";
 
 const MANAGERS = ["bun", "npm", "pnpm", "yarn"] as const;
@@ -42,6 +43,7 @@ function useManager() {
 }
 
 function CommandLine({ command }: { command: string }) {
+  const t = useT();
   const [copied, setCopied] = useState(false);
   return (
     <div className="flex min-h-12 items-center gap-2 ps-4 pe-2">
@@ -59,7 +61,7 @@ function CommandLine({ command }: { command: string }) {
         variant="subtle"
         size="sm"
         iconOnly
-        aria-label={copied ? "Copied" : "Copy command"}
+        aria-label={copied ? t("command.copied") : t("command.copy")}
         onClick={async () => {
           try {
             await navigator.clipboard.writeText(command);
@@ -89,18 +91,19 @@ export function InstallTabs({
   item: string;
   manual: ReactNode;
 }) {
+  const t = useT();
   const [manager, choose] = useManager();
   const [mode, setMode] = useState<"cli" | "manual">("cli");
   return (
     <div className="not-prose my-4 overflow-hidden rounded-md border border-border-neutral-secondary bg-background-neutral-50">
       <Tabs.Root value={mode} onValueChange={(v) => setMode(v as "cli" | "manual")}>
         <div className="flex items-center border-b border-border-neutral-secondary bg-background-white">
-          <Tabs.List aria-label="Installation method" className="flex">
+          <Tabs.List aria-label={t("install.method")} className="flex">
             <Tabs.Tab value="cli" className={tab}>
-              CLI
+              {t("install.cli")}
             </Tabs.Tab>
             <Tabs.Tab value="manual" className={tab}>
-              Manual
+              {t("install.manual")}
             </Tabs.Tab>
           </Tabs.List>
           {mode === "cli" ? (
@@ -109,7 +112,7 @@ export function InstallTabs({
               onValueChange={(v) => choose(v as Manager)}
               className="ms-auto"
             >
-              <Tabs.List aria-label="Package manager" className="flex">
+              <Tabs.List aria-label={t("install.manager")} className="flex">
                 {MANAGERS.map((m) => (
                   <Tabs.Tab key={m} value={m} className={tab}>
                     {m}

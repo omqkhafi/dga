@@ -1,7 +1,7 @@
 {
   "name": "dga-ui",
   "private": true,
-  "version": "0.1.2",
+  "version": "0.2.0",
   "type": "module",
   "packageManager": "bun@1.4.4",
   "workspaces": [
@@ -20,7 +20,9 @@
     "test": "bun test scripts",
     "test:install": "bun scripts/install-test.ts",
     "api": "bun scripts/build-api.ts",
-    "api:check": "bun scripts/build-api.ts --check"
+    "api:check": "bun scripts/build-api.ts --check",
+    "translations:check": "bun scripts/translations.ts --check",
+    "translations:stamp": "bun scripts/translations.ts --stamp"
   },
   "devDependencies": {
     "@biomejs/biome": "2.6.5",

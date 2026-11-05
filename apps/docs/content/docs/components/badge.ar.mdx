@@ -1,0 +1,63 @@
+---
+title: Badge
+description: تسمية قصيرة لحالة أو عدد أو فئة. سبعة ألوان، مملوءة أو بحد فقط، وثلاثة أحجام.
+sourceHash: 8009bba9a60c
+---
+
+<Preview name="badge-variants" title="الألوان" />
+
+<Callout title="غير موجود في ملف Figma الخاص بـ DGA">
+  يأتي Badge من CSS موقع design.dga.gov.sa. أُضيفت رموزه من CSS الموقع، وهي مدرجة تحت [الاختلافات](#deviations-from-dga).
+</Callout>
+
+## التثبيت [#installation]
+
+<ComponentInstall name="badge" />
+
+## الاستخدام [#usage]
+
+```tsx title="page.tsx"
+import { Badge } from "@/components/ui/badge";
+
+<Badge variant="success">مقبول</Badge>
+```
+
+Badge تسمية قصيرة غير تفاعلية. للتسميات التي يمكن للمستخدم إزالتها أو اختيارها، استخدم [Tag](/docs/components/tag).
+
+## البنية [#anatomy]
+
+- **Root**: عنصر `<span>`.
+- **Icon** (اختيارية): قبل النص.
+- **Label**: النص.
+
+## أمثلة [#examples]
+
+### الأحجام والشكل والأيقونات [#sizes-shape-and-icons]
+
+ارتفاع `sm` ‏20px، و`md` ‏24px (الافتراضي)، و`lg` ‏32px. يجعله `rounded` على شكل حبة، وهو مناسب للأعداد. ويجعله `iconOnly` مربعًا (أو دائرة) ويحتاج إلى `aria-label`.
+
+<Preview compact name="badge-sizes" title="الأحجام" />
+
+## اتجاه RTL [#rtl]
+
+يتبع الحشو وموضع الأيقونة اتجاه القراءة.
+
+<DirectionCompare name="badge-variants" title="ألوان Badge" />
+
+## إمكانية الوصول [#accessibility]
+
+- عنصر `<span>` بلا دور. يُقرأ النص في موضعه، فضع المعنى في النص لا في اللون وحده (WCAG 1.4.1).
+- للعدد، أضف سياقًا: `<Badge>3<span className="sr-only"> غير مقروءة</span></Badge>`.
+- تحتاج شارات الأيقونة فقط إلى `aria-label`، أو `aria-hidden` إذا كانت زخرفية.
+
+## مرجع API [#api-reference]
+
+<ApiReference component="badge" />
+
+## الاختلافات عن DGA [#deviations-from-dga]
+
+<ComponentDeviations component="badge" />
+
+## التباين [#contrast]
+
+<ComponentContrast component="badge" />

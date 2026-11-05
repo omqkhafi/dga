@@ -1,8 +1,6 @@
-import { ArrowUpRight01Icon, GithubIcon } from "@hugeicons/core-free-icons";
 import type * as PageTree from "fumadocs-core/page-tree";
-import { githubUrl } from "@/lib/shared";
-import { Button } from "@/registry/bases/base/ui/button";
-import { Icon } from "./icon";
+import { GithubLink } from "./github-link";
+import { LocaleSwitch } from "./locale-switch";
 import { Logo } from "./logo";
 import { MobileNav } from "./mobile-nav";
 import { SearchButton } from "./search-button";
@@ -20,18 +18,9 @@ export function Header({ tree, version }: { tree: PageTree.Root; version: string
         <div className="md:hidden">
           <SearchButton compact />
         </div>
+        <LocaleSwitch />
         <ThemeToggle />
-        <Button
-          variant="subtle"
-          nativeButton={false}
-          className="hidden sm:inline-flex"
-          render={<a href={githubUrl} target="_blank" rel="noopener noreferrer" />}
-        >
-          <Icon icon={GithubIcon} data-icon="inline-start" />
-          GitHub
-          <Icon icon={ArrowUpRight01Icon} data-icon="inline-end" className="rtl:-scale-x-100" />
-          <span className="sr-only"> (opens in a new tab)</span>
-        </Button>
+        <GithubLink />
         <MobileNav tree={tree} version={version} />
       </div>
     </header>

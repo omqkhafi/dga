@@ -1,6 +1,8 @@
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { highlight } from "fumadocs-core/highlight";
+import { getT } from "@/lib/dictionary";
+import type { Locale } from "@/lib/i18n";
 import { gitConfig, siteUrl } from "@/lib/shared";
 import { CodeBlock } from "./code-block";
 import { InstallTabs } from "./install-tabs";
@@ -38,7 +40,8 @@ async function Source({ path }: { path: string }) {
 }
 
 /** Install block for a registry item: CLI (bun, npm, pnpm, yarn) or Manual. */
-export function ComponentInstall({ name }: { name: string }) {
+export function ComponentInstall({ name, lang = "en" }: { name: string; lang?: Locale }) {
+  const t = getT(lang);
   const item = JSON.parse(readFileSync(join(REGISTRY, `${name}.json`), "utf8")) as RegistryItem;
   const deps = item.dependencies ?? [];
   const registryDeps = (item.registryDependencies ?? []).map((url) =>
@@ -48,7 +51,7 @@ export function ComponentInstall({ name }: { name: string }) {
     <ol className="flex list-decimal flex-col gap-4 ps-5 text-sm marker:text-text-secondary-paragraph">
       {deps.length > 0 ? (
         <li>
-          <p className="mb-2">Install the dependencies:</p>
+          <p className="mb-2">{t("install.manual.deps")}</p>
           <p
             className="rounded-sm bg-background-white px-3 py-2 font-mono text-[0.8125rem]"
             dir="ltr"
@@ -59,29 +62,31 @@ export function ComponentInstall({ name }: { name: string }) {
       ) : null}
       <li>
         <p>
-          Set up the DGA tokens and style (
-          <code className="font-mono text-[0.8125rem]">
+          {t("install.manual.setup")}
+          <code dir="ltr" className="font-mono text-[0.8125rem]">
             npx shadcn@latest init {siteUrl}/r/dga.json
           </code>
           {registryDeps.length > 0 ? (
             <>
-              ), and copy{" "}
+              {t("install.manual.copy")}
               {registryDeps.map((d, i) => (
                 <span key={d}>
-                  {i > 0 ? ", " : ""}
-                  <code className="font-mono text-[0.8125rem]">{d}</code>
+                  {i > 0 ? (lang === "ar" ? "، " : ", ") : ""}
+                  <code dir="ltr" className="font-mono text-[0.8125rem]">
+                    {d}
+                  </code>
                 </span>
-              ))}{" "}
-              from the registry.
+              ))}
+              {t("install.manual.fromRegistry")}
             </>
           ) : (
-            <>).</>
+            <>)</>
           )}
         </p>
       </li>
       <li>
         <p className="mb-2">
-          Copy the source into your project and fix the import paths. It is also on{" "}
+          {t("install.manual.source")}{" "}
           <a
             href={`https://github.com/${gitConfig.user}/${gitConfig.repo}/blob/${gitConfig.branch}/registry/${item.files[0]?.path}`}
           >

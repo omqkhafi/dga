@@ -1,0 +1,101 @@
+---
+title: التثبيت
+description: أضف نمط DGA إلى مشروع جديد أو قائم عبر سطر أوامر shadcn.
+sourceHash: 48bc9a8519b2
+---
+
+يحتاج DGA UI إلى مشروع React مع Tailwind CSS v4. تستخدم هذه الخطوات Next.js، وتُذكر الأطر الأخرى في الختام.
+
+## مشروع جديد [#new-project]
+
+<Steps>
+<Step>
+
+### أنشئ تطبيق Next.js
+
+```bash title="Terminal"
+npx create-next-app@latest my-app --ts --tailwind --app
+```
+
+</Step>
+<Step>
+
+### هيّئ DGA UI
+
+```bash title="Terminal"
+npx shadcn@latest init https://dga.omqkhafi.dev/r/dga.json
+```
+
+العنصر `dga` من النوع `registry:base`. يكتب الملف `components.json` بالإعدادات `iconLibrary: "hugeicons"` و`rtl: true` ونمط Base UI والسجل `@dga`، فيعمل الأمر `npx shadcn@latest add @dga/button` مباشرة. ويثبّت `@base-ui/react` و`cn` و`class-variance-authority` وHugeicons. كما يضيف كل رموز DGA والسمة الداكنة والأنماط المتجاوبة إلى `globals.css`، ويهيّئ خط IBM Plex Sans Arabic عبر `next/font`.
+
+</Step>
+<Step>
+
+### حدّد اللغة والاتجاه
+
+```tsx title="app/layout.tsx"
+<html lang="ar" dir="rtl">
+```
+
+استخدم `lang="en" dir="ltr"` للصفحات الإنجليزية. لا تحتاج المكوّنات إلى أي تغيير آخر.
+
+</Step>
+</Steps>
+
+## مشروع shadcn قائم [#existing-shadcn-project]
+
+إن كان في المشروع ملف `components.json`، فأضف النمط مباشرة:
+
+```bash title="Terminal"
+npx shadcn@latest add https://dga.omqkhafi.dev/r/dga-style.json
+```
+
+يدمج سطر الأوامر قيم DGA في ملف `globals.css` الخاص بك. وتصبح متغيرات shadcn الموجودة لديك (`--background` و`--primary` …) مرتبطة برموز DGA.
+
+## الرموز فقط [#tokens-only]
+
+لاستخدام رموز DGA دون أي مكوّن (مثلًا في نظام تصميم قائم)، أضف الرموز وحدها:
+
+```bash title="Terminal"
+npx shadcn@latest add https://dga.omqkhafi.dev/r/dga-tokens.json
+```
+
+## استخدام المساحة `@dga` [#use-the-dga-namespace]
+
+يسجّلها `init …/dga.json` لك. وفي المشاريع الأخرى سجّلها مرة واحدة في `components.json`:
+
+```json title="components.json"
+{
+  "registries": {
+    "@dga": "https://dga.omqkhafi.dev/r/{name}.json"
+  }
+}
+```
+
+ثم ثبّت العناصر بأسمائها:
+
+```bash title="Terminal"
+npx shadcn@latest add @dga/button @dga/badge
+```
+
+## الوضع الداكن [#dark-mode]
+
+تُطبَّق الرموز الداكنة تحت `.dark` (next-themes وshadcn) أو `[data-theme="dark"]` (عُرف موقع DGA). يعمل الاثنان على `<html>` أو على أي عنصر، فيمكن أن يكون قسم واحد داكنًا.
+
+```tsx title="page.tsx"
+<section data-theme="dark">…</section>
+```
+
+## أطر أخرى [#other-frameworks]
+
+مع Vite أو React Router أو TanStack Start، شغّل أمر `init` نفسه. وخارج Next.js يثبّت سطر الأوامر الخط من `@fontsource/ibm-plex-sans-arabic` بدل `next/font`.
+
+## ما يُثبَّت [#what-gets-installed]
+
+| العنصر | النوع | المحتوى |
+| --- | --- | --- |
+| [`dga`](/r/dga.json) | `registry:base` | إعدادات `components.json` (Hugeicons، واتجاه RTL، ونمط Base UI، والسجل `@dga`)، ويسحب `dga-style` |
+| [`dga-style`](/r/dga-style.json) | `registry:style` | الاعتماديات واستيرادات CSS وخريطة الأنماط `cn-*` للمكوّنات، ويسحب `dga-tokens` و`utils` والخط |
+| [`dga-tokens`](/r/dga-tokens.json) | `registry:theme` | كل الرموز، والسمتان الفاتحة والداكنة، والأنماط المتجاوبة، وسمة Tailwind، وربط shadcn، وطبقة الأساس |
+| [`utils`](/r/utils.json) | `registry:lib` | الملف `lib/utils.ts` الذي يعيد تصدير `cn` من الحزمة `cn` (دون clsx أو tailwind-merge) |
+| [`font-ibm-plex-sans-arabic`](/r/font-ibm-plex-sans-arabic.json) | `registry:font` | خط IBM Plex Sans Arabic بالأوزان 400 إلى 700، مجموعتا الحروف العربية واللاتينية |

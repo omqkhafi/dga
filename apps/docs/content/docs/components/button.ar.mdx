@@ -1,0 +1,114 @@
+---
+title: Button
+description: يُنفّذ إجراءً. ستة أنماط، ونسختان للإجراءات المدمّرة وللاستخدام على الألوان، وثلاثة أحجام، وزر الأيقونة فقط وحالة التحميل.
+sourceHash: be8650a3d3d0
+---
+
+<Preview name="button-variants" title="الأنماط" />
+
+## التثبيت [#installation]
+
+<ComponentInstall name="button" />
+
+يثبّت هذا الأمر أيضًا [Spinner](/docs/components/spinner) لحالة التحميل.
+
+## الاستخدام [#usage]
+
+```tsx title="app/page.tsx"
+import { Button } from "@/components/ui/button";
+
+export default function Page() {
+  return <Button>إرسال الطلب</Button>;
+}
+```
+
+## البنية [#anatomy]
+
+**Root** (`<button type="button">`، أو أي عنصر عبر `render`)، و**Icon** اختيارية قبل **Label** أو بعده، و**Spinner** يحل محل الأيقونة الأولى أثناء `loading`.
+
+## أمثلة [#examples]
+
+### الأنماط [#styles]
+
+| النمط | متى يُستخدم |
+| --- | --- |
+| `primary` | الإجراء الرئيسي. واحد في كل عرض. |
+| `neutral` | إجراء قوي بلا لون العلامة (في Figma: Primary-Neutral). |
+| `secondary` | إجراءات مساندة بجوار الإجراء الرئيسي (في Figma: Secondary-Solid). |
+| `outline` | إجراءات مساندة على الخلفيات المزدحمة (في Figma: Secondary-Outline). |
+| `subtle` | إجراءات منخفضة الأهمية في أشرطة الأدوات والجداول. |
+| `transparent` | إجراءات تشبه النص. يتغير لون التسمية عند التمرير. |
+
+### الإجراء المدمّر [#destructive]
+
+أضف `destructive` للإجراءات التي تحذف أو لا يمكن التراجع عنها. لكل نمط ما عدا `neutral` نسخة مدمّرة، و`neutral` يرجع إلى `primary` المدمّر.
+
+<Preview compact name="button-destructive" title="الإجراء المدمّر" />
+
+### على الألوان [#on-colour]
+
+أضف `onColor` على تعبئات العلامة (`background-primary` وترويسة التنقل). تكون تسميات الإجراء المدمّر بيضاء هناك، والنص هو الذي يحمل المعنى.
+
+<Preview compact name="button-on-color" title="على الألوان" />
+
+### الأحجام [#sizes]
+
+ارتفاع `sm` ‏24px، و`md` ‏32px (الافتراضي)، و`lg` ‏40px.
+
+<Preview compact name="button-sizes" title="الأحجام" />
+
+### الحالات [#states]
+
+يشير `aria-pressed` إلى زر تبديل (أو `data-selected` في القوائم والمجموعات)، ويمنع `disabled` الإجراء، ويعرض `loading` التقدّم.
+
+<Preview compact name="button-states" title="المحدد والمعطّل والتحميل" />
+
+يستبدل `loading` الأيقونة الأولى بمؤشر دوّار، ويحافظ على العرض، ويتجاهل النقرات. ويبقى الزر قابلًا لاستقبال التركيز.
+
+### الأيقونات [#icons]
+
+ضع على أيقونة [Hugeicons](/docs/foundations/icons) الوسم `data-icon="inline-start"` أو `"inline-end"`. تحتاج أزرار الأيقونة فقط إلى `iconOnly` وإلى `aria-label`.
+
+<Preview compact name="button-icons" title="الأيقونات" />
+
+### كرابط [#as-a-link]
+
+لجعل الرابط يبدو كزر، اعرض عنصر `a` عبر الخاصية `render`:
+
+```tsx title="page.tsx"
+<Button nativeButton={false} render={<a href="/services" />}>
+  الخدمات
+</Button>
+```
+
+## اتجاه RTL [#rtl]
+
+تتبدل جهات الأيقونات والمسافات والحشوات من تلقاء نفسها (خصائص منطقية). أما الأيقونات الاتجاهية كالأسهم فلا تنقلب: أضف `rtl:-scale-x-100`.
+
+<DirectionCompare name="button-variants" title="أنماط Button" />
+
+## إمكانية الوصول [#accessibility]
+
+| المفتاح | الإجراء |
+| --- | --- |
+| <kbd>Tab</kbd> | ينقل التركيز إلى الزر. |
+| <kbd>Enter</kbd> أو <kbd>Space</kbd> | يُفعّله. |
+
+- عنصر `<button type="button">` أصلي: يُعلَن دور `button` واسمه.
+- حلقة التركيز على `:focus-visible` فقط: حد `border-black` بسمك 2px (أبيض في الوضع الداكن وعلى تعبئات العلامة)، وفاصل 1px.
+- تحتاج أزرار الأيقونة فقط إلى `aria-label`؛ والأيقونات مخفية عن قارئات الشاشة.
+- يشير `aria-pressed` إلى زر تبديل مضغوط. ويضبط `loading` القيمتين `aria-busy` و`aria-disabled`؛ والمؤشر الدوّار زخرفي.
+
+## مرجع API [#api-reference]
+
+<ApiReference component="button" />
+
+الدالة `buttonVariants()` مُصدَّرة لتنسيق عناصر أخرى كأزرار.
+
+## الاختلافات عن DGA [#deviations-from-dga]
+
+<ComponentDeviations component="button" />
+
+## التباين [#contrast]
+
+<ComponentContrast component="button" />

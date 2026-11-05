@@ -1,0 +1,67 @@
+---
+title: Avatar
+description: صورة شخص أو أحرفه الأولى أو أيقونة عامة. سبعة أحجام، دائري أو مربع، ومجموعات الصور الرمزية.
+sourceHash: 409d5b702e63
+---
+
+<Preview name="avatar" title="Avatar" />
+
+## التثبيت [#installation]
+
+<ComponentInstall name="avatar" />
+
+## الاستخدام [#usage]
+
+```tsx title="page.tsx"
+import { Avatar, AvatarGroup } from "@/components/ui/avatar";
+
+<Avatar src="/people/noura.jpg" alt="نورة القحطاني" initials="ن ق" />
+
+<AvatarGroup>
+  <Avatar size={32} src="/people/noura.jpg" alt="نورة" />
+  <Avatar size={32} initials="+3" aria-label="3 أشخاص آخرون" />
+</AvatarGroup>
+```
+
+مبني على [Base UI Avatar](https://base-ui.com/react/components/avatar)، الذي يعرض البديل أثناء تحميل الصورة وعند فشلها.
+
+## البنية [#anatomy]
+
+- **Avatar**: الجذر، وفيه الصورة أو البديل.
+- **Image**: الصورة.
+- **Fallback**: الأحرف الأولى، أو أيقونة مستخدم عامة.
+- **AvatarGroup**: صف من الصور الرمزية، متراكبة أو متباعدة.
+
+## أمثلة [#examples]
+
+### الأحجام والشكل [#sizes-and-shape]
+
+الأحجام 24 و32 و40 (الافتراضي) و48 و64 و80 و120px. يستخدم `square` القيمة `radius-md`؛ ويضيف `bordered` حلقة بيضاء.
+
+### المجموعات [#groups]
+
+يُراكب `AvatarGroup` عناصره بمقدار 4px مع حلقة بيضاء (`stacked`، وهو الافتراضي). اضبط `stacked={false}` للتباعد.
+
+## اتجاه RTL [#rtl]
+
+تتراكب المجموعة من جهة البداية، فينقلب اتجاه التراكب في العربية.
+
+<DirectionCompare name="avatar" title="Avatar والمجموعة" />
+
+## إمكانية الوصول [#accessibility]
+
+- أعطِ الصورة `alt` باسم الشخص، إلا إذا كان الاسم ظاهرًا بجوارها (فاستخدم `alt=""`).
+- تُقرأ الأحرف الأولى كنص. وللصورة الرمزية التي تشير إلى الزائد مثل «+3»، أضف `aria-label` مثل «3 أشخاص آخرون».
+- أيقونة البديل مخفية عن قارئات الشاشة.
+
+## مرجع API [#api-reference]
+
+<ApiReference component="avatar" />
+
+## الاختلافات عن DGA [#deviations-from-dga]
+
+<ComponentDeviations component="avatar" />
+
+## التباين [#contrast]
+
+<ComponentContrast component="avatar" />

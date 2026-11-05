@@ -1,4 +1,6 @@
 import { ContrastBadge } from "@/components/foundations/contrast";
+import { getT } from "@/lib/dictionary";
+import type { Locale } from "@/lib/i18n";
 import { tokens } from "@/lib/tokens";
 
 type Check = (typeof tokens.componentAudit)[number];
@@ -20,16 +22,18 @@ export function contrastRows(component: string) {
  * One compact table of every audited state of a component: variant × state, ratio in light
  * and dark, pass or fail. Collapsed by default; the full report is on /docs/contrast.
  */
-export function ComponentContrast({ component }: { component: string }) {
+export function ComponentContrast({
+  component,
+  lang = "en",
+}: {
+  component: string;
+  lang?: Locale;
+}) {
+  const t = getT(lang);
   const checks = tokens.componentAudit.filter((c) => c.component === component);
   const failing = checks.filter((c) => c.ratio < c.min).length;
   if (checks.length === 0) {
-    return (
-      <p>
-        No contrast pairs: this component is decorative. Content that carries meaning must not rely
-        on it (WCAG 1.4.11 applies only to graphics needed to understand the content).
-      </p>
-    );
+    return <p>{t("contrast.decorative")}</p>;
   }
   const rows = contrastRows(component);
   return (
@@ -37,14 +41,14 @@ export function ComponentContrast({ component }: { component: string }) {
       <details className="group rounded-md border border-border-neutral-secondary bg-background-card">
         <summary className="flex min-h-11 cursor-pointer items-center gap-2 px-3 text-sm font-medium text-text-default hover:bg-button-background-neutral-default">
           <span className="min-w-0 flex-1">
-            {checks.length.toLocaleString("en")} pairs checked ·{" "}
-            {failing === 0 ? "all pass WCAG 2.1 AA" : `${failing} failing`}
+            {t("contrast.pairs", { count: checks.length.toLocaleString("en") })} ·{" "}
+            {failing === 0 ? t("contrast.allPass") : t("contrast.failing", { count: failing })}
           </span>
           <span className="text-[0.8125rem] text-text-secondary-paragraph group-open:hidden">
-            Show {rows.length} states
+            {t("contrast.show", { count: rows.length })}
           </span>
           <span className="hidden text-[0.8125rem] text-text-secondary-paragraph group-open:inline">
-            Hide
+            {t("contrast.hide")}
           </span>
         </summary>
         <div className="max-h-[32rem] overflow-auto border-t border-border-neutral-secondary">
@@ -52,13 +56,13 @@ export function ComponentContrast({ component }: { component: string }) {
             <thead className="sticky top-0 bg-background-neutral-100 text-[0.8125rem] text-text-primary-paragraph">
               <tr>
                 <th scope="col" className="px-3 py-2 text-start font-semibold">
-                  Variant / state
+                  {t("contrast.variantState")}
                 </th>
                 <th scope="col" className="px-3 py-2 text-start font-semibold">
-                  Light
+                  {t("contrast.light")}
                 </th>
                 <th scope="col" className="px-3 py-2 text-start font-semibold">
-                  Dark
+                  {t("contrast.dark")}
                 </th>
               </tr>
             </thead>
@@ -69,7 +73,9 @@ export function ComponentContrast({ component }: { component: string }) {
                     scope="row"
                     className="px-3 py-1.5 text-start text-[0.8125rem] font-normal text-text-default"
                   >
-                    {row.state}
+                    <span dir="ltr" className="inline-block">
+                      {row.state}
+                    </span>
                   </th>
                   {(["light", "dark"] as const).map((mode) => {
                     const c = row[mode];
@@ -94,8 +100,8 @@ export function ComponentContrast({ component }: { component: string }) {
         </div>
       </details>
       <p className="mt-2 text-[0.8125rem] text-text-secondary-paragraph">
-        Text needs 4.5:1, icons and focus rings 3:1. Disabled states are exempt.{" "}
-        <a href={`/docs/contrast#${component}`}>Full contrast report</a>
+        {t("contrast.note")}{" "}
+        <a href={`/${lang}/docs/contrast#${component}`}>{t("contrast.report")}</a>
       </p>
     </div>
   );

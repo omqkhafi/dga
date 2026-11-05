@@ -5,6 +5,29 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
 
 ## [Unreleased]
 
+## [0.2.0] - 2026-11-05
+
+The docs are now in Arabic and English. This reverses the earlier English-only decision.
+
+### Added
+
+- **Arabic locale.** The site lives at `/en` and `/ar` (English is the default). A request without a language is sent to the one in `Accept-Language`, or to the one the visitor chose last. The header has an `EN | العربية` switcher that keeps you on the same page; `<html lang dir>` follows the locale; every page has `hreflang` alternates and a per-locale sitemap (`/sitemap/en.xml`, `/sitemap/ar.xml`). Old URLs without a language redirect.
+- **Arabic pages for the whole site:** home, Introduction, Installation, Deviations, all Foundations, Contrast, the changelog page and the nine component pages, written in Modern Standard Arabic. Code, prop names, token names, CLI commands and component names stay in English, and code blocks stay left-to-right with bidi isolation. The API reference has an Arabic description for every prop.
+- **UI strings in both languages** for the whole shell: sidebar groups, table of contents, search, Copy page menu, previous and next, footer, 404, the preview toolbar, code block labels and the theme toggle. The two dictionaries are typed against each other, so a missing key fails the build.
+- **Search per locale.** One index per language; results never cross languages. Arabic text is normalised before matching (diacritics and tatweel removed, alef variants, taa marbuta, yaa and alef maqsura folded, Arabic-Indic digits to Western), and a leading "ال" is ignored in the query, so "الوان" finds "ألوان".
+- **Open Graph images in Arabic.** IBM Plex Sans Arabic is loaded into the OG renderer. The renderer has no bidi support, so Arabic lines are laid out word by word, right to left.
+- **`llms.txt`, `llms-full.txt` and every page as Markdown per locale** (`/ar/llms.txt`, `/ar/docs/components/button.md`); the English ones keep their old URLs.
+- **Translation drift check.** Each Arabic page records the hash of the English source it was translated from (`sourceHash`). `bun run translations:check` fails when an English page changes without its Arabic page, when an Arabic page is missing, or when the two differ in components, headings or code fences; `bun run translations:stamp` records a reviewed translation. CI runs it. If an outdated page is ever published, it shows a "Translation outdated" banner.
+- **Typography > Arabic text** on the Typography page, with the CSS to copy: IBM Plex Sans Arabic, line height 1.8 for body and 1.5 for headings, no letter spacing, and the numerals rule (Western digits in prose and every technical value; Arabic-Indic digits only in sample content that imitates a citizen-facing service; never both in one view). Logged under Typography on the Deviations page.
+- `CONTRIBUTING.md` and a `README.md`.
+
+### Changed
+
+- **Logo.** The header, footer, 404, favicon set, web app manifest icons and Open Graph images now use the DGA logo icon instead of the placeholder star.
+- Every new component phase ships its English and Arabic docs together (see `ROADMAP.md` and `CONTRIBUTING.md`).
+- Lighthouse in CI also runs on the Arabic home page and the Arabic Button page.
+- Header on tablet widths: the GitHub label shows from 1024px, and tab labels never wrap.
+
 ## [0.1.2] - 2026-11-05
 
 A site that reads as a design-systems product, a second pass on the dark theme, and a stricter bidi setup for Arabic in code.

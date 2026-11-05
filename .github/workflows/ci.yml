@@ -27,6 +27,8 @@ jobs:
         run: bun run tokens:check
       - name: API reference is up to date
         run: bun run api:check
+      - name: Translations are in sync
+        run: bun run translations:check
       - name: Registry build
         run: bun run registry:build
       - name: Registry output is committed

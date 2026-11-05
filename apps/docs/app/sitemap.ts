@@ -1,15 +1,52 @@
 import type { MetadataRoute } from "next";
+import { i18n, type Locale, locales } from "@/lib/i18n";
 import { siteUrl } from "@/lib/shared";
 import { source } from "@/lib/source";
 
-export default function sitemap(): MetadataRoute.Sitemap {
+// One sitemap per language (/sitemap/en.xml, /sitemap/ar.xml). Every URL lists its
+// translations as alternates, which is what search engines use for hreflang.
+export function generateSitemaps() {
+  return i18n.languages.map((id) => ({ id }));
+}
+
+const hasOwnPage = (path: string, locale: Locale) => locale === "en" || /\.ar\.mdx$/.test(path);
+
+export default async function sitemap(props: {
+  id: Promise<string>;
+}): Promise<MetadataRoute.Sitemap> {
+  const lang = (await props.id) as Locale;
+  const alternatesFor = (path: string) => ({
+    languages: Object.fromEntries(locales.map((l) => [l, `${siteUrl}/${l}${path}`])),
+  });
   return [
-    { url: siteUrl, changeFrequency: "weekly", priority: 1 },
-    { url: `${siteUrl}/changelog`, changeFrequency: "weekly", priority: 0.6 },
-    ...source.getPages().map((page) => ({
-      url: `${siteUrl}${page.url}`,
-      changeFrequency: "weekly" as const,
-      priority: page.url === "/docs" ? 0.9 : 0.8,
-    })),
+    {
+      url: `${siteUrl}/${lang}`,
+      changeFrequency: "weekly",
+      priority: 1,
+      alternates: alternatesFor(""),
+    },
+    {
+      url: `${siteUrl}/${lang}/changelog`,
+      changeFrequency: "weekly",
+      priority: 0.6,
+      alternates: alternatesFor("/changelog"),
+    },
+    ...source.getPages(lang).map((page) => {
+      const path = page.url.replace(/^\/[a-z]{2}/, "");
+      const languages = Object.fromEntries(
+        locales
+          .filter((l) => {
+            const other = source.getPage(page.slugs, l);
+            return other && hasOwnPage(other.path, l);
+          })
+          .map((l) => [l, `${siteUrl}/${l}${path}`]),
+      );
+      return {
+        url: `${siteUrl}${page.url}`,
+        changeFrequency: "weekly" as const,
+        priority: path === "/docs" ? 0.9 : 0.8,
+        alternates: { languages },
+      };
+    }),
   ];
 }

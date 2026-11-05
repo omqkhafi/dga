@@ -30,6 +30,7 @@ import type * as PageTree from "fumadocs-core/page-tree";
 import NextLink from "next/link";
 import { usePathname } from "next/navigation";
 import type { ReactNode } from "react";
+import { useT } from "@/lib/locale-context";
 import { Badge } from "@/registry/bases/base/ui/badge";
 import { Icon } from "./icon";
 import { SearchButton } from "./search-button";
@@ -90,20 +91,23 @@ export function SidebarNav({
   onNavigate?: () => void;
 }) {
   const pathname = usePathname();
+  const t = useT();
   const groups = groupTree(tree);
   return (
     <div className="flex flex-col">
       <div className="flex items-center gap-2 px-5 pt-4 pb-3">
         <Icon icon={GitBranchIcon} className="text-icon-default-500" />
         <Badge variant={version ? "success" : "neutral"} size="md" rounded>
-          {version ? `v${version}` : "Unreleased"}
+          {version ? `v${version}` : t("release.unreleased")}
         </Badge>
-        <span className="text-[0.8125rem] text-text-secondary-paragraph">Latest release</span>
+        <span className="text-[0.8125rem] text-text-secondary-paragraph">
+          {t("release.latest")}
+        </span>
       </div>
       <div className="px-4 pb-4">
         <SearchButton onOpen={onNavigate} />
       </div>
-      <nav aria-label="Docs" className="flex flex-col gap-6 px-4 pb-8">
+      <nav aria-label={t("nav.docs")} className="flex flex-col gap-6 px-4 pb-8">
         {groups.map((group, i) => (
           <section key={String(group.title ?? i)} className="flex flex-col gap-0.5">
             {group.title ? (
@@ -114,7 +118,7 @@ export function SidebarNav({
             <ul className="flex flex-col gap-0.5">
               {group.items.map((item) => {
                 const active = pathname === item.url;
-                const icon = ICONS[item.url] ?? File01Icon;
+                const icon = ICONS[item.url.replace(/^\/[a-z]{2}(?=\/)/, "")] ?? File01Icon;
                 return (
                   <li key={item.url}>
                     <NextLink

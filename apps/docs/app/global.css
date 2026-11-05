@@ -251,3 +251,43 @@ summary,
   transition-duration: 150ms;
   transition-timing-function: cubic-bezier(0.2, 0, 0, 1);
 }
+
+/* ------------------------------------------------------------------------------------
+ * Arabic typography (any element whose language is Arabic: the /ar pages, and the Arabic
+ * side of the hero card on /en).
+ *
+ *   - IBM Plex Sans Arabic for Arabic and Latin (the same font stack as English).
+ *   - Body line-height 1.8, headings 1.35–1.5: the marks above and below the letters need room
+ *     that Latin line-heights (1.4–1.6) do not give.
+ *   - No letter-spacing at all: it breaks the joins between letters, so every tracking utility
+ *     and every `--track` step is switched off.
+ *   - Numerals: Western digits (0 to 9) in prose and in every technical value (versions,
+ *     ratios, sizes, counts). Citizen-facing sample content, such as the hero card, may use
+ *     Arabic-Indic digits to show the locale. See CONTRIBUTING.md.
+ * ---------------------------------------------------------------------------------- */
+:lang(ar),
+:lang(ar) * {
+  /* biome-ignore lint/complexity/noImportantStyles: no utility may add tracking to Arabic */
+  letter-spacing: 0 !important;
+}
+body:lang(ar) {
+  line-height: 1.8;
+}
+:lang(ar) :where(p, li, dd, dt, td, th, label, summary, figcaption, blockquote, small) {
+  line-height: 1.8;
+}
+:lang(ar) :where(h1, h2, h3, h4) {
+  line-height: 1.5;
+}
+:lang(ar) .t-display {
+  line-height: 1.35;
+}
+:lang(ar) .t-h1,
+:lang(ar) .t-h2,
+:lang(ar) .t-h3 {
+  line-height: 1.5;
+}
+/* Code and command lines stay left to right in every language. */
+:lang(ar) :where(code, kbd, pre) {
+  letter-spacing: 0;
+}

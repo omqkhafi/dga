@@ -3128,6 +3128,13 @@
     "reason": "8–12px body text is hard to read on phones, iOS zooms into inputs under 16px, and the mobile mode made text-lg (14px) smaller than text-md."
   },
   {
+    "area": "Typography",
+    "item": "--typo-line-height-*, --typo-letter-spacing-* in Arabic (lang=\"ar\", dir=\"rtl\")",
+    "original": "Token line heights 1.4 to 1.6 and -2% letter spacing on display sizes, for every language",
+    "ours": "In Arabic: line height 1.8 for body text and 1.5 for headings, letter spacing 0 on every element.",
+    "reason": "The marks above and below Arabic letters need more room than the Latin line heights give, and negative tracking breaks the joins between letters. Latin text keeps the Figma values."
+  },
+  {
     "area": "Tokens",
     "item": "Site CSS vs Figma (39 material conflicts, 87 rounding-only, shadow-sm)",
     "original": "design.dga.gov.sa compiled CSS values",

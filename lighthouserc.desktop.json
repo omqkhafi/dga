@@ -4,7 +4,12 @@
       "startServerCommand": "bun run --filter docs start",
       "startServerReadyPattern": "Ready",
       "startServerReadyTimeout": 60000,
-      "url": ["http://localhost:3000/", "http://localhost:3000/docs/components/button"],
+      "url": [
+        "http://localhost:3000/en",
+        "http://localhost:3000/en/docs/components/button",
+        "http://localhost:3000/ar",
+        "http://localhost:3000/ar/docs/components/button"
+      ],
       "numberOfRuns": 3,
       "settings": { "preset": "desktop", "chromeFlags": "--no-sandbox --headless=new" }
     },

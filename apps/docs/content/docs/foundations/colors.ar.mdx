@@ -1,0 +1,67 @@
+---
+title: الألوان
+description: ألوان DGA الأساسية، والرموز الدلالية للوضعين الفاتح والداكن، ونسب تباينها وفق WCAG.
+sourceHash: 8739a129c0df
+---
+
+تأتي ألوان DGA في طبقتين. **الألوان الأساسية (Primitives)** هي اللوحات الخام (الأخضر السعودي والذهبي والخزامي والمحايد وألوان الحالة). و**الرموز الدلالية** (`--text-primary` و`--background-body` …) تشير إلى الألوان الأساسية وتتبدل بين الفاتح والداكن. استخدم الرموز الدلالية في المكوّنات ليعمل الوضع الداكن من تلقاء نفسه.
+
+<Preview name="service-card" title="الرموز الدلالية في سياقها" />
+
+<Preview name="status-colors" title="ألوان الحالة والتعبئات" />
+
+للوضع الداكن صفحة خاصة: [الوضع الداكن](/docs/foundations/dark-mode) تشرح القواعد وتعرض Button وBadge وTag وLink وأسطح الحالة في الوضعين جنبًا إلى جنب.
+
+## الأدوات (Utilities) [#utilities]
+
+لكل رمز دلالي أداتا Tailwind.
+
+| النوع | القاعدة | مثال |
+| --- | --- | --- |
+| مطابقة لـ Figma | `{utility}-{اسم الرمز}`، مطابقة واحد لواحد لمتغير Figma | `text-text-primary` و`bg-background-body` و`border-border-primary` |
+| اسم مختصر | اسم الرمز دون بادئة فئته | `text-primary` و`bg-body` و`border-primary` |
+
+لا توجد الأسماء المختصرة إلا لرموز `background-*` و`text-*` و`border-*`. ويُتجاوز الاسم المختصر عندما يحجب لونًا أساسيًا (`bg-white` و`bg-neutral-50` تبقى للوحة الخام) أو يغيّر معنى أداة في shadcn (`bg-primary` و`bg-secondary` تبقى لـ shadcn). في هذه الحالات استخدم الصيغة المطابقة لـ Figma.
+
+```tsx title="page.tsx"
+<p className="text-primary-paragraph">…</p>      {/* اسم مختصر */}
+<p className="text-text-primary-paragraph">…</p> {/* مطابق لـ Figma، اللون نفسه */}
+```
+
+## الرموز الدلالية [#semantic-tokens]
+
+تعرض الشارة أدنى نسبة تباين من [الأزواج المفحوصة](/docs/deviations#how-contrast-is-checked) في ذلك الوضع، مثل رمز نص على أسطح الصفحة والأبيض والبطاقة. وفي التعبئات تعرض نص اللون الموضوع فوقها. الرموز الموسومة بـ **معدَّل** تختلف عن Figma؛ انظر [الاختلافات](/docs/deviations).
+
+<SemanticColors initialCategory="Text" />
+
+## الأسماء المختصرة [#short-aliases]
+
+<AliasTable />
+
+## متغيرات shadcn [#shadcn-variables]
+
+تستخدم مكوّنات shadcn `--background` و`--primary` وغيرها. ويربط DGA UI كلًّا منها برمز دلالي من DGA، فتتفق أدوات shadcn وDGA دائمًا.
+
+<ShadcnMapping />
+
+## الألوان الأساسية [#primitives]
+
+تستخدم أدوات اللوحة اسم Figma (`bg-primary-sa-flag-600-primary`) أو اسمًا قصيرًا للون في ألوان العلامة (`bg-sa-flag-600` و`bg-gold-600` و`bg-lavender-500` و`bg-white` و`bg-black`).
+
+### العلامة والمحايد [#brand-and-neutral]
+
+<PrimitivePalettes filter="brand" />
+
+### الحالة [#status]
+
+<PrimitivePalettes filter="status" />
+
+### الشفافية [#alpha]
+
+<PrimitivePalettes filter="alpha" />
+
+### الموسَّع [#extended]
+
+تأتي هذه اللوحات مع CSS الموقع design.dga.gov.sa وليست في Figma. أُبقيت للتوافق.
+
+<PrimitivePalettes filter="extended" />

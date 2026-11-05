@@ -5,6 +5,7 @@ import { ArrowDown01Icon, LeftToRightListBulletIcon } from "@hugeicons/core-free
 import { cn } from "cn";
 import { AnchorProvider, type TableOfContents, TOCItem, useActiveAnchor } from "fumadocs-core/toc";
 import { useState } from "react";
+import { useT } from "@/lib/locale-context";
 import { Icon } from "./icon";
 
 function Items({ toc, onSelect }: { toc: TableOfContents; onSelect?: () => void }) {
@@ -37,16 +38,17 @@ function Items({ toc, onSelect }: { toc: TableOfContents; onSelect?: () => void 
 
 /** "On this page": sticky on xl screens. */
 export function Toc({ toc }: { toc: TableOfContents }) {
+  const t = useT();
   if (toc.length === 0) return null;
   return (
     <AnchorProvider toc={toc}>
       <aside
-        aria-label="On this page"
+        aria-label={t("toc.title")}
         className="sticky top-14 hidden h-[calc(100dvh-3.5rem)] w-56 shrink-0 overflow-y-auto py-10 pe-4 xl:block"
       >
         <p className="mb-3 flex items-center gap-2 text-sm font-medium text-text-default">
           <Icon icon={LeftToRightListBulletIcon} />
-          On this page
+          {t("toc.title")}
         </p>
         <Items toc={toc} />
       </aside>
@@ -56,12 +58,14 @@ export function Toc({ toc }: { toc: TableOfContents }) {
 
 function CurrentSection({ toc }: { toc: TableOfContents }) {
   const active = useActiveAnchor();
-  return <>{toc.find((item) => item.url.slice(1) === active)?.title ?? "On this page"}</>;
+  const t = useT();
+  return <>{toc.find((item) => item.url.slice(1) === active)?.title ?? t("toc.title")}</>;
 }
 
 /** Below xl: a sticky bar under the header that opens the table of contents as a dropdown. */
 export function InlineToc({ toc }: { toc: TableOfContents }) {
   const [open, setOpen] = useState(false);
+  const t = useT();
   if (toc.length === 0) return null;
   return (
     <AnchorProvider toc={toc}>
@@ -77,7 +81,7 @@ export function InlineToc({ toc }: { toc: TableOfContents }) {
           <Popover.Portal>
             <Popover.Positioner sideOffset={0} align="start" className="z-40">
               <Popover.Popup className="max-h-[60dvh] w-(--anchor-width) min-w-64 overflow-y-auto border border-border-neutral-secondary bg-background-menu p-3 outline-none">
-                <Popover.Title className="sr-only">On this page</Popover.Title>
+                <Popover.Title className="sr-only">{t("toc.title")}</Popover.Title>
                 <Items toc={toc} onSelect={() => setOpen(false)} />
               </Popover.Popup>
             </Popover.Positioner>

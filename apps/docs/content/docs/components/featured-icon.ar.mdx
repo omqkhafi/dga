@@ -1,0 +1,64 @@
+---
+title: Featured Icon
+description: أيقونة داخل حاوية مظلَّلة تتصدر البطاقات والحالات الفارغة وصناديق الحوار. خفيفة وصلبة وبحد فقط، وستة ألوان.
+sourceHash: c8557b809b56
+---
+
+<Preview name="featured-icon" title="Featured Icon" />
+
+<Callout title="غير موجود في ملف Figma الخاص بـ DGA">
+  يأتي Featured Icon من CSS موقع design.dga.gov.sa. أُضيفت رموزه من CSS الموقع، وهي مدرجة تحت [الاختلافات](#deviations-from-dga).
+</Callout>
+
+## التثبيت [#installation]
+
+<ComponentInstall name="featured-icon" />
+
+## الاستخدام [#usage]
+
+```tsx title="page.tsx"
+import { CheckmarkCircle02Icon } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
+import { FeaturedIcon } from "@/components/ui/featured-icon";
+
+<FeaturedIcon variant="success">
+  <HugeiconsIcon icon={CheckmarkCircle02Icon} />
+</FeaturedIcon>
+```
+
+تلفت Featured Icon الانتباه إلى بطاقة أو حالة فارغة أو صندوق حوار، وتلمّح إلى معناه باللون.
+
+## البنية [#anatomy]
+
+- **Root**: المربع أو الدائرة المظلَّلة.
+- **Icon**: أي أيقونة من Hugeicons، بحجم يتناسب مع الحاوية (من 16 إلى 28px).
+
+## أمثلة [#examples]
+
+### المظهر واللون [#appearance-and-colour]
+
+`light` تظليل خفيف، و`hard` تعبئة مصمتة، و`outlined` حلقة، بالألوان `brand` و`neutral` و`success` و`error` و`warning` و`info`. الأحجام من `sm` ‏32px إلى `xl` ‏56px؛ ويجعلها `circle` مستديرة.
+
+## اتجاه RTL [#rtl]
+
+ضعها في بداية البطاقة؛ وتحتاج الأيقونات الاتجاهية إلى `rtl:-scale-x-100`.
+
+<DirectionCompare name="featured-icon" title="Featured Icon" />
+
+## إمكانية الوصول [#accessibility]
+
+- زخرفية افتراضيًا (`aria-hidden`)، لأن النص بجوارها يحمل المعنى.
+- إذا كانت الأيقونة وحدها تحمل المعنى، مرّر `role="img"` و`aria-label`.
+- تُفحص الأيقونات بنسبة 3:1 مقابل تعبئتها وسطح الصفحة.
+
+## مرجع API [#api-reference]
+
+<ApiReference component="featured-icon" />
+
+## الاختلافات عن DGA [#deviations-from-dga]
+
+<ComponentDeviations component="featured-icon" />
+
+## التباين [#contrast]
+
+<ComponentContrast component="featured-icon" />

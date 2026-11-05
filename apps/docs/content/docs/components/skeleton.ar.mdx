@@ -1,0 +1,55 @@
+---
+title: Skeleton
+description: عناصر نائبة تظهر أثناء تحميل المحتوى. مستطيل ومربع ودائرة وخط بأحجام Figma.
+sourceHash: 3cb3041d3784
+---
+
+<Preview name="skeleton" title="الأشكال والأحجام" />
+
+## التثبيت [#installation]
+
+<ComponentInstall name="skeleton" />
+
+## الاستخدام [#usage]
+
+```tsx title="page.tsx"
+import { Skeleton } from "@/components/ui/skeleton";
+
+<div aria-busy="true" aria-live="polite">
+  <Skeleton shape="circle" size={48} />
+  <Skeleton shape="line" size="lg" />
+</div>
+```
+
+يعرض Skeleton شكل المحتوى أثناء تحميله، فلا تقفز الصفحة عند وصوله. اضبط العرض عبر `className` (مثل `w-32`).
+
+## أمثلة [#examples]
+
+### التخطيطات [#layouts]
+
+مكوّنات Skeleton الخمسة في Figma، مبنية من العنصر الأساسي. انسخها نقطة بداية.
+
+<Preview compact name="skeleton-layouts" title="تخطيطات Figma" />
+
+## اتجاه RTL [#rtl]
+
+تتبع التخطيطات اتجاه القراءة: تقع الصورة الرمزية في البداية.
+
+<DirectionCompare name="skeleton-layouts" title="تخطيطات Skeleton" />
+
+## إمكانية الوصول [#accessibility]
+
+- عناصر Skeleton مخفية عن قارئات الشاشة. اضبط `aria-busy="true"` على المنطقة التي تُحمَّل، وأزله عند وصول المحتوى.
+- يتوقف النبض عند تفضيل تقليل الحركة.
+
+## مرجع API [#api-reference]
+
+<ApiReference component="skeleton" />
+
+## الاختلافات عن DGA [#deviations-from-dga]
+
+<ComponentDeviations component="skeleton" />
+
+## التباين [#contrast]
+
+<ComponentContrast component="skeleton" />

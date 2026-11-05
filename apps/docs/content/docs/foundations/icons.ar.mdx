@@ -1,0 +1,30 @@
+---
+title: الأيقونات
+description: Hugeicons، مجموعة أيقونات DGA، مع قواعد الانعكاس في اتجاه RTL.
+sourceHash: d7984d8c3e4a
+---
+
+تستخدم DGA مجموعة [Hugeicons](https://hugeicons.com). يثبّت `dga-style` الحزمة `@hugeicons/react` والمجموعة المجانية بنمط الخطوط المستديرة `@hugeicons/core-free-icons`.
+
+<Preview name="icons" title="الأيقونات وانعكاسها في RTL" />
+
+## الاستخدام [#usage]
+
+```tsx title="page.tsx"
+import { HugeiconsIcon } from "@hugeicons/react";
+import { ArrowRight01Icon } from "@hugeicons/core-free-icons";
+
+<HugeiconsIcon icon={ArrowRight01Icon} size={20} className="rtl:-scale-x-100" aria-hidden />
+```
+
+- **الأحجام.** استخدم 16 أو 20 أو 24px داخل عناصر التحكم، بما يطابق أحجام أزرار DGA الصغير sm والمتوسط md والكبير lg.
+- **اللون.** ترث الأيقونات `currentColor`. استخدم رموز الأيقونات (`text-icon-default` و`text-icon-primary` و`text-icon-success` …)، وهي تحقق 3:1 على كل سطح.
+- **التسميات.** الأيقونات التزيينية تأخذ `aria-hidden`. وأزرار الأيقونة وحدها تحتاج إلى `aria-label`.
+
+## الانعكاس في RTL [#mirroring-in-rtl]
+
+اعكس الأيقونات التي تدل على اتجاه أو حركة: الأسهم والأقواس الزاوية و«التالي» و«السابق» وفواصل مسار التنقل. أضف `rtl:-scale-x-100`. ولا تعكس الشعارات ولا علامات الصح ولا أزرار الوسائط (زر التشغيل هو نفسه في العربية) ولا الساعات ولا الأرقام.
+
+## التصفّح [#browse]
+
+<IconBrowser />

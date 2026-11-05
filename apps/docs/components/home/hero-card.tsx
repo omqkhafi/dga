@@ -12,6 +12,7 @@ import { cn } from "cn";
 import { useTheme } from "next-themes";
 import { useEffect, useId, useState } from "react";
 import { Icon } from "@/components/shell/icon";
+import { useLocale, useT } from "@/lib/locale-context";
 import { Button } from "@/registry/bases/base/ui/button";
 import { FeaturedIcon } from "@/registry/bases/base/ui/featured-icon";
 import { Link } from "@/registry/bases/base/ui/link";
@@ -120,20 +121,23 @@ function Toggle<T extends string>({
  */
 export function HeroCard() {
   const { resolvedTheme } = useTheme();
-  const [dir, setDir] = useState<Dir>("ltr");
+  const { dir: pageDir, lang } = useLocale();
+  const t = useT();
+  // The card opens in the page language: Arabic on /ar, English on /en.
+  const [dir, setDir] = useState<Dir>(pageDir);
   const [chosen, setChosen] = useState<Mode | null>(null);
   const [mounted, setMounted] = useState(false);
   useEffect(() => setMounted(true), []);
   const mode: Mode = chosen ?? (mounted && resolvedTheme === "dark" ? "dark" : "light");
   const other: Dir = dir === "ltr" ? "rtl" : "ltr";
-  const t = COPY[dir];
+  const c = COPY[dir];
   const n = COPY[other];
 
   return (
     <div className="flex min-w-0 flex-col gap-4">
       <div className="flex flex-wrap items-center gap-2">
         <Toggle
-          label="Direction"
+          label={t("hero.language")}
           value={dir}
           onChange={setDir}
           options={[
@@ -142,12 +146,12 @@ export function HeroCard() {
           ]}
         />
         <Toggle
-          label="Theme"
+          label={t("hero.theme")}
           value={mode}
           onChange={setChosen}
           options={[
-            { value: "light", label: "Light", icon: Sun03Icon },
-            { value: "dark", label: "Dark", icon: Moon02Icon },
+            { value: "light", label: t("preview.light"), icon: Sun03Icon },
+            { value: "dark", label: t("preview.dark"), icon: Moon02Icon },
           ]}
         />
       </div>
@@ -155,7 +159,7 @@ export function HeroCard() {
       <div
         data-theme={mode}
         dir={dir}
-        lang={t.lang}
+        lang={c.lang}
         className={cn(
           mode === "dark" && "dark",
           "flex flex-col gap-6 rounded-lg border border-border-neutral-secondary bg-background-card p-6 text-text-default",
@@ -164,11 +168,11 @@ export function HeroCard() {
       >
         <header className="flex items-start justify-between gap-4">
           <div className="flex flex-col gap-1">
-            <h2 className="t-h3 text-text-display">{t.title}</h2>
-            <p className="text-sm text-text-primary-paragraph">{t.intro}</p>
+            <h2 className="t-h3 text-text-display">{c.title}</h2>
+            <p className="text-sm text-text-primary-paragraph">{c.intro}</p>
           </div>
           <StatusTag variant="success" size="sm">
-            {t.status}
+            {c.status}
           </StatusTag>
         </header>
 
@@ -177,23 +181,23 @@ export function HeroCard() {
           onSubmit={(e) => e.preventDefault()}
           key={dir}
         >
-          <Field label={t.building} value={t.buildingValue} />
-          <Field label={t.postal} value={t.postalValue} />
-          <Field label={t.district} value={t.districtValue} className="sm:col-span-2" />
+          <Field label={c.building} value={c.buildingValue} />
+          <Field label={c.postal} value={c.postalValue} />
+          <Field label={c.district} value={c.districtValue} className="sm:col-span-2" />
           <div className="flex flex-wrap items-center gap-2 sm:col-span-2">
-            {t.tags.map((tag, i) => (
+            {c.tags.map((tag, i) => (
               <Tag key={tag} variant="neutral" outlined={i === 1} size="sm">
                 {tag}
               </Tag>
             ))}
           </div>
           <div className="flex flex-wrap items-center justify-between gap-3 border-t border-border-neutral-secondary pt-4 sm:col-span-2">
-            <span className="text-[0.8125rem] text-text-secondary-paragraph">{t.reference}</span>
+            <span className="text-[0.8125rem] text-text-secondary-paragraph">{c.reference}</span>
             <div className="flex gap-2">
               <Button variant="outline" type="button">
-                {t.draft}
+                {c.draft}
               </Button>
-              <Button type="submit">{t.submit}</Button>
+              <Button type="submit">{c.submit}</Button>
             </div>
           </div>
         </form>
@@ -215,14 +219,15 @@ export function HeroCard() {
           <p className="text-md font-semibold text-text-display">{n.notice}</p>
           <p className="text-sm text-text-primary-paragraph">{n.noticeBody}</p>
         </div>
-        <Link href="/docs/components/featured-icon" size="sm" className="shrink-0 self-center">
+        <Link
+          href={`/${lang}/docs/components/featured-icon`}
+          size="sm"
+          className="shrink-0 self-center"
+        >
           {n.track}
         </Link>
       </div>
-      <p className="text-[0.8125rem] text-text-secondary-paragraph">
-        Live components: switch language and theme above. The fields are plain markup until the form
-        components ship.
-      </p>
+      <p className="text-[0.8125rem] text-text-secondary-paragraph">{t("hero.note")}</p>
     </div>
   );
 }

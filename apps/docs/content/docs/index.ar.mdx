@@ -1,0 +1,28 @@
+---
+title: مقدمة
+description: ما هو DGA UI، وصلته بنظام التصميم الموحد (DGA)، وما الموجود في السجل اليوم.
+sourceHash: 8d5a92249093
+---
+
+DGA UI هو [سجل shadcn](https://ui.shadcn.com/docs/registry) لـ[نظام التصميم الموحد (DGA)](https://design.dga.gov.sa) (منصات الكود الموحد، Platforms Code). تثبّت المكوّنات عبر سطر أوامر shadcn، فتُنسخ الشيفرة المصدرية إلى مشروعك لتتمكن من تعديلها.
+
+<Preview name="service-card" title="رموز DGA في صفحة خدمة" />
+
+## المبادئ [#principles]
+
+- **Figma هو المرجع.** كل رمز (token) مأخوذ من ملف الأساسيات الخاص بـ DGA في Figma. وعند اختلاف CSS المنشور في الموقع عن Figma، يُعتمد Figma.
+- **صحيح افتراضيًا.** كل زوج لوني في الأساسيات يحقق WCAG 2.1 AA في الوضعين الفاتح والداكن. وحيث تقصّر قيم DGA عن ذلك، نصحّحها ونسجّل التغيير في صفحة [الاختلافات عن DGA](/docs/deviations).
+- **العربية أولًا.** تستخدم التخطيطات الخصائص المنطقية فقط (`ms-*` و`pe-*` و`start-*`)، فيعمل المكوّن الواحد من اليمين إلى اليسار ومن اليسار إلى اليمين.
+- **نمط shadcn الحالي.** المكوّنات مبنية على [Base UI](https://base-ui.com) وتستخدم أصنافًا دلالية ثابتة (`cn-button` و`cn-button-variant-*`). ويربط النمط `dga` هذه الأصناف برموز DGA وقت البناء.
+
+## ما يتضمنه السجل [#whats-included]
+
+| | |
+| --- | --- |
+| `dga-style` | الرموز (الفاتح والداكن والمتجاوب)، وسمة Tailwind v4، وربط متغيرات shadcn، وخط IBM Plex Sans Arabic. |
+| الأساسيات | [الألوان](/docs/foundations/colors) و[الخطوط](/docs/foundations/typography) و[المسافات](/docs/foundations/spacing) و[الزوايا](/docs/foundations/radius) و[الظلال](/docs/foundations/shadows) و[الأيقونات](/docs/foundations/icons). |
+| المكوّنات | [Button](/docs/components/button) و[Link](/docs/components/link) و[Badge](/docs/components/badge) و[Tag وStatus Tag](/docs/components/tag) و[Avatar](/docs/components/avatar) و[Featured Icon](/docs/components/featured-icon) و[Spinner](/docs/components/spinner) و[Skeleton](/docs/components/skeleton) و[Divider](/docs/components/divider). النماذج والنوافذ المنبثقة والتنقل تأتي لاحقًا في [خارطة الطريق](https://github.com/omqkhafi/dga/blob/main/ROADMAP.md). |
+
+## الحالة [#status]
+
+DGA UI مشروع مستقل وليس منتجًا رسميًا لـ DGA. يتبع إرشادات DGA العامة وملفات Figma المنشورة، ويسرد كل موضع يختلف فيه عنها.
