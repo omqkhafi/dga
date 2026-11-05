@@ -300,13 +300,12 @@ async function keyboardChecks() {
     check(await page.getByRole("listbox").isVisible(), `${lang}: Enter opens the select`);
     await page.keyboard.press("ArrowDown");
     await page.keyboard.press("Enter");
-    check(
-      !(await page
-        .getByRole("listbox")
-        .isVisible()
-        .catch(() => false)),
-      `${lang}: Enter chooses and closes`,
-    );
+    const closed = await page
+      .getByRole("listbox")
+      .waitFor({ state: "hidden", timeout: 3000 })
+      .then(() => true)
+      .catch(() => false);
+    check(closed, `${lang}: Enter chooses and closes`);
     await tab("textarea", "the details");
     await page.keyboard.type(t.details);
     await tab("radio", "the radio group");
