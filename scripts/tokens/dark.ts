@@ -11,11 +11,13 @@
 //              takes the place of the cool grey in dark mode.
 //   Roles      bg 950, surface 900, raised 850, border 800, border-strong 700,
 //              text-muted 400, text-secondary 300, text 50.
-//   Colours    Text and icons use step 300 of the colour's own ramp, borders 500, solid fills
-//              keep the light value (the on-colour label is white in both modes, and no
-//              lighter step passes 4.5:1), subtle backgrounds are the 500 step at 9–15%.
+//   Colours    Text and icons use step 300 of the colour's own ramp, strong borders 500, soft
+//              borders 700–800. Every soft background (badge, tag, alert, featured icon) is
+//              the hue's 500 step as a tint with the same OKLab lightness, so all hues read as
+//              one family. Solid button and chip fills keep the light value.
 //   Elevation  No shadows in dark mode. Borders and tints carry elevation (see emit.ts).
 
+import { oklchHex, oklchHue } from "./color";
 import type { Deviation } from "./fixes";
 import type { Primitive, ThemeToken } from "./source";
 
@@ -58,9 +60,12 @@ const REASON = {
     "Figma Dark has the white surface darker than the page and the card two steps lighter. Rebuilt as bg 950, surface 900, raised 850, so each layer is lighter than the one under it.",
   border: "Border roles on the tinted ramp: border 800, border-strong 700, subtle 850.",
   text: "Text roles on the tinted ramp: text 50, primary paragraph 200, secondary 300, muted 400.",
-  tint: "Low-opacity tint of the colour's own 500 step instead of a light fill or a flat grey, so the colour reads as the same family as in light mode.",
+  tint: "Soft tint of the colour's own 500 step (400 for amber and purple) at the opacity that gives every hue the same OKLab lightness over the surface, instead of a solid saturated fill or a 950 step. Reads as the light-mode soft tint, never brown.",
+  strong:
+    "The strongest dark fill: the same tint at a higher opacity, never a solid saturated colour. White label on top.",
+  softBorder: "Hue 700 (outlined) or 800 (soft and alert), subtle on the dark surface.",
   accent:
-    "Step 300 of the colour's own ramp for text and icons on dark surfaces, 500 for borders (same hue as light).",
+    "Step 300 of the colour's own ramp for text and icons on dark surfaces, 500 for strong borders (same hue as light).",
   bug: "Figma Dark keeps a light value (or hardcoded hex) on a dark surface here. Mapped to the tinted ramp.",
   neutral: "Same step on the tinted neutral ramp (green-tinted) instead of the cool-blue grey.",
   button:
@@ -73,10 +78,17 @@ export function darkRules(hex: (primitive: string) => string): Record<string, Ru
   const set = (names: string[], value: string, reason: string) => {
     for (const name of names) r[name] = { value, reason };
   };
-  const tint = (primitive: string, alpha: number) =>
-    `${hex(primitive).slice(0, 7)}${Math.round(alpha * 255)
-      .toString(16)
-      .padStart(2, "0")}`;
+  /**
+   * One rule for every hue: the hue of the colour's own base step at a fixed OKLCH lightness
+   * and chroma (as much as sRGB allows, up to the cap), so all hues are equally strong and
+   * none drifts to brown. Warning uses the amber 400 because yellow-500 is orange.
+   */
+  const tint = (primitive: string, level: { L: number; C: number }) =>
+    oklchHex(level.L, level.C, oklchHue(hex(primitive)));
+  const SUBTLE = { L: 0.24, C: 0.04 }; // surfaces: background-*-25, rings
+  const SURFACE = { L: 0.27, C: 0.06 }; // large surfaces: alerts, background-*-50
+  const SOFT = { L: 0.31, C: 0.085 }; // chips: badges, tags, featured icon (light appearance)
+  const STRONG = { L: 0.4, C: 0.11 }; // "hard" and "inverted": the strongest dark fill
 
   // Surfaces ---------------------------------------------------------------
   set(["background-body", "background-neutral-50"], N(950), REASON.surface);
@@ -141,13 +153,27 @@ export function darkRules(hex: (primitive: string) => string): Record<string, Ru
   for (const s of statuses) {
     const h = STATUS[s];
     set([`text-${s}`, `icon-${s}`, `tag-text-${s}`, `tag-icon-${s}`], ramp(h, 300), REASON.accent);
-    set([`border-${s}`, `tag-border-${s}`], ramp(h, 500), REASON.accent);
-    set([`border-${s}-light`, `tag-border-${s}-light`], ramp(h, 800), REASON.accent);
-    set([`alpha-${s}-10`], tint(`colors-${h}-500`, 0.09), REASON.tint);
-    set([`alpha-${s}-20`], tint(`colors-${h}-500`, 0.15), REASON.tint);
+    set([`border-${s}`], ramp(h, 500), REASON.accent);
+    set([`tag-border-${s}`], ramp(h, 700), REASON.softBorder);
+    set([`border-${s}-light`, `tag-border-${s}-light`], ramp(h, 800), REASON.softBorder);
   }
-  set(["alpha-primary-10"], tint("colors-primary-sa-flag-500", 0.09), REASON.tint);
-  set(["alpha-primary-20"], tint("colors-primary-sa-flag-500", 0.15), REASON.tint);
+  // Soft tint per hue. In this ramp yellow-500 is orange, so warning uses the amber 400.
+  const BASE: Record<string, string> = {
+    success: "colors-green-500",
+    info: "colors-blue-500",
+    warning: "colors-yellow-400",
+    error: "colors-red-500",
+    primary: "colors-primary-sa-flag-500",
+    orange: "colors-orange-500",
+    purple: "colors-tertiary-lavender-400",
+    gold: "colors-secondary-gold-400",
+  };
+  for (const [name, base] of Object.entries(BASE)) {
+    if (["success", "info", "warning", "error", "primary"].includes(name)) {
+      set([`alpha-${name}-10`], tint(base, SUBTLE), REASON.tint);
+      set([`alpha-${name}-20`], tint(base, SURFACE), REASON.tint);
+    }
+  }
   set(
     [
       "background-primary-50",
@@ -160,12 +186,40 @@ export function darkRules(hex: (primitive: string) => string): Record<string, Ru
   );
   set(["background-primary-25", "background-sa-flag-25"], "{alpha-primary-10}", REASON.tint);
   set(["background-primary-200"], sa(900), REASON.tint);
-  set(["background-secondary-25"], tint("colors-secondary-gold-500", 0.1), REASON.tint);
-  set(["background-secondary-50"], tint("colors-secondary-gold-500", 0.18), REASON.tint);
-  set(["background-tertiary-25"], tint("colors-tertiary-lavender-400", 0.1), REASON.tint);
-  set(["background-tertiary-50"], tint("colors-tertiary-lavender-400", 0.18), REASON.tint);
+  set(["background-secondary-25"], tint(BASE.gold as string, SUBTLE), REASON.tint);
+  set(["background-secondary-50"], tint(BASE.gold as string, SURFACE), REASON.tint);
+  set(["background-tertiary-25"], tint(BASE.purple as string, SUBTLE), REASON.tint);
+  set(["background-tertiary-50"], tint(BASE.purple as string, SURFACE), REASON.tint);
   for (const s of statuses) {
     set([`icon-${s}-ring`], `{alpha-${s}-10}`, REASON.tint);
+    set([`tag-background-${s}-light`], tint(BASE[s] as string, SOFT), REASON.tint);
+    set(
+      [`tag-background-${s}`, `featured-icon-${s}-background`],
+      tint(BASE[s] as string, STRONG),
+      REASON.strong,
+    );
+    set([`featured-icon-${s}-background-light`], tint(BASE[s] as string, SOFT), REASON.tint);
+    set([`featured-icon-${s}-border`], ramp(STATUS[s], 800), REASON.softBorder);
+    set([`featured-icon-${s}-icon`], ramp(STATUS[s], 300), REASON.accent);
+  }
+  set(["featured-icon-brand-background-light"], tint(BASE.primary as string, SOFT), REASON.tint);
+  set(["featured-icon-brand-background"], tint(BASE.primary as string, STRONG), REASON.strong);
+  set(["featured-icon-brand-border"], sa(800), REASON.softBorder);
+  set(["featured-icon-brand-icon"], sa(300), REASON.accent);
+  // Badges: success is the brand green, warning the amber, plus orange and purple.
+  const badge: [string, string, (step: number) => string][] = [
+    ["success", "primary", sa],
+    ["error", "error", (n) => ramp("red", n)],
+    ["warning", "warning", (n) => ramp("yellow", n)],
+    ["info", "info", (n) => ramp("blue", n)],
+    ["purple", "purple", (n) => `{colors-tertiary-lavender-${n}}`],
+    ["orange", "orange", (n) => `{colors-orange-${n}}`],
+  ];
+  for (const [name, base, stepOf] of badge) {
+    set([`badge-${name}-background`], tint(BASE[base] as string, SOFT), REASON.tint);
+    set([`badge-${name}-text`], stepOf(300), REASON.accent);
+    set([`badge-${name}-border`], stepOf(800), REASON.softBorder);
+    set([`badge-${name}-border-outlined`], stepOf(700), REASON.softBorder);
   }
 
   // Figma Dark bugs: light values or hardcoded hex on dark surfaces ----------

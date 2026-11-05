@@ -1299,7 +1299,7 @@
     "item": "--text-primary (dark)",
     "original": "--colors-primary-sa-flag-400",
     "ours": "--colors-primary-sa-flag-300",
-    "reason": "Step 300 of the colour's own ramp for text and icons on dark surfaces, 500 for borders (same hue as light).",
+    "reason": "Step 300 of the colour's own ramp for text and icons on dark surfaces, 500 for strong borders (same hue as light).",
     "status": "fixed"
   },
   {
@@ -1387,23 +1387,23 @@
     "item": "--background-primary-50 (dark)",
     "original": "--colors-alpha-alpha-600-primary-10",
     "ours": "--alpha-primary-20",
-    "reason": "Low-opacity tint of the colour's own 500 step instead of a light fill or a flat grey, so the colour reads as the same family as in light mode.",
+    "reason": "Soft tint of the colour's own 500 step (400 for amber and purple) at the opacity that gives every hue the same OKLab lightness over the surface, instead of a solid saturated fill or a 950 step. Reads as the light-mode soft tint, never brown.",
     "status": "fixed"
   },
   {
     "area": "Dark theme",
     "item": "--background-secondary-50 (dark)",
     "original": "--colors-neutral-800",
-    "ours": "#f5bd022e",
-    "reason": "Low-opacity tint of the colour's own 500 step instead of a light fill or a flat grey, so the colour reads as the same family as in light mode.",
+    "ours": "#2f2600",
+    "reason": "Soft tint of the colour's own 500 step (400 for amber and purple) at the opacity that gives every hue the same OKLab lightness over the surface, instead of a solid saturated fill or a 950 step. Reads as the light-mode soft tint, never brown.",
     "status": "fixed"
   },
   {
     "area": "Dark theme",
     "item": "--background-tertiary-50 (dark)",
     "original": "--colors-neutral-800",
-    "ours": "#a57bba2e",
-    "reason": "Low-opacity tint of the colour's own 500 step instead of a light fill or a flat grey, so the colour reads as the same family as in light mode.",
+    "ours": "#311d3b",
+    "reason": "Soft tint of the colour's own 500 step (400 for amber and purple) at the opacity that gives every hue the same OKLab lightness over the surface, instead of a solid saturated fill or a 950 step. Reads as the light-mode soft tint, never brown.",
     "status": "fixed"
   },
   {
@@ -1435,7 +1435,7 @@
     "item": "--text-success (dark)",
     "original": "--colors-green-400",
     "ours": "--colors-green-300",
-    "reason": "Step 300 of the colour's own ramp for text and icons on dark surfaces, 500 for borders (same hue as light).",
+    "reason": "Step 300 of the colour's own ramp for text and icons on dark surfaces, 500 for strong borders (same hue as light).",
     "status": "fixed"
   },
   {
@@ -1443,7 +1443,7 @@
     "item": "--text-info (dark)",
     "original": "--colors-blue-400",
     "ours": "--colors-blue-300",
-    "reason": "Step 300 of the colour's own ramp for text and icons on dark surfaces, 500 for borders (same hue as light).",
+    "reason": "Step 300 of the colour's own ramp for text and icons on dark surfaces, 500 for strong borders (same hue as light).",
     "status": "fixed"
   },
   {
@@ -1451,7 +1451,7 @@
     "item": "--text-warning (dark)",
     "original": "--colors-yellow-400",
     "ours": "--colors-yellow-300",
-    "reason": "Step 300 of the colour's own ramp for text and icons on dark surfaces, 500 for borders (same hue as light).",
+    "reason": "Step 300 of the colour's own ramp for text and icons on dark surfaces, 500 for strong borders (same hue as light).",
     "status": "fixed"
   },
   {
@@ -1459,7 +1459,7 @@
     "item": "--text-error (dark)",
     "original": "--colors-red-400",
     "ours": "--colors-red-300",
-    "reason": "Step 300 of the colour's own ramp for text and icons on dark surfaces, 500 for borders (same hue as light).",
+    "reason": "Step 300 of the colour's own ramp for text and icons on dark surfaces, 500 for strong borders (same hue as light).",
     "status": "fixed"
   },
   {
@@ -1467,7 +1467,7 @@
     "item": "--border-info (dark)",
     "original": "--colors-blue-700",
     "ours": "--colors-blue-500",
-    "reason": "Step 300 of the colour's own ramp for text and icons on dark surfaces, 500 for borders (same hue as light).",
+    "reason": "Step 300 of the colour's own ramp for text and icons on dark surfaces, 500 for strong borders (same hue as light).",
     "status": "fixed"
   },
   {
@@ -1475,7 +1475,7 @@
     "item": "--border-warning (dark)",
     "original": "--colors-yellow-700",
     "ours": "--colors-yellow-500",
-    "reason": "Step 300 of the colour's own ramp for text and icons on dark surfaces, 500 for borders (same hue as light).",
+    "reason": "Step 300 of the colour's own ramp for text and icons on dark surfaces, 500 for strong borders (same hue as light).",
     "status": "fixed"
   },
   {
@@ -1483,7 +1483,7 @@
     "item": "--border-error (dark)",
     "original": "--colors-red-700",
     "ours": "--colors-red-500",
-    "reason": "Step 300 of the colour's own ramp for text and icons on dark surfaces, 500 for borders (same hue as light).",
+    "reason": "Step 300 of the colour's own ramp for text and icons on dark surfaces, 500 for strong borders (same hue as light).",
     "status": "fixed"
   },
   {
@@ -1507,7 +1507,7 @@
     "item": "--border-primary-light (dark)",
     "original": "--colors-green-200",
     "ours": "--colors-primary-sa-flag-800",
-    "reason": "Step 300 of the colour's own ramp for text and icons on dark surfaces, 500 for borders (same hue as light).",
+    "reason": "Step 300 of the colour's own ramp for text and icons on dark surfaces, 500 for strong borders (same hue as light).",
     "status": "fixed"
   },
   {
@@ -1523,7 +1523,7 @@
     "item": "--icon-primary (dark)",
     "original": "--colors-primary-sa-flag-400",
     "ours": "--colors-primary-sa-flag-300",
-    "reason": "Step 300 of the colour's own ramp for text and icons on dark surfaces, 500 for borders (same hue as light).",
+    "reason": "Step 300 of the colour's own ramp for text and icons on dark surfaces, 500 for strong borders (same hue as light).",
     "status": "fixed"
   },
   {
@@ -1627,7 +1627,7 @@
     "item": "--border-primary (dark)",
     "original": "--colors-primary-sa-flag-300",
     "ours": "--colors-primary-sa-flag-400",
-    "reason": "Step 300 of the colour's own ramp for text and icons on dark surfaces, 500 for borders (same hue as light).",
+    "reason": "Step 300 of the colour's own ramp for text and icons on dark surfaces, 500 for strong borders (same hue as light).",
     "status": "fixed"
   },
   {
@@ -1635,7 +1635,7 @@
     "item": "--icon-success (dark)",
     "original": "--colors-green-400",
     "ours": "--colors-green-300",
-    "reason": "Step 300 of the colour's own ramp for text and icons on dark surfaces, 500 for borders (same hue as light).",
+    "reason": "Step 300 of the colour's own ramp for text and icons on dark surfaces, 500 for strong borders (same hue as light).",
     "status": "fixed"
   },
   {
@@ -1643,7 +1643,7 @@
     "item": "--icon-info (dark)",
     "original": "--colors-blue-400",
     "ours": "--colors-blue-300",
-    "reason": "Step 300 of the colour's own ramp for text and icons on dark surfaces, 500 for borders (same hue as light).",
+    "reason": "Step 300 of the colour's own ramp for text and icons on dark surfaces, 500 for strong borders (same hue as light).",
     "status": "fixed"
   },
   {
@@ -1651,7 +1651,7 @@
     "item": "--icon-warning (dark)",
     "original": "--colors-yellow-400",
     "ours": "--colors-yellow-300",
-    "reason": "Step 300 of the colour's own ramp for text and icons on dark surfaces, 500 for borders (same hue as light).",
+    "reason": "Step 300 of the colour's own ramp for text and icons on dark surfaces, 500 for strong borders (same hue as light).",
     "status": "fixed"
   },
   {
@@ -1659,7 +1659,7 @@
     "item": "--icon-error (dark)",
     "original": "--colors-red-400",
     "ours": "--colors-red-300",
-    "reason": "Step 300 of the colour's own ramp for text and icons on dark surfaces, 500 for borders (same hue as light).",
+    "reason": "Step 300 of the colour's own ramp for text and icons on dark surfaces, 500 for strong borders (same hue as light).",
     "status": "fixed"
   },
   {
@@ -1683,7 +1683,7 @@
     "item": "--border-success-light (dark)",
     "original": "--colors-green-200",
     "ours": "--colors-green-800",
-    "reason": "Step 300 of the colour's own ramp for text and icons on dark surfaces, 500 for borders (same hue as light).",
+    "reason": "Hue 700 (outlined) or 800 (soft and alert), subtle on the dark surface.",
     "status": "fixed"
   },
   {
@@ -1691,7 +1691,7 @@
     "item": "--border-info-light (dark)",
     "original": "--colors-blue-200",
     "ours": "--colors-blue-800",
-    "reason": "Step 300 of the colour's own ramp for text and icons on dark surfaces, 500 for borders (same hue as light).",
+    "reason": "Hue 700 (outlined) or 800 (soft and alert), subtle on the dark surface.",
     "status": "fixed"
   },
   {
@@ -1699,7 +1699,7 @@
     "item": "--border-warning-light (dark)",
     "original": "--colors-yellow-200",
     "ours": "--colors-yellow-800",
-    "reason": "Step 300 of the colour's own ramp for text and icons on dark surfaces, 500 for borders (same hue as light).",
+    "reason": "Hue 700 (outlined) or 800 (soft and alert), subtle on the dark surface.",
     "status": "fixed"
   },
   {
@@ -1707,7 +1707,7 @@
     "item": "--border-error-light (dark)",
     "original": "--colors-red-200",
     "ours": "--colors-red-800",
-    "reason": "Step 300 of the colour's own ramp for text and icons on dark surfaces, 500 for borders (same hue as light).",
+    "reason": "Hue 700 (outlined) or 800 (soft and alert), subtle on the dark surface.",
     "status": "fixed"
   },
   {
@@ -1715,7 +1715,7 @@
     "item": "--background-sa-flag-50 (dark)",
     "original": "--colors-neutral-800",
     "ours": "--alpha-primary-20",
-    "reason": "Low-opacity tint of the colour's own 500 step instead of a light fill or a flat grey, so the colour reads as the same family as in light mode.",
+    "reason": "Soft tint of the colour's own 500 step (400 for amber and purple) at the opacity that gives every hue the same OKLab lightness over the surface, instead of a solid saturated fill or a 950 step. Reads as the light-mode soft tint, never brown.",
     "status": "fixed"
   },
   {
@@ -2107,23 +2107,23 @@
     "item": "--background-primary-25 (dark)",
     "original": "--colors-primary-sa-flag-950",
     "ours": "--alpha-primary-10",
-    "reason": "Low-opacity tint of the colour's own 500 step instead of a light fill or a flat grey, so the colour reads as the same family as in light mode.",
+    "reason": "Soft tint of the colour's own 500 step (400 for amber and purple) at the opacity that gives every hue the same OKLab lightness over the surface, instead of a solid saturated fill or a 950 step. Reads as the light-mode soft tint, never brown.",
     "status": "fixed"
   },
   {
     "area": "Dark theme",
     "item": "--background-secondary-25 (dark)",
     "original": "--colors-neutral-900",
-    "ours": "#f5bd021a",
-    "reason": "Low-opacity tint of the colour's own 500 step instead of a light fill or a flat grey, so the colour reads as the same family as in light mode.",
+    "ours": "#251f06",
+    "reason": "Soft tint of the colour's own 500 step (400 for amber and purple) at the opacity that gives every hue the same OKLab lightness over the surface, instead of a solid saturated fill or a 950 step. Reads as the light-mode soft tint, never brown.",
     "status": "fixed"
   },
   {
     "area": "Dark theme",
     "item": "--background-tertiary-25 (dark)",
     "original": "--colors-neutral-900",
-    "ours": "#a57bba1a",
-    "reason": "Low-opacity tint of the colour's own 500 step instead of a light fill or a flat grey, so the colour reads as the same family as in light mode.",
+    "ours": "#26192d",
+    "reason": "Soft tint of the colour's own 500 step (400 for amber and purple) at the opacity that gives every hue the same OKLab lightness over the surface, instead of a solid saturated fill or a 950 step. Reads as the light-mode soft tint, never brown.",
     "status": "fixed"
   },
   {
@@ -2131,7 +2131,7 @@
     "item": "--background-sa-flag-25 (dark)",
     "original": "--colors-neutral-900",
     "ours": "--alpha-primary-10",
-    "reason": "Low-opacity tint of the colour's own 500 step instead of a light fill or a flat grey, so the colour reads as the same family as in light mode.",
+    "reason": "Soft tint of the colour's own 500 step (400 for amber and purple) at the opacity that gives every hue the same OKLab lightness over the surface, instead of a solid saturated fill or a 950 step. Reads as the light-mode soft tint, never brown.",
     "status": "fixed"
   },
   {
@@ -2160,10 +2160,74 @@
   },
   {
     "area": "Dark theme",
+    "item": "--tag-background-success (dark)",
+    "original": "--colors-green-700",
+    "ours": "#005730",
+    "reason": "The strongest dark fill: the same tint at a higher opacity, never a solid saturated colour. White label on top.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--tag-background-success-light (dark)",
+    "original": "--alpha-success-10",
+    "ours": "#003b1f",
+    "reason": "Soft tint of the colour's own 500 step (400 for amber and purple) at the opacity that gives every hue the same OKLab lightness over the surface, instead of a solid saturated fill or a 950 step. Reads as the light-mode soft tint, never brown.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--tag-background-info (dark)",
+    "original": "--colors-blue-600",
+    "ours": "#134881",
+    "reason": "The strongest dark fill: the same tint at a higher opacity, never a solid saturated colour. White label on top.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--tag-background-info-light (dark)",
+    "original": "--alpha-info-10",
+    "ours": "#0b305a",
+    "reason": "Soft tint of the colour's own 500 step (400 for amber and purple) at the opacity that gives every hue the same OKLab lightness over the surface, instead of a solid saturated fill or a 950 step. Reads as the light-mode soft tint, never brown.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--tag-background-warning (dark)",
+    "original": "--colors-yellow-700",
+    "ours": "#624000",
+    "reason": "The strongest dark fill: the same tint at a higher opacity, never a solid saturated colour. White label on top.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--tag-background-warning-light (dark)",
+    "original": "--alpha-warning-10",
+    "ours": "#432b00",
+    "reason": "Soft tint of the colour's own 500 step (400 for amber and purple) at the opacity that gives every hue the same OKLab lightness over the surface, instead of a solid saturated fill or a 950 step. Reads as the light-mode soft tint, never brown.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--tag-background-error (dark)",
+    "original": "--colors-red-600",
+    "ours": "#782b23",
+    "reason": "The strongest dark fill: the same tint at a higher opacity, never a solid saturated colour. White label on top.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--tag-background-error-light (dark)",
+    "original": "--alpha-error-10",
+    "ours": "#531b16",
+    "reason": "Soft tint of the colour's own 500 step (400 for amber and purple) at the opacity that gives every hue the same OKLab lightness over the surface, instead of a solid saturated fill or a 950 step. Reads as the light-mode soft tint, never brown.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
     "item": "--tag-border-success (dark)",
     "original": "--colors-green-300",
-    "ours": "--colors-green-500",
-    "reason": "Step 300 of the colour's own ramp for text and icons on dark surfaces, 500 for borders (same hue as light).",
+    "ours": "--colors-green-700",
+    "reason": "Hue 700 (outlined) or 800 (soft and alert), subtle on the dark surface.",
     "status": "fixed"
   },
   {
@@ -2171,15 +2235,15 @@
     "item": "--tag-border-success-light (dark)",
     "original": "--colors-green-200",
     "ours": "--colors-green-800",
-    "reason": "Step 300 of the colour's own ramp for text and icons on dark surfaces, 500 for borders (same hue as light).",
+    "reason": "Hue 700 (outlined) or 800 (soft and alert), subtle on the dark surface.",
     "status": "fixed"
   },
   {
     "area": "Dark theme",
     "item": "--tag-border-info (dark)",
     "original": "--colors-blue-300",
-    "ours": "--colors-blue-500",
-    "reason": "Step 300 of the colour's own ramp for text and icons on dark surfaces, 500 for borders (same hue as light).",
+    "ours": "--colors-blue-700",
+    "reason": "Hue 700 (outlined) or 800 (soft and alert), subtle on the dark surface.",
     "status": "fixed"
   },
   {
@@ -2187,15 +2251,15 @@
     "item": "--tag-border-info-light (dark)",
     "original": "--colors-blue-200",
     "ours": "--colors-blue-800",
-    "reason": "Step 300 of the colour's own ramp for text and icons on dark surfaces, 500 for borders (same hue as light).",
+    "reason": "Hue 700 (outlined) or 800 (soft and alert), subtle on the dark surface.",
     "status": "fixed"
   },
   {
     "area": "Dark theme",
     "item": "--tag-border-warning (dark)",
     "original": "--colors-yellow-300",
-    "ours": "--colors-yellow-500",
-    "reason": "Step 300 of the colour's own ramp for text and icons on dark surfaces, 500 for borders (same hue as light).",
+    "ours": "--colors-yellow-700",
+    "reason": "Hue 700 (outlined) or 800 (soft and alert), subtle on the dark surface.",
     "status": "fixed"
   },
   {
@@ -2203,15 +2267,15 @@
     "item": "--tag-border-warning-light (dark)",
     "original": "--colors-yellow-200",
     "ours": "--colors-yellow-800",
-    "reason": "Step 300 of the colour's own ramp for text and icons on dark surfaces, 500 for borders (same hue as light).",
+    "reason": "Hue 700 (outlined) or 800 (soft and alert), subtle on the dark surface.",
     "status": "fixed"
   },
   {
     "area": "Dark theme",
     "item": "--tag-border-error (dark)",
     "original": "--colors-red-300",
-    "ours": "--colors-red-500",
-    "reason": "Step 300 of the colour's own ramp for text and icons on dark surfaces, 500 for borders (same hue as light).",
+    "ours": "--colors-red-700",
+    "reason": "Hue 700 (outlined) or 800 (soft and alert), subtle on the dark surface.",
     "status": "fixed"
   },
   {
@@ -2219,7 +2283,7 @@
     "item": "--tag-border-error-light (dark)",
     "original": "--colors-red-200",
     "ours": "--colors-red-800",
-    "reason": "Step 300 of the colour's own ramp for text and icons on dark surfaces, 500 for borders (same hue as light).",
+    "reason": "Hue 700 (outlined) or 800 (soft and alert), subtle on the dark surface.",
     "status": "fixed"
   },
   {
@@ -2243,7 +2307,7 @@
     "item": "--tag-text-success (dark)",
     "original": "--colors-green-400",
     "ours": "--colors-green-300",
-    "reason": "Step 300 of the colour's own ramp for text and icons on dark surfaces, 500 for borders (same hue as light).",
+    "reason": "Step 300 of the colour's own ramp for text and icons on dark surfaces, 500 for strong borders (same hue as light).",
     "status": "fixed"
   },
   {
@@ -2251,7 +2315,7 @@
     "item": "--tag-text-info (dark)",
     "original": "--colors-blue-400",
     "ours": "--colors-blue-300",
-    "reason": "Step 300 of the colour's own ramp for text and icons on dark surfaces, 500 for borders (same hue as light).",
+    "reason": "Step 300 of the colour's own ramp for text and icons on dark surfaces, 500 for strong borders (same hue as light).",
     "status": "fixed"
   },
   {
@@ -2259,7 +2323,7 @@
     "item": "--tag-text-warning (dark)",
     "original": "--colors-yellow-400",
     "ours": "--colors-yellow-300",
-    "reason": "Step 300 of the colour's own ramp for text and icons on dark surfaces, 500 for borders (same hue as light).",
+    "reason": "Step 300 of the colour's own ramp for text and icons on dark surfaces, 500 for strong borders (same hue as light).",
     "status": "fixed"
   },
   {
@@ -2267,7 +2331,7 @@
     "item": "--tag-text-error (dark)",
     "original": "--colors-red-400",
     "ours": "--colors-red-300",
-    "reason": "Step 300 of the colour's own ramp for text and icons on dark surfaces, 500 for borders (same hue as light).",
+    "reason": "Step 300 of the colour's own ramp for text and icons on dark surfaces, 500 for strong borders (same hue as light).",
     "status": "fixed"
   },
   {
@@ -2275,7 +2339,7 @@
     "item": "--tag-icon-success (dark)",
     "original": "--colors-green-400",
     "ours": "--colors-green-300",
-    "reason": "Step 300 of the colour's own ramp for text and icons on dark surfaces, 500 for borders (same hue as light).",
+    "reason": "Step 300 of the colour's own ramp for text and icons on dark surfaces, 500 for strong borders (same hue as light).",
     "status": "fixed"
   },
   {
@@ -2283,7 +2347,7 @@
     "item": "--tag-icon-info (dark)",
     "original": "--colors-blue-400",
     "ours": "--colors-blue-300",
-    "reason": "Step 300 of the colour's own ramp for text and icons on dark surfaces, 500 for borders (same hue as light).",
+    "reason": "Step 300 of the colour's own ramp for text and icons on dark surfaces, 500 for strong borders (same hue as light).",
     "status": "fixed"
   },
   {
@@ -2291,7 +2355,7 @@
     "item": "--tag-icon-warning (dark)",
     "original": "--colors-yellow-400",
     "ours": "--colors-yellow-300",
-    "reason": "Step 300 of the colour's own ramp for text and icons on dark surfaces, 500 for borders (same hue as light).",
+    "reason": "Step 300 of the colour's own ramp for text and icons on dark surfaces, 500 for strong borders (same hue as light).",
     "status": "fixed"
   },
   {
@@ -2299,7 +2363,7 @@
     "item": "--tag-icon-error (dark)",
     "original": "--colors-red-400",
     "ours": "--colors-red-300",
-    "reason": "Step 300 of the colour's own ramp for text and icons on dark surfaces, 500 for borders (same hue as light).",
+    "reason": "Step 300 of the colour's own ramp for text and icons on dark surfaces, 500 for strong borders (same hue as light).",
     "status": "fixed"
   },
   {
@@ -2331,7 +2395,7 @@
     "item": "--text-primary-light (dark)",
     "original": "--colors-primary-sa-flag-400",
     "ours": "--colors-primary-sa-flag-300",
-    "reason": "Step 300 of the colour's own ramp for text and icons on dark surfaces, 500 for borders (same hue as light).",
+    "reason": "Step 300 of the colour's own ramp for text and icons on dark surfaces, 500 for strong borders (same hue as light).",
     "status": "fixed"
   },
   {
@@ -2411,7 +2475,7 @@
     "item": "--background-primary-200 (dark)",
     "original": "--colors-neutral-700",
     "ours": "--colors-primary-sa-flag-900",
-    "reason": "Low-opacity tint of the colour's own 500 step instead of a light fill or a flat grey, so the colour reads as the same family as in light mode.",
+    "reason": "Soft tint of the colour's own 500 step (400 for amber and purple) at the opacity that gives every hue the same OKLab lightness over the surface, instead of a solid saturated fill or a 950 step. Reads as the light-mode soft tint, never brown.",
     "status": "fixed"
   },
   {
@@ -2450,8 +2514,8 @@
     "area": "Dark theme",
     "item": "--alpha-primary-10 (dark)",
     "original": "#166a451a",
-    "ours": "#25935f17",
-    "reason": "Low-opacity tint of the colour's own 500 step instead of a light fill or a flat grey, so the colour reads as the same family as in light mode.",
+    "ours": "#0d2518",
+    "reason": "Soft tint of the colour's own 500 step (400 for amber and purple) at the opacity that gives every hue the same OKLab lightness over the surface, instead of a solid saturated fill or a 950 step. Reads as the light-mode soft tint, never brown.",
     "status": "fixed"
   },
   {
@@ -2474,72 +2538,72 @@
     "area": "Dark theme",
     "item": "--alpha-primary-20 (dark)",
     "original": "#166a4533",
-    "ours": "#25935f26",
-    "reason": "Low-opacity tint of the colour's own 500 step instead of a light fill or a flat grey, so the colour reads as the same family as in light mode.",
+    "ours": "#032f1b",
+    "reason": "Soft tint of the colour's own 500 step (400 for amber and purple) at the opacity that gives every hue the same OKLab lightness over the surface, instead of a solid saturated fill or a 950 step. Reads as the light-mode soft tint, never brown.",
     "status": "fixed"
   },
   {
     "area": "Dark theme",
     "item": "--alpha-warning-10 (dark)",
     "original": "#b547081a",
-    "ours": "#f7900917",
-    "reason": "Low-opacity tint of the colour's own 500 step instead of a light fill or a flat grey, so the colour reads as the same family as in light mode.",
+    "ours": "#2a1c07",
+    "reason": "Soft tint of the colour's own 500 step (400 for amber and purple) at the opacity that gives every hue the same OKLab lightness over the surface, instead of a solid saturated fill or a 950 step. Reads as the light-mode soft tint, never brown.",
     "status": "fixed"
   },
   {
     "area": "Dark theme",
     "item": "--alpha-warning-20 (dark)",
     "original": "#b5470833",
-    "ours": "#f7900926",
-    "reason": "Low-opacity tint of the colour's own 500 step instead of a light fill or a flat grey, so the colour reads as the same family as in light mode.",
+    "ours": "#372200",
+    "reason": "Soft tint of the colour's own 500 step (400 for amber and purple) at the opacity that gives every hue the same OKLab lightness over the surface, instead of a solid saturated fill or a 950 step. Reads as the light-mode soft tint, never brown.",
     "status": "fixed"
   },
   {
     "area": "Dark theme",
     "item": "--alpha-error-10 (dark)",
     "original": "#b423181a",
-    "ours": "#f0443817",
-    "reason": "Low-opacity tint of the colour's own 500 step instead of a light fill or a flat grey, so the colour reads as the same family as in light mode.",
+    "ours": "#301714",
+    "reason": "Soft tint of the colour's own 500 step (400 for amber and purple) at the opacity that gives every hue the same OKLab lightness over the surface, instead of a solid saturated fill or a 950 step. Reads as the light-mode soft tint, never brown.",
     "status": "fixed"
   },
   {
     "area": "Dark theme",
     "item": "--alpha-error-20 (dark)",
     "original": "#b4231833",
-    "ours": "#f0443826",
-    "reason": "Low-opacity tint of the colour's own 500 step instead of a light fill or a flat grey, so the colour reads as the same family as in light mode.",
+    "ours": "#3f1915",
+    "reason": "Soft tint of the colour's own 500 step (400 for amber and purple) at the opacity that gives every hue the same OKLab lightness over the surface, instead of a solid saturated fill or a 950 step. Reads as the light-mode soft tint, never brown.",
     "status": "fixed"
   },
   {
     "area": "Dark theme",
     "item": "--alpha-info-10 (dark)",
     "original": "#175cd31a",
-    "ours": "#2e90fa17",
-    "reason": "Low-opacity tint of the colour's own 500 step instead of a light fill or a flat grey, so the colour reads as the same family as in light mode.",
+    "ours": "#112032",
+    "reason": "Soft tint of the colour's own 500 step (400 for amber and purple) at the opacity that gives every hue the same OKLab lightness over the surface, instead of a solid saturated fill or a 950 step. Reads as the light-mode soft tint, never brown.",
     "status": "fixed"
   },
   {
     "area": "Dark theme",
     "item": "--alpha-info-20 (dark)",
     "original": "#175cd333",
-    "ours": "#2e90fa26",
-    "reason": "Low-opacity tint of the colour's own 500 step instead of a light fill or a flat grey, so the colour reads as the same family as in light mode.",
+    "ours": "#0f2743",
+    "reason": "Soft tint of the colour's own 500 step (400 for amber and purple) at the opacity that gives every hue the same OKLab lightness over the surface, instead of a solid saturated fill or a 950 step. Reads as the light-mode soft tint, never brown.",
     "status": "fixed"
   },
   {
     "area": "Dark theme",
     "item": "--alpha-success-10 (dark)",
     "original": "#0676471a",
-    "ours": "#17b26a17",
-    "reason": "Low-opacity tint of the colour's own 500 step instead of a light fill or a flat grey, so the colour reads as the same family as in light mode.",
+    "ours": "#0e2517",
+    "reason": "Soft tint of the colour's own 500 step (400 for amber and purple) at the opacity that gives every hue the same OKLab lightness over the surface, instead of a solid saturated fill or a 950 step. Reads as the light-mode soft tint, never brown.",
     "status": "fixed"
   },
   {
     "area": "Dark theme",
     "item": "--alpha-success-20 (dark)",
     "original": "#06764733",
-    "ours": "#17b26a26",
-    "reason": "Low-opacity tint of the colour's own 500 step instead of a light fill or a flat grey, so the colour reads as the same family as in light mode.",
+    "ours": "#062f19",
+    "reason": "Soft tint of the colour's own 500 step (400 for amber and purple) at the opacity that gives every hue the same OKLab lightness over the surface, instead of a solid saturated fill or a 950 step. Reads as the light-mode soft tint, never brown.",
     "status": "fixed"
   },
   {
@@ -2579,7 +2643,7 @@
     "item": "--table-background-row-selected-hovered (dark)",
     "original": "--colors-primary-sa-flag-50",
     "ours": "--alpha-primary-20",
-    "reason": "Low-opacity tint of the colour's own 500 step instead of a light fill or a flat grey, so the colour reads as the same family as in light mode.",
+    "reason": "Soft tint of the colour's own 500 step (400 for amber and purple) at the opacity that gives every hue the same OKLab lightness over the surface, instead of a solid saturated fill or a 950 step. Reads as the light-mode soft tint, never brown.",
     "status": "fixed"
   },
   {
@@ -2595,7 +2659,7 @@
     "item": "--table-background-row-select (dark)",
     "original": "--colors-primary-sa-flag-50",
     "ours": "--alpha-primary-20",
-    "reason": "Low-opacity tint of the colour's own 500 step instead of a light fill or a flat grey, so the colour reads as the same family as in light mode.",
+    "reason": "Soft tint of the colour's own 500 step (400 for amber and purple) at the opacity that gives every hue the same OKLab lightness over the surface, instead of a solid saturated fill or a 950 step. Reads as the light-mode soft tint, never brown.",
     "status": "fixed"
   },
   {
@@ -2675,7 +2739,7 @@
     "item": "--text-secondary (dark)",
     "original": "--colors-secondary-gold-600-primary",
     "ours": "--colors-secondary-gold-400",
-    "reason": "Step 300 of the colour's own ramp for text and icons on dark surfaces, 500 for borders (same hue as light).",
+    "reason": "Step 300 of the colour's own ramp for text and icons on dark surfaces, 500 for strong borders (same hue as light).",
     "status": "fixed"
   },
   {
@@ -2683,7 +2747,7 @@
     "item": "--border-secondary (dark)",
     "original": "--colors-secondary-gold-600-primary",
     "ours": "--colors-secondary-gold-500",
-    "reason": "Step 300 of the colour's own ramp for text and icons on dark surfaces, 500 for borders (same hue as light).",
+    "reason": "Step 300 of the colour's own ramp for text and icons on dark surfaces, 500 for strong borders (same hue as light).",
     "status": "fixed"
   },
   {
@@ -2691,7 +2755,7 @@
     "item": "--border-tertiary (dark)",
     "original": "--colors-tertiary-lavender-500-primary",
     "ours": "--colors-tertiary-lavender-400",
-    "reason": "Step 300 of the colour's own ramp for text and icons on dark surfaces, 500 for borders (same hue as light).",
+    "reason": "Step 300 of the colour's own ramp for text and icons on dark surfaces, 500 for strong borders (same hue as light).",
     "status": "fixed"
   },
   {
@@ -2699,7 +2763,7 @@
     "item": "--icon-secondary (dark)",
     "original": "--colors-secondary-gold-600-primary",
     "ours": "--colors-secondary-gold-400",
-    "reason": "Step 300 of the colour's own ramp for text and icons on dark surfaces, 500 for borders (same hue as light).",
+    "reason": "Step 300 of the colour's own ramp for text and icons on dark surfaces, 500 for strong borders (same hue as light).",
     "status": "fixed"
   },
   {
@@ -2707,7 +2771,7 @@
     "item": "--icon-tertiary (dark)",
     "original": "--colors-tertiary-lavender-500-primary",
     "ours": "--colors-tertiary-lavender-300",
-    "reason": "Step 300 of the colour's own ramp for text and icons on dark surfaces, 500 for borders (same hue as light).",
+    "reason": "Step 300 of the colour's own ramp for text and icons on dark surfaces, 500 for strong borders (same hue as light).",
     "status": "fixed"
   },
   {
@@ -2744,6 +2808,166 @@
   },
   {
     "area": "Dark theme",
+    "item": "--badge-success-background (dark)",
+    "original": "--colors-primary-sa-flag-950",
+    "ours": "#003b21",
+    "reason": "Soft tint of the colour's own 500 step (400 for amber and purple) at the opacity that gives every hue the same OKLab lightness over the surface, instead of a solid saturated fill or a 950 step. Reads as the light-mode soft tint, never brown.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--badge-success-text (dark)",
+    "original": "--colors-primary-sa-flag-200",
+    "ours": "--colors-primary-sa-flag-300",
+    "reason": "Step 300 of the colour's own ramp for text and icons on dark surfaces, 500 for strong borders (same hue as light).",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--badge-success-border-outlined (dark)",
+    "original": "--colors-primary-sa-flag-400",
+    "ours": "--colors-primary-sa-flag-700",
+    "reason": "Hue 700 (outlined) or 800 (soft and alert), subtle on the dark surface.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--badge-error-background (dark)",
+    "original": "--colors-red-950",
+    "ours": "#531b16",
+    "reason": "Soft tint of the colour's own 500 step (400 for amber and purple) at the opacity that gives every hue the same OKLab lightness over the surface, instead of a solid saturated fill or a 950 step. Reads as the light-mode soft tint, never brown.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--badge-error-text (dark)",
+    "original": "--colors-red-200",
+    "ours": "--colors-red-300",
+    "reason": "Step 300 of the colour's own ramp for text and icons on dark surfaces, 500 for strong borders (same hue as light).",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--badge-error-border-outlined (dark)",
+    "original": "--colors-red-400",
+    "ours": "--colors-red-700",
+    "reason": "Hue 700 (outlined) or 800 (soft and alert), subtle on the dark surface.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--badge-warning-background (dark)",
+    "original": "--colors-yellow-950",
+    "ours": "#432b00",
+    "reason": "Soft tint of the colour's own 500 step (400 for amber and purple) at the opacity that gives every hue the same OKLab lightness over the surface, instead of a solid saturated fill or a 950 step. Reads as the light-mode soft tint, never brown.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--badge-warning-text (dark)",
+    "original": "--colors-yellow-200",
+    "ours": "--colors-yellow-300",
+    "reason": "Step 300 of the colour's own ramp for text and icons on dark surfaces, 500 for strong borders (same hue as light).",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--badge-warning-border-outlined (dark)",
+    "original": "--colors-yellow-400",
+    "ours": "--colors-yellow-700",
+    "reason": "Hue 700 (outlined) or 800 (soft and alert), subtle on the dark surface.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--badge-info-background (dark)",
+    "original": "--colors-blue-950",
+    "ours": "#0b305a",
+    "reason": "Soft tint of the colour's own 500 step (400 for amber and purple) at the opacity that gives every hue the same OKLab lightness over the surface, instead of a solid saturated fill or a 950 step. Reads as the light-mode soft tint, never brown.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--badge-info-text (dark)",
+    "original": "--colors-blue-200",
+    "ours": "--colors-blue-300",
+    "reason": "Step 300 of the colour's own ramp for text and icons on dark surfaces, 500 for strong borders (same hue as light).",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--badge-info-border-outlined (dark)",
+    "original": "--colors-blue-400",
+    "ours": "--colors-blue-700",
+    "reason": "Hue 700 (outlined) or 800 (soft and alert), subtle on the dark surface.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--badge-purple-background (dark)",
+    "original": "--colors-tertiary-lavender-950",
+    "ours": "#40214e",
+    "reason": "Soft tint of the colour's own 500 step (400 for amber and purple) at the opacity that gives every hue the same OKLab lightness over the surface, instead of a solid saturated fill or a 950 step. Reads as the light-mode soft tint, never brown.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--badge-purple-text (dark)",
+    "original": "--colors-tertiary-lavender-200",
+    "ours": "--colors-tertiary-lavender-300",
+    "reason": "Step 300 of the colour's own ramp for text and icons on dark surfaces, 500 for strong borders (same hue as light).",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--badge-purple-border-outlined (dark)",
+    "original": "--colors-tertiary-lavender-400",
+    "ours": "--colors-tertiary-lavender-700",
+    "reason": "Hue 700 (outlined) or 800 (soft and alert), subtle on the dark surface.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--badge-orange-background (dark)",
+    "original": "--colors-orange-950",
+    "ours": "#521e04",
+    "reason": "Soft tint of the colour's own 500 step (400 for amber and purple) at the opacity that gives every hue the same OKLab lightness over the surface, instead of a solid saturated fill or a 950 step. Reads as the light-mode soft tint, never brown.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--badge-orange-text (dark)",
+    "original": "--colors-orange-200",
+    "ours": "--colors-orange-300",
+    "reason": "Step 300 of the colour's own ramp for text and icons on dark surfaces, 500 for strong borders (same hue as light).",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--badge-orange-border-outlined (dark)",
+    "original": "--colors-orange-400",
+    "ours": "--colors-orange-700",
+    "reason": "Hue 700 (outlined) or 800 (soft and alert), subtle on the dark surface.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--featured-icon-brand-background (dark)",
+    "original": "--colors-primary-sa-flag-600-primary",
+    "ours": "#005633",
+    "reason": "The strongest dark fill: the same tint at a higher opacity, never a solid saturated colour. White label on top.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--featured-icon-brand-background-light (dark)",
+    "original": "--colors-primary-sa-flag-950",
+    "ours": "#003b21",
+    "reason": "Soft tint of the colour's own 500 step (400 for amber and purple) at the opacity that gives every hue the same OKLab lightness over the surface, instead of a solid saturated fill or a 950 step. Reads as the light-mode soft tint, never brown.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
     "item": "--featured-icon-neutral-background (dark)",
     "original": "--colors-neutral-500",
     "ours": "--colors-neutral-dark-500",
@@ -2772,6 +2996,70 @@
     "original": "--colors-neutral-700",
     "ours": "--colors-neutral-dark-700",
     "reason": "Same step on the tinted neutral ramp (green-tinted) instead of the cool-blue grey.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--featured-icon-success-background (dark)",
+    "original": "--colors-green-700",
+    "ours": "#005730",
+    "reason": "The strongest dark fill: the same tint at a higher opacity, never a solid saturated colour. White label on top.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--featured-icon-success-background-light (dark)",
+    "original": "--colors-green-950",
+    "ours": "#003b1f",
+    "reason": "Soft tint of the colour's own 500 step (400 for amber and purple) at the opacity that gives every hue the same OKLab lightness over the surface, instead of a solid saturated fill or a 950 step. Reads as the light-mode soft tint, never brown.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--featured-icon-error-background (dark)",
+    "original": "--colors-red-600",
+    "ours": "#782b23",
+    "reason": "The strongest dark fill: the same tint at a higher opacity, never a solid saturated colour. White label on top.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--featured-icon-error-background-light (dark)",
+    "original": "--colors-red-950",
+    "ours": "#531b16",
+    "reason": "Soft tint of the colour's own 500 step (400 for amber and purple) at the opacity that gives every hue the same OKLab lightness over the surface, instead of a solid saturated fill or a 950 step. Reads as the light-mode soft tint, never brown.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--featured-icon-warning-background (dark)",
+    "original": "--colors-yellow-700",
+    "ours": "#624000",
+    "reason": "The strongest dark fill: the same tint at a higher opacity, never a solid saturated colour. White label on top.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--featured-icon-warning-background-light (dark)",
+    "original": "--colors-yellow-950",
+    "ours": "#432b00",
+    "reason": "Soft tint of the colour's own 500 step (400 for amber and purple) at the opacity that gives every hue the same OKLab lightness over the surface, instead of a solid saturated fill or a 950 step. Reads as the light-mode soft tint, never brown.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--featured-icon-info-background (dark)",
+    "original": "--colors-blue-600",
+    "ours": "#134881",
+    "reason": "The strongest dark fill: the same tint at a higher opacity, never a solid saturated colour. White label on top.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--featured-icon-info-background-light (dark)",
+    "original": "--colors-blue-950",
+    "ours": "#0b305a",
+    "reason": "Soft tint of the colour's own 500 step (400 for amber and purple) at the opacity that gives every hue the same OKLab lightness over the surface, instead of a solid saturated fill or a 950 step. Reads as the light-mode soft tint, never brown.",
     "status": "fixed"
   },
   {
@@ -2806,10 +3094,10 @@
   },
   {
     "area": "Dark theme",
-    "item": "Solid status and brand fills (dark)",
+    "item": "Solid button and status fills (dark)",
     "original": "Same value as light mode",
-    "ours": "Unchanged: primary 600, success 700, info 600, warning 700, error 600",
-    "reason": "The label on these fills is white in both modes. Lighter steps (400–500) drop white text below 4.5:1, so fills keep the light value and only text, icons, borders and subtle backgrounds change. Kept on purpose, not an omission."
+    "ours": "Unchanged for buttons and --background-*: primary 600, success 700, info 600, warning 700, error 600",
+    "reason": "The label on these fills is white in both modes, and a lighter step (400–500) drops white text below 4.5:1 (3.2–3.9:1). Kept on purpose. Badges, tags, status tags, alerts and featured icons do not use these: they get the soft tints logged under Dark theme."
   },
   {
     "area": "Naming",

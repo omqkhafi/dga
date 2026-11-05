@@ -1,9 +1,9 @@
 "use client";
 
 import { ArrowDown01Icon } from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
 import { cn } from "cn";
 import { Fragment, useId, useState } from "react";
+import { Icon } from "@/components/shell/icon";
 import type { ApiProp } from "../../../../scripts/api-types";
 
 /**
@@ -60,10 +60,9 @@ export function PropsTable({ props, caption }: { props: ApiProp[]; caption: stri
                       }}
                       className="group flex min-h-7 items-center gap-1.5 rounded-xs text-start font-mono text-[0.8125rem] font-semibold text-text-default"
                     >
-                      <HugeiconsIcon
+                      <Icon
                         icon={ArrowDown01Icon}
-                        aria-hidden
-                        className="size-4 shrink-0 text-icon-default-500 transition-transform group-aria-expanded:rotate-180"
+                        className=" shrink-0 text-icon-default-500 transition-transform group-aria-expanded:rotate-180"
                       />
                       {prop.name}
                       {prop.required ? (

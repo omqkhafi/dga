@@ -1,10 +1,10 @@
 "use client";
 
 import { Search01Icon } from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
 import { useSearchContext } from "fumadocs-ui/contexts/search";
 import { useEffect, useState } from "react";
 import { Button } from "@/registry/bases/base/ui/button";
+import { Icon } from "./icon";
 
 /** Opens the ⌘K search dialog. */
 export function SearchButton({
@@ -29,7 +29,7 @@ export function SearchButton({
           setOpenSearch(true);
         }}
       >
-        <HugeiconsIcon icon={Search01Icon} />
+        <Icon icon={Search01Icon} />
       </Button>
     );
   }
@@ -42,7 +42,7 @@ export function SearchButton({
         setOpenSearch(true);
       }}
     >
-      <HugeiconsIcon icon={Search01Icon} data-icon="inline-start" />
+      <Icon icon={Search01Icon} data-icon="inline-start" />
       Search
       <kbd className="ms-auto rounded-xs border border-border-neutral-secondary px-1.5 font-sans text-xs font-medium">
         {mac ? "⌘" : "Ctrl "}K

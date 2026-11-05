@@ -1,5 +1,6 @@
 import { RootProvider } from "fumadocs-ui/provider/next";
 import type { Metadata } from "next";
+import { Footer } from "@/components/shell/footer";
 import { Header } from "@/components/shell/header";
 import SearchDialog from "@/components/shell/search-lazy";
 import { latestVersion } from "@/lib/changelog";
@@ -9,11 +10,14 @@ import { source } from "@/lib/source";
 import "../global.css";
 
 const description =
-  "A shadcn registry for the Saudi DGA unified design system (Platforms Code), built on Base UI and Tailwind CSS v4.";
+  "Copy-paste React components for the Saudi DGA unified design system. Base UI primitives, Arabic and English layouts, light and dark, every colour pair checked for WCAG AA.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
-  title: { default: `${appName}: DGA design system for shadcn`, template: `%s | ${appName}` },
+  title: {
+    default: `${appName}: the Saudi government design system as React components`,
+    template: `%s | ${appName}`,
+  },
   description,
   openGraph: {
     type: "website",
@@ -38,6 +42,7 @@ export default function Layout({ children }: LayoutProps<"/">) {
           </a>
           <Header tree={source.getPageTree()} version={latestVersion()} />
           {children}
+          <Footer version={latestVersion()} />
         </RootProvider>
       </body>
     </html>

@@ -1,274 +1,256 @@
-import {
-  ArrowRight02Icon,
-  CheckmarkBadge01Icon,
-  CheckmarkCircle02Icon,
-  InformationCircleIcon,
-  Layers01Icon,
-  Moon02Icon,
-  PaintBoardIcon,
-  TextAlignRightIcon,
-  UniversalAccessIcon,
-} from "@hugeicons/core-free-icons";
-import { HugeiconsIcon, type IconSvgElement } from "@hugeicons/react";
+import { ArrowRight02Icon, GithubIcon } from "@hugeicons/core-free-icons";
+import type { Metadata } from "next";
 import NextLink from "next/link";
 import type { ReactNode } from "react";
+import { Bento } from "@/components/home/bento";
+import { HeroCard } from "@/components/home/hero-card";
+import { Icon } from "@/components/shell/icon";
 import { InstallCommand } from "@/components/shell/install-command";
-import { siteUrl } from "@/lib/shared";
-import { Avatar, AvatarGroup } from "@/registry/bases/base/ui/avatar";
-import { Badge } from "@/registry/bases/base/ui/badge";
+import { latestVersion } from "@/lib/changelog";
+import { githubUrl, siteUrl } from "@/lib/shared";
+import { deviations, tokens } from "@/lib/tokens";
+import registry from "@/public/r/registry.json";
 import { Button } from "@/registry/bases/base/ui/button";
-import { Divider } from "@/registry/bases/base/ui/divider";
-import { FeaturedIcon } from "@/registry/bases/base/ui/featured-icon";
 import { Link } from "@/registry/bases/base/ui/link";
-import { Skeleton } from "@/registry/bases/base/ui/skeleton";
-import { Spinner } from "@/registry/bases/base/ui/spinner";
-import { StatusTag, Tag } from "@/registry/bases/base/ui/tag";
 
-const FEATURES: { icon: IconSvgElement; title: string; body: string }[] = [
-  {
-    icon: Layers01Icon,
-    title: "Built on Base UI",
-    body: "Unstyled, accessible primitives with DGA tokens on top. Copy the source into your project.",
-  },
-  {
-    icon: TextAlignRightIcon,
-    title: "RTL first",
-    body: "Logical properties only, so every component works in Arabic and English without changes.",
-  },
-  {
-    icon: Moon02Icon,
-    title: "Dark mode",
-    body: "A tinted dark theme with the same roles and hierarchy as light. No flash on load.",
-  },
-  {
-    icon: UniversalAccessIcon,
-    title: "AA contrast",
-    body: "Every state of every component is checked in both modes. The build fails on a regression.",
-  },
-  {
-    icon: CheckmarkBadge01Icon,
-    title: "DGA-faithful, with fixes",
-    body: "From the DGA Figma file. Where it fails WCAG or has a typo, we fix it and log it.",
-  },
-];
+export const metadata: Metadata = {
+  title: { absolute: "DGA UI: the Saudi government design system as React components" },
+  description:
+    "Copy-paste React components for the Saudi DGA unified design system. Base UI primitives, Arabic and English layouts, light and dark, every colour pair checked for WCAG AA.",
+  alternates: { canonical: "/" },
+};
 
-/** A live component card. The preview is inert: the whole card is one link to the page. */
-function Card({
-  href,
+const number = new Intl.NumberFormat("en");
+
+function Section({
+  id,
+  eyebrow,
   title,
-  description,
   children,
 }: {
-  href: string;
+  id: string;
+  eyebrow: string;
   title: string;
-  description: string;
   children: ReactNode;
 }) {
   return (
-    <li className="group relative flex flex-col overflow-hidden rounded-md border border-border-neutral-secondary bg-background-card transition-colors hover:border-border-neutral-primary has-[a:active]:bg-background-neutral-50">
-      <div
-        inert
-        aria-hidden
-        className="flex min-h-36 flex-wrap content-center items-center justify-center gap-3 border-b border-border-neutral-secondary bg-background-neutral-50 p-5"
-      >
-        {children}
-      </div>
-      <div className="flex flex-1 flex-col gap-0.5 p-4">
-        <h3 className="text-md font-semibold text-text-default">
-          <NextLink
-            href={href}
-            className="flex items-center gap-1 after:absolute after:inset-0 after:content-['']"
-          >
-            {title}
-            <HugeiconsIcon
-              icon={ArrowRight02Icon}
-              className="size-4 transition-transform group-hover:translate-x-0.5 rtl:-scale-x-100 rtl:group-hover:-translate-x-0.5"
-              aria-hidden
-            />
-          </NextLink>
-        </h3>
-        <p className="text-sm text-text-primary-paragraph">{description}</p>
-      </div>
-    </li>
+    <section aria-labelledby={id} className="mx-auto w-full max-w-6xl px-4 py-24 sm:px-8">
+      <p className="t-eyebrow mb-3 text-text-primary">{eyebrow}</p>
+      <h2 id={id} className="t-h1 mb-16 max-w-2xl text-text-display">
+        {title}
+      </h2>
+      {children}
+    </section>
   );
 }
 
 export default function HomePage() {
+  const components = registry.items.filter((item) => item.type === "registry:ui").length;
+  const version = latestVersion();
+
+  const facts = [
+    {
+      value: String(components),
+      label: "components, each on a Base UI primitive",
+      href: "/docs/components/button",
+      cta: "Browse components",
+    },
+    {
+      value: number.format(tokens.audit.checks),
+      label: "colour pairs checked against WCAG AA, in light and dark",
+      href: "/docs/contrast",
+      cta: "Open the audit",
+    },
+    {
+      value: number.format(deviations.length),
+      label: "changes to the DGA files, each logged with its reason",
+      href: "/docs/deviations",
+      cta: "Read the log",
+    },
+    {
+      value: "RTL + LTR",
+      label: "every component page shows both directions side by side",
+      href: "/docs/components/button#rtl",
+      cta: "See the Button page",
+    },
+  ];
+
   return (
     <main id="main" className="flex flex-1 flex-col">
-      <section className="border-b border-border-neutral-secondary bg-background-white">
-        <div className="mx-auto flex max-w-5xl flex-col items-center gap-6 px-4 py-14 text-center md:py-20">
-          <Badge variant="success" rounded size="lg">
-            منصات الكود الموحد · Platforms Code
-          </Badge>
-          <h1 className="text-display-md font-bold text-text-display md:text-display-xl">DGA UI</h1>
-          <p className="max-w-2xl text-lg text-text-primary-paragraph">
-            The Saudi DGA design system as a shadcn registry. Base UI components, Arabic-first, WCAG
-            AA in light and dark.
-          </p>
-          <div className="w-full max-w-xl">
-            <InstallCommand command={`npx shadcn@latest init ${siteUrl}/r/dga.json`} />
-          </div>
-          <div className="flex flex-wrap items-center justify-center gap-3">
-            <Button size="lg" nativeButton={false} render={<NextLink href="/docs/installation" />}>
-              Get started
-              <HugeiconsIcon
-                icon={ArrowRight02Icon}
-                data-icon="inline-end"
-                className="rtl:-scale-x-100"
-              />
-            </Button>
-            <Button
-              size="lg"
-              variant="outline"
-              nativeButton={false}
-              render={<NextLink href="/docs/components/button" />}
-            >
-              Components
-            </Button>
-          </div>
+      <section className="relative overflow-hidden bg-background-white">
+        {/* The motif, masked to fade out toward the page edges. */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 [mask-image:radial-gradient(ellipse_70%_90%_at_85%_20%,black,transparent_75%)]"
+        >
+          <div className="pattern size-full" />
         </div>
-      </section>
-
-      <section aria-labelledby="components" className="mx-auto w-full max-w-5xl px-4 py-12">
-        <h2 id="components" className="mb-1 text-display-xs font-bold text-text-display">
-          Components
-        </h2>
-        <p className="mb-6 text-text-primary-paragraph">
-          Live, not screenshots. Each one links to its page with RTL, dark mode and API.
-        </p>
-        <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          <Card
-            href="/docs/components/button"
-            title="Button"
-            description="Six styles, three sizes, loading."
-          >
-            <Button>Submit</Button>
-            <Button variant="secondary">Cancel</Button>
-            <Button variant="outline" destructive>
-              Delete
-            </Button>
-          </Card>
-          <Card
-            href="/docs/components/badge"
-            title="Badge"
-            description="A short, non-interactive label."
-          >
-            <Badge variant="success">Approved</Badge>
-            <Badge variant="error">Rejected</Badge>
-            <Badge variant="warning" outlined>
-              Pending
-            </Badge>
-            <Badge variant="purple" rounded>
-              New
-            </Badge>
-          </Card>
-          <Card
-            href="/docs/components/tag"
-            title="Tag"
-            description="Categories, filters and statuses."
-          >
-            <Tag variant="info">Technology</Tag>
-            <Tag variant="neutral" outlined>
-              Riyadh
-            </Tag>
-            <StatusTag variant="success">Completed</StatusTag>
-          </Card>
-          <Card
-            href="/docs/components/link"
-            title="Link"
-            description="Primary, neutral, inline, external."
-          >
-            <Link href="#" tabIndex={-1}>
-              Services
-            </Link>
-            <Link href="#" variant="neutral" tabIndex={-1}>
-              Policies
-            </Link>
-          </Card>
-          <Card
-            href="/docs/components/avatar"
-            title="Avatar"
-            description="Picture, initials or icon, and groups."
-          >
-            <AvatarGroup>
-              <Avatar size={40} src="/avatar-sample.svg" alt="" />
-              <Avatar size={40} initials="NQ" />
-              <Avatar size={40} initials="+4" />
-            </AvatarGroup>
-          </Card>
-          <Card
-            href="/docs/components/featured-icon"
-            title="Featured Icon"
-            description="An icon in a tinted container."
-          >
-            <FeaturedIcon variant="success" size="lg">
-              <HugeiconsIcon icon={CheckmarkCircle02Icon} />
-            </FeaturedIcon>
-            <FeaturedIcon variant="info" appearance="outlined" circle size="lg">
-              <HugeiconsIcon icon={InformationCircleIcon} />
-            </FeaturedIcon>
-            <FeaturedIcon variant="brand" appearance="hard" size="lg">
-              <HugeiconsIcon icon={PaintBoardIcon} />
-            </FeaturedIcon>
-          </Card>
-          <Card
-            href="/docs/components/spinner"
-            title="Spinner"
-            description="Shows that a process is running."
-          >
-            <Spinner size="sm" label={null} />
-            <Spinner size="lg" label={null} />
-            <Spinner size="2xl" variant="neutral" label={null} />
-          </Card>
-          <Card
-            href="/docs/components/skeleton"
-            title="Skeleton"
-            description="Placeholders while content loads."
-          >
-            <div className="flex w-full max-w-60 items-center gap-3">
-              <Skeleton shape="circle" size={48} />
-              <div className="flex flex-1 flex-col gap-2">
-                <Skeleton shape="line" size="lg" className="w-2/3" />
-                <Skeleton shape="line" size="sm" />
+        <div className="relative mx-auto grid w-full max-w-6xl grid-cols-1 gap-16 px-4 py-24 sm:px-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,32rem)] lg:items-start">
+          <div className="flex min-w-0 flex-col gap-8 lg:pt-6">
+            <p className="t-eyebrow text-text-primary">
+              DGA unified design system <span aria-hidden>·</span>{" "}
+              <span lang="ar" dir="rtl">
+                منصات الكود الموحد
+              </span>
+            </p>
+            <h1 className="t-display max-w-xl text-text-display text-[clamp(2.25rem,1.5rem+2.6vw,3.5rem)]">
+              The Saudi government design system, as copy-paste React components
+            </h1>
+            <p className="t-body max-w-lg text-text-primary-paragraph">
+              DGA tokens, Base UI primitives and Arabic-first layouts, installed into your project
+              with the shadcn CLI. You own the code, and every colour pair in it is checked for WCAG
+              AA.
+            </p>
+            <div className="flex max-w-lg flex-col gap-3">
+              <InstallCommand command={`npx shadcn@latest init ${siteUrl}/r/dga.json`} />
+              <div className="flex flex-wrap items-center gap-3">
+                <Button
+                  size="lg"
+                  nativeButton={false}
+                  render={<NextLink href="/docs/installation" />}
+                >
+                  Get started
+                  <Icon
+                    icon={ArrowRight02Icon}
+                    data-icon="inline-end"
+                    className="rtl:-scale-x-100"
+                  />
+                </Button>
+                <Button
+                  size="lg"
+                  variant="outline"
+                  nativeButton={false}
+                  render={<NextLink href="/docs/components/button" />}
+                >
+                  Browse components
+                </Button>
               </div>
             </div>
-          </Card>
-          <Card
-            href="/docs/components/divider"
-            title="Divider"
-            description="Separates content into sections."
-          >
-            <div className="flex w-full max-w-60 flex-col gap-3">
-              <span className="text-sm text-text-default">Personal services</span>
-              <Divider />
-              <span className="text-sm text-text-default">Business services</span>
-            </div>
-          </Card>
-        </ul>
-      </section>
-
-      <section
-        aria-labelledby="why"
-        className="border-t border-border-neutral-secondary bg-background-white"
-      >
-        <div className="mx-auto w-full max-w-5xl px-4 py-12">
-          <h2 id="why" className="sr-only">
-            Why DGA UI
-          </h2>
-          <ul className="grid gap-8 sm:grid-cols-2 lg:grid-cols-5">
-            {FEATURES.map((f) => (
-              <li key={f.title} className="flex flex-col gap-3">
-                <FeaturedIcon size="md">
-                  <HugeiconsIcon icon={f.icon} />
-                </FeaturedIcon>
-                <h3 className="text-md font-semibold text-text-default">{f.title}</h3>
-                <p className="text-sm text-text-primary-paragraph">{f.body}</p>
-              </li>
-            ))}
-          </ul>
+          </div>
+          <HeroCard />
         </div>
       </section>
+
+      <div aria-hidden className="pattern-band" />
+
+      <section
+        aria-label="What is in the repository"
+        className="mx-auto w-full max-w-6xl px-4 py-24 sm:px-8"
+      >
+        <dl className="grid grid-cols-1 gap-x-8 gap-y-12 sm:grid-cols-2 lg:grid-cols-4">
+          {facts.map((fact) => (
+            <div
+              key={fact.label}
+              className="flex flex-col gap-3 border-t-2 border-border-primary pt-4"
+            >
+              <dt className="order-2 text-sm text-text-primary-paragraph">{fact.label}</dt>
+              <dd className="order-1 text-[2.25rem] leading-none font-bold tracking-tight text-text-display tabular-nums">
+                {fact.value}
+              </dd>
+              <dd className="order-3">
+                <Link size="sm" href={fact.href} render={<NextLink href={fact.href} />}>
+                  {fact.cta}
+                </Link>
+              </dd>
+            </div>
+          ))}
+        </dl>
+      </section>
+
+      <div className="bg-background-white">
+        <Section
+          id="showcase"
+          eyebrow="Components"
+          title="Small compositions, built from the parts you install"
+        >
+          <Bento />
+        </Section>
+      </div>
+
+      <Section
+        id="install"
+        eyebrow="Install"
+        title="Three commands, and the source is in your project"
+      >
+        <ol className="grid grid-cols-1 gap-8 lg:grid-cols-3">
+          {[
+            {
+              title: "Create an app",
+              body: "Any React project with Tailwind CSS v4. These steps use Next.js.",
+              command: "npx create-next-app@latest my-app",
+            },
+            {
+              title: "Add the DGA style",
+              body: "Sets the tokens, the font, RTL and the Base UI style in components.json.",
+              command: `npx shadcn@latest init ${siteUrl}/r/dga.json`,
+            },
+            {
+              title: "Add a component",
+              body: "Copies the source into components/ui. Edit it like your own code.",
+              command: "npx shadcn@latest add @dga/button",
+            },
+          ].map((step, i) => (
+            <li key={step.title} className="flex flex-col gap-4">
+              <span className="text-[3rem] leading-none font-bold text-border-neutral-primary tabular-nums">
+                {i + 1}
+              </span>
+              <h3 className="t-h3 text-text-display">{step.title}</h3>
+              <p className="text-sm text-text-primary-paragraph">{step.body}</p>
+              <InstallCommand command={step.command} />
+            </li>
+          ))}
+        </ol>
+      </Section>
+
+      <div className="bg-background-white">
+        <Section id="open" eyebrow="Open source" title="Built in the open">
+          <ul className="grid grid-cols-1 gap-8 md:grid-cols-3">
+            <li className="flex flex-col gap-2">
+              <h3 className="t-h3 text-text-display">Source</h3>
+              <p className="text-sm text-text-primary-paragraph">
+                Components, tokens and the audit scripts are in one repository. Issues and pull
+                requests are open.
+              </p>
+              <Link size="sm" external href={githubUrl} className="mt-2 w-fit">
+                <Icon icon={GithubIcon} />
+                omqkhafi/dga
+              </Link>
+            </li>
+            <li className="flex flex-col gap-2">
+              <h3 className="t-h3 text-text-display">
+                {version ? `Version ${version}` : "Unreleased"}
+              </h3>
+              <p className="text-sm text-text-primary-paragraph">
+                Every release is written down in the changelog before it ships, with what changed
+                and why.
+              </p>
+              <Link
+                size="sm"
+                href="/changelog"
+                render={<NextLink href="/changelog" />}
+                className="mt-2 w-fit"
+              >
+                Read the changelog
+              </Link>
+            </li>
+            <li className="flex flex-col gap-2">
+              <h3 className="t-h3 text-text-display">MIT licence</h3>
+              <p className="text-sm text-text-primary-paragraph">
+                Use it in commercial and government projects. Keep the notice. The DGA brand and
+                logo belong to the Digital Government Authority.
+              </p>
+              <Link
+                size="sm"
+                external
+                href={`${githubUrl}/blob/main/LICENSE`}
+                className="mt-2 w-fit"
+              >
+                Read the licence
+              </Link>
+            </li>
+          </ul>
+        </Section>
+      </div>
     </main>
   );
 }

@@ -4,6 +4,7 @@ import { TypeTable } from "fumadocs-ui/components/type-table";
 import defaultMdxComponents from "fumadocs-ui/mdx";
 import type { MDXComponents } from "mdx/types";
 import { ApiReference } from "./docs/api-reference";
+import { Callout } from "./docs/callout";
 import { ComponentContrast } from "./docs/contrast";
 import { ContrastReport } from "./docs/contrast-report";
 import { ComponentDeviations } from "./docs/deviations";
@@ -58,6 +59,7 @@ export function getMDXComponents(components?: MDXComponents) {
     DarkNeutrals,
     ThemeCompare,
     ApiReference,
+    Callout,
     ContrastReport,
     ComponentInstall,
     ComponentContrast,

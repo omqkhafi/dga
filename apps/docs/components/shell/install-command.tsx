@@ -1,9 +1,9 @@
 "use client";
 
 import { Copy01Icon, Tick02Icon } from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
 import { useState } from "react";
 import { Button } from "@/registry/bases/base/ui/button";
+import { Icon } from "./icon";
 
 export function InstallCommand({ command }: { command: string }) {
   const [copied, setCopied] = useState(false);
@@ -15,7 +15,7 @@ export function InstallCommand({ command }: { command: string }) {
       <span aria-hidden className="font-mono text-sm text-text-secondary-paragraph">
         $
       </span>
-      <code className="min-w-0 flex-1 truncate text-start font-mono text-sm text-text-default">
+      <code className="min-w-0 flex-1 overflow-x-auto whitespace-nowrap text-start font-mono text-sm text-text-default">
         {command}
       </code>
       <Button
@@ -29,7 +29,7 @@ export function InstallCommand({ command }: { command: string }) {
           setTimeout(() => setCopied(false), 2000);
         }}
       >
-        <HugeiconsIcon icon={copied ? Tick02Icon : Copy01Icon} />
+        <Icon icon={copied ? Tick02Icon : Copy01Icon} />
       </Button>
     </div>
   );

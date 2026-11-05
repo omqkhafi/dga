@@ -11,10 +11,11 @@ import {
   TextAlignLeftIcon,
   TextAlignRightIcon,
 } from "@hugeicons/core-free-icons";
-import { HugeiconsIcon, type IconSvgElement } from "@hugeicons/react";
+import type { IconSvgElement } from "@hugeicons/react";
 import { cn } from "cn";
 import { useTheme } from "next-themes";
 import { type ReactNode, useEffect, useLayoutEffect, useRef, useState } from "react";
+import { Icon } from "@/components/shell/icon";
 import {
   type Direction,
   isPreviewMessage,
@@ -64,7 +65,7 @@ function Segmented<T extends string>({
             checked={option.value === value}
             onChange={() => onChange(option.value)}
           />
-          <HugeiconsIcon icon={option.icon} size={14} strokeWidth={1.8} aria-hidden />
+          <Icon icon={option.icon} />
           <span className={iconOnly ? "sr-only" : "hidden sm:inline"}>{option.label}</span>
           {iconOnly ? null : <span className="sr-only sm:hidden">{option.label}</span>}
         </label>
@@ -344,7 +345,7 @@ export function Preview({
               aria-label={`Reset ${label}`}
               title="Reset (replays animations)"
             >
-              <HugeiconsIcon icon={Refresh01Icon} />
+              <Icon icon={Refresh01Icon} />
             </Button>
             <Button
               variant="subtle"
@@ -355,7 +356,7 @@ export function Preview({
               title="Fullscreen (new tab)"
               render={<a href={fullscreenHref} target="_blank" rel="noopener noreferrer" />}
             >
-              <HugeiconsIcon icon={ArrowExpandDiagonal01Icon} />
+              <Icon icon={ArrowExpandDiagonal01Icon} />
             </Button>
           </div>
         </>
@@ -392,7 +393,7 @@ export function Preview({
                 aria-label={`Reset ${label}`}
                 title="Reset (replays animations)"
               >
-                <HugeiconsIcon icon={Refresh01Icon} />
+                <Icon icon={Refresh01Icon} />
               </Button>
               <Button
                 variant="subtle"
@@ -403,7 +404,7 @@ export function Preview({
                 title="Fullscreen (new tab)"
                 render={<a href={fullscreenHref} target="_blank" rel="noopener noreferrer" />}
               >
-                <HugeiconsIcon icon={ArrowExpandDiagonal01Icon} />
+                <Icon icon={ArrowExpandDiagonal01Icon} />
               </Button>
             </div>
           </div>

@@ -2,10 +2,10 @@
 
 import { Popover } from "@base-ui/react/popover";
 import { ArrowDown01Icon, LeftToRightListBulletIcon } from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
 import { cn } from "cn";
 import { AnchorProvider, type TableOfContents, TOCItem, useActiveAnchor } from "fumadocs-core/toc";
 import { useState } from "react";
+import { Icon } from "./icon";
 
 function Items({ toc, onSelect }: { toc: TableOfContents; onSelect?: () => void }) {
   const active = useActiveAnchor();
@@ -42,10 +42,10 @@ export function Toc({ toc }: { toc: TableOfContents }) {
     <AnchorProvider toc={toc}>
       <aside
         aria-label="On this page"
-        className="sticky top-12 hidden h-[calc(100dvh-3rem)] w-56 shrink-0 overflow-y-auto py-10 pe-4 xl:block"
+        className="sticky top-14 hidden h-[calc(100dvh-3.5rem)] w-56 shrink-0 overflow-y-auto py-10 pe-4 xl:block"
       >
         <p className="mb-3 flex items-center gap-2 text-sm font-medium text-text-default">
-          <HugeiconsIcon icon={LeftToRightListBulletIcon} className="size-4" aria-hidden />
+          <Icon icon={LeftToRightListBulletIcon} />
           On this page
         </p>
         <Items toc={toc} />
@@ -65,18 +65,14 @@ export function InlineToc({ toc }: { toc: TableOfContents }) {
   if (toc.length === 0) return null;
   return (
     <AnchorProvider toc={toc}>
-      <div className="sticky top-12 z-30 -mx-4 mb-6 border-b border-border-neutral-secondary bg-background-white sm:-mx-8 lg:-mx-8 xl:hidden">
+      <div className="sticky top-14 z-30 -mx-4 mb-6 border-b border-border-neutral-secondary bg-background-white sm:-mx-8 lg:-mx-8 xl:hidden">
         <Popover.Root open={open} onOpenChange={setOpen}>
           <Popover.Trigger className="flex min-h-11 w-full items-center gap-2 px-4 text-start text-sm font-medium text-text-default hover:bg-button-background-neutral-default active:bg-button-background-neutral-pressed sm:px-8 lg:px-8">
-            <HugeiconsIcon
-              icon={LeftToRightListBulletIcon}
-              className="size-4 shrink-0"
-              aria-hidden
-            />
+            <Icon icon={LeftToRightListBulletIcon} className=" shrink-0" />
             <span className="min-w-0 flex-1 truncate">
               <CurrentSection toc={toc} />
             </span>
-            <HugeiconsIcon icon={ArrowDown01Icon} className="size-4 shrink-0" aria-hidden />
+            <Icon icon={ArrowDown01Icon} className=" shrink-0" />
           </Popover.Trigger>
           <Popover.Portal>
             <Popover.Positioner sideOffset={0} align="start" className="z-40">

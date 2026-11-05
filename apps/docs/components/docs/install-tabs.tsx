@@ -2,8 +2,8 @@
 
 import { Tabs } from "@base-ui/react/tabs";
 import { Copy01Icon, Tick02Icon } from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
 import { type ReactNode, useEffect, useState } from "react";
+import { Icon } from "@/components/shell/icon";
 import { Button } from "@/registry/bases/base/ui/button";
 
 const MANAGERS = ["bun", "npm", "pnpm", "yarn"] as const;
@@ -68,7 +68,7 @@ function CommandLine({ command }: { command: string }) {
           } catch {}
         }}
       >
-        <HugeiconsIcon icon={copied ? Tick02Icon : Copy01Icon} />
+        <Icon icon={copied ? Tick02Icon : Copy01Icon} />
       </Button>
     </div>
   );

@@ -1,9 +1,9 @@
 "use client";
 
 import { Copy01Icon, Tick02Icon } from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
 import { cn } from "cn";
 import { type CSSProperties, type ReactNode, useId, useRef, useState } from "react";
+import { Icon } from "@/components/shell/icon";
 import { Button } from "@/registry/bases/base/ui/button";
 
 /** Lines shown before a block collapses. */
@@ -76,7 +76,7 @@ export function CodeBlock({
           onClick={copy}
           aria-label={copied ? "Copied" : "Copy code"}
         >
-          <HugeiconsIcon icon={copied ? Tick02Icon : Copy01Icon} />
+          <Icon icon={copied ? Tick02Icon : Copy01Icon} />
         </Button>
         <span aria-live="polite" className="sr-only">
           {copied ? "Code copied" : ""}

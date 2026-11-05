@@ -2,12 +2,12 @@
 
 import { Dialog } from "@base-ui/react/dialog";
 import { Cancel01Icon, File01Icon, HashtagIcon } from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
 import type { SharedProps } from "fumadocs-ui/contexts/search";
 import { useRouter } from "next/navigation";
 import { Fragment, useEffect, useMemo, useRef, useState } from "react";
 import type { SearchEntry } from "@/lib/search-index";
 import { Button } from "@/registry/bases/base/ui/button";
+import { Icon } from "./icon";
 
 const MAX_RESULTS = 8;
 const SNIPPET = 120;
@@ -204,7 +204,7 @@ export default function SearchDialog({ open, onOpenChange }: SharedProps) {
               Esc
             </kbd>
             <Dialog.Close render={<Button variant="subtle" iconOnly aria-label="Close search" />}>
-              <HugeiconsIcon icon={Cancel01Icon} />
+              <Icon icon={Cancel01Icon} />
             </Dialog.Close>
           </div>
           <div
@@ -226,7 +226,7 @@ export default function SearchDialog({ open, onOpenChange }: SharedProps) {
                     onClick={() => go(url)}
                     className="flex min-h-10 items-center gap-2 rounded-sm px-2 text-start text-sm text-text-default hover:bg-button-background-neutral-default active:bg-button-background-neutral-pressed"
                   >
-                    <HugeiconsIcon icon={File01Icon} className="size-4" aria-hidden />
+                    <Icon icon={File01Icon} />
                     {name}
                   </button>
                 ))}
@@ -261,10 +261,9 @@ export default function SearchDialog({ open, onOpenChange }: SharedProps) {
                         onClick={() => go(hit.entry.url)}
                         className="flex cursor-pointer gap-2 rounded-sm px-2 py-2 aria-selected:bg-background-primary-50"
                       >
-                        <HugeiconsIcon
+                        <Icon
                           icon={isPage ? File01Icon : HashtagIcon}
-                          className="mt-0.5 size-4 shrink-0 text-icon-default-500"
-                          aria-hidden
+                          className="mt-0.5  shrink-0 text-icon-default-500"
                         />
                         <div className="min-w-0 flex-1">
                           <p className="truncate text-sm font-medium text-text-default">

@@ -5,6 +5,27 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
 
 ## [Unreleased]
 
+## [0.1.2] - 2026-11-05
+
+A site that reads as a design-systems product, a second pass on the dark theme, and a stricter bidi setup for Arabic in code.
+
+### Changed
+
+- **Dark theme, soft tints.** Badge, Tag, Status Tag, Featured Icon and alert surfaces no longer use solid saturated fills in dark mode. Every hue uses one rule: the hue of its own base step (the 400 step for amber and purple) at one fixed OKLCH lightness and chroma, with text and icons at step 300 and borders at 700 to 800. Red reads red, warning and orange stay amber and orange (no brown), purple is a visible tint, and all hues look like one family. The strongest dark fill (`hard` Featured Icon, `inverted` Status Tag) is the same tint at a higher strength, still under a white label. Contrast audit: 2,320 pairs, all passing. Every changed token is listed under **Dark theme** on the Deviations page (now 409 entries); button fills are still unchanged and logged as such.
+- **Arabic in code blocks.** Every code line is its own left-to-right isolate (`dir="ltr"`, `unicode-bidi: isolate`) and the per-token isolation is gone, so an Arabic string split over several tokens keeps its reading order.
+- **Home page rewritten.** A split hero with the headline "The Saudi government design system, as copy-paste React components", the init command, and a live government service card ("Renew national address") that switches between English and Arabic, and light and dark, in place, with the other script shown next to it. Under it: four facts from the repository, each linking to its proof (components, 2,320 contrast pairs, 409 deviations, RTL and LTR), a bento of component compositions, the three install commands, and "Built in the open" with the GitHub repository, the latest version and the licence.
+- **Identity.** A DGA UI mark (an eight-point star with a star at its centre; it is not the DGA logo), the eight-point star lattice as a low-opacity background in the hero and as section dividers in both themes, and the brand green as the only accent in the header, hero and footer.
+- **Type scale.** `display`, `h1`, `h2`, `h3`, `body` and `small`, with tighter tracking on headings and one line-height per step. Tracking is switched off in Arabic and in any RTL subtree, because negative letter-spacing breaks the joins between Arabic letters.
+- **Shell.** A 56px header with the tabs as underlined links, no separators between them, a 2px bar on the inline-start edge of the current sidebar item, 150ms transitions on links, tabs and cards (none under `prefers-reduced-motion`), and one icon style (Hugeicons stroke, 1.5 weight, 18px) in the shell.
+- Docs pages show the version and, when the git history is available, the date of the last change, and component pages have a small preview thumbnail next to the title.
+- All site copy rewritten to be specific and plain.
+
+### Added
+
+- Footer on every page: product, docs and project links, the MIT licence, "not an official DGA product", and a credit to design.dga.gov.sa.
+- A DGA-style 404 page (also for URLs that match no route), the full favicon set (SVG, ICO, Apple touch icon, 192 and 512px) with a web app manifest, and Open Graph images with the pattern and the page title.
+- One `Callout` for notes and warnings in the docs, built from the tokens an Alert component will use. (There is no Alert component yet; it is on the roadmap with Phase 4.)
+
 ## [0.1.1] - 2026-11-04
 
 Docs polish after the 0.1.0 visual audit, and a rebuilt dark theme.
@@ -90,6 +111,7 @@ Docs polish after the 0.1.0 visual audit, and a rebuilt dark theme.
 - Body text sizes no longer shrink on mobile; display sizes follow the Figma modes.
 - Dropped the legacy site-CSS radius set; `rounded-2xl` and above clamp to `radius-xl`. Dropped italic weight tokens (IBM Plex Sans Arabic has no italic).
 
-[Unreleased]: https://github.com/omqkhafi/dga/compare/v0.1.1...HEAD
+[Unreleased]: https://github.com/omqkhafi/dga/compare/v0.1.2...HEAD
+[0.1.2]: https://github.com/omqkhafi/dga/compare/v0.1.1...v0.1.2
 [0.1.1]: https://github.com/omqkhafi/dga/compare/v0.1.0...v0.1.1
 [0.1.0]: https://github.com/omqkhafi/dga/releases/tag/v0.1.0

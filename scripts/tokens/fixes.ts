@@ -378,11 +378,11 @@ export const OTHER_DEVIATIONS: Deviation[] = [
   },
   {
     area: "Dark theme",
-    item: "Solid status and brand fills (dark)",
+    item: "Solid button and status fills (dark)",
     original: "Same value as light mode",
-    ours: "Unchanged: primary 600, success 700, info 600, warning 700, error 600",
+    ours: "Unchanged for buttons and --background-*: primary 600, success 700, info 600, warning 700, error 600",
     reason:
-      "The label on these fills is white in both modes. Lighter steps (400–500) drop white text below 4.5:1, so fills keep the light value and only text, icons, borders and subtle backgrounds change. Kept on purpose, not an omission.",
+      "The label on these fills is white in both modes, and a lighter step (400–500) drops white text below 4.5:1 (3.2–3.9:1). Kept on purpose. Badges, tags, status tags, alerts and featured icons do not use these: they get the soft tints logged under Dark theme.",
   },
   {
     area: "Naming",

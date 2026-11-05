@@ -2,13 +2,13 @@
 
 import { Dialog } from "@base-ui/react/dialog";
 import { Cancel01Icon, Menu01Icon } from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
 import type * as PageTree from "fumadocs-core/page-tree";
 import NextLink from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { Button } from "@/registry/bases/base/ui/button";
 import { Divider } from "@/registry/bases/base/ui/divider";
+import { Icon } from "./icon";
 import { SidebarNav } from "./sidebar";
 import { TABS } from "./tabs";
 
@@ -21,7 +21,7 @@ export function MobileNav({ tree, version }: { tree: PageTree.Root; version: str
       <Dialog.Trigger
         render={<Button variant="subtle" iconOnly aria-label="Open menu" className="md:hidden" />}
       >
-        <HugeiconsIcon icon={Menu01Icon} />
+        <Icon icon={Menu01Icon} />
       </Dialog.Trigger>
       <Dialog.Portal>
         <Dialog.Backdrop className="fixed inset-0 z-50 bg-alpha-black-50 transition-opacity data-ending-style:opacity-0 data-starting-style:opacity-0" />
@@ -33,7 +33,7 @@ export function MobileNav({ tree, version }: { tree: PageTree.Root; version: str
           <div className="flex h-12 shrink-0 items-center justify-between px-3">
             <Dialog.Title className="text-md font-semibold text-text-default">Menu</Dialog.Title>
             <Dialog.Close render={<Button variant="subtle" iconOnly aria-label="Close menu" />}>
-              <HugeiconsIcon icon={Cancel01Icon} />
+              <Icon icon={Cancel01Icon} />
             </Dialog.Close>
           </div>
           <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain pb-[env(safe-area-inset-bottom)]">

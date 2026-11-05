@@ -10,10 +10,10 @@ import {
   SparklesIcon,
   Tick02Icon,
 } from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
 import { useState } from "react";
 import { siteUrl } from "@/lib/shared";
 import { Button } from "@/registry/bases/base/ui/button";
+import { Icon } from "./icon";
 
 const item =
   "flex min-h-10 cursor-pointer items-center gap-2 rounded-sm px-2 text-sm text-text-default outline-none data-highlighted:bg-button-background-neutral-default data-highlighted:outline-2 data-highlighted:-outline-offset-2 data-highlighted:outline-border-black";
@@ -47,10 +47,7 @@ export function CopyPage({ markdownUrl }: { markdownUrl: string }) {
         onClick={copy}
         className="rounded-e-none"
       >
-        <HugeiconsIcon
-          icon={state === "copied" ? Tick02Icon : Copy01Icon}
-          data-icon="inline-start"
-        />
+        <Icon icon={state === "copied" ? Tick02Icon : Copy01Icon} data-icon="inline-start" />
         {state === "copied" ? "Copied" : "Copy page"}
       </Button>
       <Menu.Root>
@@ -65,17 +62,17 @@ export function CopyPage({ markdownUrl }: { markdownUrl: string }) {
             />
           }
         >
-          <HugeiconsIcon icon={ArrowDown01Icon} />
+          <Icon icon={ArrowDown01Icon} />
         </Menu.Trigger>
         <Menu.Portal>
           <Menu.Positioner align="end" sideOffset={4} className="z-50">
             <Menu.Popup className="w-60 rounded-md border border-border-neutral-primary bg-background-menu p-1 shadow-lg outline-none">
               <Menu.Item className={item} onClick={copy}>
-                <HugeiconsIcon icon={Copy01Icon} className="size-4" aria-hidden />
+                <Icon icon={Copy01Icon} />
                 Copy page as Markdown
               </Menu.Item>
               <Menu.LinkItem className={item} href={markdownUrl}>
-                <HugeiconsIcon icon={File01Icon} className="size-4" aria-hidden />
+                <Icon icon={File01Icon} />
                 View as Markdown
               </Menu.LinkItem>
               <Menu.LinkItem
@@ -84,13 +81,9 @@ export function CopyPage({ markdownUrl }: { markdownUrl: string }) {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <HugeiconsIcon icon={ChatGptIcon} className="size-4" aria-hidden />
+                <Icon icon={ChatGptIcon} />
                 Open in ChatGPT
-                <HugeiconsIcon
-                  icon={ArrowUpRight01Icon}
-                  className="ms-auto size-4 rtl:-scale-x-100"
-                  aria-hidden
-                />
+                <Icon icon={ArrowUpRight01Icon} className="ms-auto  rtl:-scale-x-100" />
                 <span className="sr-only">(opens in a new tab)</span>
               </Menu.LinkItem>
               <Menu.LinkItem
@@ -99,13 +92,9 @@ export function CopyPage({ markdownUrl }: { markdownUrl: string }) {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <HugeiconsIcon icon={SparklesIcon} className="size-4" aria-hidden />
+                <Icon icon={SparklesIcon} />
                 Open in Claude
-                <HugeiconsIcon
-                  icon={ArrowUpRight01Icon}
-                  className="ms-auto size-4 rtl:-scale-x-100"
-                  aria-hidden
-                />
+                <Icon icon={ArrowUpRight01Icon} className="ms-auto  rtl:-scale-x-100" />
                 <span className="sr-only">(opens in a new tab)</span>
               </Menu.LinkItem>
             </Menu.Popup>

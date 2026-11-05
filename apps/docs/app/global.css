@@ -12,6 +12,88 @@
 /* Type sizes rendered from generated data in the typography preview. */
 @source inline("text-display-{2xl,xl,lg,md,sm,xs} text-{xl,lg,md,sm,xs,2xs}");
 
+/* ------------------------------------------------------------------------------------
+ * Type scale. IBM Plex Sans Arabic for both scripts. Sizes are 4px-based (rem), headings
+ * get tighter tracking, and every step has its own line-height.
+ *
+ *   display  40 → 64px   700   -3.5%   1.04
+ *   h1       36px        700   -3%     1.15
+ *   h2       24px        600   -2%     1.25
+ *   h3       18px        600   -1%     1.4
+ *   body     16px        400    0      1.6
+ *   small    14px        400    0      1.5
+ *
+ * Tracking is removed in Arabic (and in any RTL subtree): negative letter-spacing breaks the
+ * joins between Arabic letters.
+ * ---------------------------------------------------------------------------------- */
+:root {
+  --track: 1;
+}
+:is([dir="rtl"], :lang(ar)) {
+  --track: 0;
+}
+@utility t-display {
+  font-size: clamp(2.5rem, 1.7rem + 3vw, 4rem);
+  line-height: 1.04;
+  letter-spacing: calc(-0.035em * var(--track));
+  font-weight: 700;
+}
+@utility t-h1 {
+  font-size: 2.25rem;
+  line-height: 1.15;
+  letter-spacing: calc(-0.03em * var(--track));
+  font-weight: 700;
+}
+@utility t-h2 {
+  font-size: 1.5rem;
+  line-height: 1.25;
+  letter-spacing: calc(-0.02em * var(--track));
+  font-weight: 600;
+}
+@utility t-h3 {
+  font-size: 1.125rem;
+  line-height: 1.4;
+  letter-spacing: calc(-0.01em * var(--track));
+  font-weight: 600;
+}
+@utility t-body {
+  font-size: 1rem;
+  line-height: 1.6;
+}
+@utility t-small {
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+@utility t-eyebrow {
+  font-size: 0.8125rem;
+  line-height: 1.25rem;
+  font-weight: 600;
+  letter-spacing: calc(0.04em * var(--track));
+  text-transform: uppercase;
+}
+
+/* The DGA geometric motif: an eight-point star lattice, drawn as an image (public/pattern-*.svg)
+   in the brand green, with the opacity built into the strokes. Two files, for light and dark.
+   Keep it behind a fade (see the hero). It is an image, not a tint, so contrast tools read the
+   text on the real background. */
+@utility pattern {
+  background-image: url("/pattern-light.svg");
+  background-size: 64px 64px;
+}
+:where(.dark, [data-theme="dark"]) .pattern {
+  background-image: url("/pattern-dark.svg");
+}
+/* One row of the motif as a section divider. */
+@utility pattern-band {
+  background-image: url("/pattern-light.svg");
+  background-size: 16px 16px;
+  background-repeat: repeat-x;
+  height: 16px;
+}
+:where(.dark, [data-theme="dark"]) .pattern-band {
+  background-image: url("/pattern-dark.svg");
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
@@ -19,7 +101,7 @@
   html {
     font-family: var(--font-family-text);
     font-size: 100%; /* 16px base */
-    scroll-padding-top: 6.5rem; /* sticky header + mobile TOC bar */
+    scroll-padding-top: 7rem; /* sticky header + mobile TOC bar */
   }
   @media (min-width: 48rem) {
     html {
@@ -86,22 +168,20 @@
 .dga-code-body {
   font-family: var(--font-mono, ui-monospace, SFMono-Regular, Menlo, monospace);
   font-size: 0.8125rem;
+  direction: ltr;
   unicode-bidi: isolate;
 }
 .dga-code-body code {
   counter-reset: line;
-  unicode-bidi: isolate;
 }
 .dga-code-body .line {
   display: block;
   min-height: 1.5rem;
   line-height: 1.5rem;
   padding-inline: 1rem;
+  direction: ltr;
   unicode-bidi: isolate;
   white-space: pre;
-}
-.dga-code-body .line > span {
-  unicode-bidi: isolate;
 }
 .dga-code[data-lines="multi"] .dga-code-body .line::before {
   counter-increment: line;
@@ -130,12 +210,27 @@
   border-radius: var(--radius-xs);
 }
 
-/* Tighter vertical rhythm for long reference pages. */
+/* Vertical rhythm on a 4/8 grid, and the type scale on headings. */
+.prose h1:not(:where(.not-prose *)),
+.prose h2:not(:where(.not-prose *)),
+.prose h3:not(:where(.not-prose *)) {
+  color: var(--text-display);
+}
 .prose h2:not(:where(.not-prose *)) {
-  margin-top: 1.75rem;
+  margin-top: 2.5rem;
+  margin-bottom: 0.75rem;
+  font-size: 1.5rem;
+  line-height: 1.25;
+  letter-spacing: calc(-0.02em * var(--track));
+  font-weight: 600;
 }
 .prose h3:not(:where(.not-prose *)) {
-  margin-top: 1.25rem;
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+  font-size: 1.125rem;
+  line-height: 1.4;
+  letter-spacing: calc(-0.01em * var(--track));
+  font-weight: 600;
 }
 .prose :where(p, ul, ol):not(:where(.not-prose, .not-prose *)) {
   margin-block: 0.625rem;
@@ -145,4 +240,14 @@
 }
 .prose table:not(:where(.not-prose *)) {
   font-size: 0.875rem;
+}
+
+/* Links and controls in the shell: one transition for everything, 150ms. */
+a,
+button,
+summary,
+[role="tab"] {
+  transition-property: color, background-color, border-color, box-shadow, opacity, transform;
+  transition-duration: 150ms;
+  transition-timing-function: cubic-bezier(0.2, 0, 0, 1);
 }

@@ -11,6 +11,11 @@ export default defineConfig({
           pre(node) {
             node.properties["data-language"] = this.options.lang;
           },
+          // Every line is its own left-to-right isolate: Arabic strings keep their reading
+          // order and the surrounding code stays in source order.
+          line(node) {
+            node.properties.dir = "ltr";
+          },
         },
       ],
     },
