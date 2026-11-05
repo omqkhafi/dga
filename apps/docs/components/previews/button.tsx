@@ -11,7 +11,7 @@ import {
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useState } from "react";
 import { Button, type ButtonProps } from "@/registry/bases/base/ui/button";
-import { Bi } from "./bi";
+import { Bi, useBi } from "./bi";
 import { OnColorSurface, Row, Stack } from "./kit";
 
 type Variant = NonNullable<ButtonProps["variant"]>;
@@ -77,6 +77,7 @@ export function ButtonDestructive() {
 }
 
 export function ButtonSizes() {
+  const t = useBi();
   return (
     <Stack>
       {(["sm", "md", "lg"] as const).map((size) => (
@@ -89,7 +90,7 @@ export function ButtonSizes() {
             <Bi en="Continue" ar="متابعة" />
             <Arrow />
           </Button>
-          <Button size={size} variant="secondary" iconOnly aria-label="Settings">
+          <Button size={size} variant="secondary" iconOnly aria-label={t("Settings", "الإعدادات")}>
             <HugeiconsIcon icon={Settings02Icon} />
           </Button>
         </Row>
@@ -99,9 +100,10 @@ export function ButtonSizes() {
 }
 
 export function ButtonIcons() {
+  const t = useBi();
   return (
     <Stack>
-      <Row label="Leading and trailing icons">
+      <Row label={<Bi en="Leading and trailing icons" ar="أيقونة في البداية أو النهاية" />}>
         <Button>
           <HugeiconsIcon icon={Download04Icon} data-icon="inline-start" />
           <Bi en="Download" ar="تنزيل" />
@@ -111,9 +113,9 @@ export function ButtonIcons() {
           <Arrow />
         </Button>
       </Row>
-      <Row label="Icon only (aria-label required)">
+      <Row label={<Bi en="Icon only (aria-label required)" ar="أيقونة فقط (يلزم aria-label)" />}>
         {VARIANTS.map((v) => (
-          <Button key={v.value} variant={v.value} iconOnly aria-label="Search">
+          <Button key={v.value} variant={v.value} iconOnly aria-label={t("Search", "بحث")}>
             <HugeiconsIcon icon={Search01Icon} />
           </Button>
         ))}
@@ -123,11 +125,19 @@ export function ButtonIcons() {
 }
 
 export function ButtonStates() {
+  const t = useBi();
   const [pressed, setPressed] = useState(true);
   const [loading, setLoading] = useState(false);
   return (
     <Stack>
-      <Row label="Selected (aria-pressed): click to toggle">
+      <Row
+        label={
+          <Bi
+            en="Selected (aria-pressed): click to toggle"
+            ar="محدد (aria-pressed): انقر للتبديل"
+          />
+        }
+      >
         {VARIANTS.map((v) => (
           <Button
             key={v.value}
@@ -139,14 +149,14 @@ export function ButtonStates() {
           </Button>
         ))}
       </Row>
-      <Row label="Disabled">
+      <Row label={<Bi en="Disabled" ar="معطّل" />}>
         {VARIANTS.map((v) => (
           <Button key={v.value} variant={v.value} disabled>
             <Bi en={v.en} ar={v.ar} />
           </Button>
         ))}
       </Row>
-      <Row label="Loading: click to start">
+      <Row label={<Bi en="Loading: click to start" ar="التحميل: انقر للبدء" />}>
         <Button
           loading={loading}
           onClick={() => {
@@ -160,7 +170,7 @@ export function ButtonStates() {
         <Button variant="outline" loading>
           <Bi en="Saving" ar="جارٍ الحفظ" />
         </Button>
-        <Button variant="secondary" iconOnly loading aria-label="Search">
+        <Button variant="secondary" iconOnly loading aria-label={t("Search", "بحث")}>
           <HugeiconsIcon icon={Search01Icon} />
         </Button>
       </Row>

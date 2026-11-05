@@ -508,7 +508,7 @@
   --background-white: var(--colors-base-white);
   --background-neutral-50: var(--colors-neutral-50);
   --text-primary: var(--colors-primary-sa-flag-600-primary);
-  --field-text-placeholder: var(--colors-neutral-600);
+  --field-text-placeholder: var(--text-secondary-paragraph);
   --button-background-primary-pressed: var(--colors-primary-sa-flag-900);
   --button-background-primary-default: var(--colors-primary-sa-flag-600-primary);
   --button-background-primary-hovered: var(--colors-primary-sa-flag-700);
@@ -686,7 +686,7 @@
   --field-border-default: var(--colors-neutral-500);
   --field-border-hovered: var(--colors-neutral-700);
   --field-border-pressed: var(--colors-neutral-950);
-  --field-border-error: var(--border-error);
+  --field-border-error: var(--colors-red-600);
   --field-text-readonly: var(--text-default);
   --field-text-hovered: var(--text-default);
   --field-text-pressed: var(--text-primary-paragraph);
@@ -955,6 +955,7 @@
   --featured-icon-info-border: var(--colors-blue-200);
   --skeleton-background: var(--colors-neutral-200);
   --control-thumb: var(--colors-base-white);
+  --field-text-placeholder-tinted: var(--colors-neutral-600);
   --control-icon-neutral: var(--colors-base-white);
   --background: var(--background-body);
   --foreground: var(--text-default);
@@ -1089,7 +1090,7 @@
   --background-white: var(--colors-base-white);
   --background-neutral-50: var(--colors-neutral-50);
   --text-primary: var(--colors-primary-sa-flag-600-primary);
-  --field-text-placeholder: var(--colors-neutral-600);
+  --field-text-placeholder: var(--text-secondary-paragraph);
   --button-background-primary-pressed: var(--colors-primary-sa-flag-900);
   --button-background-primary-default: var(--colors-primary-sa-flag-600-primary);
   --button-background-primary-hovered: var(--colors-primary-sa-flag-700);
@@ -1267,7 +1268,7 @@
   --field-border-default: var(--colors-neutral-500);
   --field-border-hovered: var(--colors-neutral-700);
   --field-border-pressed: var(--colors-neutral-950);
-  --field-border-error: var(--border-error);
+  --field-border-error: var(--colors-red-600);
   --field-text-readonly: var(--text-default);
   --field-text-hovered: var(--text-default);
   --field-text-pressed: var(--text-primary-paragraph);
@@ -1536,6 +1537,7 @@
   --featured-icon-info-border: var(--colors-blue-200);
   --skeleton-background: var(--colors-neutral-200);
   --control-thumb: var(--colors-base-white);
+  --field-text-placeholder-tinted: var(--colors-neutral-600);
   --control-icon-neutral: var(--colors-base-white);
   --background: var(--background-body);
   --foreground: var(--text-default);
@@ -2025,6 +2027,7 @@
   --featured-icon-info-border: var(--colors-blue-800);
   --skeleton-background: var(--colors-neutral-dark-700);
   --control-thumb: var(--colors-base-white);
+  --field-text-placeholder-tinted: var(--field-text-placeholder);
   --control-icon-neutral: var(--colors-neutral-dark-950);
   --background: var(--background-body);
   --foreground: var(--text-default);

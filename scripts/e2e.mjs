@@ -6,6 +6,9 @@
 //      dark, with the lockup on the start side, and nothing is logged to the console.
 //   3. Discovery: /sitemap.xml is an index of both language sitemaps, robots.txt lists it, and
 //      the bare /manifest.webmanifest redirects like any other URL without a language.
+//   5. Field states: the underline of Input, Textarea, Select and Number Input grows from the centre
+//      with scaleX in LTR and RTL, there is no outline after a mouse click, the press shows half
+//      the underline and focus the full one.
 //   4. Forms: every form component page fits at 375 and 1280 px in both languages, and the
 //      service request form can be completed with the keyboard alone in /en and /ar.
 import { chromium } from "playwright";
@@ -253,6 +256,102 @@ async function formPageChecks() {
   check(issues.size === 0, `form pages: no console errors or warnings: ${[...issues].join(" | ")}`);
 }
 
+/** Input, Textarea, Select and Number Input: the DGA underline and focus model, LTR and RTL. */
+async function fieldStateChecks() {
+  const cases = [
+    { name: "input-states", box: "[data-slot=input]", field: "input" },
+    { name: "textarea-states", box: "[data-slot=textarea]", field: "textarea" },
+    { name: "number-input-states", box: "[data-slot=number-input] [data-size]", field: "input" },
+    { name: "select-states", box: "[data-slot=select-trigger]", field: null },
+  ];
+  const read = (box) =>
+    box.evaluate((el) => {
+      const after = getComputedStyle(el, "::after");
+      const style = getComputedStyle(el);
+      const matrix = new DOMMatrix(after.transform === "none" ? undefined : after.transform);
+      return {
+        scale: matrix.a,
+        originX: Number.parseFloat(after.transformOrigin.split(" ")[0]),
+        width: Number.parseFloat(after.width),
+        property: after.transitionProperty,
+        duration: after.transitionDuration,
+        timing: after.transitionTimingFunction,
+        outlineStyle: style.outlineStyle,
+        outlineWidth: Number.parseFloat(style.outlineWidth),
+        border: style.borderTopColor,
+        bg: style.backgroundColor,
+      };
+    });
+  for (const dir of ["ltr", "rtl"]) {
+    const context = await browser.newContext({ viewport: { width: 900, height: 900 } });
+    const page = await context.newPage();
+    for (const { name, box: selector, field } of cases) {
+      const tag = `${name} ${dir}`;
+      await page.goto(`${BASE}/preview/${name}?dir=${dir}`, { waitUntil: "networkidle" });
+      await page.waitForTimeout(300);
+      const box = page.locator(selector).first();
+      const rest = await read(box);
+      check(rest.scale === 0, `${tag}: the underline is hidden at rest (scale ${rest.scale})`);
+      check(
+        Math.abs(rest.originX - rest.width / 2) < 1,
+        `${tag}: transform-origin is the horizontal centre (${rest.originX} of ${rest.width})`,
+      );
+      check(
+        rest.property.includes("transform") &&
+          rest.duration.includes("0.2s") &&
+          rest.timing.includes("ease-in-out"),
+        `${tag}: the underline animates transform for 200ms ease-in-out (${rest.property} ${rest.duration})`,
+      );
+      const target = field ? box.locator(field).first() : box;
+      const at = await target.boundingBox();
+      const x = at.x + Math.min(24, at.width / 2);
+      const y = at.y + Math.min(at.height / 2, 20);
+      if (field) {
+        await page.mouse.move(x, y);
+        await page.mouse.down();
+        await page.waitForTimeout(450);
+        const pressed = await read(box);
+        check(
+          pressed.scale === 0.5,
+          `${tag}: during mousedown the underline is scaleX(0.5) (${pressed.scale})`,
+        );
+        check(pressed.border !== rest.border, `${tag}: the border changes while pressed`);
+        await page.mouse.up();
+      } else {
+        await page.mouse.click(x, y);
+      }
+      await page.waitForTimeout(450);
+      const clicked = await read(box);
+      check(
+        clicked.scale === 1,
+        `${tag}: after a mouse click the underline is scaleX(1) (${clicked.scale})`,
+      );
+      check(
+        clicked.outlineStyle === "none" || clicked.outlineWidth === 0,
+        `${tag}: no outline after a mouse click (${clicked.outlineStyle} ${clicked.outlineWidth}px)`,
+      );
+      check(clicked.border !== rest.border, `${tag}: the border changes on focus`);
+      if (!field) {
+        await page.keyboard.press("Escape");
+        await page.waitForTimeout(300);
+        await page.mouse.click(2, 2);
+      }
+      // Keyboard focus: Tab onto the first control shows the same chrome.
+      await page.mouse.click(2, 2);
+      await page.keyboard.press("Tab");
+      await page.waitForTimeout(450);
+      const first = await read(box);
+      check(first.scale === 1, `${tag}: keyboard focus shows the full underline (${first.scale})`);
+      check(first.border !== rest.border, `${tag}: keyboard focus changes the border`);
+      check(
+        first.outlineStyle === "none" || first.outlineWidth === 0,
+        `${tag}: no outline on keyboard focus`,
+      );
+    }
+    await context.close();
+  }
+}
+
 /** The service request form, completed with the keyboard only, in English and Arabic. */
 async function keyboardChecks() {
   const text = {
@@ -351,6 +450,7 @@ await localeChecks();
 await layoutChecks();
 await discoveryChecks();
 await formPageChecks();
+await fieldStateChecks();
 await keyboardChecks();
 await browser.close();
 console.log(`${passed} checks passed, ${failures.length} failed.`);

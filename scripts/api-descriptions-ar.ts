@@ -140,6 +140,8 @@ export const API_DESCRIPTIONS_AR: Record<string, string> = {
     "حقل نص متعدد الأسطر يزداد ارتفاعه (وقابل لتغيير الحجم افتراضيًا). سمّه بـ Field. يرتبط بتسمية Field ونصه المساعد وخطأه كأي عنصر تحكم آخر.",
   "textarea.Textarea.appearance":
     "التعبئة: `default` (أبيض) أو `lighter` أو `darker`. وتحتفظ الثلاث بحد ظاهر.",
+  "textarea.Textarea.className": "أصناف الإطار المحيط بالحقل (الحد والتعبئة والخط السفلي).",
+  "textarea.Textarea.inputClassName": "أصناف عنصر `<textarea>` الأصلي.",
   "textarea.Textarea.resize":
     "`vertical` يتيح للمستخدم سحب الزاوية لتغيير الارتفاع. و`none` يثبّته.",
   "textarea.Textarea.rows": "عدد الأسطر الظاهرة، وهو يحدد الارتفاع الابتدائي.",

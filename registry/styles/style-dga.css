@@ -661,19 +661,27 @@
 
   /* ------------------------------------------------------------------------------------
    * Input (also the box of Search Box and Number Input). Heights md 32 / lg 40px, radius-sm,
-   * 1px border. Text md 14 / lg 16px. Focus: 2px outline outside the border.
-   * States: hover, focus, filled, read-only, disabled, error (aria-invalid).
+   * 1px border. Text md 14 / lg 16px.
+   * States follow the DGA CSS (.input, .active, .focus):
+   *   hover    border-field-border-hovered
+   *   pressed  (:active) pressed fill, pressed border, 2px underline at half width (scaleX .5)
+   *   focus    pressed border, shadow-md (none in dark mode) and the underline at full width
+   * The underline is a full-width bar scaled from its centre (--field-underline), so it grows
+   * out to both sides in LTR and RTL alike. There is no outline: the underline, the border and
+   * the shadow are the focus cue. Pressed is :active and focus is :focus, so the half underline
+   * shows during the press before the focus chrome takes over (the focus rules say not-active).
+   * --field-placeholder is neutral-500 (DGA); on the pressed and darker fills it is the -tinted
+   * token, because neutral-500 is 4.34:1 there (see Deviations).
    * ---------------------------------------------------------------------------------- */
   .cn-input {
-    @apply relative flex w-full min-w-0 items-center gap-2 rounded-sm border border-field-border-default bg-field-background-default px-3 text-field-text-filled transition-colors;
-    @apply hover:border-field-border-hovered active:bg-field-background-pressed;
-    @apply after:pointer-events-none after:absolute after:inset-x-0 after:-bottom-px after:h-0.5 after:w-0 after:rounded-b-sm after:bg-field-border-pressed after:transition-[width] after:duration-200 motion-reduce:after:transition-none;
-    @apply active:after:w-1/2 has-[input:focus]:after:w-full has-[[aria-invalid=true]]:after:bg-field-border-error;
-    @apply has-[input:focus-visible]:border-field-border-pressed has-[input:focus-visible]:outline-2 has-[input:focus-visible]:outline-solid has-[input:focus-visible]:outline-offset-1 has-[input:focus-visible]:outline-border-black;
-    @apply has-[input[readonly]]:border-dashed has-[input[readonly]]:border-field-border-default has-[input[readonly]]:bg-field-background-default has-[input[readonly]]:text-field-text-readonly has-[input[readonly]]:hover:border-field-border-default;
-    @apply has-[input:disabled]:cursor-not-allowed has-[input:disabled]:border-border-disabled has-[input:disabled]:bg-field-background-default has-[input:disabled]:text-text-default-disabled has-[input:disabled]:after:hidden has-[input[readonly]]:after:hidden has-[input[readonly]]:active:bg-field-background-default;
-    @apply has-[[aria-invalid=true]]:border-field-border-error;
-    @apply motion-reduce:transition-none;
+    @apply relative flex w-full min-w-0 items-center gap-2 rounded-sm border border-field-border-default bg-field-background-default px-3 text-field-text-filled transition-[background-color,border-color,box-shadow] duration-200 ease-[ease-in-out] [--field-placeholder:var(--field-text-placeholder)] [--field-underline:0] [outline:0_none];
+    @apply hover:border-field-border-hovered active:border-field-border-pressed active:bg-field-background-pressed active:[--field-placeholder:var(--field-text-placeholder-tinted)] active:[--field-underline:0.5];
+    @apply has-[input:focus]:border-field-border-pressed has-[input:focus]:not-active:shadow-md has-[input:focus]:not-active:[--field-underline:1];
+    @apply after:pointer-events-none after:absolute after:inset-x-0 after:-bottom-px after:h-0.5 after:origin-center after:rounded-b-sm after:bg-field-border-pressed after:transition-transform after:duration-200 after:ease-[ease-in-out] after:[transform:scaleX(var(--field-underline))];
+    @apply has-[[aria-invalid=true]]:border-field-border-error! has-[[aria-invalid=true]]:after:bg-field-border-error;
+    @apply has-[input[readonly]:not(:focus)]:border-border-neutral-primary has-[input[readonly]]:bg-field-background-default has-[input[readonly]]:text-field-text-readonly has-[input[readonly]]:active:bg-field-background-default has-[input[readonly]]:active:[--field-underline:0] has-[input[readonly]]:shadow-none;
+    @apply has-[input:disabled]:cursor-not-allowed has-[input:disabled]:border-border-disabled has-[input:disabled]:bg-field-background-default has-[input:disabled]:text-text-default-disabled has-[input:disabled]:shadow-none has-[input:disabled]:after:hidden;
+    @apply motion-reduce:transition-none motion-reduce:after:transition-none;
   }
   .cn-input-size-md {
     @apply h-8 text-sm;
@@ -683,15 +691,21 @@
     @apply h-10 text-md;
     @apply [&_svg:not([class*='size-'])]:size-6;
   }
-  /* Filled lighter and darker keep a visible border (WCAG 1.4.11), see Deviations. */
+  /*
+   * Filled lighter and darker (DGA): no border at rest (kept transparent so the box does not
+   * shift), the default border on hover, focus and press, the default fill on focus and the
+   * pressed fill on press. Darker also uses the tinted placeholder at rest.
+   */
   .cn-input-lighter {
-    @apply bg-field-background-lighter focus-visible:bg-field-background-default has-[input:focus-visible]:bg-field-background-default;
+    @apply border-transparent bg-field-background-lighter hover:border-field-border-default active:border-field-border-default has-[input:focus]:border-field-border-default has-[input:focus]:bg-field-background-default;
+    @apply has-[input[readonly]:not(:focus)]:border-border-neutral-primary has-[input[readonly]]:bg-field-background-lighter has-[input:disabled]:border-border-disabled has-[input:disabled]:bg-field-background-lighter;
   }
   .cn-input-darker {
-    @apply bg-field-background-darker focus-visible:bg-field-background-default has-[input:focus-visible]:bg-field-background-default;
+    @apply border-transparent bg-field-background-darker [--field-placeholder:var(--field-text-placeholder-tinted)] hover:border-field-border-default active:border-field-border-default has-[input:focus]:border-field-border-default has-[input:focus]:bg-field-background-default;
+    @apply has-[input[readonly]:not(:focus)]:border-border-neutral-primary has-[input[readonly]]:bg-field-background-darker has-[input:disabled]:border-border-disabled has-[input:disabled]:bg-field-background-darker;
   }
   .cn-input-field {
-    @apply h-full min-w-0 flex-1 bg-transparent p-0 text-inherit outline-none placeholder:text-field-text-placeholder;
+    @apply h-full min-w-0 flex-1 bg-transparent p-0 text-inherit [outline:0_none] placeholder:text-(--field-placeholder);
     @apply disabled:cursor-not-allowed disabled:text-text-default-disabled disabled:placeholder:text-text-default-disabled;
     @apply read-only:text-field-text-readonly;
     @apply [&::-webkit-search-cancel-button]:appearance-none [&::-webkit-search-decoration]:appearance-none;
@@ -724,47 +738,62 @@
   }
 
   /* ------------------------------------------------------------------------------------
-   * Textarea. Same box as Input; padding 16 / 12px, resizable in height.
+   * Textarea. The same box and states as Input (see there): a wrapper carries the border, fill,
+   * shadow and the centre-out underline, and the <textarea> inside it has no chrome of its own.
+   * Padding 16 / 12px, resizable in height.
    * ---------------------------------------------------------------------------------- */
   .cn-textarea {
-    @apply block min-h-20 w-full min-w-0 rounded-sm border border-field-border-default bg-field-background-default px-4 py-3 text-sm text-field-text-filled transition-colors outline-none placeholder:text-field-text-placeholder;
-    @apply hover:border-field-border-hovered active:bg-field-background-pressed;
-    @apply focus-visible:border-field-border-pressed focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-offset-1 focus-visible:outline-border-black;
-    @apply read-only:border-dashed read-only:border-field-border-default read-only:bg-field-background-default read-only:text-field-text-readonly read-only:hover:border-field-border-default read-only:active:bg-field-background-default disabled:active:bg-field-background-default;
-    @apply disabled:cursor-not-allowed disabled:border-border-disabled disabled:text-text-default-disabled disabled:placeholder:text-text-default-disabled;
-    @apply aria-invalid:border-field-border-error;
-    @apply motion-reduce:transition-none;
+    @apply relative flex w-full min-w-0 rounded-sm border border-field-border-default bg-field-background-default text-sm text-field-text-filled transition-[background-color,border-color,box-shadow] duration-200 ease-[ease-in-out] [--field-placeholder:var(--field-text-placeholder)] [--field-underline:0] [outline:0_none];
+    @apply hover:border-field-border-hovered active:border-field-border-pressed active:bg-field-background-pressed active:[--field-placeholder:var(--field-text-placeholder-tinted)] active:[--field-underline:0.5];
+    @apply has-[textarea:focus]:border-field-border-pressed has-[textarea:focus]:not-active:shadow-md has-[textarea:focus]:not-active:[--field-underline:1];
+    @apply after:pointer-events-none after:absolute after:inset-x-0 after:-bottom-px after:h-0.5 after:origin-center after:rounded-b-sm after:bg-field-border-pressed after:transition-transform after:duration-200 after:ease-[ease-in-out] after:[transform:scaleX(var(--field-underline))];
+    @apply has-[[aria-invalid=true]]:border-field-border-error! has-[[aria-invalid=true]]:after:bg-field-border-error;
+    @apply has-[textarea[readonly]:not(:focus)]:border-border-neutral-primary has-[textarea[readonly]]:bg-field-background-default has-[textarea[readonly]]:text-field-text-readonly has-[textarea[readonly]]:active:bg-field-background-default has-[textarea[readonly]]:active:[--field-underline:0] has-[textarea[readonly]]:shadow-none;
+    @apply has-[textarea:disabled]:cursor-not-allowed has-[textarea:disabled]:border-border-disabled has-[textarea:disabled]:bg-field-background-default has-[textarea:disabled]:text-text-default-disabled has-[textarea:disabled]:shadow-none has-[textarea:disabled]:after:hidden;
+    @apply motion-reduce:transition-none motion-reduce:after:transition-none;
+  }
+  .cn-textarea-lighter {
+    @apply border-transparent bg-field-background-lighter hover:border-field-border-default active:border-field-border-default has-[textarea:focus]:border-field-border-default has-[textarea:focus]:bg-field-background-default;
+    @apply has-[textarea[readonly]:not(:focus)]:border-border-neutral-primary has-[textarea[readonly]]:bg-field-background-lighter has-[textarea:disabled]:border-border-disabled has-[textarea:disabled]:bg-field-background-lighter;
+  }
+  .cn-textarea-darker {
+    @apply border-transparent bg-field-background-darker [--field-placeholder:var(--field-text-placeholder-tinted)] hover:border-field-border-default active:border-field-border-default has-[textarea:focus]:border-field-border-default has-[textarea:focus]:bg-field-background-default;
+    @apply has-[textarea[readonly]:not(:focus)]:border-border-neutral-primary has-[textarea[readonly]]:bg-field-background-darker has-[textarea:disabled]:border-border-disabled has-[textarea:disabled]:bg-field-background-darker;
+  }
+  .cn-textarea-field {
+    @apply block min-h-20 w-full min-w-0 resize-none rounded-sm border-0 bg-transparent px-4 py-3 text-inherit [outline:0_none] placeholder:text-(--field-placeholder);
+    @apply read-only:text-field-text-readonly disabled:cursor-not-allowed disabled:text-text-default-disabled disabled:placeholder:text-text-default-disabled;
   }
   .cn-textarea-resize-none {
-    @apply resize-none;
+    @apply [&_textarea]:resize-none;
   }
   .cn-textarea-resize-vertical {
-    @apply resize-y;
+    @apply [&_textarea]:resize-y;
   }
 
   /* ------------------------------------------------------------------------------------
    * Select (Figma: Dropdown Input). Trigger = Input box; popup on the card surface.
    * ---------------------------------------------------------------------------------- */
   .cn-select-trigger {
-    @apply relative flex w-full min-w-0 cursor-pointer items-center justify-between gap-2 rounded-sm border border-field-border-default bg-field-background-default px-3 text-start text-field-text-filled transition-colors;
-    @apply hover:border-field-border-hovered active:bg-field-background-pressed data-popup-open:border-field-border-pressed;
-    @apply after:pointer-events-none after:absolute after:inset-x-0 after:-bottom-px after:h-0.5 after:w-0 after:rounded-b-sm after:bg-field-border-pressed after:transition-[width] after:duration-200 motion-reduce:after:transition-none;
-    @apply active:after:w-1/2 focus-visible:after:w-full data-popup-open:after:w-full data-invalid:after:bg-field-border-error;
-    @apply focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-offset-1 focus-visible:outline-border-black;
-    @apply data-readonly:after:hidden data-readonly:active:bg-field-background-default data-disabled:after:hidden data-disabled:active:bg-field-background-default;
-    @apply data-readonly:cursor-default data-readonly:border-dashed data-readonly:border-field-border-default data-readonly:text-field-text-readonly data-readonly:hover:border-field-border-default;
-    @apply data-disabled:cursor-not-allowed data-disabled:border-border-disabled data-disabled:text-text-default-disabled;
-    @apply data-invalid:border-field-border-error;
-    @apply motion-reduce:transition-none;
+    @apply relative flex w-full min-w-0 cursor-pointer items-center justify-between gap-2 rounded-sm border border-field-border-default bg-field-background-default px-3 text-start text-field-text-filled transition-[background-color,border-color,box-shadow] duration-200 ease-[ease-in-out] [--field-placeholder:var(--field-text-placeholder)] [--field-underline:0] [outline:0_none];
+    @apply hover:border-field-border-hovered active:border-field-border-pressed active:bg-field-background-pressed active:[--field-placeholder:var(--field-text-placeholder-tinted)] active:[--field-underline:0.5];
+    @apply focus:border-field-border-pressed focus:not-active:shadow-md focus:not-active:[--field-underline:1] data-popup-open:border-field-border-pressed data-popup-open:not-active:shadow-md data-popup-open:not-active:[--field-underline:1];
+    @apply after:pointer-events-none after:absolute after:inset-x-0 after:-bottom-px after:h-0.5 after:origin-center after:rounded-b-sm after:bg-field-border-pressed after:transition-transform after:duration-200 after:ease-[ease-in-out] after:[transform:scaleX(var(--field-underline))];
+    @apply data-invalid:border-field-border-error! data-invalid:after:bg-field-border-error;
+    @apply data-readonly:cursor-default data-readonly:border-border-neutral-primary data-readonly:text-field-text-readonly data-readonly:shadow-none data-readonly:hover:border-border-neutral-primary data-readonly:active:border-border-neutral-primary data-readonly:active:bg-field-background-default data-readonly:active:[--field-underline:0] data-readonly:focus:border-field-border-pressed data-readonly:focus:[--field-underline:1];
+    @apply data-disabled:cursor-not-allowed data-disabled:border-border-disabled data-disabled:text-text-default-disabled data-disabled:shadow-none data-disabled:after:hidden data-disabled:active:bg-field-background-default;
+    @apply motion-reduce:transition-none motion-reduce:after:transition-none;
   }
   .cn-select-lighter {
-    @apply bg-field-background-lighter focus-visible:bg-field-background-default data-popup-open:bg-field-background-default;
+    @apply border-transparent bg-field-background-lighter hover:border-field-border-default active:border-field-border-default focus:border-field-border-default focus:bg-field-background-default data-popup-open:border-field-border-default data-popup-open:bg-field-background-default;
+    @apply data-readonly:border-border-neutral-primary data-readonly:bg-field-background-lighter data-disabled:border-border-disabled data-disabled:bg-field-background-lighter;
   }
   .cn-select-darker {
-    @apply bg-field-background-darker focus-visible:bg-field-background-default data-popup-open:bg-field-background-default;
+    @apply border-transparent bg-field-background-darker [--field-placeholder:var(--field-text-placeholder-tinted)] hover:border-field-border-default active:border-field-border-default focus:border-field-border-default focus:bg-field-background-default data-popup-open:border-field-border-default data-popup-open:bg-field-background-default;
+    @apply data-readonly:border-border-neutral-primary data-readonly:bg-field-background-darker data-disabled:border-border-disabled data-disabled:bg-field-background-darker;
   }
   .cn-select-value {
-    @apply min-w-0 flex-1 truncate text-start data-placeholder:text-field-text-placeholder in-data-disabled:text-text-default-disabled;
+    @apply min-w-0 flex-1 truncate text-start data-placeholder:text-(--field-placeholder) in-data-disabled:text-text-default-disabled;
   }
   .cn-select-icon {
     @apply inline-flex shrink-0 text-icon-default-500 transition-transform data-popup-open:rotate-180 motion-reduce:transition-none;

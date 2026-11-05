@@ -31,28 +31,28 @@ import {
 } from "@/registry/bases/base/ui/select";
 import { Switch } from "@/registry/bases/base/ui/switch";
 import { Textarea } from "@/registry/bases/base/ui/textarea";
-import { Bi, useDirection } from "./bi";
+import { Bi, useBi, useDirection, useUi } from "./bi";
 import { Row, Stack } from "./kit";
 
-/** Text for the components' own labels (they take them as props), by page direction. */
+/** The components' own labels, from the locale dictionary (by page direction). */
 export function useFormText() {
-  const rtl = useDirection() === "rtl";
+  const ui = useUi();
   return {
-    optional: rtl ? "اختياري" : "Optional",
-    clear: rtl ? "مسح البحث" : "Clear search",
-    decrease: rtl ? "إنقاص" : "Decrease",
-    increase: rtl ? "زيادة" : "Increase",
-    drop: rtl ? "اسحب الملفات وأفلتها هنا، أو اختر ملفات" : "Drag files here, or choose files",
-    dropping: rtl ? "أفلت الملفات لإضافتها" : "Drop the files to add them",
-    done: rtl ? "تم الرفع" : "Uploaded",
-    uploading: rtl ? "جارٍ الرفع" : "Uploading",
-    remove: (name: string) => (rtl ? `إزالة ${name}` : `Remove ${name}`),
+    optional: ui("ui.optional"),
+    clear: ui("ui.clearSearch"),
+    decrease: ui("ui.decrease"),
+    increase: ui("ui.increase"),
+    drop: ui("ui.dropFiles"),
+    dropping: ui("ui.dropping"),
+    done: ui("ui.uploaded"),
+    uploading: ui("ui.uploading"),
+    remove: (name: string) => ui("ui.removeFile", { name }),
     rejected: {
-      type: rtl ? "نوع الملف غير مقبول." : "This file type is not accepted.",
-      size: rtl ? "حجم الملف أكبر من المسموح." : "This file is too large.",
-      count: rtl ? "عدد الملفات أكبر من المسموح." : "Too many files.",
+      type: ui("ui.rejectedType"),
+      size: ui("ui.rejectedSize"),
+      count: ui("ui.rejectedCount"),
     },
-    rtl,
+    rtl: useDirection() === "rtl",
   };
 }
 
@@ -102,6 +102,7 @@ function Labelled({
 /* ---------------------------------------------------------------- Field */
 
 export function FieldAnatomy() {
+  const t = useBi();
   return (
     <Stack className="max-w-sm">
       <Labelled
@@ -109,7 +110,7 @@ export function FieldAnatomy() {
         helper={["As it appears on your national ID.", "كما يظهر في بطاقة الهوية الوطنية."]}
         required
       >
-        <Input name="name" required defaultValue="" placeholder={NAME.en} />
+        <Input name="name" required defaultValue="" placeholder={t(NAME.en, NAME.ar)} />
       </Labelled>
       <Labelled
         label={["Job title", "المسمى الوظيفي"]}
@@ -136,13 +137,14 @@ export function FieldAnatomy() {
 /* ---------------------------------------------------------------- Input */
 
 export function InputSizes() {
+  const t = useBi();
   return (
     <Stack className="max-w-sm">
       <Labelled label={["Large (40px)", "كبير (40px)"]}>
-        <Input size="lg" placeholder="Placeholder" />
+        <Input size="lg" placeholder={t("Placeholder", "نص تلميحي")} />
       </Labelled>
       <Labelled label={["Medium (32px)", "متوسط (32px)"]}>
-        <Input size="md" placeholder="Placeholder" />
+        <Input size="md" placeholder={t("Placeholder", "نص تلميحي")} />
       </Labelled>
     </Stack>
   );
@@ -663,14 +665,15 @@ function RadioItem({
 }
 
 export function RadioStates() {
+  const t = useBi();
   return (
     <Field className="max-w-3xl">
       <div className="grid gap-6 sm:grid-cols-2">
-        <RadioGroup defaultValue="on" aria-label="States">
+        <RadioGroup defaultValue="on" aria-label={t("States", "الحالات")}>
           <RadioItem value="off" label={["Unselected", "غير محدد"]} />
           <RadioItem value="on" label={["Selected", "محدد"]} />
         </RadioGroup>
-        <RadioGroup defaultValue="on" aria-label="Neutral">
+        <RadioGroup defaultValue="on" aria-label={t("Neutral", "محايد")}>
           <RadioItem
             value="off"
             label={["Neutral, unselected", "محايد، غير محدد"]}
@@ -678,11 +681,11 @@ export function RadioStates() {
           />
           <RadioItem value="on" label={["Neutral, selected", "محايد، محدد"]} tone="neutral" />
         </RadioGroup>
-        <RadioGroup defaultValue="on" readOnly aria-label="Read-only">
+        <RadioGroup defaultValue="on" readOnly aria-label={t("Read-only", "للقراءة فقط")}>
           <RadioItem value="off" label={["Read-only", "للقراءة فقط"]} />
           <RadioItem value="on" label={["Read-only, selected", "للقراءة فقط، محدد"]} />
         </RadioGroup>
-        <RadioGroup defaultValue="on" disabled aria-label="Disabled">
+        <RadioGroup defaultValue="on" disabled aria-label={t("Disabled", "معطّل")}>
           <RadioItem value="off" label={["Disabled", "معطّل"]} />
           <RadioItem value="on" label={["Disabled, selected", "معطّل ومحدد"]} />
         </RadioGroup>

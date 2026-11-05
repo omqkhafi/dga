@@ -96,7 +96,7 @@ function NumberInput({
           ref={field}
           dir="ltr"
           placeholder={placeholder}
-          className={cn("h-full min-w-0 flex-1 bg-transparent p-0 text-inherit outline-none placeholder:text-field-text-placeholder disabled:cursor-not-allowed disabled:text-text-default-disabled disabled:placeholder:text-text-default-disabled read-only:text-field-text-readonly [&::-webkit-search-cancel-button]:appearance-none [&::-webkit-search-decoration]:appearance-none [unicode-bidi:isolate]", inputClassName)}
+          className={cn("h-full min-w-0 flex-1 bg-transparent p-0 text-inherit [outline:0_none] placeholder:text-(--field-placeholder) disabled:cursor-not-allowed disabled:text-text-default-disabled disabled:placeholder:text-text-default-disabled read-only:text-field-text-readonly [&::-webkit-search-cancel-button]:appearance-none [&::-webkit-search-decoration]:appearance-none [unicode-bidi:isolate]", inputClassName)}
         />
         {hideSteppers ? null : (
           <NumberFieldPrimitive.Increment

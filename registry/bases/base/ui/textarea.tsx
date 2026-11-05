@@ -7,8 +7,8 @@ const textareaVariants = cva("cn-textarea", {
   variants: {
     appearance: {
       default: "",
-      lighter: "cn-input-lighter",
-      darker: "cn-input-darker",
+      lighter: "cn-textarea-lighter",
+      darker: "cn-textarea-darker",
     },
     resize: {
       none: "cn-textarea-resize-none",
@@ -18,20 +18,35 @@ const textareaVariants = cva("cn-textarea", {
   defaultVariants: { appearance: "default", resize: "vertical" },
 });
 
-type TextareaProps = React.ComponentProps<"textarea"> & VariantProps<typeof textareaVariants>;
+type TextareaProps = Omit<React.ComponentProps<"textarea">, "className"> &
+  VariantProps<typeof textareaVariants> & {
+    /** Class names for the box around the field (border, fill and underline). */
+    className?: string;
+    /** Class names for the native `<textarea>`. */
+    inputClassName?: string;
+  };
 
 /**
  * A multi-line text field that grows in height (it is resizable by default). Label it with a
  * Field. It is linked to the Field's label, helper text and error like any other control.
  */
-function Textarea({ className, appearance, resize, rows = 4, ...props }: TextareaProps) {
+function Textarea({
+  className,
+  inputClassName,
+  appearance,
+  resize,
+  rows = 4,
+  ...props
+}: TextareaProps) {
   return (
-    <FieldPrimitive.Control
-      data-slot="textarea"
-      render={<textarea rows={rows} />}
-      className={cn(textareaVariants({ appearance, resize }), className)}
-      {...(props as Record<string, unknown>)}
-    />
+    <div data-slot="textarea" className={cn(textareaVariants({ appearance, resize }), className)}>
+      <FieldPrimitive.Control
+        data-slot="textarea-field"
+        render={<textarea rows={rows} />}
+        className={cn("cn-textarea-field", inputClassName)}
+        {...(props as Record<string, unknown>)}
+      />
+    </div>
   );
 }
 

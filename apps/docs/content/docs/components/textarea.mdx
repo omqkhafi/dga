@@ -65,7 +65,7 @@ Text starts on the right and the resize handle sits in the bottom-left corner. E
 | <kbd>Enter</kbd> | Starts a new line. |
 
 - A native `<textarea>` linked to its [Field](/docs/components/field) label, helper text and error.
-- Same focus outline and 3:1 border as [Input](/docs/components/input).
+- Same states as [Input](/docs/components/input): the underline grows from the centre when pressed (half) and focused (full), and there is no outline. A wrapper `<div>` carries the border and underline because a `<textarea>` cannot draw one.
 - The resize handle can be dragged with a pointer. Keyboard users get the same space by typing; give `rows` enough height for the expected answer.
 - If you show a character limit, put it in the helper text and use `maxLength` so it is enforced.
 
@@ -76,7 +76,7 @@ Text starts on the right and the resize handle sits in the bottom-left corner. E
 ## Deviations from DGA
 
 - Figma has one fixed-height variant. This one grows with `rows` and can be resized.
-- Filled lighter and darker keep their border, as on [Input](/docs/components/input).
+- Lighter and darker have no border at rest, as on [Input](/docs/components/input), including the known gap.
 
 <ComponentDeviations component="textarea" />
 

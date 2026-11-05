@@ -32,7 +32,7 @@ Use Input for short single-line answers: names, IDs, email addresses, phone numb
 
 ## Anatomy
 
-- **Box** (`<div>`): the border, fill and focus outline.
+- **Box** (`<div>`): the border, fill, shadow and the underline.
 - **Start adornment** (optional): an icon or a short prefix such as `+966`.
 - **Input** (`<input>`): the text.
 - **End adornment** (optional): an icon, suffix or button.
@@ -47,7 +47,7 @@ Use Input for short single-line answers: names, IDs, email addresses, phone numb
 
 ### Fills
 
-`appearance` is `default`, `lighter` or `darker`. Unlike the Figma file, all three keep a visible border, so the field can always be found (see Deviations). The states below show them all.
+`appearance` is `default`, `lighter` or `darker`. As in DGA, lighter and darker have no border at rest; it appears on hover, focus and press. The states below show them all.
 
 <Preview name="input-states" title="Fills" />
 
@@ -71,8 +71,8 @@ The text, placeholder and adornments start on the right. Typed Arabic aligns rig
 | <kbd>Shift</kbd> + <kbd>Tab</kbd> | Moves focus back. |
 
 - A native `<input>`: always label it with a [Field](/docs/components/field); a placeholder is not a label.
-- Focus is a 2px outline outside the border (`border-black`, white in dark mode) plus the 2px underline, at least 3:1 on every fill. Pressed (mouse or touch down) shows the pressed fill and a half-width underline.
-- The border is 3:1 or better against the page in every state, light and dark (WCAG 1.4.11).
+- There is no outline. Hover darkens the border. Pressed (mouse or touch down) shows the pressed fill and the 2px underline at half width, growing from the centre. Focus (mouse or keyboard) shows the pressed border colour, the full-width underline and `shadow-md` (no shadow in dark mode). The underline grows from the centre to both sides in LTR and RTL alike, and is at least 3:1 on every fill.
+- The default border is 3:1 or better against the page, light and dark (WCAG 1.4.11). See Deviations for the two states that are not.
 - Errors set `aria-invalid` and show an icon with the message. Read-only fields stay focusable; disabled ones do not.
 - Adornment icons are decorative (`aria-hidden`). A suffix button needs its own `aria-label`.
 
@@ -82,10 +82,11 @@ The text, placeholder and adornments start on the right. Typed Arabic aligns rig
 
 ## Deviations from DGA
 
-- Filled lighter and darker keep their border in every state (Figma has none until hover).
-- Read-only is a dashed border in the default border colour (3:1) instead of the pale grey.
-- Pressed uses the pressed fill and a half-width underline; focus keeps the 2px underline and adds a 2px outline instead of a shadow, which also works in dark mode.
-- `field-border-default` is neutral-500 (was neutral-400, 2.6:1 on white) and the placeholder is neutral-600 in light mode.
+- The default border is neutral-500, not neutral-400 (2.6:1 on white), so the field can be found at rest.
+- The placeholder is neutral-500 as in DGA; only on the pressed and darker fills (4.34:1) does it use neutral-600.
+- The error border is error-600 (the live DGA CSS), not the Figma error-700.
+- A focused read-only field shows the underline, because it is still in the tab order.
+- Known gaps, kept as DGA draws them: the read-only border (1.5:1) and the lighter and darker fills at rest (1.0 to 1.1:1).
 
 <ComponentDeviations component="input" />
 

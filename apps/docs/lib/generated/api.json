@@ -1717,6 +1717,22 @@
           "descriptionAr": "`vertical` يتيح للمستخدم سحب الزاوية لتغيير الارتفاع. و`none` يثبّته."
         },
         {
+          "name": "className",
+          "type": "string",
+          "default": null,
+          "required": false,
+          "description": "Class names for the box around the field (border, fill and underline).",
+          "descriptionAr": "أصناف الإطار المحيط بالحقل (الحد والتعبئة والخط السفلي)."
+        },
+        {
+          "name": "inputClassName",
+          "type": "string",
+          "default": null,
+          "required": false,
+          "description": "Class names for the native `<textarea>`.",
+          "descriptionAr": "أصناف عنصر `<textarea>` الأصلي."
+        },
+        {
           "name": "rows",
           "type": "number",
           "default": "4",

@@ -1,7 +1,7 @@
 ---
 title: Textarea
 description: "حقل نص متعدد الأسطر يمكن للمستخدم تغيير حجمه. ثلاث تعبئات وكل الحالات: التمرير والتركيز والتعبئة والقراءة فقط والتعطيل والخطأ."
-sourceHash: a5bc1b92e8f0
+sourceHash: a3d378d83fb7
 ---
 
 <Preview name="textarea-states" title="حالات حقل النص المتعدد" />
@@ -66,7 +66,7 @@ export function DetailsField() {
 | <kbd>Enter</kbd> | يبدأ سطرًا جديدًا. |
 
 - عنصر `<textarea>` أصلي مرتبط بتسمية [Field](/docs/components/field) ونصه المساعد وخطئه.
-- حد التركيز نفسه وحد بنسبة 3:1 كما في [Input](/docs/components/input).
+- الحالات نفسها كما في [Input](/docs/components/input): ينمو الخط السفلي من الوسط عند الضغط (نصفًا) وعند التركيز (كاملًا)، ولا يوجد حد خارجي. ويحمل عنصر `<div>` الغلاف الحد والخط السفلي لأن `<textarea>` لا يستطيع رسمهما.
 - يمكن سحب مقبض تغيير الحجم بالمؤشر. ويحصل مستخدمو لوحة المفاتيح على المساحة نفسها بالكتابة؛ أعطِ `rows` ارتفاعًا يكفي للإجابة المتوقعة.
 - إن عرضت حدًا للأحرف فضعه في النص المساعد واستخدم `maxLength` ليُفرض.
 
@@ -77,7 +77,7 @@ export function DetailsField() {
 ## الاختلافات عن DGA [#deviations-from-dga]
 
 - في Figma نسخة واحدة بارتفاع ثابت. أما هذا الحقل فيكبر بحسب `rows` ويمكن تغيير حجمه.
-- تحتفظ التعبئتان الأفتح والأغمق بحدّهما كما في [Input](/docs/components/input).
+- لا حدّ للتعبئتين الأفتح والأغمق في حالة السكون، كما في [Input](/docs/components/input)، بما في ذلك الفجوة المعروفة.
 
 <ComponentDeviations component="textarea" />
 

@@ -42,10 +42,16 @@ export function formPairs(): ComponentPair[] {
   }
 
   // Text-like fields: Input, Textarea, Select trigger, Number Input, Search Box.
+  // There is no outline: the focus cue is the pressed border, the full underline and the shadow.
+  // The default fill's border is audited at rest. Lighter and darker have no border at rest (DGA);
+  // their hover, focus and press border is audited, the rest boundary is a documented gap.
   for (const component of ["input", "textarea", "select", "number-input", "search-box"]) {
     for (const surface of SURFACES) {
       for (const [fill, bg] of FILLS) {
         const name = fill === "default" ? "" : ` (${fill})`;
+        // The placeholder is neutral-500 except on the darker and pressed fills.
+        const placeholder =
+          fill === "darker" ? "field-text-placeholder-tinted" : "field-text-placeholder";
         add(component, `filled text${name}`, "field-text-filled", bg, 4.5, surface);
         add(component, `hovered text${name}`, "field-text-hovered", bg, 4.5, surface);
         add(
@@ -66,7 +72,7 @@ export function formPairs(): ComponentPair[] {
         add(
           component,
           `pressed placeholder${name}`,
-          "field-text-placeholder",
+          "field-text-placeholder-tinted",
           "field-background-pressed",
           4.5,
           surface,
@@ -87,14 +93,24 @@ export function formPairs(): ComponentPair[] {
           3,
           surface,
         );
-        add(component, `placeholder${name}`, "field-text-placeholder", bg, 4.5, surface);
+        add(component, `placeholder${name}`, placeholder, bg, 4.5, surface);
         add(component, `prefix and suffix text${name}`, "text-primary-paragraph", bg, 4.5, surface);
         add(component, `icon${name}`, "icon-default-500", bg, 3, surface);
-        add(component, `border, default${name}`, "field-border-default", surface, 3);
+        if (fill === "default")
+          add(component, "border, default", "field-border-default", surface, 3);
         add(component, `border, hovered${name}`, "field-border-hovered", surface, 3);
-        add(component, `border, focused${name}`, "field-border-pressed", surface, 3);
+        add(component, `border, focused and pressed${name}`, "field-border-pressed", surface, 3);
+        add(component, `underline, error${name}`, "field-border-error", surface, 3);
         add(component, `border, error${name}`, "field-border-error", surface, 3);
       }
+      // Lighter and darker show the default border on hover, focus and press.
+      add(
+        component,
+        "border, hover and focus (lighter and darker)",
+        "field-border-default",
+        surface,
+        3,
+      );
       add(
         component,
         "read-only text",
@@ -103,8 +119,6 @@ export function formPairs(): ComponentPair[] {
         4.5,
         surface,
       );
-      add(component, "border, read-only", "field-border-default", surface, 3);
-      add(component, "focus ring", "border-black", surface, 3);
     }
   }
   for (const surface of SURFACES) {

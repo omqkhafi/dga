@@ -489,6 +489,14 @@ COMPONENT_ADDITIONS.push(
     component: "switch",
   },
   {
+    name: "field-text-placeholder-tinted",
+    light: "{colors-neutral-600}",
+    dark: "{field-text-placeholder}",
+    reason:
+      "The DGA placeholder (neutral-500, #6c737f) is 4.83:1 on white but 4.34:1 on the filled darker fill and the pressed fill (#f3f4f6), under 4.5:1. Only those two states use this token (neutral-600, 6.2:1); everywhere else the placeholder is the DGA colour.",
+    component: "input",
+  },
+  {
     name: "control-icon-neutral",
     light: "{colors-base-white}",
     dark: "{colors-neutral-dark-950}",
@@ -504,15 +512,15 @@ COMPONENT_OVERRIDES.push(
     mode: "light",
     to: "{colors-neutral-500}",
     reason:
-      "neutral-400 (#9da4ae) on a white field is 2.58:1, below the 3:1 that WCAG 1.4.11 asks for input boundaries. neutral-500 is 4.83:1 on white and 4.3:1 or better on every field fill. Dark mode already passes (neutral dark 500, 3.8:1 or better).",
+      "DGA draws the default field border in neutral-400 (#9da4ae), which is 2.58:1 on a white field. The default field has a white fill on a white or near-white page, so the border is the only thing that marks its boundary at rest (WCAG 1.4.11, 3:1). Neutral-500 is 4.83:1 on white. Kept only for this reason; hover, focus and press use the DGA colours. Dark mode already passes.",
     component: "input",
   },
   {
-    token: "field-text-placeholder",
+    token: "field-border-error",
     mode: "light",
-    to: "{colors-neutral-600}",
+    to: "{colors-red-600}",
     reason:
-      "neutral-500 placeholder text on the filled darker fill (#f3f4f6) is 4.34:1, below the 4.5:1 minimum. neutral-600 is 6.2:1 on that fill and 7.6:1 on white.",
+      "Figma binds the error border to red-700 (#b42318); the live DGA CSS (--form-field-border-error) is error-600 (#d92d20), 4.77:1 on white, which still passes 3:1 as a border and 4.5:1 as the required marker. Follows the live DGA colour.",
     component: "input",
   },
   ...(["hovered", "pressed"] as const).map(
@@ -547,31 +555,32 @@ export const FORM_DEVIATIONS: Deviation[] = [
   },
   {
     area: "Components",
-    item: "Input, Textarea, Select: filled lighter and darker",
-    original:
-      "No border by default (border 0), a 1px border only on hover and focus. The fills are #fcfcfd and #f3f4f6.",
-    ours: "The border stays in every state. The fill changes, the boundary does not.",
+    item: "Input, Textarea, Select: read-only focus",
+    original: "A read-only field shows no change when it is focused.",
+    ours: "A focused read-only field shows the border colour change and the full underline (no shadow). Its fill and rest border are the DGA ones.",
     reason:
-      "The fills are 1.0:1 and 1.1:1 against the page, so without a border the field cannot be found (WCAG 1.4.11).",
+      "A read-only field is still in the tab order, and a focused element needs a visible indicator (WCAG 2.4.7). Without an outline, the underline is the indicator.",
     component: "input",
   },
   {
     area: "Components",
-    item: "Input, Textarea, Select: focus and pressed",
-    original:
-      "Focus: shadow-md and a 2px underline that grows in from the start. Pressed: underline at half width and field-background-pressed.",
-    ours: "Pressed (mouse or touch down) uses field-background-pressed and a half-width 2px underline, as in Figma. Focus keeps the full 2px underline (Input and Select) and the border takes field-border-pressed, and adds a 2px outline in border-black (white in dark mode) 1px outside the border. No shadow.",
+    item: "Input, Textarea, Select: read-only border",
+    original: "Solid border-neutral-primary (#d2d6db).",
+    ours: "The same, kept as DGA draws it. The value text is 4.5:1 or better.",
     reason:
-      "Shadows are off in dark mode, so the focus cue would vanish, and the underline alone is not a 3:1 focus indicator on every fill. The outline is visible in both modes and in forced colours; the underline keeps the DGA look.",
+      "Not remapped: #d2d6db is 1.5:1 on white, below the 3:1 of WCAG 1.4.11 if the boundary is needed to find the control. A read-only field shows a value, is not edited, and is named by its label, so the boundary is not what identifies it. Teams that treat read-only fields as controls should use a plain text display instead.",
+    status: "unresolved",
     component: "input",
   },
   {
     area: "Components",
-    item: "Input, Textarea, Select: read-only",
-    original: "border-neutral-primary (#d2d6db) with the default fill.",
-    ours: "A dashed border in field-border-default, the default fill and no hover change.",
+    item: "Input, Textarea, Select: filled lighter and darker at rest",
+    original:
+      "No border at rest, the border on hover, focus and press. The fills are #fcfcfd and #f3f4f6.",
+    ours: "The same, kept as DGA draws it. The border is transparent at rest (not removed), so the box does not shift when it appears.",
     reason:
-      "#d2d6db on white is 1.5:1. A read-only field can still be focused and read, so its boundary keeps 3:1. The dashed line tells it apart from an editable field without colour.",
+      "Not remapped: the fills are 1.0:1 and 1.1:1 against the page, below the 3:1 of WCAG 1.4.11 for the resting boundary. The label, the placeholder (4.5:1 or better) and the hover, focus and press border identify the field. Use the default fill where the field must be findable at rest.",
+    status: "unresolved",
     component: "input",
   },
   {

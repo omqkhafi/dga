@@ -4,7 +4,7 @@ import { Tag01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useState } from "react";
 import { StatusTag, Tag, type TagProps } from "@/registry/bases/base/ui/tag";
-import { Bi, useDirection } from "./bi";
+import { Bi, useBi, useDirection } from "./bi";
 import { OnColorSurface, Row, Stack } from "./kit";
 
 type Variant = NonNullable<TagProps["variant"]>;
@@ -17,9 +17,10 @@ const COLORS: { value: Exclude<Variant, "on-color">; en: string; ar: string }[] 
 ];
 
 export function TagVariants() {
+  const t = useBi();
   return (
     <Stack>
-      <Row label="Filled">
+      <Row label={<Bi en="Filled" ar="مملوء" />}>
         {COLORS.map((c) => (
           <Tag key={c.value} variant={c.value}>
             <HugeiconsIcon icon={Tag01Icon} />
@@ -27,21 +28,21 @@ export function TagVariants() {
           </Tag>
         ))}
       </Row>
-      <Row label="Outlined, rounded">
+      <Row label={<Bi en="Outlined, rounded" ar="بحدود، مستدير" />}>
         {COLORS.map((c) => (
           <Tag key={c.value} variant={c.value} outlined rounded>
             <Bi en={c.en} ar={c.ar} />
           </Tag>
         ))}
       </Row>
-      <Row label="Sizes xs, sm, md and icon-only">
+      <Row label={<Bi en="Sizes xs, sm, md and icon-only" ar="الأحجام xs وsm وmd وأيقونة فقط" />}>
         {(["xs", "sm", "md"] as const).map((size) => (
           <Tag key={size} size={size} variant="info">
             <Bi en="Label" ar="وسم" />
           </Tag>
         ))}
         {(["xs", "sm", "md"] as const).map((size) => (
-          <Tag key={size} size={size} variant="info" iconOnly aria-label="Tag">
+          <Tag key={size} size={size} variant="info" iconOnly aria-label={t("Tag", "وسم")}>
             <HugeiconsIcon icon={Tag01Icon} />
           </Tag>
         ))}
@@ -68,7 +69,7 @@ export function TagDismiss() {
   const rtl = useDirection() === "rtl";
   const [items, setItems] = useState(FILTERS);
   return (
-    <Row label="Removable filters">
+    <Row label={<Bi en="Removable filters" ar="مرشحات قابلة للإزالة" />}>
       {items.map((f) => (
         <Tag
           key={f.id}
@@ -112,7 +113,7 @@ export function StatusTags() {
           ))}
         </Row>
       ))}
-      <Row label="Sizes xs, sm, md">
+      <Row label={<Bi en="Sizes xs, sm, md" ar="الأحجام xs وsm وmd" />}>
         {(["xs", "sm", "md"] as const).map((size) => (
           <StatusTag key={size} size={size} variant="success">
             <Bi en="Completed" ar="مكتمل" />

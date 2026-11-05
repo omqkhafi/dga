@@ -408,4 +408,19 @@ export const ar: Dictionary = {
   "bento.termsLink": "شروط الخدمة",
   "bento.privacy": "الخصوصية",
   "bento.accessibility": "بيان إمكانية الوصول",
+
+  // Component previews: default strings of the components, by page language
+  "ui.optional": "اختياري",
+  "ui.clearSearch": "مسح البحث",
+  "ui.decrease": "إنقاص",
+  "ui.increase": "زيادة",
+  "ui.dropFiles": "اسحب الملفات وأفلتها هنا، أو اختر ملفات",
+  "ui.dropping": "أفلت الملفات لإضافتها",
+  "ui.uploaded": "تم الرفع",
+  "ui.uploading": "جارٍ الرفع",
+  "ui.removeFile": "إزالة {name}",
+  "ui.rejectedType": "نوع الملف غير مقبول.",
+  "ui.rejectedSize": "حجم الملف أكبر من المسموح.",
+  "ui.rejectedCount": "عدد الملفات أكبر من المسموح.",
+  "ui.loading": "جارٍ التحميل",
 };
