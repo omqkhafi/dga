@@ -18,6 +18,20 @@ export function orderedPages(lang: Locale): { name: string; url: string }[] {
   return pages;
 }
 
+/** The form components, listed under "Forms" in the sidebar, search and llms.txt. */
+export const FORM_COMPONENTS = [
+  "field",
+  "input",
+  "textarea",
+  "select",
+  "number-input",
+  "search-box",
+  "checkbox",
+  "radio",
+  "switch",
+  "file-upload",
+];
+
 /** Components that are used together, for the "Related" row on each component page. */
 export const RELATED: Record<string, string[]> = {
   button: ["link", "spinner", "badge"],
@@ -29,6 +43,16 @@ export const RELATED: Record<string, string[]> = {
   avatar: ["tag", "skeleton"],
   "featured-icon": ["badge", "avatar"],
   skeleton: ["spinner", "avatar"],
+  field: ["input", "checkbox", "select"],
+  input: ["field", "textarea", "number-input"],
+  textarea: ["input", "field"],
+  select: ["field", "input", "radio"],
+  "number-input": ["input", "field", "select"],
+  "search-box": ["input", "field", "select"],
+  checkbox: ["radio", "switch", "field"],
+  radio: ["checkbox", "select", "field"],
+  switch: ["checkbox", "radio", "field"],
+  "file-upload": ["field", "input", "button"],
 };
 
 export const FIGMA_URL =

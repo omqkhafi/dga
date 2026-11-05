@@ -1,9 +1,54 @@
 # Changelog
 
-All notable changes to DGA UI are documented here.
+All notable changes to Platform Code are documented here.
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the project uses [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
+
+## [0.3.0] - 2026-11-05
+
+Phase 3: Forms. Ten components, each in English and Arabic, all built on Base UI with the DGA tokens in light and dark.
+
+### Added
+
+- **Field** wraps every control: a label with a required (`*`) or optional marker, helper text, and an error message with an icon. The label names the control and the helper and error text are linked through `aria-describedby` (Base UI Field). Vertical and horizontal layouts, groups with a legend, and `invalid` plus `match` to drive errors from your own state.
+- **Input** (text input): `md` 32px and `lg` 40px, default, lighter and darker fills, prefix and suffix, and hover, focus, filled, read-only, disabled and error states.
+- **Textarea**: the same fills and states, resizable in height.
+- **Select** (DGA Dropdown Input) on Base UI Select: sizes, fills, groups and separators, a check mark on the chosen option, and a popup that is as wide as the trigger.
+- **Number Input** on Base UI Number Field: digits stay left to right and isolated (`dir="ltr"` with `unicode-bidi: isolate`), Arabic-Indic and Persian digits typed or pasted become Western digits, and the − and + buttons sit on the logical start and end.
+- **Search Box**: a search icon on the start side and a real clear button on the end side (`type="search"`, Escape clears, focus returns to the field).
+- **Checkbox** (primary and neutral, 16, 20 and 24px, indeterminate), **Radio** and **Radio Group**, and **Switch** (48 by 24px, optional check icon, thumb moves on the logical axis).
+- **File Upload**: a drop zone that is a real file input (keyboard, screen reader and drag and drop), a file list with remove, progress and error states, validation of type, size and count (`validateFiles`), and Arabic file names that keep their own direction.
+- **Docs:** a page per component in English and Arabic under a new "Forms" sidebar group (preview with direction, theme and viewport toolbar, installation, usage, anatomy, examples, RTL, accessibility, API reference, deviations, contrast, related components, previous and next), a citizen service request form built only from Field-based controls, the Arabic description of every prop, and "Forms" in the components table, search results and `llms.txt` (both languages).
+- **Registry:** ten new `registry:ui` items (`field`, `input`, `textarea`, `select`, `number-input`, `search-box`, `checkbox`, `radio`, `switch`, `file-upload`). `number-input` and `search-box` depend on `input`, and every control depends on `field`.
+- **Contrast audit for the form tokens:** every state of the `field-*`, `control-*` and `textarea-*` tokens, light and dark, 4,060 checks in all (text 4.5:1; input boundaries, check marks, radio dots, switch tracks and thumbs and focus rings 3:1).
+- **Tests:** unit tests for digit normalisation and file validation; `bun run test:e2e` now also checks the sitemap index, `robots.txt`, the bare manifest redirect, layout of every form page at 375 and 1280px in both languages, and a keyboard-only pass through the service request form in `/en` and `/ar`; `bun run test:install` installs a control on its own to check that its registry dependencies resolve; Lighthouse in CI also runs on the Arabic Input page.
+- New tokens: `control-thumb` (the white Switch thumb) and `control-icon-neutral` (the check mark on a neutral checkbox).
+
+### Changed
+
+- The token source label `dga-ui` is now `platform-code`, and the root package is named `platform-code`.
+- `bun run api` reports every missing Arabic description at once instead of stopping at the first.
+
+### Fixed
+
+- **`/sitemap.xml` returned 404.** It is now a sitemap index listing `/sitemap/en.xml` and `/sitemap/ar.xml`, and `robots.txt` lists it.
+- **`/manifest.webmanifest` returned 404.** It now redirects to the manifest of the visitor's language (the `dga_locale` cookie, then `Accept-Language`, then English), the same way every other URL without a language does.
+- **Leftover naming:** "DGA UI" in the first line of this file is "Platform Code", and the package and the internal token source label no longer say `dga-ui`.
+
+### Deviations
+
+Logged on the Deviations page and on each component page (the Arabic pages summarise them in Arabic).
+
+- `field-border-default` (neutral-400, 2.6:1 on white) is neutral-500 in light mode so input boundaries reach 3:1 (WCAG 1.4.11).
+- `field-text-placeholder` is neutral-600 in light mode: neutral-500 is 4.34:1 on the filled darker fill.
+- Filled lighter and darker keep a border in every state (Figma has none until hover, and the fills are 1.0:1 and 1.1:1 against the page).
+- Read-only fields have a dashed border at 3:1 instead of the pale grey (1.5:1); checkbox, radio and switch read-only use `control-border`.
+- Focus is a 2px outline outside the border instead of a shadow and underline, so it also works in dark mode.
+- Checked checkbox, radio and switch keep green-600 on hover and press in dark mode (Figma's lighter greens give the white mark 1.4–2.1:1).
+- The Switch off track is `control-border` (4.8:1) instead of #ccc (1.6:1).
+- The highlighted Select option has a 2px bar as well as a tint (the tint alone is 1.1:1).
+- Dropdown Input is named Select; Figma's Single and Multiple File Upload are one component; Search Box's trailing icon is a real clear button; Textarea grows and resizes.
 
 ## [0.2.0] - 2026-11-05
 

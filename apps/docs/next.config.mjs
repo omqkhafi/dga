@@ -17,6 +17,8 @@ const config = {
       { source: "/:lang(en|ar)/docs/:path*.md", destination: "/:lang/llms.mdx/:path*" },
       // Links from before the locales existed: /docs/components/button.md is English.
       { source: "/docs/:path*.md", destination: "/en/llms.mdx/:path*" },
+      // The sitemap index (app/sitemap-index/route.ts) lists /sitemap/en.xml and /sitemap/ar.xml.
+      { source: "/sitemap.xml", destination: "/sitemap-index" },
     ];
   },
 };

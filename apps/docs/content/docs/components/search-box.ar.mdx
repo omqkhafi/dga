@@ -1,0 +1,93 @@
+---
+title: Search Box
+description: "حقل بحث فيه أيقونة بحث وزر مسح. حجمان وثلاث تعبئات وكل الحالات."
+sourceHash: 4625446156da
+---
+
+<Preview name="search-box-states" title="حالات مربع البحث" />
+
+## التثبيت [#installation]
+
+<ComponentInstall name="search-box" />
+
+ويثبّت [Input](/docs/components/input) و[Field](/docs/components/field) أيضًا.
+
+## الاستخدام [#usage]
+
+```tsx title="page.tsx"
+import { useState } from "react";
+import { Field, FieldLabel } from "@/components/ui/field";
+import { SearchBox } from "@/components/ui/search-box";
+
+export function ServiceSearch() {
+  const [query, setQuery] = useState("");
+  return (
+    <Field>
+      <FieldLabel>البحث في الخدمات</FieldLabel>
+      <SearchBox
+        value={query}
+        onValueChange={setQuery}
+        placeholder="ابحث في الخدمات"
+        clearLabel="مسح البحث"
+      />
+    </Field>
+  );
+}
+```
+
+استخدم Search Box للعثور على عناصر في قائمة أو جدول أو الموقع كله. أعطه تسمية ظاهرة أو `aria-label`، ونصًا تلميحيًا يوضح ما يُبحث عنه. ترجم `clearLabel` في الصفحات العربية. والنتائج من عندك: يجمع هذا المكوّن عبارة البحث فقط.
+
+## البنية [#anatomy]
+
+- **الإطار**: الحد والتعبئة نفسهما في [Input](/docs/components/input).
+- **أيقونة البحث**: في جهة البداية، زخرفية.
+- **الحقل** (`type="search"`): عبارة البحث.
+- **زر المسح**: في جهة النهاية، يظهر عند وجود نص.
+
+## أمثلة [#examples]
+
+### زر المسح [#clear-button]
+
+اكتب لإظهار زر المسح. يفرغ الحقل ويعيد التركيز إليه ويستدعي `onValueChange` بنص فارغ. ويفعل <kbd>Esc</kbd> الشيء نفسه.
+
+<Preview compact name="search-box-demo" title="زر المسح" />
+
+### الحالات [#states]
+
+الافتراضية والمعبأة مع زر المسح وللقراءة فقط والمعطّلة، والحجم المتوسط مع التعبئة الأغمق.
+
+<Preview name="search-box-states" title="الحالات" />
+
+## RTL [#rtl]
+
+تقع أيقونة البحث على اليمين (البداية) وزر المسح على اليسار (النهاية). والأيقونتان غير اتجاهيتين فلا تُعكسان. ويُحاذى النص التلميحي وعبارة البحث العربيان إلى اليمين.
+
+<DirectionCompare name="search-box-demo" title="مربع البحث" />
+
+## إمكانية الوصول [#accessibility]
+
+| المفتاح | الإجراء |
+| --- | --- |
+| <kbd>Tab</kbd> | ينقل التركيز إلى الحقل، ثم إلى زر المسح عند وجود نص. |
+| <kbd>Esc</kbd> | يمسح النص. |
+| <kbd>Enter</kbd> | يرسل النموذج الذي يوجد فيه. |
+
+- حقل `type="search"` أصلي، تُعلنه قارئات الشاشة حقل بحث.
+- لزر المسح اسم (`clearLabel`) ومساحة نقر 24px وحد تركيز خاص به.
+- ضع الحقل داخل `<form role="search">` أو معلم `search` ليتمكن المستخدمون من القفز إليه.
+- أعلن عدد النتائج في منطقة حيّة (`role="status"`) عند تحديثها.
+
+## مرجع API [#api-reference]
+
+<ApiReference component="search-box" />
+
+## الاختلافات عن DGA [#deviations-from-dga]
+
+- نسخة الأيقونة اللاحقة في Figma (المسح أو الصوت) صارت زر مسح حقيقيًا باسم، ويعيد التركيز إلى الحقل.
+- تحتفظ التعبئتان الأفتح والأغمق بحدّهما كما في [Input](/docs/components/input).
+
+<ComponentDeviations component="search-box" />
+
+## التباين [#contrast]
+
+<ComponentContrast component="search-box" />

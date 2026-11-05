@@ -1,0 +1,86 @@
+---
+title: Switch
+description: "Turns a setting on or off right away. 48 by 24px, with an optional check icon, and hover, focus, read-only, disabled and error states."
+---
+
+<Preview name="switch-states" title="Switch states" />
+
+## Installation
+
+<ComponentInstall name="switch" />
+
+Installs [Field](/docs/components/field) too.
+
+## Usage
+
+```tsx title="page.tsx"
+import { Field, FieldContent, FieldLabel } from "@/components/ui/field";
+import { Switch } from "@/components/ui/switch";
+
+export function UpdatesField() {
+  return (
+    <Field orientation="horizontal" className="items-center justify-between">
+      <FieldContent>
+        <FieldLabel>أرسل لي تحديثات عن هذا الطلب</FieldLabel>
+      </FieldContent>
+      <Switch name="updates" defaultChecked />
+    </Field>
+  );
+}
+```
+
+Use a Switch for a setting that takes effect the moment it is flipped: notifications, a feature on or off. If the choice is only applied when a form is submitted, use [Checkbox](/docs/components/checkbox). Label what the switch does, not its state: "Request updates", not "On".
+
+## Anatomy
+
+- **Track** (`<span role="switch">` and a hidden `<input>`): 48 by 24px.
+- **Thumb**: the white circle that slides; it holds the check icon when `icon` is set.
+- **Label**, **helper text** and **error**: from [Field](/docs/components/field). Put the switch after FieldContent to trail it.
+
+## Examples
+
+### States
+
+Off, on, with a check icon, read-only, disabled and error.
+
+<Preview name="switch-states" title="States" />
+
+### Trailing switch
+
+Put the Switch after FieldContent and use `justify-between` for a settings list, with the switch at the end of each row.
+
+<Preview compact name="switch-trailing" title="Trailing switch" />
+
+## RTL
+
+The thumb moves along the logical axis: it starts on the right and slides left when on, the way the track reads. Nothing is flipped by hand; a trailing switch sits on the left.
+
+<DirectionCompare name="switch-states" title="Switch" />
+
+## Accessibility
+
+| Key | Action |
+| --- | --- |
+| <kbd>Tab</kbd> | Moves focus to the switch. |
+| <kbd>Space</kbd> | Turns it on or off. |
+
+- The `switch` role with `aria-checked`, and a hidden native input for forms.
+- The label is from [Field](/docs/components/field); clicking it flips the switch.
+- The off track and its white thumb, and the on track and thumb, are 3:1 or better in light and dark (WCAG 1.4.11). State is also shown by the thumb position, not colour alone.
+- Focus is a 2px outline 2px outside the track. An error adds a 2px error outline and a message with an icon.
+- Respects reduced motion: the thumb moves without animation.
+
+## API Reference
+
+<ApiReference component="switch" />
+
+## Deviations from DGA
+
+- The off track is `control-border` (4.8:1) instead of #ccc (1.6:1), with a white thumb (new token `control-thumb`).
+- Hover and press on the on track keep green-600 in dark mode (see [Checkbox](/docs/components/checkbox)).
+
+<ComponentDeviations component="switch" />
+
+## Contrast
+
+<ComponentContrast component="switch" />

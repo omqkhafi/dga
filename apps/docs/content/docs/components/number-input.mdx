@@ -1,0 +1,103 @@
+---
+title: Number Input
+description: "A numeric field with − and + buttons. Digits stay left to right and isolated, and Arabic-Indic digits typed in become Western digits."
+---
+
+<Preview name="number-input-states" title="Number Input states" />
+
+## Installation
+
+<ComponentInstall name="number-input" />
+
+Installs [Input](/docs/components/input) and [Field](/docs/components/field) too.
+
+## Usage
+
+```tsx title="page.tsx"
+import { Field, FieldLabel } from "@/components/ui/field";
+import { NumberInput } from "@/components/ui/number-input";
+
+export function QuantityField() {
+  return (
+    <Field name="quantity">
+      <FieldLabel>الكمية</FieldLabel>
+      <NumberInput
+        defaultValue={1}
+        min={1}
+        max={10}
+        decrementLabel="إنقاص"
+        incrementLabel="زيادة"
+      />
+    </Field>
+  );
+}
+```
+
+Use Number Input for quantities and amounts people nudge up and down. For identifiers that are digits but not quantities (a National ID, a phone number) use [Input](/docs/components/input) with `inputMode="numeric"`. Always translate `decrementLabel` and `incrementLabel` on Arabic pages.
+
+## Anatomy
+
+- **Box**: the same border and fill as [Input](/docs/components/input).
+- **Decrease button** (`−`): on the start side.
+- **Input**: the number, centred between the buttons, `dir="ltr"` with `unicode-bidi: isolate`.
+- **Increase button** (`+`): on the end side.
+
+## Examples
+
+### Min, max and step
+
+`min` and `max` stop the buttons and the arrow keys at the limits, and the button at the limit is disabled. `step` sets how much each press changes the value. The value you receive is always a `number`.
+
+<Preview compact name="number-input-demo" title="Min, max and step" />
+
+### States
+
+Default, filled, read-only, disabled and error, and the medium size with a darker fill.
+
+<Preview name="number-input-states" title="States" />
+
+### Formatting
+
+`format` takes `Intl.NumberFormat` options for currency, percent and units. The default `locale` is `en-u-nu-latn`, so digits are Western on every page.
+
+```tsx title="page.tsx"
+<NumberInput
+  defaultValue={250}
+  format={{ style: "currency", currency: "SAR", currencyDisplay: "code" }}
+/>
+```
+
+## RTL
+
+The buttons swap sides: − on the right (start) and + on the left (end). The digits do not move or reorder: the field is `dir="ltr"`, isolated from the Arabic text around it. Typing ٣ gives 3; the decimal mark ٫ gives a point.
+
+<DirectionCompare name="number-input-demo" title="Number Input" />
+
+## Accessibility
+
+| Key | Action |
+| --- | --- |
+| <kbd>Tab</kbd> | Moves focus to the field. The buttons are skipped; the arrow keys do the same. |
+| <kbd>ArrowUp</kbd> / <kbd>ArrowDown</kbd> | Increase or decrease by `step`. |
+| <kbd>Shift</kbd> + <kbd>ArrowUp</kbd> / <kbd>ArrowDown</kbd> | Change by 10 (`largeStep`). With <kbd>Alt</kbd>, by 0.1 (`smallStep`). |
+| <kbd>Home</kbd> / <kbd>End</kbd> | Jump to `min` or `max`, when they are set. |
+
+- The field is a text input with `inputmode="numeric"` and `aria-roledescription="Number field"`, so phones show a numeric keyboard and screen readers announce a number field.
+- The − and + buttons have names (`decrementLabel`, `incrementLabel`) and are 24px targets. They are disabled at the limits.
+- `dir="ltr"` and `unicode-bidi: isolate` keep digits and signs in order inside Arabic text.
+- Arabic-Indic and Persian digits are accepted when typed or pasted and become Western digits; screen readers read the Western value.
+
+## API Reference
+
+<ApiReference component="number-input" />
+
+## Deviations from DGA
+
+- Digits are always Western, left to right and isolated. Figma does not describe Arabic pages.
+- The − and + buttons are real buttons on the logical start and end sides.
+
+<ComponentDeviations component="number-input" />
+
+## Contrast
+
+<ComponentContrast component="number-input" />

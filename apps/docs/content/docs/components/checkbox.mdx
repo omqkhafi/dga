@@ -1,0 +1,93 @@
+---
+title: Checkbox
+description: "A box for a yes/no choice, or for choosing several options. Primary and neutral, three sizes, checked, indeterminate, read-only, disabled and error."
+---
+
+<Preview name="checkbox-states" title="Checkbox states" />
+
+## Installation
+
+<ComponentInstall name="checkbox" />
+
+Installs [Field](/docs/components/field) too.
+
+## Usage
+
+```tsx title="page.tsx"
+import { Checkbox } from "@/components/ui/checkbox";
+import { Field, FieldContent, FieldLabel } from "@/components/ui/field";
+
+export function ConsentField() {
+  return (
+    <Field orientation="horizontal" name="consent">
+      <Checkbox required />
+      <FieldContent>
+        <FieldLabel>أقرّ بأن المعلومات صحيحة</FieldLabel>
+      </FieldContent>
+    </Field>
+  );
+}
+```
+
+Use a Checkbox when someone can choose none, one or several options, or confirm something before submitting. The choice is applied when the form is submitted; for a setting that takes effect at once use [Switch](/docs/components/switch). For exactly one of several options use [Radio](/docs/components/radio).
+
+## Anatomy
+
+- **Box** (`<span role="checkbox">` and a hidden `<input>`): the border and fill.
+- **Mark**: a check, or a dash when indeterminate.
+- **Label**, **helper text** and **error**: from [Field](/docs/components/field), beside the box.
+
+## Examples
+
+### States
+
+Unchecked, checked, indeterminate, read-only, disabled, error and the neutral style.
+
+<Preview name="checkbox-states" title="States" />
+
+### Sizes
+
+`md` is 24px (default), `sm` 20px and `xs` 16px. The label, not the box, is the click target, so it stays comfortable at every size.
+
+<Preview compact name="checkbox-sizes" title="Sizes" />
+
+### Group with a parent
+
+Set `indeterminate` on the parent when only some children are checked. The parent checks or clears them all.
+
+<Preview compact name="checkbox-group" title="Group with a parent" />
+
+## RTL
+
+The box is on the right (start) of its label and the helper text lines up under the label. The check mark is not directional, so it is not flipped.
+
+<DirectionCompare name="checkbox-states" title="Checkbox" />
+
+## Accessibility
+
+| Key | Action |
+| --- | --- |
+| <kbd>Tab</kbd> | Moves focus to the checkbox. |
+| <kbd>Space</kbd> | Checks or unchecks it. |
+
+- The `checkbox` role with `aria-checked` (`true`, `false` or `mixed`), and a hidden native input for forms.
+- The label is from [Field](/docs/components/field); clicking it toggles the box.
+- The unchecked border is 3:1 or better on every surface; the checked fill and the mark are 3:1 against the surface and against each other (WCAG 1.4.11).
+- Focus is a 2px outline 2px outside the box. Read-only keeps a 3:1 border.
+- Errors show an icon and text with `aria-invalid`, not a colour change alone.
+
+## API Reference
+
+<ApiReference component="checkbox" />
+
+## Deviations from DGA
+
+- In dark mode the checked fill stays green-600 on hover and press, because Figma's lighter greens give the white mark 1.4–2.1:1.
+- The neutral check mark flips with the fill (new token `control-icon-neutral`).
+- Read-only has a 3:1 border (Figma: 1.5:1).
+
+<ComponentDeviations component="checkbox" />
+
+## Contrast
+
+<ComponentContrast component="checkbox" />

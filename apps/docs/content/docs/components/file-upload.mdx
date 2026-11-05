@@ -1,0 +1,119 @@
+---
+title: File Upload
+description: "A keyboard-accessible drop zone and a list of the chosen files, with remove, progress and error states and file validation."
+---
+
+<Preview name="file-upload-demo" title="File upload" />
+
+## Installation
+
+<ComponentInstall name="file-upload" />
+
+Installs [Field](/docs/components/field) too.
+
+## Usage
+
+```tsx title="page.tsx"
+import { Field, FieldLabel } from "@/components/ui/field";
+import { FileUpload } from "@/components/ui/file-upload";
+
+export function DocumentsField() {
+  return (
+    <Field name="documents">
+      <FieldLabel>المستندات الداعمة</FieldLabel>
+      <FileUpload
+        accept=".pdf,.jpg,.png"
+        maxSize={5 * 1024 * 1024}
+        maxFiles={3}
+        hint="PDF أو JPG أو PNG، حتى 5 MB للملف."
+        onFilesAdded={(files) => files.forEach(upload)}
+      />
+    </Field>
+  );
+}
+```
+
+Use File Upload to attach documents and images to a request. The component picks and checks files; you upload them. Pass `onFilesAdded` to start uploads, then keep the list in your state (`files`) and update each file's `status` and `progress`. Say the accepted formats and the size limit in `hint`.
+
+## Anatomy
+
+- **Drop zone** (`<label>` around a file `<input>`): the dashed area. The input is the focusable control.
+- **Hint**: formats and size limit.
+- **File list** (`<ul>`): one row per file with an icon, the name, the size or status, and a remove button.
+- **Progress bar** (`role="progressbar"`) while a file uploads.
+
+## Examples
+
+### Validation
+
+Files are checked against `accept`, `maxSize` and `maxFiles`. A rejected file stays in the list with the reason, so it is not lost silently. Try a file larger than 5 MB or an `.exe` file. `validateFiles()` is exported if you need the same check elsewhere.
+
+<Preview name="file-upload-demo" title="Validation" />
+
+### States
+
+The list shows a finished file, a file uploading with progress, a rejected file and a file waiting to upload. The drop zone can be disabled or in error.
+
+<Preview name="file-upload-states" title="States" />
+
+### Reporting progress
+
+Control the list with `files` and `onFilesChange`, and update the file while it uploads.
+
+```tsx title="page.tsx"
+const [files, setFiles] = useState<UploadFile[]>([]);
+
+<FileUpload
+  files={files}
+  onFilesChange={setFiles}
+  onFilesAdded={(added) =>
+    added.forEach((file) =>
+      upload(file.file, (progress) =>
+        setFiles((current) =>
+          current.map((f) =>
+            f.id === file.id
+              ? { ...f, status: progress < 100 ? "uploading" : "done", progress }
+              : f,
+          ),
+        ),
+      ),
+    )
+  }
+/>
+```
+
+## RTL
+
+The icon and text of each row start on the right, the remove button is on the left and the progress bar fills from right to left. File names keep their own direction (`dir="auto"` in a `<bdi>`): an Arabic name reads right to left and `report.pdf` left to right. Sizes and percentages are Western digits, left to right.
+
+<DirectionCompare name="file-upload-states" title="File Upload" />
+
+## Accessibility
+
+| Key | Action |
+| --- | --- |
+| <kbd>Tab</kbd> | Moves focus to the drop zone, then through the remove buttons. |
+| <kbd>Space</kbd> or <kbd>Enter</kbd> | Opens the file picker. |
+| <kbd>Enter</kbd> or <kbd>Space</kbd> on a remove button | Removes that file. |
+
+- The drop zone is a native file input, so it is focusable and works with the keyboard and with assistive technology. Dragging is an extra, never the only way (WCAG 2.1.1).
+- The focus outline goes around the whole zone. The dashed border is 3:1 or better; dragging over it adds a solid brand border and a tint.
+- Each remove button is named with the file ("Remove report.pdf"). Rejections are announced in a live region and shown in the list with an icon and text.
+- A progress bar has `role="progressbar"` with `aria-valuenow`; the percentage is also written next to it.
+- Translate `messages` on Arabic pages.
+
+## API Reference
+
+<ApiReference component="file-upload" />
+
+## Deviations from DGA
+
+- One component for Figma's Single and Multiple variants, with a drop zone that is a real file input.
+- Rejected files stay in the list with the reason.
+- Arabic file names keep their own direction.
+
+<ComponentDeviations component="file-upload" />
+
+## Contrast
+
+<ComponentContrast component="file-upload" />

@@ -1,5 +1,6 @@
 import { getT } from "./dictionary";
 import type { Locale } from "./i18n";
+import { FORM_COMPONENTS } from "./nav";
 import { siteUrl } from "./shared";
 import { getPageMarkdown, source } from "./source";
 
@@ -11,7 +12,8 @@ export function llmsIndex(lang: Locale) {
   const t = getT(lang);
   const groups = new Map<string, string[]>();
   for (const page of source.getPages(lang)) {
-    const group = page.slugs.length > 1 ? (page.slugs[0] as string) : "";
+    const isForm = page.slugs[0] === "components" && FORM_COMPONENTS.includes(page.slugs[1] ?? "");
+    const group = isForm ? "forms" : page.slugs.length > 1 ? (page.slugs[0] as string) : "";
     const line = `- [${page.data.title}](${mdUrl(page.url, lang)})${page.data.description ? `: ${page.data.description}` : ""}`;
     groups.set(group, [...(groups.get(group) ?? []), line]);
   }
@@ -19,6 +21,7 @@ export function llmsIndex(lang: Locale) {
     "": t("search.crumb.docs"),
     foundations: t("search.crumb.foundations"),
     components: t("search.crumb.components"),
+    forms: t("search.crumb.forms"),
   };
   const body = [...groups]
     .map(([group, lines]) => `## ${titles[group] ?? group}\n\n${lines.join("\n")}`)
@@ -28,7 +31,7 @@ export function llmsIndex(lang: Locale) {
 
 > ${t("meta.llmsSummary")}
 
-Install: \`npx shadcn@latest init ${siteUrl}/r/dga.json\`, then \`npx shadcn@latest add @dga/button\`.
+Install: \`npx shadcn@latest init ${siteUrl}/r/dga.json\`, then \`npx shadcn@latest add @dga/button @dga/field @dga/input\`.
 Every docs page is available as Markdown at its URL plus \`.md\`. Full text: ${siteUrl}/${lang}/llms-full.txt
 ${lang === "en" ? "Arabic" : "English"}: ${siteUrl}/${other}/llms.txt
 

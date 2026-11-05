@@ -5,6 +5,7 @@
 // Disabled states are exempt (WCAG 1.4.3 / 1.4.11), so they are not listed.
 
 import { chromePairs } from "./chrome";
+import { formPairs } from "./forms";
 import type { Mode } from "./source";
 
 export type ComponentPair = {
@@ -513,5 +514,6 @@ export function componentPairs(): ComponentPair[] {
     ...tagPairs(),
     ...featuredIconPairs(),
     ...avatarPairs(),
+    ...formPairs(),
   ];
 }

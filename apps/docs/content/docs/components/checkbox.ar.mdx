@@ -1,0 +1,94 @@
+---
+title: Checkbox
+description: "مربع لاختيار نعم/لا، أو لاختيار عدة خيارات. أساسي ومحايد، وثلاثة أحجام، ومحدد وجزئي وللقراءة فقط ومعطّل وخطأ."
+sourceHash: 6b0671255fe2
+---
+
+<Preview name="checkbox-states" title="حالات مربع الاختيار" />
+
+## التثبيت [#installation]
+
+<ComponentInstall name="checkbox" />
+
+ويثبّت [Field](/docs/components/field) أيضًا.
+
+## الاستخدام [#usage]
+
+```tsx title="page.tsx"
+import { Checkbox } from "@/components/ui/checkbox";
+import { Field, FieldContent, FieldLabel } from "@/components/ui/field";
+
+export function ConsentField() {
+  return (
+    <Field orientation="horizontal" name="consent">
+      <Checkbox required />
+      <FieldContent>
+        <FieldLabel>أقرّ بأن المعلومات صحيحة</FieldLabel>
+      </FieldContent>
+    </Field>
+  );
+}
+```
+
+استخدم Checkbox عندما يمكن للمستخدم ألا يختار شيئًا أو يختار خيارًا أو عدة خيارات، أو يقرّ بشيء قبل الإرسال. يُطبَّق الاختيار عند إرسال النموذج؛ وللإعداد الذي يسري فورًا استخدم [Switch](/docs/components/switch). ولاختيار واحد فقط من عدة خيارات استخدم [Radio](/docs/components/radio).
+
+## البنية [#anatomy]
+
+- **المربع** (`<span role="checkbox">` مع `<input>` مخفي): الحد والتعبئة.
+- **العلامة**: علامة صح، أو شرطة عند الحالة الجزئية.
+- **التسمية** و**النص المساعد** و**الخطأ**: من [Field](/docs/components/field)، بجانب المربع.
+
+## أمثلة [#examples]
+
+### الحالات [#states]
+
+غير محدد ومحدد وجزئي وللقراءة فقط ومعطّل وخطأ والنمط المحايد.
+
+<Preview name="checkbox-states" title="الحالات" />
+
+### الأحجام [#sizes]
+
+`md` بحجم 24px (الافتراضي)، و`sm` بحجم 20px، و`xs` بحجم 16px. والتسمية، لا المربع، هي هدف النقر، فيبقى مريحًا في كل الأحجام.
+
+<Preview compact name="checkbox-sizes" title="الأحجام" />
+
+### مجموعة مع عنصر أب [#indeterminate-group]
+
+اضبط `indeterminate` على العنصر الأب عندما يكون بعض الأبناء فقط محددًا. ويحدد الأب كل الأبناء أو يلغي تحديدهم.
+
+<Preview compact name="checkbox-group" title="مجموعة مع عنصر أب" />
+
+## RTL [#rtl]
+
+يقع المربع على يمين (بداية) تسميته، ويصطف النص المساعد تحت التسمية. وعلامة الصح غير اتجاهية فلا تُعكس.
+
+<DirectionCompare name="checkbox-states" title="مربع الاختيار" />
+
+## إمكانية الوصول [#accessibility]
+
+| المفتاح | الإجراء |
+| --- | --- |
+| <kbd>Tab</kbd> | ينقل التركيز إلى مربع الاختيار. |
+| <kbd>Space</kbd> | يحدده أو يلغي تحديده. |
+
+- الدور `checkbox` مع `aria-checked` (`true` أو `false` أو `mixed`)، وحقل أصلي مخفي للنماذج.
+- تأتي التسمية من [Field](/docs/components/field)؛ والنقر عليها يبدّل المربع.
+- حد المربع غير المحدد بنسبة 3:1 أو أفضل على كل سطح؛ وتعبئة المربع المحدد وعلامته بنسبة 3:1 مقابل السطح ومقابل بعضهما (WCAG 1.4.11).
+- التركيز حد بسمك 2px على بعد 2px خارج المربع. وللقراءة فقط حد بنسبة 3:1.
+- يعرض الخطأ أيقونة ونصًا مع `aria-invalid`، لا تغيّر لون وحده.
+
+## مرجع API [#api-reference]
+
+<ApiReference component="checkbox" />
+
+## الاختلافات عن DGA [#deviations-from-dga]
+
+- في الوضع الداكن تبقى تعبئة المربع المحدد green-600 عند التمرير والضغط، لأن الخضرة الأفتح في Figma تعطي العلامة البيضاء 1.4–2.1:1.
+- تنقلب علامة الصح المحايدة مع التعبئة (رمز جديد `control-icon-neutral`).
+- للقراءة فقط حد بنسبة 3:1 (في Figma: 1.5:1).
+
+<ComponentDeviations component="checkbox" />
+
+## التباين [#contrast]
+
+<ComponentContrast component="checkbox" />

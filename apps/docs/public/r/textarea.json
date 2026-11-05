@@ -1,0 +1,22 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "textarea",
+  "title": "Textarea",
+  "description": "DGA Textarea on Base UI Field: default, lighter and darker fills, resizable, hover, focus, read-only, disabled and error.",
+  "dependencies": [
+    "@base-ui/react",
+    "class-variance-authority"
+  ],
+  "registryDependencies": [
+    "https://dga.omqkhafi.dev/r/utils.json",
+    "https://dga.omqkhafi.dev/r/field.json"
+  ],
+  "files": [
+    {
+      "path": "bases/base/ui/textarea.tsx",
+      "content": "import { Field as FieldPrimitive } from \"@base-ui/react/field\";\nimport { cva, type VariantProps } from \"class-variance-authority\";\nimport type * as React from \"react\";\nimport { cn } from \"@/registry/bases/base/lib/utils\";\n\nconst textareaVariants = cva(\"block min-h-20 w-full min-w-0 rounded-sm border border-field-border-default bg-field-background-default px-4 py-3 text-sm text-field-text-filled transition-colors outline-none placeholder:text-field-text-placeholder hover:border-field-border-hovered active:bg-field-background-pressed focus-visible:border-field-border-pressed focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-offset-1 focus-visible:outline-border-black read-only:border-dashed read-only:border-field-border-default read-only:bg-field-background-default read-only:text-field-text-readonly read-only:hover:border-field-border-default read-only:active:bg-field-background-default disabled:active:bg-field-background-default disabled:cursor-not-allowed disabled:border-border-disabled disabled:text-text-default-disabled disabled:placeholder:text-text-default-disabled aria-invalid:border-field-border-error motion-reduce:transition-none\", {\n  variants: {\n    appearance: {\n      default: \"\",\n      lighter: \"bg-field-background-lighter focus-visible:bg-field-background-default has-[input:focus-visible]:bg-field-background-default\",\n      darker: \"bg-field-background-darker focus-visible:bg-field-background-default has-[input:focus-visible]:bg-field-background-default\",\n    },\n    resize: {\n      none: \"resize-none\",\n      vertical: \"resize-y\",\n    },\n  },\n  defaultVariants: { appearance: \"default\", resize: \"vertical\" },\n});\n\ntype TextareaProps = React.ComponentProps<\"textarea\"> & VariantProps<typeof textareaVariants>;\n\n/**\n * A multi-line text field that grows in height (it is resizable by default). Label it with a\n * Field. It is linked to the Field's label, helper text and error like any other control.\n */\nfunction Textarea({ className, appearance, resize, rows = 4, ...props }: TextareaProps) {\n  return (\n    <FieldPrimitive.Control\n      data-slot=\"textarea\"\n      render={<textarea rows={rows} />}\n      className={cn(textareaVariants({ appearance, resize }), className)}\n      {...(props as Record<string, unknown>)}\n    />\n  );\n}\n\nexport type { TextareaProps };\nexport { Textarea, textareaVariants };\n",
+      "type": "registry:ui"
+    }
+  ],
+  "type": "registry:ui"
+}

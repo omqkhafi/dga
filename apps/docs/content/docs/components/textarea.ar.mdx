@@ -1,0 +1,86 @@
+---
+title: Textarea
+description: "حقل نص متعدد الأسطر يمكن للمستخدم تغيير حجمه. ثلاث تعبئات وكل الحالات: التمرير والتركيز والتعبئة والقراءة فقط والتعطيل والخطأ."
+sourceHash: a5bc1b92e8f0
+---
+
+<Preview name="textarea-states" title="حالات حقل النص المتعدد" />
+
+## التثبيت [#installation]
+
+<ComponentInstall name="textarea" />
+
+ويثبّت [Field](/docs/components/field) أيضًا.
+
+## الاستخدام [#usage]
+
+```tsx title="page.tsx"
+import { Field, FieldDescription, FieldLabel } from "@/components/ui/field";
+import { Textarea } from "@/components/ui/textarea";
+
+export function DetailsField() {
+  return (
+    <Field name="details">
+      <FieldLabel required>تفاصيل الطلب</FieldLabel>
+      <Textarea required rows={4} />
+      <FieldDescription>اذكر رقم القطعة واسم الشارع.</FieldDescription>
+    </Field>
+  );
+}
+```
+
+استخدم Textarea للإجابات التي تحتاج أكثر من سطر: الأوصاف والتعليقات والأسباب. اضبط `rows` للارتفاع الابتدائي. اذكر الحد الأقصى في النص المساعد، ولا تقتطع النص بصمت.
+
+## البنية [#anatomy]
+
+- **Textarea** (`<textarea>`): الحد والتعبئة والنص ومقبض تغيير الحجم في عنصر واحد.
+- شريط التمرير هو شريط المتصفح نفسه؛ يظهر عندما يزيد النص عن ارتفاع الصندوق.
+
+## أمثلة [#examples]
+
+### الحالات [#states]
+
+الافتراضية والمعبأة وللقراءة فقط والمعطّلة وحالة الخطأ، مع التعبئة الأغمق دون تغيير الحجم.
+
+<Preview name="textarea-states" title="الحالات" />
+
+### تغيير الحجم [#resize]
+
+`resize="vertical"` (الافتراضي) يعرض مقبضًا في زاوية النهاية. استخدم `resize="none"` عندما يتطلب التخطيط ارتفاعًا ثابتًا. ولا يتغير عرض الحقل جانبيًا أبدًا.
+
+```tsx title="page.tsx"
+<Textarea resize="none" rows={6} />
+```
+
+## RTL [#rtl]
+
+يبدأ النص من اليمين ويقع مقبض تغيير الحجم في الزاوية السفلية اليسرى. ويتبع كل شيء اتجاه الصفحة.
+
+<DirectionCompare name="textarea-states" title="حقل النص المتعدد" />
+
+## إمكانية الوصول [#accessibility]
+
+| المفتاح | الإجراء |
+| --- | --- |
+| <kbd>Tab</kbd> | ينقل التركيز إلى الحقل. |
+| <kbd>Enter</kbd> | يبدأ سطرًا جديدًا. |
+
+- عنصر `<textarea>` أصلي مرتبط بتسمية [Field](/docs/components/field) ونصه المساعد وخطئه.
+- حد التركيز نفسه وحد بنسبة 3:1 كما في [Input](/docs/components/input).
+- يمكن سحب مقبض تغيير الحجم بالمؤشر. ويحصل مستخدمو لوحة المفاتيح على المساحة نفسها بالكتابة؛ أعطِ `rows` ارتفاعًا يكفي للإجابة المتوقعة.
+- إن عرضت حدًا للأحرف فضعه في النص المساعد واستخدم `maxLength` ليُفرض.
+
+## مرجع API [#api-reference]
+
+<ApiReference component="textarea" />
+
+## الاختلافات عن DGA [#deviations-from-dga]
+
+- في Figma نسخة واحدة بارتفاع ثابت. أما هذا الحقل فيكبر بحسب `rows` ويمكن تغيير حجمه.
+- تحتفظ التعبئتان الأفتح والأغمق بحدّهما كما في [Input](/docs/components/input).
+
+<ComponentDeviations component="textarea" />
+
+## التباين [#contrast]
+
+<ComponentContrast component="textarea" />

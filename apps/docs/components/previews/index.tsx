@@ -16,6 +16,29 @@ import {
   SkeletonLayouts,
 } from "./display";
 import {
+  CheckboxGroupDemo,
+  CheckboxSizes,
+  CheckboxStates,
+  FieldAnatomy,
+  FileUploadDemo,
+  FileUploadStates,
+  InputAdornments,
+  InputSizes,
+  InputStates,
+  NumberInputDemo,
+  NumberInputStates,
+  RadioGroupDemo,
+  RadioStates,
+  SearchBoxDemo,
+  SearchBoxStates,
+  SelectBasic,
+  SelectGroups,
+  SelectStates,
+  SwitchStates,
+  SwitchTrailing,
+  TextareaStates,
+} from "./forms";
+import {
   IconsDemo,
   RadiusDemo,
   ShadowsDemo,
@@ -25,6 +48,7 @@ import {
 } from "./foundations";
 import { LinkInline, LinkVariants } from "./link";
 import { ServiceCard } from "./service-card";
+import { ServiceRequestForm } from "./service-request";
 import { SpinnerSizes } from "./spinner";
 import { StatusColors } from "./status";
 import { StatusTags, TagDismiss, TagVariants } from "./tag";
@@ -57,6 +81,28 @@ export const previews = {
   "featured-icon": FeaturedIconDemo,
   skeleton: SkeletonDemo,
   "skeleton-layouts": SkeletonLayouts,
+  "field-anatomy": FieldAnatomy,
+  "service-request": ServiceRequestForm,
+  "input-sizes": InputSizes,
+  "input-states": InputStates,
+  "input-adornments": InputAdornments,
+  "textarea-states": TextareaStates,
+  "select-basic": SelectBasic,
+  "select-states": SelectStates,
+  "select-groups": SelectGroups,
+  "number-input-demo": NumberInputDemo,
+  "number-input-states": NumberInputStates,
+  "search-box-demo": SearchBoxDemo,
+  "search-box-states": SearchBoxStates,
+  "checkbox-states": CheckboxStates,
+  "checkbox-sizes": CheckboxSizes,
+  "checkbox-group": CheckboxGroupDemo,
+  "radio-group": RadioGroupDemo,
+  "radio-states": RadioStates,
+  "switch-states": SwitchStates,
+  "switch-trailing": SwitchTrailing,
+  "file-upload-demo": FileUploadDemo,
+  "file-upload-states": FileUploadStates,
 } satisfies Record<string, ComponentType>;
 
 export const previewNames = Object.keys(previews);

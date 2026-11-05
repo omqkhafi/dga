@@ -508,7 +508,7 @@
   --background-white: var(--colors-base-white);
   --background-neutral-50: var(--colors-neutral-50);
   --text-primary: var(--colors-primary-sa-flag-600-primary);
-  --field-text-placeholder: var(--text-secondary-paragraph);
+  --field-text-placeholder: var(--colors-neutral-600);
   --button-background-primary-pressed: var(--colors-primary-sa-flag-900);
   --button-background-primary-default: var(--colors-primary-sa-flag-600-primary);
   --button-background-primary-hovered: var(--colors-primary-sa-flag-700);
@@ -683,7 +683,7 @@
   --field-background-lighter: var(--colors-neutral-25);
   --field-background-darker: var(--colors-neutral-100);
   --field-background-pressed: var(--colors-neutral-100);
-  --field-border-default: var(--colors-neutral-400);
+  --field-border-default: var(--colors-neutral-500);
   --field-border-hovered: var(--colors-neutral-700);
   --field-border-pressed: var(--colors-neutral-950);
   --field-border-error: var(--border-error);
@@ -954,6 +954,8 @@
   --featured-icon-info-icon: var(--colors-blue-600);
   --featured-icon-info-border: var(--colors-blue-200);
   --skeleton-background: var(--colors-neutral-200);
+  --control-thumb: var(--colors-base-white);
+  --control-icon-neutral: var(--colors-base-white);
   --background: var(--background-body);
   --foreground: var(--text-default);
   --card: var(--background-card);
@@ -1087,7 +1089,7 @@
   --background-white: var(--colors-base-white);
   --background-neutral-50: var(--colors-neutral-50);
   --text-primary: var(--colors-primary-sa-flag-600-primary);
-  --field-text-placeholder: var(--text-secondary-paragraph);
+  --field-text-placeholder: var(--colors-neutral-600);
   --button-background-primary-pressed: var(--colors-primary-sa-flag-900);
   --button-background-primary-default: var(--colors-primary-sa-flag-600-primary);
   --button-background-primary-hovered: var(--colors-primary-sa-flag-700);
@@ -1262,7 +1264,7 @@
   --field-background-lighter: var(--colors-neutral-25);
   --field-background-darker: var(--colors-neutral-100);
   --field-background-pressed: var(--colors-neutral-100);
-  --field-border-default: var(--colors-neutral-400);
+  --field-border-default: var(--colors-neutral-500);
   --field-border-hovered: var(--colors-neutral-700);
   --field-border-pressed: var(--colors-neutral-950);
   --field-border-error: var(--border-error);
@@ -1533,6 +1535,8 @@
   --featured-icon-info-icon: var(--colors-blue-600);
   --featured-icon-info-border: var(--colors-blue-200);
   --skeleton-background: var(--colors-neutral-200);
+  --control-thumb: var(--colors-base-white);
+  --control-icon-neutral: var(--colors-base-white);
   --background: var(--background-body);
   --foreground: var(--text-default);
   --card: var(--background-card);
@@ -1722,8 +1726,8 @@
   --alpha-black-0: var(--colors-alpha-alpha-white-10);
   --border-white-40: var(--alpha-white-40);
   --control-primary: var(--alpha-white-0);
-  --control-primary-hovered: var(--colors-primary-sa-flag-300);
-  --control-primary-pressed: var(--colors-primary-sa-flag-400);
+  --control-primary-hovered: var(--colors-primary-sa-flag-600-primary);
+  --control-primary-pressed: var(--colors-primary-sa-flag-600-primary);
   --control-primary-focused: var(--colors-primary-sa-flag-600-primary);
   --control-primary--readonly: var(--alpha-white-0);
   --background-neutral-800: var(--colors-neutral-dark-600);
@@ -2020,6 +2024,8 @@
   --featured-icon-info-icon: var(--colors-blue-300);
   --featured-icon-info-border: var(--colors-blue-800);
   --skeleton-background: var(--colors-neutral-dark-700);
+  --control-thumb: var(--colors-base-white);
+  --control-icon-neutral: var(--colors-neutral-dark-950);
   --background: var(--background-body);
   --foreground: var(--text-default);
   --card: var(--background-card);

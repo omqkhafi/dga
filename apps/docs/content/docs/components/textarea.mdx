@@ -1,0 +1,85 @@
+---
+title: Textarea
+description: "A multi-line text field that the user can resize. Three fills and every state: hover, focus, filled, read-only, disabled and error."
+---
+
+<Preview name="textarea-states" title="Textarea states" />
+
+## Installation
+
+<ComponentInstall name="textarea" />
+
+Installs [Field](/docs/components/field) too.
+
+## Usage
+
+```tsx title="page.tsx"
+import { Field, FieldDescription, FieldLabel } from "@/components/ui/field";
+import { Textarea } from "@/components/ui/textarea";
+
+export function DetailsField() {
+  return (
+    <Field name="details">
+      <FieldLabel required>تفاصيل الطلب</FieldLabel>
+      <Textarea required rows={4} />
+      <FieldDescription>اذكر رقم القطعة واسم الشارع.</FieldDescription>
+    </Field>
+  );
+}
+```
+
+Use Textarea for answers that need more than a line: descriptions, comments, reasons. Set `rows` for the starting height. Tell people the limit in the helper text, and do not cut text off silently.
+
+## Anatomy
+
+- **Textarea** (`<textarea>`): the border, fill, text and resize handle in one element.
+- The scroll bar is the browser's own; it appears when the text is taller than the box.
+
+## Examples
+
+### States
+
+Default, filled, read-only, disabled and error, plus the darker fill without resizing.
+
+<Preview name="textarea-states" title="States" />
+
+### Resizing
+
+`resize="vertical"` (default) shows a handle at the end corner. Use `resize="none"` when the layout needs a fixed height. The field never resizes sideways.
+
+```tsx title="page.tsx"
+<Textarea resize="none" rows={6} />
+```
+
+## RTL
+
+Text starts on the right and the resize handle sits in the bottom-left corner. Everything follows the page direction.
+
+<DirectionCompare name="textarea-states" title="Textarea" />
+
+## Accessibility
+
+| Key | Action |
+| --- | --- |
+| <kbd>Tab</kbd> | Moves focus to the field. |
+| <kbd>Enter</kbd> | Starts a new line. |
+
+- A native `<textarea>` linked to its [Field](/docs/components/field) label, helper text and error.
+- Same focus outline and 3:1 border as [Input](/docs/components/input).
+- The resize handle can be dragged with a pointer. Keyboard users get the same space by typing; give `rows` enough height for the expected answer.
+- If you show a character limit, put it in the helper text and use `maxLength` so it is enforced.
+
+## API Reference
+
+<ApiReference component="textarea" />
+
+## Deviations from DGA
+
+- Figma has one fixed-height variant. This one grows with `rows` and can be resized.
+- Filled lighter and darker keep their border, as on [Input](/docs/components/input).
+
+<ComponentDeviations component="textarea" />
+
+## Contrast
+
+<ComponentContrast component="textarea" />

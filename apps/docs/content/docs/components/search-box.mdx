@@ -1,0 +1,92 @@
+---
+title: Search Box
+description: "A search field with a search icon and a clear button. Two sizes, three fills and every state."
+---
+
+<Preview name="search-box-states" title="Search Box states" />
+
+## Installation
+
+<ComponentInstall name="search-box" />
+
+Installs [Input](/docs/components/input) and [Field](/docs/components/field) too.
+
+## Usage
+
+```tsx title="page.tsx"
+import { useState } from "react";
+import { Field, FieldLabel } from "@/components/ui/field";
+import { SearchBox } from "@/components/ui/search-box";
+
+export function ServiceSearch() {
+  const [query, setQuery] = useState("");
+  return (
+    <Field>
+      <FieldLabel>البحث في الخدمات</FieldLabel>
+      <SearchBox
+        value={query}
+        onValueChange={setQuery}
+        placeholder="ابحث في الخدمات"
+        clearLabel="مسح البحث"
+      />
+    </Field>
+  );
+}
+```
+
+Use Search Box for finding things in a list, a table or the whole site. Give it a visible label or an `aria-label`, and a placeholder that says what is searched. Translate `clearLabel` on Arabic pages. Search results are your own: this component only collects the query.
+
+## Anatomy
+
+- **Box**: the same border and fill as [Input](/docs/components/input).
+- **Search icon**: on the start side, decorative.
+- **Input** (`type="search"`): the query.
+- **Clear button**: on the end side, shown when there is text.
+
+## Examples
+
+### Clear button
+
+Type to show the clear button. It empties the field, returns focus to it and calls `onValueChange` with an empty string. <kbd>Esc</kbd> does the same.
+
+<Preview compact name="search-box-demo" title="Clear button" />
+
+### States
+
+Default, filled with the clear button, read-only, disabled, and the medium size with a darker fill.
+
+<Preview name="search-box-states" title="States" />
+
+## RTL
+
+The search icon is on the right (start) and the clear button on the left (end). The icons are not directional, so they are not flipped. Arabic placeholders and queries align right.
+
+<DirectionCompare name="search-box-demo" title="Search Box" />
+
+## Accessibility
+
+| Key | Action |
+| --- | --- |
+| <kbd>Tab</kbd> | Moves focus to the field, then to the clear button when there is text. |
+| <kbd>Esc</kbd> | Clears the text. |
+| <kbd>Enter</kbd> | Submits the form it is in. |
+
+- A native `type="search"` input, announced as a search field.
+- The clear button has an accessible name (`clearLabel`), a 24px target and its own focus ring.
+- Put the field in a `<form role="search">` or a `search` landmark so people can jump to it.
+- Announce the number of results in a live region (`role="status"`) when they update.
+
+## API Reference
+
+<ApiReference component="search-box" />
+
+## Deviations from DGA
+
+- Figma's trailing icon variant (clear or voice) is a real clear button with a name, and returns focus to the field.
+- Filled lighter and darker keep their border, as on [Input](/docs/components/input).
+
+<ComponentDeviations component="search-box" />
+
+## Contrast
+
+<ComponentContrast component="search-box" />

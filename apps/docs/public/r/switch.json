@@ -1,0 +1,23 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "switch",
+  "title": "Switch",
+  "description": "DGA Switch on Base UI: 48x24px, optional check icon, hover, focus, read-only, disabled and error. Moves on the logical axis in RTL.",
+  "dependencies": [
+    "@base-ui/react",
+    "@hugeicons/react",
+    "@hugeicons/core-free-icons"
+  ],
+  "registryDependencies": [
+    "https://dga.omqkhafi.dev/r/utils.json",
+    "https://dga.omqkhafi.dev/r/field.json"
+  ],
+  "files": [
+    {
+      "path": "bases/base/ui/switch.tsx",
+      "content": "import { Switch as SwitchPrimitive } from \"@base-ui/react/switch\";\nimport { Tick02Icon } from \"@hugeicons/core-free-icons\";\nimport { HugeiconsIcon } from \"@hugeicons/react\";\nimport { cn } from \"@/registry/bases/base/lib/utils\";\n\ntype SwitchProps = SwitchPrimitive.Root.Props & {\n  /** Shows a check mark in the thumb while the switch is on. */\n  icon?: boolean;\n};\n\n/**\n * Turns a setting on or off right away (DGA: Switch). Use a Checkbox for choices that are\n * only applied when the form is submitted. Label it with a Field (`orientation=\"horizontal\"`).\n */\nfunction Switch({ className, icon = false, ...props }: SwitchProps) {\n  return (\n    <SwitchPrimitive.Root data-slot=\"switch\" className={cn(\"relative inline-flex h-6 w-12 shrink-0 cursor-pointer items-center rounded-full border-0 bg-control-border p-0.5 transition-colors focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-offset-2 focus-visible:outline-border-black data-checked:bg-control-primary-checked hover:data-checked:not-data-disabled:bg-control-primary-hovered active:data-checked:not-data-disabled:bg-control-primary-pressed data-invalid:not-data-checked:outline-2 data-invalid:not-data-checked:outline-solid data-invalid:not-data-checked:outline-field-border-error data-disabled:cursor-not-allowed data-disabled:bg-border-disabled data-disabled:data-checked:bg-border-disabled data-readonly:cursor-default data-readonly:bg-transparent data-readonly:ring-1 data-readonly:ring-control-border data-readonly:ring-inset motion-reduce:transition-none\", className)} {...props}>\n      <SwitchPrimitive.Thumb data-slot=\"switch-thumb\" className=\"pointer-events-none flex size-5 shrink-0 items-center justify-center rounded-full bg-control-thumb transition-[margin] ms-0 data-checked:ms-6 motion-reduce:transition-none [[data-readonly]>&]:bg-icon-default-500\">\n        {icon ? <HugeiconsIcon icon={Tick02Icon} aria-hidden className=\"hidden size-3.5 text-control-primary-checked [[data-checked]>&]:block\" /> : null}\n      </SwitchPrimitive.Thumb>\n    </SwitchPrimitive.Root>\n  );\n}\n\nexport type { SwitchProps };\nexport { Switch };\n",
+      "type": "registry:ui"
+    }
+  ],
+  "type": "registry:ui"
+}

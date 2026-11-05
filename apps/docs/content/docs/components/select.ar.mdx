@@ -1,0 +1,119 @@
+---
+title: Select
+description: "اختيار خيار واحد من قائمة (في DGA: Dropdown Input أي القائمة المنسدلة). حجمان وثلاث تعبئات ومجموعات وكل الحالات، على Base UI Select."
+sourceHash: cc7c210083aa
+---
+
+<Preview name="select-states" title="حالات القائمة المنسدلة" />
+
+## التثبيت [#installation]
+
+<ComponentInstall name="select" />
+
+ويثبّت [Field](/docs/components/field) أيضًا. هذا هو Dropdown Input في DGA (القائمة المنسدلة)؛ وسمّيناه Select تيمّنًا بجزء Base UI.
+
+## الاستخدام [#usage]
+
+```tsx title="page.tsx"
+import { Field, FieldLabel } from "@/components/ui/field";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+
+const services = [
+  { value: "issue", label: "إصدار رخصة" },
+  { value: "renew", label: "تجديد رخصة" },
+];
+
+export function ServiceField() {
+  return (
+    <Field name="service">
+      <FieldLabel required>الخدمة</FieldLabel>
+      <Select items={services} required>
+        <SelectTrigger>
+          <SelectValue placeholder="اختر خدمة" />
+        </SelectTrigger>
+        <SelectContent>
+          {services.map((s) => (
+            <SelectItem key={s.value} value={s.value}>
+              {s.label}
+            </SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
+    </Field>
+  );
+}
+```
+
+استخدم Select لاختيار خيار واحد من خمسة إلى خمسة عشر. وللأقل من ذلك يعرض [Radio](/docs/components/radio) كل الخيارات معًا؛ وللأكثر أضف حقل بحث. مرّر `items` ليعرض الزر تسمية القيمة المختارة، و`placeholder` يوضح ما المطلوب اختياره.
+
+## البنية [#anatomy]
+
+- **الزر** (`<button>`): الحد والتسمية المختارة أو النص التلميحي وسهم.
+- **المحتوى**: القائمة المنبثقة على سطح البطاقة وبعرض الزر.
+- **الخيار**: خيار واحد، وعليه علامة صح في جهة النهاية عند اختياره.
+- **المجموعة** و**التسمية** و**الفاصل** (اختيارية): تجمع الخيارات المترابطة.
+
+## أمثلة [#examples]
+
+### الأساسي [#basic]
+
+انقر للفتح، أو ركّز عليه واضغط <kbd>Enter</kbd> أو <kbd>Space</kbd> أو <kbd>ArrowDown</kbd>.
+
+<Preview compact name="select-basic" title="الأساسي" />
+
+### الحالات [#states]
+
+الافتراضية والمعبأة وللقراءة فقط والمعطّلة وحالة الخطأ، والحجم المتوسط مع التعبئة الأغمق.
+
+<Preview name="select-states" title="الحالات" />
+
+### المجموعات [#groups]
+
+لفّ الخيارات المترابطة في `SelectGroup` مع `SelectLabel`، وافصل بين المجموعات بـ `SelectSeparator`.
+
+<Preview compact name="select-groups" title="المجموعات" />
+
+## RTL [#rtl]
+
+يبدأ نص الزر من اليمين ويقع السهم على اليسار. وتفتح القائمة أسفل الزر وتُحاذى بحافة بدايته (اليمنى)؛ وتقع علامة الصح على اليسار.
+
+<DirectionCompare name="select-basic" title="القائمة المنسدلة" />
+
+## إمكانية الوصول [#accessibility]
+
+| المفتاح | الإجراء |
+| --- | --- |
+| <kbd>Tab</kbd> | ينقل التركيز إلى الزر. |
+| <kbd>Enter</kbd> أو <kbd>Space</kbd> أو <kbd>ArrowDown</kbd> | يفتح القائمة. |
+| <kbd>ArrowUp</kbd> / <kbd>ArrowDown</kbd> | ينتقل بين الخيارات. |
+| <kbd>Home</kbd> / <kbd>End</kbd> | يقفز إلى أول خيار أو آخره. |
+| كتابة حرف | يقفز إلى الخيار الذي يبدأ به. |
+| <kbd>Enter</kbd> | يختار الخيار المميّز ويغلق القائمة. |
+| <kbd>Esc</kbd> | يغلق القائمة ويعيد التركيز إلى الزر. |
+
+- للزر الدور `combobox` مع `aria-expanded`؛ وللقائمة الدور `listbox` ولكل خيار الدور `option` مع `aria-selected`.
+- تأتي التسمية من [Field](/docs/components/field). ويرتبط النص المساعد والأخطاء عبر `aria-describedby`.
+- للخيار المميّز شريط بسمك 2px مع تظليل، لا تظليل وحده (WCAG 2.4.7). وللخيار المختار علامة صح.
+- تحتفظ كل الحالات بحد بنسبة 3:1 ونص بنسبة 4.5:1، فاتحًا وداكنًا.
+
+## مرجع API [#api-reference]
+
+<ApiReference component="select" />
+
+## الاختلافات عن DGA [#deviations-from-dga]
+
+- سمّيناه Select (في Figma: Dropdown Input). يرسم Figma القائمة المفتوحة فقط؛ وسطح القائمة المنبثقة من عندنا.
+- للخيار المميّز شريط مع التظليل، لأن التظليل وحده بنسبة 1.1:1.
+- تحتفظ التعبئتان الأفتح والأغمق بحدّهما؛ والقراءة فقط بحد متقطع.
+
+<ComponentDeviations component="select" />
+
+## التباين [#contrast]
+
+<ComponentContrast component="select" />

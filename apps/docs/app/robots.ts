@@ -5,7 +5,10 @@ import { siteUrl } from "@/lib/shared";
 export default function robots(): MetadataRoute.Robots {
   return {
     rules: [{ userAgent: "*", allow: "/", disallow: ["/preview/", "/api/"] }],
-    sitemap: i18n.languages.map((lang) => `${siteUrl}/sitemap/${lang}.xml`),
+    sitemap: [
+      `${siteUrl}/sitemap.xml`,
+      ...i18n.languages.map((lang) => `${siteUrl}/sitemap/${lang}.xml`),
+    ],
     host: siteUrl,
   };
 }

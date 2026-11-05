@@ -760,6 +760,8 @@
   --color-featured-icon-info-icon: var(--featured-icon-info-icon);
   --color-featured-icon-info-border: var(--featured-icon-info-border);
   --color-skeleton-background: var(--skeleton-background);
+  --color-control-thumb: var(--control-thumb);
+  --color-control-icon-neutral: var(--control-icon-neutral);
 
   /* aliases */
   --background-color-body: var(--background-body);

@@ -54,6 +54,7 @@ export const en = {
   "search.suggest.colors": "Colors",
   "search.suggest.deviations": "Deviations from DGA",
   "search.crumb.components": "Components",
+  "search.crumb.forms": "Forms",
   "search.crumb.foundations": "Foundations",
   "search.crumb.docs": "Docs",
 

@@ -1,0 +1,100 @@
+---
+title: Radio
+description: "اختيار خيار واحد بالضبط من مجموعة. Radio وRadio Group، أساسي ومحايد، مع كل الحالات."
+sourceHash: 70a179290ae7
+---
+
+<Preview name="radio-group" title="مجموعة أزرار الاختيار" />
+
+## التثبيت [#installation]
+
+<ComponentInstall name="radio" />
+
+ويثبّت [Field](/docs/components/field) أيضًا.
+
+## الاستخدام [#usage]
+
+```tsx title="page.tsx"
+import { Field, FieldItem, FieldLabel, FieldLegend, FieldSet } from "@/components/ui/field";
+import { Radio, RadioGroup } from "@/components/ui/radio";
+
+export function ContactField() {
+  return (
+    <Field name="contact">
+      <FieldSet render={<RadioGroup defaultValue="sms" />}>
+        <FieldLegend>وسيلة التواصل المفضلة</FieldLegend>
+        <FieldItem>
+          <FieldLabel>
+            <Radio value="sms" />
+            رسالة نصية
+          </FieldLabel>
+        </FieldItem>
+        <FieldItem>
+          <FieldLabel>
+            <Radio value="email" />
+            البريد الإلكتروني
+          </FieldLabel>
+        </FieldItem>
+      </FieldSet>
+    </Field>
+  );
+}
+```
+
+استخدم Radio عندما يجب اختيار خيار واحد من اثنين إلى خمسة ورؤيتها كلها تفيد. ابدأ باختيار الخيار الأشيع محددًا فقط إن كان افتراضيًا آمنًا. وللخيارات الأكثر استخدم [Select](/docs/components/select)؛ ولاختيارات متعددة استخدم [Checkbox](/docs/components/checkbox).
+
+## البنية [#anatomy]
+
+- **RadioGroup**: المجموعة؛ قيمة واحدة في كل مرة.
+- **العنوان** (FieldLegend): اسم المجموعة.
+- **Radio**: العنصر الدائري وفيه نقطة عند اختياره.
+- **التسمية** و**النص المساعد** لكل خيار، من FieldItem.
+
+## أمثلة [#examples]
+
+### مجموعة أزرار الاختيار [#group]
+
+لفّ المجموعة في Field ثم FieldSet الذي يعرض RadioGroup، فيسمّي العنوان المجموعة ويسمّي كل FieldItem زره.
+
+<Preview compact name="radio-group" title="مجموعة أزرار الاختيار" />
+
+### الحالات [#states]
+
+غير محدد ومحدد، بالنغمتين الأساسية والمحايدة، وللقراءة فقط ومعطّل.
+
+<Preview name="radio-states" title="الحالات" />
+
+## RTL [#rtl]
+
+يقع زر الاختيار على يمين (بداية) تسميته. استخدم <kbd>ArrowDown</kbd> و<kbd>ArrowUp</kbd> في المجموعة العمودية: يعملان بالطريقة نفسها في الاتجاهين. وينتقل <kbd>ArrowRight</kbd> إلى الخيار التالي و<kbd>ArrowLeft</kbd> إلى السابق في الاتجاهين أيضًا (لا تعكسهما Base UI).
+
+<DirectionCompare name="radio-group" title="مجموعة أزرار الاختيار" />
+
+## إمكانية الوصول [#accessibility]
+
+| المفتاح | الإجراء |
+| --- | --- |
+| <kbd>Tab</kbd> | ينقل التركيز إلى المجموعة (إلى الزر المختار، أو الأول) وإلى خارجها. |
+| <kbd>ArrowDown</kbd> / <kbd>ArrowRight</kbd> | ينتقل إلى الخيار التالي ويختاره. |
+| <kbd>ArrowUp</kbd> / <kbd>ArrowLeft</kbd> | ينتقل إلى الخيار السابق ويختاره. |
+| <kbd>Space</kbd> | يختار الزر المركَّز عليه. |
+
+- الدور `radiogroup` للمجموعة و`radio` مع `aria-checked` لكل خيار. ويسمّي FieldSet وعنوانه المجموعة.
+- زر اختيار واحد فقط في ترتيب Tab، فالمجموعة محطة واحدة.
+- حلقة الزر غير المختار وحلقة المختار ونقطته بنسبة 3:1 أو أفضل على كل سطح (WCAG 1.4.11).
+- التركيز حد بسمك 2px على بعد 2px خارج الدائرة. وتبقى تسمية الأزرار المعطّلة وللقراءة فقط مقروءة.
+
+## مرجع API [#api-reference]
+
+<ApiReference component="radio" />
+
+## الاختلافات عن DGA [#deviations-from-dga]
+
+- تعبئة التمرير والضغط في الوضع الداكن كما في [Checkbox](/docs/components/checkbox): تبقى النقطة green-600.
+- للقراءة فقط حلقة بنسبة 3:1 (في Figma: 1.5:1).
+
+<ComponentDeviations component="radio" />
+
+## التباين [#contrast]
+
+<ComponentContrast component="radio" />

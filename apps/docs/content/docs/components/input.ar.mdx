@@ -1,0 +1,95 @@
+---
+title: Input
+description: "حقل نص من سطر واحد. حجمان وثلاث تعبئات وبادئة ولاحقة، وكل الحالات: التمرير والتركيز والتعبئة والقراءة فقط والتعطيل والخطأ."
+sourceHash: ec4d2419d657
+---
+
+<Preview name="input-states" title="حالات حقل الإدخال" />
+
+## التثبيت [#installation]
+
+<ComponentInstall name="input" />
+
+ويثبّت [Field](/docs/components/field) أيضًا.
+
+## الاستخدام [#usage]
+
+```tsx title="page.tsx"
+import { Field, FieldDescription, FieldLabel } from "@/components/ui/field";
+import { Input } from "@/components/ui/input";
+
+export function NameField() {
+  return (
+    <Field name="name">
+      <FieldLabel required>الاسم الكامل</FieldLabel>
+      <Input required autoComplete="name" />
+      <FieldDescription>كما يظهر في بطاقة الهوية.</FieldDescription>
+    </Field>
+  );
+}
+```
+
+استخدم Input للإجابات القصيرة من سطر واحد: الأسماء والهويات وعناوين البريد وأرقام الهاتف. اضبط `type` و`inputMode` للوحة مفاتيح مناسبة، و`autoComplete` ليتمكن المتصفح من التعبئة. وللأرقام التي تزيد وتنقص استخدم [Number Input](/docs/components/number-input)، وللنص متعدد الأسطر استخدم [Textarea](/docs/components/textarea).
+
+## البنية [#anatomy]
+
+- **الإطار** (`<div>`): الحد والتعبئة وحد التركيز.
+- **عنصر البداية** (اختياري): أيقونة أو بادئة قصيرة مثل `+966`.
+- **Input** (`<input>`): النص.
+- **عنصر النهاية** (اختياري): أيقونة أو لاحقة أو زر.
+
+## أمثلة [#examples]
+
+### الأحجام [#sizes]
+
+`lg` بارتفاع 40px (الافتراضي)، و`md` بارتفاع 32px.
+
+<Preview compact name="input-sizes" title="الأحجام" />
+
+### التعبئات [#fills]
+
+قيمة `appearance` إما `default` أو `lighter` أو `darker`. وخلافًا لملف Figma تحتفظ الثلاث بحد ظاهر، فيمكن العثور على الحقل دائمًا (انظر الاختلافات). وتعرضها الحالات أدناه كلها.
+
+<Preview name="input-states" title="التعبئات" />
+
+### البادئة واللاحقة [#prefix-and-suffix]
+
+يقبل `startAdornment` و`endAdornment` أيقونة أو نصًا، ويقعان في جهتي البداية والنهاية المنطقيتين. وتبقى أرقام الهاتف والبريد من اليسار إلى اليمين بـ `dir="ltr"`.
+
+<Preview compact name="input-adornments" title="البادئة واللاحقة" />
+
+## RTL [#rtl]
+
+يبدأ النص والنص التلميحي والعناصر الجانبية من اليمين. ويُحاذى النص العربي المكتوب إلى اليمين، ويُحاذى النص اللاتيني (كالبريد) بحسب `dir="ltr"` عند ضبطه.
+
+<DirectionCompare name="input-adornments" title="حقل الإدخال" />
+
+## إمكانية الوصول [#accessibility]
+
+| المفتاح | الإجراء |
+| --- | --- |
+| <kbd>Tab</kbd> | ينقل التركيز إلى الحقل. |
+| <kbd>Shift</kbd> + <kbd>Tab</kbd> | يعيد التركيز إلى الخلف. |
+
+- عنصر `<input>` أصلي: سمّه دائمًا بـ [Field](/docs/components/field)؛ فالنص التلميحي ليس تسمية.
+- التركيز حد بسمك 2px خارج الإطار (`border-black`، وأبيض في الوضع الداكن) مع الخط السفلي بسمك 2px، بنسبة 3:1 على الأقل على كل تعبئة. والضغط (بالفأرة أو اللمس) يعرض تعبئة الضغط وخطًا سفليًا بنصف العرض.
+- الحد بنسبة 3:1 أو أفضل مقابل الصفحة في كل الحالات، فاتحًا وداكنًا (WCAG 1.4.11).
+- يضبط الخطأ `aria-invalid` ويعرض أيقونة مع الرسالة. تبقى الحقول للقراءة فقط قابلة للتركيز، والمعطّلة لا.
+- أيقونات العناصر الجانبية زخرفية (`aria-hidden`). وزر اللاحقة يحتاج `aria-label` خاصًا به.
+
+## مرجع API [#api-reference]
+
+<ApiReference component="input" />
+
+## الاختلافات عن DGA [#deviations-from-dga]
+
+- تحتفظ التعبئتان الأفتح والأغمق بحدّهما في كل الحالات (في Figma لا حدّ لهما حتى التمرير).
+- للقراءة فقط: حد متقطع بلون الحد الافتراضي (3:1) بدل الرمادي الباهت.
+- الضغط يستخدم تعبئة الضغط وخطًا سفليًا بنصف العرض؛ ويحتفظ التركيز بالخط السفلي بسمك 2px ويضيف حدًّا بسمك 2px بدل الظل، وهو يعمل في الوضع الداكن أيضًا.
+- أصبح `field-border-default` هو neutral-500 (كان neutral-400 بنسبة 2.6:1 على الأبيض)، والنص التلميحي neutral-600 في الوضع الفاتح.
+
+<ComponentDeviations component="input" />
+
+## التباين [#contrast]
+
+<ComponentContrast component="input" />

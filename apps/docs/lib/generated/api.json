@@ -198,6 +198,107 @@
       ]
     }
   ],
+  "checkbox": [
+    {
+      "name": "Checkbox",
+      "description": "A box for a yes/no choice, or one of several. `indeterminate` shows a dash for a parent that is partly selected. Label it with a Field (`orientation=\"horizontal\"`) or an enclosing label.",
+      "descriptionAr": "مربع لاختيار نعم/لا، أو لاختيار واحد من عدة خيارات. `indeterminate` يعرض شرطة لعنصر أب اختير بعض أبنائه فقط. سمّه بـ Field (`orientation=\"horizontal\"`) أو بتسمية تحيط به.",
+      "inherits": {
+        "name": "Checkbox",
+        "url": "https://base-ui.com/react/components/checkbox"
+      },
+      "props": [
+        {
+          "name": "size",
+          "type": "\"xs\" | \"sm\" | \"md\"",
+          "default": "\"md\"",
+          "required": false,
+          "description": "Box size: `md` 24px, `sm` 20px, `xs` 16px.",
+          "descriptionAr": "حجم المربع: `md` ‏24px، و`sm` ‏20px، و`xs` ‏16px."
+        },
+        {
+          "name": "tone",
+          "type": "\"primary\" | \"neutral\"",
+          "default": "\"primary\"",
+          "required": false,
+          "description": "`primary` (green) or `neutral` (black in light mode).",
+          "descriptionAr": "`primary` (أخضر) أو `neutral` (أسود في الوضع الفاتح)."
+        },
+        {
+          "name": "indeterminate",
+          "type": "boolean",
+          "default": null,
+          "required": false,
+          "description": "Whether the checkbox is in a mixed state: neither ticked, nor unticked.",
+          "descriptionAr": "يعرض شرطة ويُبلّغ بـ `aria-checked=mixed`، لعنصر أب اختير بعض أبنائه فقط."
+        },
+        {
+          "name": "checked",
+          "type": "boolean",
+          "default": null,
+          "required": false,
+          "description": "Whether the checkbox is currently ticked. To render an uncontrolled checkbox, use the `defaultChecked` prop instead.",
+          "descriptionAr": "حالة متحكَّم بها."
+        },
+        {
+          "name": "defaultChecked",
+          "type": "boolean",
+          "default": null,
+          "required": false,
+          "description": "Whether the checkbox is initially ticked. To render a controlled checkbox, use the `checked` prop instead.",
+          "descriptionAr": "الحالة الابتدائية عند عدم التحكم."
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "default": null,
+          "required": false,
+          "description": "Whether the component should ignore user interaction.",
+          "descriptionAr": "يعطّل المربع."
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "default": null,
+          "required": false,
+          "description": "Identifies the field when a form is submitted.",
+          "descriptionAr": "اسم الحقل عند إرسال النموذج."
+        },
+        {
+          "name": "onCheckedChange",
+          "type": "(checked: boolean, details) => void",
+          "default": null,
+          "required": false,
+          "description": "Event handler called when the checkbox is ticked or unticked.",
+          "descriptionAr": "تُستدعى عند تبديل المستخدم المربع. من Base UI."
+        },
+        {
+          "name": "readOnly",
+          "type": "boolean",
+          "default": null,
+          "required": false,
+          "description": "Whether the user should be unable to tick or untick the checkbox.",
+          "descriptionAr": "يعرض الحالة دون إمكانية تغييرها."
+        },
+        {
+          "name": "required",
+          "type": "boolean",
+          "default": null,
+          "required": false,
+          "description": "Whether the user must tick the checkbox before submitting a form.",
+          "descriptionAr": "لا يمكن إرسال النموذج قبل تحديده."
+        },
+        {
+          "name": "value",
+          "type": "string",
+          "default": null,
+          "required": false,
+          "description": "The checkbox's value. Identifies it within a [Checkbox Group](https://base-ui.com/react/components/checkbox-group), falling back to `name` when omitted. When submitting a form, a checked box submits `value`; with no `value`, it submits the native \"on\".",
+          "descriptionAr": "القيمة التي تُرسل عند التحديد."
+        }
+      ]
+    }
+  ],
   "divider": [
     {
       "name": "Divider",
@@ -265,6 +366,424 @@
           "required": false,
           "description": "Round container instead of square.",
           "descriptionAr": "حاوية دائرية بدل المربعة."
+        }
+      ]
+    }
+  ],
+  "field": [
+    {
+      "name": "Field",
+      "description": "Wraps one form control with its label, helper text and error message. Links them for assistive technology: the label names the control and the helper text and error are announced through `aria-describedby`.",
+      "descriptionAr": "يلفّ عنصر تحكم واحدًا مع تسميته ونصه المساعد ورسالة الخطأ. ويربطها لتقنيات المساعدة: التسمية تسمّي العنصر، ويُقرأ النص المساعد ورسالة الخطأ عبر `aria-describedby`.",
+      "inherits": {
+        "name": "Field",
+        "url": "https://base-ui.com/react/components/field"
+      },
+      "props": [
+        {
+          "name": "orientation",
+          "type": "\"vertical\" | \"horizontal\"",
+          "default": "\"vertical\"",
+          "required": false,
+          "description": "`vertical` stacks label, control, helper text and error. `horizontal` puts the control (checkbox, radio, switch) beside its label and text.",
+          "descriptionAr": "`vertical` يرتّب التسمية والعنصر والنص المساعد والخطأ عموديًا. و`horizontal` يضع العنصر (مربع الاختيار أو زر الاختيار أو مفتاح التبديل) بجانب تسميته ونصوصه."
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "default": null,
+          "required": false,
+          "description": "Identifies the field when a form is submitted. Takes precedence over the `name` prop on the `<Field.Control>` component.",
+          "descriptionAr": "اسم عنصر التحكم. يربطه بقيمة النموذج وبأخطاء الخادم."
+        },
+        {
+          "name": "invalid",
+          "type": "boolean",
+          "default": null,
+          "required": false,
+          "description": "Whether the field is invalid. Useful when the field state is controlled by an external library.",
+          "descriptionAr": "يعلّم عنصر التحكم غير صالح بناءً على تحققك الخاص. اقرنه بـ `match` في FieldError."
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "default": null,
+          "required": false,
+          "description": "Whether the component should ignore user interaction. Takes precedence over the `disabled` prop on the `<Field.Control>` component.",
+          "descriptionAr": "يعطّل عنصر التحكم ويُخفِّت تسميته ونصه المساعد."
+        }
+      ]
+    },
+    {
+      "name": "FieldContent",
+      "description": "Groups the label, helper text and error beside a horizontal control.",
+      "descriptionAr": "يجمع التسمية والنص المساعد والخطأ بجانب عنصر تحكم أفقي.",
+      "inherits": {
+        "name": "Field",
+        "url": "https://base-ui.com/react/components/field"
+      },
+      "props": []
+    },
+    {
+      "name": "FieldDescription",
+      "description": "Helper text under the control. Linked to the control with `aria-describedby`.",
+      "descriptionAr": "نص مساعد تحت عنصر التحكم. يرتبط بالعنصر عبر `aria-describedby`.",
+      "inherits": {
+        "name": "Field",
+        "url": "https://base-ui.com/react/components/field"
+      },
+      "props": []
+    },
+    {
+      "name": "FieldError",
+      "description": "The error message, with an icon so the error never relies on colour alone. It renders when the control fails validation, or whenever `match` is `true`. Set `invalid` on the Field and `match` here to control it from your own state.",
+      "descriptionAr": "رسالة الخطأ، مع أيقونة حتى لا يعتمد الخطأ على اللون وحده. تظهر عند فشل التحقق، أو دائمًا عندما تكون `match` تساوي `true`. اضبط `invalid` على Field و`match` هنا للتحكم فيها من حالتك.",
+      "inherits": {
+        "name": "Field",
+        "url": "https://base-ui.com/react/components/field"
+      },
+      "props": [
+        {
+          "name": "match",
+          "type": "boolean | \"valueMissing\" | \"typeMismatch\" | …",
+          "default": null,
+          "required": false,
+          "description": "Determines whether to show the error message according to the field's [ValidityState](https://developer.mozilla.org/en-US/docs/Web/API/ValidityState). Specifying `true` will always show the error message, and lets external libraries control the visibility.",
+          "descriptionAr": "متى تظهر الرسالة. `true` تُظهرها دائمًا (استخدمها مع `invalid`)، ومفتاح صلاحية يُظهرها عند ذلك الفشل، وعند حذفها تظهر كلما فشل التحقق."
+        }
+      ]
+    },
+    {
+      "name": "FieldGroup",
+      "description": "Stacks several fields with the DGA spacing between them.",
+      "descriptionAr": "يرتّب عدة حقول عموديًا بالمسافة المعتمدة في DGA بينها.",
+      "inherits": {
+        "name": "Field",
+        "url": "https://base-ui.com/react/components/field"
+      },
+      "props": []
+    },
+    {
+      "name": "FieldItem",
+      "description": "One checkbox or radio inside a group, so each has its own label and helper text.",
+      "descriptionAr": "مربع اختيار أو زر اختيار واحد داخل مجموعة، ليكون لكل منهما تسميته ونصه المساعد.",
+      "inherits": {
+        "name": "Field",
+        "url": "https://base-ui.com/react/components/field"
+      },
+      "props": []
+    },
+    {
+      "name": "FieldLabel",
+      "description": "The visible name of the control. Clicking it focuses or toggles the control.",
+      "descriptionAr": "الاسم الظاهر لعنصر التحكم. النقر عليه يركّز العنصر أو يبدّل حالته.",
+      "inherits": {
+        "name": "Field",
+        "url": "https://base-ui.com/react/components/field"
+      },
+      "props": [
+        {
+          "name": "required",
+          "type": "boolean",
+          "default": null,
+          "required": false,
+          "description": "Shows the required marker (*). Also set `required` on the control so it is announced.",
+          "descriptionAr": "يعرض علامة المطلوب (*). اضبط `required` على عنصر التحكم أيضًا ليُعلَن للقارئ."
+        },
+        {
+          "name": "optional",
+          "type": "boolean",
+          "default": null,
+          "required": false,
+          "description": "Shows the optional marker, for fields that are not required in a form that mostly is.",
+          "descriptionAr": "يعرض علامة الاختياري، للحقول غير المطلوبة في نموذج أغلب حقوله مطلوبة."
+        },
+        {
+          "name": "optionalLabel",
+          "type": "string",
+          "default": "\"Optional\"",
+          "required": false,
+          "description": "Text of the optional marker. Translate it on Arabic pages.",
+          "descriptionAr": "نص علامة الاختياري. ترجمه في الصفحات العربية."
+        }
+      ]
+    },
+    {
+      "name": "FieldLegend",
+      "description": "The name of a group of controls. Use it instead of a label on a Fieldset.",
+      "descriptionAr": "اسم مجموعة عناصر التحكم. استخدمه بدل التسمية في FieldSet.",
+      "inherits": {
+        "name": "Field",
+        "url": "https://base-ui.com/react/components/field"
+      },
+      "props": [
+        {
+          "name": "required",
+          "type": "boolean",
+          "default": null,
+          "required": false,
+          "description": "Shows the required marker (*). Also set `required` on the control so it is announced.",
+          "descriptionAr": "يعرض علامة المطلوب (*)."
+        },
+        {
+          "name": "optional",
+          "type": "boolean",
+          "default": null,
+          "required": false,
+          "description": "Shows the optional marker, for fields that are not required in a form that mostly is.",
+          "descriptionAr": "يعرض علامة الاختياري."
+        },
+        {
+          "name": "optionalLabel",
+          "type": "string",
+          "default": "\"Optional\"",
+          "required": false,
+          "description": "Text of the optional marker. Translate it on Arabic pages.",
+          "descriptionAr": "نص علامة الاختياري. ترجمه في الصفحات العربية."
+        }
+      ]
+    },
+    {
+      "name": "FieldSet",
+      "description": "Groups related controls (a radio group, a set of checkboxes) under a legend.",
+      "descriptionAr": "يجمع عناصر تحكم مترابطة (مجموعة أزرار اختيار، أو عدة مربعات اختيار) تحت عنوان.",
+      "inherits": {
+        "name": "Field",
+        "url": "https://base-ui.com/react/components/field"
+      },
+      "props": []
+    }
+  ],
+  "file-upload": [
+    {
+      "name": "FileUpload",
+      "description": "A drop zone and the list of chosen files. The drop zone is a real file input, so it works with the keyboard (Tab, then Space or Enter) and with drag and drop. Files that fail validation stay in the list with their error. Label it with a Field.",
+      "descriptionAr": "منطقة إفلات وقائمة بالملفات المختارة. المنطقة حقل ملف حقيقي، فتعمل بلوحة المفاتيح (Tab ثم Space أو Enter) وبالسحب والإفلات. الملفات التي تفشل في التحقق تبقى في القائمة مع سبب الرفض. سمّها بـ Field.",
+      "inherits": {
+        "name": "Field",
+        "url": "https://base-ui.com/react/components/field"
+      },
+      "props": [
+        {
+          "name": "name",
+          "type": "string",
+          "default": null,
+          "required": false,
+          "description": "Name for form submission.",
+          "descriptionAr": "اسم الحقل عند إرسال النموذج."
+        },
+        {
+          "name": "files",
+          "type": "UploadFile[]",
+          "default": null,
+          "required": false,
+          "description": "The files in the list (controlled). Update `status` and `progress` as uploads run.",
+          "descriptionAr": "الملفات في القائمة (متحكَّم بها). حدّث `status` و`progress` أثناء الرفع."
+        },
+        {
+          "name": "accept",
+          "type": "string",
+          "default": null,
+          "required": false,
+          "description": "Accepted formats, as in the HTML `accept` attribute: `.pdf,image/*`.",
+          "descriptionAr": "الصيغ المقبولة كما في سمة HTML `accept`: `.pdf,image/*`."
+        },
+        {
+          "name": "maxSize",
+          "type": "number",
+          "default": null,
+          "required": false,
+          "description": "Largest size per file, in bytes.",
+          "descriptionAr": "أكبر حجم للملف الواحد بالبايت."
+        },
+        {
+          "name": "maxFiles",
+          "type": "number",
+          "default": null,
+          "required": false,
+          "description": "Most files in the list. `multiple` defaults to `true` when this is above 1.",
+          "descriptionAr": "أكبر عدد من الملفات في القائمة. تكون `multiple` مفعّلة افتراضيًا ما دام العدد أكبر من 1."
+        },
+        {
+          "name": "defaultFiles",
+          "type": "UploadFile[]",
+          "default": "[]",
+          "required": false,
+          "description": "The files the list starts with (uncontrolled).",
+          "descriptionAr": "الملفات التي تبدأ بها القائمة (عند عدم التحكم)."
+        },
+        {
+          "name": "onFilesChange",
+          "type": "(files: UploadFile[]) => void",
+          "default": null,
+          "required": false,
+          "description": "Called with the whole list whenever a file is added or removed.",
+          "descriptionAr": "تُستدعى بالقائمة كاملة كلما أُضيف ملف أو أُزيل."
+        },
+        {
+          "name": "onFilesAdded",
+          "type": "(files: UploadFile[]) => void",
+          "default": null,
+          "required": false,
+          "description": "Called with the files that passed validation, so you can start uploading them.",
+          "descriptionAr": "تُستدعى بالملفات التي اجتازت التحقق، لتبدأ رفعها."
+        },
+        {
+          "name": "multiple",
+          "type": "boolean",
+          "default": null,
+          "required": false,
+          "description": "Allows several files. Defaults to `true` unless `maxFiles` is 1.",
+          "descriptionAr": "يتيح عدة ملفات. مفعّل افتراضيًا ما لم تكن `maxFiles` تساوي 1."
+        },
+        {
+          "name": "hint",
+          "type": "string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<AwaitedReactNode>",
+          "default": null,
+          "required": false,
+          "description": "Shows the accepted formats and size under the drop zone.",
+          "descriptionAr": "يعرض الصيغ المقبولة والحجم تحت منطقة الإفلات."
+        },
+        {
+          "name": "messages",
+          "type": "Partial<FileUploadMessages>",
+          "default": null,
+          "required": false,
+          "description": "Text for the drop zone, upload statuses and errors. Translate it on Arabic pages.",
+          "descriptionAr": "نصوص منطقة الإفلات وحالات الرفع والأخطاء. ترجمها في الصفحات العربية."
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "default": null,
+          "required": false,
+          "description": "Disables the drop zone.",
+          "descriptionAr": "يعطّل منطقة الإفلات."
+        },
+        {
+          "name": "required",
+          "type": "boolean",
+          "default": null,
+          "required": false,
+          "description": "The form cannot be submitted without a file.",
+          "descriptionAr": "لا يمكن إرسال النموذج دون ملف."
+        }
+      ]
+    }
+  ],
+  "input": [
+    {
+      "name": "Input",
+      "description": "A single-line text field in a bordered box. Label it with a Field. Use `type=\"email\"`, `\"tel\"`, `\"url\"` or `\"password\"` for the matching keyboard and autofill.",
+      "descriptionAr": "حقل نص من سطر واحد داخل إطار. سمّه بـ Field. استخدم `type=\"email\"` أو `\"tel\"` أو `\"url\"` أو `\"password\"` للوحة المفاتيح والتعبئة التلقائية المناسبة.",
+      "inherits": {
+        "name": "Input",
+        "url": "https://base-ui.com/react/components/input"
+      },
+      "props": [
+        {
+          "name": "type",
+          "type": "string",
+          "default": null,
+          "required": false,
+          "description": "Input type: `text`, `email`, `tel`, `url`, `password` and so on.",
+          "descriptionAr": "نوع الحقل: `text` أو `email` أو `tel` أو `url` أو `password` وغيرها."
+        },
+        {
+          "name": "size",
+          "type": "\"md\" | \"lg\"",
+          "default": "\"lg\"",
+          "required": false,
+          "description": "Height: `md` 32px, `lg` 40px.",
+          "descriptionAr": "الارتفاع: `md` ‏32px، و`lg` ‏40px."
+        },
+        {
+          "name": "appearance",
+          "type": "\"default\" | \"lighter\" | \"darker\"",
+          "default": "\"default\"",
+          "required": false,
+          "description": "Fill: `default` (white), `lighter` or `darker`. All three keep a visible border.",
+          "descriptionAr": "التعبئة: `default` (أبيض) أو `lighter` أو `darker`. وتحتفظ الثلاث بحد ظاهر."
+        },
+        {
+          "name": "startAdornment",
+          "type": "string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<AwaitedReactNode>",
+          "default": null,
+          "required": false,
+          "description": "An icon or a short prefix (for example `+966`) before the text, on the start side.",
+          "descriptionAr": "أيقونة أو بادئة قصيرة (مثل `+966`) قبل النص، في جهة البداية."
+        },
+        {
+          "name": "endAdornment",
+          "type": "string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<AwaitedReactNode>",
+          "default": null,
+          "required": false,
+          "description": "An icon, suffix text or button after the text, on the end side.",
+          "descriptionAr": "أيقونة أو لاحقة نصية أو زر بعد النص، في جهة النهاية."
+        },
+        {
+          "name": "inputClassName",
+          "type": "string",
+          "default": null,
+          "required": false,
+          "description": "Class names for the native `<input>`. `className` styles the box around it.",
+          "descriptionAr": "أصناف CSS للعنصر `<input>` نفسه. أما `className` فيصمّم الإطار المحيط به."
+        },
+        {
+          "name": "defaultValue",
+          "type": "string | number",
+          "default": null,
+          "required": false,
+          "description": "The default value of the input. Use when uncontrolled.",
+          "descriptionAr": "القيمة الابتدائية عند عدم التحكم."
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "default": null,
+          "required": false,
+          "description": "Disables the field.",
+          "descriptionAr": "يعطّل الحقل."
+        },
+        {
+          "name": "onValueChange",
+          "type": "(value: string, details) => void",
+          "default": null,
+          "required": false,
+          "description": "Callback fired when the `value` changes. Use when controlled.",
+          "descriptionAr": "تُستدعى بالنص الجديد كلما تغيّر. من Base UI."
+        },
+        {
+          "name": "placeholder",
+          "type": "string",
+          "default": null,
+          "required": false,
+          "description": "Hint shown while empty.",
+          "descriptionAr": "نص تلميحي يظهر والحقل فارغ."
+        },
+        {
+          "name": "readOnly",
+          "type": "boolean",
+          "default": null,
+          "required": false,
+          "description": "The text can be read and copied but not changed.",
+          "descriptionAr": "يمكن قراءة النص ونسخه لكن لا يمكن تغييره."
+        },
+        {
+          "name": "required",
+          "type": "boolean",
+          "default": null,
+          "required": false,
+          "description": "The form cannot be submitted while the field is empty.",
+          "descriptionAr": "لا يمكن إرسال النموذج والحقل فارغ."
+        },
+        {
+          "name": "value",
+          "type": "string | number",
+          "default": null,
+          "required": false,
+          "description": "The value of the input. Use when controlled.",
+          "descriptionAr": "قيمة متحكَّم بها."
         }
       ]
     }
@@ -343,6 +862,599 @@
       ]
     }
   ],
+  "number-input": [
+    {
+      "name": "NumberInput",
+      "description": "A numeric field with − and + buttons. Digits are always written left to right, also on Arabic pages, and typing Arabic-Indic digits (٣) gives Western digits (3). Label it with a Field.",
+      "descriptionAr": "حقل رقمي بزرّي − و+. تُكتب الأرقام دائمًا من اليسار إلى اليمين، حتى في الصفحات العربية، وكتابة أرقام هندية (٣) تعطي أرقامًا غربية (3). سمّه بـ Field.",
+      "inherits": {
+        "name": "NumberField",
+        "url": "https://base-ui.com/react/components/number-field"
+      },
+      "props": [
+        {
+          "name": "size",
+          "type": "\"md\" | \"lg\"",
+          "default": null,
+          "required": false,
+          "description": "Height: `md` 32px, `lg` 40px.",
+          "descriptionAr": "الارتفاع: `md` ‏32px، و`lg` ‏40px."
+        },
+        {
+          "name": "appearance",
+          "type": "\"default\" | \"lighter\" | \"darker\"",
+          "default": null,
+          "required": false,
+          "description": "Fill style. `lighter` and `darker` keep the border.",
+          "descriptionAr": "التعبئة: `default` (أبيض) أو `lighter` أو `darker`. وتحتفظ الثلاث بحد ظاهر."
+        },
+        {
+          "name": "placeholder",
+          "type": "string",
+          "default": null,
+          "required": false,
+          "description": "Hint text shown while the field is empty.",
+          "descriptionAr": "نص تلميحي يظهر والحقل فارغ."
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "default": null,
+          "required": false,
+          "description": "Identifies the field when a form is submitted.",
+          "descriptionAr": "اسم الحقل عند إرسال النموذج."
+        },
+        {
+          "name": "decrementLabel",
+          "type": "string",
+          "default": "\"Decrease\"",
+          "required": false,
+          "description": "Accessible name of the decrease button. Translate it on Arabic pages.",
+          "descriptionAr": "اسم زر الإنقاص لتقنيات المساعدة. ترجمه في الصفحات العربية."
+        },
+        {
+          "name": "incrementLabel",
+          "type": "string",
+          "default": "\"Increase\"",
+          "required": false,
+          "description": "Accessible name of the increase button. Translate it on Arabic pages.",
+          "descriptionAr": "اسم زر الزيادة لتقنيات المساعدة. ترجمه في الصفحات العربية."
+        },
+        {
+          "name": "hideSteppers",
+          "type": "boolean",
+          "default": "false",
+          "required": false,
+          "description": "Hides the − and + buttons and leaves a plain numeric field.",
+          "descriptionAr": "يخفي زرّي − و+ ويترك حقلًا رقميًا بسيطًا."
+        },
+        {
+          "name": "inputClassName",
+          "type": "string",
+          "default": null,
+          "required": false,
+          "description": "Class names for the native `<input>`. `className` styles the box around it.",
+          "descriptionAr": "أصناف CSS للعنصر `<input>` نفسه. أما `className` فيصمّم الإطار المحيط به."
+        },
+        {
+          "name": "locale",
+          "type": "string",
+          "default": "\"en-u-nu-latn\"",
+          "required": false,
+          "description": "The locale of the input element. Defaults to the user's runtime locale.",
+          "descriptionAr": "لغة التنسيق. الافتراضي `en-u-nu-latn`: أرقام غربية في كل الصفحات، ومنها العربية."
+        },
+        {
+          "name": "value",
+          "type": "number | null",
+          "default": null,
+          "required": false,
+          "description": "The raw numeric value of the field.",
+          "descriptionAr": "قيمة متحكَّم بها. و`null` تعني حقلًا فارغًا."
+        },
+        {
+          "name": "step",
+          "type": "number",
+          "default": null,
+          "required": false,
+          "description": "Amount to increment and decrement with the buttons and arrow keys, or to scrub with pointer movement in the scrub area. To always enable step validation on form submission, specify the `min` prop explicitly in conjunction with this prop. Specify `step=\"any\"` to always disable step validation; interactive stepping then uses a base amount of `1`, while the alt and shift keys still step by `smallStep` and `largeStep`.",
+          "descriptionAr": "مقدار التغيير عند زرّي − و+ ومفتاحي السهمين. الافتراضي 1."
+        },
+        {
+          "name": "defaultValue",
+          "type": "number",
+          "default": null,
+          "required": false,
+          "description": "The uncontrolled value of the field when it's initially rendered. To render a controlled number field, use the `value` prop instead.",
+          "descriptionAr": "القيمة الابتدائية عند عدم التحكم."
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "default": null,
+          "required": false,
+          "description": "Whether the component should ignore user interaction.",
+          "descriptionAr": "يعطّل الحقل وزرّيه."
+        },
+        {
+          "name": "format",
+          "type": "Intl.NumberFormatOptions",
+          "default": null,
+          "required": false,
+          "description": "Options to format the input value.",
+          "descriptionAr": "خيارات التنسيق: العملة والنسبة المئوية والوحدات والكسور."
+        },
+        {
+          "name": "max",
+          "type": "number",
+          "default": null,
+          "required": false,
+          "description": "The maximum value of the input element.",
+          "descriptionAr": "أكبر قيمة."
+        },
+        {
+          "name": "min",
+          "type": "number",
+          "default": null,
+          "required": false,
+          "description": "The minimum value of the input element.",
+          "descriptionAr": "أصغر قيمة."
+        },
+        {
+          "name": "onValueChange",
+          "type": "(value: number | null, details) => void",
+          "default": null,
+          "required": false,
+          "description": "Callback fired when the number value changes. The `eventDetails.reason` indicates what triggered the change: - `'input-change'` for parseable typing or programmatic text updates - `'input-clear'` when the field becomes empty - `'input-blur'` when formatting (and clamping, if enabled) occurs on blur - `'input-paste'` for paste interactions - `'keyboard'` for arrow-key/Home/End stepping (typing digits uses `'input-change'`/`'input-clear'`) - `'increment-press'` / `'decrement-press'` for button presses on the increment and decrement controls - `'wheel'` for wheel-based scrubbing - `'scrub'` for scrub area drags",
+          "descriptionAr": "تُستدعى بالرقم بعد تحليله، وهو دائمًا `number` بأرقام غربية. من Base UI."
+        },
+        {
+          "name": "readOnly",
+          "type": "boolean",
+          "default": null,
+          "required": false,
+          "description": "Whether the user should be unable to change the field value.",
+          "descriptionAr": "يمكن قراءة الرقم لكن لا يمكن تغييره."
+        },
+        {
+          "name": "required",
+          "type": "boolean",
+          "default": null,
+          "required": false,
+          "description": "Whether the user must enter a value before submitting a form.",
+          "descriptionAr": "لا يمكن إرسال النموذج والحقل فارغ."
+        }
+      ]
+    }
+  ],
+  "radio": [
+    {
+      "name": "Radio",
+      "description": "One round option of a RadioGroup. Give every Radio a `value`.",
+      "descriptionAr": "زر اختيار دائري واحد في RadioGroup. أعطِ كل Radio قيمة `value`.",
+      "inherits": {
+        "name": "Radio",
+        "url": "https://base-ui.com/react/components/radio"
+      },
+      "props": [
+        {
+          "name": "tone",
+          "type": "\"primary\" | \"neutral\"",
+          "default": "\"primary\"",
+          "required": false,
+          "description": "`primary` (green) or `neutral` (black in light mode).",
+          "descriptionAr": "`primary` (أخضر) أو `neutral` (أسود في الوضع الفاتح)."
+        },
+        {
+          "name": "value",
+          "type": "string",
+          "default": null,
+          "required": true,
+          "description": "The unique identifying value of the radio in a group.",
+          "descriptionAr": "قيمة المجموعة عند اختيار هذا الزر."
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "default": null,
+          "required": false,
+          "description": "Whether the component should ignore user interaction.",
+          "descriptionAr": "يعطّل هذا الزر."
+        }
+      ]
+    },
+    {
+      "name": "RadioGroup",
+      "description": "A group of radios where only one can be chosen. Arrow keys move and choose, Tab enters and leaves the group. Wrap it in a Field with a FieldSet to give it a legend.",
+      "descriptionAr": "مجموعة أزرار اختيار لا يمكن اختيار أكثر من زر واحد فيها. تنقل مفاتيح الأسهم وتختار، ويدخل Tab المجموعة ويخرج منها. لفّها بـ Field مع FieldSet لتعطيها عنوانًا.",
+      "inherits": {
+        "name": "Radio",
+        "url": "https://base-ui.com/react/components/radio"
+      },
+      "props": [
+        {
+          "name": "value",
+          "type": "string",
+          "default": null,
+          "required": false,
+          "description": "The controlled value of the radio item that should be currently selected. To render an uncontrolled radio group, use the `defaultValue` prop instead.",
+          "descriptionAr": "قيمة متحكَّم بها."
+        },
+        {
+          "name": "defaultValue",
+          "type": "string",
+          "default": null,
+          "required": false,
+          "description": "The uncontrolled value of the radio button that should be initially selected. To render a controlled radio group, use the `value` prop instead.",
+          "descriptionAr": "القيمة الابتدائية عند عدم التحكم."
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "default": null,
+          "required": false,
+          "description": "Whether the component should ignore user interaction.",
+          "descriptionAr": "يعطّل كل أزرار الاختيار في المجموعة."
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "default": null,
+          "required": false,
+          "description": "Identifies the field when a form is submitted.",
+          "descriptionAr": "اسم الحقل عند إرسال النموذج."
+        },
+        {
+          "name": "onValueChange",
+          "type": "(value: string, details) => void",
+          "default": null,
+          "required": false,
+          "description": "Callback fired when the value changes.",
+          "descriptionAr": "تُستدعى عند اختيار المستخدم زرًا. من Base UI."
+        },
+        {
+          "name": "readOnly",
+          "type": "boolean",
+          "default": null,
+          "required": false,
+          "description": "Whether the user should be unable to select a different radio button in the group.",
+          "descriptionAr": "يعرض الاختيار دون إمكانية تغييره."
+        },
+        {
+          "name": "required",
+          "type": "boolean",
+          "default": null,
+          "required": false,
+          "description": "Whether the user must choose a value before submitting a form.",
+          "descriptionAr": "لا يمكن إرسال النموذج دون اختيار."
+        }
+      ]
+    }
+  ],
+  "search-box": [
+    {
+      "name": "SearchBox",
+      "description": "A search field with a search icon on the start side and a clear button on the end side that appears once there is text. It is `type=\"search\"`, so Escape clears it too.",
+      "descriptionAr": "حقل بحث فيه أيقونة بحث في جهة البداية وزر مسح في جهة النهاية يظهر عند وجود نص. نوعه `type=\"search\"`، فيمسحه Escape أيضًا.",
+      "inherits": {
+        "name": "Input",
+        "url": "https://base-ui.com/react/components/input"
+      },
+      "props": [
+        {
+          "name": "size",
+          "type": "\"md\" | \"lg\"",
+          "default": null,
+          "required": false,
+          "description": "Height: `md` 32px, `lg` 40px.",
+          "descriptionAr": "الارتفاع: `md` ‏32px، و`lg` ‏40px."
+        },
+        {
+          "name": "onValueChange",
+          "type": "(value: string) => void",
+          "default": null,
+          "required": false,
+          "description": "Called with the new text whenever it changes, including when it is cleared.",
+          "descriptionAr": "تُستدعى بالنص الجديد كلما تغيّر، ومنه عند المسح."
+        },
+        {
+          "name": "appearance",
+          "type": "\"default\" | \"lighter\" | \"darker\"",
+          "default": null,
+          "required": false,
+          "description": "Fill style. `lighter` and `darker` keep the border.",
+          "descriptionAr": "التعبئة: `default` (أبيض) أو `lighter` أو `darker`. وتحتفظ الثلاث بحد ظاهر."
+        },
+        {
+          "name": "value",
+          "type": "string",
+          "default": null,
+          "required": false,
+          "description": "The value of the input. Use when controlled.",
+          "descriptionAr": "نص متحكَّم به."
+        },
+        {
+          "name": "clearLabel",
+          "type": "string",
+          "default": "\"Clear search\"",
+          "required": false,
+          "description": "Accessible name of the clear button. Translate it on Arabic pages.",
+          "descriptionAr": "اسم زر المسح لتقنيات المساعدة. ترجمه في الصفحات العربية."
+        },
+        {
+          "name": "inputClassName",
+          "type": "string",
+          "default": null,
+          "required": false,
+          "description": "Class names for the native `<input>`. `className` styles the box around it.",
+          "descriptionAr": "أصناف CSS للعنصر `<input>` نفسه. أما `className` فيصمّم الإطار المحيط به."
+        },
+        {
+          "name": "defaultValue",
+          "type": "string",
+          "default": null,
+          "required": false,
+          "description": "The default value of the input. Use when uncontrolled.",
+          "descriptionAr": "النص الابتدائي عند عدم التحكم."
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "default": null,
+          "required": false,
+          "description": "Disables the field.",
+          "descriptionAr": "يعطّل الحقل."
+        },
+        {
+          "name": "readOnly",
+          "type": "boolean",
+          "default": null,
+          "required": false,
+          "description": "The text can be read but not changed. The clear button is hidden.",
+          "descriptionAr": "يمكن قراءة النص لكن لا يمكن تغييره. ويُخفى زر المسح."
+        },
+        {
+          "name": "placeholder",
+          "type": "string",
+          "default": null,
+          "required": false,
+          "description": "Hint shown while empty.",
+          "descriptionAr": "نص تلميحي يظهر والحقل فارغ."
+        }
+      ]
+    }
+  ],
+  "select": [
+    {
+      "name": "Select",
+      "description": "Lets people pick one option from a list (DGA: Dropdown Input). Compose it from SelectTrigger, SelectValue and SelectContent. Pass `items` so the trigger shows the label of the chosen value, and label it with a Field.",
+      "descriptionAr": "يتيح اختيار خيار واحد من قائمة (في DGA: Dropdown Input، أي القائمة المنسدلة). ركّبه من SelectTrigger وSelectValue وSelectContent. مرّر `items` ليعرض الزر تسمية القيمة المختارة، وسمّه بـ Field.",
+      "inherits": {
+        "name": "Select",
+        "url": "https://base-ui.com/react/components/select"
+      },
+      "props": [
+        {
+          "name": "items",
+          "type": "{ value, label }[] | Record<string, ReactNode>",
+          "default": null,
+          "required": false,
+          "description": "Data structure of the items rendered in the select popup. When specified, `<Select.Value>` renders the label of the selected item instead of the raw value.",
+          "descriptionAr": "الخيارات مع تسمياتها، ليعرض الزر تسمية القيمة المختارة قبل فتح القائمة."
+        },
+        {
+          "name": "value",
+          "type": "Value",
+          "default": null,
+          "required": false,
+          "description": "The value of the select. Use when controlled.",
+          "descriptionAr": "قيمة متحكَّم بها."
+        },
+        {
+          "name": "defaultValue",
+          "type": "Value",
+          "default": null,
+          "required": false,
+          "description": "The uncontrolled value of the select when it's initially rendered. To render a controlled select, use the `value` prop instead.",
+          "descriptionAr": "القيمة الابتدائية عند عدم التحكم."
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "default": null,
+          "required": false,
+          "description": "Whether the component should ignore user interaction.",
+          "descriptionAr": "يعطّل القائمة المنسدلة."
+        },
+        {
+          "name": "multiple",
+          "type": "boolean",
+          "default": null,
+          "required": false,
+          "description": "Whether multiple items can be selected.",
+          "descriptionAr": "يتيح اختيار عدة خيارات. وتكون القيمة حينئذٍ مصفوفة."
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "default": null,
+          "required": false,
+          "description": "Identifies the field when a form is submitted.",
+          "descriptionAr": "اسم الحقل عند إرسال النموذج."
+        },
+        {
+          "name": "onValueChange",
+          "type": "(value: Value, details) => void",
+          "default": null,
+          "required": false,
+          "description": "Event handler called when the value of the select changes.",
+          "descriptionAr": "تُستدعى عند اختيار المستخدم خيارًا. من Base UI."
+        },
+        {
+          "name": "readOnly",
+          "type": "boolean",
+          "default": null,
+          "required": false,
+          "description": "Whether the user should be unable to choose a different option from the select popup.",
+          "descriptionAr": "يعرض الاختيار دون فتح القائمة."
+        },
+        {
+          "name": "required",
+          "type": "boolean",
+          "default": null,
+          "required": false,
+          "description": "Whether the user must choose a value before submitting a form.",
+          "descriptionAr": "لا يمكن إرسال النموذج دون اختيار."
+        }
+      ]
+    },
+    {
+      "name": "SelectContent",
+      "description": "The popup list. It opens below the trigger by default and is as wide as the trigger.",
+      "descriptionAr": "القائمة المنبثقة. تفتح أسفل الزر افتراضيًا وبعرضه.",
+      "inherits": {
+        "name": "Select",
+        "url": "https://base-ui.com/react/components/select"
+      },
+      "props": [
+        {
+          "name": "side",
+          "type": "\"top\" | \"bottom\" | \"inline-start\" | \"inline-end\"",
+          "default": "\"bottom\"",
+          "required": false,
+          "description": "Which side of the anchor element to align the popup against. May automatically change to avoid collisions.",
+          "descriptionAr": "أي جهة من الزر تفتح عليها القائمة. الافتراضي `bottom`."
+        },
+        {
+          "name": "align",
+          "type": "\"start\" | \"center\" | \"end\"",
+          "default": "\"start\"",
+          "required": false,
+          "description": "How to align the popup relative to the specified side.",
+          "descriptionAr": "المحاذاة مع الزر. و`start` هي الحافة اليمنى في RTL."
+        },
+        {
+          "name": "sideOffset",
+          "type": "number",
+          "default": "4",
+          "required": false,
+          "description": "Distance between the anchor and the popup in pixels. Also accepts a function that returns the distance to read the dimensions of the anchor and positioner elements, along with its side and alignment. The function takes a `data` object parameter with the following properties: - `data.anchor`: the dimensions of the anchor element with properties `width` and `height`. - `data.positioner`: the dimensions of the positioner element with properties `width` and `height`. - `data.side`: which side of the anchor element the positioner is aligned against. - `data.align`: how the positioner is aligned relative to the specified side.",
+          "descriptionAr": "الفجوة بين الزر والقائمة بالبكسل. الافتراضي 4."
+        },
+        {
+          "name": "alignItemWithTrigger",
+          "type": "boolean",
+          "default": "false",
+          "required": false,
+          "description": "Whether the positioner overlaps the trigger so the selected item's text is aligned with the trigger's value text. This only applies to mouse input and is automatically disabled if there is not enough space.",
+          "descriptionAr": "يجعل الخيار المختار فوق الزر تمامًا، كالقائمة الأصلية في macOS. الافتراضي `false`."
+        }
+      ]
+    },
+    {
+      "name": "SelectGroup",
+      "description": "Groups related options under a SelectLabel.",
+      "descriptionAr": "يجمع خيارات مترابطة تحت SelectLabel.",
+      "inherits": {
+        "name": "Select",
+        "url": "https://base-ui.com/react/components/select"
+      },
+      "props": []
+    },
+    {
+      "name": "SelectItem",
+      "description": "One option. The chosen option shows a check mark on the end side.",
+      "descriptionAr": "خيار واحد. يظهر على الخيار المختار علامة صح في جهة النهاية.",
+      "inherits": {
+        "name": "Select",
+        "url": "https://base-ui.com/react/components/select"
+      },
+      "props": [
+        {
+          "name": "value",
+          "type": "Value",
+          "default": null,
+          "required": false,
+          "description": "A unique value that identifies this select item.",
+          "descriptionAr": "القيمة التي يمثلها هذا الخيار."
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "default": null,
+          "required": false,
+          "description": "Whether the component should ignore user interaction.",
+          "descriptionAr": "يعطّل الخيار."
+        }
+      ]
+    },
+    {
+      "name": "SelectLabel",
+      "description": "The heading of a SelectGroup.",
+      "descriptionAr": "عنوان SelectGroup.",
+      "inherits": {
+        "name": "Select",
+        "url": "https://base-ui.com/react/components/select"
+      },
+      "props": []
+    },
+    {
+      "name": "SelectSeparator",
+      "description": "",
+      "descriptionAr": "",
+      "inherits": {
+        "name": "Select",
+        "url": "https://base-ui.com/react/components/select"
+      },
+      "props": []
+    },
+    {
+      "name": "SelectTrigger",
+      "description": "The button that shows the chosen option and opens the list.",
+      "descriptionAr": "الزر الذي يعرض الخيار المختار ويفتح القائمة.",
+      "inherits": {
+        "name": "Select",
+        "url": "https://base-ui.com/react/components/select"
+      },
+      "props": [
+        {
+          "name": "size",
+          "type": "\"md\" | \"lg\"",
+          "default": "\"lg\"",
+          "required": false,
+          "description": "Height: `md` 32px, `lg` 40px.",
+          "descriptionAr": "الارتفاع: `md` ‏32px، و`lg` ‏40px."
+        },
+        {
+          "name": "appearance",
+          "type": "\"default\" | \"lighter\" | \"darker\"",
+          "default": "\"default\"",
+          "required": false,
+          "description": "Fill: `default` (white), `lighter` or `darker`. All three keep a visible border.",
+          "descriptionAr": "التعبئة: `default` (أبيض) أو `lighter` أو `darker`. وتحتفظ الثلاث بحد ظاهر."
+        }
+      ]
+    },
+    {
+      "name": "SelectValue",
+      "description": "The chosen option, or the `placeholder` while there is none.",
+      "descriptionAr": "الخيار المختار، أو `placeholder` ما دام لا يوجد اختيار.",
+      "inherits": {
+        "name": "Select",
+        "url": "https://base-ui.com/react/components/select"
+      },
+      "props": [
+        {
+          "name": "placeholder",
+          "type": "ReactNode",
+          "default": null,
+          "required": false,
+          "description": "The placeholder value to display when no value is selected. This is overridden by `children` if specified, or by a null item's label in `items`.",
+          "descriptionAr": "يظهر ما دام لم يُختر شيء."
+        }
+      ]
+    }
+  ],
   "skeleton": [
     {
       "name": "Skeleton",
@@ -399,6 +1511,83 @@
           "required": false,
           "description": "Text announced to screen readers. Pass `null` when something else already announces the busy state (for example a button with aria-busy).",
           "descriptionAr": "نص يُعلَن لقارئ الشاشة. مرّر `null` عندما يعلن شيء آخر حالة الانشغال (مثل زر فيه aria-busy)."
+        }
+      ]
+    }
+  ],
+  "switch": [
+    {
+      "name": "Switch",
+      "description": "Turns a setting on or off right away (DGA: Switch). Use a Checkbox for choices that are only applied when the form is submitted. Label it with a Field (`orientation=\"horizontal\"`).",
+      "descriptionAr": "يشغّل إعدادًا أو يوقفه فورًا (في DGA: Switch). استخدم مربع الاختيار للخيارات التي لا تُطبَّق إلا عند إرسال النموذج. سمّه بـ Field (`orientation=\"horizontal\"`).",
+      "inherits": {
+        "name": "Switch",
+        "url": "https://base-ui.com/react/components/switch"
+      },
+      "props": [
+        {
+          "name": "icon",
+          "type": "boolean",
+          "default": "false",
+          "required": false,
+          "description": "Shows a check mark in the thumb while the switch is on.",
+          "descriptionAr": "يعرض علامة صح داخل المقبض أثناء التشغيل."
+        },
+        {
+          "name": "checked",
+          "type": "boolean",
+          "default": null,
+          "required": false,
+          "description": "Whether the switch is currently active. To render an uncontrolled switch, use the `defaultChecked` prop instead.",
+          "descriptionAr": "حالة متحكَّم بها."
+        },
+        {
+          "name": "defaultChecked",
+          "type": "boolean",
+          "default": null,
+          "required": false,
+          "description": "Whether the switch is initially active. To render a controlled switch, use the `checked` prop instead.",
+          "descriptionAr": "الحالة الابتدائية عند عدم التحكم."
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "default": null,
+          "required": false,
+          "description": "Whether the component should ignore user interaction.",
+          "descriptionAr": "يعطّل المفتاح."
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "default": null,
+          "required": false,
+          "description": "Identifies the field when a form is submitted.",
+          "descriptionAr": "اسم الحقل عند إرسال النموذج."
+        },
+        {
+          "name": "onCheckedChange",
+          "type": "(checked: boolean, details) => void",
+          "default": null,
+          "required": false,
+          "description": "Event handler called when the switch is activated or deactivated.",
+          "descriptionAr": "تُستدعى عند قلب المستخدم المفتاح. من Base UI."
+        },
+        {
+          "name": "readOnly",
+          "type": "boolean",
+          "default": null,
+          "required": false,
+          "description": "Whether the user should be unable to activate or deactivate the switch.",
+          "descriptionAr": "يعرض الحالة دون إمكانية تغييرها."
+        },
+        {
+          "name": "required",
+          "type": "boolean",
+          "default": null,
+          "required": false,
+          "description": "Whether the user must activate the switch before submitting a form.",
+          "descriptionAr": "لا يمكن إرسال النموذج قبل تشغيله."
         }
       ]
     }
@@ -497,6 +1686,91 @@
           "required": false,
           "description": "Accessible name of the close button. Translate it on Arabic pages.",
           "descriptionAr": "الاسم الذي يقرؤه قارئ الشاشة لزر الإغلاق. ترجمه في الصفحات العربية."
+        }
+      ]
+    }
+  ],
+  "textarea": [
+    {
+      "name": "Textarea",
+      "description": "A multi-line text field that grows in height (it is resizable by default). Label it with a Field. It is linked to the Field's label, helper text and error like any other control.",
+      "descriptionAr": "حقل نص متعدد الأسطر يزداد ارتفاعه (وقابل لتغيير الحجم افتراضيًا). سمّه بـ Field. يرتبط بتسمية Field ونصه المساعد وخطأه كأي عنصر تحكم آخر.",
+      "inherits": {
+        "name": "Field",
+        "url": "https://base-ui.com/react/components/field"
+      },
+      "props": [
+        {
+          "name": "appearance",
+          "type": "\"default\" | \"lighter\" | \"darker\"",
+          "default": "\"default\"",
+          "required": false,
+          "description": "Fill: `default` (white), `lighter` or `darker`. All three keep a visible border.",
+          "descriptionAr": "التعبئة: `default` (أبيض) أو `lighter` أو `darker`. وتحتفظ الثلاث بحد ظاهر."
+        },
+        {
+          "name": "resize",
+          "type": "\"vertical\" | \"none\"",
+          "default": "\"vertical\"",
+          "required": false,
+          "description": "`vertical` lets the user drag the corner to change the height. `none` fixes it.",
+          "descriptionAr": "`vertical` يتيح للمستخدم سحب الزاوية لتغيير الارتفاع. و`none` يثبّته."
+        },
+        {
+          "name": "rows",
+          "type": "number",
+          "default": "4",
+          "required": false,
+          "description": "Visible lines of text, which sets the starting height.",
+          "descriptionAr": "عدد الأسطر الظاهرة، وهو يحدد الارتفاع الابتدائي."
+        },
+        {
+          "name": "defaultValue",
+          "type": "string",
+          "default": null,
+          "required": false,
+          "description": "Initial value when uncontrolled.",
+          "descriptionAr": "القيمة الابتدائية عند عدم التحكم."
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "default": null,
+          "required": false,
+          "description": "Disables the field.",
+          "descriptionAr": "يعطّل الحقل."
+        },
+        {
+          "name": "placeholder",
+          "type": "string",
+          "default": null,
+          "required": false,
+          "description": "Hint shown while empty.",
+          "descriptionAr": "نص تلميحي يظهر والحقل فارغ."
+        },
+        {
+          "name": "readOnly",
+          "type": "boolean",
+          "default": null,
+          "required": false,
+          "description": "The text can be read and copied but not changed.",
+          "descriptionAr": "يمكن قراءة النص ونسخه لكن لا يمكن تغييره."
+        },
+        {
+          "name": "required",
+          "type": "boolean",
+          "default": null,
+          "required": false,
+          "description": "The form cannot be submitted while the field is empty.",
+          "descriptionAr": "لا يمكن إرسال النموذج والحقل فارغ."
+        },
+        {
+          "name": "value",
+          "type": "string",
+          "default": null,
+          "required": false,
+          "description": "Controlled value.",
+          "descriptionAr": "قيمة متحكَّم بها."
         }
       ]
     }
