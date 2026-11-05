@@ -19,10 +19,10 @@ export function DocumentsNeeded() {
   return (
     <InlineAlert
       variant="info"
-      title="مستندات مطلوبة"
-      actions={<Button size="sm">إرفاق مستند</Button>}
+      title="Documents required"
+      actions={<Button size="sm">Attach document</Button>}
     >
-      أرفق عقد الإيجار قبل التقديم.
+      Attach the lease before you submit.
     </InlineAlert>
   );
 }
@@ -44,6 +44,12 @@ Use an Inline Alert for a message that belongs to one place: a form that has a p
 The five kinds on a white fill (left) and `tinted` (right). The info and warning alerts can be dismissed; the success and destructive ones have actions.
 
 <Preview compact name="inline-alert-kinds" title="White and tinted" />
+
+### Without an icon and dismissed
+
+`hideIcon` removes the status icon: the bar and the title still carry the kind. A destructive or warning alert is announced at once. After it is dismissed `onDismiss` runs and nothing is rendered in its place.
+
+<Preview compact name="inline-alert-states" title="Without an icon and dismissed" />
 
 ## RTL
 

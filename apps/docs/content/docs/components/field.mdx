@@ -20,9 +20,9 @@ import { Input } from "@/components/ui/input";
 export function NationalIdField({ error }: { error?: string }) {
   return (
     <Field name="nationalId" invalid={Boolean(error)}>
-      <FieldLabel required>رقم الهوية الوطنية</FieldLabel>
+      <FieldLabel required>National ID number</FieldLabel>
       <Input required inputMode="numeric" />
-      <FieldDescription>10 أرقام تبدأ بالرقم 1 أو 2.</FieldDescription>
+      <FieldDescription>10 digits, starting with 1 or 2.</FieldDescription>
       <FieldError match={Boolean(error)}>{error}</FieldError>
     </Field>
   );
@@ -47,8 +47,8 @@ Put one control in each Field. The label names the control, and the helper text 
 Mark required fields with `required` on the label **and** on the control, so the marker is seen and the requirement is announced. In a form where most fields are required, mark the exceptions with `optional` and translate the text with `optionalLabel`.
 
 ```tsx title="page.tsx"
-<FieldLabel required>الاسم الكامل</FieldLabel>
-<FieldLabel optional optionalLabel="اختياري">المسمى الوظيفي</FieldLabel>
+<FieldLabel required>Full name</FieldLabel>
+<FieldLabel optional optionalLabel="Optional">Job title</FieldLabel>
 ```
 
 ### Error messages
@@ -69,8 +69,8 @@ Use `orientation="horizontal"` with FieldContent for a checkbox or switch, and F
 <Field orientation="horizontal">
   <Checkbox />
   <FieldContent>
-    <FieldLabel>أوافق على الشروط</FieldLabel>
-    <FieldDescription>يمكنك سحب الموافقة لاحقًا.</FieldDescription>
+    <FieldLabel>I agree to the terms</FieldLabel>
+    <FieldDescription>You can withdraw consent later.</FieldDescription>
   </FieldContent>
 </Field>
 ```

@@ -17,14 +17,14 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 export function RequestTabs() {
   return (
     <Tabs defaultValue="details">
-      <TabsList aria-label="أقسام الطلب">
-        <TabsTrigger value="details">التفاصيل</TabsTrigger>
-        <TabsTrigger value="documents">المستندات</TabsTrigger>
-        <TabsTrigger value="history">السجل</TabsTrigger>
+      <TabsList aria-label="Request sections">
+        <TabsTrigger value="details">Details</TabsTrigger>
+        <TabsTrigger value="documents">Documents</TabsTrigger>
+        <TabsTrigger value="history">History</TabsTrigger>
       </TabsList>
-      <TabsContent value="details">اسم مقدم الطلب والخدمة وتاريخ التقديم.</TabsContent>
-      <TabsContent value="documents">ملفان مرفقان.</TabsContent>
-      <TabsContent value="history">قُدّم في ٤ نوفمبر ٢٠٢٦.</TabsContent>
+      <TabsContent value="details">Applicant name, service and submission date.</TabsContent>
+      <TabsContent value="documents">Two files attached.</TabsContent>
+      <TabsContent value="history">Submitted on 4 November 2026.</TabsContent>
     </Tabs>
   );
 }
@@ -51,6 +51,12 @@ Use Tabs to split one page into parts that belong together and are read one at a
 `orientation="vertical"` puts the list beside the panel, with the bar on the end side. Up and Down move between tabs.
 
 <Preview compact name="tabs-vertical" title="Vertical" />
+
+### Behaviour
+
+By default an arrow key moves focus and selects the tab. Set `activateOnFocus={false}` on TabsList for manual activation: arrows only move focus, and <kbd>Enter</kbd> or <kbd>Space</kbd> selects. `divider={false}` removes the line under the list, `flush` removes its side padding, and `value` with `onValueChange` makes the selection yours to control.
+
+<Preview compact name="tabs-behaviour" title="Behaviour" />
 
 ## RTL
 

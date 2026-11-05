@@ -1,7 +1,7 @@
 ---
 title: Notification
 description: "شريط بعرض كامل لرسالة تخص الصفحة كلها. خمسة أنواع ونص افتتاحي بخط عريض وإجراء وزر إغلاق، ويُعلَن بوصفه منطقة حية."
-sourceHash: 3dfe2df38cd9
+sourceHash: 2163b27fe45d
 ---
 
 <Preview name="notification-kinds" title="الإشعار" />
@@ -45,6 +45,12 @@ export function MaintenanceNotice() {
 قيمة `variant` هي `neutral` أو `info` أو `success` أو `warning` أو `critical`. ولكل نوع تظليل 50 ونص وأيقونة بلونه. تجاهل أحدها لتراه يزول.
 
 <Preview compact name="notification-kinds" title="الأنواع" />
+
+### دون أيقونة ومُغلق [#without-an-icon-and-dismissed]
+
+تزيل `hideIcon` أيقونة الحالة: ويبقى اللون والعنوان العريض حاملين للنوع. وبعد أن يغلق الشخص الإشعار تُستدعى `onDismiss` ولا يُعرض شيء مكانه، فاحتفظ بالحالة في الصفحة إن أردت إعادته.
+
+<Preview compact name="notification-states" title="دون أيقونة ومُغلق" />
 
 ## RTL [#rtl]
 

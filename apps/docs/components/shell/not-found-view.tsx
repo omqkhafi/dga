@@ -21,13 +21,6 @@ export function NotFoundView() {
         <Mark className="h-16" />
         <p className="t-eyebrow text-text-primary">{t("nf.eyebrow")}</p>
         <h1 className="t-h1 text-text-display">{t("nf.title")}</h1>
-        <p
-          lang={lang === "ar" ? "en" : "ar"}
-          dir={lang === "ar" ? "ltr" : "rtl"}
-          className="text-lg text-text-primary-paragraph"
-        >
-          {t("nf.other")}
-        </p>
         <p className="t-body max-w-md text-text-primary-paragraph">{t("nf.body")}</p>
         <div className="flex flex-wrap justify-center gap-3">
           <Button size="lg" nativeButton={false} render={<NextLink href={`/${lang}/docs`} />}>

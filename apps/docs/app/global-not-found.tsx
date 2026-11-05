@@ -8,7 +8,7 @@ import "./global.css";
 export const metadata: Metadata = { title: "Page not found | Platform Code" };
 
 // This page bypasses the layouts, so it sets the theme itself, before first paint. A URL that
-// matches no route has no locale, so the message is English with the Arabic line under it, and
+// matches no route has no locale, so the message is English, and
 // the links go to /en.
 const theme = `(() => { try { const t = localStorage.getItem("theme"); const dark = t === "dark" || ((!t || t === "system") && matchMedia("(prefers-color-scheme: dark)").matches); document.documentElement.classList.toggle("dark", dark); document.documentElement.style.colorScheme = dark ? "dark" : "light"; } catch {} })();`;
 

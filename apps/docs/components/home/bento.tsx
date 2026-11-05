@@ -90,7 +90,7 @@ export function Bento({ lang }: { lang: Locale }) {
       >
         <div className="flex items-start justify-between gap-4">
           <div className="flex items-center gap-3">
-            <Avatar size={48} initials="NQ" />
+            <Avatar size={48} initials={lang === "ar" ? "ن ق" : "NQ"} />
             <div>
               <p className="text-md font-semibold text-text-display">{t("bento.person")}</p>
               <p className="text-sm text-text-secondary-paragraph">{t("bento.request")}</p>
@@ -170,9 +170,9 @@ export function Bento({ lang }: { lang: Locale }) {
         <p className="text-sm font-semibold text-text-default">{t("bento.team")}</p>
         <div className="mt-4 flex items-center gap-4 pb-6">
           <AvatarGroup>
-            <Avatar size={40} initials="NQ" />
-            <Avatar size={40} initials="FA" />
-            <Avatar size={40} initials={lang === "ar" ? "+٣" : "+3"} />
+            <Avatar size={40} initials={lang === "ar" ? "ن ق" : "NQ"} />
+            <Avatar size={40} initials={lang === "ar" ? "ف أ" : "FA"} />
+            <Avatar size={40} initials={lang === "ar" ? "٣+" : "+3"} />
           </AvatarGroup>
           <p className="text-sm text-text-primary-paragraph">{t("bento.reviewers")}</p>
         </div>
@@ -201,12 +201,7 @@ export function Bento({ lang }: { lang: Locale }) {
         </ul>
       </Tile>
 
-      <Tile
-        lang={lang}
-        name="Divider and Link"
-        href="/docs/components/link"
-        className="md:col-span-6"
-      >
+      <Tile lang={lang} name="Divider, Link" href="/docs/components/link" className="md:col-span-6">
         <div className="flex flex-col gap-4 pb-6 sm:flex-row sm:items-center sm:justify-between">
           <p className="text-md text-text-default">
             {t("bento.terms", { link: "\u0000" })
@@ -230,7 +225,7 @@ export function Bento({ lang }: { lang: Locale }) {
             <Link href="#" variant="neutral">
               {t("bento.accessibility")}
             </Link>
-            <Link href="#" external>
+            <Link href="#" external externalLabel={t("newTab")}>
               dga.gov.sa
             </Link>
           </div>

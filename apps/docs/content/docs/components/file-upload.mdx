@@ -20,12 +20,12 @@ import { FileUpload } from "@/components/ui/file-upload";
 export function DocumentsField() {
   return (
     <Field name="documents">
-      <FieldLabel>المستندات الداعمة</FieldLabel>
+      <FieldLabel>Supporting documents</FieldLabel>
       <FileUpload
         accept=".pdf,.jpg,.png"
         maxSize={5 * 1024 * 1024}
         maxFiles={3}
-        hint="PDF أو JPG أو PNG، حتى 5 MB للملف."
+        hint="PDF, JPG or PNG, up to 5 MB each."
         onFilesAdded={(files) => files.forEach(upload)}
       />
     </Field>

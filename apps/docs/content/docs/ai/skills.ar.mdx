@@ -1,0 +1,75 @@
+---
+title: إعداد الوكيل
+description: ثبّت مهارة كود المنصات وملفي AGENTS.md وCLAUDE.md ليبني وكيل البرمجة بالسجل والرموز وقواعد الاتجاه من اليمين إلى اليسار.
+sourceHash: 17a9c83af31e
+---
+
+يحتاج وكيل البرمجة الذي يبني الواجهات إلى ما يحتاجه الشخص من ملاحظات المشروع: كيف يُثبَّت، وما المكوّنات الموجودة، وما القواعد التي تُبقي التخطيطين العربي والإنجليزي صحيحين. تعلّمه المهارة هذا مرة واحدة، وتُبقيه الملفات أدناه داخل المشروع.
+
+## تثبيت المهارة
+
+المهارة ملف Markdown واحد منشور على `/.well-known/agent-skills/platform-code/SKILL.md`. انسخه إلى المجلد الذي يقرأ منه وكيلك.
+
+<Tabs items={["Claude Code", "Cursor وبقية الوكلاء"]}>
+<Tab value="Claude Code">
+
+```bash title="الطرفية"
+mkdir -p .claude/skills/platform-code
+curl -fsSL https://dga.omqkhafi.dev/.well-known/agent-skills/platform-code/SKILL.md \
+  -o .claude/skills/platform-code/SKILL.md
+```
+
+</Tab>
+<Tab value="Cursor وبقية الوكلاء">
+
+```bash title="الطرفية"
+mkdir -p .agents/skills/platform-code
+curl -fsSL https://dga.omqkhafi.dev/.well-known/agent-skills/platform-code/SKILL.md \
+  -o .agents/skills/platform-code/SKILL.md
+```
+
+</Tab>
+</Tabs>
+
+يستطيع الوكيل الذي يدعم اكتشاف مهارات الوكلاء أن يجدها من الفهرس على `https://dga.omqkhafi.dev/.well-known/agent-skills/index.json`. يسرد الفهرس المهارة مع بصمتها `sha256` لتتحقق من الملف الذي نزّلته.
+
+## ما الذي تعلّمه المهارة
+
+| الموضوع | القاعدة |
+| --- | --- |
+| التثبيت | `npx shadcn@latest init https://dga.omqkhafi.dev/r/dga.json` ثم `npx shadcn@latest add @dga/<name>`. |
+| التوثيق | اقرأ `/{lang}/llms.txt` ونسخة Markdown لكل صفحة، لا من الذاكرة. |
+| المكوّنات | استخدم المكوّنات الموجودة في السجل فقط. لا تخترع مكوّنًا. |
+| النماذج | غلّف كل عنصر تحكم بـ `Field`. |
+| الاتجاه | ابدأ من اليمين إلى اليسار، بخصائص CSS المنطقية. دون `left` أو `right`. |
+| الرموز | رموز DGA فقط. دون ألوان خام. |
+| الأرقام | أرقام غربية في المحتوى التقني. أرقام عربية-هندية في المحتوى العربي النموذجي للمواطن فقط. ولا تجمع بينهما في عرض واحد. |
+| التباين | اقرأ [الاختلافات](/docs/deviations) قبل "إصلاح" لون. |
+
+## الملفان AGENTS.md وCLAUDE.md
+
+يحمل ملفان صغيران القواعد نفسها إلى المشروع. كل منهما كتلة بين `<!-- BEGIN PLATFORM-CODE -->` و`<!-- END PLATFORM-CODE -->`. ضع الكتلة في ملفك واحتفظ بنصك خارج العلامتين، فيستبدل أي تحديث لاحق الكتلة وحدها.
+
+| الملف | الدور | التنزيل |
+| --- | --- | --- |
+| `AGENTS.md` | قواعد كود المنصات، ويقرؤه Claude Code وCursor وCodex وغيرها من الوكلاء. | [AGENTS.md](https://dga.omqkhafi.dev/agents/AGENTS.md) |
+| `CLAUDE.md` | استيراد `@AGENTS.md` لصالح Claude Code. | [CLAUDE.md](https://dga.omqkhafi.dev/agents/CLAUDE.md) |
+
+```md title="CLAUDE.md"
+<!-- BEGIN PLATFORM-CODE -->
+@AGENTS.md
+<!-- END PLATFORM-CODE -->
+```
+
+## أي أداة تقرأ أي ملف
+
+| الأداة | تقرأ |
+| --- | --- |
+| Claude Code | `CLAUDE.md` (الذي يستورد `AGENTS.md`) و`.claude/skills/platform-code/SKILL.md`. |
+| Cursor وبقية الوكلاء | `AGENTS.md` و`.agents/skills/platform-code/SKILL.md`. |
+| أي وكيل | [التوثيق للوكلاء](/docs/ai/llm) و[خادم MCP](/docs/ai/mcp). |
+
+## صفحات ذات صلة
+
+- [التوثيق للوكلاء](/docs/ai/llm): نقاط Markdown و`llms.txt` وJSON.
+- [خادم MCP](/docs/ai/mcp): تصفّح المكوّنات وثبّتها من مساعد.

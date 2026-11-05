@@ -20,13 +20,13 @@ import { NumberInput } from "@/components/ui/number-input";
 export function QuantityField() {
   return (
     <Field name="quantity">
-      <FieldLabel>الكمية</FieldLabel>
+      <FieldLabel>Quantity</FieldLabel>
       <NumberInput
         defaultValue={1}
         min={1}
         max={10}
-        decrementLabel="إنقاص"
-        incrementLabel="زيادة"
+        decrementLabel="Decrease"
+        incrementLabel="Increase"
       />
     </Field>
   );

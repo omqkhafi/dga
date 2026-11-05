@@ -22,12 +22,12 @@ export function ServiceSearch() {
   const [query, setQuery] = useState("");
   return (
     <Field>
-      <FieldLabel>البحث في الخدمات</FieldLabel>
+      <FieldLabel>Search services</FieldLabel>
       <SearchBox
         value={query}
         onValueChange={setQuery}
-        placeholder="ابحث في الخدمات"
-        clearLabel="مسح البحث"
+        placeholder="Search services"
+        clearLabel="Clear search"
       />
     </Field>
   );

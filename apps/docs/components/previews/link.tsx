@@ -1,11 +1,11 @@
 "use client";
 
 import { Link } from "@/registry/bases/base/ui/link";
-import { Bi, useDirection } from "./bi";
+import { Bi, useLanguage } from "./bi";
 import { OnColorSurface, Row, Stack } from "./kit";
 
 export function LinkVariants() {
-  const rtl = useDirection() === "rtl";
+  const rtl = useLanguage() === "ar";
   const external = rtl ? "(يفتح في علامة تبويب جديدة)" : undefined;
   return (
     <Stack>

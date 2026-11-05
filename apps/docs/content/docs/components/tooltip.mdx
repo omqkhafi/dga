@@ -24,8 +24,8 @@ export function SaveHint() {
   return (
     <TooltipProvider>
       <Tooltip>
-        <TooltipTrigger render={<Button variant="outline" />}>المسودات</TooltipTrigger>
-        <TooltipContent side="end" title="المسودات">يفتح المسودات المحفوظة.</TooltipContent>
+        <TooltipTrigger render={<Button variant="outline" />}>Drafts</TooltipTrigger>
+        <TooltipContent side="end" title="Drafts">Opens your saved drafts.</TooltipContent>
       </Tooltip>
     </TooltipProvider>
   );
@@ -55,6 +55,12 @@ Use a Tooltip to name an icon-only button or to add a short hint to a control. K
 TooltipHelp next to a label. It is a real button with an accessible name that opens on hover, focus, click and touch, so keyboard, touch and screen reader users reach the text.
 
 <Preview compact name="tooltip-help" title="Help icon" minHeight={200} />
+
+### Arrow, title and disabled
+
+A tooltip opens on hover and on keyboard focus, and closes on blur, Escape or when the pointer leaves. `showArrow={false}` drops the arrow, a `title` adds a bold first line for longer text, and `disabled` on Tooltip turns it off while keeping the trigger.
+
+<Preview compact name="tooltip-states" title="Arrow, title and disabled" minHeight={300} />
 
 ## RTL
 

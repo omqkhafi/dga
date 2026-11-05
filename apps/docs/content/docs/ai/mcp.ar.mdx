@@ -1,0 +1,109 @@
+---
+title: خادم MCP
+description: استخدم خادم shadcn MCP الرسمي مع سجل @dga لتصفّح المكوّنات والبحث عنها وتثبيتها من مساعد.
+sourceHash: 49cea982f0fe
+---
+
+كود المنصات سجل shadcn، فيعمل خادم shadcn MCP الرسمي معه كما هو. لا يوجد خادم مخصص: يسأل المساعد خادم shadcn، ويقرأ الخادم `@dga`.
+
+## سجّل السجل
+
+أضف `@dga` إلى `components.json`. الأمر `npx shadcn@latest init https://dga.omqkhafi.dev/r/dga.json` يفعل هذا أصلًا.
+
+```json title="components.json"
+{
+  "registries": {
+    "@dga": "https://dga.omqkhafi.dev/r/{name}.json"
+  }
+}
+```
+
+## هيّئ الخادم
+
+يكتب سطر الأوامر الإعداد لعميلك.
+
+<Tabs items={["Claude Code", "Cursor", "VS Code"]}>
+<Tab value="Claude Code">
+
+```bash title="الطرفية"
+npx shadcn@latest mcp init --client claude
+```
+
+</Tab>
+<Tab value="Cursor">
+
+```bash title="الطرفية"
+npx shadcn@latest mcp init --client cursor
+```
+
+</Tab>
+<Tab value="VS Code">
+
+```bash title="الطرفية"
+npx shadcn@latest mcp init --client vscode
+```
+
+</Tab>
+</Tabs>
+
+## الإعداد اليدوي
+
+أو أضف الخادم إلى الملف الذي يقرأه عميلك. الأمر هو `npx` ووسيطاه `shadcn@latest` و`mcp`.
+
+<Tabs items={["Claude Code", "Cursor", "VS Code"]}>
+<Tab value="Claude Code">
+
+```json title=".mcp.json"
+{
+  "mcpServers": {
+    "shadcn": {
+      "command": "npx",
+      "args": ["shadcn@latest", "mcp"]
+    }
+  }
+}
+```
+
+</Tab>
+<Tab value="Cursor">
+
+```json title=".cursor/mcp.json"
+{
+  "mcpServers": {
+    "shadcn": {
+      "command": "npx",
+      "args": ["shadcn@latest", "mcp"]
+    }
+  }
+}
+```
+
+</Tab>
+<Tab value="VS Code">
+
+```json title=".vscode/mcp.json"
+{
+  "servers": {
+    "shadcn": {
+      "command": "npx",
+      "args": ["shadcn@latest", "mcp"]
+    }
+  }
+}
+```
+
+</Tab>
+</Tabs>
+
+أعد تشغيل العميل بعد حفظ الملف.
+
+## أمثلة على الطلبات
+
+- "اعرض مكوّنات سجل `@dga`."
+- "أضف `@dga/button` و`@dga/field` إلى هذا المشروع."
+- "ابنِ نموذج طلب خدمة للمواطن بمكوّنات `@dga`، بالعربية والإنجليزية."
+
+## صفحات ذات صلة
+
+- [إعداد الوكيل](/docs/ai/skills): القواعد التي يتبعها المساعد حين يستطيع تثبيت المكوّنات.
+- [التوثيق للوكلاء](/docs/ai/llm): ملفات Markdown وJSON التي يقرؤها المساعد.

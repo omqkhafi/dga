@@ -31,7 +31,7 @@ import {
 } from "@/registry/bases/base/ui/select";
 import { Switch } from "@/registry/bases/base/ui/switch";
 import { Textarea } from "@/registry/bases/base/ui/textarea";
-import { Bi, useBi, useDirection, useUi } from "./bi";
+import { Bi, useBi, useLanguage, useUi } from "./bi";
 import { Row, Stack } from "./kit";
 
 /** The components' own labels, from the locale dictionary (by page direction). */
@@ -52,7 +52,7 @@ export function useFormText() {
       size: ui("ui.rejectedSize"),
       count: ui("ui.rejectedCount"),
     },
-    rtl: useDirection() === "rtl",
+    rtl: useLanguage() === "ar",
   };
 }
 

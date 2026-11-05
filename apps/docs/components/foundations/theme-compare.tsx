@@ -148,7 +148,7 @@ function Panel({ mode, lang }: { mode: Mode; lang: Locale }) {
         <Link href="#compare" inline>
           {t("compare.linkInline")}
         </Link>
-        <Link href="#compare" external>
+        <Link href="#compare" external externalLabel={t("newTab")}>
           {t("compare.linkExternal")}
         </Link>
       </Group>

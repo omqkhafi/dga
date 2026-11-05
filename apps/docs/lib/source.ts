@@ -1,8 +1,9 @@
 import { loader } from "fumadocs-core/source";
 import { metaSchema, pageSchema } from "fumadocs-core/source/schema";
 import { defineDocs } from "fumadocs-mdx/macro";
+import { getT } from "./dictionary";
 import { i18n, type Locale } from "./i18n";
-import { docsRoute } from "./shared";
+import { docsRoute, siteUrl } from "./shared";
 
 const docs = defineDocs({
   dir: "content/docs",
@@ -19,7 +20,10 @@ export const source = loader({
 export type DocsPage = NonNullable<ReturnType<typeof source.getPage>>;
 
 /** The page as Markdown, for "Copy page", /{lang}/docs/*.md and llms-full.txt. */
-export async function getPageMarkdown(page: DocsPage, options: { keepIds?: boolean } = {}) {
+export async function getPageMarkdown(
+  page: DocsPage,
+  options: { keepIds?: boolean; indexLink?: boolean } = {},
+) {
   // Drop the heading ids fumadocs appends ("## Usage [#usage]").
   const processed = await page.data.getText("processed");
   const body = options.keepIds
@@ -30,7 +34,12 @@ export async function getPageMarkdown(page: DocsPage, options: { keepIds?: boole
     /\]\(\/(?!en\/|ar\/|\/)/g,
     `](/${page.locale ?? i18n.defaultLanguage}/`,
   );
-  return `# ${page.data.title}\n\n${page.data.description ? `${page.data.description}\n\n` : ""}${text}`;
+  const lang = (page.locale ?? i18n.defaultLanguage) as Locale;
+  // Every Markdown twin ends with a link to the index of its language.
+  const footer = options.indexLink
+    ? `\n\n---\n\n[${getT(lang)("llms.indexLink")}](${siteUrl}/${lang}/llms.txt)\n`
+    : "";
+  return `# ${page.data.title}\n\n${page.data.description ? `${page.data.description}\n\n` : ""}${text}${footer}`;
 }
 
 export const pagesFor = (lang: Locale) => source.getPages(lang);

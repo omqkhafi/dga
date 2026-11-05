@@ -27,15 +27,15 @@ import {
 export function CancelRequest() {
   return (
     <Dialog>
-      <DialogTrigger render={<Button variant="outline" />}>إلغاء الطلب</DialogTrigger>
-      <DialogContent closeLabel="إغلاق">
+      <DialogTrigger render={<Button variant="outline" />}>Cancel request</DialogTrigger>
+      <DialogContent closeLabel="Close">
         <DialogHeader>
-          <DialogTitle>إلغاء هذا الطلب؟</DialogTitle>
-          <DialogDescription>سيُسحب الطلب ٢٤٨١٠. يمكنك تقديمه مرة أخرى لاحقًا.</DialogDescription>
+          <DialogTitle>Cancel this request?</DialogTitle>
+          <DialogDescription>Request 24810 will be withdrawn. You can submit it again later.</DialogDescription>
         </DialogHeader>
         <DialogFooter>
-          <DialogClose render={<Button variant="outline" />}>الإبقاء على الطلب</DialogClose>
-          <DialogClose render={<Button destructive />}>إلغاء الطلب</DialogClose>
+          <DialogClose render={<Button variant="outline" />}>Keep request</DialogClose>
+          <DialogClose render={<Button destructive />}>Cancel request</DialogClose>
         </DialogFooter>
       </DialogContent>
     </Dialog>
@@ -67,6 +67,18 @@ Use a Dialog when the person must answer or finish something before going on: co
 Put fields in DialogBody. The dialog scrolls when it is taller than the screen. A Field inside is labelled and wired as usual.
 
 <Preview compact name="dialog-form" title="With a form" minHeight={480} />
+
+### Must be answered
+
+Set `disablePointerDismissal` on Dialog for a decision that cannot be skipped: a click outside the window no longer closes it, and Escape still does. Pair it with `showCloseButton={false}` so the only ways out are the actions in the footer.
+
+<Preview compact name="dialog-required" title="Must be answered" minHeight={360} />
+
+### Controlled
+
+Pass `open` and `onOpenChange` to own the state: open the dialog from your own code, and close it when a request finishes. The trigger is optional.
+
+<Preview compact name="dialog-controlled" title="Controlled" minHeight={360} />
 
 ## RTL
 

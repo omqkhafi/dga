@@ -18,10 +18,10 @@ import { ContentSwitcher, ContentSwitcherItem } from "@/components/ui/content-sw
 export function PeriodSwitcher() {
   const [period, setPeriod] = useState("week");
   return (
-    <ContentSwitcher value={period} onValueChange={setPeriod} aria-label="الفترة">
-      <ContentSwitcherItem value="day">يوم</ContentSwitcherItem>
-      <ContentSwitcherItem value="week">أسبوع</ContentSwitcherItem>
-      <ContentSwitcherItem value="month">شهر</ContentSwitcherItem>
+    <ContentSwitcher value={period} onValueChange={setPeriod} aria-label="Period">
+      <ContentSwitcherItem value="day">Day</ContentSwitcherItem>
+      <ContentSwitcherItem value="week">Week</ContentSwitcherItem>
+      <ContentSwitcherItem value="month">Month</ContentSwitcherItem>
     </ContentSwitcher>
   );
 }
@@ -47,6 +47,12 @@ Use a Content Switcher to change how one set of content is shown: a day, week or
 `onColor` is for a brand fill: a translucent black track and a white chosen option.
 
 <Preview compact name="content-switcher-on-color" title="On colour" />
+
+### Disabled, icons and controlled
+
+A disabled option stays visible and cannot be chosen. Put an icon first in an option when it helps, and pass `value` with `onValueChange` to own the selection.
+
+<Preview compact name="content-switcher-states" title="Disabled, icons and controlled" />
 
 ## RTL
 

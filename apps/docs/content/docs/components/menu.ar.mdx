@@ -1,7 +1,7 @@
 ---
 title: Menu
 description: "قائمة إجراءات على سطح مؤقت. أيقونات ونص في النهاية وعناصر مربع اختيار وراديو ومجموعات وقوائم فرعية، مع تنقل بمفاتيح الأسهم."
-sourceHash: 08734a102205
+sourceHash: 89cdc752ab04
 ---
 
 <Preview name="menu-basic" title="القائمة" minHeight={300} />
@@ -69,6 +69,12 @@ export function RequestActions() {
 
 <Preview compact name="menu-submenu" title="قائمة فرعية" minHeight={300} />
 
+### تبقى مفتوحة ومُدارة [#stay-open-and-controlled]
+
+يمكن لعنصر مربع الاختيار أو الراديو أن يضبط `closeOnClick={false}` فتبقى القائمة مفتوحة بينما يغيّر الشخص عدة خيارات. مرّر `open` و`onOpenChange` إلى Menu لقراءة حالتها أو ضبطها. والعنصر العادي يغلق القائمة.
+
+<Preview compact name="menu-states" title="تبقى مفتوحة ومُدارة" minHeight={300} />
+
 ## RTL [#rtl]
 
 تُحاذى القوائم إلى حافة بداية الزر (الحافة اليمنى بالعربية). وتفتح القائمة الفرعية في جهة النهاية أي على اليسار، ويُعكس سهمها. ويتبادل اليمين واليسار: فاليسار يفتح قائمة فرعية بالعربية. وتبقى الأرقام والاختصارات من اليسار إلى اليمين.
@@ -85,7 +91,7 @@ export function RequestActions() {
 | <kbd>ArrowUp</kbd> | ينتقل إلى العنصر السابق. |
 | <kbd>Home</kbd> | ينتقل إلى العنصر الأول (وEnd إلى الأخير). |
 | <kbd>ArrowRight</kbd> | يفتح قائمة فرعية (ArrowLeft بالعربية)؛ ويغلقها السهم المعاكس. |
-| <kbd>A to Z</kbd> | ينتقل إلى العنصر التالي الذي يبدأ بذلك الحرف. |
+| <kbd>A</kbd> إلى <kbd>Z</kbd> | ينتقل إلى العنصر التالي الذي يبدأ بذلك الحرف. |
 | <kbd>Escape</kbd> | يغلق القائمة ويعيد التركيز إلى الزر. |
 
 - مبنية على Base UI Menu: `role="menu"` وعناصر بـ `role="menuitem"` و`menuitemcheckbox` و`menuitemradio`، وللزر `aria-haspopup` و`aria-expanded`.

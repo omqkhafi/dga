@@ -1,0 +1,74 @@
+---
+title: Set up your agent
+description: Install the Platform Code skill, AGENTS.md and CLAUDE.md so a coding agent builds with the registry, tokens and RTL rules.
+---
+
+A coding agent that builds UI needs the same project notes a person would: how to install, which components exist, and the rules that keep Arabic and English layouts correct. The skill teaches it once, and the files below keep it in the project.
+
+## Install the skill
+
+The skill is one Markdown file, published at `/.well-known/agent-skills/platform-code/SKILL.md`. Copy it into the folder your agent reads.
+
+<Tabs items={["Claude Code", "Cursor and other agents"]}>
+<Tab value="Claude Code">
+
+```bash title="Terminal"
+mkdir -p .claude/skills/platform-code
+curl -fsSL https://dga.omqkhafi.dev/.well-known/agent-skills/platform-code/SKILL.md \
+  -o .claude/skills/platform-code/SKILL.md
+```
+
+</Tab>
+<Tab value="Cursor and other agents">
+
+```bash title="Terminal"
+mkdir -p .agents/skills/platform-code
+curl -fsSL https://dga.omqkhafi.dev/.well-known/agent-skills/platform-code/SKILL.md \
+  -o .agents/skills/platform-code/SKILL.md
+```
+
+</Tab>
+</Tabs>
+
+An agent that supports Agent Skills discovery can find it from the index at `https://dga.omqkhafi.dev/.well-known/agent-skills/index.json`. The index lists the skill with its `sha256` digest, so you can check the file you downloaded.
+
+## What the skill teaches
+
+| Topic | The rule |
+| --- | --- |
+| Install | `npx shadcn@latest init https://dga.omqkhafi.dev/r/dga.json`, then `npx shadcn@latest add @dga/<name>`. |
+| Docs | Read `/{lang}/llms.txt` and the Markdown twin of each page, not memory. |
+| Components | Use only components that exist in the registry. Never invent one. |
+| Forms | Wrap every control in `Field`. |
+| Direction | RTL first, with CSS logical properties. No `left` or `right`. |
+| Tokens | DGA tokens only. No raw colours. |
+| Digits | Western digits in technical content. Arabic-Indic digits only in Arabic citizen sample content. Never both in one view. |
+| Contrast | Read [Deviations](/docs/deviations) before "fixing" a colour. |
+
+## AGENTS.md and CLAUDE.md
+
+Two small files carry the same rules into the project. Each one is a block between `<!-- BEGIN PLATFORM-CODE -->` and `<!-- END PLATFORM-CODE -->`. Put the block in your own file and keep your text outside the markers, so a later update can replace the block and nothing else.
+
+| File | Role | Download |
+| --- | --- | --- |
+| `AGENTS.md` | The Platform Code rules, read by Claude Code, Cursor, Codex and other agents. | [AGENTS.md](https://dga.omqkhafi.dev/agents/AGENTS.md) |
+| `CLAUDE.md` | An `@AGENTS.md` import, for Claude Code. | [CLAUDE.md](https://dga.omqkhafi.dev/agents/CLAUDE.md) |
+
+```md title="CLAUDE.md"
+<!-- BEGIN PLATFORM-CODE -->
+@AGENTS.md
+<!-- END PLATFORM-CODE -->
+```
+
+## Which tool reads which file
+
+| Tool | Reads |
+| --- | --- |
+| Claude Code | `CLAUDE.md` (which imports `AGENTS.md`) and `.claude/skills/platform-code/SKILL.md`. |
+| Cursor and other agents | `AGENTS.md` and `.agents/skills/platform-code/SKILL.md`. |
+| Any agent | The [docs for agents](/docs/ai/llm) and the [MCP server](/docs/ai/mcp). |
+
+## Related
+
+- [Docs for agents](/docs/ai/llm): the Markdown, `llms.txt` and JSON endpoints.
+- [MCP server](/docs/ai/mcp): browse and install components from an assistant.

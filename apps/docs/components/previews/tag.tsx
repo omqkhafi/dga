@@ -4,7 +4,7 @@ import { Tag01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useState } from "react";
 import { StatusTag, Tag, type TagProps } from "@/registry/bases/base/ui/tag";
-import { Bi, useBi, useDirection } from "./bi";
+import { Bi, useBi, useLanguage } from "./bi";
 import { OnColorSurface, Row, Stack } from "./kit";
 
 type Variant = NonNullable<TagProps["variant"]>;
@@ -66,7 +66,7 @@ const FILTERS = [
 ];
 
 export function TagDismiss() {
-  const rtl = useDirection() === "rtl";
+  const rtl = useLanguage() === "ar";
   const [items, setItems] = useState(FILTERS);
   return (
     <Row label={<Bi en="Removable filters" ar="مرشحات قابلة للإزالة" />}>

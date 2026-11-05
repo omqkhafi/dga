@@ -14,8 +14,8 @@ description: Labels for categories, filters and statuses. Tag and Status Tag, fi
 ```tsx title="page.tsx"
 import { StatusTag, Tag } from "@/components/ui/tag";
 
-<Tag variant="info">تقنية</Tag>
-<StatusTag variant="success">مكتمل</StatusTag>
+<Tag variant="info">Technical</Tag>
+<StatusTag variant="success">Complete</StatusTag>
 ```
 
 Tags label content by category or show the filters a user has picked. Status tags show the state of an item, task or request.
@@ -30,7 +30,7 @@ Tags label content by category or show the filters a user has picked. Status tag
 
 ### Removable
 
-Pass `onDismiss` to add a close button. Give it a specific name with `dismissLabel`, such as "إزالة الرياض", and move focus somewhere sensible after the tag is removed.
+Pass `onDismiss` to add a close button. Give it a specific name with `dismissLabel`, such as "Remove Riyadh", and move focus somewhere sensible after the tag is removed.
 
 <Preview compact name="tag-dismiss" title="Removable" />
 

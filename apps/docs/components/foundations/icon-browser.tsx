@@ -86,7 +86,11 @@ export function IconBrowser() {
                 strokeWidth={1.5}
                 aria-hidden
               />
-              <span className="w-full truncate text-center text-xs text-muted-foreground">
+              <span
+                lang="en"
+                dir="ltr"
+                className="w-full truncate text-center text-xs text-muted-foreground"
+              >
                 {name.replace(/Icon$/, "")}
               </span>
             </button>

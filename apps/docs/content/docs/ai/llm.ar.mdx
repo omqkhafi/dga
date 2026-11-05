@@ -1,0 +1,55 @@
+---
+title: التوثيق للوكلاء
+description: كل صفحة بصيغة Markdown، مع llms.txt وllms-full.txt وllms.json لكل لغة.
+sourceHash: 73716da3d82c
+---
+
+كُتب التوثيق للناس ونُشر للوكلاء. لكل صفحة نسخة Markdown، ويُفهرس الموقع كله لكل لغة، فلا يحتاج الوكيل إلى استخراج HTML.
+
+## نقاط الوصول
+
+| ماذا | العنوان |
+| --- | --- |
+| صفحة واحدة | `/{lang}/docs/<slug>.md` |
+| فهرس كل الصفحات | `/{lang}/llms.txt` |
+| كل الصفحات في ملف واحد | `/{lang}/llms-full.txt` |
+| كل الصفحات بصيغة JSON | `/{lang}/llms.json` |
+| مهارات الوكلاء | `/.well-known/agent-skills/index.json` |
+
+قيمة `{lang}` هي `en` أو `ar`. مثلًا صفحة الزر الإنجليزية هي `https://dga.omqkhafi.dev/en/docs/components/button.md`. العنوان دون لغة، `/llms.txt`، إنجليزي.
+
+تنتهي كل صفحة Markdown برابط إلى `llms.txt` للغتها.
+
+## اطلب Markdown
+
+اطلب صفحة توثيق مع الترويسة `Accept: text/markdown` فتحصل على نسخة Markdown من العنوان نفسه.
+
+```bash title="الطرفية"
+curl -H "Accept: text/markdown" https://dga.omqkhafi.dev/en/docs/installation
+```
+
+تحمل الاستجابة `Vary: Accept` فتفصل الذاكرة المؤقتة بين HTML وMarkdown.
+
+## الاكتشاف
+
+تعلن الصفحات أيضًا عن هذه الملفات بنفسها.
+
+- ترويسة HTTP `Link` فيها `describedby` لـ `llms.txt`، و`sitemap` لخريطة الموقع، و`agent-skills` لفهرس المهارات، و`alternate` لنسخة Markdown للصفحة.
+- العلاقات نفسها كوسوم `<link>` في رأس الصفحة.
+- الملف `/webmcp.js` الذي يسجّل `search_docs` و`get_page` و`list_pages` في المتصفحات التي تدعم WebMCP.
+
+## استخدمه
+
+أعطِ الوكيل الفهرس أولًا، ثم دعه يفتح الصفحات التي يحتاجها.
+
+```text title="الطلب"
+اقرأ https://dga.omqkhafi.dev/ar/llms.txt ثم اقرأ صفحتي الزر والحقل
+وابنِ نموذج طلب خدمة للمواطن.
+```
+
+وقائمة نسخ الصفحة في كل صفحة تفعل الشيء نفسه: انسخ Markdown أو افتحه أو سلّمه لمساعد.
+
+## صفحات ذات صلة
+
+- [إعداد الوكيل](/docs/ai/skills): المهارة وAGENTS.md وCLAUDE.md.
+- [خادم MCP](/docs/ai/mcp): خادم shadcn MCP على هذا السجل.

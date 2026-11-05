@@ -119,12 +119,7 @@ export default async function HomePage({ params }: PageProps<"/[lang]">) {
         </div>
         <div className="relative mx-auto grid w-full max-w-6xl grid-cols-1 gap-16 px-4 py-24 sm:px-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,32rem)] lg:items-start">
           <div className="flex min-w-0 flex-col gap-8 lg:pt-6">
-            <p className="t-eyebrow text-text-primary">
-              {t("home.eyebrow")} <span aria-hidden>·</span>{" "}
-              <span lang={lang === "ar" ? "en" : "ar"} dir={lang === "ar" ? "ltr" : "rtl"}>
-                {t("home.eyebrowAr")}
-              </span>
-            </p>
+            <p className="t-eyebrow text-text-primary">{t("home.eyebrow")}</p>
             <h1 className="t-display max-w-xl text-text-display text-[clamp(2.25rem,1.5rem+2.6vw,3.5rem)]">
               {t("home.title")}
             </h1>
@@ -216,7 +211,13 @@ export default async function HomePage({ params }: PageProps<"/[lang]">) {
             <li className="flex flex-col gap-2">
               <h3 className="t-h3 text-text-display">{t("home.open.source")}</h3>
               <p className="text-sm text-text-primary-paragraph">{t("home.open.sourceBody")}</p>
-              <Link size="sm" external href={githubUrl} className="mt-2 w-fit">
+              <Link
+                size="sm"
+                external
+                externalLabel={t("newTab")}
+                href={githubUrl}
+                className="mt-2 w-fit"
+              >
                 <Icon icon={GithubIcon} />
                 omqkhafi/dga
               </Link>
@@ -241,6 +242,7 @@ export default async function HomePage({ params }: PageProps<"/[lang]">) {
               <Link
                 size="sm"
                 external
+                externalLabel={t("newTab")}
                 href={`${githubUrl}/blob/main/LICENSE`}
                 className="mt-2 w-fit"
               >

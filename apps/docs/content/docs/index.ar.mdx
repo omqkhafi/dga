@@ -1,7 +1,7 @@
 ---
 title: مقدمة
 description: ما هو كود المنصات، وصلته بنظام التصميم الموحد (DGA)، وما الموجود في السجل اليوم.
-sourceHash: 06726707583b
+sourceHash: 2e381b5a1466
 ---
 
 كود المنصات هو [سجل shadcn](https://ui.shadcn.com/docs/registry) لـ[نظام التصميم الموحد (DGA)](https://design.dga.gov.sa) (منصات الكود الموحد، Platforms Code). تثبّت المكوّنات عبر سطر أوامر shadcn، فتُنسخ الشيفرة المصدرية إلى مشروعك لتتمكن من تعديلها.
@@ -10,7 +10,7 @@ sourceHash: 06726707583b
 
 ## المبادئ [#principles]
 
-- **Figma هو المرجع.** كل رمز (token) مأخوذ من ملف الأساسيات الخاص بـ DGA في Figma. وعند اختلاف CSS المنشور في الموقع عن Figma، يُعتمد Figma.
+- **Figma هو المرجع.** كل رمز مأخوذ من ملف الأساسيات الخاص بـ DGA في Figma. وعند اختلاف CSS المنشور في الموقع عن Figma، يُعتمد Figma.
 - **صحيح افتراضيًا.** كل زوج لوني في الأساسيات يحقق WCAG 2.1 AA في الوضعين الفاتح والداكن. وحيث تقصّر قيم DGA عن ذلك، نصحّحها ونسجّل التغيير في صفحة [الاختلافات عن DGA](/docs/deviations).
 - **العربية أولًا.** تستخدم التخطيطات الخصائص المنطقية فقط (`ms-*` و`pe-*` و`start-*`)، فيعمل المكوّن الواحد من اليمين إلى اليسار ومن اليسار إلى اليمين.
 - **نمط shadcn الحالي.** المكوّنات مبنية على [Base UI](https://base-ui.com) وتستخدم أصنافًا دلالية ثابتة (`cn-button` و`cn-button-variant-*`). ويربط النمط `dga` هذه الأصناف برموز DGA وقت البناء.
@@ -24,6 +24,7 @@ sourceHash: 06726707583b
 | المكوّنات | [Button](/docs/components/button) و[Link](/docs/components/link) و[Badge](/docs/components/badge) و[Tag وStatus Tag](/docs/components/tag) و[Avatar](/docs/components/avatar) و[Featured Icon](/docs/components/featured-icon) و[Spinner](/docs/components/spinner) و[Skeleton](/docs/components/skeleton) و[Divider](/docs/components/divider). |
 | النماذج | [Field](/docs/components/field) و[Input](/docs/components/input) و[Textarea](/docs/components/textarea) و[Select](/docs/components/select) و[Number Input](/docs/components/number-input) و[Search Box](/docs/components/search-box) و[Checkbox](/docs/components/checkbox) و[Radio](/docs/components/radio) و[Switch](/docs/components/switch) و[File Upload](/docs/components/file-upload). |
 | التفاعلية | [Dialog](/docs/components/dialog) و[Drawer](/docs/components/drawer) و[Tooltip](/docs/components/tooltip) و[Menu](/docs/components/menu) و[Tabs](/docs/components/tabs) و[Accordion](/docs/components/accordion) و[Content Switcher](/docs/components/content-switcher) و[Toast](/docs/components/toast) و[Notification](/docs/components/notification) و[Inline Alert](/docs/components/inline-alert). التنقل وعرض البيانات يأتيان لاحقًا في [خارطة الطريق](https://github.com/omqkhafi/dga/blob/main/ROADMAP.md). |
+| موارد الذكاء الاصطناعي | [إعداد الوكيل](/docs/ai/skills) و[التوثيق للوكلاء](/docs/ai/llm) و[خادم MCP](/docs/ai/mcp). |
 
 ## الحالة [#status]
 

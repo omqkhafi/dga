@@ -2,12 +2,28 @@
 
 import { cn } from "cn";
 import { useEffect, useMemo, useState } from "react";
+import type { Key } from "@/lib/dictionary";
 import { useT } from "@/lib/locale-context";
 import { type Deviation, deviations } from "@/lib/tokens";
+import { Button } from "@/registry/bases/base/ui/button";
 
 const AREAS = [...new Set(deviations.map((d) => d.area))];
 
+/** The area names, in the page language. */
+const AREA_KEYS: Record<string, Key> = {
+  Breakpoints: "dev.area.breakpoints",
+  Components: "dev.area.components",
+  Contrast: "dev.area.contrast",
+  "Dark theme": "dev.area.darkTheme",
+  Naming: "dev.area.naming",
+  Tailwind: "dev.area.tailwind",
+  Theming: "dev.area.theming",
+  Tokens: "dev.area.tokens",
+  Typography: "dev.area.typography",
+};
+
 function Status({ status }: { status?: string | null }) {
+  const t = useT();
   if (!status || status === "fixed") return null;
   return (
     <span
@@ -16,7 +32,7 @@ function Status({ status }: { status?: string | null }) {
         status === "unresolved" ? "bg-error-50 text-error" : "bg-warning-50 text-warning",
       )}
     >
-      {status}
+      {status === "unresolved" ? t("dev.status.unresolved") : t("dev.status.pending")}
     </span>
   );
 }
@@ -51,37 +67,32 @@ export function DeviationsTable() {
     >
       {component ? (
         <p className="flex flex-wrap items-center gap-2 rounded-md border border-border-neutral-secondary bg-background-primary-50 px-3 py-2 text-sm text-text-default">
-          Showing {rows.length} deviations for{" "}
+          {t("dev.showing", { count: rows.length })}{" "}
           <strong className="capitalize">{component.replace(/-/g, " ")}</strong>.
-          <button
-            type="button"
+          <Button
+            variant="transparent"
+            size="sm"
             onClick={() => {
               history.replaceState(null, "", window.location.pathname);
               setComponent(null);
             }}
-            className="min-h-8 rounded-sm px-2 text-text-primary underline underline-offset-4 hover:bg-button-background-neutral-default"
           >
             {t("dev.showAll")}
-          </button>
+          </Button>
         </p>
       ) : null}
       <div className="flex flex-wrap gap-1" role="toolbar" aria-label={t("dev.filter")}>
         {["All", ...AREAS].map((a) => (
-          <button
+          <Button
             key={a}
-            type="button"
+            variant={area === a ? "primary" : "outline"}
+            size="sm"
             aria-pressed={area === a}
             onClick={() => setArea(a)}
-            className={cn(
-              "min-h-8 rounded-sm border border-border px-2 py-1 text-[0.8125rem] font-medium",
-              area === a
-                ? "border-primary bg-primary text-primary-foreground"
-                : "bg-background text-muted-foreground hover:bg-accent",
-            )}
           >
-            {a === "All" ? t("dev.all") : a}
+            {a === "All" ? t("dev.all") : t(AREA_KEYS[a] ?? "dev.all")}
             {a !== "All" && ` (${deviations.filter((d) => d.area === a).length})`}
-          </button>
+          </Button>
         ))}
       </div>
       <div className="overflow-hidden rounded-md border border-border">
@@ -114,7 +125,7 @@ export function DeviationsTable() {
                 <td className="align-top lg:w-1/4 lg:px-3 lg:py-2">
                   <div className="flex flex-wrap items-center gap-1">
                     <span className="rounded-xs bg-muted px-1.5 py-0.5 text-[0.8125rem] text-muted-foreground">
-                      {d.area}
+                      {t(AREA_KEYS[d.area] ?? "dev.all")}
                     </span>
                     <Status status={"status" in d ? d.status : null} />
                   </div>

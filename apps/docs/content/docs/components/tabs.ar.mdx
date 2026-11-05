@@ -1,7 +1,7 @@
 ---
 title: Tabs
 description: "يبدّل بين لوحات محتوى مترابطة في صفحة واحدة. أفقي وعمودي وثلاثة أحجام وأيقونات وفاصل، ومفاتيح أسهم تتبع اتجاه الصفحة."
-sourceHash: 91b4ba46740f
+sourceHash: 2195258d8ca5
 ---
 
 <Preview name="tabs-horizontal" title="التبويبات" />
@@ -52,6 +52,12 @@ export function RequestTabs() {
 يضع `orientation="vertical"` القائمة بجانب اللوحة، والشريط في جهة النهاية. ويتنقل أعلى وأسفل بين التبويبات.
 
 <Preview compact name="tabs-vertical" title="عمودي" />
+
+### السلوك [#behaviour]
+
+افتراضيًا يحرّك مفتاح السهم التركيز ويحدد التبويب. اضبط `activateOnFocus={false}` على TabsList للتفعيل اليدوي: تحرّك الأسهم التركيز فقط، ويحدد <kbd>Enter</kbd> أو <kbd>Space</kbd> التبويب. وتزيل `divider={false}` الخط تحت القائمة، وتزيل `flush` الحشوة الجانبية، ويجعل `value` مع `onValueChange` التحديد في يدك.
+
+<Preview compact name="tabs-behaviour" title="السلوك" />
 
 ## RTL [#rtl]
 

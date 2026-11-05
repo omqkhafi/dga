@@ -45,7 +45,9 @@ export async function buildSearchIndex(lang: Locale): Promise<SearchEntry[]> {
             ? t("search.crumb.components")
             : segment === "foundations"
               ? t("search.crumb.foundations")
-              : t("search.crumb.docs");
+              : segment === "ai"
+                ? t("search.crumb.ai")
+                : t("search.crumb.docs");
     const base = { page: page.data.title, pageUrl: page.url, crumb };
     const pageEntry: SearchEntry = {
       ...base,

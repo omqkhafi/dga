@@ -23,6 +23,13 @@ export function Row({
   );
 }
 
+/** Centres a demo that is a single trigger (a Dialog, Drawer or Menu button) in the preview. */
+export function Center({ children, className }: { children: ReactNode; className?: string }) {
+  return (
+    <div className={cn("flex min-h-40 items-center justify-center", className)}>{children}</div>
+  );
+}
+
 export function Stack({ children, className }: { children: ReactNode; className?: string }) {
   return <div className={cn("flex flex-col gap-4", className)}>{children}</div>;
 }

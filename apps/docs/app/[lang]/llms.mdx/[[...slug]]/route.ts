@@ -9,8 +9,8 @@ export async function GET(_req: Request, { params }: RouteContext<"/[lang]/llms.
   if (!isLocale(lang)) notFound();
   const page = source.getPage(slug?.[0] === "index" ? [] : slug, lang);
   if (!page) notFound();
-  return new Response(await getPageMarkdown(page), {
-    headers: { "Content-Type": "text/markdown; charset=utf-8" },
+  return new Response(await getPageMarkdown(page, { indexLink: true }), {
+    headers: { "Content-Type": "text/markdown; charset=utf-8", Vary: "Accept" },
   });
 }
 

@@ -34,6 +34,17 @@ export default async function sitemap(props: {
       priority: 0.6,
       alternates: alternatesFor("/changelog"),
     },
+    // For agents: both indexes (every language) and the agent skills.
+    ...locales.map((l) => ({
+      url: `${siteUrl}/${l}/llms.txt`,
+      changeFrequency: "weekly" as const,
+      priority: 0.5,
+    })),
+    {
+      url: `${siteUrl}/.well-known/agent-skills/index.json`,
+      changeFrequency: "monthly" as const,
+      priority: 0.5,
+    },
     ...source.getPages(lang).map((page) => {
       const path = page.url.replace(/^\/[a-z]{2}/, "");
       const translated = locales.filter((l) => {

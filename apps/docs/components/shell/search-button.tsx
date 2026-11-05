@@ -22,17 +22,18 @@ export function SearchButton({
   useEffect(() => setMac(/Mac|iPhone|iPad/.test(navigator.platform)), []);
   if (compact) {
     return (
-      <button
-        type="button"
+      <Button
+        variant="transparent"
+        size="md"
+        iconOnly
         aria-label={t("search.button")}
         onClick={() => {
           onOpen?.();
           setOpenSearch(true);
         }}
-        className="inline-flex size-8 items-center justify-center rounded-sm text-text-secondary-paragraph transition-colors duration-150 hover:text-text-default motion-reduce:transition-none"
       >
         <Icon icon={Search01Icon} />
-      </button>
+      </Button>
     );
   }
   return (

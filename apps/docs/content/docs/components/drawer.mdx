@@ -27,14 +27,14 @@ import {
 export function FilterDrawer() {
   return (
     <Drawer side="start">
-      <DrawerTrigger render={<Button variant="outline" />}>التصفية</DrawerTrigger>
-      <DrawerContent closeLabel="إغلاق">
+      <DrawerTrigger render={<Button variant="outline" />}>Filter</DrawerTrigger>
+      <DrawerContent closeLabel="Close">
         <DrawerHeader>
-          <DrawerTitle>التصفية</DrawerTitle>
-          <DrawerDescription>اختر ما يظهر في قائمة الطلبات.</DrawerDescription>
+          <DrawerTitle>Filter</DrawerTitle>
+          <DrawerDescription>Choose what appears in the request list.</DrawerDescription>
         </DrawerHeader>
         <DrawerFooter>
-          <DrawerClose render={<Button />}>تطبيق</DrawerClose>
+          <DrawerClose render={<Button />}>Apply</DrawerClose>
         </DrawerFooter>
       </DrawerContent>
     </Drawer>
@@ -65,6 +65,12 @@ The four sides. Open the first one in each direction and compare where it appear
 The gray tone, a `start` drawer with a list of links. Links are ordinary buttons that render an `<a>`.
 
 <Preview compact name="drawer-nav" title="Navigation" minHeight={420} />
+
+### Controlled, without the corner button
+
+Pass `open` and `onOpenChange` to open the drawer from your own code, and set `showCloseButton={false}` when the footer already has a close action. Escape and a click on the page behind still close it.
+
+<Preview compact name="drawer-controlled" title="Controlled" minHeight={420} />
 
 ## RTL
 
