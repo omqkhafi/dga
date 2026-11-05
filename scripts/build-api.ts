@@ -6,6 +6,7 @@
 import { readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import ts from "typescript";
+import { API_DESCRIPTIONS_AR } from "./api-descriptions-ar";
 import { API_NOTES } from "./api-notes";
 import type { Api, ApiPart, ApiProp } from "./api-types";
 import { ROOT } from "./tokens/source";
@@ -44,6 +45,15 @@ function typeText(checker: ts.TypeChecker, type: ts.Type, text: string) {
       .join(" | ");
   }
   return checker.typeToString(type, undefined, flags);
+}
+
+/** The Arabic description for a key, or an error if an English description has none. */
+function arabic(key: string, hasEnglish: boolean) {
+  const text = API_DESCRIPTIONS_AR[key] ?? "";
+  if (hasEnglish && !text) {
+    throw new Error(`Missing Arabic description for ${key} in scripts/api-descriptions-ar.ts`);
+  }
+  return text;
 }
 
 export function buildApi(): Api {
@@ -160,12 +170,20 @@ export function buildApi(): Api {
           default: defaults.get(prop.getName()) ?? variantDefaults.get(prop.getName()) ?? null,
           required: !optional,
           description: (jsdoc || note?.description || "").replace(/\s+/g, " "),
+          descriptionAr: arabic(
+            `${slug}.${name}.${prop.getName()}`,
+            Boolean(jsdoc || note?.description),
+          ),
         });
       }
       const doc = ts.displayPartsToString(real.getDocumentationComment(checker)).trim();
       parts.push({
         name,
         description: doc.replace(/\s+/g, " ") || API_NOTES[`${slug}.${name}`]?.description || "",
+        descriptionAr: arabic(
+          `${slug}.${name}`,
+          Boolean(doc || API_NOTES[`${slug}.${name}`]?.description),
+        ),
         inherits,
         props,
       });

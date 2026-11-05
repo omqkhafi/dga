@@ -1,6 +1,6 @@
 # Roadmap
 
-Phases 0, 1 and 2 are done (0.1.0), and the Phase 2.5 docs polish is in 0.1.1; see [CHANGELOG.md](CHANGELOG.md).
+Phases 0, 1 and 2 are done (0.1.0), the Phase 2.5 docs polish is in 0.1.1 and 0.1.2, and the Arabic locale (Phase 2.6) is in 0.2.0; see [CHANGELOG.md](CHANGELOG.md).
 Component specs for each phase are in `docs/design-system/components/`.
 
 ## Rules for every phase
@@ -11,6 +11,7 @@ These apply to every component, so they are not repeated in each phase.
 - Logical properties only. RTL and LTR are both checked in the docs previews.
 - **Contrast check extended for each component as it lands.** Every state of the component (default, hover, pressed, selected, focused) is added to the audit in `scripts/tokens/model.ts`. Failures are fixed and logged in Deviations.
 - A docs page for each component: a preview (direction, theme and viewport toggles), usage, props and accessibility notes.
+- **English and Arabic ship together.** A component phase is not done until its docs page exists in both languages (`name.mdx` and `name.ar.mdx`, with the English `sourceHash` recorded by `bun run translations:stamp`), its `descriptionAr` entries exist for every prop (`scripts/api-descriptions-ar.ts`), and `bun run translations:check` passes. New UI strings go into both dictionaries.
 - Covered by the install test. CHANGELOG and Deviations are updated.
 
 ## Phase 2: Button, simple components and registry structure (done, 0.1.0)
@@ -47,6 +48,21 @@ Agreed scope:
 - [x] Home page, mobile shell, focus rings, reduced motion.
 - [x] Lighthouse budget in CI.
 
+## Phase 2.6: Arabic locale (done, 0.2.0)
+
+This reverses the earlier decision to publish the docs in English only.
+
+- [x] `/en` and `/ar` routing (English default, `hideLocale: never`), language switcher, `<html lang dir>`, `hreflang` (with `x-default`) and a sitemap per locale.
+- [x] Locale persistence: the switcher writes the `dga_locale` cookie (SameSite=Lax, path `/`, one year). For a URL without a language, `proxy.ts` uses the cookie, then `Accept-Language`, then English. Covered by `bun run test:e2e`.
+- [x] UI strings in both languages for the whole shell.
+- [x] Arabic pages for home, Getting Started, Foundations, Contrast and the nine component pages.
+- [x] Search index per locale with Arabic normalisation.
+- [x] Arabic Open Graph images, `llms.txt` and Markdown export per locale.
+- [x] Translation drift check in CI.
+- [x] Product name: Platform Code / كود المنصات, with the DGA logo icon as the lockup in both languages.
+- [x] Header and docs layout follow the shared omqkhafi docs layout (lockup pane, three equal tabs, theme, language, GitHub).
+- [x] Arabic typography rules and the numerals convention, documented on the Typography page.
+
 ## Phase 3: Forms
 
 Input, Textarea, Checkbox, Radio, Switch, Select, Number Input, Search Box, File Upload, Field (label, helper text, error).
@@ -75,6 +91,7 @@ Tab Bar, Navigation Bar, Banner, from the DGA Mobile Components Figma file.
 
 ## Release
 
+- Arabic review by a native-speaking reader of every page (the translations are written, not yet externally reviewed).
 - Accessibility audit: axe in CI, plus manual screen-reader passes (VoiceOver, NVDA) in Arabic and English.
 - Visual regression tests for previews in every direction, theme and viewport.
 - 1.0 release.

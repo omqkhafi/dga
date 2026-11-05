@@ -4,6 +4,7 @@ import { ArrowDown01Icon } from "@hugeicons/core-free-icons";
 import { cn } from "cn";
 import { Fragment, useId, useState } from "react";
 import { Icon } from "@/components/shell/icon";
+import { useT } from "@/lib/locale-context";
 import type { ApiProp } from "../../../../scripts/api-types";
 
 /**
@@ -12,6 +13,7 @@ import type { ApiProp } from "../../../../scripts/api-types";
  * description is always visible under the type.
  */
 export function PropsTable({ props, caption }: { props: ApiProp[]; caption: string }) {
+  const t = useT();
   const id = useId();
   const [open, setOpen] = useState<Set<string>>(new Set());
   const toggle = (name: string) =>
@@ -28,13 +30,13 @@ export function PropsTable({ props, caption }: { props: ApiProp[]; caption: stri
         <thead className="bg-background-neutral-100 text-start text-[0.8125rem] text-text-primary-paragraph">
           <tr>
             <th scope="col" className="w-1/4 px-3 py-2 text-start font-semibold">
-              Prop
+              {t("props.prop")}
             </th>
             <th scope="col" className="px-3 py-2 text-start font-semibold">
-              Type
+              {t("props.type")}
             </th>
             <th scope="col" className="w-1/5 px-3 py-2 text-start font-semibold">
-              Default
+              {t("props.default")}
             </th>
           </tr>
         </thead>
@@ -66,7 +68,7 @@ export function PropsTable({ props, caption }: { props: ApiProp[]; caption: stri
                       />
                       {prop.name}
                       {prop.required ? (
-                        <span className="text-text-error" title="Required">
+                        <span className="text-text-error" title={t("props.required")}>
                           *
                         </span>
                       ) : null}
@@ -100,7 +102,7 @@ export function PropsTable({ props, caption }: { props: ApiProp[]; caption: stri
                     ) : (
                       <span className="text-text-secondary-paragraph">
                         <span aria-hidden>–</span>
-                        <span className="sr-only">No default</span>
+                        <span className="sr-only">{t("props.noDefault")}</span>
                       </span>
                     )}
                   </td>
@@ -108,18 +110,24 @@ export function PropsTable({ props, caption }: { props: ApiProp[]; caption: stri
                 <tr id={`${rowId}-details`} hidden={!expanded} className="bg-background-neutral-50">
                   <td colSpan={3} className="px-3 py-3 ps-8">
                     <dl className="grid gap-x-4 gap-y-1.5 text-[0.8125rem] sm:grid-cols-[6rem_1fr]">
-                      <dt className="font-semibold text-text-primary-paragraph">Type</dt>
+                      <dt className="font-semibold text-text-primary-paragraph">
+                        {t("props.type")}
+                      </dt>
                       <dd dir="ltr" className="font-mono break-words text-text-primary-paragraph">
                         {prop.type}
                       </dd>
-                      <dt className="font-semibold text-text-primary-paragraph">Default</dt>
+                      <dt className="font-semibold text-text-primary-paragraph">
+                        {t("props.default")}
+                      </dt>
                       <dd dir="ltr" className="font-mono text-text-primary-paragraph">
-                        {prop.default ?? "None"}
-                        {prop.required ? " (required)" : ""}
+                        {prop.default ?? t("props.none")}
+                        {prop.required ? ` ${t("props.requiredNote")}` : ""}
                       </dd>
                       {prop.description ? (
                         <>
-                          <dt className="font-semibold text-text-primary-paragraph">Description</dt>
+                          <dt className="font-semibold text-text-primary-paragraph">
+                            {t("props.description")}
+                          </dt>
                           <dd className="text-text-primary-paragraph">{prop.description}</dd>
                         </>
                       ) : null}

@@ -11,6 +11,7 @@ import {
   Tick02Icon,
 } from "@hugeicons/core-free-icons";
 import { useState } from "react";
+import { useT } from "@/lib/locale-context";
 import { siteUrl } from "@/lib/shared";
 import { Button } from "@/registry/bases/base/ui/button";
 import { Icon } from "./icon";
@@ -23,6 +24,7 @@ const item =
  * more ways to use it: view the Markdown, or open it in an AI assistant.
  */
 export function CopyPage({ markdownUrl }: { markdownUrl: string }) {
+  const t = useT();
   const [state, setState] = useState<"idle" | "loading" | "copied">("idle");
   const copy = async () => {
     setState("loading");
@@ -35,9 +37,7 @@ export function CopyPage({ markdownUrl }: { markdownUrl: string }) {
       setState("idle");
     }
   };
-  const prompt = encodeURIComponent(
-    `Read ${siteUrl}${markdownUrl} so I can ask questions about it.`,
-  );
+  const prompt = encodeURIComponent(t("copy.prompt", { url: `${siteUrl}${markdownUrl}` }));
   return (
     <div className="flex shrink-0 items-center">
       <Button
@@ -48,7 +48,7 @@ export function CopyPage({ markdownUrl }: { markdownUrl: string }) {
         className="rounded-e-none"
       >
         <Icon icon={state === "copied" ? Tick02Icon : Copy01Icon} data-icon="inline-start" />
-        {state === "copied" ? "Copied" : "Copy page"}
+        {state === "copied" ? t("copy.copied") : t("copy.page")}
       </Button>
       <Menu.Root>
         <Menu.Trigger
@@ -57,7 +57,7 @@ export function CopyPage({ markdownUrl }: { markdownUrl: string }) {
               variant="outline"
               size="sm"
               iconOnly
-              aria-label="More ways to copy or open this page"
+              aria-label={t("copy.more")}
               className="-ms-px rounded-s-none"
             />
           }
@@ -69,11 +69,11 @@ export function CopyPage({ markdownUrl }: { markdownUrl: string }) {
             <Menu.Popup className="w-60 rounded-md border border-border-neutral-primary bg-background-menu p-1 shadow-lg outline-none">
               <Menu.Item className={item} onClick={copy}>
                 <Icon icon={Copy01Icon} />
-                Copy page as Markdown
+                {t("copy.markdown")}
               </Menu.Item>
               <Menu.LinkItem className={item} href={markdownUrl}>
                 <Icon icon={File01Icon} />
-                View as Markdown
+                {t("copy.view")}
               </Menu.LinkItem>
               <Menu.LinkItem
                 className={item}
@@ -82,9 +82,9 @@ export function CopyPage({ markdownUrl }: { markdownUrl: string }) {
                 rel="noopener noreferrer"
               >
                 <Icon icon={ChatGptIcon} />
-                Open in ChatGPT
+                {t("copy.chatgpt")}
                 <Icon icon={ArrowUpRight01Icon} className="ms-auto  rtl:-scale-x-100" />
-                <span className="sr-only">(opens in a new tab)</span>
+                <span className="sr-only">{t("newTab")}</span>
               </Menu.LinkItem>
               <Menu.LinkItem
                 className={item}
@@ -93,16 +93,16 @@ export function CopyPage({ markdownUrl }: { markdownUrl: string }) {
                 rel="noopener noreferrer"
               >
                 <Icon icon={SparklesIcon} />
-                Open in Claude
+                {t("copy.claude")}
                 <Icon icon={ArrowUpRight01Icon} className="ms-auto  rtl:-scale-x-100" />
-                <span className="sr-only">(opens in a new tab)</span>
+                <span className="sr-only">{t("newTab")}</span>
               </Menu.LinkItem>
             </Menu.Popup>
           </Menu.Positioner>
         </Menu.Portal>
       </Menu.Root>
       <span aria-live="polite" className="sr-only">
-        {state === "copied" ? "Page copied as Markdown" : ""}
+        {state === "copied" ? t("copy.done") : ""}
       </span>
     </div>
   );

@@ -1,0 +1,55 @@
+---
+title: Divider
+description: خط رفيع يفصل المحتوى إلى أقسام. أفقي أو عمودي، وأربعة ألوان.
+sourceHash: d276c3c09437
+---
+
+<Preview name="divider" title="Divider" />
+
+## التثبيت [#installation]
+
+<ComponentInstall name="divider" />
+
+## الاستخدام [#usage]
+
+```tsx title="page.tsx"
+import { Divider } from "@/components/ui/divider";
+
+<Divider />
+<Divider orientation="vertical" />
+```
+
+مبني على [Base UI Separator](https://base-ui.com/react/components/separator).
+
+## أمثلة [#examples]
+
+### الألوان [#colours]
+
+`neutral` (الافتراضي) و`primary`، و`alpha-white` و`white` لتعبئات العلامة.
+
+### العمودي [#vertical]
+
+اضبط `orientation="vertical"` داخل صف flex بارتفاع ثابت.
+
+## اتجاه RTL [#rtl]
+
+الخط بلا اتجاه. تقع الفواصل العمودية بين العناصر وفق ترتيب القراءة.
+
+<DirectionCompare name="divider" title="Divider" />
+
+## إمكانية الوصول [#accessibility]
+
+- يعرض `role="separator"` مع `aria-orientation`، فتعلن قارئات الشاشة الفاصل بين الأقسام.
+- إذا كان الخط بصريًا فقط، مرّر `role="none"`.
+
+## مرجع API [#api-reference]
+
+<ApiReference component="divider" />
+
+## الاختلافات عن DGA [#deviations-from-dga]
+
+<ComponentDeviations component="divider" />
+
+## التباين [#contrast]
+
+<ComponentContrast component="divider" />

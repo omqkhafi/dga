@@ -3,17 +3,19 @@
 import { cn } from "cn";
 import { useEffect, useMemo, useState } from "react";
 import { ContrastBadge } from "@/components/foundations/contrast";
+import { useT } from "@/lib/locale-context";
 import { tokens } from "@/lib/tokens";
 
 type Check = (typeof tokens.componentAudit)[number];
 
-const LABELS: Record<string, string> = { "ui-chrome": "Docs UI chrome" };
-const label = (component: string) =>
-  LABELS[component] ??
-  component.replace(/(^|-)([a-z])/g, (_, s, c) => (s ? " " : "") + c.toUpperCase());
+const label = (component: string, chrome: string) =>
+  component === "ui-chrome"
+    ? chrome
+    : component.replace(/(^|-)([a-z])/g, (_, s, c) => (s ? " " : "") + c.toUpperCase());
 
 /** Every audited pair, one component at a time, with the tokens behind each ratio. */
 export function ContrastReport() {
+  const t = useT();
   const components = useMemo(() => {
     const map = new Map<string, Check[]>();
     for (const c of tokens.componentAudit)
@@ -57,7 +59,7 @@ export function ContrastReport() {
 
   return (
     <div className="not-prose my-6 flex flex-col gap-3">
-      <div role="toolbar" aria-label="Component" className="flex flex-wrap gap-1">
+      <div role="toolbar" aria-label={t("contrast.component")} className="flex flex-wrap gap-1">
         {components.map(([name, list]) => (
           <button
             key={name}
@@ -74,15 +76,19 @@ export function ContrastReport() {
                 : "bg-background text-muted-foreground hover:bg-accent active:bg-button-background-neutral-pressed",
             )}
           >
-            {label(name)} <span className="opacity-80">({list.length})</span>
+            {label(name, t("contrast.chrome"))} <span className="opacity-80">({list.length})</span>
           </button>
         ))}
       </div>
       <div className="flex flex-wrap items-center justify-between gap-2 text-sm">
         <p id={selected} className="text-text-primary-paragraph">
-          {checks.length.toLocaleString("en")} pairs,{" "}
-          {failing === 0 ? "all passing" : `${failing} failing`}. Text needs 4.5:1, icons and focus
-          rings 3:1.
+          {t("contrast.summary", {
+            count: checks.length.toLocaleString("en"),
+            status:
+              failing === 0
+                ? t("contrast.statusPass")
+                : t("contrast.statusFail", { count: failing }),
+          })}
         </p>
         <label className="flex min-h-8 cursor-pointer items-center gap-2 text-[0.8125rem] text-text-primary-paragraph">
           <input
@@ -90,14 +96,19 @@ export function ContrastReport() {
             checked={onlyFailing}
             onChange={(e) => setOnlyFailing(e.target.checked)}
           />
-          Only failing
+          {t("contrast.onlyFailing")}
         </label>
       </div>
       <div className="max-h-[40rem] overflow-auto rounded-md border border-border-neutral-secondary">
         <table className="w-full min-w-[40rem] text-sm">
           <thead className="sticky top-0 bg-background-neutral-100 text-[0.8125rem] text-text-primary-paragraph">
             <tr>
-              {["Variant / state", "Foreground on background", "Light", "Dark"].map((h) => (
+              {[
+                t("contrast.variantState"),
+                t("contrast.fgOnBg"),
+                t("contrast.light"),
+                t("contrast.dark"),
+              ].map((h) => (
                 <th key={h} scope="col" className="px-3 py-2 text-start font-semibold">
                   {h}
                 </th>
@@ -111,9 +122,14 @@ export function ContrastReport() {
                   scope="row"
                   className="px-3 py-1.5 text-start text-[0.8125rem] font-normal text-text-default"
                 >
-                  {row.state}
+                  <span dir="ltr" className="inline-block">
+                    {row.state}
+                  </span>
                 </th>
-                <td className="px-3 py-1.5 font-mono text-[0.8125rem] break-all text-text-primary-paragraph">
+                <td
+                  dir="ltr"
+                  className="px-3 py-1.5 text-start font-mono text-[0.8125rem] break-all text-text-primary-paragraph"
+                >
                   {row.fg} / {row.bg}
                 </td>
                 {(["light", "dark"] as const).map((mode) => {

@@ -6,8 +6,8 @@
     {
       "name": "dga",
       "type": "registry:base",
-      "title": "DGA UI",
-      "description": "Sets up DGA UI: the DGA style and tokens, Hugeicons, RTL, and the @dga registry in components.json.",
+      "title": "Platform Code",
+      "description": "Sets up Platform Code: the DGA style and tokens, Hugeicons, RTL, and the @dga registry in components.json.",
       "extends": "none",
       "config": {
         "style": "base-nova",

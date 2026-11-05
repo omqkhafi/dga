@@ -1,39 +1,43 @@
+import { getT } from "@/lib/dictionary";
+import type { Locale } from "@/lib/i18n";
 import { tokens } from "@/lib/tokens";
 import { ContrastBadge, Swatch } from "./contrast";
 
 const { white, black } = tokens.swatchText;
 
-const LABELS: [RegExp, string][] = [
-  [/^primary-sa-flag$/, "SA Flag green (primary)"],
-  [/^secondary-gold$/, "Gold (secondary)"],
-  [/^tertiary-lavender$/, "Lavender (tertiary)"],
-  [/^neutral$/, "Neutral"],
-  [/^neutral-dark$/, "Neutral, dark mode (DGA UI, green-tinted)"],
-  [/^base-(white|black)$/, "Base"],
-  [/^(green|red|yellow|blue)$/, "Status: $1"],
-  [/^alpha-alpha-600-primary$|^primary-sa-flag-500-alpha$/, "Alpha: primary"],
-  [/^alpha-alpha-(\w+)$/, "Alpha: $1"],
-  [/^(.+)$/, "Extended (site CSS only): $1"],
-];
-
-function label(palette: string) {
-  for (const [re, out] of LABELS) if (re.test(palette)) return palette.replace(re, out);
-  return palette;
+function label(palette: string, t: ReturnType<typeof getT>) {
+  const each = (name: string) => name.replace(/^(.)/, (c) => c.toUpperCase());
+  if (palette === "primary-sa-flag") return t("pal.primary");
+  if (palette === "secondary-gold") return t("pal.gold");
+  if (palette === "tertiary-lavender") return t("pal.lavender");
+  if (palette === "neutral") return t("pal.neutral");
+  if (palette === "neutral-dark") return t("pal.neutralDark");
+  if (/^base-(white|black)$/.test(palette)) return t("pal.base");
+  const status = /^(green|red|yellow|blue)$/.exec(palette);
+  if (status) return t("pal.status", { name: each(status[1] as string) });
+  if (/^alpha-alpha-600-primary$|^primary-sa-flag-500-alpha$/.test(palette))
+    return t("pal.alphaPrimary");
+  const alpha = /^alpha-alpha-(\w+)$/.exec(palette);
+  if (alpha) return t("pal.alpha", { name: alpha[1] as string });
+  return t("pal.extended", { name: palette });
 }
 
 export function PrimitivePalettes({
   filter,
+  lang = "en",
 }: {
   filter?: "brand" | "status" | "alpha" | "extended";
+  lang?: Locale;
 }) {
+  const t = getT(lang);
   const groups = new Map<string, typeof tokens.primitives>();
   for (const p of tokens.primitives) {
-    const name = label(p.palette);
-    const kind = name.startsWith("Alpha")
+    const name = label(p.palette, t);
+    const kind = /^(alpha-alpha|primary-sa-flag-500-alpha)/.test(p.palette)
       ? "alpha"
-      : name.startsWith("Status")
+      : /^(green|red|yellow|blue)$/.test(p.palette)
         ? "status"
-        : name.startsWith("Extended")
+        : label(p.palette, t) === t("pal.extended", { name: p.palette })
           ? "extended"
           : "brand";
     if (filter && kind !== filter) continue;
@@ -89,9 +93,12 @@ export function PrimitivePalettes({
         </section>
       ))}
       <p className="text-xs text-muted-foreground">
-        Each swatch shows the contrast of white (<code>{white.token}</code>, {white.value}) and of
-        black (<code>{black.token}</code>, {black.value}) text on it. Translucent swatches are
-        measured over white.
+        {t("pal.note", {
+          whiteToken: white.token,
+          white: white.value,
+          blackToken: black.token,
+          black: black.value,
+        })}
       </p>
     </div>
   );

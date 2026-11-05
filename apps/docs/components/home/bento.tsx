@@ -8,6 +8,8 @@ import { cn } from "cn";
 import NextLink from "next/link";
 import type { ReactNode } from "react";
 import { Icon } from "@/components/shell/icon";
+import { getT } from "@/lib/dictionary";
+import type { Locale } from "@/lib/i18n";
 import { Avatar, AvatarGroup } from "@/registry/bases/base/ui/avatar";
 import { Badge } from "@/registry/bases/base/ui/badge";
 import { Button } from "@/registry/bases/base/ui/button";
@@ -26,14 +28,17 @@ import { StatusTag, Tag } from "@/registry/bases/base/ui/tag";
 function Tile({
   name,
   href,
+  lang,
   className,
   children,
 }: {
   name: string;
   href: string;
+  lang: Locale;
   className?: string;
   children: ReactNode;
 }) {
+  const t = getT(lang);
   return (
     <li
       className={cn(
@@ -45,7 +50,7 @@ function Tile({
         {children}
       </div>
       <NextLink
-        href={href}
+        href={`/${lang}${href}`}
         className="absolute inset-0 flex items-end rounded-lg focus-visible:outline-offset-[-2px]"
       >
         <span
@@ -57,7 +62,7 @@ function Tile({
         >
           <span>{name}</span>
           <span className="flex items-center gap-1 text-text-primary">
-            View docs
+            {t("bento.viewDocs")}
             <Icon icon={ArrowRight02Icon} className="rtl:-scale-x-100" />
           </span>
         </span>
@@ -73,73 +78,79 @@ const KV = ({ k, v }: { k: string; v: ReactNode }) => (
   </div>
 );
 
-export function Bento() {
+export function Bento({ lang }: { lang: Locale }) {
+  const t = getT(lang);
   return (
     <ul className="grid grid-cols-1 gap-4 md:grid-cols-6">
-      <Tile name="Status Tag" href="/docs/components/tag" className="md:col-span-4 md:row-span-2">
+      <Tile
+        lang={lang}
+        name="Status Tag"
+        href="/docs/components/tag"
+        className="md:col-span-4 md:row-span-2"
+      >
         <div className="flex items-start justify-between gap-4">
           <div className="flex items-center gap-3">
             <Avatar size={48} initials="NQ" />
             <div>
-              <p className="text-md font-semibold text-text-display">Noura Al-Qahtani</p>
-              <p className="text-sm text-text-secondary-paragraph">Request 24810 · Riyadh</p>
+              <p className="text-md font-semibold text-text-display">{t("bento.person")}</p>
+              <p className="text-sm text-text-secondary-paragraph">{t("bento.request")}</p>
             </div>
           </div>
-          <StatusTag variant="info">Under review</StatusTag>
+          <StatusTag variant="info">{t("bento.status")}</StatusTag>
         </div>
         <dl className="mt-6 divide-y divide-border-neutral-secondary">
-          <KV k="Service" v="Renew national address" />
-          <KV k="Submitted" v="4 Nov 2026" />
+          <KV k={t("bento.service")} v={t("bento.serviceValue")} />
+          <KV k={t("bento.submitted")} v={t("bento.submittedValue")} />
           <KV
-            k="Documents"
+            k={t("bento.documents")}
             v={
               <span className="flex gap-2">
-                <Badge variant="success">Verified</Badge>
-                <Badge variant="neutral">2 files</Badge>
+                <Badge variant="success">{t("bento.verified")}</Badge>
+                <Badge variant="neutral">{t("bento.files")}</Badge>
               </span>
             }
           />
-          <KV k="Priority" v={<Tag variant="warning">Standard</Tag>} />
+          <KV k={t("bento.priority")} v={<Tag variant="warning">{t("bento.standard")}</Tag>} />
         </dl>
         <div className="mt-auto flex gap-2 pt-8 pb-8">
-          <Button variant="secondary">Withdraw</Button>
-          <Button variant="outline">Add a document</Button>
+          <Button variant="secondary">{t("bento.withdraw")}</Button>
+          <Button variant="outline">{t("bento.addDocument")}</Button>
         </div>
       </Tile>
 
-      <Tile name="Tag" href="/docs/components/tag" className="md:col-span-2">
-        <p className="text-sm font-semibold text-text-default">Filters</p>
+      <Tile lang={lang} name="Tag" href="/docs/components/tag" className="md:col-span-2">
+        <p className="text-sm font-semibold text-text-default">{t("bento.filters")}</p>
         <div className="mt-4 flex flex-wrap gap-2 pb-6">
-          <Tag variant="neutral">Personal services</Tag>
-          <Tag variant="info">Riyadh</Tag>
+          <Tag variant="neutral">{t("bento.filter1")}</Tag>
+          <Tag variant="info">{t("bento.filter2")}</Tag>
           <Tag variant="neutral" outlined>
-            Open now
+            {t("bento.filter3")}
           </Tag>
-          <Tag variant="success">Online</Tag>
+          <Tag variant="success">{t("bento.filter4")}</Tag>
         </div>
       </Tile>
 
-      <Tile name="Button" href="/docs/components/button" className="md:col-span-2">
-        <p className="text-sm font-semibold text-text-default">Actions</p>
+      <Tile lang={lang} name="Button" href="/docs/components/button" className="md:col-span-2">
+        <p className="text-sm font-semibold text-text-default">{t("bento.actions")}</p>
         <div className="mt-4 flex flex-col gap-3 pb-6">
           <div className="flex flex-wrap items-center gap-2">
-            <Button size="sm">Continue</Button>
+            <Button size="sm">{t("bento.continue")}</Button>
             <Button size="sm" variant="secondary">
-              Back
+              {t("bento.back")}
             </Button>
           </div>
           <div className="flex flex-wrap items-center gap-2">
-            <Button>Pay fee</Button>
+            <Button>{t("bento.payFee")}</Button>
             <Button variant="outline" destructive>
-              Cancel
+              {t("bento.cancel")}
             </Button>
           </div>
         </div>
       </Tile>
 
-      <Tile name="Skeleton" href="/docs/components/skeleton" className="md:col-span-2">
+      <Tile lang={lang} name="Skeleton" href="/docs/components/skeleton" className="md:col-span-2">
         <div className="flex items-center justify-between">
-          <p className="text-sm font-semibold text-text-default">Loading</p>
+          <p className="text-sm font-semibold text-text-default">{t("bento.loading")}</p>
           <Spinner size="sm" label={null} />
         </div>
         <div className="mt-4 flex flex-col gap-3 pb-6">
@@ -155,25 +166,30 @@ export function Bento() {
         </div>
       </Tile>
 
-      <Tile name="Avatar" href="/docs/components/avatar" className="md:col-span-2">
-        <p className="text-sm font-semibold text-text-default">Review team</p>
+      <Tile lang={lang} name="Avatar" href="/docs/components/avatar" className="md:col-span-2">
+        <p className="text-sm font-semibold text-text-default">{t("bento.team")}</p>
         <div className="mt-4 flex items-center gap-4 pb-6">
           <AvatarGroup>
             <Avatar size={40} initials="NQ" />
             <Avatar size={40} initials="FA" />
-            <Avatar size={40} initials="+3" />
+            <Avatar size={40} initials={lang === "ar" ? "+٣" : "+3"} />
           </AvatarGroup>
-          <p className="text-sm text-text-primary-paragraph">5 reviewers</p>
+          <p className="text-sm text-text-primary-paragraph">{t("bento.reviewers")}</p>
         </div>
       </Tile>
 
-      <Tile name="Featured Icon" href="/docs/components/featured-icon" className="md:col-span-2">
-        <p className="text-sm font-semibold text-text-default">Updates</p>
+      <Tile
+        lang={lang}
+        name="Featured Icon"
+        href="/docs/components/featured-icon"
+        className="md:col-span-2"
+      >
+        <p className="text-sm font-semibold text-text-default">{t("bento.updates")}</p>
         <ul className="mt-4 flex flex-col gap-3 pb-6">
           {[
-            { v: "success", icon: CheckmarkCircle02Icon, t: "Address verified" },
-            { v: "warning", icon: Alert02Icon, t: "ID expires in 14 days" },
-            { v: "info", icon: InformationCircleIcon, t: "New service hours" },
+            { v: "success", icon: CheckmarkCircle02Icon, t: t("bento.update1") },
+            { v: "warning", icon: Alert02Icon, t: t("bento.update2") },
+            { v: "info", icon: InformationCircleIcon, t: t("bento.update3") },
           ].map((row) => (
             <li key={row.t} className="flex items-center gap-3 text-sm text-text-default">
               <FeaturedIcon variant={row.v as "success" | "warning" | "info"} size="sm">
@@ -185,18 +201,34 @@ export function Bento() {
         </ul>
       </Tile>
 
-      <Tile name="Divider and Link" href="/docs/components/link" className="md:col-span-6">
+      <Tile
+        lang={lang}
+        name="Divider and Link"
+        href="/docs/components/link"
+        className="md:col-span-6"
+      >
         <div className="flex flex-col gap-4 pb-6 sm:flex-row sm:items-center sm:justify-between">
           <p className="text-md text-text-default">
-            Read the <Link href="#">service terms</Link> before you submit.
+            {t("bento.terms", { link: "\u0000" })
+              .split("\u0000")
+              .flatMap((part, i, all) =>
+                i < all.length - 1
+                  ? [
+                      part,
+                      <Link key="terms" href="#">
+                        {t("bento.termsLink")}
+                      </Link>,
+                    ]
+                  : [part],
+              )}
           </p>
           <Divider className="hidden h-6 sm:block" orientation="vertical" />
           <div className="flex flex-wrap gap-4">
             <Link href="#" variant="neutral">
-              Privacy
+              {t("bento.privacy")}
             </Link>
             <Link href="#" variant="neutral">
-              Accessibility statement
+              {t("bento.accessibility")}
             </Link>
             <Link href="#" external>
               dga.gov.sa

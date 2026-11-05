@@ -1,0 +1,76 @@
+---
+title: Link
+description: ينقل المستخدم إلى صفحة أو قسم آخر. بنمط primary وneutral وللخلفيات الملونة، وحجمان، ومضمّن وخارجي.
+sourceHash: 6294e33446b4
+---
+
+<Preview name="link-variants" title="الأنماط والأحجام" />
+
+## التثبيت [#installation]
+
+<ComponentInstall name="link" />
+
+## الاستخدام [#usage]
+
+```tsx title="app/page.tsx"
+import NextLink from "next/link";
+import { Link } from "@/components/ui/link";
+
+<Link render={<NextLink href="/services" />}>الخدمات</Link>
+```
+
+بلا `render` يعرض `Link` عنصر `<a>` عاديًا. استخدم [Button](/docs/components/button) للإجراءات.
+
+## البنية [#anatomy]
+
+- **Root**: عنصر `<a>`، أو أي عنصر عبر `render`.
+- **Label**: نص الرابط.
+- **External icon** (للروابط الخارجية): تنقلب في RTL.
+
+## أمثلة [#examples]
+
+### المضمّن [#inline]
+
+داخل النص الجاري، اضبط `inline`. الروابط المضمّنة تحتها خط دائمًا، فيمكن تمييزها دون الاعتماد على اللون (WCAG 1.4.1).
+
+<Preview compact name="link-inline" title="المضمّن" />
+
+### الخارجي [#external]
+
+يفتح `external` علامة تبويب جديدة مع `rel="noopener noreferrer"`، ويضيف أيقونة الرابط الخارجي، ويُعلم قارئات الشاشة. ترجم التنبيه عبر `externalLabel`:
+
+```tsx title="page.tsx"
+<Link href="https://dga.gov.sa" external externalLabel="(يفتح في علامة تبويب جديدة)">
+  هيئة الحكومة الرقمية
+</Link>
+```
+
+## اتجاه RTL [#rtl]
+
+يتبع النص وأيقونة الرابط الخارجي اتجاه القراءة؛ وتنقلب الأيقونة في العربية.
+
+<DirectionCompare name="link-inline" title="الروابط المضمّنة" />
+
+## إمكانية الوصول [#accessibility]
+
+| المفتاح | الإجراء |
+| --- | --- |
+| <kbd>Tab</kbd> | ينقل التركيز إلى الرابط. |
+| <kbd>Enter</kbd> | يتبعه. |
+
+- عنصر `<a href>` حقيقي: يعمل بلوحة المفاتيح، والنقر الأوسط، و«فتح في علامة تبويب جديدة».
+- يتغير لون الروابط التي سبقت زيارتها (`link-primary-visited`). ويضاف خط تحتها عند التمرير والضغط.
+- حلقة التركيز على `:focus-visible` فقط: حد `border-black` بسمك 2px، وإزاحة 2px، وبيضاء على تعبئات العلامة.
+- الرابط المعطّل بلا `href`، فلا يتلقى التركيز ويُعلن على أنه معطّل.
+
+## مرجع API [#api-reference]
+
+<ApiReference component="link" />
+
+## الاختلافات عن DGA [#deviations-from-dga]
+
+<ComponentDeviations component="link" />
+
+## التباين [#contrast]
+
+<ComponentContrast component="link" />

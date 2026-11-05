@@ -2,8 +2,8 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "extends": "none",
   "name": "dga",
-  "title": "DGA UI",
-  "description": "Sets up DGA UI: the DGA style and tokens, Hugeicons, RTL, and the @dga registry in components.json.",
+  "title": "Platform Code",
+  "description": "Sets up Platform Code: the DGA style and tokens, Hugeicons, RTL, and the @dga registry in components.json.",
   "registryDependencies": [
     "https://dga.omqkhafi.dev/r/dga-style.json"
   ],

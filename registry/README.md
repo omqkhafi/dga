@@ -1,4 +1,4 @@
-# DGA UI registry
+# Platform Code registry
 
 Source for the `@dga` shadcn registry, served at `https://dga.omqkhafi.dev/r/{name}.json`.
 

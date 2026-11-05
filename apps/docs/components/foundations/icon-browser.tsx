@@ -3,12 +3,14 @@
 import { Search01Icon, Tick02Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon, type IconSvgElement } from "@hugeicons/react";
 import { useDeferredValue, useEffect, useMemo, useState } from "react";
+import { useT } from "@/lib/locale-context";
 
 type IconEntry = { name: string; icon: IconSvgElement };
 const PAGE = 120;
 
 /** Searchable grid of the Hugeicons free set (stroke rounded). Loaded on demand. */
 export function IconBrowser() {
+  const t = useT();
   const [icons, setIcons] = useState<IconEntry[] | null>(null);
   const [query, setQuery] = useState("");
   const [limit, setLimit] = useState(PAGE);
@@ -55,19 +57,19 @@ export function IconBrowser() {
           className="text-muted-foreground"
           aria-hidden
         />
-        <span className="sr-only">Search icons</span>
+        <span className="sr-only">{t("icons.searchLabel")}</span>
         <input
           value={query}
           onChange={(e) => {
             setQuery(e.target.value);
             setLimit(PAGE);
           }}
-          placeholder="Search icons, e.g. arrow, user, calendar"
+          placeholder={t("icons.placeholder")}
           className="w-full bg-transparent text-sm text-foreground outline-none placeholder:text-muted-foreground"
         />
       </label>
       <p className="text-xs text-muted-foreground" aria-live="polite">
-        {icons ? `${results.length} icons. Click one to copy its import.` : "Loading icons…"}
+        {icons ? t("icons.count", { count: results.length }) : t("icons.loading")}
       </p>
       <ul className="grid grid-cols-3 gap-2 sm:grid-cols-5 lg:grid-cols-6">
         {results.slice(0, limit).map(({ name, icon }) => (
@@ -97,7 +99,7 @@ export function IconBrowser() {
           onClick={() => setLimit((n) => n + PAGE * 2)}
           className="inline-flex items-center justify-center gap-2 self-center rounded-sm border border-border bg-background px-4 py-2 text-sm font-medium text-foreground hover:bg-accent"
         >
-          Show more ({results.length - limit} left)
+          {t("icons.more", { count: results.length - limit })}
         </button>
       )}
     </div>

@@ -1,4 +1,6 @@
+import { getT } from "@/lib/dictionary";
 import api from "@/lib/generated/api.json";
+import type { Locale } from "@/lib/i18n";
 import type { Api } from "../../../../scripts/api-types";
 import { PropsTable } from "./props-table";
 
@@ -6,9 +8,11 @@ import { PropsTable } from "./props-table";
  * One props table per part, generated from the TypeScript types (`bun run api`). Add
  * `<ApiReference component="button" />` under the "API Reference" heading.
  */
-export function ApiReference({ component }: { component: string }) {
+export function ApiReference({ component, lang = "en" }: { component: string; lang?: Locale }) {
+  const t = getT(lang);
   const parts = (api as Api)[component];
   if (!parts) throw new Error(`No API data for ${component}. Run \`bun run api\`.`);
+  const text = (en: string, ar: string) => (lang === "ar" ? ar : en);
   return (
     <div className="not-prose">
       {parts.map((part) => (
@@ -20,15 +24,23 @@ export function ApiReference({ component }: { component: string }) {
             {part.name}
           </h3>
           {part.description ? (
-            <p className="mt-1 text-sm text-text-primary-paragraph">{part.description}</p>
+            <p className="mt-1 text-sm text-text-primary-paragraph">
+              {text(part.description, part.descriptionAr)}
+            </p>
           ) : null}
           {part.props.length > 0 ? (
-            <PropsTable caption={`${part.name} props`} props={part.props} />
+            <PropsTable
+              caption={t("props.caption", { part: part.name })}
+              props={part.props.map((prop) => ({
+                ...prop,
+                description: text(prop.description, prop.descriptionAr),
+              }))}
+            />
           ) : null}
           <p className="text-[0.8125rem] text-text-secondary-paragraph">
             {part.inherits ? (
               <>
-                Also accepts every prop of the{" "}
+                {t("props.alsoBase")}{" "}
                 <a
                   className="underline underline-offset-4 hover:text-text-default"
                   href={part.inherits.url}
@@ -36,12 +48,12 @@ export function ApiReference({ component }: { component: string }) {
                   rel="noopener noreferrer"
                 >
                   Base UI {part.inherits.name}
-                  <span className="sr-only"> (opens in a new tab)</span>
+                  <span className="sr-only"> {t("newTab")}</span>
                 </a>
                 .
               </>
             ) : (
-              <>Also accepts the props of the element it renders.</>
+              t("props.alsoElement")
             )}
           </p>
         </section>

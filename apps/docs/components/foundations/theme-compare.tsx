@@ -6,6 +6,8 @@ import {
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon, type IconSvgElement } from "@hugeicons/react";
 import { cn } from "cn";
+import { getT, type Key } from "@/lib/dictionary";
+import type { Locale } from "@/lib/i18n";
 import { Badge } from "@/registry/bases/base/ui/badge";
 import { Button } from "@/registry/bases/base/ui/button";
 import { FeaturedIcon } from "@/registry/bases/base/ui/featured-icon";
@@ -17,40 +19,30 @@ type Mode = "light" | "dark";
 const ALERTS: {
   status: "success" | "info" | "warning" | "error";
   icon: IconSvgElement;
-  title: string;
-  body: string;
   box: string;
   iconColor: string;
 }[] = [
   {
     status: "success",
     icon: CheckmarkCircle02Icon,
-    title: "Request submitted",
-    body: "You will get an SMS when it is reviewed.",
     box: "border-border-success-light bg-background-success-50 text-text-success",
     iconColor: "text-icon-success",
   },
   {
     status: "info",
     icon: InformationCircleIcon,
-    title: "Service hours",
-    body: "Sunday to Thursday, 8:00 to 16:00.",
     box: "border-border-info-light bg-background-info-50 text-text-info",
     iconColor: "text-icon-info",
   },
   {
     status: "warning",
     icon: Alert02Icon,
-    title: "Document expires soon",
-    body: "Renew it within 14 days to avoid a fee.",
     box: "border-border-warning-light bg-background-warning-50 text-text-warning",
     iconColor: "text-icon-warning",
   },
   {
     status: "error",
     icon: AlertCircleIcon,
-    title: "Payment failed",
-    body: "Check the card details and try again.",
     box: "border-border-error-light bg-background-error-50 text-text-error",
     iconColor: "text-icon-error",
   },
@@ -67,7 +59,8 @@ function Group({ title, children }: { title: string; children: React.ReactNode }
   );
 }
 
-function Panel({ mode }: { mode: Mode }) {
+function Panel({ mode, lang }: { mode: Mode; lang: Locale }) {
+  const t = getT(lang);
   return (
     <div
       data-theme={mode}
@@ -78,34 +71,38 @@ function Panel({ mode }: { mode: Mode }) {
       )}
     >
       <p className="text-sm font-semibold text-text-display">
-        {mode === "light" ? "Light" : "Dark"}
+        {mode === "light" ? t("compare.light") : t("compare.dark")}
       </p>
 
-      <Group title="Surfaces: body, surface, raised">
+      <Group title={t("compare.surfaces")}>
         <div className="flex h-14 w-full overflow-hidden rounded-sm border border-border-neutral-secondary text-[0.8125rem]">
-          <span className="flex flex-1 items-center justify-center bg-background-body">Body</span>
-          <span className="flex flex-1 items-center justify-center bg-background-card">
-            Surface
+          <span className="flex flex-1 items-center justify-center bg-background-body">
+            {t("compare.body")}
           </span>
-          <span className="flex flex-1 items-center justify-center bg-background-menu">Raised</span>
+          <span className="flex flex-1 items-center justify-center bg-background-card">
+            {t("compare.surface")}
+          </span>
+          <span className="flex flex-1 items-center justify-center bg-background-menu">
+            {t("compare.raised")}
+          </span>
         </div>
       </Group>
 
-      <Group title="Text: default, primary paragraph, secondary paragraph">
-        <span className="text-sm text-text-default">Default</span>
-        <span className="text-sm text-text-primary-paragraph">Primary</span>
-        <span className="text-sm text-text-secondary-paragraph">Secondary</span>
-        <span className="text-sm text-text-primary">Brand</span>
+      <Group title={t("compare.text")}>
+        <span className="text-sm text-text-default">{t("compare.default")}</span>
+        <span className="text-sm text-text-primary-paragraph">{t("compare.primary")}</span>
+        <span className="text-sm text-text-secondary-paragraph">{t("compare.secondary")}</span>
+        <span className="text-sm text-text-primary">{t("compare.brand")}</span>
       </Group>
 
-      <Group title="Button">
+      <Group title={t("compare.button")}>
         {STYLES.map((variant) => (
           <Button key={variant} variant={variant}>
             {variant}
           </Button>
         ))}
       </Group>
-      <Group title="Button, destructive">
+      <Group title={t("compare.buttonDestructive")}>
         {STYLES.filter((v) => v !== "neutral").map((variant) => (
           <Button key={variant} variant={variant} destructive>
             {variant}
@@ -113,7 +110,7 @@ function Panel({ mode }: { mode: Mode }) {
         ))}
       </Group>
 
-      <Group title="Badge">
+      <Group title={t("compare.badge")}>
         {(["neutral", "success", "error", "warning", "info", "purple", "orange"] as const).map(
           (variant) => (
             <Badge key={variant} variant={variant}>
@@ -122,7 +119,7 @@ function Panel({ mode }: { mode: Mode }) {
           ),
         )}
       </Group>
-      <Group title="Badge, outlined">
+      <Group title={t("compare.badgeOutlined")}>
         {(["neutral", "success", "error", "warning", "info"] as const).map((variant) => (
           <Badge key={variant} variant={variant} outlined>
             {variant}
@@ -130,7 +127,7 @@ function Panel({ mode }: { mode: Mode }) {
         ))}
       </Group>
 
-      <Group title="Tag and Status Tag">
+      <Group title={t("compare.tagStatus")}>
         {(["neutral", "success", "info", "warning", "error"] as const).map((variant) => (
           <Tag key={variant} variant={variant}>
             {variant}
@@ -143,20 +140,20 @@ function Panel({ mode }: { mode: Mode }) {
         ))}
       </Group>
 
-      <Group title="Link">
-        <Link href="#compare">Primary</Link>
+      <Group title={t("compare.link")}>
+        <Link href="#compare">{t("compare.primary")}</Link>
         <Link href="#compare" variant="neutral">
-          Neutral
+          {t("compare.linkNeutral")}
         </Link>
         <Link href="#compare" inline>
-          Inline
+          {t("compare.linkInline")}
         </Link>
         <Link href="#compare" external>
-          External
+          {t("compare.linkExternal")}
         </Link>
       </Group>
 
-      <Group title="Alert-like surfaces">
+      <Group title={t("compare.alerts")}>
         <ul className="flex w-full flex-col gap-2">
           {ALERTS.map((a) => (
             <li
@@ -169,15 +166,19 @@ function Panel({ mode }: { mode: Mode }) {
                 aria-hidden
               />
               <div className="flex flex-col">
-                <p className="text-sm font-semibold">{a.title}</p>
-                <p className="text-sm text-text-primary-paragraph">{a.body}</p>
+                <p className="text-sm font-semibold">
+                  {t(`compare.alert.${a.status}.title` as Key)}
+                </p>
+                <p className="text-sm text-text-primary-paragraph">
+                  {t(`compare.alert.${a.status}.body` as Key)}
+                </p>
               </div>
             </li>
           ))}
         </ul>
       </Group>
 
-      <Group title="Featured icon">
+      <Group title={t("compare.featured")}>
         {(["brand", "neutral", "success", "info", "warning", "error"] as const).map((variant) => (
           <FeaturedIcon key={variant} variant={variant} size="md">
             <HugeiconsIcon icon={InformationCircleIcon} />
@@ -189,11 +190,11 @@ function Panel({ mode }: { mode: Mode }) {
 }
 
 /** Light and dark side by side in one page, from the same markup. Both panels are live. */
-export function ThemeCompare() {
+export function ThemeCompare({ lang = "en" }: { lang?: Locale }) {
   return (
     <div id="compare" className="not-prose my-6 grid gap-4 lg:grid-cols-2">
-      <Panel mode="light" />
-      <Panel mode="dark" />
+      <Panel mode="light" lang={lang} />
+      <Panel mode="dark" lang={lang} />
     </div>
   );
 }

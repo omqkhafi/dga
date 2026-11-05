@@ -3,18 +3,39 @@
 import { cn } from "cn";
 import NextLink from "next/link";
 import { usePathname } from "next/navigation";
+import { useLocale, useT } from "@/lib/locale-context";
 
-export const TABS = [
-  { href: "/", label: "README", match: (p: string) => p === "/" },
-  { href: "/docs", label: "DOCS", match: (p: string) => p.startsWith("/docs") },
-  { href: "/changelog", label: "CHANGELOG", match: (p: string) => p.startsWith("/changelog") },
-];
+/** The three top tabs, with the active locale in each URL. */
+export function useTabs() {
+  const { lang } = useLocale();
+  const t = useT();
+  const home = `/${lang}`;
+  return [
+    { href: home, label: t("tab.home"), match: (p: string) => p === home },
+    {
+      href: `${home}/docs`,
+      label: t("tab.docs"),
+      match: (p: string) => p.startsWith(`${home}/docs`),
+    },
+    {
+      href: `${home}/changelog`,
+      label: t("tab.changelog"),
+      match: (p: string) => p.startsWith(`${home}/changelog`),
+    },
+  ];
+}
 
+/**
+ * The three tabs share the width that is left of the lockup pane, like the other omqkhafi docs
+ * sites: equal cells, a border on the end side of each, and a 2px bar under the current one.
+ */
 export function Tabs() {
   const pathname = usePathname();
+  const tabs = useTabs();
+  const t = useT();
   return (
-    <nav aria-label="Main" className="hidden h-full items-stretch gap-1 md:flex">
-      {TABS.map((tab) => {
+    <nav aria-label={t("nav.main")} className="flex min-w-0 flex-1 items-stretch">
+      {tabs.map((tab) => {
         const active = tab.match(pathname);
         return (
           <NextLink
@@ -22,15 +43,18 @@ export function Tabs() {
             href={tab.href}
             aria-current={active ? "page" : undefined}
             className={cn(
-              "relative flex items-center px-3 text-[0.8125rem] font-medium tracking-wider",
+              "group/tab relative flex flex-1 items-center justify-center border-e border-border-neutral-secondary px-2 xl:px-4",
+              "text-[0.8125rem] font-medium tracking-wider whitespace-nowrap uppercase transition-colors duration-150 motion-reduce:transition-none",
               "focus-visible:-outline-offset-2",
-              "after:absolute after:inset-x-3 after:bottom-0 after:h-0.5 after:rounded-full after:bg-border-primary after:transition-opacity after:duration-150",
               active
-                ? "text-text-default after:opacity-100"
-                : "text-text-secondary-paragraph after:opacity-0 hover:text-text-default hover:after:bg-border-neutral-primary hover:after:opacity-100 active:text-text-default",
+                ? "text-text-default"
+                : "text-text-secondary-paragraph hover:bg-background-neutral-50 hover:text-text-default",
             )}
           >
             {tab.label}
+            {active ? (
+              <span aria-hidden className="absolute inset-x-0 -bottom-px h-0.5 bg-border-primary" />
+            ) : null}
           </NextLink>
         );
       })}

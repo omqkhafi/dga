@@ -16,6 +16,7 @@ import { cn } from "cn";
 import { useTheme } from "next-themes";
 import { type ReactNode, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { Icon } from "@/components/shell/icon";
+import { useLocale, useT } from "@/lib/locale-context";
 import {
   type Direction,
   isPreviewMessage,
@@ -30,12 +31,15 @@ type Option<T extends string> = { value: T; label: string; icon: IconSvgElement 
 
 function Segmented<T extends string>({
   label,
+  legend,
   value,
   options,
   onChange,
   iconOnly = false,
 }: {
   label: string;
+  /** Visible to screen readers: the name of the group. */
+  legend: string;
   value: T;
   options: Option<T>[];
   onChange: (value: T) => void;
@@ -44,7 +48,7 @@ function Segmented<T extends string>({
 }) {
   return (
     <fieldset className="inline-flex items-center rounded-sm border border-border bg-background p-0.5">
-      <legend className="sr-only">{label}</legend>
+      <legend className="sr-only">{legend}</legend>
       {options.map((option) => (
         <label
           key={option.value}
@@ -74,19 +78,23 @@ function Segmented<T extends string>({
   );
 }
 
-const DIRECTIONS: Option<Direction>[] = [
-  { value: "ltr", label: "LTR", icon: TextAlignLeftIcon },
-  { value: "rtl", label: "RTL", icon: TextAlignRightIcon },
-];
-const THEMES: Option<Theme>[] = [
-  { value: "light", label: "Light", icon: Sun03Icon },
-  { value: "dark", label: "Dark", icon: Moon02Icon },
-];
-const VIEWPORT_OPTIONS: Option<Viewport>[] = [
-  { value: "mobile", label: VIEWPORTS.mobile.label, icon: SmartPhone01Icon },
-  { value: "tablet", label: VIEWPORTS.tablet.label, icon: Tablet01Icon },
-  { value: "desktop", label: VIEWPORTS.desktop.label, icon: ComputerIcon },
-];
+function useOptions() {
+  const t = useT();
+  const directions: Option<Direction>[] = [
+    { value: "ltr", label: t("preview.ltr"), icon: TextAlignLeftIcon },
+    { value: "rtl", label: t("preview.rtl"), icon: TextAlignRightIcon },
+  ];
+  const themes: Option<Theme>[] = [
+    { value: "light", label: t("preview.light"), icon: Sun03Icon },
+    { value: "dark", label: t("preview.dark"), icon: Moon02Icon },
+  ];
+  const viewports: Option<Viewport>[] = [
+    { value: "mobile", label: t("preview.mobile"), icon: SmartPhone01Icon },
+    { value: "tablet", label: t("preview.tablet"), icon: Tablet01Icon },
+    { value: "desktop", label: t("preview.desktop"), icon: ComputerIcon },
+  ];
+  return { directions, themes, viewports };
+}
 
 /** Last measured content height per preview, width and direction, so a revisit does not jump. */
 const heightCache = new Map<string, number>();
@@ -156,6 +164,7 @@ export function PreviewFrame({
 }) {
   const frame = useRef<HTMLIFrameElement>(null);
   const box = useRef<HTMLDivElement>(null);
+  const { dir: pageDir } = useLocale();
   const near = useNear(box);
   const [available, setAvailable] = useState(0);
   const cacheKey = `${name}:${width}`;
@@ -246,7 +255,7 @@ export function PreviewFrame({
               inlineSize: width,
               blockSize: height,
               transform: `scale(${scale})`,
-              transformOrigin: "0 0",
+              transformOrigin: pageDir === "rtl" ? "100% 0" : "0 0",
             }}
           />
         )}
@@ -264,7 +273,7 @@ export function PreviewFrame({
 export function Preview({
   name,
   title,
-  defaultDir = "ltr",
+  defaultDir,
   defaultViewport,
   minHeight = 64,
   compact = false,
@@ -281,7 +290,12 @@ export function Preview({
   children?: ReactNode;
 }) {
   const docsTheme = useDocsTheme();
-  const [dir, setDir] = useState<Direction>(defaultDir);
+  const t = useT();
+  const { dir: pageDir } = useLocale();
+  const { directions, themes, viewports } = useOptions();
+  // The preview opens in the page's own direction: RTL on Arabic pages.
+  const initialDir: Direction = defaultDir ?? pageDir;
+  const [dir, setDir] = useState<Direction>(initialDir);
   const [theme, setTheme] = useState<Theme | null>(null);
   const [chosenViewport, setViewport] = useState<Viewport | null>(defaultViewport ?? null);
   const [available, setAvailable] = useState(0);
@@ -310,13 +324,14 @@ export function Preview({
   }, []);
 
   const reset = () => {
-    setDir(defaultDir);
+    setDir(initialDir);
     setTheme(null);
     setViewport(defaultViewport ?? null);
     setReloadKey((n) => n + 1);
   };
 
   const label = title ?? name;
+  const other: Direction = dir === "ltr" ? "rtl" : "ltr";
   const fullscreenHref = `/preview/${name}?dir=${dir}&theme=${activeTheme}`;
 
   return (
@@ -332,8 +347,11 @@ export function Preview({
               variant="subtle"
               size="sm"
               onClick={() => setDir(dir === "ltr" ? "rtl" : "ltr")}
-              aria-label={`Direction: ${dir.toUpperCase()}. Switch to ${dir === "ltr" ? "RTL" : "LTR"}`}
-              title="Toggle LTR / RTL"
+              aria-label={t("preview.toggleDir", {
+                dir: dir.toUpperCase(),
+                other: other.toUpperCase(),
+              })}
+              title={t("preview.toggleDirTitle")}
             >
               {dir.toUpperCase()}
             </Button>
@@ -342,8 +360,8 @@ export function Preview({
               size="sm"
               iconOnly
               onClick={reset}
-              aria-label={`Reset ${label}`}
-              title="Reset (replays animations)"
+              aria-label={t("preview.reset", { name: label })}
+              title={t("preview.resetTitle")}
             >
               <Icon icon={Refresh01Icon} />
             </Button>
@@ -352,8 +370,8 @@ export function Preview({
               size="sm"
               iconOnly
               nativeButton={false}
-              aria-label={`Open ${label} fullscreen in a new tab`}
-              title="Fullscreen (new tab)"
+              aria-label={t("preview.fullscreen", { name: label })}
+              title={t("preview.fullscreenTitle")}
               render={<a href={fullscreenHref} target="_blank" rel="noopener noreferrer" />}
             >
               <Icon icon={ArrowExpandDiagonal01Icon} />
@@ -366,21 +384,24 @@ export function Preview({
           <div className="flex flex-wrap items-center gap-1.5">
             <Segmented
               label={`${name}-direction`}
+              legend={t("preview.direction")}
               value={dir}
-              options={DIRECTIONS}
+              options={directions}
               onChange={setDir}
             />
             <Segmented
               label={`${name}-theme`}
+              legend={t("preview.theme")}
               value={activeTheme}
-              options={THEMES}
+              options={themes}
               onChange={setTheme}
               iconOnly
             />
             <Segmented
               label={`${name}-viewport`}
+              legend={t("preview.viewport")}
               value={viewport}
-              options={VIEWPORT_OPTIONS}
+              options={viewports}
               onChange={setViewport}
               iconOnly
             />
@@ -390,8 +411,8 @@ export function Preview({
                 size="sm"
                 iconOnly
                 onClick={reset}
-                aria-label={`Reset ${label}`}
-                title="Reset (replays animations)"
+                aria-label={t("preview.reset", { name: label })}
+                title={t("preview.resetTitle")}
               >
                 <Icon icon={Refresh01Icon} />
               </Button>
@@ -400,8 +421,8 @@ export function Preview({
                 size="sm"
                 iconOnly
                 nativeButton={false}
-                aria-label={`Open ${label} fullscreen in a new tab`}
-                title="Fullscreen (new tab)"
+                aria-label={t("preview.fullscreen", { name: label })}
+                title={t("preview.fullscreenTitle")}
                 render={<a href={fullscreenHref} target="_blank" rel="noopener noreferrer" />}
               >
                 <Icon icon={ArrowExpandDiagonal01Icon} />
@@ -434,8 +455,8 @@ export function Preview({
       </div>
       {device ? (
         <div className="border-t border-border px-3 py-1 text-[0.8125rem] text-muted-foreground">
-          {VIEWPORTS[viewport].label} · {width}px
-          {scale < 1 ? ` · shown at ${Math.round(scale * 100)}%` : ""}
+          {t(`preview.${viewport}`)} · {width}px
+          {scale < 1 ? ` · ${t("preview.shownAt", { percent: Math.round(scale * 100) })}` : ""}
         </div>
       ) : null}
       {children}
@@ -456,6 +477,7 @@ export function DirectionCompare({
   title: string;
   minHeight?: number;
 }) {
+  const t = useT();
   const theme = useDocsTheme() ?? "light";
   return (
     <div className="not-prose my-6 grid gap-4 md:grid-cols-2">
@@ -466,7 +488,7 @@ export function DirectionCompare({
           data-preview-direction={dir}
         >
           <figcaption className="border-b border-border bg-muted px-3 py-1 text-[0.8125rem] font-medium text-foreground">
-            {dir === "ltr" ? "LTR (English)" : "RTL (العربية)"}
+            {dir === "ltr" ? t("preview.comparisonLtr") : t("preview.comparisonRtl")}
           </figcaption>
           <PreviewFrame
             name={name}

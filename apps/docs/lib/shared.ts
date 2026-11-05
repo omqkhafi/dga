@@ -1,4 +1,4 @@
-export const appName = "DGA UI";
+export const appName = "Platform Code";
 export const siteUrl = "https://dga.omqkhafi.dev";
 export const docsRoute = "/docs";
 export const gitConfig = { user: "omqkhafi", repo: "dga", branch: "main" };

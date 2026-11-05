@@ -2,10 +2,12 @@
 
 import { Copy01Icon, Tick02Icon } from "@hugeicons/core-free-icons";
 import { useState } from "react";
+import { useT } from "@/lib/locale-context";
 import { Button } from "@/registry/bases/base/ui/button";
 import { Icon } from "./icon";
 
 export function InstallCommand({ command }: { command: string }) {
+  const t = useT();
   const [copied, setCopied] = useState(false);
   return (
     <div
@@ -22,7 +24,7 @@ export function InstallCommand({ command }: { command: string }) {
         variant="subtle"
         size="sm"
         iconOnly
-        aria-label={copied ? "Copied" : "Copy command"}
+        aria-label={copied ? t("command.copied") : t("command.copy")}
         onClick={async () => {
           await navigator.clipboard.writeText(command);
           setCopied(true);

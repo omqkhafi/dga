@@ -2,6 +2,7 @@
 
 import { cn } from "cn";
 import { useEffect, useMemo, useState } from "react";
+import { useT } from "@/lib/locale-context";
 import { type Deviation, deviations } from "@/lib/tokens";
 
 const AREAS = [...new Set(deviations.map((d) => d.area))];
@@ -21,6 +22,7 @@ function Status({ status }: { status?: string | null }) {
 }
 
 export function DeviationsTable() {
+  const t = useT();
   const [area, setArea] = useState<string>("All");
   // `#component-button` (linked from each component page) filters to one component.
   const [component, setComponent] = useState<string | null>(null);
@@ -59,11 +61,11 @@ export function DeviationsTable() {
             }}
             className="min-h-8 rounded-sm px-2 text-text-primary underline underline-offset-4 hover:bg-button-background-neutral-default"
           >
-            Show all
+            {t("dev.showAll")}
           </button>
         </p>
       ) : null}
-      <div className="flex flex-wrap gap-1" role="toolbar" aria-label="Filter by area">
+      <div className="flex flex-wrap gap-1" role="toolbar" aria-label={t("dev.filter")}>
         {["All", ...AREAS].map((a) => (
           <button
             key={a}
@@ -77,7 +79,7 @@ export function DeviationsTable() {
                 : "bg-background text-muted-foreground hover:bg-accent",
             )}
           >
-            {a}
+            {a === "All" ? t("dev.all") : a}
             {a !== "All" && ` (${deviations.filter((d) => d.area === a).length})`}
           </button>
         ))}
@@ -86,7 +88,12 @@ export function DeviationsTable() {
         <table className="w-full border-collapse text-sm">
           <thead className="hidden bg-muted lg:table-header-group">
             <tr>
-              {["Token / component", "DGA original", "Ours", "Reason"].map((c) => (
+              {[
+                t("dev.col.item"),
+                t("dev.col.original"),
+                t("dev.col.ours"),
+                t("dev.col.reason"),
+              ].map((c) => (
                 <th
                   key={c}
                   scope="col"
@@ -117,17 +124,33 @@ export function DeviationsTable() {
                 </td>
                 <td className="align-top lg:px-3 lg:py-2">
                   <span className="me-2 text-xs font-medium text-muted-foreground lg:hidden">
-                    DGA original:
+                    {t("dev.originalShort")}
                   </span>
-                  <span className="text-xs break-words text-muted-foreground">{d.original}</span>
+                  <span
+                    dir="ltr"
+                    lang="en"
+                    className="inline-block text-xs break-words text-muted-foreground"
+                  >
+                    {d.original}
+                  </span>
                 </td>
                 <td className="align-top lg:px-3 lg:py-2">
                   <span className="me-2 text-xs font-medium text-muted-foreground lg:hidden">
-                    Ours:
+                    {t("dev.oursShort")}
                   </span>
-                  <span className="text-xs break-words text-foreground">{d.ours}</span>
+                  <span
+                    dir="ltr"
+                    lang="en"
+                    className="inline-block text-xs break-words text-foreground"
+                  >
+                    {d.ours}
+                  </span>
                 </td>
-                <td className="align-top text-sm text-primary-paragraph lg:w-1/3 lg:px-3 lg:py-2">
+                <td
+                  dir="ltr"
+                  lang="en"
+                  className="align-top text-sm text-primary-paragraph lg:w-1/3 lg:px-3 lg:py-2"
+                >
                   {d.reason}
                 </td>
               </tr>

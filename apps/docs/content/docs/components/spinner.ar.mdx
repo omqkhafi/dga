@@ -1,0 +1,58 @@
+---
+title: Spinner
+description: يوضح أن عملية قيد التنفيذ. سبعة أحجام، بنمط primary وneutral وللخلفيات الملونة.
+sourceHash: de6400de2e22
+---
+
+<Preview name="spinner-sizes" title="الأحجام والأنماط" />
+
+## التثبيت [#installation]
+
+<ComponentInstall name="spinner" />
+
+## الاستخدام [#usage]
+
+```tsx title="page.tsx"
+import { Spinner } from "@/components/ui/spinner";
+
+<Spinner label="جارٍ التحميل" />
+```
+
+## البنية [#anatomy]
+
+- **Root**: عنصر `role="status"` فيه الحلقة المتحركة.
+- **Label**: نص مخفي بصريًا تعلنه قارئات الشاشة.
+
+## أمثلة [#examples]
+
+### الأحجام والألوان [#sizes-and-colours]
+
+سبعة أحجام من `2xs` (‏20px) إلى `2xl` (‏44px)، بالأنماط `primary` و`neutral` و`on-color` و`current` (يتبع لون النص، للاستخدام داخل الأزرار).
+
+### الزخرفي [#decorative]
+
+مرّر `label={null}` حين يعلن العنصر المحيط حالة الانشغال بنفسه، كما يفعل [Button](/docs/components/button).
+
+## اتجاه RTL [#rtl]
+
+الحلقة بلا اتجاه، فلا ينقلب شيء. ترجم `label` في الصفحات العربية.
+
+<DirectionCompare name="spinner-sizes" title="Spinner" />
+
+## إمكانية الوصول [#accessibility]
+
+- `role="status"` مع تسمية مخفية بصريًا، فتعلنه قارئات الشاشة مرة واحدة.
+- مع `label={null}` يُخفى المؤشر عن قارئات الشاشة.
+- عند تفضيل تقليل الحركة، يدور المؤشر ببطء بدل أن يتوقف، فتبقى حالة الانشغال ظاهرة.
+
+## مرجع API [#api-reference]
+
+<ApiReference component="spinner" />
+
+## الاختلافات عن DGA [#deviations-from-dga]
+
+<ComponentDeviations component="spinner" />
+
+## التباين [#contrast]
+
+<ComponentContrast component="spinner" />

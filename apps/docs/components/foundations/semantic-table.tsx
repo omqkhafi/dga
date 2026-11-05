@@ -4,6 +4,8 @@ import { Search01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { cn } from "cn";
 import { useMemo, useState } from "react";
+import type { Key } from "@/lib/dictionary";
+import { useT } from "@/lib/locale-context";
 import type { SemanticToken } from "@/lib/tokens";
 import { ContrastBadge, Swatch } from "./contrast";
 
@@ -11,6 +13,7 @@ const CATEGORIES = ["Text", "Background", "Border", "Icon", "Link", "Alpha", "Co
 type Category = (typeof CATEGORIES)[number];
 
 function ModeCell({ token, mode }: { token: SemanticToken; mode: "light" | "dark" }) {
+  const t = useT();
   const value = token[mode];
   const contrast = token.contrast[mode];
   const fill = token.fill[mode];
@@ -31,11 +34,15 @@ function ModeCell({ token, mode }: { token: SemanticToken; mode: "light" | "dark
           <ContrastBadge
             ratio={contrast.ratio}
             min={contrast.min}
-            label={`Lowest ratio on --${contrast.bg}`}
+            label={t("tokens.lowestOn", { token: contrast.bg })}
           />
         )}
         {!contrast && fill && (
-          <ContrastBadge ratio={fill.ratio} min={fill.min} label={`--${fill.fg} on this fill`} />
+          <ContrastBadge
+            ratio={fill.ratio}
+            min={fill.min}
+            label={t("tokens.onFill", { token: fill.fg })}
+          />
         )}
       </div>
     </div>
@@ -49,6 +56,7 @@ export function SemanticTable({
   tokens: SemanticToken[];
   initialCategory?: Category | "All";
 }) {
+  const tr = useT();
   const [category, setCategory] = useState<Category | "All">(initialCategory);
   const [query, setQuery] = useState("");
 
@@ -67,7 +75,7 @@ export function SemanticTable({
   return (
     <div className="not-prose my-6 flex flex-col gap-3">
       <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-        <div className="flex flex-wrap gap-1" role="toolbar" aria-label="Token category">
+        <div className="flex flex-wrap gap-1" role="toolbar" aria-label={tr("tokens.category")}>
           {(["All", ...CATEGORIES] as const).map((c) => (
             <button
               key={c}
@@ -81,7 +89,7 @@ export function SemanticTable({
                   : "bg-background text-muted-foreground hover:bg-accent",
               )}
             >
-              {c}
+              {tr(`tokens.cat.${c.toLowerCase()}` as Key)}
             </button>
           ))}
         </div>
@@ -92,23 +100,23 @@ export function SemanticTable({
             className="text-muted-foreground"
             aria-hidden
           />
-          <span className="sr-only">Search tokens</span>
+          <span className="sr-only">{tr("tokens.searchLabel")}</span>
           <input
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="Search tokens or utilities"
+            placeholder={tr("tokens.search")}
             className="w-full bg-transparent text-sm text-foreground outline-none placeholder:text-muted-foreground"
           />
         </label>
       </div>
       <p className="text-xs text-muted-foreground">
-        {rows.length} of {tokens.length} tokens
+        {tr("tokens.count", { shown: rows.length, total: tokens.length })}
       </p>
       <div className="overflow-hidden rounded-md border border-border">
         <div className="hidden grid-cols-[minmax(0,1.3fr)_minmax(0,1fr)_minmax(0,1fr)] gap-4 border-b border-border bg-muted px-3 py-2 text-xs font-semibold text-muted-foreground md:grid">
-          <span>Token and utilities</span>
-          <span>Light</span>
-          <span>Dark</span>
+          <span>{tr("tokens.tokenAndUtilities")}</span>
+          <span>{tr("col.light")}</span>
+          <span>{tr("col.dark")}</span>
         </div>
         <ul className="divide-y divide-border">
           {rows.map((t) => (
@@ -132,22 +140,26 @@ export function SemanticTable({
                       href="/docs/deviations"
                       className="rounded-xs bg-warning-50 px-1 text-xs font-medium text-warning"
                     >
-                      changed
+                      {tr("tokens.changed")}
                     </a>
                   )}
                   {t.source !== "figma" && (
                     <span className="rounded-xs bg-muted px-1 text-xs text-muted-foreground">
-                      {t.source === "css" ? "site CSS only" : "DGA UI"}
+                      {t.source === "css" ? tr("tokens.siteCss") : tr("tokens.dgaUi")}
                     </span>
                   )}
                 </div>
               </div>
               <div className="flex flex-col gap-1">
-                <span className="text-xs font-medium text-muted-foreground md:hidden">Light</span>
+                <span className="text-xs font-medium text-muted-foreground md:hidden">
+                  {tr("col.light")}
+                </span>
                 <ModeCell token={t} mode="light" />
               </div>
               <div className="flex flex-col gap-1">
-                <span className="text-xs font-medium text-muted-foreground md:hidden">Dark</span>
+                <span className="text-xs font-medium text-muted-foreground md:hidden">
+                  {tr("col.dark")}
+                </span>
                 <ModeCell token={t} mode="dark" />
               </div>
             </li>

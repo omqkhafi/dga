@@ -4,6 +4,7 @@ import { Copy01Icon, Tick02Icon } from "@hugeicons/core-free-icons";
 import { cn } from "cn";
 import { type CSSProperties, type ReactNode, useId, useRef, useState } from "react";
 import { Icon } from "@/components/shell/icon";
+import { useT } from "@/lib/locale-context";
 import { Button } from "@/registry/bases/base/ui/button";
 
 /** Lines shown before a block collapses. */
@@ -34,6 +35,7 @@ export function CodeBlock({
   style?: CSSProperties;
   children: ReactNode;
 }) {
+  const t = useT();
   const id = useId();
   const body = useRef<HTMLDivElement>(null);
   const [copied, setCopied] = useState(false);
@@ -74,12 +76,12 @@ export function CodeBlock({
           size="sm"
           iconOnly
           onClick={copy}
-          aria-label={copied ? "Copied" : "Copy code"}
+          aria-label={copied ? t("code.copied") : t("code.copy")}
         >
           <Icon icon={copied ? Tick02Icon : Copy01Icon} />
         </Button>
         <span aria-live="polite" className="sr-only">
-          {copied ? "Code copied" : ""}
+          {copied ? t("code.copiedLive") : ""}
         </span>
       </div>
       <div className="relative">
@@ -89,7 +91,7 @@ export function CodeBlock({
           dir="ltr"
           // biome-ignore lint/a11y/noNoninteractiveTabindex: scrollable region must be keyboard reachable
           tabIndex={0}
-          aria-label={typeof title === "string" ? `${title} code` : "Code"}
+          aria-label={typeof title === "string" ? t("code.label", { title }) : "Code"}
           className="dga-code-body overflow-x-auto overflow-y-hidden py-3"
           style={collapsed ? { maxHeight: `calc(${COLLAPSE_AT} * 1.5rem + 1.5rem)` } : undefined}
         >
@@ -111,7 +113,7 @@ export function CodeBlock({
             aria-controls={id}
             onClick={() => setExpanded((v) => !v)}
           >
-            {expanded ? "Collapse code" : `Expand code (${lines} lines)`}
+            {expanded ? t("code.collapse") : t("code.expand", { lines })}
           </Button>
         </div>
       ) : null}

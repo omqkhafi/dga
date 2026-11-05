@@ -3,6 +3,7 @@
     {
       "name": "Avatar",
       "description": "A person's picture, initials or a generic user icon.",
+      "descriptionAr": "صورة شخص أو الأحرف الأولى من اسمه أو أيقونة مستخدم عامة.",
       "inherits": {
         "name": "Avatar",
         "url": "https://base-ui.com/react/components/avatar"
@@ -13,48 +14,55 @@
           "type": "24 | 32 | 40 | 48 | 64 | 80 | 120",
           "default": "40",
           "required": false,
-          "description": "Size in pixels."
+          "description": "Size in pixels.",
+          "descriptionAr": "الحجم بالبكسل."
         },
         {
           "name": "square",
           "type": "boolean",
           "default": "false",
           "required": false,
-          "description": "Square with rounded corners instead of a circle."
+          "description": "Square with rounded corners instead of a circle.",
+          "descriptionAr": "مربع بزوايا مستديرة بدل الدائرة."
         },
         {
           "name": "bordered",
           "type": "boolean",
           "default": "false",
           "required": false,
-          "description": "Adds a ring around the avatar."
+          "description": "Adds a ring around the avatar.",
+          "descriptionAr": "يضيف حلقة حول الصورة الرمزية."
         },
         {
           "name": "initials",
           "type": "string",
           "default": null,
           "required": false,
-          "description": "One or two letters shown when there is no image."
+          "description": "One or two letters shown when there is no image.",
+          "descriptionAr": "حرف أو حرفان يظهران عند عدم وجود صورة."
         },
         {
           "name": "src",
           "type": "string",
           "default": null,
           "required": false,
-          "description": "Image URL. Falls back to the initials or icon if it is missing or fails to load."
+          "description": "Image URL. Falls back to the initials or icon if it is missing or fails to load.",
+          "descriptionAr": "رابط الصورة. إن غاب الرابط أو فشل تحميل الصورة تظهر الأحرف الأولى أو الأيقونة."
         },
         {
           "name": "alt",
           "type": "string",
           "default": "\"\"",
           "required": false,
-          "description": "Alternative text for the image. Use the person's name."
+          "description": "Alternative text for the image. Use the person's name.",
+          "descriptionAr": "النص البديل للصورة. استخدم اسم الشخص."
         }
       ]
     },
     {
       "name": "AvatarGroup",
       "description": "A row of avatars. Put an Avatar with initials like \"+3\" last for the remainder.",
+      "descriptionAr": "صف من الصور الرمزية. ضع Avatar بأحرف مثل \"+3\" في النهاية للدلالة على الباقي.",
       "inherits": {
         "name": "Avatar",
         "url": "https://base-ui.com/react/components/avatar"
@@ -65,7 +73,8 @@
           "type": "boolean",
           "default": "true",
           "required": false,
-          "description": "Overlap the avatars (Figma: Stacked)."
+          "description": "Overlap the avatars (Figma: Stacked).",
+          "descriptionAr": "تداخل الصور الرمزية (في Figma: Stacked)."
         }
       ]
     }
@@ -74,6 +83,7 @@
     {
       "name": "Badge",
       "description": "A short, non-interactive label for status, counts or categories.",
+      "descriptionAr": "وسم قصير غير تفاعلي للحالة أو العدد أو التصنيف.",
       "inherits": null,
       "props": [
         {
@@ -81,35 +91,40 @@
           "type": "\"on-color\" | \"neutral\" | \"success\" | \"error\" | \"warning\" | \"info\" | \"purple\" | \"orange\"",
           "default": "\"neutral\"",
           "required": false,
-          "description": "Colour family. `on-color` is for badges on brand fills."
+          "description": "Colour family. `on-color` is for badges on brand fills.",
+          "descriptionAr": "عائلة اللون. `on-color` للشارات على الخلفيات ذات لون العلامة."
         },
         {
           "name": "size",
           "type": "\"sm\" | \"md\" | \"lg\"",
           "default": "\"md\"",
           "required": false,
-          "description": "Height: `sm` 20px, `md` 24px, `lg` 32px."
+          "description": "Height: `sm` 20px, `md` 24px, `lg` 32px.",
+          "descriptionAr": "الارتفاع: `sm` ‏20px، و`md` ‏24px، و`lg` ‏32px."
         },
         {
           "name": "outlined",
           "type": "boolean",
           "default": "false",
           "required": false,
-          "description": "Outlined instead of filled."
+          "description": "Outlined instead of filled.",
+          "descriptionAr": "بإطار فقط بدل التعبئة."
         },
         {
           "name": "rounded",
           "type": "boolean",
           "default": "false",
           "required": false,
-          "description": "Fully rounded (pill) corners."
+          "description": "Fully rounded (pill) corners.",
+          "descriptionAr": "زوايا مستديرة بالكامل (على شكل حبة)."
         },
         {
           "name": "iconOnly",
           "type": "boolean",
           "default": "false",
           "required": false,
-          "description": "Square, icon only. Needs an `aria-label`."
+          "description": "Square, icon only. Needs an `aria-label`.",
+          "descriptionAr": "مربع بأيقونة فقط. يحتاج إلى `aria-label`."
         }
       ]
     }
@@ -118,6 +133,7 @@
     {
       "name": "Button",
       "description": "Triggers an action. Six styles, destructive and on-colour versions, three sizes, icon-only and loading.",
+      "descriptionAr": "ينفّذ إجراءً. ستة أنماط، ونسختان للإجراءات المدمّرة وللخلفيات الملونة، وثلاثة أحجام، وزر بأيقونة فقط وحالة تحميل.",
       "inherits": {
         "name": "Button",
         "url": "https://base-ui.com/react/components/button"
@@ -128,49 +144,56 @@
           "type": "\"primary\" | \"neutral\" | \"secondary\" | \"outline\" | \"subtle\" | \"transparent\"",
           "default": "\"primary\"",
           "required": false,
-          "description": "Style. `neutral` is Figma's Primary-Neutral, `secondary` is Secondary-Solid and `outline` is Secondary-Outline."
+          "description": "Style. `neutral` is Figma's Primary-Neutral, `secondary` is Secondary-Solid and `outline` is Secondary-Outline.",
+          "descriptionAr": "النمط. `neutral` يقابل Primary-Neutral في Figma، و`secondary` يقابل Secondary-Solid، و`outline` يقابل Secondary-Outline."
         },
         {
           "name": "size",
           "type": "\"sm\" | \"md\" | \"lg\"",
           "default": "\"md\"",
           "required": false,
-          "description": "Height: `sm` 24px, `md` 32px, `lg` 40px."
+          "description": "Height: `sm` 24px, `md` 32px, `lg` 40px.",
+          "descriptionAr": "الارتفاع: `sm` ‏24px، و`md` ‏32px، و`lg` ‏40px."
         },
         {
           "name": "destructive",
           "type": "boolean",
           "default": "false",
           "required": false,
-          "description": "Destructive version of the style. `neutral` has none in Figma and falls back to destructive `primary`."
+          "description": "Destructive version of the style. `neutral` has none in Figma and falls back to destructive `primary`.",
+          "descriptionAr": "النسخة المدمّرة من النمط. لا يوجد لـ `neutral` نسخة مدمّرة في Figma، فيعود إلى `primary` المدمّر."
         },
         {
           "name": "onColor",
           "type": "boolean",
           "default": "false",
           "required": false,
-          "description": "For buttons on brand fills (`background-primary`, the nav header)."
+          "description": "For buttons on brand fills (`background-primary`, the nav header).",
+          "descriptionAr": "للأزرار على خلفيات لون العلامة (`background-primary`، وترويسة التنقل)."
         },
         {
           "name": "iconOnly",
           "type": "boolean",
           "default": "false",
           "required": false,
-          "description": "Square, icon only. Needs an `aria-label`."
+          "description": "Square, icon only. Needs an `aria-label`.",
+          "descriptionAr": "مربع بأيقونة فقط. يحتاج إلى `aria-label`."
         },
         {
           "name": "loading",
           "type": "boolean",
           "default": "false",
           "required": false,
-          "description": "Shows a spinner in place of the leading icon (or the icon, for icon-only buttons), sets aria-busy and ignores clicks. The button keeps its width and stays focusable."
+          "description": "Shows a spinner in place of the leading icon (or the icon, for icon-only buttons), sets aria-busy and ignores clicks. The button keeps its width and stays focusable.",
+          "descriptionAr": "يعرض مؤشر تحميل مكان الأيقونة الأولى (أو الأيقونة نفسها في الأزرار ذات الأيقونة فقط)، ويضبط aria-busy، ويتجاهل النقرات. يحافظ الزر على عرضه ويبقى قابلًا للتركيز."
         },
         {
           "name": "render",
           "type": "ReactElement | function",
           "default": null,
           "required": false,
-          "description": "Allows you to replace the component's HTML element with a different tag, or compose it with another component. Accepts a `ReactElement` or a function that returns the element to render."
+          "description": "Allows you to replace the component's HTML element with a different tag, or compose it with another component. Accepts a `ReactElement` or a function that returns the element to render.",
+          "descriptionAr": "يتيح لك استبدال عنصر HTML الخاص بالمكوّن بوسم آخر، أو تركيبه مع مكوّن آخر. يقبل `ReactElement` أو دالة تعيد العنصر المراد عرضه."
         }
       ]
     }
@@ -179,6 +202,7 @@
     {
       "name": "Divider",
       "description": "Separates content into sections. Announced as a separator; pass role=\"none\" if purely visual.",
+      "descriptionAr": "يفصل المحتوى إلى أقسام. يُعلَن كفاصل؛ مرّر role=\"none\" إن كان بصريًا فقط.",
       "inherits": {
         "name": "Separator",
         "url": "https://base-ui.com/react/components/separator"
@@ -189,14 +213,16 @@
           "type": "\"alpha-white\" | \"neutral\" | \"primary\" | \"white\"",
           "default": "\"neutral\"",
           "required": false,
-          "description": "Colour. `alpha-white` and `white` are for dividers on brand fills."
+          "description": "Colour. `alpha-white` and `white` are for dividers on brand fills.",
+          "descriptionAr": "اللون. `alpha-white` و`white` للفواصل على خلفيات لون العلامة."
         },
         {
           "name": "orientation",
           "type": "\"horizontal\" | \"vertical\"",
           "default": "\"horizontal\"",
           "required": false,
-          "description": "The orientation of the separator."
+          "description": "The orientation of the separator.",
+          "descriptionAr": "اتجاه الفاصل."
         }
       ]
     }
@@ -205,6 +231,7 @@
     {
       "name": "FeaturedIcon",
       "description": "An icon in a tinted container, used to lead cards, empty states and dialogs. Decorative by default; pass role=\"img\" and an aria-label if the icon carries meaning.",
+      "descriptionAr": "أيقونة داخل حاوية مظلّلة، تتصدّر البطاقات والحالات الفارغة والنوافذ الحوارية. تزيينية افتراضيًا؛ مرّر role=\"img\" وaria-label إن كانت الأيقونة تحمل معنى.",
       "inherits": null,
       "props": [
         {
@@ -212,28 +239,32 @@
           "type": "\"brand\" | \"neutral\" | \"success\" | \"error\" | \"warning\" | \"info\"",
           "default": "\"brand\"",
           "required": false,
-          "description": "Colour family."
+          "description": "Colour family.",
+          "descriptionAr": "عائلة اللون."
         },
         {
           "name": "appearance",
           "type": "\"light\" | \"outlined\" | \"hard\"",
           "default": "\"light\"",
           "required": false,
-          "description": "`light` is a tinted container, `hard` a solid one and `outlined` a ring."
+          "description": "`light` is a tinted container, `hard` a solid one and `outlined` a ring.",
+          "descriptionAr": "`light` حاوية مظلّلة، و`hard` حاوية مصمتة، و`outlined` حلقة."
         },
         {
           "name": "size",
           "type": "\"sm\" | \"md\" | \"lg\" | \"xl\"",
           "default": "\"xl\"",
           "required": false,
-          "description": "Container size: `sm` 32px up to `xl` 56px."
+          "description": "Container size: `sm` 32px up to `xl` 56px.",
+          "descriptionAr": "حجم الحاوية: من `sm` ‏32px إلى `xl` ‏56px."
         },
         {
           "name": "circle",
           "type": "boolean",
           "default": "false",
           "required": false,
-          "description": "Round container instead of square."
+          "description": "Round container instead of square.",
+          "descriptionAr": "حاوية دائرية بدل المربعة."
         }
       ]
     }
@@ -242,6 +273,7 @@
     {
       "name": "Link",
       "description": "A text link in the DGA link colours. Works with Next.js `Link` through `render`.",
+      "descriptionAr": "رابط نصي بألوان الروابط في DGA. يعمل مع `Link` من Next.js عبر `render`.",
       "inherits": null,
       "props": [
         {
@@ -249,56 +281,64 @@
           "type": "ReactElement | function",
           "default": null,
           "required": false,
-          "description": "Allows you to replace the component's HTML element with a different tag, or compose it with another component. Accepts a `ReactElement` or a function that returns the element to render."
+          "description": "Allows you to replace the component's HTML element with a different tag, or compose it with another component. Accepts a `ReactElement` or a function that returns the element to render.",
+          "descriptionAr": "يتيح لك استبدال عنصر HTML الخاص بالمكوّن بوسم آخر، أو تركيبه مع مكوّن آخر. يقبل `ReactElement` أو دالة تعيد العنصر المراد عرضه."
         },
         {
           "name": "variant",
           "type": "\"on-color\" | \"primary\" | \"neutral\"",
           "default": "\"primary\"",
           "required": false,
-          "description": "Colour. `on-color` is for links on brand fills."
+          "description": "Colour. `on-color` is for links on brand fills.",
+          "descriptionAr": "اللون. `on-color` للروابط على خلفيات لون العلامة."
         },
         {
           "name": "size",
           "type": "\"sm\" | \"md\"",
           "default": "\"md\"",
           "required": false,
-          "description": "Text size: `sm` 14px, `md` 16px."
+          "description": "Text size: `sm` 14px, `md` 16px.",
+          "descriptionAr": "حجم النص: `sm` ‏14px، و`md` ‏16px."
         },
         {
           "name": "inline",
           "type": "boolean",
           "default": "false",
           "required": false,
-          "description": "Always underlined, for links inside running text (WCAG 1.4.1)."
+          "description": "Always underlined, for links inside running text (WCAG 1.4.1).",
+          "descriptionAr": "مسطّر دائمًا، للروابط داخل النص المتصل (WCAG 1.4.1)."
         },
         {
           "name": "external",
           "type": "boolean",
           "default": "false",
           "required": false,
-          "description": "Opens in a new tab, adds rel=\"noopener noreferrer\" and an external-link icon."
+          "description": "Opens in a new tab, adds rel=\"noopener noreferrer\" and an external-link icon.",
+          "descriptionAr": "يفتح في نافذة جديدة، ويضيف rel=\"noopener noreferrer\" وأيقونة الرابط الخارجي."
         },
         {
           "name": "externalLabel",
           "type": "string",
           "default": "\"(opens in a new tab)\"",
           "required": false,
-          "description": "Screen-reader text added to external links. Translate it on Arabic pages."
+          "description": "Screen-reader text added to external links. Translate it on Arabic pages.",
+          "descriptionAr": "نص لقارئ الشاشة يُضاف إلى الروابط الخارجية. ترجمه في الصفحات العربية."
         },
         {
           "name": "href",
           "type": "string",
           "default": null,
           "required": false,
-          "description": "Destination."
+          "description": "Destination.",
+          "descriptionAr": "الوجهة."
         },
         {
           "name": "disabled",
           "type": "boolean",
           "default": "false",
           "required": false,
-          "description": "Renders without an href, with aria-disabled."
+          "description": "Renders without an href, with aria-disabled.",
+          "descriptionAr": "يُعرض بلا href ومع aria-disabled."
         }
       ]
     }
@@ -307,6 +347,7 @@
     {
       "name": "Skeleton",
       "description": "A placeholder shown while content loads. Hidden from screen readers: set aria-busy=\"true\" on the region that is loading instead.",
+      "descriptionAr": "عنصر نائب يظهر أثناء تحميل المحتوى. مخفي عن قارئ الشاشة: اضبط aria-busy=\"true\" على المنطقة التي تُحمَّل بدلًا من ذلك.",
       "inherits": null,
       "props": [
         {
@@ -314,14 +355,16 @@
           "type": "\"rectangle\" | \"line\" | \"square\" | \"circle\"",
           "default": "\"rectangle\"",
           "required": false,
-          "description": "Shape of the placeholder."
+          "description": "Shape of the placeholder.",
+          "descriptionAr": "شكل العنصر النائب."
         },
         {
           "name": "size",
           "type": "\"sm\" | \"md\" | \"lg\" | 24 | 48 | 64 | 80 | 120 | 170 | 240",
           "default": null,
           "required": false,
-          "description": "Figma size. Omit it and size the skeleton with `className`."
+          "description": "Figma size. Omit it and size the skeleton with `className`.",
+          "descriptionAr": "الحجم في Figma. احذفه وحدّد حجم الهيكل بـ `className`."
         }
       ]
     }
@@ -330,6 +373,7 @@
     {
       "name": "Spinner",
       "description": "A loading indicator. Turns slowly with reduced motion.",
+      "descriptionAr": "مؤشر تحميل. يدور ببطء عند تفضيل تقليل الحركة.",
       "inherits": null,
       "props": [
         {
@@ -337,21 +381,24 @@
           "type": "\"2xs\" | \"xs\" | \"sm\" | \"md\" | \"lg\" | \"xl\" | \"2xl\"",
           "default": "\"md\"",
           "required": false,
-          "description": "Diameter in the Figma sizes, from `2xs` (20px) to `2xl` (44px)."
+          "description": "Diameter in the Figma sizes, from `2xs` (20px) to `2xl` (44px).",
+          "descriptionAr": "القطر بأحجام Figma، من `2xs` (‏20px) إلى `2xl` (‏44px)."
         },
         {
           "name": "variant",
           "type": "\"on-color\" | \"primary\" | \"neutral\" | \"current\"",
           "default": "\"primary\"",
           "required": false,
-          "description": "Colour. `current` takes the text colour of its parent, for use inside buttons."
+          "description": "Colour. `current` takes the text colour of its parent, for use inside buttons.",
+          "descriptionAr": "اللون. `current` يأخذ لون نص العنصر الأب، للاستخدام داخل الأزرار."
         },
         {
           "name": "label",
           "type": "string",
           "default": "\"Loading\"",
           "required": false,
-          "description": "Text announced to screen readers. Pass `null` when something else already announces the busy state (for example a button with aria-busy)."
+          "description": "Text announced to screen readers. Pass `null` when something else already announces the busy state (for example a button with aria-busy).",
+          "descriptionAr": "نص يُعلَن لقارئ الشاشة. مرّر `null` عندما يعلن شيء آخر حالة الانشغال (مثل زر فيه aria-busy)."
         }
       ]
     }
@@ -360,6 +407,7 @@
     {
       "name": "StatusTag",
       "description": "The status of an item, task or request, with a coloured dot.",
+      "descriptionAr": "حالة عنصر أو مهمة أو طلب، مع نقطة ملونة.",
       "inherits": null,
       "props": [
         {
@@ -367,27 +415,31 @@
           "type": "\"neutral\" | \"success\" | \"error\" | \"warning\" | \"info\"",
           "default": "\"neutral\"",
           "required": false,
-          "description": "Colour family. `on-color` is for tags on brand fills."
+          "description": "Colour family. `on-color` is for tags on brand fills.",
+          "descriptionAr": "عائلة اللون. `on-color` للوسوم على خلفيات لون العلامة."
         },
         {
           "name": "size",
           "type": "\"xs\" | \"sm\" | \"md\"",
           "default": "\"sm\"",
           "required": false,
-          "description": "Height: `xs` 20px, `sm` 24px, `md` 32px."
+          "description": "Height: `xs` 20px, `sm` 24px, `md` 32px.",
+          "descriptionAr": "الارتفاع: `xs` ‏20px، و`sm` ‏24px، و`md` ‏32px."
         },
         {
           "name": "appearance",
           "type": "\"subtle\" | \"inverted\" | \"ghost\"",
           "default": "\"subtle\"",
           "required": false,
-          "description": "`subtle` is a tinted fill, `inverted` a solid one and `ghost` has no fill."
+          "description": "`subtle` is a tinted fill, `inverted` a solid one and `ghost` has no fill.",
+          "descriptionAr": "`subtle` تعبئة مظلّلة، و`inverted` تعبئة مصمتة، و`ghost` بلا تعبئة."
         }
       ]
     },
     {
       "name": "Tag",
       "description": "A label for a category or a selected filter. Optionally removable.",
+      "descriptionAr": "وسم لتصنيف أو لمرشّح محدَّد. يمكن إزالته اختياريًا.",
       "inherits": null,
       "props": [
         {
@@ -395,49 +447,56 @@
           "type": "\"on-color\" | \"neutral\" | \"success\" | \"error\" | \"warning\" | \"info\"",
           "default": "\"neutral\"",
           "required": false,
-          "description": "Colour family. `on-color` is for tags on brand fills."
+          "description": "Colour family. `on-color` is for tags on brand fills.",
+          "descriptionAr": "عائلة اللون. `on-color` للوسوم على خلفيات لون العلامة."
         },
         {
           "name": "size",
           "type": "\"xs\" | \"sm\" | \"md\"",
           "default": "\"sm\"",
           "required": false,
-          "description": "Height: `xs` 20px, `sm` 24px, `md` 32px."
+          "description": "Height: `xs` 20px, `sm` 24px, `md` 32px.",
+          "descriptionAr": "الارتفاع: `xs` ‏20px، و`sm` ‏24px، و`md` ‏32px."
         },
         {
           "name": "outlined",
           "type": "boolean",
           "default": "false",
           "required": false,
-          "description": "Outlined instead of filled."
+          "description": "Outlined instead of filled.",
+          "descriptionAr": "بإطار فقط بدل التعبئة."
         },
         {
           "name": "rounded",
           "type": "boolean",
           "default": "false",
           "required": false,
-          "description": "Fully rounded (pill) corners."
+          "description": "Fully rounded (pill) corners.",
+          "descriptionAr": "زوايا مستديرة بالكامل (على شكل حبة)."
         },
         {
           "name": "iconOnly",
           "type": "boolean",
           "default": "false",
           "required": false,
-          "description": "Square, icon only. Needs an `aria-label`."
+          "description": "Square, icon only. Needs an `aria-label`.",
+          "descriptionAr": "مربع بأيقونة فقط. يحتاج إلى `aria-label`."
         },
         {
           "name": "onDismiss",
           "type": "() => void",
           "default": null,
           "required": false,
-          "description": "Adds a trailing close button."
+          "description": "Adds a trailing close button.",
+          "descriptionAr": "يضيف زر إغلاق في النهاية."
         },
         {
           "name": "dismissLabel",
           "type": "string",
           "default": "\"Remove\"",
           "required": false,
-          "description": "Accessible name of the close button. Translate it on Arabic pages."
+          "description": "Accessible name of the close button. Translate it on Arabic pages.",
+          "descriptionAr": "الاسم الذي يقرؤه قارئ الشاشة لزر الإغلاق. ترجمه في الصفحات العربية."
         }
       ]
     }

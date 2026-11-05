@@ -1,4 +1,4 @@
-// Generates DGA UI token files from tokens/tokens.json.
+// Generates Platform Code token files from tokens/tokens.json.
 //   bun scripts/generate-tokens.ts          write files
 //   bun scripts/generate-tokens.ts --check  fail if files are stale or contrast fails
 
