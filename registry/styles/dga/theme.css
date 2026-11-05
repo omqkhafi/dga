@@ -256,6 +256,19 @@
   --color-alpha-alpha-green-80: var(--colors-alpha-alpha-green-80);
   --color-alpha-alpha-green-90: var(--colors-alpha-alpha-green-90);
   --color-alpha-alpha-green-100: var(--colors-alpha-alpha-green-100);
+  --color-neutral-dark-25: var(--colors-neutral-dark-25);
+  --color-neutral-dark-50: var(--colors-neutral-dark-50);
+  --color-neutral-dark-100: var(--colors-neutral-dark-100);
+  --color-neutral-dark-200: var(--colors-neutral-dark-200);
+  --color-neutral-dark-300: var(--colors-neutral-dark-300);
+  --color-neutral-dark-400: var(--colors-neutral-dark-400);
+  --color-neutral-dark-500: var(--colors-neutral-dark-500);
+  --color-neutral-dark-600: var(--colors-neutral-dark-600);
+  --color-neutral-dark-700: var(--colors-neutral-dark-700);
+  --color-neutral-dark-800: var(--colors-neutral-dark-800);
+  --color-neutral-dark-850: var(--colors-neutral-dark-850);
+  --color-neutral-dark-900: var(--colors-neutral-dark-900);
+  --color-neutral-dark-950: var(--colors-neutral-dark-950);
 
   /* hues */
   --color-white: var(--colors-base-white);
@@ -678,6 +691,7 @@
   --color-icon-secondary: var(--icon-secondary);
   --color-icon-tertiary: var(--icon-tertiary);
   --color-text-on-gold: var(--text-on-gold);
+  --color-button-border-neutral: var(--button-border-neutral);
   --color-button-label-transparent-hovered: var(--button-label-transparent-hovered);
   --color-button-label-transparent-pressed: var(--button-label-transparent-pressed);
   --color-button-label-transparent-selected: var(--button-label-transparent-selected);

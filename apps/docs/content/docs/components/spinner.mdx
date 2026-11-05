@@ -3,8 +3,6 @@ title: Spinner
 description: Shows that a process is running. Seven sizes, primary, neutral and on-colour.
 ---
 
-The spinner (Figma: Loading) shows that a process is running and the user should wait.
-
 <Preview name="spinner-sizes" title="Sizes and styles" />
 
 ## Installation
@@ -19,26 +17,41 @@ import { Spinner } from "@/components/ui/spinner";
 <Spinner label="جارٍ التحميل" />
 ```
 
-## Props
+## Anatomy
 
-<TypeTable
-  type={{
-    size: { type: '"2xs" | "xs" | "sm" | "md" | "lg" | "xl" | "2xl"', default: '"md"', description: "20, 24, 28, 32, 36, 40 and 44px." },
-    variant: { type: '"primary" | "neutral" | "on-color" | "current"', default: '"primary"', description: '"current" follows the text colour.' },
-    label: { type: "string | null", default: '"Loading"', description: "Announced to screen readers. null makes the spinner decorative." },
-  }}
-/>
+- **Root**: a `role="status"` element with the animated ring.
+- **Label**: visually hidden text announced to screen readers.
+
+## Examples
+
+### Sizes and colours
+
+Seven sizes from `2xs` (20px) to `2xl` (44px), in `primary`, `neutral`, `on-color` and `current` (follows the text colour, for use inside buttons).
+
+### Decorative
+
+Pass `label={null}` when the surrounding element already announces the busy state, as [Button](/docs/components/button) does.
+
+## RTL
+
+A ring has no direction, so nothing mirrors. Translate the `label` for Arabic pages.
+
+<DirectionCompare name="spinner-sizes" title="Spinner" />
 
 ## Accessibility
 
-- `role="status"` with a visually hidden label, so screen readers announce it once. Translate the label for Arabic pages.
-- With `label={null}` the spinner is hidden from screen readers. Use this when the surrounding element already announces the busy state, as [Button](/docs/components/button) does.
+- `role="status"` with a visually hidden label, so screen readers announce it once.
+- With `label={null}` the spinner is hidden from screen readers.
 - With reduced motion, the spinner turns slowly instead of stopping, so the busy state stays visible.
 
-### Contrast
+## API Reference
 
-<ComponentContrast component="spinner" />
+<ApiReference component="spinner" />
 
 ## Deviations from DGA
 
 <ComponentDeviations component="spinner" />
+
+## Contrast
+
+<ComponentContrast component="spinner" />

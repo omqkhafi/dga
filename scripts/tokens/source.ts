@@ -13,7 +13,12 @@ export type Viewport = "mobile" | "tablet" | "desktop";
 /** A value is a literal (`#fff`, `16px`) or a reference to another token (`{colors-neutral-50}`). */
 export type Value = string;
 
-export type Primitive = { name: string; figmaName?: string; value: Value; source: "figma" | "css" };
+export type Primitive = {
+  name: string;
+  figmaName?: string;
+  value: Value;
+  source: "figma" | "css" | "dga-ui";
+};
 export type ThemeToken = {
   name: string;
   figmaName?: string;

@@ -15,7 +15,9 @@ export function InstallCommand({ command }: { command: string }) {
       <span aria-hidden className="font-mono text-sm text-text-secondary-paragraph">
         $
       </span>
-      <code className="min-w-0 flex-1 truncate font-mono text-sm text-text-default">{command}</code>
+      <code className="min-w-0 flex-1 truncate text-start font-mono text-sm text-text-default">
+        {command}
+      </code>
       <Button
         variant="subtle"
         size="sm"

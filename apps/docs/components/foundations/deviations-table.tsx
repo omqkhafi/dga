@@ -1,7 +1,7 @@
 "use client";
 
 import { cn } from "cn";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { type Deviation, deviations } from "@/lib/tokens";
 
 const AREAS = [...new Set(deviations.map((d) => d.area))];
@@ -22,12 +22,47 @@ function Status({ status }: { status?: string | null }) {
 
 export function DeviationsTable() {
   const [area, setArea] = useState<string>("All");
+  // `#component-button` (linked from each component page) filters to one component.
+  const [component, setComponent] = useState<string | null>(null);
+  useEffect(() => {
+    const fromHash = () => {
+      const match = /^#component-(.+)$/.exec(window.location.hash);
+      setComponent(match?.[1] ?? null);
+    };
+    fromHash();
+    window.addEventListener("hashchange", fromHash);
+    return () => window.removeEventListener("hashchange", fromHash);
+  }, []);
   const rows = useMemo(
-    () => (deviations as Deviation[]).filter((d) => area === "All" || d.area === area),
-    [area],
+    () =>
+      (deviations as Deviation[]).filter(
+        (d) =>
+          (area === "All" || d.area === area) &&
+          (component === null || ("component" in d && d.component === component)),
+      ),
+    [area, component],
   );
   return (
-    <div className="not-prose my-6 flex flex-col gap-3">
+    <div
+      id={component ? `component-${component}` : undefined}
+      className="not-prose my-6 flex flex-col gap-3"
+    >
+      {component ? (
+        <p className="flex flex-wrap items-center gap-2 rounded-md border border-border-neutral-secondary bg-background-primary-50 px-3 py-2 text-sm text-text-default">
+          Showing {rows.length} deviations for{" "}
+          <strong className="capitalize">{component.replace(/-/g, " ")}</strong>.
+          <button
+            type="button"
+            onClick={() => {
+              history.replaceState(null, "", window.location.pathname);
+              setComponent(null);
+            }}
+            className="min-h-8 rounded-sm px-2 text-text-primary underline underline-offset-4 hover:bg-button-background-neutral-default"
+          >
+            Show all
+          </button>
+        </p>
+      ) : null}
       <div className="flex flex-wrap gap-1" role="toolbar" aria-label="Filter by area">
         {["All", ...AREAS].map((a) => (
           <button
@@ -36,7 +71,7 @@ export function DeviationsTable() {
             aria-pressed={area === a}
             onClick={() => setArea(a)}
             className={cn(
-              "rounded-sm border border-border px-2 py-1 text-xs font-medium",
+              "min-h-8 rounded-sm border border-border px-2 py-1 text-[0.8125rem] font-medium",
               area === a
                 ? "border-primary bg-primary text-primary-foreground"
                 : "bg-background text-muted-foreground hover:bg-accent",
@@ -55,7 +90,7 @@ export function DeviationsTable() {
                 <th
                   key={c}
                   scope="col"
-                  className="px-3 py-2 text-start text-xs font-semibold text-muted-foreground"
+                  className="px-3 py-2 text-start text-[0.8125rem] font-semibold text-muted-foreground"
                 >
                   {c}
                 </th>
@@ -71,7 +106,7 @@ export function DeviationsTable() {
               >
                 <td className="align-top lg:w-1/4 lg:px-3 lg:py-2">
                   <div className="flex flex-wrap items-center gap-1">
-                    <span className="rounded-xs bg-muted px-1.5 py-0.5 text-xs text-muted-foreground">
+                    <span className="rounded-xs bg-muted px-1.5 py-0.5 text-[0.8125rem] text-muted-foreground">
                       {d.area}
                     </span>
                     <Status status={"status" in d ? d.status : null} />

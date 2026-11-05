@@ -2,6 +2,7 @@
 
 import { contrastRatio } from "./color";
 import { type ComponentPair, componentPairs } from "./components";
+import { applyDark } from "./dark";
 import {
   ADDITIONS,
   type Deviation,
@@ -70,6 +71,16 @@ export function buildModel(source = loadSource()): Model {
     });
   }
 
+  // Rebuild the dark theme last, so it sees every override and addition.
+  const primitives = new Map(source.primitives);
+  const figmaDark = new Map([...source.themes].map(([name, token]) => [name, token.dark]));
+  const dark = applyDark(themes, primitives, figmaDark);
+  // A dark contrast override the rebuild replaced would otherwise be listed twice.
+  const rebuilt = new Set(dark.map((d) => d.item));
+  const kept = deviations.filter((d) => !(d.area === "Contrast" && rebuilt.has(d.item)));
+  deviations.length = 0;
+  deviations.push(...kept, ...dark);
+
   const responsive = new Map(source.responsive);
   for (const [name, token] of responsive) {
     if (FIXED_TEXT_TOKENS.test(name)) {
@@ -80,6 +91,7 @@ export function buildModel(source = loadSource()): Model {
 
   return {
     ...source,
+    primitives,
     themes,
     responsive,
     deviations: [...deviations, ...OTHER_DEVIATIONS],

@@ -17,8 +17,11 @@ export const source = loader({
 export type DocsPage = NonNullable<ReturnType<typeof source.getPage>>;
 
 /** The page as Markdown, for "Copy page", /docs/*.md and llms-full.txt. */
-export async function getPageMarkdown(page: DocsPage) {
+export async function getPageMarkdown(page: DocsPage, options: { keepIds?: boolean } = {}) {
   // Drop the heading ids fumadocs appends ("## Usage [#usage]").
-  const body = (await page.data.getText("processed")).replace(/^(#{1,6} .*?) \[#[^\]]+\]$/gm, "$1");
+  const processed = await page.data.getText("processed");
+  const body = options.keepIds
+    ? processed
+    : processed.replace(/^(#{1,6} .*?) \[#[^\]]+\]$/gm, "$1");
   return `# ${page.data.title}\n\n${page.data.description ? `${page.data.description}\n\n` : ""}${body}`;
 }

@@ -37,7 +37,7 @@ describe("tokens", () => {
 
   test("light and dark resolve differently for flipping tokens", () => {
     expect(tokenValue(model, "background-body", "light")).toBe("#f9fafb");
-    expect(tokenValue(model, "background-body", "dark")).toBe("#111927");
+    expect(tokenValue(model, "background-body", "dark")).toBe("#0d1311");
   });
 
   test("dark scope re-declares shadcn variables", () => {

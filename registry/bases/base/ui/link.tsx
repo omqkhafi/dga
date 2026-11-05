@@ -32,6 +32,7 @@ type LinkProps = useRender.ComponentProps<"a"> &
     disabled?: boolean;
   };
 
+/** A text link in the DGA link colours. Works with Next.js `Link` through `render`. */
 function Link({
   className,
   variant,

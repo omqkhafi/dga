@@ -1,6 +1,6 @@
 # Roadmap
 
-Phases 0, 1 and 2 are done (released as 0.1.0); see [CHANGELOG.md](CHANGELOG.md).
+Phases 0, 1 and 2 are done (0.1.0), and the Phase 2.5 docs polish is in 0.1.1; see [CHANGELOG.md](CHANGELOG.md).
 Component specs for each phase are in `docs/design-system/components/`.
 
 ## Rules for every phase
@@ -37,6 +37,15 @@ Agreed scope:
   - Sitemap and robots.
   - OG images.
 - [x] Monospace for code only.
+
+## Phase 2.5: Docs polish (done, 0.1.1)
+
+- [x] One structure for every component page, with a generated API reference and a single collapsed contrast table (plus `/docs/contrast`).
+- [x] Typography and contrast of the docs UI chrome, audited like the components.
+- [x] Previews (skeleton, lazy load, fullscreen, reset, device frames), code blocks, prebuilt search, props tables.
+- [x] Dark theme rebuilt on a tinted neutral ramp, with a side-by-side comparison page.
+- [x] Home page, mobile shell, focus rings, reduced motion.
+- [x] Lighthouse budget in CI.
 
 ## Phase 3: Forms
 

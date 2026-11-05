@@ -22,11 +22,11 @@ export function Tabs() {
             href={tab.href}
             aria-current={active ? "page" : undefined}
             className={cn(
-              "flex flex-1 items-center justify-center border-e border-border-neutral-secondary text-xs font-medium tracking-widest transition-colors",
-              "focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-border-black",
+              "flex flex-1 items-center justify-center border-e border-border-neutral-secondary text-[0.8125rem] font-medium tracking-widest transition-colors",
+              "focus-visible:-outline-offset-2",
               active
                 ? "text-text-default shadow-[inset_0_-2px_0_var(--border-primary)]"
-                : "text-text-secondary-paragraph hover:bg-button-background-neutral-default hover:text-text-default",
+                : "text-text-secondary-paragraph hover:bg-button-background-neutral-default hover:text-text-default active:bg-button-background-neutral-pressed",
             )}
           >
             {tab.label}

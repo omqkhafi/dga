@@ -24,8 +24,8 @@ const buttonVariants = cva("relative inline-flex shrink-0 cursor-pointer items-c
   },
   compoundVariants: [
     { variant: "primary", destructive: false, onColor: false, class: "bg-button-background-primary-default text-text-oncolor-primary hover:bg-button-background-primary-hovered active:bg-button-background-primary-pressed aria-pressed:bg-button-background-primary-selected data-selected:bg-button-background-primary-selected data-disabled:bg-background-disabled data-disabled:text-text-default-disabled" },
-    { variant: "neutral", destructive: false, onColor: false, class: "bg-button-background-black-default text-text-oncolor-primary hover:bg-button-background-black-hovered active:bg-button-background-black-pressed aria-pressed:bg-button-background-black-selected data-selected:bg-button-background-black-selected data-disabled:bg-background-disabled data-disabled:text-text-default-disabled" },
-    { variant: "secondary", destructive: false, onColor: false, class: "bg-button-background-neutral-default text-text-default hover:bg-button-background-neutral-pressed active:bg-button-background-neutral-pressed aria-pressed:bg-button-background-neutral-selected data-selected:bg-button-background-neutral-selected data-disabled:bg-background-disabled data-disabled:text-text-default-disabled" },
+    { variant: "neutral", destructive: false, onColor: false, class: "border-button-border-neutral bg-button-background-black-default text-text-oncolor-primary hover:bg-button-background-black-hovered active:bg-button-background-black-pressed aria-pressed:bg-button-background-black-selected data-selected:bg-button-background-black-selected data-disabled:bg-background-disabled data-disabled:text-text-default-disabled" },
+    { variant: "secondary", destructive: false, onColor: false, class: "border-button-border-neutral bg-button-background-neutral-default text-text-default hover:bg-button-background-neutral-pressed active:bg-button-background-neutral-pressed aria-pressed:bg-button-background-neutral-selected data-selected:bg-button-background-neutral-selected data-disabled:bg-background-disabled data-disabled:text-text-default-disabled" },
     { variant: "outline", destructive: false, onColor: false, class: "border-border-neutral-primary bg-transparent text-text-default hover:border-border-neutral-secondary hover:bg-button-background-neutral-default active:border-border-neutral-primary active:bg-button-background-neutral-pressed aria-pressed:bg-button-background-neutral-selected data-selected:bg-button-background-neutral-selected data-disabled:border-border-neutral-secondary data-disabled:bg-transparent data-disabled:text-text-default-disabled" },
     { variant: "subtle", destructive: false, onColor: false, class: "bg-transparent text-text-default hover:bg-button-background-neutral-default active:bg-button-background-neutral-pressed aria-pressed:bg-button-background-neutral-selected data-selected:bg-button-background-neutral-selected data-disabled:bg-transparent data-disabled:text-text-default-disabled" },
     {
@@ -132,6 +132,7 @@ type ButtonProps = ButtonPrimitive.Props &
     loading?: boolean;
   };
 
+/** Triggers an action. Six styles, destructive and on-colour versions, three sizes, icon-only and loading. */
 function Button({
   className,
   variant = "primary",

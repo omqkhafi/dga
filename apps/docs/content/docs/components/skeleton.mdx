@@ -3,8 +3,6 @@ title: Skeleton
 description: Placeholders shown while content loads. Rectangle, square, circle and line in the Figma sizes.
 ---
 
-A skeleton shows the shape of content while it loads, so the page does not jump when it arrives.
-
 <Preview name="skeleton" title="Shapes and sizes" />
 
 ## Installation
@@ -22,35 +20,35 @@ import { Skeleton } from "@/components/ui/skeleton";
 </div>
 ```
 
-## Layouts
+A skeleton shows the shape of content while it loads, so the page does not jump when it arrives. Set widths with `className` (for example `w-32`).
+
+## Examples
+
+### Layouts
 
 The five Figma Skeleton Components, built from the primitive. Copy them as a starting point.
 
-<Preview name="skeleton-layouts" title="Figma layouts" />
+<Preview compact name="skeleton-layouts" title="Figma layouts" />
 
-## Props
+## RTL
 
-<TypeTable
-  type={{
-    shape: { type: '"rectangle" | "square" | "circle" | "line"', default: '"rectangle"' },
-    size: {
-      type: '"sm" | "md" | "lg" | 24 | 48 | 64 | 80 | 120 | 170 | 240',
-      description: "rectangle: sm 24, md 32, lg 40px high. line: sm 14, lg 22px. square and circle: the pixel size.",
-    },
-  }}
-/>
+Layouts follow the reading direction: the avatar sits at the start.
 
-Set widths with `className` (for example `w-32`).
+<DirectionCompare name="skeleton-layouts" title="Skeleton layouts" />
 
 ## Accessibility
 
 - Skeletons are hidden from screen readers. Set `aria-busy="true"` on the region that is loading, and remove it when the content arrives.
 - The pulse stops with reduced motion.
 
-### Contrast
+## API Reference
 
-<ComponentContrast component="skeleton" />
+<ApiReference component="skeleton" />
 
 ## Deviations from DGA
 
 <ComponentDeviations component="skeleton" />
+
+## Contrast
+
+<ComponentContrast component="skeleton" />

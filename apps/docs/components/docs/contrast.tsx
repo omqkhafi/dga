@@ -3,30 +3,25 @@ import { tokens } from "@/lib/tokens";
 
 type Check = (typeof tokens.componentAudit)[number];
 
-/**
- * Every audited colour pair for a component, grouped by variant. Each row shows the lowest
- * ratio across the surfaces the variant can sit on, in light and dark mode.
- */
-export function ComponentContrast({ component }: { component: string }) {
-  const checks = tokens.componentAudit.filter((c) => c.component === component);
-  const rows = new Map<string, { fg: string; bg: string; light?: Check; dark?: Check }>();
-
-  for (const c of checks) {
-    const key = c.state;
-    const row = rows.get(key) ?? { fg: c.fg, bg: c.bg };
+/** Lowest ratio per variant × state and mode: one row each, light and dark side by side. */
+export function contrastRows(component: string) {
+  const rows = new Map<string, { state: string; light?: Check; dark?: Check }>();
+  for (const c of tokens.componentAudit.filter((c) => c.component === component)) {
+    const row = rows.get(c.state) ?? { state: c.state };
     const mode = c.mode as "light" | "dark";
     const current = row[mode];
     if (!current || c.ratio / c.min < current.ratio / current.min) row[mode] = c;
-    rows.set(key, row);
+    rows.set(c.state, row);
   }
-  const groups = new Map<
-    string,
-    [string, typeof rows extends Map<string, infer R> ? R : never][]
-  >();
-  for (const [state, row] of rows) {
-    const group = state.split(" / ")[0] ?? state;
-    groups.set(group, [...(groups.get(group) ?? []), [state, row]]);
-  }
+  return [...rows.values()];
+}
+
+/**
+ * One compact table of every audited state of a component: variant × state, ratio in light
+ * and dark, pass or fail. Collapsed by default; the full report is on /docs/contrast.
+ */
+export function ComponentContrast({ component }: { component: string }) {
+  const checks = tokens.componentAudit.filter((c) => c.component === component);
   const failing = checks.filter((c) => c.ratio < c.min).length;
   if (checks.length === 0) {
     return (
@@ -36,62 +31,72 @@ export function ComponentContrast({ component }: { component: string }) {
       </p>
     );
   }
+  const rows = contrastRows(component);
   return (
-    <div className="not-prose my-6 flex flex-col gap-3">
-      <p className="text-sm text-text-primary-paragraph">
-        {checks.length} pairs checked against WCAG 2.1 AA (text 4.5:1, icons and focus rings 3:1),{" "}
-        {failing === 0 ? "all passing" : `${failing} failing`}. Disabled states are exempt.
-      </p>
-      {[...groups].map(([group, entries]) => (
-        <details key={group} className="rounded-md border border-border bg-card">
-          <summary className="cursor-pointer px-3 py-2 text-sm font-medium text-foreground">
-            {group}
-          </summary>
-          <div className="overflow-x-auto border-t border-border">
-            <table className="w-full text-sm">
-              <thead className="bg-muted text-xs text-muted-foreground">
-                <tr>
-                  <th scope="col" className="px-3 py-2 text-start font-semibold">
-                    State
+    <div className="not-prose my-4">
+      <details className="group rounded-md border border-border-neutral-secondary bg-background-card">
+        <summary className="flex min-h-11 cursor-pointer items-center gap-2 px-3 text-sm font-medium text-text-default hover:bg-button-background-neutral-default">
+          <span className="min-w-0 flex-1">
+            {checks.length.toLocaleString("en")} pairs checked ·{" "}
+            {failing === 0 ? "all pass WCAG 2.1 AA" : `${failing} failing`}
+          </span>
+          <span className="text-[0.8125rem] text-text-secondary-paragraph group-open:hidden">
+            Show {rows.length} states
+          </span>
+          <span className="hidden text-[0.8125rem] text-text-secondary-paragraph group-open:inline">
+            Hide
+          </span>
+        </summary>
+        <div className="max-h-[32rem] overflow-auto border-t border-border-neutral-secondary">
+          <table className="w-full min-w-[28rem] text-sm">
+            <thead className="sticky top-0 bg-background-neutral-100 text-[0.8125rem] text-text-primary-paragraph">
+              <tr>
+                <th scope="col" className="px-3 py-2 text-start font-semibold">
+                  Variant / state
+                </th>
+                <th scope="col" className="px-3 py-2 text-start font-semibold">
+                  Light
+                </th>
+                <th scope="col" className="px-3 py-2 text-start font-semibold">
+                  Dark
+                </th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-border-neutral-secondary">
+              {rows.map((row) => (
+                <tr key={row.state}>
+                  <th
+                    scope="row"
+                    className="px-3 py-1.5 text-start text-[0.8125rem] font-normal text-text-default"
+                  >
+                    {row.state}
                   </th>
-                  <th scope="col" className="px-3 py-2 text-start font-semibold">
-                    Foreground on background
-                  </th>
-                  <th scope="col" className="px-3 py-2 text-start font-semibold">
-                    Light
-                  </th>
-                  <th scope="col" className="px-3 py-2 text-start font-semibold">
-                    Dark
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-border">
-                {entries.map(([state, row]) => (
-                  <tr key={state}>
-                    <td className="px-3 py-2 align-top text-xs">{state.split(" / ")[1]}</td>
-                    <td className="px-3 py-2 align-top font-mono text-xs break-all">
-                      {row.fg} / {row.bg}
-                    </td>
-                    {(["light", "dark"] as const).map((mode) => (
-                      <td key={mode} className="px-3 py-2 align-top">
-                        {row[mode] ? (
+                  {(["light", "dark"] as const).map((mode) => {
+                    const c = row[mode];
+                    return (
+                      <td key={mode} className="px-3 py-1.5">
+                        {c ? (
                           <ContrastBadge
-                            ratio={row[mode].ratio}
-                            min={row[mode].min}
-                            label={`${row[mode].fg} on ${row[mode].bg}${row[mode].on ? ` over ${row[mode].on}` : ""}`}
+                            ratio={c.ratio}
+                            min={c.min}
+                            label={`${c.fg} on ${c.bg}${c.on ? ` over ${c.on}` : ""}`}
                           />
                         ) : (
-                          "—"
+                          <span aria-hidden>–</span>
                         )}
                       </td>
-                    ))}
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </details>
-      ))}
+                    );
+                  })}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </details>
+      <p className="mt-2 text-[0.8125rem] text-text-secondary-paragraph">
+        Text needs 4.5:1, icons and focus rings 3:1. Disabled states are exempt.{" "}
+        <a href={`/docs/contrast#${component}`}>Full contrast report</a>
+      </p>
     </div>
   );
 }

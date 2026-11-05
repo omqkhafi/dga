@@ -105,6 +105,16 @@ COMPONENT_OVERRIDES.push({
 });
 
 export const COMPONENT_ADDITIONS: Addition[] = [
+  // Neutral buttons in dark mode: the fills are one or two steps above the page, so their
+  // edge disappears. A border one step above the fill keeps it visible; none in light mode.
+  {
+    name: "button-border-neutral",
+    light: "{colors-alpha-alpha-white-0}",
+    dark: "{colors-neutral-dark-700}",
+    reason:
+      "In dark mode the neutral and secondary button fills are 1.1–1.4:1 against the page, so their edge was not visible. A 1px border (neutral dark 700) shows it. Transparent in light mode, so nothing changes there.",
+    component: button,
+  },
   // Transparent buttons: Figma colours the label with the primary fill tokens, which do not
   // change in dark mode.
   ...(

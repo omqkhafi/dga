@@ -5,9 +5,38 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
 
 ## [Unreleased]
 
+## [0.1.1] - 2026-11-04
+
+Docs polish after the 0.1.0 visual audit, and a rebuilt dark theme.
+
+### Changed
+
+- **Dark theme rebuilt from scratch.** One green-tinted neutral ramp (`colors-neutral-dark-25 … 950`) replaces the cool blue-grey; page 950, surface 900, raised 850, border 800, border-strong 700, text 50, secondary 300, muted 400. Text, icons and borders use step 300 and 500 of each colour's own ramp, subtle backgrounds are the 500 step at 9–15% opacity, and solid fills keep their light value (white labels need it). Figma Dark bugs fixed (light surfaces darker than the page, hardcoded hex, light tints on dark). No shadows in dark mode. Every change is listed under **Dark theme** on the Deviations page (190+ entries). New page: Dark mode, with Button, Badge, Tag, Link and status surfaces in light and dark side by side.
+- **Component pages share one structure**: preview, Installation (bun, npm, pnpm, yarn or Manual), Usage, Anatomy, Examples, RTL (LTR and RTL side by side), Accessibility, API Reference (generated from the TypeScript types), Deviations (key rows and a link to all of them for that component), one collapsed Contrast table, then related components, Previous and Next, and Edit on GitHub.
+- **Docs typography**: 16px body, sidebar, table of contents and toolbar at 13–14px, nothing under 12px in the docs shell. Sidebar section labels, inactive tabs and toggles, table columns and code line numbers all pass AA, and the docs UI chrome is now in the contrast audit (`ui-chrome`, 60+ pairs in both modes).
+- Previews: a skeleton holds the frame's height until the iframe has loaded, below-the-fold previews load lazily, desktop previews run at the column's own width instead of a scaled-down tablet, and mobile and tablet frames sit centred in a device outline. New Fullscreen (new tab) and Reset (also replays animations) buttons.
+- Code blocks: line numbers, a language pill, collapse past 16 lines with "Expand code", and `dir="ltr"` with `unicode-bidi: isolate` so Arabic strings inside JSX render in the right order. Code now uses the high-contrast GitHub themes.
+- Search (⌘K / Ctrl+K) is prebuilt: one `search-index.json`, filtered in memory. Results are grouped by page, show a breadcrumb, a title and one highlighted line (up to 120 characters), at most 8 per search. Arrow keys and Enter work.
+- Props tables: each row opens to show the full type, default and description, by click or with Enter and Space on the prop name.
+- Home page: hero with the init command, Get started and Components buttons, a grid of live component previews that link to their pages, and a row of features.
+- Mobile docs shell: the navigation is a bottom sheet, the sticky header keeps a search icon, and the table of contents is a dropdown under the header.
+- Visible focus rings (the DGA focus token) on every interactive element in the docs shell, hover and pressed states on the sidebar, tabs and table of contents, and `prefers-reduced-motion` is respected.
+- "Copy page" is a menu: copy as Markdown, view the Markdown, open in ChatGPT or Claude.
+- shadcn `--muted` is now `background-neutral-50`. `text-secondary-paragraph` on `background-neutral-100` is 4.34:1 in light mode, which fails AA for muted text on muted fills (logged in Deviations).
+
+### Added
+
+- `button-border-neutral` token and class on the neutral and secondary buttons: the fills sit 1.1–1.4:1 from the page in dark mode, so their edge was not visible. A 1px border shows it; it is transparent in light mode (logged in Deviations).
+- `/docs/contrast`: every audited pair for each component and for the docs UI chrome, in light and dark.
+- `bun run api` generates `apps/docs/lib/generated/api.json` (props, types, defaults, JSDoc) from the registry sources; CI fails if it is stale.
+- Lighthouse in CI on the home and Button pages: performance, accessibility, best practices and SEO must all be at least 95 on desktop (median of three runs); mobile accessibility, best practices and SEO are enforced too and mobile performance is reported as a warning.
+- Favicon.
+
 ### Fixed
 
-- `test:install` takes the production registry from `DGA_REGISTRY_URL` instead of `REGISTRY_URL`, which the shadcn CLI also reads as its own default registry.
+- `test:install` takes the production registry from `DGA_REGISTRY_URL` instead of `REGISTRY_URL`, which the shadcn CLI also reads as its own default registry. The 0.1.0 entry now says `DGA_REGISTRY_URL` too.
+- Props table rows did not reveal their description or default.
+- Preview iframes flashed blank before loading.
 
 ## [0.1.0] - 2026-11-04
 
@@ -61,5 +90,6 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
 - Body text sizes no longer shrink on mobile; display sizes follow the Figma modes.
 - Dropped the legacy site-CSS radius set; `rounded-2xl` and above clamp to `radius-xl`. Dropped italic weight tokens (IBM Plex Sans Arabic has no italic).
 
-[Unreleased]: https://github.com/omqkhafi/dga/compare/v0.1.0...HEAD
+[Unreleased]: https://github.com/omqkhafi/dga/compare/v0.1.1...HEAD
+[0.1.1]: https://github.com/omqkhafi/dga/compare/v0.1.0...v0.1.1
 [0.1.0]: https://github.com/omqkhafi/dga/releases/tag/v0.1.0

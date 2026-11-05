@@ -33,6 +33,7 @@ type SpinnerProps = Omit<React.ComponentProps<"span">, "children"> &
     label?: string | null;
   };
 
+/** A loading indicator. Turns slowly with reduced motion. */
 function Spinner({ className, size, variant, label = "Loading", ...props }: SpinnerProps) {
   const decorative = label === null;
   return (

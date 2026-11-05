@@ -2,6 +2,7 @@
 
 import {
   BookOpen01Icon,
+  ContrastIcon,
   CursorPointer02Icon,
   DashedLine01Icon,
   Download04Icon,
@@ -13,6 +14,7 @@ import {
   Layers01Icon,
   Link01Icon,
   Loading03Icon,
+  Moon02Icon,
   PaintBoardIcon,
   RectangularIcon,
   RulerIcon,
@@ -35,6 +37,8 @@ const ICONS: Record<string, IconSvgElement> = {
   "/docs": BookOpen01Icon,
   "/docs/installation": Download04Icon,
   "/docs/deviations": GitCompareIcon,
+  "/docs/contrast": ContrastIcon,
+  "/docs/foundations/dark-mode": Moon02Icon,
   "/docs/foundations/colors": PaintBoardIcon,
   "/docs/foundations/typography": TextFontIcon,
   "/docs/foundations/spacing": RulerIcon,
@@ -90,19 +94,19 @@ export function SidebarNav({
     <div className="flex flex-col">
       <div className="flex items-center gap-2 border-b border-border-neutral-secondary px-4 py-2.5">
         <HugeiconsIcon icon={GitBranchIcon} className="size-4 text-icon-default-500" aria-hidden />
-        <Badge variant={version ? "success" : "neutral"} size="sm" rounded>
+        <Badge variant={version ? "success" : "neutral"} size="md" rounded>
           {version ? `v${version}` : "Unreleased"}
         </Badge>
-        <span className="text-xs text-text-secondary-paragraph">Latest release</span>
+        <span className="text-[0.8125rem] text-text-secondary-paragraph">Latest release</span>
       </div>
       <div className="border-b border-border-neutral-secondary p-3">
-        <SearchButton />
+        <SearchButton onOpen={onNavigate} />
       </div>
       <nav aria-label="Docs" className="flex flex-col gap-4 px-3 py-4">
         {groups.map((group, i) => (
           <section key={String(group.title ?? i)} className="flex flex-col gap-0.5">
             {group.title ? (
-              <h2 className="flex items-center gap-2 px-2 pb-1 text-2xs font-semibold tracking-widest text-text-secondary-paragraph uppercase">
+              <h2 className="flex items-center gap-2 px-2 pb-1 text-[0.8125rem] font-semibold tracking-wider text-text-secondary-paragraph uppercase">
                 <span>
                   {i + 1}. {group.title}
                 </span>
@@ -120,11 +124,10 @@ export function SidebarNav({
                       onClick={onNavigate}
                       aria-current={active ? "page" : undefined}
                       className={cn(
-                        "flex items-center gap-2 rounded-sm px-2 py-1.5 text-sm transition-colors",
-                        "focus-visible:outline-2 focus-visible:outline-border-black",
+                        "flex min-h-9 items-center gap-2 rounded-sm px-2 py-1.5 text-sm transition-colors",
                         active
-                          ? "bg-background-primary-50 font-medium text-text-primary"
-                          : "text-text-primary-paragraph hover:bg-button-background-neutral-default hover:text-text-default",
+                          ? "bg-background-primary-50 font-medium text-text-primary hover:bg-background-primary-50 active:bg-background-primary-50"
+                          : "text-text-primary-paragraph hover:bg-button-background-neutral-default hover:text-text-default active:bg-button-background-neutral-pressed",
                       )}
                     >
                       <HugeiconsIcon icon={icon} className="size-4 shrink-0" aria-hidden />

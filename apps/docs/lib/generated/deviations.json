@@ -113,14 +113,6 @@
   },
   {
     "area": "Contrast",
-    "item": "--icon-tertiary (dark)",
-    "original": "--colors-tertiary-lavender-500-primary",
-    "ours": "--colors-tertiary-lavender-400",
-    "reason": "Lavender-500 icons on dark surfaces are 2.49:1 (non-text needs 3:1). Lavender-400 gives 4.25:1.",
-    "status": "fixed"
-  },
-  {
-    "area": "Contrast",
     "item": "--text-oncolor-secondary (dark)",
     "original": "--alpha-white-80",
     "ours": "--colors-alpha-alpha-white-80",
@@ -349,22 +341,6 @@
     "original": "--colors-red-800",
     "ours": "--colors-red-300",
     "reason": "Red-800 on dark card is 1.68:1.",
-    "status": "fixed"
-  },
-  {
-    "area": "Contrast",
-    "item": "--link-neutral-pressed (dark)",
-    "original": "--colors-neutral-500",
-    "ours": "--colors-neutral-400",
-    "reason": "Neutral-500 on dark card is 3.04:1. Neutral-400 gives 5.78:1.",
-    "status": "fixed"
-  },
-  {
-    "area": "Contrast",
-    "item": "--link-icon-neutral-pressed (dark)",
-    "original": "--colors-neutral-500",
-    "ours": "--colors-neutral-400",
-    "reason": "Neutral-500 on dark card is 3.04:1. Neutral-400 gives 5.78:1.",
     "status": "fixed"
   },
   {
@@ -680,6 +656,15 @@
     "ours": "--colors-base-black",
     "reason": "White on the gold fill (background-secondary, gold-600) is 2.30:1. Text on gold uses black (7.85:1), which keeps the brand gold fill.",
     "status": "fixed"
+  },
+  {
+    "area": "Contrast",
+    "item": "--button-border-neutral (new)",
+    "original": "—",
+    "ours": "--colors-alpha-alpha-white-0 (light), --colors-neutral-dark-700 (dark)",
+    "reason": "In dark mode the neutral and secondary button fills are 1.1–1.4:1 against the page, so their edge was not visible. A 1px border (neutral dark 700) shows it. Transparent in light mode, so nothing changes there.",
+    "status": "fixed",
+    "component": "button"
   },
   {
     "area": "Contrast",
@@ -1292,6 +1277,1539 @@
     "reason": "Placeholder fill: neutral-200, neutral-700 in dark mode.",
     "status": "fixed",
     "component": "skeleton"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--background-white (dark)",
+    "original": "--colors-neutral-950",
+    "ours": "--colors-neutral-dark-900",
+    "reason": "Figma Dark has the white surface darker than the page and the card two steps lighter. Rebuilt as bg 950, surface 900, raised 850, so each layer is lighter than the one under it.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--background-neutral-50 (dark)",
+    "original": "--colors-neutral-900",
+    "ours": "--colors-neutral-dark-950",
+    "reason": "Figma Dark has the white surface darker than the page and the card two steps lighter. Rebuilt as bg 950, surface 900, raised 850, so each layer is lighter than the one under it.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--text-primary (dark)",
+    "original": "--colors-primary-sa-flag-400",
+    "ours": "--colors-primary-sa-flag-300",
+    "reason": "Step 300 of the colour's own ramp for text and icons on dark surfaces, 500 for borders (same hue as light).",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--field-text-placeholder (dark)",
+    "original": "--text-secondary-paragraph",
+    "ours": "--colors-neutral-dark-400",
+    "reason": "Text roles on the tinted ramp: text 50, primary paragraph 200, secondary 300, muted 400.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--global-border-disabled (dark)",
+    "original": "--colors-neutral-400",
+    "ours": "--colors-neutral-dark-700",
+    "reason": "Border roles on the tinted ramp: border 800, border-strong 700, subtle 850.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--border-neutral-primary (dark)",
+    "original": "--colors-neutral-500",
+    "ours": "--colors-neutral-dark-700",
+    "reason": "Border roles on the tinted ramp: border 800, border-strong 700, subtle 850.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--border-neutral-secondary (dark)",
+    "original": "--colors-neutral-700",
+    "ours": "--colors-neutral-dark-800",
+    "reason": "Border roles on the tinted ramp: border 800, border-strong 700, subtle 850.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--border-neutral-tertiary (dark)",
+    "original": "--colors-neutral-800",
+    "ours": "--colors-neutral-dark-850",
+    "reason": "Border roles on the tinted ramp: border 800, border-strong 700, subtle 850.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--border-white (dark)",
+    "original": "--colors-base-black",
+    "ours": "--colors-neutral-dark-950",
+    "reason": "Figma Dark uses pure black. The tinted 950.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--link-neutral (dark)",
+    "original": "--colors-neutral-200",
+    "ours": "--colors-neutral-dark-200",
+    "reason": "Same step on the tinted neutral ramp (green-tinted) instead of the cool-blue grey.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--link-neutral-hovered (dark)",
+    "original": "--colors-neutral-400",
+    "ours": "--colors-neutral-dark-400",
+    "reason": "Same step on the tinted neutral ramp (green-tinted) instead of the cool-blue grey.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--link-neutral-pressed (dark)",
+    "original": "--colors-neutral-500",
+    "ours": "--colors-neutral-dark-400",
+    "reason": "Same step on the tinted neutral ramp (green-tinted) instead of the cool-blue grey.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--link-neutral-visited (dark)",
+    "original": "--colors-neutral-300",
+    "ours": "--colors-neutral-dark-300",
+    "reason": "Same step on the tinted neutral ramp (green-tinted) instead of the cool-blue grey.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--background-primary-50 (dark)",
+    "original": "--colors-alpha-alpha-600-primary-10",
+    "ours": "--alpha-primary-20",
+    "reason": "Low-opacity tint of the colour's own 500 step instead of a light fill or a flat grey, so the colour reads as the same family as in light mode.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--background-secondary-50 (dark)",
+    "original": "--colors-neutral-800",
+    "ours": "#f5bd022e",
+    "reason": "Low-opacity tint of the colour's own 500 step instead of a light fill or a flat grey, so the colour reads as the same family as in light mode.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--background-tertiary-50 (dark)",
+    "original": "--colors-neutral-800",
+    "ours": "#a57bba2e",
+    "reason": "Low-opacity tint of the colour's own 500 step instead of a light fill or a flat grey, so the colour reads as the same family as in light mode.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--text-display (dark)",
+    "original": "--colors-neutral-50",
+    "ours": "--colors-neutral-dark-50",
+    "reason": "Text roles on the tinted ramp: text 50, primary paragraph 200, secondary 300, muted 400.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--text-primary-paragraph (dark)",
+    "original": "--colors-neutral-100",
+    "ours": "--colors-neutral-dark-200",
+    "reason": "Text roles on the tinted ramp: text 50, primary paragraph 200, secondary 300, muted 400.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--text-secondary-paragraph (dark)",
+    "original": "--colors-neutral-200",
+    "ours": "--colors-neutral-dark-300",
+    "reason": "Text roles on the tinted ramp: text 50, primary paragraph 200, secondary 300, muted 400.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--text-success (dark)",
+    "original": "--colors-green-400",
+    "ours": "--colors-green-300",
+    "reason": "Step 300 of the colour's own ramp for text and icons on dark surfaces, 500 for borders (same hue as light).",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--text-info (dark)",
+    "original": "--colors-blue-400",
+    "ours": "--colors-blue-300",
+    "reason": "Step 300 of the colour's own ramp for text and icons on dark surfaces, 500 for borders (same hue as light).",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--text-warning (dark)",
+    "original": "--colors-yellow-400",
+    "ours": "--colors-yellow-300",
+    "reason": "Step 300 of the colour's own ramp for text and icons on dark surfaces, 500 for borders (same hue as light).",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--text-error (dark)",
+    "original": "--colors-red-400",
+    "ours": "--colors-red-300",
+    "reason": "Step 300 of the colour's own ramp for text and icons on dark surfaces, 500 for borders (same hue as light).",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--border-info (dark)",
+    "original": "--colors-blue-700",
+    "ours": "--colors-blue-500",
+    "reason": "Step 300 of the colour's own ramp for text and icons on dark surfaces, 500 for borders (same hue as light).",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--border-warning (dark)",
+    "original": "--colors-yellow-700",
+    "ours": "--colors-yellow-500",
+    "reason": "Step 300 of the colour's own ramp for text and icons on dark surfaces, 500 for borders (same hue as light).",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--border-error (dark)",
+    "original": "--colors-red-700",
+    "ours": "--colors-red-500",
+    "reason": "Step 300 of the colour's own ramp for text and icons on dark surfaces, 500 for borders (same hue as light).",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--border-background-white (dark)",
+    "original": "--colors-neutral-600",
+    "ours": "--colors-neutral-dark-800",
+    "reason": "Border roles on the tinted ramp: border 800, border-strong 700, subtle 850.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--border-background-neutral (dark)",
+    "original": "--colors-neutral-600",
+    "ours": "--colors-neutral-dark-700",
+    "reason": "Border roles on the tinted ramp: border 800, border-strong 700, subtle 850.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--border-primary-light (dark)",
+    "original": "--colors-green-200",
+    "ours": "--colors-primary-sa-flag-800",
+    "reason": "Step 300 of the colour's own ramp for text and icons on dark surfaces, 500 for borders (same hue as light).",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--icon-default (dark)",
+    "original": "--colors-base-white",
+    "ours": "--colors-neutral-dark-50",
+    "reason": "Text roles on the tinted ramp: text 50, primary paragraph 200, secondary 300, muted 400.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--icon-primary (dark)",
+    "original": "--colors-primary-sa-flag-400",
+    "ours": "--colors-primary-sa-flag-300",
+    "reason": "Step 300 of the colour's own ramp for text and icons on dark surfaces, 500 for borders (same hue as light).",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--icon-neutral-light (dark)",
+    "original": "--colors-neutral-950",
+    "ours": "--colors-neutral-dark-950",
+    "reason": "Same step on the tinted neutral ramp (green-tinted) instead of the cool-blue grey.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--icon-neutral (dark)",
+    "original": "--colors-neutral-400",
+    "ours": "--colors-neutral-dark-400",
+    "reason": "Same step on the tinted neutral ramp (green-tinted) instead of the cool-blue grey.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--text-default (dark)",
+    "original": "--colors-base-white",
+    "ours": "--colors-neutral-dark-50",
+    "reason": "Text roles on the tinted ramp: text 50, primary paragraph 200, secondary 300, muted 400.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--field-text-focused (dark)",
+    "original": "--text-primary-paragraph",
+    "ours": "--colors-neutral-dark-200",
+    "reason": "Text roles on the tinted ramp: text 50, primary paragraph 200, secondary 300, muted 400.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--field-text-filled (dark)",
+    "original": "--text-default",
+    "ours": "--colors-neutral-dark-50",
+    "reason": "Text roles on the tinted ramp: text 50, primary paragraph 200, secondary 300, muted 400.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--field-text-helper (dark)",
+    "original": "--text-secondary-paragraph",
+    "ours": "--colors-neutral-dark-400",
+    "reason": "Text roles on the tinted ramp: text 50, primary paragraph 200, secondary 300, muted 400.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--field-text-label (dark)",
+    "original": "--text-default",
+    "ours": "--colors-neutral-dark-50",
+    "reason": "Text roles on the tinted ramp: text 50, primary paragraph 200, secondary 300, muted 400.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--button-background-neutral-default (dark)",
+    "original": "--colors-neutral-800",
+    "ours": "--colors-neutral-dark-800",
+    "reason": "Same step on the tinted neutral ramp (green-tinted) instead of the cool-blue grey.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--button-background-neutral-hovered (dark)",
+    "original": "--colors-neutral-700",
+    "ours": "--colors-neutral-dark-700",
+    "reason": "Same step on the tinted neutral ramp (green-tinted) instead of the cool-blue grey.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--button-background-neutral-pressed (dark)",
+    "original": "--colors-neutral-600",
+    "ours": "--colors-neutral-dark-600",
+    "reason": "Same step on the tinted neutral ramp (green-tinted) instead of the cool-blue grey.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--button-background-neutral-selected (dark)",
+    "original": "--colors-neutral-700",
+    "ours": "--colors-neutral-dark-700",
+    "reason": "Same step on the tinted neutral ramp (green-tinted) instead of the cool-blue grey.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--button-background-neutral-focused (dark)",
+    "original": "--colors-neutral-800",
+    "ours": "--colors-neutral-dark-800",
+    "reason": "Same step on the tinted neutral ramp (green-tinted) instead of the cool-blue grey.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--border-primary (dark)",
+    "original": "--colors-primary-sa-flag-300",
+    "ours": "--colors-primary-sa-flag-400",
+    "reason": "Step 300 of the colour's own ramp for text and icons on dark surfaces, 500 for borders (same hue as light).",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--icon-success (dark)",
+    "original": "--colors-green-400",
+    "ours": "--colors-green-300",
+    "reason": "Step 300 of the colour's own ramp for text and icons on dark surfaces, 500 for borders (same hue as light).",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--icon-info (dark)",
+    "original": "--colors-blue-400",
+    "ours": "--colors-blue-300",
+    "reason": "Step 300 of the colour's own ramp for text and icons on dark surfaces, 500 for borders (same hue as light).",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--icon-warning (dark)",
+    "original": "--colors-yellow-400",
+    "ours": "--colors-yellow-300",
+    "reason": "Step 300 of the colour's own ramp for text and icons on dark surfaces, 500 for borders (same hue as light).",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--icon-error (dark)",
+    "original": "--colors-red-400",
+    "ours": "--colors-red-300",
+    "reason": "Step 300 of the colour's own ramp for text and icons on dark surfaces, 500 for borders (same hue as light).",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--background-neutral-400 (dark)",
+    "original": "--colors-neutral-400",
+    "ours": "--colors-neutral-dark-500",
+    "reason": "Figma Dark has the white surface darker than the page and the card two steps lighter. Rebuilt as bg 950, surface 900, raised 850, so each layer is lighter than the one under it.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--background-neutral-100 (dark)",
+    "original": "--colors-neutral-800",
+    "ours": "--colors-neutral-dark-850",
+    "reason": "Figma Dark has the white surface darker than the page and the card two steps lighter. Rebuilt as bg 950, surface 900, raised 850, so each layer is lighter than the one under it.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--border-success-light (dark)",
+    "original": "--colors-green-200",
+    "ours": "--colors-green-800",
+    "reason": "Step 300 of the colour's own ramp for text and icons on dark surfaces, 500 for borders (same hue as light).",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--border-info-light (dark)",
+    "original": "--colors-blue-200",
+    "ours": "--colors-blue-800",
+    "reason": "Step 300 of the colour's own ramp for text and icons on dark surfaces, 500 for borders (same hue as light).",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--border-warning-light (dark)",
+    "original": "--colors-yellow-200",
+    "ours": "--colors-yellow-800",
+    "reason": "Step 300 of the colour's own ramp for text and icons on dark surfaces, 500 for borders (same hue as light).",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--border-error-light (dark)",
+    "original": "--colors-red-200",
+    "ours": "--colors-red-800",
+    "reason": "Step 300 of the colour's own ramp for text and icons on dark surfaces, 500 for borders (same hue as light).",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--background-sa-flag-50 (dark)",
+    "original": "--colors-neutral-800",
+    "ours": "--alpha-primary-20",
+    "reason": "Low-opacity tint of the colour's own 500 step instead of a light fill or a flat grey, so the colour reads as the same family as in light mode.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--button-background-black-default (dark)",
+    "original": "--colors-neutral-950",
+    "ours": "--colors-neutral-dark-850",
+    "reason": "On the 950 page the black button and the neutral fills lose their edge. Lifted one step and given a border (button-border-neutral).",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--button-background-black-hovered (dark)",
+    "original": "--colors-neutral-800",
+    "ours": "--colors-neutral-dark-700",
+    "reason": "On the 950 page the black button and the neutral fills lose their edge. Lifted one step and given a border (button-border-neutral).",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--button-background-black-pressed (dark)",
+    "original": "--colors-neutral-600",
+    "ours": "--colors-neutral-dark-600",
+    "reason": "On the 950 page the black button and the neutral fills lose their edge. Lifted one step and given a border (button-border-neutral).",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--button-background-black-selected (dark)",
+    "original": "--colors-neutral-700",
+    "ours": "--colors-neutral-dark-700",
+    "reason": "On the 950 page the black button and the neutral fills lose their edge. Lifted one step and given a border (button-border-neutral).",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--button-background-black-focused (dark)",
+    "original": "--colors-neutral-950",
+    "ours": "--colors-neutral-dark-850",
+    "reason": "On the 950 page the black button and the neutral fills lose their edge. Lifted one step and given a border (button-border-neutral).",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--text-default-disabled (dark)",
+    "original": "--colors-neutral-400",
+    "ours": "--colors-neutral-dark-400",
+    "reason": "Same step on the tinted neutral ramp (green-tinted) instead of the cool-blue grey.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--button-background-oncolor-default (dark)",
+    "original": "--colors-base-black",
+    "ours": "--colors-neutral-dark-950",
+    "reason": "Figma Dark uses pure black. The tinted 950.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--background-neutral-800 (dark)",
+    "original": "--colors-neutral-600",
+    "ours": "--colors-neutral-dark-600",
+    "reason": "Same step on the tinted neutral ramp (green-tinted) instead of the cool-blue grey.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--control-border (dark)",
+    "original": "--colors-neutral-400",
+    "ours": "--colors-neutral-dark-500",
+    "reason": "Input boundaries need 3:1 on the surface (WCAG 1.4.11). Step 500 on the tinted ramp.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--control-neutral-checked (dark)",
+    "original": "--colors-neutral-600",
+    "ours": "--colors-neutral-dark-300",
+    "reason": "Checked neutral controls need 3:1 on the surface. Step 600 is 2.1:1.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--control-neutral-hovered (dark)",
+    "original": "--colors-neutral-400",
+    "ours": "--colors-neutral-dark-200",
+    "reason": "Hover is lighter than checked, as in the other states.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--control-neutral-pressed (dark)",
+    "original": "--colors-neutral-400",
+    "ours": "--colors-neutral-dark-400",
+    "reason": "Pressed is dimmer than checked.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--control-neutral-focused (dark)",
+    "original": "--colors-neutral-600",
+    "ours": "--colors-neutral-dark-300",
+    "reason": "Checked neutral controls need 3:1 on the surface. Step 600 is 2.1:1.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--control-pressed (dark)",
+    "original": "--colors-neutral-600",
+    "ours": "--colors-neutral-dark-600",
+    "reason": "Same step on the tinted neutral ramp (green-tinted) instead of the cool-blue grey.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--control-ripple-effect (dark)",
+    "original": "--colors-neutral-900",
+    "ours": "--colors-neutral-dark-850",
+    "reason": "Figma Dark has the white surface darker than the page and the card two steps lighter. Rebuilt as bg 950, surface 900, raised 850, so each layer is lighter than the one under it.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--link-neutral-focused (dark)",
+    "original": "--colors-neutral-200",
+    "ours": "--colors-neutral-dark-200",
+    "reason": "Same step on the tinted neutral ramp (green-tinted) instead of the cool-blue grey.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--icon-default-400 (dark)",
+    "original": "--colors-neutral-500",
+    "ours": "--colors-neutral-dark-500",
+    "reason": "Same step on the tinted neutral ramp (green-tinted) instead of the cool-blue grey.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--background-neutral-300 (dark)",
+    "original": "--colors-neutral-500",
+    "ours": "--colors-neutral-dark-700",
+    "reason": "Figma Dark has the white surface darker than the page and the card two steps lighter. Rebuilt as bg 950, surface 900, raised 850, so each layer is lighter than the one under it.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--background-neutral-200 (dark)",
+    "original": "--colors-neutral-600",
+    "ours": "--colors-neutral-dark-800",
+    "reason": "Figma Dark has the white surface darker than the page and the card two steps lighter. Rebuilt as bg 950, surface 900, raised 850, so each layer is lighter than the one under it.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--background-neutral-25 (dark)",
+    "original": "--colors-neutral-950",
+    "ours": "--colors-neutral-dark-900",
+    "reason": "Figma Dark has the white surface darker than the page and the card two steps lighter. Rebuilt as bg 950, surface 900, raised 850, so each layer is lighter than the one under it.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--background-disabled (dark)",
+    "original": "--colors-neutral-700",
+    "ours": "--colors-neutral-dark-850",
+    "reason": "Figma Dark has the white surface darker than the page and the card two steps lighter. Rebuilt as bg 950, surface 900, raised 850, so each layer is lighter than the one under it.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--icon-default-500 (dark)",
+    "original": "--colors-neutral-200",
+    "ours": "--colors-neutral-dark-300",
+    "reason": "Text roles on the tinted ramp: text 50, primary paragraph 200, secondary 300, muted 400.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--field-background-default (dark)",
+    "original": "--colors-neutral-800",
+    "ours": "--background-card",
+    "reason": "Figma Dark keeps a light value (or hardcoded hex) on a dark surface here. Mapped to the tinted ramp.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--field-background-lighter (dark)",
+    "original": "--colors-neutral-600",
+    "ours": "--colors-neutral-dark-850",
+    "reason": "Figma Dark keeps a light value (or hardcoded hex) on a dark surface here. Mapped to the tinted ramp.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--field-background-darker (dark)",
+    "original": "--colors-neutral-800",
+    "ours": "--colors-neutral-dark-950",
+    "reason": "Figma Dark keeps a light value (or hardcoded hex) on a dark surface here. Mapped to the tinted ramp.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--field-background-pressed (dark)",
+    "original": "#4d5761",
+    "ours": "--colors-neutral-dark-800",
+    "reason": "Figma Dark keeps a light value (or hardcoded hex) on a dark surface here. Mapped to the tinted ramp.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--field-border-default (dark)",
+    "original": "--colors-neutral-500",
+    "ours": "--colors-neutral-dark-500",
+    "reason": "Input boundaries need 3:1 on the surface (WCAG 1.4.11). Step 500 on the tinted ramp.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--field-border-hovered (dark)",
+    "original": "--colors-neutral-200",
+    "ours": "--colors-neutral-dark-200",
+    "reason": "Same step on the tinted neutral ramp (green-tinted) instead of the cool-blue grey.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--field-border-pressed (dark)",
+    "original": "--colors-neutral-25",
+    "ours": "--colors-neutral-dark-25",
+    "reason": "Same step on the tinted neutral ramp (green-tinted) instead of the cool-blue grey.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--field-text-readonly (dark)",
+    "original": "--text-default",
+    "ours": "--colors-neutral-dark-50",
+    "reason": "Text roles on the tinted ramp: text 50, primary paragraph 200, secondary 300, muted 400.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--field-text-hovered (dark)",
+    "original": "--text-default",
+    "ours": "--colors-neutral-dark-50",
+    "reason": "Text roles on the tinted ramp: text 50, primary paragraph 200, secondary 300, muted 400.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--field-text-pressed (dark)",
+    "original": "--text-primary-paragraph",
+    "ours": "--colors-neutral-dark-200",
+    "reason": "Text roles on the tinted ramp: text 50, primary paragraph 200, secondary 300, muted 400.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--background-body (dark)",
+    "original": "--colors-neutral-900",
+    "ours": "--colors-neutral-dark-950",
+    "reason": "Figma Dark has the white surface darker than the page and the card two steps lighter. Rebuilt as bg 950, surface 900, raised 850, so each layer is lighter than the one under it.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--table-cell-border (dark)",
+    "original": "--colors-neutral-600",
+    "ours": "--colors-neutral-dark-800",
+    "reason": "Border roles on the tinted ramp: border 800, border-strong 700, subtle 850.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--table-text-head (dark)",
+    "original": "--colors-neutral-300",
+    "ours": "--colors-neutral-dark-200",
+    "reason": "Text roles on the tinted ramp: text 50, primary paragraph 200, secondary 300, muted 400.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--table-text-body (dark)",
+    "original": "--text-default",
+    "ours": "--colors-neutral-dark-50",
+    "reason": "Text roles on the tinted ramp: text 50, primary paragraph 200, secondary 300, muted 400.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--table-background-hover-selected (dark)",
+    "original": "--colors-neutral-900",
+    "ours": "--colors-neutral-dark-850",
+    "reason": "Figma Dark keeps a light value (or hardcoded hex) on a dark surface here. Mapped to the tinted ramp.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--stepper-button-upcomming (dark)",
+    "original": "--colors-neutral-600",
+    "ours": "--colors-neutral-dark-600",
+    "reason": "Same step on the tinted neutral ramp (green-tinted) instead of the cool-blue grey.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--stepper-button-upcomming-hovered (dark)",
+    "original": "--colors-neutral-600",
+    "ours": "--colors-neutral-dark-600",
+    "reason": "Same step on the tinted neutral ramp (green-tinted) instead of the cool-blue grey.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--stepper-button-background (dark)",
+    "original": "--colors-base-white",
+    "ours": "--colors-neutral-dark-900",
+    "reason": "Figma Dark keeps a light value (or hardcoded hex) on a dark surface here. Mapped to the tinted ramp.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--stepper-text-primary (dark)",
+    "original": "--text-default",
+    "ours": "--colors-neutral-dark-50",
+    "reason": "Text roles on the tinted ramp: text 50, primary paragraph 200, secondary 300, muted 400.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--stepper-text-secondary (dark)",
+    "original": "--text-primary-paragraph",
+    "ours": "--colors-neutral-dark-200",
+    "reason": "Text roles on the tinted ramp: text 50, primary paragraph 200, secondary 300, muted 400.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--stepper-text-tertiary (dark)",
+    "original": "--text-secondary-paragraph",
+    "ours": "--colors-neutral-dark-300",
+    "reason": "Text roles on the tinted ramp: text 50, primary paragraph 200, secondary 300, muted 400.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--stepper-line-upcomming (dark)",
+    "original": "--colors-neutral-700",
+    "ours": "--colors-neutral-dark-700",
+    "reason": "Same step on the tinted neutral ramp (green-tinted) instead of the cool-blue grey.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--stepper-line-upcomming-hovered (dark)",
+    "original": "--colors-neutral-700",
+    "ours": "--colors-neutral-dark-700",
+    "reason": "Same step on the tinted neutral ramp (green-tinted) instead of the cool-blue grey.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--stepper-line-current (dark)",
+    "original": "--colors-neutral-700",
+    "ours": "--colors-neutral-dark-700",
+    "reason": "Same step on the tinted neutral ramp (green-tinted) instead of the cool-blue grey.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--table-background-header (dark)",
+    "original": "--colors-neutral-900",
+    "ours": "--colors-neutral-dark-850",
+    "reason": "Figma Dark keeps a light value (or hardcoded hex) on a dark surface here. Mapped to the tinted ramp.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--table-background-row (dark)",
+    "original": "--colors-neutral-900",
+    "ours": "--colors-neutral-dark-900",
+    "reason": "Figma Dark keeps a light value (or hardcoded hex) on a dark surface here. Mapped to the tinted ramp.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--background-primary-25 (dark)",
+    "original": "--colors-primary-sa-flag-950",
+    "ours": "--alpha-primary-10",
+    "reason": "Low-opacity tint of the colour's own 500 step instead of a light fill or a flat grey, so the colour reads as the same family as in light mode.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--background-secondary-25 (dark)",
+    "original": "--colors-neutral-900",
+    "ours": "#f5bd021a",
+    "reason": "Low-opacity tint of the colour's own 500 step instead of a light fill or a flat grey, so the colour reads as the same family as in light mode.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--background-tertiary-25 (dark)",
+    "original": "--colors-neutral-900",
+    "ours": "#a57bba1a",
+    "reason": "Low-opacity tint of the colour's own 500 step instead of a light fill or a flat grey, so the colour reads as the same family as in light mode.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--background-sa-flag-25 (dark)",
+    "original": "--colors-neutral-900",
+    "ours": "--alpha-primary-10",
+    "reason": "Low-opacity tint of the colour's own 500 step instead of a light fill or a flat grey, so the colour reads as the same family as in light mode.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--background-menu (dark)",
+    "original": "--colors-neutral-800",
+    "ours": "--colors-neutral-dark-850",
+    "reason": "Figma Dark has the white surface darker than the page and the card two steps lighter. Rebuilt as bg 950, surface 900, raised 850, so each layer is lighter than the one under it.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--tag-background-neutral (dark)",
+    "original": "--colors-neutral-600",
+    "ours": "--colors-neutral-dark-600",
+    "reason": "Same step on the tinted neutral ramp (green-tinted) instead of the cool-blue grey.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--tag-background-neutral-light (dark)",
+    "original": "--colors-neutral-800",
+    "ours": "--colors-neutral-dark-800",
+    "reason": "Same step on the tinted neutral ramp (green-tinted) instead of the cool-blue grey.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--tag-border-success (dark)",
+    "original": "--colors-green-300",
+    "ours": "--colors-green-500",
+    "reason": "Step 300 of the colour's own ramp for text and icons on dark surfaces, 500 for borders (same hue as light).",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--tag-border-success-light (dark)",
+    "original": "--colors-green-200",
+    "ours": "--colors-green-800",
+    "reason": "Step 300 of the colour's own ramp for text and icons on dark surfaces, 500 for borders (same hue as light).",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--tag-border-info (dark)",
+    "original": "--colors-blue-300",
+    "ours": "--colors-blue-500",
+    "reason": "Step 300 of the colour's own ramp for text and icons on dark surfaces, 500 for borders (same hue as light).",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--tag-border-info-light (dark)",
+    "original": "--colors-blue-200",
+    "ours": "--colors-blue-800",
+    "reason": "Step 300 of the colour's own ramp for text and icons on dark surfaces, 500 for borders (same hue as light).",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--tag-border-warning (dark)",
+    "original": "--colors-yellow-300",
+    "ours": "--colors-yellow-500",
+    "reason": "Step 300 of the colour's own ramp for text and icons on dark surfaces, 500 for borders (same hue as light).",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--tag-border-warning-light (dark)",
+    "original": "--colors-yellow-200",
+    "ours": "--colors-yellow-800",
+    "reason": "Step 300 of the colour's own ramp for text and icons on dark surfaces, 500 for borders (same hue as light).",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--tag-border-error (dark)",
+    "original": "--colors-red-300",
+    "ours": "--colors-red-500",
+    "reason": "Step 300 of the colour's own ramp for text and icons on dark surfaces, 500 for borders (same hue as light).",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--tag-border-error-light (dark)",
+    "original": "--colors-red-200",
+    "ours": "--colors-red-800",
+    "reason": "Step 300 of the colour's own ramp for text and icons on dark surfaces, 500 for borders (same hue as light).",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--tag-border-neutral (dark)",
+    "original": "--colors-neutral-300",
+    "ours": "--colors-neutral-dark-300",
+    "reason": "Same step on the tinted neutral ramp (green-tinted) instead of the cool-blue grey.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--tag-border-neutral-light (dark)",
+    "original": "--colors-neutral-800",
+    "ours": "--colors-neutral-dark-800",
+    "reason": "Same step on the tinted neutral ramp (green-tinted) instead of the cool-blue grey.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--tag-text-success (dark)",
+    "original": "--colors-green-400",
+    "ours": "--colors-green-300",
+    "reason": "Step 300 of the colour's own ramp for text and icons on dark surfaces, 500 for borders (same hue as light).",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--tag-text-info (dark)",
+    "original": "--colors-blue-400",
+    "ours": "--colors-blue-300",
+    "reason": "Step 300 of the colour's own ramp for text and icons on dark surfaces, 500 for borders (same hue as light).",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--tag-text-warning (dark)",
+    "original": "--colors-yellow-400",
+    "ours": "--colors-yellow-300",
+    "reason": "Step 300 of the colour's own ramp for text and icons on dark surfaces, 500 for borders (same hue as light).",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--tag-text-error (dark)",
+    "original": "--colors-red-400",
+    "ours": "--colors-red-300",
+    "reason": "Step 300 of the colour's own ramp for text and icons on dark surfaces, 500 for borders (same hue as light).",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--tag-icon-success (dark)",
+    "original": "--colors-green-400",
+    "ours": "--colors-green-300",
+    "reason": "Step 300 of the colour's own ramp for text and icons on dark surfaces, 500 for borders (same hue as light).",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--tag-icon-info (dark)",
+    "original": "--colors-blue-400",
+    "ours": "--colors-blue-300",
+    "reason": "Step 300 of the colour's own ramp for text and icons on dark surfaces, 500 for borders (same hue as light).",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--tag-icon-warning (dark)",
+    "original": "--colors-yellow-400",
+    "ours": "--colors-yellow-300",
+    "reason": "Step 300 of the colour's own ramp for text and icons on dark surfaces, 500 for borders (same hue as light).",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--tag-icon-error (dark)",
+    "original": "--colors-red-400",
+    "ours": "--colors-red-300",
+    "reason": "Step 300 of the colour's own ramp for text and icons on dark surfaces, 500 for borders (same hue as light).",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--tag-text-neutral (dark)",
+    "original": "--colors-neutral-100",
+    "ours": "--colors-neutral-dark-100",
+    "reason": "Same step on the tinted neutral ramp (green-tinted) instead of the cool-blue grey.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--tag-icon-neutral (dark)",
+    "original": "--colors-neutral-100",
+    "ours": "--colors-neutral-dark-100",
+    "reason": "Same step on the tinted neutral ramp (green-tinted) instead of the cool-blue grey.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--background-inverse-disabled (dark)",
+    "original": "--colors-neutral-700",
+    "ours": "--colors-neutral-dark-800",
+    "reason": "Figma Dark has the white surface darker than the page and the card two steps lighter. Rebuilt as bg 950, surface 900, raised 850, so each layer is lighter than the one under it.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--text-primary-light (dark)",
+    "original": "--colors-primary-sa-flag-400",
+    "ours": "--colors-primary-sa-flag-300",
+    "reason": "Step 300 of the colour's own ramp for text and icons on dark surfaces, 500 for borders (same hue as light).",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--option-background-hover (dark)",
+    "original": "--colors-neutral-500",
+    "ours": "--colors-neutral-dark-500",
+    "reason": "Same step on the tinted neutral ramp (green-tinted) instead of the cool-blue grey.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--option-background-pressed (dark)",
+    "original": "--colors-neutral-700",
+    "ours": "--colors-neutral-dark-700",
+    "reason": "Same step on the tinted neutral ramp (green-tinted) instead of the cool-blue grey.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--datecell-today-background-hovered (dark)",
+    "original": "--colors-neutral-700",
+    "ours": "--colors-neutral-dark-700",
+    "reason": "Same step on the tinted neutral ramp (green-tinted) instead of the cool-blue grey.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--datecell-today-background-pressed (dark)",
+    "original": "--colors-neutral-600",
+    "ours": "--colors-neutral-dark-600",
+    "reason": "Same step on the tinted neutral ramp (green-tinted) instead of the cool-blue grey.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--background-card (dark)",
+    "original": "--colors-neutral-800",
+    "ours": "--colors-neutral-dark-900",
+    "reason": "Figma Dark has the white surface darker than the page and the card two steps lighter. Rebuilt as bg 950, surface 900, raised 850, so each layer is lighter than the one under it.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--tooltip-background-light (dark)",
+    "original": "--colors-neutral-800",
+    "ours": "--colors-neutral-dark-850",
+    "reason": "Figma Dark has the white surface darker than the page and the card two steps lighter. Rebuilt as bg 950, surface 900, raised 850, so each layer is lighter than the one under it.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--tooltip-text-heading-dark (dark)",
+    "original": "--colors-neutral-800",
+    "ours": "--colors-neutral-dark-800",
+    "reason": "Same step on the tinted neutral ramp (green-tinted) instead of the cool-blue grey.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--tooltip-text-paragraph-dark (dark)",
+    "original": "--colors-neutral-700",
+    "ours": "--colors-neutral-dark-700",
+    "reason": "Same step on the tinted neutral ramp (green-tinted) instead of the cool-blue grey.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--background-notification-white (dark)",
+    "original": "--colors-neutral-900",
+    "ours": "--colors-neutral-dark-850",
+    "reason": "Figma Dark has the white surface darker than the page and the card two steps lighter. Rebuilt as bg 950, surface 900, raised 850, so each layer is lighter than the one under it.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--background-primary-200 (dark)",
+    "original": "--colors-neutral-700",
+    "ours": "--colors-primary-sa-flag-900",
+    "reason": "Low-opacity tint of the colour's own 500 step instead of a light fill or a flat grey, so the colour reads as the same family as in light mode.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--link-icon-neutral-hovered (dark)",
+    "original": "--colors-neutral-400",
+    "ours": "--colors-neutral-dark-400",
+    "reason": "Same step on the tinted neutral ramp (green-tinted) instead of the cool-blue grey.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--link-icon-neutral-pressed (dark)",
+    "original": "--colors-neutral-500",
+    "ours": "--colors-neutral-dark-400",
+    "reason": "Same step on the tinted neutral ramp (green-tinted) instead of the cool-blue grey.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--link-icon-neutral-focused (dark)",
+    "original": "--colors-neutral-200",
+    "ours": "--colors-neutral-dark-200",
+    "reason": "Same step on the tinted neutral ramp (green-tinted) instead of the cool-blue grey.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--link-icon-neutral-visited (dark)",
+    "original": "--colors-neutral-300",
+    "ours": "--colors-neutral-dark-300",
+    "reason": "Same step on the tinted neutral ramp (green-tinted) instead of the cool-blue grey.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--alpha-primary-10 (dark)",
+    "original": "#166a451a",
+    "ours": "#25935f17",
+    "reason": "Low-opacity tint of the colour's own 500 step instead of a light fill or a flat grey, so the colour reads as the same family as in light mode.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--control-icon-disabled (dark)",
+    "original": "--colors-neutral-400",
+    "ours": "--colors-neutral-dark-400",
+    "reason": "Same step on the tinted neutral ramp (green-tinted) instead of the cool-blue grey.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--datecell-background-disabled (dark)",
+    "original": "#ffffff",
+    "ours": "--colors-neutral-dark-900",
+    "reason": "Figma Dark keeps a light value (or hardcoded hex) on a dark surface here. Mapped to the tinted ramp.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--alpha-primary-20 (dark)",
+    "original": "#166a4533",
+    "ours": "#25935f26",
+    "reason": "Low-opacity tint of the colour's own 500 step instead of a light fill or a flat grey, so the colour reads as the same family as in light mode.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--alpha-warning-10 (dark)",
+    "original": "#b547081a",
+    "ours": "#f7900917",
+    "reason": "Low-opacity tint of the colour's own 500 step instead of a light fill or a flat grey, so the colour reads as the same family as in light mode.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--alpha-warning-20 (dark)",
+    "original": "#b5470833",
+    "ours": "#f7900926",
+    "reason": "Low-opacity tint of the colour's own 500 step instead of a light fill or a flat grey, so the colour reads as the same family as in light mode.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--alpha-error-10 (dark)",
+    "original": "#b423181a",
+    "ours": "#f0443817",
+    "reason": "Low-opacity tint of the colour's own 500 step instead of a light fill or a flat grey, so the colour reads as the same family as in light mode.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--alpha-error-20 (dark)",
+    "original": "#b4231833",
+    "ours": "#f0443826",
+    "reason": "Low-opacity tint of the colour's own 500 step instead of a light fill or a flat grey, so the colour reads as the same family as in light mode.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--alpha-info-10 (dark)",
+    "original": "#175cd31a",
+    "ours": "#2e90fa17",
+    "reason": "Low-opacity tint of the colour's own 500 step instead of a light fill or a flat grey, so the colour reads as the same family as in light mode.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--alpha-info-20 (dark)",
+    "original": "#175cd333",
+    "ours": "#2e90fa26",
+    "reason": "Low-opacity tint of the colour's own 500 step instead of a light fill or a flat grey, so the colour reads as the same family as in light mode.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--alpha-success-10 (dark)",
+    "original": "#0676471a",
+    "ours": "#17b26a17",
+    "reason": "Low-opacity tint of the colour's own 500 step instead of a light fill or a flat grey, so the colour reads as the same family as in light mode.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--alpha-success-20 (dark)",
+    "original": "#06764733",
+    "ours": "#17b26a26",
+    "reason": "Low-opacity tint of the colour's own 500 step instead of a light fill or a flat grey, so the colour reads as the same family as in light mode.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--textarea-scrollbar-bar (dark)",
+    "original": "--colors-neutral-600",
+    "ours": "--colors-neutral-dark-600",
+    "reason": "Same step on the tinted neutral ramp (green-tinted) instead of the cool-blue grey.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--control-disabled (dark)",
+    "original": "--colors-neutral-300",
+    "ours": "--colors-neutral-dark-300",
+    "reason": "Same step on the tinted neutral ramp (green-tinted) instead of the cool-blue grey.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--border-disabled (dark)",
+    "original": "--colors-neutral-500",
+    "ours": "--colors-neutral-dark-700",
+    "reason": "Border roles on the tinted ramp: border 800, border-strong 700, subtle 850.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--unselected-tab-icon (dark)",
+    "original": "--colors-neutral-100",
+    "ours": "--colors-neutral-dark-200",
+    "reason": "Text roles on the tinted ramp: text 50, primary paragraph 200, secondary 300, muted 400.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--table-background-row-selected-hovered (dark)",
+    "original": "--colors-primary-sa-flag-50",
+    "ours": "--alpha-primary-20",
+    "reason": "Low-opacity tint of the colour's own 500 step instead of a light fill or a flat grey, so the colour reads as the same family as in light mode.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--table-boarder-row-selected-hovered (dark)",
+    "original": "--colors-neutral-100",
+    "ours": "--colors-neutral-dark-800",
+    "reason": "Figma Dark keeps a light value (or hardcoded hex) on a dark surface here. Mapped to the tinted ramp.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--table-background-row-select (dark)",
+    "original": "--colors-primary-sa-flag-50",
+    "ours": "--alpha-primary-20",
+    "reason": "Low-opacity tint of the colour's own 500 step instead of a light fill or a flat grey, so the colour reads as the same family as in light mode.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--table-background-row-hovered (dark)",
+    "original": "--colors-neutral-100",
+    "ours": "--colors-neutral-dark-850",
+    "reason": "Figma Dark keeps a light value (or hardcoded hex) on a dark surface here. Mapped to the tinted ramp.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--table-background-row-alt (dark)",
+    "original": "#ffffff",
+    "ours": "--colors-neutral-dark-900",
+    "reason": "Figma Dark keeps a light value (or hardcoded hex) on a dark surface here. Mapped to the tinted ramp.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--chip-background-neutral-default (dark)",
+    "original": "--colors-neutral-800",
+    "ours": "--colors-neutral-dark-800",
+    "reason": "Same step on the tinted neutral ramp (green-tinted) instead of the cool-blue grey.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--chip-background-neutral-focused (dark)",
+    "original": "--colors-neutral-800",
+    "ours": "--colors-neutral-dark-800",
+    "reason": "Same step on the tinted neutral ramp (green-tinted) instead of the cool-blue grey.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--chip-background-on-color-default (dark)",
+    "original": "--colors-base-black",
+    "ours": "--colors-neutral-dark-950",
+    "reason": "Figma Dark uses pure black. The tinted 950.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--chip-background-neutral-hovered (dark)",
+    "original": "--colors-neutral-600",
+    "ours": "--colors-neutral-dark-600",
+    "reason": "Same step on the tinted neutral ramp (green-tinted) instead of the cool-blue grey.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--chip-background-neutral-selected (dark)",
+    "original": "--colors-neutral-700",
+    "ours": "--colors-neutral-dark-700",
+    "reason": "Same step on the tinted neutral ramp (green-tinted) instead of the cool-blue grey.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--progress-bar-neutral (dark)",
+    "original": "--colors-neutral-700",
+    "ours": "--colors-neutral-dark-700",
+    "reason": "Same step on the tinted neutral ramp (green-tinted) instead of the cool-blue grey.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--icon-neutral-ring (dark)",
+    "original": "--colors-neutral-900",
+    "ours": "--colors-neutral-dark-850",
+    "reason": "Figma Dark has the white surface darker than the page and the card two steps lighter. Rebuilt as bg 950, surface 900, raised 850, so each layer is lighter than the one under it.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--text-secondary (dark)",
+    "original": "--colors-secondary-gold-600-primary",
+    "ours": "--colors-secondary-gold-400",
+    "reason": "Step 300 of the colour's own ramp for text and icons on dark surfaces, 500 for borders (same hue as light).",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--border-secondary (dark)",
+    "original": "--colors-secondary-gold-600-primary",
+    "ours": "--colors-secondary-gold-500",
+    "reason": "Step 300 of the colour's own ramp for text and icons on dark surfaces, 500 for borders (same hue as light).",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--border-tertiary (dark)",
+    "original": "--colors-tertiary-lavender-500-primary",
+    "ours": "--colors-tertiary-lavender-400",
+    "reason": "Step 300 of the colour's own ramp for text and icons on dark surfaces, 500 for borders (same hue as light).",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--icon-secondary (dark)",
+    "original": "--colors-secondary-gold-600-primary",
+    "ours": "--colors-secondary-gold-400",
+    "reason": "Step 300 of the colour's own ramp for text and icons on dark surfaces, 500 for borders (same hue as light).",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--icon-tertiary (dark)",
+    "original": "--colors-tertiary-lavender-500-primary",
+    "ours": "--colors-tertiary-lavender-300",
+    "reason": "Step 300 of the colour's own ramp for text and icons on dark surfaces, 500 for borders (same hue as light).",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--badge-neutral-background (dark)",
+    "original": "--colors-neutral-800",
+    "ours": "--colors-neutral-dark-800",
+    "reason": "Same step on the tinted neutral ramp (green-tinted) instead of the cool-blue grey.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--badge-neutral-border (dark)",
+    "original": "--colors-neutral-700",
+    "ours": "--colors-neutral-dark-700",
+    "reason": "Same step on the tinted neutral ramp (green-tinted) instead of the cool-blue grey.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--badge-neutral-text (dark)",
+    "original": "--colors-neutral-200",
+    "ours": "--colors-neutral-dark-200",
+    "reason": "Same step on the tinted neutral ramp (green-tinted) instead of the cool-blue grey.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--badge-neutral-border-outlined (dark)",
+    "original": "--colors-neutral-400",
+    "ours": "--colors-neutral-dark-400",
+    "reason": "Same step on the tinted neutral ramp (green-tinted) instead of the cool-blue grey.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--featured-icon-neutral-background (dark)",
+    "original": "--colors-neutral-500",
+    "ours": "--colors-neutral-dark-500",
+    "reason": "Same step on the tinted neutral ramp (green-tinted) instead of the cool-blue grey.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--featured-icon-neutral-background-light (dark)",
+    "original": "--colors-neutral-800",
+    "ours": "--colors-neutral-dark-800",
+    "reason": "Same step on the tinted neutral ramp (green-tinted) instead of the cool-blue grey.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--featured-icon-neutral-icon (dark)",
+    "original": "--colors-neutral-300",
+    "ours": "--colors-neutral-dark-300",
+    "reason": "Same step on the tinted neutral ramp (green-tinted) instead of the cool-blue grey.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--featured-icon-neutral-border (dark)",
+    "original": "--colors-neutral-700",
+    "ours": "--colors-neutral-dark-700",
+    "reason": "Same step on the tinted neutral ramp (green-tinted) instead of the cool-blue grey.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--skeleton-background (dark)",
+    "original": "--colors-neutral-700",
+    "ours": "--colors-neutral-dark-700",
+    "reason": "Same step on the tinted neutral ramp (green-tinted) instead of the cool-blue grey.",
+    "status": "fixed"
+  },
+  {
+    "area": "Contrast",
+    "item": "shadcn --muted (background-neutral-100 → background-neutral-50)",
+    "original": "--muted: --background-neutral-100 with --muted-foreground: --text-secondary-paragraph",
+    "ours": "--muted: --background-neutral-50",
+    "reason": "text-secondary-paragraph (#6c737f) on neutral-100 is 4.34:1 in light mode, which fails AA for the muted text shadcn components put on muted fills. On neutral-50 it is 4.65:1.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--shadow-* (dark)",
+    "original": "Figma effect styles, same in both modes",
+    "ours": "none (0 0 #0000)",
+    "reason": "Shadows are invisible on near-black surfaces and only add haze. In dark mode elevation is a lighter surface (raised 850) plus a border."
+  },
+  {
+    "area": "Dark theme",
+    "item": "Neutral ramp (dark)",
+    "original": "Cool blue-grey ramp (colors-neutral-*), reused for dark",
+    "ours": "colors-neutral-dark-25 … 950: a green-tinted ramp (OKLCH hue 172, chroma 0.004–0.016)",
+    "reason": "Figma Dark reuses the light neutral ramp, a blue-grey that clashes with the green brand and makes dark mode look off-brand. The tinted ramp keeps the same lightness steps."
+  },
+  {
+    "area": "Dark theme",
+    "item": "Solid status and brand fills (dark)",
+    "original": "Same value as light mode",
+    "ours": "Unchanged: primary 600, success 700, info 600, warning 700, error 600",
+    "reason": "The label on these fills is white in both modes. Lighter steps (400–500) drop white text below 4.5:1, so fills keep the light value and only text, icons, borders and subtle backgrounds change. Kept on purpose, not an omission."
   },
   {
     "area": "Naming",

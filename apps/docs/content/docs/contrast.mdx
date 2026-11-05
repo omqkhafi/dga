@@ -1,0 +1,14 @@
+---
+title: Contrast
+description: Every colour pair DGA UI checks against WCAG 2.1 AA, for each component and for the docs site's own UI, in light and dark mode.
+---
+
+The token build fails if any pair below is under WCAG 2.1 AA, in light or dark mode: 4.5:1 for text, 3:1 for icons, borders that carry meaning and focus rings. Disabled states are exempt (WCAG 1.4.3). Each row is the lowest ratio across the surfaces that variant and state can sit on.
+
+Component pages show the same data for one component, collapsed. [Foundation pairs](/docs/deviations#how-contrast-is-checked) (text, icon and status tokens on page surfaces) are checked by the same build.
+
+<ContrastReport />
+
+## Docs UI chrome
+
+The docs site is built from the tokens it documents, so its own sidebar labels, tabs, table of contents, toolbar toggles, table columns and code blocks are audited too (the **Docs UI chrome** group above).

@@ -102,14 +102,14 @@
   }
   /* Primary-Neutral (black) */
   .cn-button-neutral {
-    @apply bg-button-background-black-default text-text-oncolor-primary;
+    @apply border-button-border-neutral bg-button-background-black-default text-text-oncolor-primary;
     @apply hover:bg-button-background-black-hovered active:bg-button-background-black-pressed;
     @apply aria-pressed:bg-button-background-black-selected data-selected:bg-button-background-black-selected;
     @apply data-disabled:bg-background-disabled data-disabled:text-text-default-disabled;
   }
   /* Secondary-Solid. Figma: hovered uses the pressed fill. */
   .cn-button-secondary {
-    @apply bg-button-background-neutral-default text-text-default;
+    @apply border-button-border-neutral bg-button-background-neutral-default text-text-default;
     @apply hover:bg-button-background-neutral-pressed active:bg-button-background-neutral-pressed;
     @apply aria-pressed:bg-button-background-neutral-selected data-selected:bg-button-background-neutral-selected;
     @apply data-disabled:bg-background-disabled data-disabled:text-text-default-disabled;

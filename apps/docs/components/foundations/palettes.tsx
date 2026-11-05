@@ -8,6 +8,7 @@ const LABELS: [RegExp, string][] = [
   [/^secondary-gold$/, "Gold (secondary)"],
   [/^tertiary-lavender$/, "Lavender (tertiary)"],
   [/^neutral$/, "Neutral"],
+  [/^neutral-dark$/, "Neutral, dark mode (DGA UI, green-tinted)"],
   [/^base-(white|black)$/, "Base"],
   [/^(green|red|yellow|blue)$/, "Status: $1"],
   [/^alpha-alpha-600-primary$|^primary-sa-flag-500-alpha$/, "Alpha: primary"],

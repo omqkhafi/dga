@@ -3,8 +3,6 @@ title: Featured Icon
 description: An icon in a tinted container that leads cards, empty states and dialogs. Light, hard and outlined, six colours.
 ---
 
-A featured icon draws attention to a card, an empty state or a dialog, and hints at its meaning with colour.
-
 <Preview name="featured-icon" title="Featured Icon" />
 
 <Callout title="Not in the DGA Figma file">
@@ -27,27 +25,39 @@ import { FeaturedIcon } from "@/components/ui/featured-icon";
 </FeaturedIcon>
 ```
 
-## Props
+A featured icon draws attention to a card, an empty state or a dialog, and hints at its meaning with colour.
 
-<TypeTable
-  type={{
-    variant: { type: '"brand" | "neutral" | "success" | "error" | "warning" | "info"', default: '"brand"' },
-    appearance: { type: '"light" | "hard" | "outlined"', default: '"light"' },
-    size: { type: '"sm" | "md" | "lg" | "xl"', default: '"xl"', description: "32, 40, 48 and 56px; icons 16 to 28px." },
-    circle: { type: "boolean", default: "false" },
-  }}
-/>
+## Anatomy
+
+- **Root**: the tinted square or circle.
+- **Icon**: any Hugeicons icon, sized to the container (16 to 28px).
+
+## Examples
+
+### Appearance and colour
+
+`light` is a tint, `hard` a solid fill and `outlined` a ring, in `brand`, `neutral`, `success`, `error`, `warning` and `info`. Sizes `sm` 32px to `xl` 56px; `circle` makes it round.
+
+## RTL
+
+Place it at the start of a card; directional icons need `rtl:-scale-x-100`.
+
+<DirectionCompare name="featured-icon" title="Featured icon" />
 
 ## Accessibility
 
 - Decorative by default (`aria-hidden`), because the text next to it carries the meaning.
-- If the icon alone carries meaning, pass `role="img"` and an `aria-label`; it is then announced.
+- If the icon alone carries meaning, pass `role="img"` and an `aria-label`.
 - Icons are checked at 3:1 against their fill and the page surface.
 
-### Contrast
+## API Reference
 
-<ComponentContrast component="featured-icon" />
+<ApiReference component="featured-icon" />
 
 ## Deviations from DGA
 
 <ComponentDeviations component="featured-icon" />
+
+## Contrast
+
+<ComponentContrast component="featured-icon" />

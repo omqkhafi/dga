@@ -1,6 +1,7 @@
 import { RootProvider } from "fumadocs-ui/provider/next";
 import type { Metadata } from "next";
 import { Header } from "@/components/shell/header";
+import SearchDialog from "@/components/shell/search-lazy";
 import { latestVersion } from "@/lib/changelog";
 import { ibmPlexSansArabic } from "@/lib/fonts";
 import { appName, siteUrl } from "@/lib/shared";
@@ -28,7 +29,7 @@ export default function Layout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en" dir="ltr" className={ibmPlexSansArabic.variable} suppressHydrationWarning>
       <body className="flex min-h-screen flex-col bg-background-body text-text-default">
-        <RootProvider>
+        <RootProvider search={{ SearchDialog }}>
           <a
             href="#main"
             className="sr-only z-50 rounded-sm bg-background-white px-3 py-2 focus:not-sr-only focus:fixed focus:start-2 focus:top-2"
