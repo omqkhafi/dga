@@ -1,0 +1,26 @@
+---
+title: Dark mode
+description: How the dark theme is built, the neutral ramp and its roles, and Button, Badge, Tag, Link and status surfaces in light and dark side by side.
+---
+
+Light is the DGA Figma theme. Dark is rebuilt from it with one set of rules, because Figma's Dark mode is incomplete and inconsistent: the "white" surface is darker than the page, a few tokens keep a light value on a dark background, and the neutral ramp is a cool blue-grey that clashes with the green brand. Every token the rebuild changes is listed under **Dark theme** on [Deviations](/docs/deviations).
+
+## Rules
+
+- **One tinted neutral ramp.** `colors-neutral-dark-25 … 950` (OKLCH hue 172, chroma 0.004 to 0.016): a slight green tint that matches the brand, never flat grey or pure black.
+- **Roles.** Page 950, surface 900, raised 850, border 800, border-strong 700, text 50, secondary paragraph 300, muted 400. Each layer is lighter than the one under it.
+- **Colours.** Text and icons use step 300 of the colour's own ramp, strong borders 500, soft and outlined borders 700 to 800. Badges, tags, status tags, alerts and featured icons sit on a soft tint: the hue of the colour's own base step at one fixed OKLCH lightness and chroma, so every hue is equally strong and none drifts to brown (amber and purple use their 400 step). Button fills keep their light value: the label on them is white in both modes and a lighter step would drop it below 4.5:1.
+- **Same system.** Every light semantic token has a dark counterpart with the same role, so components keep the same hierarchy in both modes.
+- **No shadows.** Elevation is a lighter surface plus a border.
+- **No flash.** The theme class is set before first paint; the page never opens in light and switches.
+- **Contrast.** Every dark pair is in the audit ([report](/docs/contrast)); the build fails on a regression.
+
+## Neutral ramp
+
+<DarkNeutrals />
+
+## Light and dark side by side
+
+The two columns below are the same markup in a `data-theme="light"` and a `data-theme="dark"` scope, so what you see is what ships. The full per-token table, with each value and its contrast ratio, is on [Colors](/docs/foundations/colors#semantic-tokens).
+
+<ThemeCompare />

@@ -3,8 +3,6 @@ title: Tag
 description: Labels for categories, filters and statuses. Tag and Status Tag, filled or outlined, three sizes, optionally removable.
 ---
 
-Tags label content by category or show the filters a user has picked. Status tags show the state of an item, task or request.
-
 <Preview name="tag-variants" title="Tag" />
 
 ## Installation
@@ -20,54 +18,53 @@ import { StatusTag, Tag } from "@/components/ui/tag";
 <StatusTag variant="success">مكتمل</StatusTag>
 ```
 
-## Removable
+Tags label content by category or show the filters a user has picked. Status tags show the state of an item, task or request.
 
-Pass `onDismiss` to add a close button. Give it a specific name with `dismissLabel`, such as "إزالة الرياض", so screen-reader users know which filter it removes. Move focus to a sensible place after the tag is removed (for example the next tag or the filter field).
+## Anatomy
 
-<Preview name="tag-dismiss" title="Removable" />
+- **Tag**: a `<span>` with optional icon and close button.
+- **StatusTag**: a `<span>` with a coloured dot and the label.
+- **Close button** (optional): a real `<button>` with a 24px hit area.
 
-## Status Tag
+## Examples
+
+### Removable
+
+Pass `onDismiss` to add a close button. Give it a specific name with `dismissLabel`, such as "إزالة الرياض", and move focus somewhere sensible after the tag is removed.
+
+<Preview compact name="tag-dismiss" title="Removable" />
+
+### Status Tag
 
 `subtle` (default) sits on a tint, `inverted` on a solid fill and `ghost` has no fill. All three start with a coloured dot.
 
-<Preview name="status-tags" title="Status Tag" />
+<Preview compact name="status-tags" title="Status Tag" />
 
-## Props
+## RTL
 
-### Tag
+The dot, icon and close button sit on the logical start and end sides.
 
-<TypeTable
-  type={{
-    variant: { type: '"neutral" | "success" | "info" | "warning" | "error" | "on-color"', default: '"neutral"' },
-    size: { type: '"xs" | "sm" | "md"', default: '"sm"', description: "20, 24 and 32px." },
-    outlined: { type: "boolean", default: "false" },
-    rounded: { type: "boolean", default: "false" },
-    iconOnly: { type: "boolean", default: "false", description: "Needs an aria-label." },
-    onDismiss: { type: "() => void", description: "Adds a trailing close button." },
-    dismissLabel: { type: "string", default: '"Remove"' },
-  }}
-/>
-
-### StatusTag
-
-<TypeTable
-  type={{
-    variant: { type: '"neutral" | "success" | "info" | "warning" | "error"', default: '"neutral"' },
-    appearance: { type: '"subtle" | "inverted" | "ghost"', default: '"subtle"' },
-    size: { type: '"xs" | "sm" | "md"', default: '"sm"' },
-  }}
-/>
+<DirectionCompare name="tag-dismiss" title="Removable tags" />
 
 ## Accessibility
 
+| Key | Action |
+| --- | --- |
+| <kbd>Tab</kbd> | Moves focus to the close button of a removable tag. |
+| <kbd>Enter</kbd> or <kbd>Space</kbd> | Removes the tag. |
+
 - Tags are `<span>`s and are read as text. Put the meaning in the label; the colour and dot are extras (WCAG 1.4.1).
-- The close button is a real `<button>` with its own name and a 24px hit area (WCAG 2.5.8).
-- Use [Button](/docs/components/button) with `aria-pressed` for tags the user can toggle on and off.
+- The close button has its own name and a 24px hit area (WCAG 2.5.8).
+- Use [Button](/docs/components/button) with `aria-pressed` for tags the user can toggle.
 
-### Contrast
+## API Reference
 
-<ComponentContrast component="tag" />
+<ApiReference component="tag" />
 
 ## Deviations from DGA
 
 <ComponentDeviations component="tag" />
+
+## Contrast
+
+<ComponentContrast component="tag" />

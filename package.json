@@ -1,7 +1,7 @@
 {
   "name": "dga-ui",
   "private": true,
-  "version": "0.1.0",
+  "version": "0.1.2",
   "type": "module",
   "packageManager": "bun@1.4.4",
   "workspaces": [
@@ -13,12 +13,14 @@
     "tokens": "bun scripts/generate-tokens.ts",
     "tokens:check": "bun scripts/generate-tokens.ts --check",
     "registry:build": "bun scripts/build-registry.ts",
-    "build": "bun run tokens:check && bun run registry:build && bun run --filter docs build",
+    "build": "bun run tokens:check && bun run api:check && bun run registry:build && bun run --filter docs build",
     "typecheck": "tsc -p tsconfig.json && bun run --filter '*' typecheck",
     "lint": "biome ci .",
     "format": "biome check --write .",
     "test": "bun test scripts",
-    "test:install": "bun scripts/install-test.ts"
+    "test:install": "bun scripts/install-test.ts",
+    "api": "bun scripts/build-api.ts",
+    "api:check": "bun scripts/build-api.ts --check"
   },
   "devDependencies": {
     "@biomejs/biome": "2.6.5",

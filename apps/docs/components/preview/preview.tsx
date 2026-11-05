@@ -1,18 +1,21 @@
 "use client";
 
 import {
+  ArrowExpandDiagonal01Icon,
   ComputerIcon,
   Moon02Icon,
+  Refresh01Icon,
   SmartPhone01Icon,
   Sun03Icon,
   Tablet01Icon,
   TextAlignLeftIcon,
   TextAlignRightIcon,
 } from "@hugeicons/core-free-icons";
-import { HugeiconsIcon, type IconSvgElement } from "@hugeicons/react";
+import type { IconSvgElement } from "@hugeicons/react";
 import { cn } from "cn";
 import { useTheme } from "next-themes";
 import { type ReactNode, useEffect, useLayoutEffect, useRef, useState } from "react";
+import { Icon } from "@/components/shell/icon";
 import {
   type Direction,
   isPreviewMessage,
@@ -21,6 +24,7 @@ import {
   VIEWPORTS,
   type Viewport,
 } from "@/lib/preview";
+import { Button } from "@/registry/bases/base/ui/button";
 
 type Option<T extends string> = { value: T; label: string; icon: IconSvgElement };
 
@@ -29,11 +33,14 @@ function Segmented<T extends string>({
   value,
   options,
   onChange,
+  iconOnly = false,
 }: {
   label: string;
   value: T;
   options: Option<T>[];
   onChange: (value: T) => void;
+  /** Show only the icons (the label stays as the accessible name and the tooltip). */
+  iconOnly?: boolean;
 }) {
   return (
     <fieldset className="inline-flex items-center rounded-sm border border-border bg-background p-0.5">
@@ -43,11 +50,11 @@ function Segmented<T extends string>({
           key={option.value}
           title={option.label}
           className={cn(
-            "inline-flex cursor-pointer items-center gap-1 rounded-xs px-2 py-1 text-xs font-medium text-muted-foreground transition-colors",
-            "has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-ring",
+            "inline-flex min-h-7 cursor-pointer items-center gap-1 rounded-xs px-2 py-1 text-[0.8125rem] font-medium text-muted-foreground transition-colors",
+            "has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-border-black",
             option.value === value
               ? "bg-primary text-primary-foreground"
-              : "hover:bg-accent hover:text-accent-foreground",
+              : "hover:bg-accent hover:text-accent-foreground active:bg-button-background-neutral-pressed",
           )}
         >
           <input
@@ -58,9 +65,9 @@ function Segmented<T extends string>({
             checked={option.value === value}
             onChange={() => onChange(option.value)}
           />
-          <HugeiconsIcon icon={option.icon} size={14} strokeWidth={1.8} aria-hidden />
-          <span className="hidden sm:inline">{option.label}</span>
-          <span className="sr-only sm:hidden">{option.label}</span>
+          <Icon icon={option.icon} />
+          <span className={iconOnly ? "sr-only" : "hidden sm:inline"}>{option.label}</span>
+          {iconOnly ? null : <span className="sr-only sm:hidden">{option.label}</span>}
         </label>
       ))}
     </fieldset>
@@ -81,53 +88,218 @@ const VIEWPORT_OPTIONS: Option<Viewport>[] = [
   { value: "desktop", label: VIEWPORTS.desktop.label, icon: ComputerIcon },
 ];
 
+/** Last measured content height per preview, width and direction, so a revisit does not jump. */
+const heightCache = new Map<string, number>();
+
+/** Space the device outline takes around a mobile or tablet frame (padding + border). */
+const DEVICE_CHROME = 20;
+
+/** The docs theme, read after mount (the server cannot know it). */
+function useDocsTheme(): Theme | null {
+  const { resolvedTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+  return mounted && resolvedTheme ? (resolvedTheme === "dark" ? "dark" : "light") : null;
+}
+
+/** True once the element is within 400px of the viewport. Below-the-fold previews wait. */
+function useNear(ref: React.RefObject<HTMLElement | null>) {
+  const [near, setNear] = useState(false);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el || near) return;
+    if (!("IntersectionObserver" in window)) return setNear(true);
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry?.isIntersecting) setNear(true);
+      },
+      { rootMargin: "400px 0px" },
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [near, ref]);
+  return near;
+}
+
 /**
- * Renders /preview/{name} in an iframe so media queries see the chosen viewport width.
- * Direction and theme are pushed in with postMessage, so toggling never reloads the frame.
+ * The preview iframe at a fixed width, scaled down to fit its container. Until the frame has
+ * loaded (and until it is near the viewport) a skeleton with the frame's height holds the
+ * space, so nothing flashes blank or jumps. Direction and theme are pushed in with
+ * postMessage, so changing them never reloads the frame.
+ */
+export function PreviewFrame({
+  name,
+  title,
+  dir,
+  theme,
+  width,
+  minHeight = 64,
+  chrome = 0,
+  reloadKey = 0,
+  onHeight,
+  className,
+}: {
+  name: string;
+  title: string;
+  dir: Direction;
+  theme: Theme;
+  /** Viewport width the content is laid out at. */
+  width: number;
+  minHeight?: number;
+  /** Pixels of the container the frame must leave free (for a device outline). */
+  chrome?: number;
+  /** Change to reload the frame. */
+  reloadKey?: number;
+  /** Reports the scaled height, so the container can size itself. */
+  onHeight?: (height: number) => void;
+  className?: string;
+}) {
+  const frame = useRef<HTMLIFrameElement>(null);
+  const box = useRef<HTMLDivElement>(null);
+  const near = useNear(box);
+  const [available, setAvailable] = useState(0);
+  const cacheKey = `${name}:${width}`;
+  const [height, setHeight] = useState(() => heightCache.get(cacheKey) ?? minHeight);
+  const [loaded, setLoaded] = useState(false);
+  // The source is built once, in the theme the docs have when the frame first loads.
+  const [src, setSrc] = useState<string | null>(null);
+  // biome-ignore lint/correctness/useExhaustiveDependencies: the first theme and direction are enough for src.
+  useEffect(() => {
+    if (near && src === null) setSrc(`/preview/${name}?dir=${dir}&theme=${theme}`);
+  }, [near, src]);
+  // biome-ignore lint/correctness/useExhaustiveDependencies: reload on key change only.
+  useEffect(() => {
+    if (reloadKey > 0) {
+      setLoaded(false);
+      setSrc(`/preview/${name}?dir=${dir}&theme=${theme}&r=${reloadKey}`);
+    }
+  }, [reloadKey]);
+
+  useLayoutEffect(() => {
+    const el = box.current;
+    if (!el) return;
+    const observer = new ResizeObserver(([entry]) => setAvailable(entry?.contentRect.width ?? 0));
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    const cached = heightCache.get(cacheKey);
+    setHeight(cached ?? minHeight);
+  }, [cacheKey, minHeight]);
+
+  useEffect(() => {
+    const onMessage = (event: MessageEvent) => {
+      if (event.source !== frame.current?.contentWindow || !isPreviewMessage(event.data)) return;
+      if (event.data.type === "dga-preview:height") {
+        const next = Math.max(minHeight, event.data.height);
+        heightCache.set(cacheKey, next);
+        setHeight(next);
+      }
+    };
+    window.addEventListener("message", onMessage);
+    return () => window.removeEventListener("message", onMessage);
+  }, [minHeight, cacheKey]);
+
+  const post = () => {
+    const message: PreviewMessage = { type: "dga-preview:set", dir, theme };
+    frame.current?.contentWindow?.postMessage(message, window.location.origin);
+  };
+  useEffect(post, [dir, theme]);
+
+  const scale = available > 0 ? Math.min(1, (available - chrome) / width) : 1;
+  const scaled = height * scale;
+  useEffect(() => onHeight?.(scaled), [scaled, onHeight]);
+
+  return (
+    <div
+      ref={box}
+      className={cn("relative w-full overflow-hidden", className)}
+      style={{ blockSize: scaled }}
+    >
+      <div
+        className="absolute inset-y-0 start-0 overflow-hidden"
+        style={{ inlineSize: width * scale }}
+      >
+        {!loaded && (
+          <div
+            aria-hidden
+            data-slot="skeleton"
+            className="absolute inset-0 z-10 bg-skeleton-background motion-safe:animate-pulse"
+          />
+        )}
+        {src && (
+          <iframe
+            ref={frame}
+            src={src}
+            title={title}
+            loading="lazy"
+            onLoad={() => {
+              post();
+              setLoaded(true);
+            }}
+            className={cn(
+              "block border-0 bg-background transition-opacity duration-150",
+              loaded ? "opacity-100" : "opacity-0",
+            )}
+            style={{
+              inlineSize: width,
+              blockSize: height,
+              transform: `scale(${scale})`,
+              transformOrigin: "0 0",
+            }}
+          />
+        )}
+      </div>
+    </div>
+  );
+}
+
+/**
+ * Renders /preview/{name} in an iframe so media queries see the chosen viewport width. Mobile
+ * and tablet frames are centred inside a subtle device outline; the frame height follows the
+ * content. Fullscreen opens the preview in a new tab and Reset restores the defaults and
+ * reloads the frame (which also replays any animation).
  */
 export function Preview({
   name,
   title,
   defaultDir = "ltr",
   defaultViewport,
-  minHeight = 160,
+  minHeight = 64,
+  compact = false,
   children,
 }: {
   name: string;
   title?: string;
+  /** No toolbar: a small control cluster in the corner instead. For examples under the main preview. */
+  compact?: boolean;
   defaultDir?: Direction;
-  /** Omit to pick the largest viewport that fits at 75% scale or more. */
+  /** Defaults to desktop: the column's width, unscaled. */
   defaultViewport?: Viewport;
   minHeight?: number;
   children?: ReactNode;
 }) {
-  const { resolvedTheme } = useTheme();
+  const docsTheme = useDocsTheme();
   const [dir, setDir] = useState<Direction>(defaultDir);
   const [theme, setTheme] = useState<Theme | null>(null);
   const [chosenViewport, setViewport] = useState<Viewport | null>(defaultViewport ?? null);
   const [available, setAvailable] = useState(0);
-  const [height, setHeight] = useState(minHeight);
-  const frame = useRef<HTMLIFrameElement>(null);
+  const [reloadKey, setReloadKey] = useState(0);
   const stage = useRef<HTMLDivElement>(null);
-  // Built after mount, once the docs theme is known, so the frame opens in the right theme.
-  const [src, setSrc] = useState<string | null>(null);
 
-  // The server cannot know the docs theme, so read it only after mount (avoids a hydration mismatch).
-  const [mounted, setMounted] = useState(false);
-  useEffect(() => setMounted(true), []);
-  const activeTheme: Theme = theme ?? (mounted && resolvedTheme === "dark" ? "dark" : "light");
-  const fitting = (["desktop", "tablet"] as const).find(
-    (v) => available >= VIEWPORTS[v].width * 0.75,
-  );
-  const viewport: Viewport = chosenViewport ?? fitting ?? "mobile";
-  const width = VIEWPORTS[viewport].width;
-  const scale = available > 0 ? Math.min(1, available / width) : 1;
-
-  // biome-ignore lint/correctness/useExhaustiveDependencies: only the first theme matters for src.
-  useEffect(() => {
-    if (src === null && mounted && resolvedTheme)
-      setSrc(`/preview/${name}?dir=${dir}&theme=${activeTheme}`);
-  }, [resolvedTheme, mounted]);
+  const activeTheme: Theme = theme ?? docsTheme ?? "light";
+  // Desktop is the column's own width at full size (up to 1280px), never scaled down, so
+  // text stays readable. Mobile and tablet are real device widths, scaled only when they
+  // do not fit.
+  const viewport: Viewport = chosenViewport ?? "desktop";
+  const width =
+    viewport === "desktop"
+      ? Math.max(320, Math.min(VIEWPORTS.desktop.width, Math.floor(available) || 640))
+      : VIEWPORTS[viewport].width;
+  const device = viewport !== "desktop";
+  const chrome = device ? DEVICE_CHROME : 0;
+  const scale = available > 0 ? Math.min(1, (available - chrome) / width) : 1;
 
   useLayoutEffect(() => {
     const el = stage.current;
@@ -137,74 +309,175 @@ export function Preview({
     return () => observer.disconnect();
   }, []);
 
-  useEffect(() => {
-    const onMessage = (event: MessageEvent) => {
-      if (event.source !== frame.current?.contentWindow || !isPreviewMessage(event.data)) return;
-      if (event.data.type === "dga-preview:height")
-        setHeight(Math.max(minHeight, event.data.height));
-    };
-    window.addEventListener("message", onMessage);
-    return () => window.removeEventListener("message", onMessage);
-  }, [minHeight]);
-
-  const post = () => {
-    const message: PreviewMessage = { type: "dga-preview:set", dir, theme: activeTheme };
-    frame.current?.contentWindow?.postMessage(message, window.location.origin);
+  const reset = () => {
+    setDir(defaultDir);
+    setTheme(null);
+    setViewport(defaultViewport ?? null);
+    setReloadKey((n) => n + 1);
   };
-  useEffect(post, [dir, activeTheme]);
 
-  // Scale from the inline-start corner so the frame stays aligned in RTL pages too.
-  const origin = typeof document !== "undefined" && document.dir === "rtl" ? "100% 0" : "0 0";
+  const label = title ?? name;
+  const fullscreenHref = `/preview/${name}?dir=${dir}&theme=${activeTheme}`;
 
   return (
-    <figure className="not-prose my-6 overflow-hidden rounded-md border border-border bg-card">
-      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-border bg-muted px-3 py-2">
-        <figcaption className="text-sm font-medium text-foreground">
-          {title ?? "Preview"}
-        </figcaption>
-        <div className="flex flex-wrap items-center gap-2">
-          <Segmented
-            label={`${name}-direction`}
-            value={dir}
-            options={DIRECTIONS}
-            onChange={setDir}
-          />
-          <Segmented
-            label={`${name}-theme`}
-            value={activeTheme}
-            options={THEMES}
-            onChange={setTheme}
-          />
-          <Segmented
-            label={`${name}-viewport`}
-            value={viewport}
-            options={VIEWPORT_OPTIONS}
-            onChange={setViewport}
-          />
+    <figure
+      data-preview={name}
+      className="not-prose group/preview relative my-5 overflow-hidden rounded-md border border-border bg-card"
+    >
+      {compact ? (
+        <>
+          <figcaption className="sr-only">{label}</figcaption>
+          <div className="absolute end-1.5 top-1.5 z-20 flex items-center gap-0.5 rounded-sm border border-border bg-card p-0.5 opacity-0 transition-opacity group-hover/preview:opacity-100 focus-within:opacity-100 [@media(hover:none)]:opacity-100">
+            <Button
+              variant="subtle"
+              size="sm"
+              onClick={() => setDir(dir === "ltr" ? "rtl" : "ltr")}
+              aria-label={`Direction: ${dir.toUpperCase()}. Switch to ${dir === "ltr" ? "RTL" : "LTR"}`}
+              title="Toggle LTR / RTL"
+            >
+              {dir.toUpperCase()}
+            </Button>
+            <Button
+              variant="subtle"
+              size="sm"
+              iconOnly
+              onClick={reset}
+              aria-label={`Reset ${label}`}
+              title="Reset (replays animations)"
+            >
+              <Icon icon={Refresh01Icon} />
+            </Button>
+            <Button
+              variant="subtle"
+              size="sm"
+              iconOnly
+              nativeButton={false}
+              aria-label={`Open ${label} fullscreen in a new tab`}
+              title="Fullscreen (new tab)"
+              render={<a href={fullscreenHref} target="_blank" rel="noopener noreferrer" />}
+            >
+              <Icon icon={ArrowExpandDiagonal01Icon} />
+            </Button>
+          </div>
+        </>
+      ) : (
+        <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-1.5 border-b border-border bg-muted px-3 py-1.5">
+          <figcaption className="text-sm font-medium text-foreground">{label}</figcaption>
+          <div className="flex flex-wrap items-center gap-1.5">
+            <Segmented
+              label={`${name}-direction`}
+              value={dir}
+              options={DIRECTIONS}
+              onChange={setDir}
+            />
+            <Segmented
+              label={`${name}-theme`}
+              value={activeTheme}
+              options={THEMES}
+              onChange={setTheme}
+              iconOnly
+            />
+            <Segmented
+              label={`${name}-viewport`}
+              value={viewport}
+              options={VIEWPORT_OPTIONS}
+              onChange={setViewport}
+              iconOnly
+            />
+            <div className="flex items-center gap-0.5">
+              <Button
+                variant="subtle"
+                size="sm"
+                iconOnly
+                onClick={reset}
+                aria-label={`Reset ${label}`}
+                title="Reset (replays animations)"
+              >
+                <Icon icon={Refresh01Icon} />
+              </Button>
+              <Button
+                variant="subtle"
+                size="sm"
+                iconOnly
+                nativeButton={false}
+                aria-label={`Open ${label} fullscreen in a new tab`}
+                title="Fullscreen (new tab)"
+                render={<a href={fullscreenHref} target="_blank" rel="noopener noreferrer" />}
+              >
+                <Icon icon={ArrowExpandDiagonal01Icon} />
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
+      <div ref={stage} className={cn("w-full", device && "bg-muted py-4")}>
+        <div
+          className={cn(
+            "mx-auto overflow-hidden",
+            device &&
+              "rounded-[1.25rem] border border-border-neutral-primary bg-background p-2 ring-4 ring-border-neutral-tertiary",
+          )}
+          style={{ inlineSize: device ? width * scale + chrome : undefined }}
+        >
+          <div className={cn("overflow-hidden", device && "rounded-[0.75rem]")}>
+            <PreviewFrame
+              name={name}
+              title={label}
+              dir={dir}
+              theme={activeTheme}
+              width={width}
+              minHeight={minHeight}
+              reloadKey={reloadKey}
+            />
+          </div>
         </div>
       </div>
-      <div ref={stage} className="w-full overflow-hidden" style={{ blockSize: height * scale }}>
-        {src && (
-          <iframe
-            ref={frame}
-            src={src}
-            title={title ?? name}
-            onLoad={post}
-            className="block border-0"
-            style={{
-              inlineSize: width,
-              blockSize: height,
-              transform: `scale(${scale})`,
-              transformOrigin: origin,
-            }}
-          />
-        )}
-      </div>
-      <div className="border-t border-border px-3 py-1.5 text-xs text-muted-foreground">
-        {VIEWPORTS[viewport].label} · {width}px
-        {scale < 1 ? ` · shown at ${Math.round(scale * 100)}%` : ""}
-      </div>
+      {device ? (
+        <div className="border-t border-border px-3 py-1 text-[0.8125rem] text-muted-foreground">
+          {VIEWPORTS[viewport].label} · {width}px
+          {scale < 1 ? ` · shown at ${Math.round(scale * 100)}%` : ""}
+        </div>
+      ) : null}
       {children}
     </figure>
+  );
+}
+
+/**
+ * LTR and RTL side by side, for the RTL section of a component page. The theme follows the
+ * docs; the viewport is mobile so both frames fit next to each other.
+ */
+export function DirectionCompare({
+  name,
+  title,
+  minHeight = 64,
+}: {
+  name: string;
+  title: string;
+  minHeight?: number;
+}) {
+  const theme = useDocsTheme() ?? "light";
+  return (
+    <div className="not-prose my-6 grid gap-4 md:grid-cols-2">
+      {(["ltr", "rtl"] as const).map((dir) => (
+        <figure
+          key={dir}
+          className="overflow-hidden rounded-md border border-border bg-card"
+          data-preview-direction={dir}
+        >
+          <figcaption className="border-b border-border bg-muted px-3 py-1 text-[0.8125rem] font-medium text-foreground">
+            {dir === "ltr" ? "LTR (English)" : "RTL (العربية)"}
+          </figcaption>
+          <PreviewFrame
+            name={name}
+            title={`${title} (${dir.toUpperCase()})`}
+            dir={dir}
+            theme={theme}
+            width={VIEWPORTS.mobile.width}
+            minHeight={minHeight}
+          />
+        </figure>
+      ))}
+    </div>
   );
 }

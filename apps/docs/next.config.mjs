@@ -6,6 +6,8 @@ const withMDX = createMDX();
 /** @type {import('next').NextConfig} */
 const config = {
   reactStrictMode: true,
+  // A branded 404 for URLs that match no route (there are several root layouts).
+  experimental: { globalNotFound: true },
   // The docs import generated CSS from ../../registry, so Turbopack needs the repo root.
   turbopack: { root: fileURLToPath(new URL("../..", import.meta.url)) },
   outputFileTracingRoot: fileURLToPath(new URL("../..", import.meta.url)),

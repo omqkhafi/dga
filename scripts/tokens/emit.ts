@@ -34,7 +34,7 @@ export const SHADCN_VARS: Record<string, string> = {
   "primary-foreground": "text-oncolor-primary",
   secondary: "button-background-neutral-default",
   "secondary-foreground": "text-default",
-  muted: "background-neutral-100",
+  muted: "background-neutral-50",
   "muted-foreground": "text-secondary-paragraph",
   accent: "background-neutral-100",
   "accent-foreground": "text-default",
@@ -180,7 +180,12 @@ export const lightScopeVars = (model: Model): Vars => [
 ];
 
 /** Dark scope re-declares every semantic token, so nested [data-theme] sections resolve correctly. */
-export const darkScopeVars = (model: Model): Vars => [...themeVars(model, "dark"), ...shadcnVars()];
+export const darkScopeVars = (model: Model): Vars => [
+  ...themeVars(model, "dark"),
+  ...shadcnVars(),
+  // No shadows in dark mode: elevation is shown with borders and lighter surfaces.
+  ...model.shadows.map((s) => [s.name, "0 0 #0000"] as [string, string]),
+];
 
 export const viewportVars = (model: Model) => {
   const { tablet, desktop } = responsiveVars(model);

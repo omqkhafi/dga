@@ -18,7 +18,7 @@ export default function ChangelogPage() {
   const latest = latestVersion();
   return (
     <div className="flex flex-1 flex-col md:flex-row">
-      <aside className="border-b border-border-neutral-secondary bg-background-white px-6 py-10 md:sticky md:top-12 md:flex md:h-[calc(100dvh-3rem)] md:w-100 md:shrink-0 md:flex-col md:justify-center md:border-e md:border-b-0 md:px-10">
+      <aside className="bg-background-white px-6 py-10 md:sticky md:top-14 md:flex md:h-[calc(100dvh-3.5rem)] md:w-100 md:shrink-0 md:flex-col md:justify-center md:px-10">
         <p className="text-xs font-semibold tracking-widest text-text-secondary-paragraph uppercase">
           Changelog
         </p>

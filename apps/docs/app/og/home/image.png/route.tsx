@@ -4,9 +4,8 @@ export const revalidate = false;
 
 export function GET() {
   return ogImage({
-    title: "The DGA design system for shadcn",
-    description:
-      "Tokens, themes and components for the Saudi DGA unified design system. Arabic-first, light and dark, WCAG AA.",
-    eyebrow: "Platforms Code",
+    title: "The Saudi government design system, as React components",
+    description: "Copy-paste components on Base UI. Arabic and English, light and dark, WCAG AA.",
+    eyebrow: "Design system",
   });
 }

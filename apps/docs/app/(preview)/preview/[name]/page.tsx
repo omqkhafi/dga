@@ -6,7 +6,7 @@ export default async function PreviewPage(props: PageProps<"/preview/[name]">) {
   const Demo = previews[name as keyof typeof previews];
   if (!Demo) notFound();
   return (
-    <main className="p-4 sm:p-6">
+    <main className="p-4">
       <Demo />
     </main>
   );

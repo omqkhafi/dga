@@ -132,6 +132,7 @@ type ButtonProps = ButtonPrimitive.Props &
     loading?: boolean;
   };
 
+/** Triggers an action. Six styles, destructive and on-colour versions, three sizes, icon-only and loading. */
 function Button({
   className,
   variant = "primary",

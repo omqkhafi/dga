@@ -11,6 +11,7 @@ export type DeviationArea =
   | "Typography"
   | "Tokens"
   | "Theming"
+  | "Dark theme"
   | "Tailwind"
   | "Components";
 
@@ -349,6 +350,40 @@ export const FIXED_TEXT_TOKENS = /^(typo-size|line-heights|paragraph-spacing)-te
 // ---------------------------------------------------------------------------
 
 export const OTHER_DEVIATIONS: Deviation[] = [
+  {
+    area: "Contrast",
+    item: "shadcn --muted (background-neutral-100 → background-neutral-50)",
+    original:
+      "--muted: --background-neutral-100 with --muted-foreground: --text-secondary-paragraph",
+    ours: "--muted: --background-neutral-50",
+    reason:
+      "text-secondary-paragraph (#6c737f) on neutral-100 is 4.34:1 in light mode, which fails AA for the muted text shadcn components put on muted fills. On neutral-50 it is 4.65:1.",
+    status: "fixed",
+  },
+  {
+    area: "Dark theme",
+    item: "--shadow-* (dark)",
+    original: "Figma effect styles, same in both modes",
+    ours: "none (0 0 #0000)",
+    reason:
+      "Shadows are invisible on near-black surfaces and only add haze. In dark mode elevation is a lighter surface (raised 850) plus a border.",
+  },
+  {
+    area: "Dark theme",
+    item: "Neutral ramp (dark)",
+    original: "Cool blue-grey ramp (colors-neutral-*), reused for dark",
+    ours: "colors-neutral-dark-25 … 950: a green-tinted ramp (OKLCH hue 172, chroma 0.004–0.016)",
+    reason:
+      "Figma Dark reuses the light neutral ramp, a blue-grey that clashes with the green brand and makes dark mode look off-brand. The tinted ramp keeps the same lightness steps.",
+  },
+  {
+    area: "Dark theme",
+    item: "Solid button and status fills (dark)",
+    original: "Same value as light mode",
+    ours: "Unchanged for buttons and --background-*: primary 600, success 700, info 600, warning 700, error 600",
+    reason:
+      "The label on these fills is white in both modes, and a lighter step (400–500) drops white text below 4.5:1 (3.2–3.9:1). Kept on purpose. Badges, tags, status tags, alerts and featured icons do not use these: they get the soft tints logged under Dark theme.",
+  },
   {
     area: "Naming",
     item: 'Figma group "Font Wieght"',

@@ -1,10 +1,10 @@
 "use client";
 
 import { Moon02Icon, Sun03Icon } from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 import { Button } from "@/registry/bases/base/ui/button";
+import { Icon } from "./icon";
 
 export function ThemeToggle({ className }: { className?: string }) {
   const { resolvedTheme, setTheme } = useTheme();
@@ -19,7 +19,7 @@ export function ThemeToggle({ className }: { className?: string }) {
       aria-label={dark ? "Switch to light theme" : "Switch to dark theme"}
       onClick={() => setTheme(dark ? "light" : "dark")}
     >
-      <HugeiconsIcon icon={dark ? Sun03Icon : Moon02Icon} />
+      <Icon icon={dark ? Sun03Icon : Moon02Icon} />
     </Button>
   );
 }
