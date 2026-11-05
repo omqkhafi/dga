@@ -36,12 +36,22 @@ const ICONS = {
   error: AlertCircleIcon,
 };
 
+const manager = ToastPrimitive.createToastManager();
+
 /**
  * The toast manager. Call `toast.add({ title, description, type })` from anywhere, also outside
- * React. `type` is `neutral`, `info`, `success`, `warning` or `error`; `error` and `warning`
- * are announced at once (`priority: "high"`), the others politely.
+ * React; it also has `close`, `update` and `promise`. `type` is `neutral`, `info`, `success`,
+ * `warning` or `error`. `error` and `warning` toasts are announced at once (`priority: "high"`)
+ * unless you set another priority; the others are announced politely.
  */
-const toast = ToastPrimitive.createToastManager();
+const toast = {
+  ...manager,
+  add: (options: Parameters<typeof manager.add>[0]) =>
+    manager.add({
+      priority: options.type === "error" || options.type === "warning" ? "high" : "low",
+      ...options,
+    }),
+};
 
 type ToasterProps = {
   /** The most toasts shown at once. */
@@ -67,7 +77,7 @@ function Toaster({
   regionLabel = "Notifications",
 }: ToasterProps) {
   return (
-    <ToastPrimitive.Provider toastManager={toast} limit={limit} timeout={timeout}>
+    <ToastPrimitive.Provider toastManager={manager} limit={limit} timeout={timeout}>
       <ToastPrimitive.Portal>
         <ToastPrimitive.Viewport
           data-slot="toaster"
