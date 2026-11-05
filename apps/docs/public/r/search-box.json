@@ -1,0 +1,25 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "search-box",
+  "title": "Search Box",
+  "description": "DGA Search Box on Base UI Input: search icon on the start side, clear button on the end side, md and lg, Escape clears.",
+  "dependencies": [
+    "@base-ui/react",
+    "class-variance-authority",
+    "@hugeicons/react",
+    "@hugeicons/core-free-icons"
+  ],
+  "registryDependencies": [
+    "https://dga.omqkhafi.dev/r/utils.json",
+    "https://dga.omqkhafi.dev/r/field.json",
+    "https://dga.omqkhafi.dev/r/input.json"
+  ],
+  "files": [
+    {
+      "path": "bases/base/ui/search-box.tsx",
+      "content": "\"use client\";\n\nimport { Input as InputPrimitive } from \"@base-ui/react/input\";\nimport { Cancel01Icon, Search01Icon } from \"@hugeicons/core-free-icons\";\nimport { HugeiconsIcon } from \"@hugeicons/react\";\nimport * as React from \"react\";\nimport { cn } from \"@/registry/bases/base/lib/utils\";\nimport { inputVariants } from \"@/registry/bases/base/ui/input\";\n\ntype SearchBoxProps = Omit<InputPrimitive.Props, \"size\" | \"type\" | \"onChange\" | \"onValueChange\"> & {\n  /** Height: `md` 32px, `lg` 40px. */\n  size?: \"md\" | \"lg\";\n  /** Fill style. `lighter` and `darker` keep the border. */\n  appearance?: \"default\" | \"lighter\" | \"darker\";\n  /** Called with the new text whenever it changes, including when it is cleared. */\n  onValueChange?: (value: string) => void;\n  /** Accessible name of the clear button. Translate it on Arabic pages. */\n  clearLabel?: string;\n  /** Class names for the native `<input>`. `className` styles the box around it. */\n  inputClassName?: string;\n  /** Ref to the native `<input>`. */\n  ref?: React.Ref<HTMLInputElement>;\n};\n\n/**\n * A search field with a search icon on the start side and a clear button on the end side\n * that appears once there is text. It is `type=\"search\"`, so Escape clears it too.\n */\nfunction SearchBox({\n  className,\n  inputClassName,\n  size,\n  appearance,\n  value,\n  defaultValue,\n  onValueChange,\n  clearLabel = \"Clear search\",\n  disabled,\n  readOnly,\n  ref,\n  ...props\n}: SearchBoxProps) {\n  const inner = React.useRef<HTMLInputElement>(null);\n  const [internal, setInternal] = React.useState(String(defaultValue ?? \"\"));\n  const text = value === undefined ? internal : String(value);\n  const setRefs = (node: HTMLInputElement | null) => {\n    inner.current = node;\n    if (typeof ref === \"function\") ref(node);\n    else if (ref) (ref as React.RefObject<HTMLInputElement | null>).current = node;\n  };\n\n  const change = (next: string) => {\n    if (value === undefined) setInternal(next);\n    onValueChange?.(next);\n  };\n\n  return (\n    <div\n      data-slot=\"search-box\"\n      data-size={size ?? \"lg\"}\n      className={cn(inputVariants({ size, appearance }), className)}\n    >\n      <span aria-hidden=\"true\" className=\"inline-flex shrink-0 items-center text-text-primary-paragraph [&_svg]:shrink-0 [&_svg]:text-icon-default-500\">\n        <HugeiconsIcon icon={Search01Icon} />\n      </span>\n      <InputPrimitive\n        data-slot=\"input-field\"\n        type=\"search\"\n        ref={setRefs}\n        value={text}\n        onChange={(event) => change(event.currentTarget.value)}\n        disabled={disabled}\n        readOnly={readOnly}\n        className={cn(\"h-full min-w-0 flex-1 bg-transparent p-0 text-inherit outline-none placeholder:text-field-text-placeholder disabled:cursor-not-allowed disabled:text-text-default-disabled disabled:placeholder:text-text-default-disabled read-only:text-field-text-readonly [&::-webkit-search-cancel-button]:appearance-none [&::-webkit-search-decoration]:appearance-none\", inputClassName)}\n        {...props}\n      />\n      {text && !disabled && !readOnly ? (\n        <button\n          type=\"button\"\n          data-slot=\"search-clear\"\n          aria-label={clearLabel}\n          className=\"-me-1 inline-flex size-6 shrink-0 cursor-pointer items-center justify-center rounded-xs text-icon-default-500 transition-colors hover:bg-button-background-neutral-default hover:text-icon-default active:bg-button-background-neutral-pressed focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-offset-1 focus-visible:outline-border-black [&_svg]:size-4\"\n          onClick={() => {\n            change(\"\");\n            inner.current?.focus();\n          }}\n        >\n          <HugeiconsIcon icon={Cancel01Icon} aria-hidden className=\"size-4\" />\n        </button>\n      ) : null}\n    </div>\n  );\n}\n\nexport type { SearchBoxProps };\nexport { SearchBox };\n",
+      "type": "registry:ui"
+    }
+  ],
+  "type": "registry:ui"
+}

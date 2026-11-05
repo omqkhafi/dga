@@ -1,0 +1,111 @@
+---
+title: Field
+description: "يلفّ عنصر تحكم بتسميته ونصه المساعد ورسالة الخطأ، ويربطها لتقنيات المساعدة. علامتا المطلوب والاختياري، وتخطيطان عمودي وأفقي، ومجموعات."
+sourceHash: def294501810
+---
+
+<Preview name="field-anatomy" title="التسمية والنص المساعد ورسالة الخطأ" />
+
+## التثبيت [#installation]
+
+<ComponentInstall name="field" />
+
+Field هو أساس كل عنصر تحكم في النماذج. وكل عنصر تضيفه من هذا القسم يثبّته معه.
+
+## الاستخدام [#usage]
+
+```tsx title="page.tsx"
+import { Field, FieldDescription, FieldError, FieldLabel } from "@/components/ui/field";
+import { Input } from "@/components/ui/input";
+
+export function NationalIdField({ error }: { error?: string }) {
+  return (
+    <Field name="nationalId" invalid={Boolean(error)}>
+      <FieldLabel required>رقم الهوية الوطنية</FieldLabel>
+      <Input required inputMode="numeric" />
+      <FieldDescription>10 أرقام تبدأ بالرقم 1 أو 2.</FieldDescription>
+      <FieldError match={Boolean(error)}>{error}</FieldError>
+    </Field>
+  );
+}
+```
+
+ضع عنصر تحكم واحدًا في كل Field. تسمّي التسمية العنصر، ويُقرأ النص المساعد ورسالة الخطأ بعده عبر `aria-describedby`. استخدم [Input](/docs/components/input) أو [Textarea](/docs/components/textarea) أو [Select](/docs/components/select) أو [Number Input](/docs/components/number-input) أو [Search Box](/docs/components/search-box) أو [Checkbox](/docs/components/checkbox) أو [Radio](/docs/components/radio) أو [Switch](/docs/components/switch) أو [File Upload](/docs/components/file-upload) عنصرَ تحكم.
+
+## البنية [#anatomy]
+
+- **Field** (`<div>`): يحمل الحالة (`invalid` و`disabled`) التي تقرؤها كل الأجزاء.
+- **FieldLabel** (`<label>`): الاسم الظاهر. `required` يضيف `*` أحمر، و`optional` يضيف النص «(اختياري)».
+- **عنصر التحكم**: أي مكوّن نموذج من هذا القسم.
+- **FieldDescription** (`<p>`): نص مساعد تحت عنصر التحكم.
+- **FieldError**: الرسالة مع أيقونة تنبيه.
+- **FieldContent** و**FieldGroup** و**FieldSet** و**FieldLegend** و**FieldItem** ترتّب المجموعات وعناصر التحكم الأفقية.
+
+## أمثلة [#examples]
+
+### المطلوب والاختياري [#required-and-optional]
+
+علّم الحقول المطلوبة بـ `required` على التسمية **وعلى** عنصر التحكم، فتُرى العلامة ويُعلَن الشرط. وفي نموذج أغلب حقوله مطلوبة، علّم الاستثناءات بـ `optional` وترجم النص عبر `optionalLabel`.
+
+```tsx title="page.tsx"
+<FieldLabel required>الاسم الكامل</FieldLabel>
+<FieldLabel optional optionalLabel="اختياري">المسمى الوظيفي</FieldLabel>
+```
+
+### رسائل الخطأ [#error-messages]
+
+اضبط `invalid` على Field و`match` على FieldError لتتحكم في الخطأ من حالتك. وبدون `match` تظهر الرسالة عند فشل تحقق المتصفح. ولها أيقونة دائمًا، فلا يعتمد الخطأ على اللون وحده.
+
+### نموذج كامل [#a-form]
+
+طلب رخصة بناء مبني من عناصر تحكم داخل Field فقط. أرسله فارغًا لترى كل رسائل الخطأ.
+
+<Preview name="service-request" title="نموذج كامل" />
+
+### المجموعات والعناصر الأفقية [#groups]
+
+استخدم `orientation="horizontal"` مع FieldContent لمربع اختيار أو مفتاح تبديل، وFieldSet مع FieldLegend لمجموعة أزرار اختيار أو عدة مربعات اختيار. ويعطي FieldItem كل زر اختيار تسميته ونصه المساعد.
+
+```tsx title="page.tsx"
+<Field orientation="horizontal">
+  <Checkbox />
+  <FieldContent>
+    <FieldLabel>أوافق على الشروط</FieldLabel>
+    <FieldDescription>يمكنك سحب الموافقة لاحقًا.</FieldDescription>
+  </FieldContent>
+</Field>
+```
+
+## RTL [#rtl]
+
+تقع التسمية والنص المساعد والخطأ في جهة البداية، وتأتي أيقونة الخطأ أولًا في ترتيب القراءة. وتلي علامة المطلوب نص التسمية. وتضع الحقول الأفقية عنصر التحكم في جهة البداية.
+
+<DirectionCompare name="field-anatomy" title="الحقل" />
+
+## إمكانية الوصول [#accessibility]
+
+| المفتاح | الإجراء |
+| --- | --- |
+| <kbd>Tab</kbd> | ينقل التركيز إلى عنصر التحكم. |
+| النقر على التسمية | يركّز العنصر، أو يبدّل مربع الاختيار أو زر الاختيار أو مفتاح التبديل. |
+
+- تربط Base UI التسمية بعنصر التحكم، فتكون اسمه المتاح لتقنيات المساعدة.
+- يُضاف FieldDescription وFieldError إلى `aria-describedby` الخاص بالعنصر، فيُقرآن بعد التسمية.
+- لعنصر التحكم غير الصالح `aria-invalid="true"`. وللرسالة أيقونة ونص، ولا تعتمد على اللون وحده (WCAG 1.4.1).
+- علامة `*` مخفية عن قارئات الشاشة؛ اضبط `required` على العنصر ليُعلَن أنه مطلوب.
+- تستخدم المجموعات `<fieldset>` و`<legend>`، فيُقرأ اسم المجموعة مع كل عنصر.
+
+## مرجع API [#api-reference]
+
+<ApiReference component="field" />
+
+## الاختلافات عن DGA [#deviations-from-dga]
+
+- Field غير موجود في ملف Figma؛ استُخلص من أجزاء التسمية والنص المساعد والخطأ في صفحات الإدخال.
+- لا يعتمد الخطأ على اللون وحده: `aria-invalid` وحد أحمر ورسالة تبدأ بأيقونة.
+
+<ComponentDeviations component="field" />
+
+## التباين [#contrast]
+
+<ComponentContrast component="field" />

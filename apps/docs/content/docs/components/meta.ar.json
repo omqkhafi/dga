@@ -9,6 +9,17 @@
     "divider",
     "avatar",
     "featured-icon",
-    "skeleton"
+    "skeleton",
+    "---النماذج---",
+    "field",
+    "input",
+    "textarea",
+    "select",
+    "number-input",
+    "search-box",
+    "checkbox",
+    "radio",
+    "switch",
+    "file-upload"
   ]
 }

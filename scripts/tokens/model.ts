@@ -56,7 +56,7 @@ export function buildModel(source = loadSource()): Model {
       name: addition.name,
       light: addition.light,
       dark: addition.dark,
-      source: "dga-ui",
+      source: "platform-code",
     });
     const light = describe(addition.light);
     const dark = describe(addition.dark);

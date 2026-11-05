@@ -3,6 +3,8 @@
 //   1. `shadcn init <url>/r/dga.json`          the registry:base item (recommended path)
 //   2. `shadcn init <url>/r/dga-style.json`    the style item on its own (Phase 1 path)
 //   3. `shadcn add  <url>/r/dga-tokens.json`   tokens only, no components
+//   4. `shadcn init <url>/r/dga.json`, then `shadcn add @dga/number-input`: one form control on
+//      its own, to check that its registry dependencies (input, field, utils) are pulled in
 // Path 1 also adds every registry:ui component and renders them on a page. Every app must build.
 //
 //   bun run test:install                                   local registry (needs network for npm)
@@ -29,6 +31,19 @@ const registryItems = (
   JSON.parse(readFileSync(join(ROOT, "registry", "registry.json"), "utf8")) as { items: Item[] }
 ).items;
 const components = registryItems.filter((i) => i.type === "registry:ui").map((i) => i.name);
+/** The Phase 3 form items. Each must be in the registry and installable. */
+const FORM_ITEMS = [
+  "field",
+  "input",
+  "textarea",
+  "select",
+  "number-input",
+  "search-box",
+  "checkbox",
+  "radio",
+  "switch",
+  "file-upload",
+];
 
 const work = mkdtempSync(join(tmpdir(), "dga-install-"));
 const registryDir = join(work, "serve");
@@ -168,6 +183,9 @@ try {
           .nothrow()
           .quiet();
       check(add.exitCode === 0, `${label}: shadcn add @dga/{${components.join(",")}}`);
+      for (const item of FORM_ITEMS) {
+        check(components.includes(item), `${label}: the registry has the form item ${item}`);
+      }
       if (add.exitCode !== 0) console.error(add.stderr.toString() || add.stdout.toString());
       for (const c of components) {
         const source = reader(app).text(`src/components/ui/${c}.tsx`);
@@ -176,6 +194,52 @@ try {
       }
       writeFileSync(join(app, "src/app/page.tsx"), smokePage(components));
     }
+    await build(label, app);
+  }
+
+  // 4. one form control on its own: its dependencies come with it
+  {
+    const label = "dga-form-control";
+    const app = await fresh(label);
+    await $`bunx ${shadcn} init ${url}/r/dga.json --yes --no-monorepo < /dev/null`.cwd(app).quiet();
+    const add = await $`bunx ${shadcn} add @dga/number-input --yes < /dev/null`
+      .cwd(app)
+      .nothrow()
+      .quiet();
+    check(add.exitCode === 0, `${label}: shadcn add @dga/number-input`);
+    if (add.exitCode !== 0) console.error(add.stderr.toString() || add.stdout.toString());
+    const r = reader(app);
+    for (const file of ["number-input", "input", "field"]) {
+      let found = true;
+      try {
+        r.text(`src/components/ui/${file}.tsx`);
+      } catch {
+        found = false;
+      }
+      check(found, `${label}: ${file}.tsx was installed with number-input`);
+    }
+    const source = r.text("src/components/ui/number-input.tsx");
+    check(source.startsWith('"use client"'), `${label}: number-input.tsx is a client component`);
+    check(!/\bcn-[a-z]/.test(source.replace(/data-slot=|"cn"/g, "")), `${label}: cn-* inlined`);
+    check(
+      source.includes("normalizeDigits"),
+      `${label}: number-input.tsx has the digit normaliser`,
+    );
+    writeFileSync(
+      join(app, "src/app/page.tsx"),
+      `import { Field, FieldLabel } from "@/components/ui/field";
+import { NumberInput } from "@/components/ui/number-input";
+
+export default function Page() {
+  return (
+    <Field>
+      <FieldLabel>Quantity</FieldLabel>
+      <NumberInput defaultValue={1} />
+    </Field>
+  );
+}
+`,
+    );
     await build(label, app);
   }
 

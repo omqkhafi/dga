@@ -1,0 +1,110 @@
+---
+title: Field
+description: "Wraps a control with its label, helper text and error message, and links them for assistive technology. Required and optional markers, vertical and horizontal layouts, groups."
+---
+
+<Preview name="field-anatomy" title="Label, helper text and error" />
+
+## Installation
+
+<ComponentInstall name="field" />
+
+Field is the base of every form control. Each control you add from this section installs it with it.
+
+## Usage
+
+```tsx title="page.tsx"
+import { Field, FieldDescription, FieldError, FieldLabel } from "@/components/ui/field";
+import { Input } from "@/components/ui/input";
+
+export function NationalIdField({ error }: { error?: string }) {
+  return (
+    <Field name="nationalId" invalid={Boolean(error)}>
+      <FieldLabel required>رقم الهوية الوطنية</FieldLabel>
+      <Input required inputMode="numeric" />
+      <FieldDescription>10 أرقام تبدأ بالرقم 1 أو 2.</FieldDescription>
+      <FieldError match={Boolean(error)}>{error}</FieldError>
+    </Field>
+  );
+}
+```
+
+Put one control in each Field. The label names the control, and the helper text and the error message are read after it through `aria-describedby`. Use [Input](/docs/components/input), [Textarea](/docs/components/textarea), [Select](/docs/components/select), [Number Input](/docs/components/number-input), [Search Box](/docs/components/search-box), [Checkbox](/docs/components/checkbox), [Radio](/docs/components/radio), [Switch](/docs/components/switch) or [File Upload](/docs/components/file-upload) as the control.
+
+## Anatomy
+
+- **Field** (`<div>`): holds the state (`invalid`, `disabled`) that every part reads.
+- **FieldLabel** (`<label>`): the visible name. `required` adds a red `*`, `optional` adds the text "(Optional)".
+- **Control**: any form component from this section.
+- **FieldDescription** (`<p>`): helper text under the control.
+- **FieldError**: the message with an alert icon.
+- **FieldContent**, **FieldGroup**, **FieldSet**, **FieldLegend** and **FieldItem** lay out groups and horizontal controls.
+
+## Examples
+
+### Required and optional
+
+Mark required fields with `required` on the label **and** on the control, so the marker is seen and the requirement is announced. In a form where most fields are required, mark the exceptions with `optional` and translate the text with `optionalLabel`.
+
+```tsx title="page.tsx"
+<FieldLabel required>الاسم الكامل</FieldLabel>
+<FieldLabel optional optionalLabel="اختياري">المسمى الوظيفي</FieldLabel>
+```
+
+### Error messages
+
+Set `invalid` on the Field and `match` on FieldError to drive the error from your own state. Without `match`, the message shows when the browser's validation fails. The message always has an icon: the error never relies on colour alone.
+
+### A form
+
+A building permit request built only from Field-based controls. Submit it empty to see every error.
+
+<Preview name="service-request" title="A form" />
+
+### Groups and horizontal controls
+
+Use `orientation="horizontal"` with FieldContent for a checkbox or switch, and FieldSet with FieldLegend for a radio group or a set of checkboxes. FieldItem gives each radio its own label and helper text.
+
+```tsx title="page.tsx"
+<Field orientation="horizontal">
+  <Checkbox />
+  <FieldContent>
+    <FieldLabel>أوافق على الشروط</FieldLabel>
+    <FieldDescription>يمكنك سحب الموافقة لاحقًا.</FieldDescription>
+  </FieldContent>
+</Field>
+```
+
+## RTL
+
+The label, helper text and error sit on the start side and the error icon comes first in reading order. The required marker follows the label text. Horizontal fields put the control on the start side.
+
+<DirectionCompare name="field-anatomy" title="Field" />
+
+## Accessibility
+
+| Key | Action |
+| --- | --- |
+| <kbd>Tab</kbd> | Moves focus to the control. |
+| Click on the label | Focuses the control, or toggles a checkbox, radio or switch. |
+
+- The label is linked to the control by Base UI, so it is its accessible name.
+- FieldDescription and FieldError are added to the control's `aria-describedby`, so they are read after the label.
+- An invalid control has `aria-invalid="true"`. The message has an icon and text, never colour alone (WCAG 1.4.1).
+- The `*` marker is hidden from screen readers; set `required` on the control so "required" is announced.
+- Groups use `<fieldset>` and `<legend>`, so the group name is read with each control.
+
+## API Reference
+
+<ApiReference component="field" />
+
+## Deviations from DGA
+
+- Field is not in the Figma file: it is derived from the label, helper and error parts of the input pages.
+- The error is never colour alone: `aria-invalid`, a red border, and a message that starts with an icon.
+
+<ComponentDeviations component="field" />
+
+## Contrast
+
+<ComponentContrast component="field" />

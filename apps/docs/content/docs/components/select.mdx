@@ -1,0 +1,118 @@
+---
+title: Select
+description: "Choose one option from a list (DGA: Dropdown Input). Two sizes, three fills, groups and every state, on Base UI Select."
+---
+
+<Preview name="select-states" title="Select states" />
+
+## Installation
+
+<ComponentInstall name="select" />
+
+Installs [Field](/docs/components/field) too. This is DGA's Dropdown Input; it is named Select after the Base UI part.
+
+## Usage
+
+```tsx title="page.tsx"
+import { Field, FieldLabel } from "@/components/ui/field";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+
+const services = [
+  { value: "issue", label: "إصدار رخصة" },
+  { value: "renew", label: "تجديد رخصة" },
+];
+
+export function ServiceField() {
+  return (
+    <Field name="service">
+      <FieldLabel required>الخدمة</FieldLabel>
+      <Select items={services} required>
+        <SelectTrigger>
+          <SelectValue placeholder="اختر خدمة" />
+        </SelectTrigger>
+        <SelectContent>
+          {services.map((s) => (
+            <SelectItem key={s.value} value={s.value}>
+              {s.label}
+            </SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
+    </Field>
+  );
+}
+```
+
+Use Select to pick one option from five to fifteen. For fewer, [Radio](/docs/components/radio) shows every option at once; for many, add a search field. Pass `items` so the trigger shows the label of the chosen value, and a `placeholder` that says what to choose.
+
+## Anatomy
+
+- **Trigger** (`<button>`): the border, the chosen label or the placeholder, and a chevron.
+- **Content**: the popup on the card surface, as wide as the trigger.
+- **Item**: one option, with a check mark on the end side when chosen.
+- **Group**, **Label** and **Separator** (optional): group related options.
+
+## Examples
+
+### Basic
+
+Click to open, or focus it and press <kbd>Enter</kbd>, <kbd>Space</kbd> or <kbd>ArrowDown</kbd>.
+
+<Preview compact name="select-basic" title="Basic" />
+
+### States
+
+Default, filled, read-only, disabled and error, and the medium size with a darker fill.
+
+<Preview name="select-states" title="States" />
+
+### Groups
+
+Wrap related options in `SelectGroup` with a `SelectLabel`, and separate groups with `SelectSeparator`.
+
+<Preview compact name="select-groups" title="Groups" />
+
+## RTL
+
+The trigger text starts on the right and the chevron is on the left. The popup opens below the trigger and aligns to its start (right) edge; the check mark sits on the left.
+
+<DirectionCompare name="select-basic" title="Select" />
+
+## Accessibility
+
+| Key | Action |
+| --- | --- |
+| <kbd>Tab</kbd> | Moves focus to the trigger. |
+| <kbd>Enter</kbd>, <kbd>Space</kbd> or <kbd>ArrowDown</kbd> | Opens the list. |
+| <kbd>ArrowUp</kbd> / <kbd>ArrowDown</kbd> | Moves between options. |
+| <kbd>Home</kbd> / <kbd>End</kbd> | Jumps to the first or last option. |
+| Type a letter | Jumps to the option that starts with it. |
+| <kbd>Enter</kbd> | Chooses the highlighted option and closes the list. |
+| <kbd>Esc</kbd> | Closes the list and returns focus to the trigger. |
+
+- The trigger has the `combobox` role with `aria-expanded`; the list has the `listbox` role and each option `option` with `aria-selected`.
+- The label comes from [Field](/docs/components/field). Helper text and errors are linked with `aria-describedby`.
+- The highlighted option has a 2px bar and a tint, not a tint alone (WCAG 2.4.7). The chosen option has a check mark.
+- Every state keeps a 3:1 border and 4.5:1 text in light and dark.
+
+## API Reference
+
+<ApiReference component="select" />
+
+## Deviations from DGA
+
+- Named Select (Figma: Dropdown Input). Figma draws only the open list; the popup surface is ours.
+- The highlighted option has a bar as well as a tint, because the tint alone is 1.1:1.
+- Filled lighter and darker keep their border; read-only is dashed.
+
+<ComponentDeviations component="select" />
+
+## Contrast
+
+<ComponentContrast component="select" />

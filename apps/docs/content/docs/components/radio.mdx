@@ -1,0 +1,99 @@
+---
+title: Radio
+description: "Choose exactly one option from a group. Radio and Radio Group, primary and neutral, with every state."
+---
+
+<Preview name="radio-group" title="Radio group" />
+
+## Installation
+
+<ComponentInstall name="radio" />
+
+Installs [Field](/docs/components/field) too.
+
+## Usage
+
+```tsx title="page.tsx"
+import { Field, FieldItem, FieldLabel, FieldLegend, FieldSet } from "@/components/ui/field";
+import { Radio, RadioGroup } from "@/components/ui/radio";
+
+export function ContactField() {
+  return (
+    <Field name="contact">
+      <FieldSet render={<RadioGroup defaultValue="sms" />}>
+        <FieldLegend>وسيلة التواصل المفضلة</FieldLegend>
+        <FieldItem>
+          <FieldLabel>
+            <Radio value="sms" />
+            رسالة نصية
+          </FieldLabel>
+        </FieldItem>
+        <FieldItem>
+          <FieldLabel>
+            <Radio value="email" />
+            البريد الإلكتروني
+          </FieldLabel>
+        </FieldItem>
+      </FieldSet>
+    </Field>
+  );
+}
+```
+
+Use Radio when people must choose one of two to five options and seeing them all helps. Start with the most common choice selected only when it is a safe default. For more options use [Select](/docs/components/select); for several choices use [Checkbox](/docs/components/checkbox).
+
+## Anatomy
+
+- **RadioGroup**: the group; one value at a time.
+- **Legend** (FieldLegend): the name of the group.
+- **Radio**: the round control with a dot when chosen.
+- **Label** and **helper text** for each option, from FieldItem.
+
+## Examples
+
+### Radio group
+
+Wrap the group in a Field, then a FieldSet that renders the RadioGroup, so the legend names the group and each FieldItem labels its radio.
+
+<Preview compact name="radio-group" title="Radio group" />
+
+### States
+
+Unselected and selected, in the primary and neutral tones, read-only and disabled.
+
+<Preview name="radio-states" title="States" />
+
+## RTL
+
+The radio is on the right (start) of its label. Use <kbd>ArrowDown</kbd> and <kbd>ArrowUp</kbd> in a vertical group: they work the same in both directions. <kbd>ArrowRight</kbd> moves to the next option and <kbd>ArrowLeft</kbd> to the previous one in both directions too (Base UI does not mirror them).
+
+<DirectionCompare name="radio-group" title="Radio group" />
+
+## Accessibility
+
+| Key | Action |
+| --- | --- |
+| <kbd>Tab</kbd> | Moves focus into the group (to the chosen radio, or the first) and out of it. |
+| <kbd>ArrowDown</kbd> / <kbd>ArrowRight</kbd> | Moves to the next option and chooses it. |
+| <kbd>ArrowUp</kbd> / <kbd>ArrowLeft</kbd> | Moves to the previous option and chooses it. |
+| <kbd>Space</kbd> | Chooses the focused radio. |
+
+- The `radiogroup` role on the group and `radio` with `aria-checked` on each option. A FieldSet and its legend name the group.
+- Only one radio is in the Tab order, so the group is one stop.
+- The unchecked ring and the chosen ring and dot are 3:1 or better on every surface (WCAG 1.4.11).
+- Focus is a 2px outline 2px outside the circle. Disabled and read-only radios keep their label legible.
+
+## API Reference
+
+<ApiReference component="radio" />
+
+## Deviations from DGA
+
+- Same dark-mode hover and press fill as [Checkbox](/docs/components/checkbox): the dot stays green-600.
+- Read-only has a 3:1 ring (Figma: 1.5:1).
+
+<ComponentDeviations component="radio" />
+
+## Contrast
+
+<ComponentContrast component="radio" />

@@ -1,0 +1,94 @@
+---
+title: Input
+description: "A single-line text field. Two sizes, three fills, prefix and suffix, and every state: hover, focus, filled, read-only, disabled and error."
+---
+
+<Preview name="input-states" title="Input states" />
+
+## Installation
+
+<ComponentInstall name="input" />
+
+Installs [Field](/docs/components/field) too.
+
+## Usage
+
+```tsx title="page.tsx"
+import { Field, FieldDescription, FieldLabel } from "@/components/ui/field";
+import { Input } from "@/components/ui/input";
+
+export function NameField() {
+  return (
+    <Field name="name">
+      <FieldLabel required>الاسم الكامل</FieldLabel>
+      <Input required autoComplete="name" />
+      <FieldDescription>كما يظهر في بطاقة الهوية.</FieldDescription>
+    </Field>
+  );
+}
+```
+
+Use Input for short single-line answers: names, IDs, email addresses, phone numbers. Set `type` and `inputMode` for the right keyboard, and `autoComplete` so browsers can fill it in. For numbers you add and subtract use [Number Input](/docs/components/number-input); for several lines use [Textarea](/docs/components/textarea).
+
+## Anatomy
+
+- **Box** (`<div>`): the border, fill and focus outline.
+- **Start adornment** (optional): an icon or a short prefix such as `+966`.
+- **Input** (`<input>`): the text.
+- **End adornment** (optional): an icon, suffix or button.
+
+## Examples
+
+### Sizes
+
+`lg` is 40px high (default) and `md` is 32px.
+
+<Preview compact name="input-sizes" title="Sizes" />
+
+### Fills
+
+`appearance` is `default`, `lighter` or `darker`. Unlike the Figma file, all three keep a visible border, so the field can always be found (see Deviations). The states below show them all.
+
+<Preview name="input-states" title="Fills" />
+
+### Prefix and suffix
+
+`startAdornment` and `endAdornment` take an icon or text. They sit on the logical start and end sides. Phone numbers and emails stay left to right with `dir="ltr"`.
+
+<Preview compact name="input-adornments" title="Prefix and suffix" />
+
+## RTL
+
+The text, placeholder and adornments start on the right. Typed Arabic aligns right; typed Latin text (an email) aligns with `dir="ltr"` when you set it.
+
+<DirectionCompare name="input-adornments" title="Input" />
+
+## Accessibility
+
+| Key | Action |
+| --- | --- |
+| <kbd>Tab</kbd> | Moves focus to the field. |
+| <kbd>Shift</kbd> + <kbd>Tab</kbd> | Moves focus back. |
+
+- A native `<input>`: always label it with a [Field](/docs/components/field); a placeholder is not a label.
+- Focus is a 2px outline outside the border (`border-black`, white in dark mode), at least 3:1 on every fill.
+- The border is 3:1 or better against the page in every state, light and dark (WCAG 1.4.11).
+- Errors set `aria-invalid` and show an icon with the message. Read-only fields stay focusable; disabled ones do not.
+- Adornment icons are decorative (`aria-hidden`). A suffix button needs its own `aria-label`.
+
+## API Reference
+
+<ApiReference component="input" />
+
+## Deviations from DGA
+
+- Filled lighter and darker keep their border in every state (Figma has none until hover).
+- Read-only is a dashed border in the default border colour (3:1) instead of the pale grey.
+- Focus is a 2px outline instead of a shadow and underline, which also works in dark mode.
+- `field-border-default` is neutral-500 (was neutral-400, 2.6:1 on white) and the placeholder is neutral-600 in light mode.
+
+<ComponentDeviations component="input" />
+
+## Contrast
+
+<ComponentContrast component="input" />

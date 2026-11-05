@@ -1,0 +1,24 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "checkbox",
+  "title": "Checkbox",
+  "description": "DGA Checkbox on Base UI: primary and neutral, 16, 20 and 24px, checked, indeterminate, read-only, disabled and error.",
+  "dependencies": [
+    "@base-ui/react",
+    "class-variance-authority",
+    "@hugeicons/react",
+    "@hugeicons/core-free-icons"
+  ],
+  "registryDependencies": [
+    "https://dga.omqkhafi.dev/r/utils.json",
+    "https://dga.omqkhafi.dev/r/field.json"
+  ],
+  "files": [
+    {
+      "path": "bases/base/ui/checkbox.tsx",
+      "content": "import { Checkbox as CheckboxPrimitive } from \"@base-ui/react/checkbox\";\nimport { MinusSignIcon, Tick02Icon } from \"@hugeicons/core-free-icons\";\nimport { HugeiconsIcon } from \"@hugeicons/react\";\nimport { cva, type VariantProps } from \"class-variance-authority\";\nimport { cn } from \"@/registry/bases/base/lib/utils\";\n\nconst checkboxVariants = cva(\"relative inline-flex shrink-0 cursor-pointer items-center justify-center border border-control-border bg-transparent p-0 text-(--control-mark) transition-colors hover:not-data-disabled:border-control-neutral-hovered hover:not-data-disabled:bg-control-ripple-effect active:not-data-disabled:bg-control-pressed focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-offset-2 focus-visible:outline-border-black data-checked:border-(--control-fill) hover:data-checked:not-data-disabled:border-(--control-fill-hover) active:data-checked:not-data-disabled:border-(--control-fill-pressed) data-invalid:not-data-checked:border-field-border-error data-disabled:cursor-not-allowed data-disabled:border-border-disabled data-disabled:bg-transparent data-readonly:cursor-default data-readonly:border-control-border data-readonly:bg-transparent data-readonly:text-icon-default-500 motion-reduce:transition-none rounded-xs data-checked:bg-(--control-fill) hover:data-checked:not-data-disabled:bg-(--control-fill-hover) active:data-checked:not-data-disabled:bg-(--control-fill-pressed) data-indeterminate:border-(--control-fill) data-indeterminate:bg-(--control-fill) data-disabled:data-checked:bg-border-disabled data-disabled:data-indeterminate:bg-border-disabled data-readonly:data-checked:bg-transparent data-readonly:data-indeterminate:bg-transparent\", {\n  variants: {\n    size: { xs: \"size-4 [&_svg]:size-3\", sm: \"size-5 [&_svg]:size-3.5\", md: \"size-6 [&_svg]:size-4\" },\n    tone: { primary: \"[--control-fill-hover:var(--control-primary-hovered)] [--control-fill-pressed:var(--control-primary-pressed)] [--control-fill:var(--control-primary-checked)] [--control-mark:var(--icon-oncolor)]\", neutral: \"[--control-fill-hover:var(--control-neutral-hovered)] [--control-fill-pressed:var(--control-neutral-pressed)] [--control-fill:var(--control-neutral-checked)] [--control-mark:var(--control-icon-neutral)]\" },\n  },\n  defaultVariants: { size: \"md\", tone: \"primary\" },\n});\n\ntype CheckboxProps = CheckboxPrimitive.Root.Props & VariantProps<typeof checkboxVariants>;\n\n/**\n * A box for a yes/no choice, or one of several. `indeterminate` shows a dash for a parent that\n * is partly selected. Label it with a Field (`orientation=\"horizontal\"`) or an enclosing label.\n */\nfunction Checkbox({ className, size, tone, ...props }: CheckboxProps) {\n  return (\n    <CheckboxPrimitive.Root\n      data-slot=\"checkbox\"\n      className={cn(checkboxVariants({ size, tone }), className)}\n      {...props}\n    >\n      <CheckboxPrimitive.Indicator\n        keepMounted\n        data-slot=\"checkbox-indicator\"\n        className=\"hidden items-center justify-center data-checked:inline-flex data-indeterminate:inline-flex\"\n      >\n        <HugeiconsIcon icon={Tick02Icon} aria-hidden className=\"[[data-indeterminate]>&]:hidden\" />\n        <HugeiconsIcon icon={MinusSignIcon} aria-hidden className=\"hidden [[data-indeterminate]>&]:block\" />\n      </CheckboxPrimitive.Indicator>\n    </CheckboxPrimitive.Root>\n  );\n}\n\nexport type { CheckboxProps };\nexport { Checkbox, checkboxVariants };\n",
+      "type": "registry:ui"
+    }
+  ],
+  "type": "registry:ui"
+}

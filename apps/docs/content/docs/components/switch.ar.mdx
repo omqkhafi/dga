@@ -1,0 +1,87 @@
+---
+title: Switch
+description: "يشغّل إعدادًا أو يوقفه فورًا. بحجم 48 في 24px، مع أيقونة صح اختيارية، وحالات التمرير والتركيز والقراءة فقط والتعطيل والخطأ."
+sourceHash: e9ab56e5d186
+---
+
+<Preview name="switch-states" title="حالات مفتاح التبديل" />
+
+## التثبيت [#installation]
+
+<ComponentInstall name="switch" />
+
+ويثبّت [Field](/docs/components/field) أيضًا.
+
+## الاستخدام [#usage]
+
+```tsx title="page.tsx"
+import { Field, FieldContent, FieldLabel } from "@/components/ui/field";
+import { Switch } from "@/components/ui/switch";
+
+export function UpdatesField() {
+  return (
+    <Field orientation="horizontal" className="items-center justify-between">
+      <FieldContent>
+        <FieldLabel>أرسل لي تحديثات عن هذا الطلب</FieldLabel>
+      </FieldContent>
+      <Switch name="updates" defaultChecked />
+    </Field>
+  );
+}
+```
+
+استخدم Switch لإعداد يسري لحظة قلبه: الإشعارات أو تشغيل ميزة أو إيقافها. وإن كان الاختيار لا يُطبَّق إلا عند إرسال نموذج فاستخدم [Checkbox](/docs/components/checkbox). سمِّ ما يفعله المفتاح لا حالته: «تحديثات الطلب» لا «قيد التشغيل».
+
+## البنية [#anatomy]
+
+- **المسار** (`<span role="switch">` مع `<input>` مخفي): بحجم 48 في 24px.
+- **المقبض**: الدائرة البيضاء المنزلقة؛ وفيها أيقونة الصح عند ضبط `icon`.
+- **التسمية** و**النص المساعد** و**الخطأ**: من [Field](/docs/components/field). ضع المفتاح بعد FieldContent ليكون في النهاية.
+
+## أمثلة [#examples]
+
+### الحالات [#states]
+
+متوقف وقيد التشغيل ومع أيقونة وللقراءة فقط ومعطّل وخطأ.
+
+<Preview name="switch-states" title="الحالات" />
+
+### المفتاح في النهاية [#trailing-switch]
+
+ضع Switch بعد FieldContent واستخدم `justify-between` لقائمة إعدادات، والمفتاح في نهاية كل صف.
+
+<Preview compact name="switch-trailing" title="المفتاح في النهاية" />
+
+## RTL [#rtl]
+
+يتحرك المقبض على المحور المنطقي: يبدأ من اليمين وينزلق إلى اليسار عند التشغيل، كما يُقرأ المسار. ولا شيء يُعكس يدويًا؛ والمفتاح الذي في النهاية يقع على اليسار.
+
+<DirectionCompare name="switch-states" title="مفتاح التبديل" />
+
+## إمكانية الوصول [#accessibility]
+
+| المفتاح | الإجراء |
+| --- | --- |
+| <kbd>Tab</kbd> | ينقل التركيز إلى المفتاح. |
+| <kbd>Space</kbd> | يشغّله أو يوقفه. |
+
+- الدور `switch` مع `aria-checked`، وحقل أصلي مخفي للنماذج.
+- تأتي التسمية من [Field](/docs/components/field)؛ والنقر عليها يقلب المفتاح.
+- المسار المتوقف ومقبضه الأبيض، والمسار المشغَّل ومقبضه، بنسبة 3:1 أو أفضل فاتحًا وداكنًا (WCAG 1.4.11). وتظهر الحالة أيضًا من موضع المقبض، لا من اللون وحده.
+- التركيز حد بسمك 2px على بعد 2px خارج المسار. ويضيف الخطأ حدًا بسمك 2px ورسالة بأيقونة.
+- يحترم تقليل الحركة: يتحرك المقبض دون حركة انتقالية.
+
+## مرجع API [#api-reference]
+
+<ApiReference component="switch" />
+
+## الاختلافات عن DGA [#deviations-from-dga]
+
+- المسار المتوقف هو `control-border` (4.8:1) بدل #ccc (1.6:1)، مع مقبض أبيض (رمز جديد `control-thumb`).
+- يبقى المسار المشغَّل green-600 عند التمرير والضغط في الوضع الداكن (انظر [Checkbox](/docs/components/checkbox)).
+
+<ComponentDeviations component="switch" />
+
+## التباين [#contrast]
+
+<ComponentContrast component="switch" />

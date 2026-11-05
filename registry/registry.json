@@ -222,6 +222,174 @@
           "type": "registry:ui"
         }
       ]
+    },
+    {
+      "name": "field",
+      "type": "registry:ui",
+      "title": "Field",
+      "description": "DGA Field on Base UI Field and Fieldset: label with required or optional marker, helper text, error with icon, horizontal layout for checkbox, radio and switch, grouping with legend.",
+      "dependencies": ["@base-ui/react", "@hugeicons/react", "@hugeicons/core-free-icons"],
+      "registryDependencies": ["{{REGISTRY_URL}}/r/utils.json"],
+      "files": [
+        {
+          "path": "bases/base/ui/field.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "input",
+      "type": "registry:ui",
+      "title": "Input",
+      "description": "DGA Text Input on Base UI Input: md 32px and lg 40px, default, lighter and darker fills, prefix and suffix, hover, focus, read-only, disabled and error.",
+      "dependencies": ["@base-ui/react", "class-variance-authority"],
+      "registryDependencies": ["{{REGISTRY_URL}}/r/utils.json", "{{REGISTRY_URL}}/r/field.json"],
+      "files": [
+        {
+          "path": "bases/base/ui/input.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "textarea",
+      "type": "registry:ui",
+      "title": "Textarea",
+      "description": "DGA Textarea on Base UI Field: default, lighter and darker fills, resizable, hover, focus, read-only, disabled and error.",
+      "dependencies": ["@base-ui/react", "class-variance-authority"],
+      "registryDependencies": ["{{REGISTRY_URL}}/r/utils.json", "{{REGISTRY_URL}}/r/field.json"],
+      "files": [
+        {
+          "path": "bases/base/ui/textarea.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "checkbox",
+      "type": "registry:ui",
+      "title": "Checkbox",
+      "description": "DGA Checkbox on Base UI: primary and neutral, 16, 20 and 24px, checked, indeterminate, read-only, disabled and error.",
+      "dependencies": [
+        "@base-ui/react",
+        "class-variance-authority",
+        "@hugeicons/react",
+        "@hugeicons/core-free-icons"
+      ],
+      "registryDependencies": ["{{REGISTRY_URL}}/r/utils.json", "{{REGISTRY_URL}}/r/field.json"],
+      "files": [
+        {
+          "path": "bases/base/ui/checkbox.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "radio",
+      "type": "registry:ui",
+      "title": "Radio",
+      "description": "DGA Radio and Radio Group on Base UI: primary and neutral, selected, read-only, disabled and error, arrow-key navigation.",
+      "dependencies": ["@base-ui/react", "class-variance-authority"],
+      "registryDependencies": ["{{REGISTRY_URL}}/r/utils.json", "{{REGISTRY_URL}}/r/field.json"],
+      "files": [
+        {
+          "path": "bases/base/ui/radio.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "switch",
+      "type": "registry:ui",
+      "title": "Switch",
+      "description": "DGA Switch on Base UI: 48x24px, optional check icon, hover, focus, read-only, disabled and error. Moves on the logical axis in RTL.",
+      "dependencies": ["@base-ui/react", "@hugeicons/react", "@hugeicons/core-free-icons"],
+      "registryDependencies": ["{{REGISTRY_URL}}/r/utils.json", "{{REGISTRY_URL}}/r/field.json"],
+      "files": [
+        {
+          "path": "bases/base/ui/switch.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "select",
+      "type": "registry:ui",
+      "title": "Select",
+      "description": "DGA Dropdown Input on Base UI Select: md and lg, default, lighter and darker fills, grouped options, check mark on the chosen option, hover, open, read-only, disabled and error.",
+      "dependencies": [
+        "@base-ui/react",
+        "class-variance-authority",
+        "@hugeicons/react",
+        "@hugeicons/core-free-icons"
+      ],
+      "registryDependencies": ["{{REGISTRY_URL}}/r/utils.json", "{{REGISTRY_URL}}/r/field.json"],
+      "files": [
+        {
+          "path": "bases/base/ui/select.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "number-input",
+      "type": "registry:ui",
+      "title": "Number Input",
+      "description": "DGA Number Input on Base UI Number Field: left-to-right isolated digits, Arabic-Indic digit input normalised to Western, - and + buttons on the logical sides, min, max and step.",
+      "dependencies": [
+        "@base-ui/react",
+        "class-variance-authority",
+        "@hugeicons/react",
+        "@hugeicons/core-free-icons"
+      ],
+      "registryDependencies": [
+        "{{REGISTRY_URL}}/r/utils.json",
+        "{{REGISTRY_URL}}/r/field.json",
+        "{{REGISTRY_URL}}/r/input.json"
+      ],
+      "files": [
+        {
+          "path": "bases/base/ui/number-input.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "search-box",
+      "type": "registry:ui",
+      "title": "Search Box",
+      "description": "DGA Search Box on Base UI Input: search icon on the start side, clear button on the end side, md and lg, Escape clears.",
+      "dependencies": [
+        "@base-ui/react",
+        "class-variance-authority",
+        "@hugeicons/react",
+        "@hugeicons/core-free-icons"
+      ],
+      "registryDependencies": [
+        "{{REGISTRY_URL}}/r/utils.json",
+        "{{REGISTRY_URL}}/r/field.json",
+        "{{REGISTRY_URL}}/r/input.json"
+      ],
+      "files": [
+        {
+          "path": "bases/base/ui/search-box.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "file-upload",
+      "type": "registry:ui",
+      "title": "File Upload",
+      "description": "DGA File Upload: keyboard-accessible drag-and-drop zone, file list with remove, progress and error states, type, size and count validation, Arabic file names.",
+      "dependencies": ["@base-ui/react", "@hugeicons/react", "@hugeicons/core-free-icons"],
+      "registryDependencies": ["{{REGISTRY_URL}}/r/utils.json", "{{REGISTRY_URL}}/r/field.json"],
+      "files": [
+        {
+          "path": "bases/base/ui/file-upload.tsx",
+          "type": "registry:ui"
+        }
+      ]
     }
   ]
 }

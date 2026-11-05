@@ -17,14 +17,14 @@ export type Primitive = {
   name: string;
   figmaName?: string;
   value: Value;
-  source: "figma" | "css" | "dga-ui";
+  source: "figma" | "css" | "platform-code";
 };
 export type ThemeToken = {
   name: string;
   figmaName?: string;
   light: Value;
   dark: Value;
-  source: "figma" | "css" | "dga-ui";
+  source: "figma" | "css" | "platform-code";
 };
 export type ResponsiveToken = {
   name: string;

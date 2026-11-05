@@ -651,6 +651,42 @@
   },
   {
     "area": "Contrast",
+    "item": "--field-border-default (light)",
+    "original": "--colors-neutral-400",
+    "ours": "--colors-neutral-500",
+    "reason": "neutral-400 (#9da4ae) on a white field is 2.58:1, below the 3:1 that WCAG 1.4.11 asks for input boundaries. neutral-500 is 4.83:1 on white and 4.3:1 or better on every field fill. Dark mode already passes (neutral dark 500, 3.8:1 or better).",
+    "status": "fixed",
+    "component": "input"
+  },
+  {
+    "area": "Contrast",
+    "item": "--field-text-placeholder (light)",
+    "original": "--text-secondary-paragraph",
+    "ours": "--colors-neutral-600",
+    "reason": "neutral-500 placeholder text on the filled darker fill (#f3f4f6) is 4.34:1, below the 4.5:1 minimum. neutral-600 is 6.2:1 on that fill and 7.6:1 on white.",
+    "status": "fixed",
+    "component": "input"
+  },
+  {
+    "area": "Contrast",
+    "item": "--control-primary-hovered (dark)",
+    "original": "--colors-primary-sa-flag-300",
+    "ours": "--colors-primary-sa-flag-600-primary",
+    "reason": "Figma Dark lightens the checked fill on hover and press (green-300/400). The white check mark on it is 1.4–2.1:1. The fill stays green-600 and hover and press show on the ring and background instead.",
+    "status": "fixed",
+    "component": "checkbox"
+  },
+  {
+    "area": "Contrast",
+    "item": "--control-primary-pressed (dark)",
+    "original": "--colors-primary-sa-flag-400",
+    "ours": "--colors-primary-sa-flag-600-primary",
+    "reason": "Figma Dark lightens the checked fill on hover and press (green-300/400). The white check mark on it is 1.4–2.1:1. The fill stays green-600 and hover and press show on the ring and background instead.",
+    "status": "fixed",
+    "component": "checkbox"
+  },
+  {
+    "area": "Contrast",
     "item": "--text-on-gold (new)",
     "original": "—",
     "ours": "--colors-base-black",
@@ -1277,6 +1313,24 @@
     "reason": "Placeholder fill: neutral-200, neutral-700 in dark mode.",
     "status": "fixed",
     "component": "skeleton"
+  },
+  {
+    "area": "Contrast",
+    "item": "--control-thumb (new)",
+    "original": "—",
+    "ours": "--colors-base-white",
+    "reason": "The Switch thumb is white in both modes. Figma has no token for it (background-white turns dark in dark mode, and the white thumb on the off track would be 1.1:1).",
+    "status": "fixed",
+    "component": "switch"
+  },
+  {
+    "area": "Contrast",
+    "item": "--control-icon-neutral (new)",
+    "original": "—",
+    "ours": "--colors-base-white (light), --colors-neutral-dark-950 (dark)",
+    "reason": "The check mark on a neutral checkbox. The neutral fill is near-black in light mode and light grey in dark mode (control-neutral-checked), so the mark needs to flip too. Figma's control-icon-* tokens stay white (1.8:1 on the dark-mode fill).",
+    "status": "fixed",
+    "component": "checkbox"
   },
   {
     "area": "Dark theme",
@@ -3357,5 +3411,149 @@
     "ours": "loading prop: a Spinner replaces the leading icon, the width is kept, aria-busy is set and the button is disabled for clicks but stays focusable.",
     "reason": "Async actions need a busy state. Keeping focus avoids losing the user's place.",
     "component": "button"
+  },
+  {
+    "area": "Components",
+    "item": "Field",
+    "original": "No Field component. Label, helper text and error are parts of each input page.",
+    "ours": "One Field wraps every control: Label (with required or optional marker), Description (helper text) and Error. Built on Base UI Field, so the label names the control and helper and error text are linked with aria-describedby.",
+    "reason": "The same three parts appear on every control page. One component keeps them consistent and wires the accessibility attributes once.",
+    "component": "field"
+  },
+  {
+    "area": "Components",
+    "item": "Field: error is never colour alone",
+    "original": "Error state is a red border and a message with an icon swap.",
+    "ours": "aria-invalid on the control, a red border and a message that always starts with an alert icon. Checkbox, radio and switch show the message the same way.",
+    "reason": "WCAG 1.4.1: colour must not be the only cue. A border colour change alone fails it.",
+    "component": "field"
+  },
+  {
+    "area": "Components",
+    "item": "Input, Textarea, Select: filled lighter and darker",
+    "original": "No border by default (border 0), a 1px border only on hover and focus. The fills are #fcfcfd and #f3f4f6.",
+    "ours": "The border stays in every state. The fill changes, the boundary does not.",
+    "reason": "The fills are 1.0:1 and 1.1:1 against the page, so without a border the field cannot be found (WCAG 1.4.11).",
+    "component": "input"
+  },
+  {
+    "area": "Components",
+    "item": "Input, Textarea, Select: focus",
+    "original": "shadow-md and a 2px underline that grows in from the start.",
+    "ours": "A 2px outline in border-black (white in dark mode), 1px outside the border, and the border takes field-border-pressed.",
+    "reason": "Shadows are off in dark mode (the focus cue would vanish) and the underline is not a 3:1 focus indicator on every fill. An outline is visible in both modes and in forced colours.",
+    "component": "input"
+  },
+  {
+    "area": "Components",
+    "item": "Input, Textarea, Select: read-only",
+    "original": "border-neutral-primary (#d2d6db) with the default fill.",
+    "ours": "A dashed border in field-border-default, the default fill and no hover change.",
+    "reason": "#d2d6db on white is 1.5:1. A read-only field can still be focused and read, so its boundary keeps 3:1. The dashed line tells it apart from an editable field without colour.",
+    "component": "input"
+  },
+  {
+    "area": "Components",
+    "item": "Textarea: size",
+    "original": "Large only: one fixed height (124px sample).",
+    "ours": "Grows in height (rows, default 4) and the user can resize it vertically; resize can be turned off.",
+    "reason": "A multi-line field has no single right height. Figma's Resize and Scroll Bar props map to resize and the native scroll bar.",
+    "component": "textarea"
+  },
+  {
+    "area": "Components",
+    "item": "Select: popup",
+    "original": "Only the open list (Dropdown List Item) is drawn, no popup surface.",
+    "ours": "A popup on the card surface with a 1px border, as wide as the trigger, opening below it. A 2px bar on the highlighted option (as well as the tint) and a check mark on the chosen one.",
+    "reason": "The tint alone is 1.1:1 against the popup, so keyboard users could not see which option is highlighted (WCAG 2.4.7).",
+    "component": "select"
+  },
+  {
+    "area": "Components",
+    "item": "Select: name",
+    "original": "Dropdown Input",
+    "ours": "Select (SelectTrigger, SelectValue, SelectContent, SelectItem)",
+    "reason": "Named after the Base UI part and the shadcn convention, so it is found when people search for it. The docs page says it is DGA's Dropdown Input.",
+    "component": "select"
+  },
+  {
+    "area": "Components",
+    "item": "Number Input: digits and direction",
+    "original": "No rule for Arabic pages.",
+    "ours": "The field is dir=\"ltr\" with unicode-bidi: isolate, so digits and signs never reorder. Typing or pasting Arabic-Indic (٣) or Persian (۳) digits gives Western digits (3). The − and + buttons sit on the logical start and end.",
+    "reason": "Numbers are technical values (amounts, IDs, quantities) that must not be reordered or mixed with other digit systems in one field.",
+    "component": "number-input"
+  },
+  {
+    "area": "Components",
+    "item": "Search Box: clear button",
+    "original": "A trailing icon variant (clear or voice).",
+    "ours": "A real clear button (24px target, named by clearLabel) that appears when there is text and returns focus to the field. type=search, so Escape clears it too.",
+    "reason": "Icon-only controls need a name and a keyboard path.",
+    "component": "search-box"
+  },
+  {
+    "area": "Components",
+    "item": "Checkbox, Radio: hover and pressed fill in dark mode",
+    "original": "The checked fill lightens on hover and press.",
+    "ours": "The fill stays green-600 in dark mode. Hover and press add a background to the box.",
+    "reason": "A white mark on the lighter fill is 1.4–2.1:1 (see the control-primary-hovered and -pressed fixes).",
+    "component": "checkbox"
+  },
+  {
+    "area": "Components",
+    "item": "Checkbox, Radio, Switch: read-only",
+    "original": "border-neutral-primary, transparent fill, grey mark.",
+    "ours": "control-border (3:1), transparent fill, grey mark, and the pointer stays an arrow.",
+    "reason": "The pale border is 1.5:1 on white. A read-only control keeps a 3:1 boundary.",
+    "component": "checkbox"
+  },
+  {
+    "area": "Components",
+    "item": "Checkbox: indeterminate",
+    "original": "A dash variant of the primary and neutral styles.",
+    "ours": "indeterminate prop (and aria-checked=mixed). The dash and check mark share one icon slot.",
+    "reason": "A parent checkbox needs to report a partly selected group to screen readers.",
+    "component": "checkbox"
+  },
+  {
+    "area": "Components",
+    "item": "Checkbox, Radio, Switch: focus ring",
+    "original": "A 2px border-black outline on the label's hit box.",
+    "ours": "A 2px outline 2px outside the control, on :focus-visible only (white in dark mode).",
+    "reason": "Keyboard-only focus (WCAG 2.4.7). The outline follows the control's shape and does not shift the label.",
+    "component": "switch"
+  },
+  {
+    "area": "Components",
+    "item": "Switch: off track",
+    "original": "#ccc on the site, no token in Figma.",
+    "ours": "control-border for the off track, a white thumb, and a tick in the thumb when icon is set.",
+    "reason": "#ccc is 1.6:1 on white. control-border is 4.8:1, so the off track and its white thumb pass 3:1.",
+    "component": "switch"
+  },
+  {
+    "area": "Components",
+    "item": "Switch: error",
+    "original": "An alert message below the label.",
+    "ours": "The same message with its icon, and a 2px error outline on the off track.",
+    "reason": "The error must be visible on the control as well as in the text, without relying on colour alone.",
+    "component": "switch"
+  },
+  {
+    "area": "Components",
+    "item": "File Upload: drop zone",
+    "original": "Single and Multiple variants with a Drop Zone and File parts; drag-over style on the site.",
+    "ours": "One component for both: a drop zone that is a real file input (Tab, then Space or Enter), a file list with remove, progress and error states, and file-type, size and count validation.",
+    "reason": "A drop zone that only accepts a mouse drag is not keyboard accessible (WCAG 2.1.1). Rejected files stay in the list with the reason.",
+    "component": "file-upload"
+  },
+  {
+    "area": "Components",
+    "item": "File Upload: Arabic file names",
+    "original": "Not specified.",
+    "ours": "Each name has dir=\"auto\" and is wrapped in <bdi>, so an Arabic name reads right to left and \"report.pdf\" left to right, whatever the page direction. Sizes and percentages are always left to right Western digits.",
+    "reason": "A name mixing Arabic and Latin text must not be reordered around its extension.",
+    "component": "file-upload"
   }
 ]

@@ -1,0 +1,120 @@
+---
+title: File Upload
+description: "منطقة إفلات تعمل بلوحة المفاتيح، وقائمة بالملفات المختارة، مع حالات الإزالة والتقدم والخطأ والتحقق من الملفات."
+sourceHash: ce237d2b4951
+---
+
+<Preview name="file-upload-demo" title="رفع ملف" />
+
+## التثبيت [#installation]
+
+<ComponentInstall name="file-upload" />
+
+ويثبّت [Field](/docs/components/field) أيضًا.
+
+## الاستخدام [#usage]
+
+```tsx title="page.tsx"
+import { Field, FieldLabel } from "@/components/ui/field";
+import { FileUpload } from "@/components/ui/file-upload";
+
+export function DocumentsField() {
+  return (
+    <Field name="documents">
+      <FieldLabel>المستندات الداعمة</FieldLabel>
+      <FileUpload
+        accept=".pdf,.jpg,.png"
+        maxSize={5 * 1024 * 1024}
+        maxFiles={3}
+        hint="PDF أو JPG أو PNG، حتى 5 MB للملف."
+        onFilesAdded={(files) => files.forEach(upload)}
+      />
+    </Field>
+  );
+}
+```
+
+استخدم File Upload لإرفاق المستندات والصور بطلب. يختار المكوّن الملفات ويفحصها، وأنت ترفعها. مرّر `onFilesAdded` لبدء الرفع، ثم احتفظ بالقائمة في حالتك (`files`) وحدّث `status` و`progress` لكل ملف. اذكر الصيغ المقبولة وحد الحجم في `hint`.
+
+## البنية [#anatomy]
+
+- **منطقة الإفلات** (`<label>` حول `<input>` للملفات): المنطقة المنقطة. والحقل هو عنصر التحكم القابل للتركيز.
+- **التلميح**: الصيغ وحد الحجم.
+- **قائمة الملفات** (`<ul>`): صف لكل ملف فيه أيقونة والاسم والحجم أو الحالة وزر إزالة.
+- **شريط التقدم** (`role="progressbar"`) أثناء رفع الملف.
+
+## أمثلة [#examples]
+
+### التحقق [#validation]
+
+تُفحص الملفات مقابل `accept` و`maxSize` و`maxFiles`. ويبقى الملف المرفوض في القائمة مع السبب، فلا يضيع بصمت. جرّب ملفًا أكبر من 5 MB أو ملف `.exe`. والدالة `validateFiles()` مصدَّرة إن احتجت الفحص نفسه في مكان آخر.
+
+<Preview name="file-upload-demo" title="التحقق" />
+
+### الحالات [#states]
+
+تعرض القائمة ملفًا انتهى رفعه وملفًا يُرفع مع التقدم وملفًا مرفوضًا وملفًا ينتظر الرفع. ويمكن تعطيل منطقة الإفلات أو جعلها في حالة خطأ.
+
+<Preview name="file-upload-states" title="الحالات" />
+
+### إظهار التقدم [#reporting-progress]
+
+تحكّم في القائمة عبر `files` و`onFilesChange`، وحدّث الملف أثناء رفعه.
+
+```tsx title="page.tsx"
+const [files, setFiles] = useState<UploadFile[]>([]);
+
+<FileUpload
+  files={files}
+  onFilesChange={setFiles}
+  onFilesAdded={(added) =>
+    added.forEach((file) =>
+      upload(file.file, (progress) =>
+        setFiles((current) =>
+          current.map((f) =>
+            f.id === file.id
+              ? { ...f, status: progress < 100 ? "uploading" : "done", progress }
+              : f,
+          ),
+        ),
+      ),
+    )
+  }
+/>
+```
+
+## RTL [#rtl]
+
+يبدأ رمز كل صف ونصه من اليمين، ويقع زر الإزالة على اليسار، ويمتلئ شريط التقدم من اليمين إلى اليسار. وتحتفظ أسماء الملفات باتجاهها (`dir="auto"` داخل `<bdi>`): الاسم العربي يُقرأ من اليمين إلى اليسار و`report.pdf` من اليسار إلى اليمين. والأحجام والنسب المئوية بأرقام غربية من اليسار إلى اليمين.
+
+<DirectionCompare name="file-upload-states" title="رفع ملف" />
+
+## إمكانية الوصول [#accessibility]
+
+| المفتاح | الإجراء |
+| --- | --- |
+| <kbd>Tab</kbd> | ينقل التركيز إلى منطقة الإفلات، ثم عبر أزرار الإزالة. |
+| <kbd>Space</kbd> أو <kbd>Enter</kbd> | يفتح منتقي الملفات. |
+| <kbd>Enter</kbd> أو <kbd>Space</kbd> على زر الإزالة | يزيل ذلك الملف. |
+
+- منطقة الإفلات حقل ملفات أصلي، فهي قابلة للتركيز وتعمل بلوحة المفاتيح وتقنيات المساعدة. والسحب إضافة وليس الطريقة الوحيدة (WCAG 2.1.1).
+- يحيط حد التركيز بالمنطقة كلها. والحد المتقطع بنسبة 3:1 أو أفضل؛ والسحب فوقها يضيف حدًا مصمتًا بلون العلامة وتظليلًا.
+- يحمل كل زر إزالة اسم الملف («إزالة report.pdf»). وتُعلَن حالات الرفض في منطقة حيّة وتظهر في القائمة بأيقونة ونص.
+- لشريط التقدم `role="progressbar"` مع `aria-valuenow`؛ وتُكتب النسبة المئوية بجانبه أيضًا.
+- ترجم `messages` في الصفحات العربية.
+
+## مرجع API [#api-reference]
+
+<ApiReference component="file-upload" />
+
+## الاختلافات عن DGA [#deviations-from-dga]
+
+- مكوّن واحد لنسختي Single وMultiple في Figma، ومنطقة الإفلات فيه حقل ملفات حقيقي.
+- تبقى الملفات المرفوضة في القائمة مع السبب.
+- تحتفظ أسماء الملفات العربية باتجاهها.
+
+<ComponentDeviations component="file-upload" />
+
+## التباين [#contrast]
+
+<ComponentContrast component="file-upload" />

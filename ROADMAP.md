@@ -1,6 +1,6 @@
 # Roadmap
 
-Phases 0, 1 and 2 are done (0.1.0), the Phase 2.5 docs polish is in 0.1.1 and 0.1.2, and the Arabic locale (Phase 2.6) is in 0.2.0; see [CHANGELOG.md](CHANGELOG.md).
+Phases 0, 1 and 2 are done (0.1.0), the Phase 2.5 docs polish is in 0.1.1 and 0.1.2, the Arabic locale (Phase 2.6) is in 0.2.0, and the forms (Phase 3) are in 0.3.0; see [CHANGELOG.md](CHANGELOG.md).
 Component specs for each phase are in `docs/design-system/components/`.
 
 ## Rules for every phase
@@ -63,11 +63,14 @@ This reverses the earlier decision to publish the docs in English only.
 - [x] Header and docs layout follow the shared omqkhafi docs layout (lockup pane, three equal tabs, theme, language, GitHub).
 - [x] Arabic typography rules and the numerals convention, documented on the Typography page.
 
-## Phase 3: Forms
+## Phase 3: Forms (done, 0.3.0)
 
-Input, Textarea, Checkbox, Radio, Switch, Select, Number Input, Search Box, File Upload, Field (label, helper text, error).
-
-- Audit for the `field-*`, `control-*` and `textarea-*` tokens. This includes non-text contrast of 3:1 for input boundaries, as WCAG 1.4.11 requires.
+- [x] **Field** (label with required or optional marker, helper text, error with icon), wrapping every control. No Figma spec, so it is derived from the label, helper and error parts of the input pages.
+- [x] **Input**, **Textarea**, **Select** (DGA Dropdown Input), **Number Input**, **Search Box**, **Checkbox** (with indeterminate), **Radio** and Radio Group, **Switch**, **File Upload**.
+- [x] Every state from the specs: default, hover, focus-visible, filled, read-only, disabled and error (success where the spec has it), all sizes, light and dark, RTL and LTR.
+- [x] Number Input keeps digits left to right and isolated and normalises Arabic-Indic input to Western digits; File Upload has a keyboard-accessible drop zone, a file list with remove, progress and error states, and Arabic file names; Search Box has a clear button.
+- [x] Audit for the `field-*`, `control-*` and `textarea-*` tokens, including non-text contrast of 3:1 for input boundaries (WCAG 1.4.11). Failures fixed and logged in Deviations.
+- [x] A docs page per component in English and Arabic under "Forms", with a citizen service request form built from Field-based controls.
 
 ## Phase 4: Interactive on Base UI
 

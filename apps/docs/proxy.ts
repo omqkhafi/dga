@@ -7,7 +7,8 @@ const fumadocs = createI18nMiddleware(i18n);
 /**
  * A URL without a locale (/, /docs/installation) goes to /en or /ar: first the language the
  * visitor chose with the switcher (the `dga_locale` cookie), then Accept-Language, then English.
- * Old links keep working because they are redirected, not removed.
+ * Old links keep working because they are redirected, not removed. The bare
+ * /manifest.webmanifest is routed the same way (the matcher below lets it through).
  */
 export default function proxy(request: NextRequest, event: NextFetchEvent) {
   const { pathname } = request.nextUrl;
@@ -25,6 +26,7 @@ export default function proxy(request: NextRequest, event: NextFetchEvent) {
 
 export const config = {
   // Not the registry (/r), preview frames, OG images, the search index, API routes, or any
-  // file (icons, sitemaps, llms.txt, .md exports).
-  matcher: ["/((?!_next|r/|preview|og/|search-index|api|.*\\..*).*)"],
+  // file (icons, sitemaps, llms.txt, .md exports). The one file that is let through is the bare
+  // manifest, which redirects to the manifest of the visitor's language.
+  matcher: ["/((?!_next|r/|preview|og/|search-index|api|.*\\..*).*)", "/manifest.webmanifest"],
 };

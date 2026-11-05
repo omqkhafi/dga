@@ -299,7 +299,7 @@ export function applyDark(
 ): DarkChange[] {
   for (const [step, value] of Object.entries(DARK_NEUTRALS)) {
     const name = `${DARK_NEUTRAL_PREFIX}${step}`;
-    primitives.set(name, { name, value, source: "dga-ui" });
+    primitives.set(name, { name, value, source: "platform-code" });
   }
   const hex = (name: string) => {
     let value = primitives.get(name)?.value;

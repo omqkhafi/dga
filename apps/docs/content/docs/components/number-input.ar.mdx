@@ -1,0 +1,104 @@
+---
+title: Number Input
+description: "حقل رقمي بزرّي − و+. تبقى الأرقام من اليسار إلى اليمين ومعزولة، وتتحول الأرقام الهندية المكتوبة إلى أرقام غربية."
+sourceHash: bee64891fdca
+---
+
+<Preview name="number-input-states" title="حالات حقل الرقم" />
+
+## التثبيت [#installation]
+
+<ComponentInstall name="number-input" />
+
+ويثبّت [Input](/docs/components/input) و[Field](/docs/components/field) أيضًا.
+
+## الاستخدام [#usage]
+
+```tsx title="page.tsx"
+import { Field, FieldLabel } from "@/components/ui/field";
+import { NumberInput } from "@/components/ui/number-input";
+
+export function QuantityField() {
+  return (
+    <Field name="quantity">
+      <FieldLabel>الكمية</FieldLabel>
+      <NumberInput
+        defaultValue={1}
+        min={1}
+        max={10}
+        decrementLabel="إنقاص"
+        incrementLabel="زيادة"
+      />
+    </Field>
+  );
+}
+```
+
+استخدم Number Input للكميات والمبالغ التي يزيدها المستخدم وينقصها. وللمعرّفات التي هي أرقام وليست كميات (رقم الهوية أو الهاتف) استخدم [Input](/docs/components/input) مع `inputMode="numeric"`. وترجم دائمًا `decrementLabel` و`incrementLabel` في الصفحات العربية.
+
+## البنية [#anatomy]
+
+- **الإطار**: الحد والتعبئة نفسهما في [Input](/docs/components/input).
+- **زر الإنقاص** (`−`): في جهة البداية.
+- **الحقل**: الرقم، في الوسط بين الزرين، بـ `dir="ltr"` و`unicode-bidi: isolate`.
+- **زر الزيادة** (`+`): في جهة النهاية.
+
+## أمثلة [#examples]
+
+### الحد الأدنى والأقصى والخطوة [#min-max-and-step]
+
+يوقف `min` و`max` الزرين ومفتاحي السهمين عند الحدين، ويُعطَّل الزر عند الحد. ويحدد `step` مقدار تغيّر القيمة مع كل ضغطة. والقيمة التي تستلمها هي دائمًا `number`.
+
+<Preview compact name="number-input-demo" title="الحد الأدنى والأقصى والخطوة" />
+
+### الحالات [#states]
+
+الافتراضية والمعبأة وللقراءة فقط والمعطّلة وحالة الخطأ، والحجم المتوسط مع التعبئة الأغمق.
+
+<Preview name="number-input-states" title="الحالات" />
+
+### التنسيق [#formatting]
+
+يقبل `format` خيارات `Intl.NumberFormat` للعملة والنسبة المئوية والوحدات. والقيمة الافتراضية لـ `locale` هي `en-u-nu-latn`، فالأرقام غربية في كل الصفحات.
+
+```tsx title="page.tsx"
+<NumberInput
+  defaultValue={250}
+  format={{ style: "currency", currency: "SAR", currencyDisplay: "code" }}
+/>
+```
+
+## RTL [#rtl]
+
+يتبادل الزران الجهتين: − على اليمين (البداية) و+ على اليسار (النهاية). ولا تتحرك الأرقام ولا يُعاد ترتيبها: الحقل `dir="ltr"` ومعزول عن النص العربي حوله. كتابة ٣ تعطي 3، والفاصلة العشرية ٫ تعطي نقطة.
+
+<DirectionCompare name="number-input-demo" title="حقل الرقم" />
+
+## إمكانية الوصول [#accessibility]
+
+| المفتاح | الإجراء |
+| --- | --- |
+| <kbd>Tab</kbd> | ينقل التركيز إلى الحقل. ويُتخطى الزران؛ فمفتاحا السهمين يؤديان العمل نفسه. |
+| <kbd>ArrowUp</kbd> / <kbd>ArrowDown</kbd> | يزيد أو ينقص بمقدار `step`. |
+| <kbd>Shift</kbd> + <kbd>ArrowUp</kbd> / <kbd>ArrowDown</kbd> | يغيّر بمقدار 10 (`largeStep`). ومع <kbd>Alt</kbd> بمقدار 0.1 (`smallStep`). |
+| <kbd>Home</kbd> / <kbd>End</kbd> | يقفز إلى `min` أو `max` عند ضبطهما. |
+
+- الحقل إدخال نصي بالسمة `inputmode="numeric"` و`aria-roledescription="Number field"`، فيعرض الهاتف لوحة أرقام وتعلنه قارئات الشاشة حقل رقم.
+- للزرين − و+ اسمان (`decrementLabel` و`incrementLabel`) ومساحة نقر 24px، ويُعطَّلان عند الحدين.
+- يحافظ `dir="ltr"` و`unicode-bidi: isolate` على ترتيب الأرقام والإشارات داخل النص العربي.
+- تُقبل الأرقام الهندية والفارسية عند الكتابة أو اللصق وتصبح أرقامًا غربية؛ وتقرأ قارئات الشاشة القيمة الغربية.
+
+## مرجع API [#api-reference]
+
+<ApiReference component="number-input" />
+
+## الاختلافات عن DGA [#deviations-from-dga]
+
+- الأرقام دائمًا غربية ومن اليسار إلى اليمين ومعزولة. ولا يصف Figma الصفحات العربية.
+- زرّا − و+ زرّان حقيقيان في جهتي البداية والنهاية المنطقيتين.
+
+<ComponentDeviations component="number-input" />
+
+## التباين [#contrast]
+
+<ComponentContrast component="number-input" />

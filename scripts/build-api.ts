@@ -47,12 +47,12 @@ function typeText(checker: ts.TypeChecker, type: ts.Type, text: string) {
   return checker.typeToString(type, undefined, flags);
 }
 
-/** The Arabic description for a key, or an error if an English description has none. */
+const missingArabic: string[] = [];
+
+/** The Arabic description for a key. A key with an English description but no Arabic one is reported. */
 function arabic(key: string, hasEnglish: boolean) {
   const text = API_DESCRIPTIONS_AR[key] ?? "";
-  if (hasEnglish && !text) {
-    throw new Error(`Missing Arabic description for ${key} in scripts/api-descriptions-ar.ts`);
-  }
+  if (hasEnglish && !text) missingArabic.push(key);
   return text;
 }
 
@@ -189,6 +189,11 @@ export function buildApi(): Api {
       });
     }
     if (parts.length > 0) api[slug] = parts;
+  }
+  if (missingArabic.length > 0) {
+    throw new Error(
+      `Missing Arabic descriptions in scripts/api-descriptions-ar.ts:\n  ${missingArabic.join("\n  ")}`,
+    );
   }
   return api;
 }

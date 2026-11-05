@@ -56,6 +56,7 @@ export const ar: Dictionary = {
   "search.suggest.colors": "الألوان",
   "search.suggest.deviations": "الاختلافات عن DGA",
   "search.crumb.components": "المكوّنات",
+  "search.crumb.forms": "النماذج",
   "search.crumb.foundations": "الأساسيات",
   "search.crumb.docs": "التوثيق",
 
