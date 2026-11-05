@@ -52,12 +52,15 @@ Agreed scope:
 
 This reverses the earlier decision to publish the docs in English only.
 
-- [x] `/en` and `/ar` routing (English default), locale detection from `Accept-Language`, language switcher, `<html lang dir>`, `hreflang` and a sitemap per locale.
+- [x] `/en` and `/ar` routing (English default, `hideLocale: never`), language switcher, `<html lang dir>`, `hreflang` (with `x-default`) and a sitemap per locale.
+- [x] Locale persistence: the switcher writes the `dga_locale` cookie (SameSite=Lax, path `/`, one year). For a URL without a language, `proxy.ts` uses the cookie, then `Accept-Language`, then English. Covered by `bun run test:e2e`.
 - [x] UI strings in both languages for the whole shell.
 - [x] Arabic pages for home, Getting Started, Foundations, Contrast and the nine component pages.
 - [x] Search index per locale with Arabic normalisation.
 - [x] Arabic Open Graph images, `llms.txt` and Markdown export per locale.
 - [x] Translation drift check in CI.
+- [x] Product name: Platform Code / كود المنصات, with the DGA logo icon as the lockup in both languages.
+- [x] Header and docs layout follow the shared omqkhafi docs layout (lockup pane, three equal tabs, theme, language, GitHub).
 - [x] Arabic typography rules and the numerals convention, documented on the Typography page.
 
 ## Phase 3: Forms

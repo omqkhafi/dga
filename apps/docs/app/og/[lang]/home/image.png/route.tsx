@@ -11,6 +11,7 @@ export async function GET(_req: Request, { params }: RouteContext<"/og/[lang]/ho
   const t = getT(lang);
   return ogImage({
     lang,
+    brand: t("app.name"),
     title: t("meta.ogTitle"),
     description: t("meta.ogDescription"),
     eyebrow: t("meta.ogEyebrow"),

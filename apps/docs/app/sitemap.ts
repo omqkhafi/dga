@@ -16,7 +16,10 @@ export default async function sitemap(props: {
 }): Promise<MetadataRoute.Sitemap> {
   const lang = (await props.id) as Locale;
   const alternatesFor = (path: string) => ({
-    languages: Object.fromEntries(locales.map((l) => [l, `${siteUrl}/${l}${path}`])),
+    languages: {
+      ...Object.fromEntries(locales.map((l) => [l, `${siteUrl}/${l}${path}`])),
+      "x-default": `${siteUrl}/${i18n.defaultLanguage}${path}`,
+    },
   });
   return [
     {
@@ -33,14 +36,14 @@ export default async function sitemap(props: {
     },
     ...source.getPages(lang).map((page) => {
       const path = page.url.replace(/^\/[a-z]{2}/, "");
-      const languages = Object.fromEntries(
-        locales
-          .filter((l) => {
-            const other = source.getPage(page.slugs, l);
-            return other && hasOwnPage(other.path, l);
-          })
-          .map((l) => [l, `${siteUrl}/${l}${path}`]),
-      );
+      const translated = locales.filter((l) => {
+        const other = source.getPage(page.slugs, l);
+        return other && hasOwnPage(other.path, l);
+      });
+      const languages = {
+        ...Object.fromEntries(translated.map((l) => [l, `${siteUrl}/${l}${path}`])),
+        "x-default": `${siteUrl}/${i18n.defaultLanguage}${path}`,
+      };
       return {
         url: `${siteUrl}${page.url}`,
         changeFrequency: "weekly" as const,

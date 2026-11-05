@@ -2,7 +2,8 @@
 // (the type below enforces it). `{name}` is replaced by a value.
 export const en = {
   // Site metadata
-  "meta.title": "DGA UI: the Saudi government design system as React components",
+  "app.name": "Platform Code",
+  "meta.title": "Platform Code: the Saudi government design system as React components",
   "meta.description":
     "Copy-paste React components for the Saudi DGA unified design system. Base UI primitives, Arabic and English layouts, light and dark, every colour pair checked for WCAG AA.",
   "meta.ogTitle": "The Saudi government design system, as React components",
@@ -203,7 +204,7 @@ export const en = {
   "footer.issue": "Report an issue",
   "footer.licence": "MIT licence",
   "footer.disclaimerBefore":
-    "DGA UI is an independent open-source project. It is not an official product of the Digital Government Authority and is not endorsed by it. The design language, tokens and component specifications come from the DGA unified design system, published at ",
+    "Platform Code is an independent open-source project. It is not an official product of the Digital Government Authority and is not endorsed by it. The design language, tokens and component specifications come from the DGA unified design system, published at ",
   "footer.disclaimerAfter": ". MIT licence, © 2026 Omq Khafi.",
 
   // Changelog page
@@ -214,7 +215,7 @@ export const en = {
   "changelog.releases": "Releases",
   "changelog.latest": "Latest",
   "changelog.source": "Source",
-  "changelog.meta": "Every DGA UI release, newest first. Generated from CHANGELOG.md.",
+  "changelog.meta": "Every Platform Code release, newest first. Generated from CHANGELOG.md.",
 
   // Foundations tables and tools
   "col.shadcnVar": "shadcn variable",
@@ -258,7 +259,7 @@ export const en = {
   "tokens.tokenAndUtilities": "Token and utilities",
   "tokens.changed": "changed",
   "tokens.siteCss": "site CSS only",
-  "tokens.dgaUi": "DGA UI",
+  "tokens.dgaUi": "Platform Code",
   "tokens.lowestOn": "Lowest ratio on --{token}",
   "tokens.onFill": "--{token} on this fill",
   "icons.searchLabel": "Search icons",
@@ -270,7 +271,7 @@ export const en = {
   "pal.gold": "Gold (secondary)",
   "pal.lavender": "Lavender (tertiary)",
   "pal.neutral": "Neutral",
-  "pal.neutralDark": "Neutral, dark mode (DGA UI, green-tinted)",
+  "pal.neutralDark": "Neutral, dark mode (Platform Code, green-tinted)",
   "pal.base": "Base",
   "pal.status": "Status: {name}",
   "pal.alphaPrimary": "Alpha: primary",

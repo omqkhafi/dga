@@ -13,7 +13,7 @@ import { Icon } from "./icon";
 import { SidebarNav } from "./sidebar";
 import { useTabs } from "./tabs";
 
-/** Below md: a bottom sheet with the tabs and the docs navigation. */
+/** Below lg: a bottom sheet with the tabs and the docs navigation. */
 export function MobileNav({ tree, version }: { tree: PageTree.Root; version: string | null }) {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
@@ -22,9 +22,8 @@ export function MobileNav({ tree, version }: { tree: PageTree.Root; version: str
   return (
     <Dialog.Root open={open} onOpenChange={setOpen}>
       <Dialog.Trigger
-        render={
-          <Button variant="subtle" iconOnly aria-label={t("menu.open")} className="md:hidden" />
-        }
+        aria-label={t("menu.open")}
+        className="inline-flex size-8 items-center justify-center rounded-sm text-text-secondary-paragraph transition-colors duration-150 hover:text-text-default motion-reduce:transition-none"
       >
         <Icon icon={Menu01Icon} />
       </Dialog.Trigger>

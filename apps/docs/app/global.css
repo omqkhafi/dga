@@ -28,6 +28,14 @@
  * ---------------------------------------------------------------------------------- */
 :root {
   --track: 1;
+  /* The header and the docs sidebar share these two sizes (the omqkhafi docs layout). */
+  --topbar-h: 44px;
+  --left-pane-w: min(22vw, 300px);
+}
+@media (min-width: 1024px) {
+  :root {
+    --topbar-h: 48px;
+  }
 }
 :is([dir="rtl"], :lang(ar)) {
   --track: 0;

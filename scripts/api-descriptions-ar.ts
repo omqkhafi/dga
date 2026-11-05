@@ -31,12 +31,12 @@ export const API_DESCRIPTIONS_AR: Record<string, string> = {
   "badge.Badge.iconOnly": iconOnly,
   // Button
   "button.Button":
-    "ينفّذ إجراءً. ستة أنماط، ونسختان للإجراءات الحاذفة وللخلفيات الملونة، وثلاثة أحجام، وزر بأيقونة فقط وحالة تحميل.",
+    "ينفّذ إجراءً. ستة أنماط، ونسختان للإجراءات المدمّرة وللخلفيات الملونة، وثلاثة أحجام، وزر بأيقونة فقط وحالة تحميل.",
   "button.Button.variant":
     "النمط. `neutral` يقابل Primary-Neutral في Figma، و`secondary` يقابل Secondary-Solid، و`outline` يقابل Secondary-Outline.",
   "button.Button.size": "الارتفاع: `sm` ‏24px، و`md` ‏32px، و`lg` ‏40px.",
   "button.Button.destructive":
-    "النسخة الحاذفة من النمط. لا يوجد لـ `neutral` نسخة حاذفة في Figma، فيعود إلى `primary` الحاذف.",
+    "النسخة المدمّرة من النمط. لا يوجد لـ `neutral` نسخة مدمّرة في Figma، فيعود إلى `primary` المدمّر.",
   "button.Button.onColor": "للأزرار على خلفيات لون العلامة (`background-primary`، وترويسة التنقل).",
   "button.Button.iconOnly": iconOnly,
   "button.Button.loading":

@@ -38,7 +38,7 @@ export default async function ChangelogPage({ params }: PageProps<"/[lang]/chang
   const latest = latestVersion();
   return (
     <div className="flex flex-1 flex-col md:flex-row">
-      <aside className="bg-background-white px-6 py-10 md:sticky md:top-14 md:flex md:h-[calc(100dvh-3.5rem)] md:w-100 md:shrink-0 md:flex-col md:justify-center md:px-10">
+      <aside className="bg-background-white px-6 py-10 md:sticky md:top-(--topbar-h) md:flex md:h-[calc(100dvh-var(--topbar-h))] md:w-100 md:shrink-0 md:flex-col md:justify-center md:px-10">
         <p className="t-eyebrow text-text-secondary-paragraph">{t("changelog.eyebrow")}</p>
         <h1 className="mt-3 t-h1 text-text-display">{t("changelog.title")}</h1>
         <p className="mt-4 text-md text-text-primary-paragraph">{t("changelog.intro")}</p>

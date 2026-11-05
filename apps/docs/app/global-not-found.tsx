@@ -5,7 +5,7 @@ import { ibmPlexSansArabic } from "@/lib/fonts";
 import { LocaleProvider } from "@/lib/locale-context";
 import "./global.css";
 
-export const metadata: Metadata = { title: "Page not found | DGA UI" };
+export const metadata: Metadata = { title: "Page not found | Platform Code" };
 
 // This page bypasses the layouts, so it sets the theme itself, before first paint. A URL that
 // matches no route has no locale, so the message is English with the Arabic line under it, and

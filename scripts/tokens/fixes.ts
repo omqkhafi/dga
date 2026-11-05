@@ -1,6 +1,6 @@
 import { COMPONENT_ADDITIONS, COMPONENT_DEVIATIONS, COMPONENT_OVERRIDES } from "./component-fixes";
 
-// Every place where DGA UI intentionally differs from the DGA Figma source.
+// Every place where Platform Code intentionally differs from the DGA Figma source.
 // Each entry is applied by the generator AND listed on the docs "Deviations from DGA" page,
 // so the two can never drift apart.
 
@@ -295,7 +295,7 @@ export const OVERRIDES: Override[] = [
   ...COMPONENT_OVERRIDES,
 ];
 
-/** Tokens DGA UI adds that do not exist in Figma. */
+/** Tokens Platform Code adds that do not exist in Figma. */
 export type Addition = {
   name: string;
   light: string;

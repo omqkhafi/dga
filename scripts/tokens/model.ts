@@ -1,4 +1,4 @@
-// Applies DGA UI fixes to the Figma source and resolves token values.
+// Applies Platform Code fixes to the Figma source and resolves token values.
 
 import { contrastRatio } from "./color";
 import { type ComponentPair, componentPairs } from "./components";

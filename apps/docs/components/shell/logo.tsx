@@ -3,7 +3,7 @@
 import { cn } from "cn";
 import NextLink from "next/link";
 import { useId } from "react";
-import { useLocale } from "@/lib/locale-context";
+import { useLocale, useT } from "@/lib/locale-context";
 
 const PATHS = [
   [
@@ -80,16 +80,31 @@ export function Mark({ className }: { className?: string }) {
   );
 }
 
-/** The logo icon and the name. */
-export function Logo() {
+/** The lockup: the DGA logo icon, then the product name in the page's language. */
+export function Lockup({ className }: { className?: string }) {
+  const t = useT();
+  return (
+    <span className={cn("inline-flex items-center gap-3 text-text-default", className)}>
+      <Mark />
+      <span className="text-md font-bold whitespace-nowrap">{t("app.name")}</span>
+    </span>
+  );
+}
+
+/** The lockup as the link to the home page, on the start side of the header. */
+export function Logo({ className }: { className?: string }) {
   const { lang } = useLocale();
+  const t = useT();
   return (
     <NextLink
       href={`/${lang}`}
-      className="inline-flex min-h-9 items-center gap-2.5 rounded-sm font-bold tracking-tight text-text-default"
+      aria-label={t("app.name")}
+      className={cn(
+        "flex items-center transition-opacity duration-150 hover:opacity-80 motion-reduce:transition-none",
+        className,
+      )}
     >
-      <Mark />
-      <span className="text-md">DGA UI</span>
+      <Lockup />
     </NextLink>
   );
 }

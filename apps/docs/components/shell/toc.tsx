@@ -44,7 +44,7 @@ export function Toc({ toc }: { toc: TableOfContents }) {
     <AnchorProvider toc={toc}>
       <aside
         aria-label={t("toc.title")}
-        className="sticky top-14 hidden h-[calc(100dvh-3.5rem)] w-56 shrink-0 overflow-y-auto py-10 pe-4 xl:block"
+        className="sticky top-(--topbar-h) hidden h-[calc(100dvh-var(--topbar-h))] w-56 shrink-0 overflow-y-auto py-10 pe-4 xl:block"
       >
         <p className="mb-3 flex items-center gap-2 text-sm font-medium text-text-default">
           <Icon icon={LeftToRightListBulletIcon} />
@@ -69,7 +69,7 @@ export function InlineToc({ toc }: { toc: TableOfContents }) {
   if (toc.length === 0) return null;
   return (
     <AnchorProvider toc={toc}>
-      <div className="sticky top-14 z-30 -mx-4 mb-6 border-b border-border-neutral-secondary bg-background-white sm:-mx-8 lg:-mx-8 xl:hidden">
+      <div className="sticky top-(--topbar-h) z-30 -mx-4 mb-6 border-b border-border-neutral-secondary bg-background-white sm:-mx-8 lg:-mx-8 xl:hidden">
         <Popover.Root open={open} onOpenChange={setOpen}>
           <Popover.Trigger className="flex min-h-11 w-full items-center gap-2 px-4 text-start text-sm font-medium text-text-default hover:bg-button-background-neutral-default active:bg-button-background-neutral-pressed sm:px-8 lg:px-8">
             <Icon icon={LeftToRightListBulletIcon} className=" shrink-0" />

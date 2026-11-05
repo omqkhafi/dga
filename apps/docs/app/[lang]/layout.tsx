@@ -9,7 +9,7 @@ import { getDictionary, getT } from "@/lib/dictionary";
 import { ibmPlexSansArabic } from "@/lib/fonts";
 import { dirOf, i18n, isLocale } from "@/lib/i18n";
 import { LocaleProvider } from "@/lib/locale-context";
-import { appName, siteUrl } from "@/lib/shared";
+import { siteUrl } from "@/lib/shared";
 import { source } from "@/lib/source";
 import "../global.css";
 
@@ -25,17 +25,18 @@ export async function generateMetadata({ params }: LayoutProps<"/[lang]">): Prom
   const t = getT(lang);
   return {
     metadataBase: new URL(siteUrl),
-    title: { default: t("meta.title"), template: `%s | ${appName}` },
+    title: { default: t("meta.title"), template: `%s | ${t("app.name")}` },
     description: t("meta.description"),
     openGraph: {
       type: "website",
-      siteName: appName,
+      siteName: t("app.name"),
       url: `${siteUrl}/${lang}`,
       locale: lang === "ar" ? "ar_SA" : "en_US",
       alternateLocale: lang === "ar" ? ["en_US"] : ["ar_SA"],
       images: [{ url: `/og/${lang}/home/image.png`, width: 1200, height: 630 }],
     },
     twitter: { card: "summary_large_image" },
+    manifest: `/${lang}/manifest.webmanifest`,
     alternates: { types: { "text/plain": `/${lang}/llms.txt` } },
   };
 }

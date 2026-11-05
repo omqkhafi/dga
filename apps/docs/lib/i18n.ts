@@ -22,6 +22,9 @@ export const isLocale = (value: string | undefined): value is Locale =>
 
 export const dirOf = (locale: Locale): "ltr" | "rtl" => (locale === "ar" ? "rtl" : "ltr");
 
+/** The cookie the language switcher writes and `proxy.ts` reads. */
+export const LOCALE_COOKIE = "dga_locale";
+
 /** The locale's name in its own language, for the switcher. */
 export const localeName: Record<Locale, string> = { en: "English", ar: "العربية" };
 

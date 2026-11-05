@@ -1,6 +1,6 @@
 import { getT } from "./dictionary";
 import type { Locale } from "./i18n";
-import { appName, siteUrl } from "./shared";
+import { siteUrl } from "./shared";
 import { getPageMarkdown, source } from "./source";
 
 const mdUrl = (url: string, lang: Locale) =>
@@ -24,7 +24,7 @@ export function llmsIndex(lang: Locale) {
     .map(([group, lines]) => `## ${titles[group] ?? group}\n\n${lines.join("\n")}`)
     .join("\n\n");
   const other: Locale = lang === "en" ? "ar" : "en";
-  return `# ${appName}
+  return `# ${t("app.name")}
 
 > ${t("meta.llmsSummary")}
 

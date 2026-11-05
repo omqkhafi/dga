@@ -22,11 +22,13 @@
     "api": "bun scripts/build-api.ts",
     "api:check": "bun scripts/build-api.ts --check",
     "translations:check": "bun scripts/translations.ts --check",
-    "translations:stamp": "bun scripts/translations.ts --stamp"
+    "translations:stamp": "bun scripts/translations.ts --stamp",
+    "test:e2e": "bun scripts/e2e.mjs"
   },
   "devDependencies": {
     "@biomejs/biome": "2.6.5",
     "@types/bun": "latest",
+    "playwright": "1.63.0",
     "shadcn": "4.23.0",
     "typescript": "~5.9.3"
   }

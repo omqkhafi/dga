@@ -4,7 +4,8 @@ import type { Dictionary } from "./en";
 // component names stay in English wherever they appear in a sentence.
 export const ar: Dictionary = {
   // Site metadata
-  "meta.title": "DGA UI: نظام تصميم الحكومة السعودية على هيئة مكوّنات React",
+  "app.name": "كود المنصات",
+  "meta.title": "كود المنصات: نظام تصميم الحكومة السعودية على هيئة مكوّنات React",
   "meta.description":
     "مكوّنات React تنسخها إلى مشروعك لنظام التصميم الموحد (DGA) في السعودية. مبنية على Base UI، بتخطيط عربي وإنجليزي، ووضعين فاتح وداكن، وكل زوج لوني فُحص وفق WCAG AA.",
   "meta.ogTitle": "نظام تصميم الحكومة السعودية على هيئة مكوّنات React",
@@ -206,7 +207,7 @@ export const ar: Dictionary = {
   "footer.issue": "الإبلاغ عن مشكلة",
   "footer.licence": "رخصة MIT",
   "footer.disclaimerBefore":
-    "DGA UI مشروع مستقل مفتوح المصدر. وهو ليس منتجًا رسميًا لهيئة الحكومة الرقمية، ولم تعتمده الهيئة. اللغة البصرية والرموز ومواصفات المكوّنات مأخوذة من نظام التصميم الموحد (DGA) المنشور في ",
+    "كود المنصات مشروع مستقل مفتوح المصدر. وهو ليس منتجًا رسميًا لهيئة الحكومة الرقمية، ولم تعتمده الهيئة. اللغة البصرية والرموز ومواصفات المكوّنات مأخوذة من نظام التصميم الموحد (DGA) المنشور في ",
   "footer.disclaimerAfter": ". رخصة MIT، © 2026 Omq Khafi.",
 
   // Changelog page
@@ -217,7 +218,7 @@ export const ar: Dictionary = {
   "changelog.releases": "الإصدارات",
   "changelog.latest": "الأحدث",
   "changelog.source": "المصدر",
-  "changelog.meta": "كل إصدار من DGA UI، الأحدث أولًا. تُولَّد من CHANGELOG.md.",
+  "changelog.meta": "كل إصدار من كود المنصات، الأحدث أولًا. تُولَّد من CHANGELOG.md.",
 
   // Foundations tables and tools
   "col.shadcnVar": "متغير shadcn",
@@ -261,7 +262,7 @@ export const ar: Dictionary = {
   "tokens.tokenAndUtilities": "الرمز وأدواته",
   "tokens.changed": "معدَّل",
   "tokens.siteCss": "من CSS الموقع فقط",
-  "tokens.dgaUi": "DGA UI",
+  "tokens.dgaUi": "كود المنصات",
   "tokens.lowestOn": "أدنى نسبة على --{token}",
   "tokens.onFill": "--{token} على هذه التعبئة",
   "icons.searchLabel": "البحث في الأيقونات",
@@ -273,7 +274,7 @@ export const ar: Dictionary = {
   "pal.gold": "الذهبي (الثانوي)",
   "pal.lavender": "الخزامي (الثالثي)",
   "pal.neutral": "المحايد",
-  "pal.neutralDark": "المحايد للوضع الداكن (DGA UI، بصبغة خضراء)",
+  "pal.neutralDark": "المحايد للوضع الداكن (كود المنصات، بصبغة خضراء)",
   "pal.base": "الأساس",
   "pal.status": "الحالة: {name}",
   "pal.alphaPrimary": "الشفافية: الأساسي",
@@ -306,7 +307,7 @@ export const ar: Dictionary = {
   "compare.secondary": "ثانوي",
   "compare.brand": "العلامة",
   "compare.button": "الزر (Button)",
-  "compare.buttonDestructive": "الزر الحاذف",
+  "compare.buttonDestructive": "الزر المدمّر",
   "compare.badge": "الشارة (Badge)",
   "compare.badgeOutlined": "الشارة بإطار",
   "compare.tagStatus": "الوسم ووسم الحالة (Tag وStatus Tag)",
@@ -377,7 +378,7 @@ export const ar: Dictionary = {
   "bento.service": "الخدمة",
   "bento.serviceValue": "تجديد العنوان الوطني",
   "bento.submitted": "تاريخ التقديم",
-  "bento.submittedValue": "4 نوفمبر 2026",
+  "bento.submittedValue": "٤ نوفمبر ٢٠٢٦",
   "bento.documents": "المستندات",
   "bento.verified": "موثّق",
   "bento.files": "ملفان",
@@ -397,10 +398,10 @@ export const ar: Dictionary = {
   "bento.cancel": "إلغاء",
   "bento.loading": "جارٍ التحميل",
   "bento.team": "فريق المراجعة",
-  "bento.reviewers": "5 مراجعين",
+  "bento.reviewers": "٥ مراجعين",
   "bento.updates": "المستجدات",
   "bento.update1": "تم التحقق من العنوان",
-  "bento.update2": "تنتهي الهوية خلال 14 يومًا",
+  "bento.update2": "تنتهي الهوية خلال ١٤ يومًا",
   "bento.update3": "ساعات خدمة جديدة",
   "bento.terms": "اقرأ {link} قبل التقديم.",
   "bento.termsLink": "شروط الخدمة",

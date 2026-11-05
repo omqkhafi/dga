@@ -8,6 +8,7 @@ bun run typecheck
 bun run test
 bun run tokens:check && bun run api:check && bun run translations:check
 bun run build
+bun run test:e2e   # with the site running; set E2E_BASE_URL if it is not on :3000
 ```
 
 If you change tokens, run `bun run tokens`; if you change a component's props, run `bun run api`; commit the generated files (`apps/docs/lib/generated`, `apps/docs/public/r`).
@@ -28,6 +29,7 @@ Every docs page and every UI string exists in English and Arabic. A pull request
 - Modern Standard Arabic, plain and specific, the same register as the English. Use the same Arabic term for the same thing everywhere; look it up in existing pages first.
 - Arabic text uses IBM Plex Sans Arabic, line height 1.8 for body text (1.5 for headings) and no letter spacing. The docs site applies this for `:lang(ar)`; see Foundations > Typography.
 - **Numerals.** Western digits (0 to 9) in prose and in every technical value (versions, ratios, sizes, counts, dates). Arabic-Indic digits (٠ to ٩) only in sample content that imitates a citizen-facing service. Never mix the two in one view.
+- **Digits in demos.** A sample that imitates a citizen-facing service uses Arabic-Indic digits for all of it (dates, counts, reference numbers); do not mix in Western digits.
 - Use logical properties (`ms-*`, `ps-*`, `start-*`) everywhere, and check every change in RTL and LTR, light and dark, at 375, 768 and 1280px.
 
 ## Components

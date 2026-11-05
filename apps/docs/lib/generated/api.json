@@ -133,7 +133,7 @@
     {
       "name": "Button",
       "description": "Triggers an action. Six styles, destructive and on-colour versions, three sizes, icon-only and loading.",
-      "descriptionAr": "ينفّذ إجراءً. ستة أنماط، ونسختان للإجراءات الحاذفة وللخلفيات الملونة، وثلاثة أحجام، وزر بأيقونة فقط وحالة تحميل.",
+      "descriptionAr": "ينفّذ إجراءً. ستة أنماط، ونسختان للإجراءات المدمّرة وللخلفيات الملونة، وثلاثة أحجام، وزر بأيقونة فقط وحالة تحميل.",
       "inherits": {
         "name": "Button",
         "url": "https://base-ui.com/react/components/button"
@@ -161,7 +161,7 @@
           "default": "false",
           "required": false,
           "description": "Destructive version of the style. `neutral` has none in Figma and falls back to destructive `primary`.",
-          "descriptionAr": "النسخة الحاذفة من النمط. لا يوجد لـ `neutral` نسخة حاذفة في Figma، فيعود إلى `primary` الحاذف."
+          "descriptionAr": "النسخة المدمّرة من النمط. لا يوجد لـ `neutral` نسخة مدمّرة في Figma، فيعود إلى `primary` المدمّر."
         },
         {
           "name": "onColor",

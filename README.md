@@ -1,4 +1,4 @@
-# DGA UI
+# Platform Code (كود المنصات)
 
 The Saudi Digital Government Authority (DGA) design system as copy-paste React components, installed with the shadcn CLI. Built on Base UI and Tailwind CSS v4, in Arabic and English (RTL and LTR), light and dark, to WCAG 2.1 AA.
 
@@ -15,7 +15,7 @@ npx shadcn@latest add @dga/button
 
 ## Languages
 
-The documentation is published in English and Arabic. Both are first-class: every page, every UI string and every Open Graph image exists in both, and a new component is not done until both are written (see [ROADMAP.md](ROADMAP.md)). Arabic follows its own typography rules (line height 1.8, no letter spacing, Western digits in technical values); they are documented under Foundations > Typography.
+The documentation is published in English (`/en`) and Arabic (`/ar`). A URL without a language goes to the language the visitor chose with the switcher in the header (the `dga_locale` cookie: SameSite=Lax, path `/`, one year), then to the language in `Accept-Language`, then to English. Both are first-class: every page, every UI string and every Open Graph image exists in both, and a new component is not done until both are written (see [ROADMAP.md](ROADMAP.md)). Arabic follows its own typography rules (line height 1.8, no letter spacing, Western digits in technical values); they are documented under Foundations > Typography.
 
 ## Repository
 
@@ -33,6 +33,7 @@ bun install
 bun run dev                 # docs site on http://localhost:3000
 bun run lint && bun run typecheck && bun run test
 bun run translations:check  # English and Arabic pages are in sync
+bun run test:e2e            # browser checks against a running site (E2E_BASE_URL)
 bun run build
 ```
 

@@ -122,12 +122,15 @@ export function ogImage({
   description,
   eyebrow,
   footer,
+  brand,
   lang = "en",
 }: {
   title: string;
   description?: string;
   eyebrow: string;
   footer: string;
+  /** The product name for the lockup, in the page's language. */
+  brand: string;
   lang?: "en" | "ar";
 }) {
   const rtl = lang === "ar";
@@ -222,11 +225,19 @@ export function ogImage({
               <path key={d} d={d} fill={`url(#${g})`} />
             ))}
           </svg>
-          <div
-            style={{ fontSize: 36, fontWeight: 700, color: "#161616", letterSpacing: track(-1) }}
-          >
-            DGA UI
-          </div>
+          {rtl ? (
+            <RtlText
+              text={brand}
+              gap={8}
+              style={{ fontSize: 40, fontWeight: 700, color: "#161616" }}
+            />
+          ) : (
+            <div
+              style={{ fontSize: 36, fontWeight: 700, color: "#161616", letterSpacing: track(-1) }}
+            >
+              {brand}
+            </div>
+          )}
           {rtl ? (
             <RtlText text={eyebrow} gap={8} style={{ fontSize: 28, color: "#4d5761" }} />
           ) : (

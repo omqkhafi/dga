@@ -172,7 +172,7 @@ export function Bento({ lang }: { lang: Locale }) {
           <AvatarGroup>
             <Avatar size={40} initials="NQ" />
             <Avatar size={40} initials="FA" />
-            <Avatar size={40} initials="+3" />
+            <Avatar size={40} initials={lang === "ar" ? "+٣" : "+3"} />
           </AvatarGroup>
           <p className="text-sm text-text-primary-paragraph">{t("bento.reviewers")}</p>
         </div>
