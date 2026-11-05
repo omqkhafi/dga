@@ -739,7 +739,6 @@ export function ToastDemo() {
                 type,
                 title: messages[type][0],
                 description: messages[type][1],
-                priority: type === "error" || type === "warning" ? "high" : "low",
                 ...(type === "success" ? { actionProps: { children: t("View", "عرض") } } : {}),
               })
             }

@@ -5,6 +5,53 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
 
 ## [Unreleased]
 
+## [0.4.0] - 2026-11-05
+
+Phase 4: Interactive. Ten components on Base UI, each in English and Arabic, and a fix for how Input, Textarea, Select, Number Input and Search Box behave on hover, press and focus.
+
+### Added
+
+- **Dialog** (DGA Modal): `sm` 400, `md` 600 (DGA) and `lg` 800px, a close button, header, body and footer. Focus moves in and is trapped, the page behind is inert, Escape closes it and focus returns to the trigger. `disablePointerDismissal` for a decision that must be answered.
+- **Drawer** (DGA Slideout Menu): slides in from the start, end, top or bottom; `start` and `end` flip with the page direction and the swipe that closes it follows. White or gray. A modal panel with the same focus handling as Dialog.
+- **Tooltip** and **Help Icon**: light and dark, optional title and beak, placement `top`, `bottom`, `start` and `end` (the last two swap in Arabic). Opens on hover and on keyboard focus. The Help Icon (`TooltipHelp`) is a popover that also opens on hover, so touch and screen reader users can read it.
+- **Menu**: items with icons and trailing text, checkbox and radio items, groups, separators and submenus. Roving focus, typeahead, Home and End; submenus open on the end side and mirror in Arabic.
+- **Tabs**: horizontal and vertical, `sm`, `md` and `lg`, icons, divider and flush. Arrow keys follow the page direction, and a tab opens its panel on focus.
+- **Accordion**: `sm`, `md` and `lg`, leading or trailing chevron, flush, single or multiple open, with logical padding (no RTL overrides).
+- **Content Switcher** on Base UI Toggle Group: two to four options, three sizes, an on-colour version, one option always chosen.
+- **Toast** (DGA Notification Toast): one `Toaster` and a `toast.add()` manager that works outside React. Five kinds, an action, a close button, a polite live region (assertive for errors and warnings), pause on hover and focus, swipe to dismiss, bottom end of the screen.
+- **Notification**: a full-width banner in five kinds, with a bold lead-in, an action and a close button, as a live region.
+- **Inline Alert**: five kinds on a white or tinted fill, a title, text, up to two actions and a close button, as a live region.
+- **`AutoDirection` and `useDocumentDirection`** (a new `direction` registry item): Base UI only knows the direction from a `DirectionProvider`; the components read it from `<html dir>` themselves, so arrow keys, submenus and tooltips follow RTL with no setup.
+- **Docs:** a page per component in English and Arabic under a new "Interactive" sidebar group (preview toolbar, installation, usage, anatomy, examples, RTL, accessibility, API reference, deviations, contrast, related components, previous and next), the Arabic description of every prop, "Interactive" in the components table, search results and `llms.txt` (both languages), and 20 live previews.
+- **Registry:** eleven new items (`dialog`, `drawer`, `tooltip`, `menu`, `tabs`, `accordion`, `content-switcher`, `toast`, `notification`, `inline-alert` and the `direction` library file). `bun run test:install` installs every one.
+- **Contrast audit for every new state:** 490 more checks (text 4.5:1; icons, focus rings, bars and chosen fills 3:1), light and dark.
+- **Tests:** `bun run test:e2e` now has a keyboard-only pass for Dialog, Menu and Tabs in `/en` and `/ar` (focus trap and return, the submenu on the end side, arrow keys that follow the direction), checks that the start Drawer flips and that Toast is a live region, runs the layout checks on every new page at 375 and 1280px, and checks the Input, Textarea, Select and Number Input underline in LTR and RTL. Lighthouse in CI also runs on the Arabic Dialog page.
+
+### Changed
+
+- **Textarea** is now a box around a `<textarea>` (a `<div data-slot="textarea">` with the border, fill and underline), because a `<textarea>` cannot draw an underline. `className` styles the box and the new `inputClassName` styles the `<textarea>`; before, `className` styled the `<textarea>`.
+- The previews take the components' own labels (optional, clear, decrease, increase, remove, loading, close) from the locale dictionary, and every label, placeholder and `aria-label` in the Arabic previews is Arabic.
+
+### Fixed
+
+- **Input, Textarea, Select, Number Input and Search Box state behaviour** now follows the DGA CSS:
+  - The 2px underline grows from the centre out to both sides (it is a full-width bar scaled with `scaleX`, 0 at rest, 0.5 pressed, 1 focused or open, 200ms ease-in-out), the same in LTR and RTL. Before, it grew from the start edge.
+  - There is no outline on focus, with the mouse or the keyboard. Focus is the pressed border colour, the full underline and `shadow-md` (no shadow in dark mode). Before, a click drew a 2px solid outline.
+  - Pressed is visible: `:active` shows the pressed fill, the pressed border and the half underline before the focus styles take over. Before, `has-[input:focus]` overrode it on mousedown.
+  - Textarea has the underline.
+  - Colours follow DGA: error border and underline `error-600` (was `error-700`), the placeholder `neutral-500` (was `neutral-600`), read-only a solid `neutral-300` border (was dashed), and filled lighter and darker with no border at rest (it appears on hover, focus and press).
+- **Font weights were all rendered as 400.** The Figma font weight variables hold the style name ("Semibold"), which CSS ignores; `--font-weight-*` are now 400, 500, 600 and 700, so `font-medium`, `font-semibold` and `font-bold` work in every component.
+- The Arabic Field page used Western digits (10, 1, 2) in a citizen sample; it uses ١٠, ١ and ٢.
+- Defaults such as "Optional", "Clear search" and "Remove" no longer show in English in the Arabic previews.
+
+### Deviations
+
+Logged on the Deviations page and on each component page (the Arabic pages summarise them in Arabic).
+
+- **Added for Phase 4:** the `Dialog`, `Drawer`, `Tooltip`, `Menu`, `Tabs`, `Accordion`, `Content Switcher`, `Toast`, `Notification` and `Inline Alert` entries (names, focus and keyboard behaviour, logical placement, live regions, the Notification icon colour, the neutral bars, the on-colour Content Switcher track, the Tabs More tab that is not built) and `--font-weight-*`.
+- **Added for the field states:** `field-text-placeholder-tinted` (neutral-600) for the pressed and darker fills only, where the DGA placeholder is 4.34:1; `field-border-error` is `error-600` as in the live DGA CSS; a focused read-only field shows the underline; and two known gaps kept as DGA draws them and marked unresolved: the read-only border (1.5:1) and the lighter and darker fills at rest (1.0 to 1.1:1).
+- **Removed:** the "outline replaces shadow" entry, the dashed read-only border, "lighter and darker keep their border in every state", and the global `field-text-placeholder` remap. `field-border-default` stays neutral-500, now logged only for its 1.4.11 reason (2.58:1 on white at rest).
+
 ## [0.3.0] - 2026-11-05
 
 Phase 3: Forms. Ten components, each in English and Arabic, all built on Base UI with the DGA tokens in light and dark.

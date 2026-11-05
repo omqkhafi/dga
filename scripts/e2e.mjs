@@ -636,12 +636,19 @@ async function keyboardChecks() {
   }
 }
 
+console.log("locale");
 await localeChecks();
+console.log("layout");
 await layoutChecks();
+console.log("discovery");
 await discoveryChecks();
+console.log("pages");
 await formPageChecks();
+console.log("fields");
 await fieldStateChecks();
+console.log("keyboard");
 await keyboardChecks();
+console.log("interactive");
 await interactiveChecks();
 await browser.close();
 console.log(`${passed} checks passed, ${failures.length} failed.`);

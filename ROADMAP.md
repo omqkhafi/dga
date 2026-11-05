@@ -1,6 +1,6 @@
 # Roadmap
 
-Phases 0, 1 and 2 are done (0.1.0), the Phase 2.5 docs polish is in 0.1.1 and 0.1.2, the Arabic locale (Phase 2.6) is in 0.2.0, and the forms (Phase 3) are in 0.3.0; see [CHANGELOG.md](CHANGELOG.md).
+Phases 0, 1 and 2 are done (0.1.0), the Phase 2.5 docs polish is in 0.1.1 and 0.1.2, the Arabic locale (Phase 2.6) is in 0.2.0, the forms (Phase 3) are in 0.3.0, and the interactive components (Phase 4) are in 0.4.0; see [CHANGELOG.md](CHANGELOG.md).
 Component specs for each phase are in `docs/design-system/components/`.
 
 ## Rules for every phase
@@ -72,9 +72,18 @@ This reverses the earlier decision to publish the docs in English only.
 - [x] Audit for the `field-*`, `control-*` and `textarea-*` tokens, including non-text contrast of 3:1 for input boundaries (WCAG 1.4.11). Failures fixed and logged in Deviations.
 - [x] A docs page per component in English and Arabic under "Forms", with a citizen service request form built from Field-based controls.
 
-## Phase 4: Interactive on Base UI
+## Phase 4: Interactive on Base UI (done, 0.4.0)
 
-Dialog, Drawer, Tooltip, Menu, Tabs, Accordion, Content Switcher, Toast, Notification, Inline Alert.
+- [x] **Dialog** (DGA Modal), **Drawer** (Slideout Menu), **Tooltip** (with the Help Icon), **Menu**, **Tabs**, **Accordion**, **Content Switcher**, **Toast** (Notification Toast), **Notification** and **Inline Alert**, each on a Base UI primitive with stable `cn-*` classes and DGA tokens, in light and dark.
+- [x] Every state from the specs, focus-visible, and keyboard and ARIA behaviour per the WAI-ARIA patterns: focus trap and return in Dialog and Drawer, roving focus in Tabs, Menu and Content Switcher, live regions in Toast, Notification and Inline Alert.
+- [x] RTL: the Drawer side flips with the direction, Menu submenus and Tooltip placement mirror, Tabs and Content Switcher arrow keys follow the direction (`AutoDirection`), and motion mirrors.
+- [x] The contrast audit covers every new state; docs pages in English and Arabic under "Interactive"; registry items and install test; keyboard e2e for Dialog, Menu and Tabs in `/en` and `/ar`; Lighthouse on `/ar/docs/components/dialog`.
+- [x] Also fixed in this phase: the Input, Textarea, Select, Number Input and Search Box state behaviour (underline from the centre, no outline, a visible pressed state, DGA colours) and the font weight tokens.
+
+Follow-ups, not blocking Phase 4:
+
+- [ ] **Tabs: the More tab** (an overflow menu on horizontal tabs). Tabs scroll sideways for now; the roadmap item is a built-in overflow menu composed from Menu.
+- [ ] **Known gaps from DGA** (Deviations, unresolved): the read-only border and the lighter and darker fills at rest are below 3:1 (WCAG 1.4.11), kept as DGA draws them.
 
 ## Phase 5: Navigation and data display
 
