@@ -57,6 +57,7 @@ export const ar: Dictionary = {
   "search.suggest.deviations": "الاختلافات عن DGA",
   "search.crumb.components": "المكوّنات",
   "search.crumb.forms": "النماذج",
+  "search.crumb.interactive": "التفاعلية",
   "search.crumb.foundations": "الأساسيات",
   "search.crumb.docs": "التوثيق",
 
@@ -423,4 +424,7 @@ export const ar: Dictionary = {
   "ui.rejectedSize": "حجم الملف أكبر من المسموح.",
   "ui.rejectedCount": "عدد الملفات أكبر من المسموح.",
   "ui.loading": "جارٍ التحميل",
+  "ui.close": "إغلاق",
+  "ui.dismiss": "تجاهل",
+  "ui.notifications": "الإشعارات",
 };

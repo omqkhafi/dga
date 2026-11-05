@@ -1,6 +1,6 @@
 import { getT } from "./dictionary";
 import type { Locale } from "./i18n";
-import { FORM_COMPONENTS } from "./nav";
+import { FORM_COMPONENTS, INTERACTIVE_COMPONENTS } from "./nav";
 import { siteUrl } from "./shared";
 import { getPageMarkdown, source } from "./source";
 
@@ -13,7 +13,15 @@ export function llmsIndex(lang: Locale) {
   const groups = new Map<string, string[]>();
   for (const page of source.getPages(lang)) {
     const isForm = page.slugs[0] === "components" && FORM_COMPONENTS.includes(page.slugs[1] ?? "");
-    const group = isForm ? "forms" : page.slugs.length > 1 ? (page.slugs[0] as string) : "";
+    const isInteractive =
+      page.slugs[0] === "components" && INTERACTIVE_COMPONENTS.includes(page.slugs[1] ?? "");
+    const group = isForm
+      ? "forms"
+      : isInteractive
+        ? "interactive"
+        : page.slugs.length > 1
+          ? (page.slugs[0] as string)
+          : "";
     const line = `- [${page.data.title}](${mdUrl(page.url, lang)})${page.data.description ? `: ${page.data.description}` : ""}`;
     groups.set(group, [...(groups.get(group) ?? []), line]);
   }
@@ -22,6 +30,7 @@ export function llmsIndex(lang: Locale) {
     foundations: t("search.crumb.foundations"),
     components: t("search.crumb.components"),
     forms: t("search.crumb.forms"),
+    interactive: t("search.crumb.interactive"),
   };
   const body = [...groups]
     .map(([group, lines]) => `## ${titles[group] ?? group}\n\n${lines.join("\n")}`)

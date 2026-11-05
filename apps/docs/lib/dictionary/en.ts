@@ -55,6 +55,7 @@ export const en = {
   "search.suggest.deviations": "Deviations from DGA",
   "search.crumb.components": "Components",
   "search.crumb.forms": "Forms",
+  "search.crumb.interactive": "Interactive",
   "search.crumb.foundations": "Foundations",
   "search.crumb.docs": "Docs",
 
@@ -420,6 +421,9 @@ export const en = {
   "ui.rejectedSize": "This file is too large.",
   "ui.rejectedCount": "Too many files.",
   "ui.loading": "Loading",
+  "ui.close": "Close",
+  "ui.dismiss": "Dismiss",
+  "ui.notifications": "Notifications",
 } as const;
 
 export type Dictionary = { [K in keyof typeof en]: string };

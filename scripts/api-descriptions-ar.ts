@@ -275,4 +275,203 @@ export const API_DESCRIPTIONS_AR: Record<string, string> = {
   "file-upload.FileUpload.disabled": "يعطّل منطقة الإفلات.",
   "file-upload.FileUpload.name": "اسم الحقل عند إرسال النموذج.",
   "file-upload.FileUpload.required": "لا يمكن إرسال النموذج دون ملف.",
+
+  // Dialog
+  "dialog.Dialog":
+    "نافذة فوق الصفحة لقرار أو مهمة قصيرة (في DGA: Modal). يدخل التركيز إليها ويبقى فيها، والصفحة خلفها معطّلة، ويغلقها Escape، ويعود التركيز إلى الزر الذي فتحها.",
+  "dialog.Dialog.open": "حالة الفتح بتحكّم خارجي.",
+  "dialog.Dialog.defaultOpen": "مفتوحة في البداية (دون تحكم).",
+  "dialog.Dialog.onOpenChange": "تُستدعى عند فتحها أو إغلاقها.",
+  "dialog.Dialog.disablePointerDismissal":
+    "يمنع الإغلاق بالنقر خارجها. استخدمه لقرار لا بد من الإجابة عنه؛ ويبقى Escape والأزرار تغلقها.",
+  "dialog.Dialog.modal": "القيمة `true` (الافتراضية) تعطّل الصفحة خلفها وتقفل تمريرها.",
+  "dialog.DialogTrigger": "الزر الذي يفتح النافذة.",
+  "dialog.DialogContent": "النافذة: خلفية معتمة والبطاقة. في المنتصف، وتُمرَّر إن زاد طولها.",
+  "dialog.DialogContent.size":
+    "العرض: `sm` ‏400px، و`md` ‏600px (كما في DGA)، و`lg` ‏800px. وكلها تتقلص لتناسب الجوال.",
+  "dialog.DialogContent.showCloseButton":
+    "يعرض زر الإغلاق في الزاوية. أوقفه إن كان للتذييل زر خاص به.",
+  "dialog.DialogContent.closeLabel":
+    "الاسم الذي يقرؤه قارئ الشاشة لزر الإغلاق. ترجمه في الصفحات العربية.",
+  "dialog.DialogHeader": "يجمع العنوان والوصف في أعلى النافذة.",
+  "dialog.DialogTitle": "اسم النافذة. يقرؤه قارئ الشاشة عند فتحها.",
+  "dialog.DialogDescription": "يشرح النافذة. مرتبط بها عبر `aria-describedby`.",
+  "dialog.DialogBody": "الجزء الأوسط القابل للتمرير في نافذة طويلة.",
+  "dialog.DialogFooter": "الإجراءات، محاذاة إلى النهاية. ضع الإجراء الرئيس أخيرًا.",
+  "dialog.DialogClose": "يغلق النافذة. اعرض Button معه: `<DialogClose render={<Button />}>`.",
+  // Drawer
+  "drawer.Drawer":
+    "لوحة تنزلق من حافة الشاشة (في DGA: Slideout Menu). هي نافذة معتمة: يُحبس التركيز فيها ويغلقها Escape ويعود التركيز إلى الزر. وعلى شاشات اللمس تُغلق بالسحب.",
+  "drawer.Drawer.side":
+    "الحافة التي تنزلق منها. تتبع `start` و`end` اتجاه الصفحة، فتكون `start` على اليمين في الصفحات العربية. ويتبعها اتجاه السحب للإغلاق.",
+  "drawer.Drawer.open": "حالة الفتح بتحكّم خارجي.",
+  "drawer.Drawer.defaultOpen": "مفتوحة في البداية (دون تحكم).",
+  "drawer.Drawer.onOpenChange": "تُستدعى عند فتحها أو إغلاقها.",
+  "drawer.DrawerTrigger": "الزر الذي يفتح اللوحة.",
+  "drawer.DrawerContent":
+    "اللوحة: خلفية معتمة والبطاقة، بعرض 346px على الجانبين وبعرض كامل في الأعلى أو الأسفل.",
+  "drawer.DrawerContent.tone": "السطح: `white` ‏(background-menu) أو `gray` ‏(neutral-100).",
+  "drawer.DrawerContent.showCloseButton": "يعرض زر الإغلاق في الزاوية.",
+  "drawer.DrawerContent.closeLabel":
+    "الاسم الذي يقرؤه قارئ الشاشة لزر الإغلاق. ترجمه في الصفحات العربية.",
+  "drawer.DrawerHeader": "يجمع العنوان والوصف في أعلى اللوحة.",
+  "drawer.DrawerTitle": "اسم اللوحة. يقرؤه قارئ الشاشة عند فتحها.",
+  "drawer.DrawerDescription": "يشرح اللوحة. مرتبط بها عبر `aria-describedby`.",
+  "drawer.DrawerFooter": "الإجراءات في أسفل اللوحة، محاذاة إلى النهاية.",
+  "drawer.DrawerClose": "يغلق اللوحة. اعرض Button معه: `<DrawerClose render={<Button />}>`.",
+  // Tooltip
+  "tooltip.TooltipProvider":
+    "يحدد مدة التمرير قبل فتح التلميح، ويتيح فتح التالي فورًا عند الانتقال بين العناصر. ضعه حول الصفحة أو شريط أدوات.",
+  "tooltip.TooltipProvider.delay": "بالملّي ثانية قبل فتح التلميح عند التمرير. الافتراضي 300.",
+  "tooltip.Tooltip":
+    "تلميح قصير لعنصر، يظهر عند التمرير وعند تركيز لوحة المفاتيح (في DGA: Tooltip). التلميحات لمستخدمي الفأرة ولوحة المفاتيح المبصرين: فلا يعتمد عليها قارئ الشاشة ولا شاشات اللمس، فلا تحمل النسخة الوحيدة مما يحتاجه الناس، وليست للمحتوى التفاعلي. ويحتاج العنصر بأيقونة فقط إلى `aria-label`.",
+  "tooltip.Tooltip.open": "حالة الفتح بتحكّم خارجي.",
+  "tooltip.Tooltip.defaultOpen": "مفتوح في البداية (دون تحكم).",
+  "tooltip.Tooltip.disabled": "لا يفتح أبدًا.",
+  "tooltip.TooltipTrigger": "العنصر الذي يصفه التلميح. اعرض الزر أو الرابط الخاص بك عبر `render`.",
+  "tooltip.TooltipContent": "الفقاعة. عرضها 240px على الأكثر وتبقى بعيدة عن حواف الشاشة.",
+  "tooltip.TooltipContent.tone":
+    "`light` أبيض (neutral-800 في الوضع الداكن)؛ و`dark` التلميح المعكوس.",
+  "tooltip.TooltipContent.side":
+    "الجهة التي يفتح عليها. `start` و`end` جهتا النص، فتتبادلان في الصفحات العربية.",
+  "tooltip.TooltipContent.align":
+    "المحاذاة على حافة العنصر. و`start` هي الحافة اليمنى في RTL للأعلى والأسفل.",
+  "tooltip.TooltipContent.sideOffset":
+    "الفجوة بين العنصر والفقاعة بالبكسل. الافتراضي 10 (مكان للسهم).",
+  "tooltip.TooltipContent.title": "عنوان بخط عريض فوق النص.",
+  "tooltip.TooltipContent.showArrow": "يعرض السهم الذي يشير إلى العنصر.",
+  "tooltip.TooltipHelp":
+    "أيقونة المساعدة في DGA: زر بعلامة استفهام بحجم 20px بجانب تسمية، يفتح شرحًا في فقاعة التلميح نفسها. وهو Popover يفتح أيضًا عند التمرير لا Tooltip: فالزر موجود ليعرض النص، فيجب أن يستطيع فتحه وقراءته مستخدمو لوحة المفاتيح واللمس وقارئ الشاشة.",
+  "tooltip.TooltipHelp.label": "الاسم الذي يقرؤه قارئ الشاشة للزر. ترجمه في الصفحات العربية.",
+  "tooltip.TooltipHelp.tone":
+    "`light` أبيض (neutral-800 في الوضع الداكن)؛ و`dark` التلميح المعكوس.",
+  "tooltip.TooltipHelp.align":
+    "المحاذاة على حافة الزر. و`start` هي الحافة اليمنى في RTL للأعلى والأسفل.",
+  "tooltip.TooltipHelp.sideOffset": "الفجوة بين الزر والفقاعة بالبكسل. الافتراضي 10 (مكان للسهم).",
+  "tooltip.TooltipHelp.title": "عنوان بخط عريض فوق النص.",
+  "tooltip.TooltipHelp.side":
+    "الجهة التي يفتح عليها. `start` و`end` جهتا النص، فتتبادلان في الصفحات العربية.",
+  "tooltip.TooltipHelp.children":
+    "الشرح. يفتح عند التمرير والتركيز والنقر واللمس، ويستطيع قارئ الشاشة قراءته.",
+  // Menu
+  "menu.Menu":
+    "قائمة إجراءات على سطح مؤقت (في DGA: Menu). تنقل مفاتيح الأسهم بين العناصر، وHome وEnd إلى الأول والأخير، وحرف يقفز إلى المطابق، ويغلقها Escape ويعود التركيز إلى الزر. وتفتح القوائم الفرعية في جهة النهاية وتنعكس في الصفحات العربية.",
+  "menu.Menu.open": "حالة الفتح بتحكّم خارجي.",
+  "menu.Menu.defaultOpen": "مفتوحة في البداية (دون تحكم).",
+  "menu.Menu.onOpenChange": "تُستدعى عند فتحها أو إغلاقها.",
+  "menu.MenuTrigger": "الزر الذي يفتح القائمة. اعرض Button الخاص بك عبر `render`.",
+  "menu.MenuContent": "القائمة المنبثقة. تفتح أسفل الزر، محاذاة لجهة بدايته.",
+  "menu.MenuContent.side": "أي جهة من الزر تفتح عليها. الافتراضي `bottom`.",
+  "menu.MenuContent.align": "المحاذاة مع الزر. و`start` هي الحافة اليمنى في RTL.",
+  "menu.MenuContent.sideOffset": "الفجوة بين الزر والقائمة بالبكسل. الافتراضي 4.",
+  "menu.MenuContent.alignOffset": "يزيح القائمة على طول حافة الزر بالبكسل.",
+  "menu.MenuItem":
+    'إجراء واحد. ضع أيقونة أولًا ثم التسمية ثم MenuShortcut أو Tag أو Switch اختياريًا. واستخدم `render` ليكون رابطًا: `<MenuItem render={<a href="/" />}>`.',
+  "menu.MenuItem.onClick": "تُستدعى عند اختيار العنصر بالفأرة أو لوحة المفاتيح.",
+  "menu.MenuItem.disabled":
+    "لا يمكن اختيار العنصر. ويبقى في ترتيب مفاتيح الأسهم ليمكن العثور عليه.",
+  "menu.MenuItem.closeOnClick": "هل يغلق اختياره القائمة. الافتراضي `true`.",
+  "menu.MenuCheckboxItem": "عنصر يمكن تشغيله وإيقافه. يعرض علامة صح عند تشغيله.",
+  "menu.MenuCheckboxItem.checked": "حالة التشغيل بتحكّم خارجي.",
+  "menu.MenuCheckboxItem.onCheckedChange": "تُستدعى عند تشغيله أو إيقافه.",
+  "menu.MenuRadioGroup": "يجمع خيارات MenuRadioItem ليُختار واحد فقط.",
+  "menu.MenuRadioGroup.value": "القيمة المختارة.",
+  "menu.MenuRadioGroup.onValueChange": "تُستدعى بالقيمة المختارة حديثًا.",
+  "menu.MenuRadioItem": "خيار في MenuRadioGroup. يعرض الخيار المختار نقطة.",
+  "menu.MenuRadioItem.value": "قيمة هذا الخيار.",
+  "menu.MenuGroup": "يجمع عناصر مترابطة تحت MenuLabel.",
+  "menu.MenuLabel": "عنوان MenuGroup.",
+  "menu.MenuSeparator": "خط بين مجموعات العناصر.",
+  "menu.MenuShortcut":
+    "نص في نهاية العنصر، كاختصار أو عدد. تبقى الأرقام والرموز من اليسار إلى اليمين.",
+  "menu.MenuSub": "يجمع MenuSubTrigger مع MenuSubContent.",
+  "menu.MenuSubTrigger": "عنصر يفتح قائمة فرعية. سهمه نحو جهة النهاية وينعكس في RTL.",
+  "menu.MenuSubContent": "القائمة الفرعية. تفتح بجانب عنصرها في جهة النهاية.",
+  // Tabs
+  "tabs.Tabs":
+    "ينتقل بين لوحات محتوى مترابطة في صفحة واحدة (في DGA: Tabs). تبويب واحد فقط في ترتيب Tab؛ وتنقل مفاتيح الأسهم بين التبويبات (يمين ويسار يتبادلان في الصفحات العربية، وأعلى وأسفل في القائمة العمودية)، وHome وEnd إلى الأول والأخير. ويفتح التبويب لوحته عند التركيز.",
+  "tabs.Tabs.value": "التبويب المحدد بتحكّم خارجي.",
+  "tabs.Tabs.defaultValue": "التبويب المحدد في البداية (دون تحكم).",
+  "tabs.Tabs.onValueChange": "تُستدعى بقيمة التبويب الذي حُدد.",
+  "tabs.Tabs.orientation": "اتجاه القائمة. تستخدم التبويبات العمودية مفتاحي أعلى وأسفل.",
+  "tabs.TabsList":
+    "صف التبويبات (أو عمودها في Tabs عمودي). أعطه `aria-label` عند وجود أكثر من قائمة.",
+  "tabs.TabsList.size": "التباعد والنص: `sm` أو `md` أو `lg`.",
+  "tabs.TabsList.divider": "خط بسمك 3px تحت القائمة (أو بجانبها). الافتراضي `true`.",
+  "tabs.TabsList.flush": "بلا حشوة جانبية في بداية القائمة.",
+  "tabs.TabsList.scrollable": "تُمرَّر جانبيًا بدل الالتفاف عندما لا تتسع التبويبات.",
+  "tabs.TabsList.activateOnFocus":
+    "يفتح التبويب لوحته بمجرد أن تركّزه مفاتيح الأسهم. الافتراضي `true`؛ واضبط `false` لفتحها بـ Enter أو Space.",
+  "tabs.TabsTrigger": "تبويب واحد. ضع أيقونة أولًا ثم التسمية.",
+  "tabs.TabsTrigger.value": "ما يعرّف التبويب. وتظهر اللوحة ذات القيمة نفسها.",
+  "tabs.TabsTrigger.disabled":
+    "لا يمكن تحديد التبويب. ويبقى في ترتيب مفاتيح الأسهم ليمكن العثور عليه.",
+  "tabs.TabsContent": "المحتوى الذي يعرضه التبويب. يُخفى ما دام تبويبه غير محدد.",
+  "tabs.TabsContent.value": "قيمة التبويب الذي تنتمي إليه هذه اللوحة.",
+  // Accordion
+  "accordion.Accordion":
+    "يعرض أقسام المحتوى ويخفيها تحت عناوينها (في DGA: Accordion). كل عنوان زر: ينقل Tab بين العناوين ويفتح Enter أو Space القسم أو يغلقه. ويُفتح قسم واحد في كل مرة ما لم تضبط `multiple`.",
+  "accordion.Accordion.size": "حشوة العنوان: `sm` ‏8px، و`md` ‏12px، و`lg` ‏16px (كما في DGA).",
+  "accordion.Accordion.iconPosition":
+    "موضع السهم: `trailing` في النهاية (الافتراضي) أو `leading` في البداية.",
+  "accordion.Accordion.flush": "تتوقف الخطوط على بعد 16px من الحواف.",
+  "accordion.Accordion.value": "قيم العناصر المفتوحة بتحكّم خارجي.",
+  "accordion.Accordion.defaultValue": "العناصر المفتوحة في البداية (دون تحكم).",
+  "accordion.Accordion.onValueChange": "تُستدعى بقيم العناصر المفتوحة.",
+  "accordion.Accordion.multiple": "يتيح فتح عدة عناصر معًا. الافتراضي `false`.",
+  "accordion.AccordionItem": "قسم واحد: عنوان ولوحته. أعطه `value` للتحكم في المفتوح.",
+  "accordion.AccordionItem.value": "ما يعرّف العنصر. الافتراضي موضعه.",
+  "accordion.AccordionItem.disabled": "لا يمكن فتح القسم ولا إغلاقه.",
+  "accordion.AccordionTrigger": "زر العنوان. يعرض سهمًا يدور عند فتح القسم.",
+  "accordion.AccordionContent": "محتوى القسم. يحرّك ارتفاعه ويُخفى عن قارئ الشاشة وهو مغلق.",
+  // Content Switcher
+  "content-switcher.ContentSwitcher":
+    "صف قصير من خيارين إلى أربعة يبدّل العرض تحته (في DGA: Content Switcher). يبقى خيار واحد مختارًا دائمًا. وخيار واحد في ترتيب Tab؛ وتنقل مفاتيح الأسهم بين الخيارات (يمين ويسار يتبادلان في الصفحات العربية). سمّه بـ `aria-label`.",
+  "content-switcher.ContentSwitcher.size": "الارتفاع: `sm` ‏32px، و`md` ‏40px، و`lg` ‏48px.",
+  "content-switcher.ContentSwitcher.onColor":
+    "للخلفيات ذات لون العلامة (`background-primary`، وترويسة التنقل).",
+  "content-switcher.ContentSwitcher.value": "الخيار المختار بتحكّم خارجي.",
+  "content-switcher.ContentSwitcher.defaultValue":
+    "الخيار المختار في البداية (دون تحكم). الأول إن لم تحدده.",
+  "content-switcher.ContentSwitcher.onValueChange":
+    "تُستدعى بالقيمة الجديدة. يبقى خيار مختار دائمًا فلا تكون فارغة.",
+  "content-switcher.ContentSwitcherItem":
+    "خيار واحد. قيمته `value` هي ما يبلّغ عنه ContentSwitcher. ضع أيقونة أولًا إن لزمت.",
+  "content-switcher.ContentSwitcherItem.value": "ما يعرّف الخيار.",
+  "content-switcher.ContentSwitcherItem.disabled": "لا يمكن اختيار الخيار.",
+  // Toast
+  "toast.Toaster":
+    "ضع Toaster واحدًا في جذر التطبيق (في DGA: Notification Toast). يعرض الإشعارات في نهاية أسفل الشاشة: أسفل اليمين في الصفحات الإنجليزية وأسفل اليسار في العربية. يُعلَن كل إشعار لقارئ الشاشة عند ظهوره (منطقة حية مهذبة، وعاجلة للأخطاء والتنبيهات)، ويبقى ما دام عليه المؤشر أو التركيز، ويمكن سحبه لإزالته.",
+  "toast.Toaster.limit": "أكثر عدد من الإشعارات يُعرض معًا. الافتراضي 3.",
+  "toast.Toaster.timeout": "مدة بقاء الإشعار بالملّي ثانية. القيمة `0` تُبقيه حتى يُغلق.",
+  "toast.Toaster.closeLabel": "الاسم الذي يقرؤه قارئ الشاشة لزر الإغلاق. ترجمه في الصفحات العربية.",
+  "toast.Toaster.regionLabel":
+    "الاسم الذي يقرؤه قارئ الشاشة للمنطقة التي تحمل الإشعارات. ترجمه في الصفحات العربية.",
+  // Notification
+  "notification.Notification":
+    'شريط بعرض كامل لرسالة تخص الصفحة كلها (في DGA: Notification)، في أعلى الصفحة أو قسم منها. هو منطقة حية: تُعلَن `critical` فورًا (`role="alert"`) وغيرها بأدب (`role="status"`). أضفه عند انطباق الرسالة لا قبله ليُعلَن.',
+  "notification.Notification.variant":
+    "النوع: `neutral` أو `info` أو `success` أو `warning` أو `critical`.",
+  "notification.Notification.title": "نص افتتاحي بخط عريض قبل الرسالة، مثل «مهم:».",
+  "notification.Notification.hideIcon": "يخفي أيقونة الحالة.",
+  "notification.Notification.action": "رابط أو Button صغير بعد الرسالة.",
+  "notification.Notification.dismissible":
+    "يعرض زر الإغلاق. يخفي الإشعار نفسه ثم يستدعي `onDismiss`.",
+  "notification.Notification.onDismiss": "تُستدعى بعد إغلاق الإشعار.",
+  "notification.Notification.dismissLabel":
+    "الاسم الذي يقرؤه قارئ الشاشة لزر الإغلاق. ترجمه في الصفحات العربية.",
+  // Inline Alert
+  "inline-alert.InlineAlert":
+    'رسالة داخل الصفحة بجانب ما تخصه (في DGA: Inline Alert): نموذج أو بطاقة أو قسم. يحمل النوعَ شريط ملون في جهة البداية مع أيقونة، فلا يكون اللون الإشارة الوحيدة. تُعلَن `destructive` و`warning` فورًا (`role="alert"`) وغيرهما بأدب (`role="status"`). أضفها عند انطباقها لتُعلَن.',
+  "inline-alert.InlineAlert.variant":
+    "النوع: `neutral` أو `info` أو `success` أو `warning` أو `destructive`.",
+  "inline-alert.InlineAlert.tinted": "تعبئة ونص بلون النوع بدل الأبيض.",
+  "inline-alert.InlineAlert.title": "العنوان القصير للتنبيه.",
+  "inline-alert.InlineAlert.hideIcon": "يخفي أيقونة الحالة.",
+  "inline-alert.InlineAlert.actions": "أزرار أو روابط تحت النص (اثنان على الأكثر).",
+  "inline-alert.InlineAlert.dismissible":
+    "يعرض زر الإغلاق. يخفي التنبيه نفسه ثم يستدعي `onDismiss`.",
+  "inline-alert.InlineAlert.onDismiss": "تُستدعى بعد إغلاق التنبيه.",
+  "inline-alert.InlineAlert.dismissLabel":
+    "الاسم الذي يقرؤه قارئ الشاشة لزر الإغلاق. ترجمه في الصفحات العربية.",
 };

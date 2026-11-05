@@ -9,7 +9,8 @@
         "http://localhost:3000/en/docs/components/button",
         "http://localhost:3000/ar",
         "http://localhost:3000/ar/docs/components/button",
-        "http://localhost:3000/ar/docs/components/input"
+        "http://localhost:3000/ar/docs/components/input",
+        "http://localhost:3000/ar/docs/components/dialog"
       ],
       "numberOfRuns": 3,
       "settings": { "chromeFlags": "--no-sandbox --headless=new" }

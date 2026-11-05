@@ -1,0 +1,89 @@
+---
+title: Tabs
+description: "يبدّل بين لوحات محتوى مترابطة في صفحة واحدة. أفقي وعمودي وثلاثة أحجام وأيقونات وفاصل، ومفاتيح أسهم تتبع اتجاه الصفحة."
+sourceHash: 91b4ba46740f
+---
+
+<Preview name="tabs-horizontal" title="التبويبات" />
+
+## التثبيت [#installation]
+
+<ComponentInstall name="tabs" />
+
+## الاستخدام [#usage]
+
+```tsx title="page.tsx"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+
+export function RequestTabs() {
+  return (
+    <Tabs defaultValue="details">
+      <TabsList aria-label="أقسام الطلب">
+        <TabsTrigger value="details">التفاصيل</TabsTrigger>
+        <TabsTrigger value="documents">المستندات</TabsTrigger>
+        <TabsTrigger value="history">السجل</TabsTrigger>
+      </TabsList>
+      <TabsContent value="details">اسم مقدم الطلب والخدمة وتاريخ التقديم.</TabsContent>
+      <TabsContent value="documents">ملفان مرفقان.</TabsContent>
+      <TabsContent value="history">قُدّم في ٤ نوفمبر ٢٠٢٦.</TabsContent>
+    </Tabs>
+  );
+}
+```
+
+استخدم Tabs لتقسيم صفحة واحدة إلى أجزاء مترابطة تُقرأ واحدًا بعد آخر: تفاصيل الطلب ومستنداته وسجله. ولا تغيّر التبويبات الصفحة: وللانتقال بين الصفحات استخدم روابط أو قائمة تنقل. والتبويبات ليست خطوات؛ فللتسلسل استخدم مؤشر خطوات. يحتاج كل TabsTrigger إلى `value`، ويكون TabsContent بالقيمة نفسها لوحته. وأعط القائمة `aria-label` إن كان في الصفحة أكثر من قائمة.
+
+## البنية [#anatomy]
+
+- **القائمة** (`role="tablist"`): صف التبويبات، وتحتها فاصل بسمك 3px (`divider`). وتُمرَّر جانبيًا إن لم تتسع التبويبات.
+- **التبويب** (`role="tab"`): أيقونة اختيارية وتسمية. والتبويب المحدد بخط عريض مع شريط بسمك 3px بلون `border-primary`.
+- **اللوحة** (`role="tabpanel"`): محتوى التبويب المحدد.
+
+## أمثلة [#examples]
+
+### الأحجام والأيقونات [#sizes-and-icons]
+
+قيمة `size` إما `sm` أو `md` (الافتراضي) أو `lg`. ضع أيقونة قبل التسمية. ويمكن الوصول إلى التبويب المعطّل بمفاتيح الأسهم لكن لا يمكن تحديده.
+
+<Preview compact name="tabs-horizontal" title="الأحجام والأيقونات" />
+
+### عمودي [#vertical]
+
+يضع `orientation="vertical"` القائمة بجانب اللوحة، والشريط في جهة النهاية. ويتنقل أعلى وأسفل بين التبويبات.
+
+<Preview compact name="tabs-vertical" title="عمودي" />
+
+## RTL [#rtl]
+
+تبدأ القائمة من اليمين ويتبادل السهمان يمين ويسار: فبالعربية ينقل اليسار إلى التبويب التالي. وتقرأ المكوّنات الاتجاه من `<html dir>` بنفسها، فلا تلفّها بموفّر.
+
+<DirectionCompare name="tabs-horizontal" title="التبويبات" />
+
+## إمكانية الوصول [#accessibility]
+
+| المفتاح | الإجراء |
+| --- | --- |
+| <kbd>Tab</kbd> | ينقل التركيز إلى القائمة (إلى التبويب المحدد) ثم إلى اللوحة. |
+| <kbd>ArrowRight</kbd> | ينتقل إلى التبويب التالي ويفتح لوحته (والسابق بالعربية). |
+| <kbd>ArrowLeft</kbd> | ينتقل إلى التبويب السابق (والتالي بالعربية). |
+| <kbd>ArrowDown</kbd> | في القائمة العمودية ينتقل إلى التبويب التالي (وArrowUp إلى السابق). |
+| <kbd>Home</kbd> | ينتقل إلى التبويب الأول (وEnd إلى الأخير). |
+
+- مبنية على Base UI Tabs: `role="tablist"` و`tab` و`tabpanel`، مع `aria-selected` و`aria-controls` و`aria-orientation`. والتبويب المحدد وحده في ترتيب Tab (تركيز متنقل).
+- يفتح التبويب لوحته بمجرد تركيزه. واللوحة نفسها قابلة للتركيز، فيصل مستخدم لوحة المفاتيح إلى محتوى لا يحوي عنصرًا قابلًا للتركيز.
+- يظهر التبويب المحدد بخط عريض وشريط لا باللون وحده. والنص بنسبة 4.5:1 والأيقونات والشريط 3:1 أو أفضل على كل سطح، فاتحًا وداكنًا. والتركيز حد بسمك 2px داخل التبويب.
+
+## مرجع API [#api-reference]
+
+<ApiReference component="tabs" />
+
+## الاختلافات عن DGA [#deviations-from-dga]
+
+- علامة التبويب «المزيد» (قائمة فائض في التبويبات الأفقية) غير مبنية. وتُمرَّر القائمة جانبيًا بدلًا منها إن لم تتسع؛ ولقائمة فائض ضع [Menu](/docs/components/menu) في آخر تبويب.
+- تعرض التبويبات العمودية أيضًا شريطًا محايدًا عند التمرير والضغط (كما في CSS لـ DGA)؛ ويعرض كل تبويب الشريط الأساسي عند تحديده.
+
+<ComponentDeviations component="tabs" />
+
+## التباين [#contrast]
+
+<ComponentContrast component="tabs" />

@@ -1,0 +1,87 @@
+---
+title: Accordion
+description: "Shows and hides sections of content under their headings. Three sizes, a leading or trailing chevron, flush, and single or multiple open."
+---
+
+<Preview name="accordion-basic" title="Accordion" />
+
+## Installation
+
+<ComponentInstall name="accordion" />
+
+## Usage
+
+```tsx title="page.tsx"
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+
+export function ServiceFaq() {
+  return (
+    <Accordion defaultValue={["eligibility"]}>
+      <AccordionItem value="eligibility">
+        <AccordionTrigger>من يستطيع التقديم؟</AccordionTrigger>
+        <AccordionContent>المواطنون والمقيمون ممن لديهم هوية سارية.</AccordionContent>
+      </AccordionItem>
+      <AccordionItem value="time">
+        <AccordionTrigger>كم تستغرق المعالجة؟</AccordionTrigger>
+        <AccordionContent>تُنجز معظم الطلبات خلال ٥ أيام عمل.</AccordionContent>
+      </AccordionItem>
+    </Accordion>
+  );
+}
+```
+
+Use an Accordion for content people scan by heading and open only in part: questions and answers, the sections of a long form. Do not hide what everyone must read. By default one section is open at a time; set `multiple` to let people open several.
+
+## Anatomy
+
+- **Item**: one section, with a 1px line above it. The `value` identifies it.
+- **Trigger** (a `<button>` in a heading): Text md, Semibold, with a chevron that turns when the section is open.
+- **Panel** (`role="region"`): the content. It animates its height.
+
+## Examples
+
+### Sizes, leading and flush
+
+`size` sets the header padding: `sm` 8px, `md` 12px, `lg` 16px. `iconPosition="leading"` puts the chevron first. `flush` keeps the lines 16px from the edges. `multiple` lets several sections stay open.
+
+<Preview compact name="accordion-variants" title="Sizes, leading and flush" />
+
+## RTL
+
+The chevron sits on the end side (the left in Arabic), or the start side with `iconPosition="leading"`. The panel text is indented with logical padding so it lines up with the heading text. No `[dir=rtl]` overrides are needed.
+
+<DirectionCompare name="accordion-basic" title="Accordion" />
+
+## Accessibility
+
+| Key | Action |
+| --- | --- |
+| <kbd>Tab</kbd> | Moves focus to the next heading. |
+| <kbd>Enter</kbd> | Opens or closes the focused section. |
+| <kbd>Space</kbd> | Opens or closes the focused section. |
+
+- Built on Base UI Accordion: each heading is a `<button>` with `aria-expanded` and `aria-controls`, inside a heading element; the panel is a `region` labelled by it. A closed panel is hidden from screen readers. As the WAI-ARIA pattern asks, Tab, Enter and Space are all that is needed.
+- The open state is shown by the chevron turning and by the panel itself, not by colour. Focus is a 2px outline inside the heading.
+- Text is 4.5:1 and the chevron 3:1 or better in every state, light and dark. A disabled section cannot be opened.
+- The panel opens and closes by animating its height; with reduced motion it opens at once.
+
+## API Reference
+
+<ApiReference component="accordion" />
+
+## Deviations from DGA
+
+- The DGA CSS repeats every body-padding rule for `[dir=rtl]` and `html[lang=ar]` (twelve rules). Logical padding (`ps` and `pe`) needs none.
+- Flush is a 16px margin on each side of the line; DGA draws it with a `border-image` gradient at 16px and 382px, which only fits one width.
+- A disabled section uses `text-default-disabled` instead of `neutral-300` with `!important`.
+
+<ComponentDeviations component="accordion" />
+
+## Contrast
+
+<ComponentContrast component="accordion" />

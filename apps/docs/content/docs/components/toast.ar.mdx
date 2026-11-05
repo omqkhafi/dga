@@ -1,0 +1,96 @@
+---
+title: Toast
+description: "رسالة قصيرة تظهر عند حافة الشاشة وتزول وحدها (في DGA: Notification Toast). خمسة أنواع وإجراء وزر إغلاق، وتُعلَن لقارئ الشاشة."
+sourceHash: 69c9ebc210ca
+---
+
+<Preview name="toast-demo" title="إشعار منبثق" minHeight={340} />
+
+## التثبيت [#installation]
+
+<ComponentInstall name="toast" />
+
+## الاستخدام [#usage]
+
+```tsx title="page.tsx"
+import { Button } from "@/components/ui/button";
+import { Toaster, toast } from "@/components/ui/toast";
+
+// Once, at the root of the app (for example in layout.tsx).
+export function Providers({ children }: { children: React.ReactNode }) {
+  return (
+    <>
+      {children}
+      <Toaster closeLabel="إغلاق" regionLabel="الإشعارات" />
+    </>
+  );
+}
+
+export function SubmitButton() {
+  return (
+    <Button
+      onClick={() =>
+        toast.add({
+          type: "success",
+          title: "تم إرسال الطلب",
+          description: "رقمك المرجعي ٢٤٨١٠.",
+        })
+      }
+    >
+      إرسال
+    </Button>
+  );
+}
+```
+
+استخدم Toast لتأكيد أمر حدث للتو ولا يحتاج ردًا: أُرسل طلب أو حُفظت مسودة. ولا تستخدمه لخطأ يعيق الشخص (اعرضه بجانب الحقل أو في [Inline Alert](/docs/components/inline-alert)) ولا لشيء يجب أن يتصرف حياله قبل أن يختفي. ضع `Toaster` واحدًا في الجذر واستدعِ `toast.add({ title, description, type })` من أي مكان، حتى خارج React. قيمة `type` هي `neutral` أو `info` أو `success` أو `warning` أو `error`. ويزول الإشعار بعد 6 ثوانٍ؛ ومرّر `timeout: 0` ليبقى حتى يُغلق، واستخدمه للأخطاء التي يحتاج الناس إلى قراءتها. أبقِ الرسالة في جملة قصيرة؛ ويتيح زر `actionProps` إجراءً سريعًا واحدًا (مثل «تراجع»).
+
+## البنية [#anatomy]
+
+- **Toaster** (`role="region"` ومنطقة حية): القائمة عند نهاية أسفل الشاشة. تحمل ثلاثة إشعارات على الأكثر.
+- **الإشعار**: بعرض 484px (وعرض كامل على الجوال)، وانحناء radius-md و`shadow-3xl`، على `background-notification-white`.
+- **الشريط**: 8px في جهة البداية، بلون النوع (الدرجة 400).
+- **الأيقونة** و**العنوان** و**الوصف**، و**إجراء** اختياري و**زر إغلاق**.
+
+## أمثلة [#examples]
+
+### الأنواع [#kinds]
+
+اضغط زرًا لإضافة إشعار. يُعلَن `error` و`warning` فورًا (`priority: "high"`) وغيرهما بأدب. وللنجاح هنا إجراء.
+
+<Preview compact name="toast-demo" title="الأنواع" minHeight={340} />
+
+## RTL [#rtl]
+
+تظهر الإشعارات عند نهاية أسفل الشاشة: أسفل اليمين بالإنجليزية وأسفل اليسار بالعربية. والشريط في جهة البداية، ويزيلها السحب نحو الحافة التي جاءت منها.
+
+<DirectionCompare name="toast-demo" title="إشعار منبثق" minHeight={340} />
+
+## إمكانية الوصول [#accessibility]
+
+| المفتاح | الإجراء |
+| --- | --- |
+| <kbd>F6</kbd> | ينقل التركيز إلى منطقة الإشعارات (عند وجود إشعارات). ويعيده Escape أو النقر في مكان آخر. |
+| <kbd>Tab</kbd> | ينتقل بين زرَّي الإجراء والإغلاق في الإشعارات. |
+| <kbd>Enter</kbd> | يضغط زر الإجراء أو الإغلاق المركَّز. |
+| <kbd>Escape</kbd> | يغلق الإشعار المركَّز. |
+
+- مبنية على Base UI Toast. والإطار منطقة حية: تُعلَن الإشعارات الجديدة دون تحريك التركيز (`polite` أو `assertive` عند `priority: "high"`). اكتب جملًا قصيرة كاملة.
+- لا يزول الإشعار ما دام المؤشر فوقه أو التركيز داخله، ويعاد المؤقت بعد ذلك (WCAG 2.2.1). واستخدم `timeout: 0` لما قد يحتاج الناس وقتًا أطول لقراءته.
+- يظهر النوع من الأيقونة والعنوان إضافة إلى الشريط، لا من اللون وحده. والنص بنسبة 4.5:1 والأيقونات 3:1 أو أفضل، فاتحًا وداكنًا. ولزر الإغلاق اسم (`closeLabel`).
+- ومع تقليل الحركة يظهر الإشعار ويزول دون انزلاق.
+
+## مرجع API [#api-reference]
+
+<ApiReference component="toast" />
+
+## الاختلافات عن DGA [#deviations-from-dga]
+
+- الشريط المحايد هو `border-neutral-primary`: بينما ترسمه DGA أبيض فلا يُرى على البطاقة البيضاء. والشريط منطقي (جهة البداية).
+- لا تحدد DGA أي توقيت أو إعلان. وتتوقف الإشعارات مؤقتًا أثناء التمرير أو التركيز، ويمكن سحبها لإزالتها، وتُعلَن، ويقع Toaster عند نهاية أسفل الشاشة.
+
+<ComponentDeviations component="toast" />
+
+## التباين [#contrast]
+
+<ComponentContrast component="toast" />

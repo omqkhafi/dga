@@ -1,0 +1,80 @@
+---
+title: Notification
+description: "شريط بعرض كامل لرسالة تخص الصفحة كلها. خمسة أنواع ونص افتتاحي بخط عريض وإجراء وزر إغلاق، ويُعلَن بوصفه منطقة حية."
+sourceHash: 3dfe2df38cd9
+---
+
+<Preview name="notification-kinds" title="الإشعار" />
+
+## التثبيت [#installation]
+
+<ComponentInstall name="notification" />
+
+## الاستخدام [#usage]
+
+```tsx title="page.tsx"
+import { Notification } from "@/components/ui/notification";
+
+export function MaintenanceNotice() {
+  return (
+    <Notification
+      variant="warning"
+      title="تنبيه:"
+      dismissible
+      dismissLabel="تجاهل"
+      action={<a href="/status">التفاصيل</a>}
+    >
+      ستتوقف البوابة للصيانة يوم الجمعة.
+    </Notification>
+  );
+}
+```
+
+استخدم Notification في أعلى صفحة أو قسم لما يخصها كلها: صيانة مجدولة أو خدمة جديدة أو مشكلة في الحساب. ويبقى حتى يتجاهله الشخص أو يزول سببه. ولرسالة تخص نموذجًا أو بطاقة واحدة استخدم [Inline Alert](/docs/components/inline-alert)؛ وللحدث الذي وقع للتو استخدم [Toast](/docs/components/toast). أضف Notification عند انطباقه لا قبله: فالمنطقة الحية تُعلَن عند ظهور محتواها. وابدأه بـ `title` قصير بخط عريض («مهم:»).
+
+## البنية [#anatomy]
+
+- **الشريط** (`role="status"` أو `role="alert"` لـ `critical`): بعرض كامل وحشوة 8 في 24px وانحناء radius-xs وحد سفلي بسمك 2px بلون النوع.
+- **الأيقونة** (اختيارية) و**العنوان** (نص افتتاحي بخط عريض) والرسالة.
+- **الإجراء** (رابط أو Button صغير) و**زر الإغلاق**، في جهة النهاية.
+
+## أمثلة [#examples]
+
+### الأنواع [#kinds]
+
+قيمة `variant` هي `neutral` أو `info` أو `success` أو `warning` أو `critical`. ولكل نوع تظليل 50 ونص وأيقونة بلونه. تجاهل أحدها لتراه يزول.
+
+<Preview compact name="notification-kinds" title="الأنواع" />
+
+## RTL [#rtl]
+
+الأيقونة على اليمين، والإجراء وزر الإغلاق على اليسار، ويبدأ النص من اليمين. ولا شيء يُعكس يدويًا.
+
+<DirectionCompare name="notification-kinds" title="الإشعار" />
+
+## إمكانية الوصول [#accessibility]
+
+| المفتاح | الإجراء |
+| --- | --- |
+| <kbd>Tab</kbd> | ينقل التركيز إلى الإجراء ثم إلى زر الإغلاق. |
+| <kbd>Enter</kbd> | يضغط الرابط أو الزر المركَّز. |
+| <kbd>Space</kbd> | يضغط الزر المركَّز. |
+
+- منطقة حية: لـ `critical` الدور `role="alert"` ويقاطع؛ وغيره `role="status"` وينتظر فاصلًا. ولا يتحرك التركيز.
+- يظهر النوع من الأيقونة والنص الافتتاحي إضافة إلى اللون. والنص بنسبة 4.5:1 والأيقونات 3:1 أو أفضل على التظليل، فاتحًا وداكنًا.
+- لزر الإغلاق اسم (`dismissLabel`) وحد تركيز بسمك 2px. وتحتفظ الروابط في الرسالة بخطها السفلي.
+
+## مرجع API [#api-reference]
+
+<ApiReference component="notification" />
+
+## الاختلافات عن DGA [#deviations-from-dga]
+
+- يلوّن Figma الأيقونة بـ `icon-oncolor` (أبيض) على تظليل 50: أي 1.0 إلى 1.1:1، فلا تُرى. وتستخدم الأيقونة لون أيقونة النوع.
+- يرسم CSS النجاح بأخضر العلامة بينما يستخدم Figma رموز النجاح؛ ويُعتمد Figma. وكل نوع يُعلَن بوصفه منطقة حية.
+
+<ComponentDeviations component="notification" />
+
+## التباين [#contrast]
+
+<ComponentContrast component="notification" />

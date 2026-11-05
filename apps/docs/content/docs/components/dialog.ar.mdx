@@ -1,0 +1,106 @@
+---
+title: Dialog
+description: "نافذة فوق الصفحة لقرار أو مهمة قصيرة. ثلاثة عروض وزر إغلاق، ويُحبس التركيز فيها ثم يعود إلى الزر."
+sourceHash: 292cce8d875c
+---
+
+<Preview name="dialog-basic" title="نافذة حوار" minHeight={360} />
+
+## التثبيت [#installation]
+
+<ComponentInstall name="dialog" />
+
+## الاستخدام [#usage]
+
+```tsx title="page.tsx"
+import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+
+export function CancelRequest() {
+  return (
+    <Dialog>
+      <DialogTrigger render={<Button variant="outline" />}>إلغاء الطلب</DialogTrigger>
+      <DialogContent closeLabel="إغلاق">
+        <DialogHeader>
+          <DialogTitle>إلغاء هذا الطلب؟</DialogTitle>
+          <DialogDescription>سيُسحب الطلب ٢٤٨١٠. يمكنك تقديمه مرة أخرى لاحقًا.</DialogDescription>
+        </DialogHeader>
+        <DialogFooter>
+          <DialogClose render={<Button variant="outline" />}>الإبقاء على الطلب</DialogClose>
+          <DialogClose render={<Button destructive />}>إلغاء الطلب</DialogClose>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+  );
+}
+```
+
+استخدم Dialog حين يجب على الشخص أن يجيب أو ينهي أمرًا قبل المتابعة: تأكيد إجراء مدمّر أو تعديل بضعة حقول أو قراءة شروط. ولا تستخدمه لرسالة لا تحتاج إجابة (استخدم [Toast](/docs/components/toast) أو [Inline Alert](/docs/components/inline-alert)) ولا لصفحة طويلة من المحتوى. أعطه دائمًا DialogTitle، فهو يسمّي النافذة لقارئ الشاشة. وضع الإجراء الرئيس أخيرًا، وسمِّ الإجراءات بما تفعله («إلغاء الطلب») لا «نعم» و«لا». و`closeLabel` هو الاسم الذي يقرؤه قارئ الشاشة لزر الإغلاق؛ ترجمه في الصفحات العربية.
+
+## البنية [#anatomy]
+
+- **الخلفية**: تعتّم الصفحة وتعطّلها.
+- **المحتوى** (`role="dialog"`): البطاقة. عرضها 600px افتراضيًا، وارتفاعها بقدر الشاشة على الأكثر، وتُمرَّر من الداخل.
+- **الترويسة**: DialogTitle وDialogDescription.
+- **الجسم** (اختياري): DialogBody للحقول أو النص.
+- **التذييل**: الإجراءات، محاذاة إلى النهاية. ويغلق DialogClose النافذة.
+- **زر الإغلاق**: في الزاوية، في جهة النهاية.
+
+## أمثلة [#examples]
+
+### الأحجام [#sizes]
+
+قيمة `size` إما `sm` (‏400px) أو `md` (‏600px، عرض DGA) أو `lg` (‏800px). وكلها تتقلص لتناسب الجوال.
+
+<Preview compact name="dialog-sizes" title="الأحجام" minHeight={360} />
+
+### مع نموذج [#with-a-form]
+
+ضع الحقول في DialogBody. وتُمرَّر النافذة إن زاد طولها على الشاشة. ويُسمّى Field داخلها ويُربط كالمعتاد.
+
+<Preview compact name="dialog-form" title="مع نموذج" minHeight={480} />
+
+## RTL [#rtl]
+
+ينتقل زر الإغلاق إلى اليسار، وتُحاذى إجراءات التذييل إلى اليسار، وتظهر النافذة بالتلاشي والتكبير نفسه. ولا شيء يُعكس يدويًا: فالتخطيط يستخدم `start` و`end`.
+
+<DirectionCompare name="dialog-basic" title="نافذة حوار" minHeight={360} />
+
+## إمكانية الوصول [#accessibility]
+
+| المفتاح | الإجراء |
+| --- | --- |
+| <kbd>Tab</kbd> | ينقل التركيز إلى العنصر التالي داخل النافذة. وعند الأخير يعود إلى الأول: فلا يغادر التركيز النافذة. |
+| <kbd>Shift</kbd> + <kbd>Tab</kbd> | يعيد التركيز إلى الخلف. |
+| <kbd>Escape</kbd> | يغلق النافذة ويعيد التركيز إلى العنصر الذي فتحها. |
+| <kbd>Enter</kbd> | يضغط الزر المركَّز. |
+
+- مبنية على Base UI Dialog: `role="dialog"` و`aria-modal` و`aria-labelledby` ‏(DialogTitle) و`aria-describedby` ‏(DialogDescription).
+- ينتقل التركيز إلى النافذة عند فتحها ويُحبس فيها ويعود إلى الزر عند إغلاقها. والصفحة خلفها معطّلة وتمريرها مقفل.
+- اضبط `disablePointerDismissal` على Dialog لقرار لا بد من الإجابة عنه، فلا يغلقها النقر خارجها. ويبقى Escape يغلقها.
+- لزر الإغلاق اسم (`closeLabel`). والعناوين والنصوص بنسبة 4.5:1 والأيقونات 3:1 أو أفضل، فاتحًا وداكنًا.
+- تظهر النافذة بالتلاشي والتكبير؛ ومع تقليل الحركة تظهر دون حركة.
+
+## مرجع API [#api-reference]
+
+<ApiReference component="dialog" />
+
+## الاختلافات عن DGA [#deviations-from-dga]
+
+- يرسم ملف Figma بطاقة بعرض 600px فقط. وأُضيف زر الإغلاق وحبس التركيز ومفتاح Escape وعرضا `sm` و`lg`.
+- الخلفية `alpha-black-50`. وعلى الجوال عرض البطاقة 100% مطروحًا منه 16px من حشوة الصفحة.
+
+<ComponentDeviations component="dialog" />
+
+## التباين [#contrast]
+
+<ComponentContrast component="dialog" />

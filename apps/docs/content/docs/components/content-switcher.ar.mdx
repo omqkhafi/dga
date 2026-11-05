@@ -1,0 +1,85 @@
+---
+title: Content Switcher
+description: "صف قصير من خيارين إلى أربعة يبدّل العرض تحته. ثلاثة أحجام ونسخة للألوان الداكنة، ويبقى خيار واحد مختارًا دائمًا."
+sourceHash: 8a82acbe8480
+---
+
+<Preview name="content-switcher-basic" title="مبدّل المحتوى" />
+
+## التثبيت [#installation]
+
+<ComponentInstall name="content-switcher" />
+
+## الاستخدام [#usage]
+
+```tsx title="page.tsx"
+import { useState } from "react";
+import { ContentSwitcher, ContentSwitcherItem } from "@/components/ui/content-switcher";
+
+export function PeriodSwitcher() {
+  const [period, setPeriod] = useState("week");
+  return (
+    <ContentSwitcher value={period} onValueChange={setPeriod} aria-label="الفترة">
+      <ContentSwitcherItem value="day">يوم</ContentSwitcherItem>
+      <ContentSwitcherItem value="week">أسبوع</ContentSwitcherItem>
+      <ContentSwitcherItem value="month">شهر</ContentSwitcherItem>
+    </ContentSwitcher>
+  );
+}
+```
+
+استخدم Content Switcher لتغيير طريقة عرض مجموعة محتوى واحدة: عرض يومي أو أسبوعي أو شهري، أو قائمة أو خريطة. وتعرض كل الخيارات النوع نفسه من الأشياء. ولأقسام محتوى منفصلة استخدم [Tabs](/docs/components/tabs)؛ ولاختيار يُحفظ في نموذج استخدم [Radio](/docs/components/radio). أبقِ الخيارات بين اثنين وأربعة بتسميات قصيرة. وسمِّ المجموعة بـ `aria-label`، وضع المحتوى الذي تتحكم فيه تحتها مباشرة.
+
+## البنية [#anatomy]
+
+- **المبدّل** (`role="group"`): المسار، بلون neutral-100 وحد 1px. بارتفاع 32 أو 40 أو 48px.
+- **الخيار** (زر تبديل مع `aria-pressed`): تسمية وأيقونة اختيارية. وللخيار المختار تعبئة أساسية وتسمية بيضاء.
+
+## أمثلة [#examples]
+
+### الأحجام [#sizes]
+
+قيمة `size` إما `sm` أو `md` (الافتراضي) أو `lg`. وتشترك المبدّلات الثلاثة هنا في قيمة واحدة.
+
+<Preview compact name="content-switcher-basic" title="الأحجام" />
+
+### على لون العلامة [#on-colour]
+
+يلائم `onColor` خلفية بلون العلامة: مسار أسود شفاف وخيار مختار أبيض.
+
+<Preview compact name="content-switcher-on-color" title="على لون العلامة" />
+
+## RTL [#rtl]
+
+يقع الخيار الأول على اليمين ويتبادل السهمان يمين ويسار. وعرض المبدّل بقدر خياراته؛ أعطه `className="w-full"` ليملأ صفًا.
+
+<DirectionCompare name="content-switcher-basic" title="مبدّل المحتوى" />
+
+## إمكانية الوصول [#accessibility]
+
+| المفتاح | الإجراء |
+| --- | --- |
+| <kbd>Tab</kbd> | ينقل التركيز إلى المبدّل (إلى الخيار المختار) ثم يخرج منه. |
+| <kbd>ArrowRight</kbd> | ينقل التركيز إلى الخيار التالي (والسابق بالعربية). |
+| <kbd>ArrowLeft</kbd> | ينقل التركيز إلى الخيار السابق (والتالي بالعربية). |
+| <kbd>Enter</kbd> | يختار الخيار المركَّز. |
+| <kbd>Space</kbd> | يختار الخيار المركَّز. |
+
+- مبنية على Base UI Toggle Group: `group` من أزرار مع `aria-pressed`، وأحدها في ترتيب Tab (تركيز متنقل). واختيار الخيار المضغوط مرة أخرى لا يفعل شيئًا، فيبقى خيار واحد مختارًا دائمًا.
+- يظهر الخيار المختار من التعبئة ومن `aria-pressed`. والتسمية بنسبة 4.5:1 على المسار، وتعبئة المختار 3:1 مقابله، فاتحًا وداكنًا. والتركيز حد بسمك 2px داخل الخيار.
+- إن تغيّر المحتوى تحته فأعلِن عنه: ضعه في منطقة `aria-live="polite"` أو انقل التركيز إليه.
+
+## مرجع API [#api-reference]
+
+<ApiReference component="content-switcher" />
+
+## الاختلافات عن DGA [#deviations-from-dga]
+
+- في Figma عنصران أو ثلاثة بتسمية بيضاء ونسخة OnColor؛ بينما لا يضبط CSS إلا `margin: 10px`. وصُمّم المسار وتعبئة المختار هنا من رموز الأزرار.
+- على خلفية العلامة يكون المسار أسود شفافًا لا أبيض: فالأبيض يُفتّح التعبئة ويخفض التسمية البيضاء إلى 3.34:1 (و2.81:1 عند الضغط).
+
+<ComponentDeviations component="content-switcher" />
+
+## التباين [#contrast]
+
+<ComponentContrast component="content-switcher" />

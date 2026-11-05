@@ -1,0 +1,92 @@
+---
+title: Tooltip
+description: "A short hint for an element, on hover and keyboard focus. Light or dark, with an optional title and beak, and a placement that mirrors in RTL."
+---
+
+<Preview name="tooltip-placements" title="Placements" minHeight={280} />
+
+## Installation
+
+<ComponentInstall name="tooltip" />
+
+## Usage
+
+```tsx title="page.tsx"
+import { Button } from "@/components/ui/button";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+
+export function SaveHint() {
+  return (
+    <TooltipProvider>
+      <Tooltip>
+        <TooltipTrigger render={<Button variant="outline" />}>المسودات</TooltipTrigger>
+        <TooltipContent side="end" title="المسودات">يفتح المسودات المحفوظة.</TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
+  );
+}
+```
+
+Use a Tooltip to name an icon-only button or to add a short hint to a control. Keep it to a sentence. It is a hint for sighted mouse and keyboard users, not the place for links, buttons or anything people must read: screen readers and touch screens do not rely on it. Wrap the app or a toolbar in a TooltipProvider so the second tooltip opens at once while the pointer moves along. For the question-mark that explains a label, use TooltipHelp: it opens on click and touch too and can be read by a screen reader.
+
+## Anatomy
+
+- **Trigger**: the element it describes. Any button, link or input.
+- **Bubble**: at most 240px (at least 160px), radius-xs, `shadow-lg`.
+- **Title** (optional): bold, above the text.
+- **Beak**: the 14px point toward the trigger. Turn it off with `showArrow={false}`.
+- **Help Icon**: TooltipHelp, a 20px question-mark button that opens the same bubble as a popover.
+
+## Examples
+
+### Tones
+
+`tone` is `light` (white) or `dark` (the inverted tooltip). In dark mode they swap. Hover or focus the buttons.
+
+<Preview compact name="tooltip-basic" title="Tones" minHeight={120} />
+
+### Help icon
+
+TooltipHelp next to a label. It is a real button with an accessible name that opens on hover, focus, click and touch, so keyboard, touch and screen reader users reach the text.
+
+<Preview compact name="tooltip-help" title="Help icon" minHeight={200} />
+
+## RTL
+
+`side` takes `start` and `end` as well as `top` and `bottom`. They are the sides of the text, so `end` opens to the left on Arabic pages, and the beak follows. `align="start"` lines up with the right edge of the trigger in RTL.
+
+<DirectionCompare name="tooltip-placements" title="Tooltip" minHeight={280} />
+
+## Accessibility
+
+| Key | Action |
+| --- | --- |
+| <kbd>Tab</kbd> | Focusing the trigger opens the tooltip. Moving away closes it. |
+| <kbd>Escape</kbd> | Closes the tooltip without moving focus. |
+| <kbd>Enter</kbd> | On a Help Icon, opens the explanation (and closes it again). |
+
+- A Tooltip is for sighted mouse and keyboard users (Base UI says the same): put anything important in the page text. An icon-only trigger needs an `aria-label`, because the tooltip does not name it.
+- TooltipHelp is a popover, so it also opens on click, Enter and touch, is announced as a dialog-like popup with its title and text, and closes with Escape. It has an accessible name (`label`).
+- It opens on keyboard focus as well as hover, stays open while the pointer is over the bubble, and closes with Escape (WCAG 1.4.13: dismissible, hoverable, persistent).
+- Text is 4.5:1 or better on both tones, light and dark. The Help Icon is 3:1 or better on every surface and has a focus ring.
+- The bubble fades in; with reduced motion it appears without animation.
+
+## API Reference
+
+<ApiReference component="tooltip" />
+
+## Deviations from DGA
+
+- DGA draws the placement with a physical 14px margin per direction. Here `start` and `end` are logical, so they swap in Arabic and the beak follows.
+- It also opens on keyboard focus. The Help Icon is built as a popover that opens on hover, so touch and screen reader users can read it too; Figma shows hover only.
+
+<ComponentDeviations component="tooltip" />
+
+## Contrast
+
+<ComponentContrast component="tooltip" />

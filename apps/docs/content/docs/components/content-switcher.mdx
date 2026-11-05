@@ -1,0 +1,84 @@
+---
+title: Content Switcher
+description: "A short row of two to four options that switch the view below it. Three sizes, an on-colour version, and one option always chosen."
+---
+
+<Preview name="content-switcher-basic" title="Content Switcher" />
+
+## Installation
+
+<ComponentInstall name="content-switcher" />
+
+## Usage
+
+```tsx title="page.tsx"
+import { useState } from "react";
+import { ContentSwitcher, ContentSwitcherItem } from "@/components/ui/content-switcher";
+
+export function PeriodSwitcher() {
+  const [period, setPeriod] = useState("week");
+  return (
+    <ContentSwitcher value={period} onValueChange={setPeriod} aria-label="الفترة">
+      <ContentSwitcherItem value="day">يوم</ContentSwitcherItem>
+      <ContentSwitcherItem value="week">أسبوع</ContentSwitcherItem>
+      <ContentSwitcherItem value="month">شهر</ContentSwitcherItem>
+    </ContentSwitcher>
+  );
+}
+```
+
+Use a Content Switcher to change how one set of content is shown: a day, week or month view; a list or a map. All options show the same kind of thing. For separate sections of content use [Tabs](/docs/components/tabs); for a choice that is saved in a form use [Radio](/docs/components/radio). Keep two to four short labels. Name the group with `aria-label`, and put the content it controls right under it.
+
+## Anatomy
+
+- **Switcher** (`role="group"`): the track, neutral-100 with a 1px border. 32, 40 or 48px high.
+- **Option** (a toggle button with `aria-pressed`): a label and an optional icon. The chosen option has the primary fill and a white label.
+
+## Examples
+
+### Sizes
+
+`size` is `sm`, `md` (default) or `lg`. The three switchers share one value here.
+
+<Preview compact name="content-switcher-basic" title="Sizes" />
+
+### On colour
+
+`onColor` is for a brand fill: a translucent black track and a white chosen option.
+
+<Preview compact name="content-switcher-on-color" title="On colour" />
+
+## RTL
+
+The first option is on the right and the Left and Right arrows swap. The switcher is as wide as its options; give it `className="w-full"` to fill a row.
+
+<DirectionCompare name="content-switcher-basic" title="Content Switcher" />
+
+## Accessibility
+
+| Key | Action |
+| --- | --- |
+| <kbd>Tab</kbd> | Moves focus into the switcher (to the chosen option), then out of it. |
+| <kbd>ArrowRight</kbd> | Moves focus to the next option (the previous one in Arabic). |
+| <kbd>ArrowLeft</kbd> | Moves focus to the previous option (the next one in Arabic). |
+| <kbd>Enter</kbd> | Chooses the focused option. |
+| <kbd>Space</kbd> | Chooses the focused option. |
+
+- Built on Base UI Toggle Group: a `group` of buttons with `aria-pressed`, one of them in the tab order (roving focus). Choosing the pressed option again does nothing, so one option is always chosen.
+- The chosen option is shown by the fill and by `aria-pressed`. The label is 4.5:1 on the track, the chosen fill 3:1 against it, in light and dark. Focus is a 2px outline inside the option.
+- If the content below changes, announce it: put it in a region with `aria-live="polite"` or move focus to it.
+
+## API Reference
+
+<ApiReference component="content-switcher" />
+
+## Deviations from DGA
+
+- Figma has two or three items with a white label and an OnColor variant; the CSS only sets `margin: 10px`. The track and the chosen fill are designed here from the button tokens.
+- On a brand fill the track is a translucent black, not white: white lightens the fill and drops the white label to 3.34:1 (2.81:1 pressed).
+
+<ComponentDeviations component="content-switcher" />
+
+## Contrast
+
+<ComponentContrast component="content-switcher" />

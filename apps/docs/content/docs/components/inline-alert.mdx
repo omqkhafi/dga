@@ -1,0 +1,79 @@
+---
+title: Inline Alert
+description: "A message in the page next to what it is about. Five kinds on a white or tinted fill, a title, text, up to two actions and a close button."
+---
+
+<Preview name="inline-alert-kinds" title="Inline Alert" />
+
+## Installation
+
+<ComponentInstall name="inline-alert" />
+
+## Usage
+
+```tsx title="page.tsx"
+import { Button } from "@/components/ui/button";
+import { InlineAlert } from "@/components/ui/inline-alert";
+
+export function DocumentsNeeded() {
+  return (
+    <InlineAlert
+      variant="info"
+      title="مستندات مطلوبة"
+      actions={<Button size="sm">إرفاق مستند</Button>}
+    >
+      أرفق عقد الإيجار قبل التقديم.
+    </InlineAlert>
+  );
+}
+```
+
+Use an Inline Alert for a message that belongs to one place: a form that has a problem, a card that needs a step, a section with a notice. It is part of the page, so it does not move or disappear by itself. For the whole page use a [Notification](/docs/components/notification); for something that just happened use a [Toast](/docs/components/toast). Give it a short `title`, one or two sentences of text, and at most two `actions`: the main one first. `tinted` colours the fill and text in the kind's colour; the default is a white card with a coloured bar.
+
+## Anatomy
+
+- **Alert** (`role="status"`, or `role="alert"` for `warning` and `destructive`): radius-md, a 1px border, padding 16 by 24px.
+- **Bar**: 8px on the start side, in the kind's 400 colour.
+- **Icon**, **title** and **text**.
+- **Actions** under the text (at most two) and a **close button** on the end side.
+
+## Examples
+
+### White and tinted
+
+The five kinds on a white fill (left) and `tinted` (right). The info and warning alerts can be dismissed; the success and destructive ones have actions.
+
+<Preview compact name="inline-alert-kinds" title="White and tinted" />
+
+## RTL
+
+The bar and the icon are on the right, the close button on the left, and the actions start on the right. The alert is as wide as its container.
+
+<DirectionCompare name="inline-alert-kinds" title="Inline Alert" />
+
+## Accessibility
+
+| Key | Action |
+| --- | --- |
+| <kbd>Tab</kbd> | Moves focus through the actions, then to the close button. |
+| <kbd>Enter</kbd> | Presses the focused button or link. |
+| <kbd>Space</kbd> | Presses the focused button. |
+
+- A live region: `destructive` and `warning` have `role="alert"` and interrupt; the rest are `role="status"`. Focus does not move. Mount it when it applies so it is announced.
+- The kind is shown by an icon and the title, not by the bar's colour alone. Title and text are 4.5:1 and icons 3:1 or better on the white and tinted fills, in light and dark.
+- The close button has an accessible name (`dismissLabel`) and a 2px focus outline.
+
+## API Reference
+
+<ApiReference component="inline-alert" />
+
+## Deviations from DGA
+
+- The neutral bar is `border-neutral-primary`; DGA draws it white on a white alert, so it is invisible.
+- In Figma the tinted info and warning alerts with a close button swap the kind's icon for a plain one. The icon is always the kind's, so adding a close button changes nothing else.
+
+<ComponentDeviations component="inline-alert" />
+
+## Contrast
+
+<ComponentContrast component="inline-alert" />

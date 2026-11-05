@@ -1,0 +1,95 @@
+---
+title: Toast
+description: "A short message that appears at the edge of the screen and goes by itself (DGA: Notification Toast). Five kinds, an action, a close button, and announced to screen readers."
+---
+
+<Preview name="toast-demo" title="Toast" minHeight={340} />
+
+## Installation
+
+<ComponentInstall name="toast" />
+
+## Usage
+
+```tsx title="page.tsx"
+import { Button } from "@/components/ui/button";
+import { Toaster, toast } from "@/components/ui/toast";
+
+// Once, at the root of the app (for example in layout.tsx).
+export function Providers({ children }: { children: React.ReactNode }) {
+  return (
+    <>
+      {children}
+      <Toaster closeLabel="إغلاق" regionLabel="الإشعارات" />
+    </>
+  );
+}
+
+export function SubmitButton() {
+  return (
+    <Button
+      onClick={() =>
+        toast.add({
+          type: "success",
+          title: "تم إرسال الطلب",
+          description: "رقمك المرجعي ٢٤٨١٠.",
+        })
+      }
+    >
+      إرسال
+    </Button>
+  );
+}
+```
+
+Use a Toast to confirm something that just happened and needs no reply: a request was sent, a draft was saved. Do not use it for an error that blocks the person (show it next to the field, or in an [Inline Alert](/docs/components/inline-alert)), or for anything they must act on before it disappears. Mount one `Toaster` at the root and call `toast.add({ title, description, type })` from anywhere, even outside React. `type` is `neutral`, `info`, `success`, `warning` or `error`. A toast goes after 6 seconds; pass `timeout: 0` for one that stays until it is closed, and use that for errors people need to read. Keep the message to one short sentence; an `actionProps` button gives one quick action (such as Undo).
+
+## Anatomy
+
+- **Toaster** (`role="region"`, a live region): the list at the bottom end of the screen. It holds up to 3 toasts.
+- **Toast**: 484px wide (full width on phones), radius-md, `shadow-3xl`, on `background-notification-white`.
+- **Bar**: 8px on the start side, in the kind's 400 colour.
+- **Icon**, **title**, **description**, an optional **action** and a **close button**.
+
+## Examples
+
+### Kinds
+
+Press a button to add a toast. `error` and `warning` are announced at once (`priority: "high"`), the others politely. Success here has an action.
+
+<Preview compact name="toast-demo" title="Kinds" minHeight={340} />
+
+## RTL
+
+Toasts appear at the bottom end of the screen: the bottom right in English and the bottom left in Arabic. The bar is on the start side, and a swipe toward the edge they came from dismisses them.
+
+<DirectionCompare name="toast-demo" title="Toast" minHeight={340} />
+
+## Accessibility
+
+| Key | Action |
+| --- | --- |
+| <kbd>F6</kbd> | Moves focus into the toast region (when there are toasts). Escape or a click elsewhere returns it. |
+| <kbd>Tab</kbd> | Moves between the action and close buttons of the toasts. |
+| <kbd>Enter</kbd> | Presses the focused action or close button. |
+| <kbd>Escape</kbd> | Closes the focused toast. |
+
+- Built on Base UI Toast. The viewport is a live region: new toasts are announced without moving focus (`polite`, or `assertive` for `priority: "high"`). Announce short, complete sentences.
+- A toast does not go while the pointer is over it or focus is inside it, and the timer restarts after (WCAG 2.2.1). Use `timeout: 0` for anything people may need more time to read.
+- The kind is shown by an icon and the title as well as the bar, never by colour alone. Text is 4.5:1 and icons 3:1 or better, in light and dark. The close button has an accessible name (`closeLabel`).
+- With reduced motion a toast appears and goes without sliding.
+
+## API Reference
+
+<ApiReference component="toast" />
+
+## Deviations from DGA
+
+- The neutral bar is `border-neutral-primary`: DGA draws it white, which is invisible on the white card. The bar is logical (the start side).
+- DGA specifies no timing or announcement. Toasts pause while hovered or focused, can be swiped away, are announced, and the Toaster sits on the bottom end of the screen.
+
+<ComponentDeviations component="toast" />
+
+## Contrast
+
+<ComponentContrast component="toast" />

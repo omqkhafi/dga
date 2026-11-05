@@ -457,4 +457,241 @@ export const API_NOTES: Record<string, ApiNote> = {
     type: "boolean",
     description: "The form cannot be submitted without a file.",
   },
+
+  // Dialog
+  "dialog.size": {
+    description: "Width: `sm` 400px, `md` 600px (DGA), `lg` 800px. All shrink to fit a phone.",
+  },
+  "dialog.Dialog.open": { include: true, type: "boolean", description: "Controlled open state." },
+  "dialog.Dialog.defaultOpen": {
+    include: true,
+    type: "boolean",
+    description: "Open at first (uncontrolled).",
+  },
+  "dialog.Dialog.onOpenChange": {
+    include: true,
+    type: "(open: boolean) => void",
+    description: "Called when it opens or closes.",
+  },
+  "dialog.Dialog.disablePointerDismissal": {
+    include: true,
+    type: "boolean",
+    description:
+      "Stops a click outside from closing it. Use it for a decision that must be answered; Escape and the buttons still close it.",
+  },
+  "dialog.Dialog.modal": {
+    include: true,
+    type: 'boolean | "trap-focus"',
+    description: "`true` (default) makes the page behind inert and locks its scroll.",
+  },
+  // Drawer
+  "drawer.tone": { description: "Surface: `white` (background-menu) or `gray` (neutral-100)." },
+  "drawer.Drawer.open": { include: true, type: "boolean", description: "Controlled open state." },
+  "drawer.Drawer.defaultOpen": {
+    include: true,
+    type: "boolean",
+    description: "Open at first (uncontrolled).",
+  },
+  "drawer.Drawer.onOpenChange": {
+    include: true,
+    type: "(open: boolean) => void",
+    description: "Called when it opens or closes.",
+  },
+  // Tooltip
+  "tooltip.tone": {
+    description: "`light` is white (neutral-800 in dark mode); `dark` is the inverted tooltip.",
+  },
+  "tooltip.TooltipContent.align": {
+    description:
+      "Alignment along the trigger's edge. `start` is the right edge in RTL for top and bottom.",
+  },
+  "tooltip.TooltipContent.sideOffset": {
+    description:
+      "Gap between the trigger and the bubble in pixels. Default 10 (room for the beak).",
+  },
+  "tooltip.Tooltip.open": { include: true, type: "boolean", description: "Controlled open state." },
+  "tooltip.Tooltip.defaultOpen": {
+    include: true,
+    type: "boolean",
+    description: "Open at first (uncontrolled).",
+  },
+  "tooltip.Tooltip.disabled": {
+    include: true,
+    type: "boolean",
+    description: "Never opens.",
+  },
+  "tooltip.TooltipProvider.delay": {
+    include: true,
+    type: "number",
+    description: "Milliseconds to hover before a tooltip opens. Default 300.",
+  },
+  // Menu
+  "menu.MenuContent.side": {
+    description: "Which side of the trigger it opens on. Default `bottom`.",
+  },
+  "menu.MenuContent.align": {
+    description: "Alignment with the trigger. `start` is the right edge in RTL.",
+  },
+  "menu.MenuContent.sideOffset": {
+    description: "Gap between the trigger and the menu in pixels. Default 4.",
+  },
+  "menu.MenuContent.alignOffset": {
+    description: "Shifts the menu along the trigger's edge, in pixels.",
+  },
+  "menu.Menu.open": { include: true, type: "boolean", description: "Controlled open state." },
+  "menu.Menu.defaultOpen": {
+    include: true,
+    type: "boolean",
+    description: "Open at first (uncontrolled).",
+  },
+  "menu.Menu.onOpenChange": {
+    include: true,
+    type: "(open: boolean) => void",
+    description: "Called when it opens or closes.",
+  },
+  "menu.MenuItem.onClick": {
+    include: true,
+    type: "(event) => void",
+    description: "Called when the item is chosen, with the mouse or the keyboard.",
+  },
+  "menu.MenuItem.disabled": {
+    include: true,
+    type: "boolean",
+    description: "The item cannot be chosen. It stays in the arrow-key order so it can be found.",
+  },
+  "menu.MenuItem.closeOnClick": {
+    include: true,
+    type: "boolean",
+    description: "Whether choosing it closes the menu. Default `true`.",
+  },
+  "menu.MenuCheckboxItem.checked": {
+    include: true,
+    type: "boolean",
+    description: "Controlled on or off state.",
+  },
+  "menu.MenuCheckboxItem.onCheckedChange": {
+    include: true,
+    type: "(checked: boolean) => void",
+    description: "Called when it is turned on or off.",
+  },
+  "menu.MenuRadioGroup.value": { include: true, type: "string", description: "The chosen value." },
+  "menu.MenuRadioGroup.onValueChange": {
+    include: true,
+    type: "(value: string) => void",
+    description: "Called with the newly chosen value.",
+  },
+  "menu.MenuRadioItem.value": {
+    include: true,
+    type: "string",
+    description: "This option's value.",
+  },
+  // Tabs
+  "tabs.size": { description: "Padding and text: `sm`, `md` or `lg`." },
+  "tabs.divider": { description: "A 3px line under (or beside) the list. Default `true`." },
+  "tabs.flush": { description: "No inline padding at the start of the list." },
+  "tabs.Tabs.value": {
+    include: true,
+    type: "string | number",
+    description: "The selected tab (controlled).",
+  },
+  "tabs.Tabs.defaultValue": {
+    include: true,
+    type: "string | number",
+    description: "The tab selected at first (uncontrolled).",
+  },
+  "tabs.Tabs.onValueChange": {
+    include: true,
+    type: "(value) => void",
+    description: "Called with the value of the tab that was selected.",
+  },
+  "tabs.Tabs.orientation": {
+    include: true,
+    type: '"horizontal" | "vertical"',
+    description: "Direction of the list. Vertical tabs use Up and Down arrows.",
+  },
+  "tabs.TabsTrigger.value": {
+    include: true,
+    type: "string | number",
+    description: "What identifies the tab. The panel with the same `value` is shown.",
+  },
+  "tabs.TabsTrigger.disabled": {
+    include: true,
+    type: "boolean",
+    description: "The tab cannot be selected. It stays in the arrow-key order so it can be found.",
+  },
+  "tabs.TabsList.activateOnFocus": {
+    include: true,
+    type: "boolean",
+    description:
+      "A tab opens its panel as soon as the arrow keys focus it. Default `true`; set `false` to open it with Enter or Space.",
+  },
+  "tabs.TabsContent.value": {
+    include: true,
+    type: "string | number",
+    description: "The `value` of the tab this panel belongs to.",
+  },
+  // Accordion
+  "accordion.size": { description: "Header padding: `sm` 8px, `md` 12px, `lg` 16px (DGA)." },
+  "accordion.iconPosition": {
+    description: "Where the chevron sits: `trailing` (default) or `leading`.",
+  },
+  "accordion.flush": { description: "The lines stop 16px short of the edges." },
+  "accordion.Accordion.value": {
+    include: true,
+    type: "string[]",
+    description: "The `value`s of the open items (controlled).",
+  },
+  "accordion.Accordion.defaultValue": {
+    include: true,
+    type: "string[]",
+    description: "The items open at first (uncontrolled).",
+  },
+  "accordion.Accordion.onValueChange": {
+    include: true,
+    type: "(value: string[]) => void",
+    description: "Called with the `value`s of the open items.",
+  },
+  "accordion.Accordion.multiple": {
+    include: true,
+    type: "boolean",
+    description: "Lets several items be open at once. Default `false`.",
+  },
+  "accordion.AccordionItem.value": {
+    include: true,
+    type: "string",
+    description: "What identifies the item. Defaults to its position.",
+  },
+  "accordion.AccordionItem.disabled": {
+    include: true,
+    type: "boolean",
+    description: "Skips the item.",
+  },
+  // Content Switcher
+  "content-switcher.size": { description: "Height: `sm` 32px, `md` 40px, `lg` 48px." },
+  "content-switcher.onColor": {
+    description: "For brand fills (`background-primary`, the nav header).",
+  },
+  "content-switcher.ContentSwitcherItem.value": {
+    include: true,
+    type: "string",
+    description: "What identifies the option.",
+  },
+  "content-switcher.ContentSwitcherItem.disabled": {
+    include: true,
+    type: "boolean",
+    description: "The option cannot be chosen.",
+  },
+  // Toast
+  "toast.Toaster.limit": { description: "The most toasts shown at once. Default 3." },
+  // Notification
+  "notification.variant": {
+    description: "Kind: `neutral`, `info`, `success`, `warning` or `critical`.",
+  },
+  // Inline Alert
+  "inline-alert.variant": {
+    description: "Kind: `neutral`, `info`, `success`, `warning` or `destructive`.",
+  },
+  "inline-alert.tinted": {
+    description: "Tinted fill and text in the kind's colour instead of white.",
+  },
 };

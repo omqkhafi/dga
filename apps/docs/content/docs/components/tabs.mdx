@@ -1,0 +1,88 @@
+---
+title: Tabs
+description: "Switches between related panels of content on one page. Horizontal and vertical, three sizes, icons and a divider, with arrow keys that follow the page direction."
+---
+
+<Preview name="tabs-horizontal" title="Tabs" />
+
+## Installation
+
+<ComponentInstall name="tabs" />
+
+## Usage
+
+```tsx title="page.tsx"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+
+export function RequestTabs() {
+  return (
+    <Tabs defaultValue="details">
+      <TabsList aria-label="أقسام الطلب">
+        <TabsTrigger value="details">التفاصيل</TabsTrigger>
+        <TabsTrigger value="documents">المستندات</TabsTrigger>
+        <TabsTrigger value="history">السجل</TabsTrigger>
+      </TabsList>
+      <TabsContent value="details">اسم مقدم الطلب والخدمة وتاريخ التقديم.</TabsContent>
+      <TabsContent value="documents">ملفان مرفقان.</TabsContent>
+      <TabsContent value="history">قُدّم في ٤ نوفمبر ٢٠٢٦.</TabsContent>
+    </Tabs>
+  );
+}
+```
+
+Use Tabs to split one page into parts that belong together and are read one at a time: the details, documents and history of a request. Tabs do not change the page: for moving between pages use links or a navigation menu. Tabs are not steps; use a stepper for a sequence. Every TabsTrigger needs a `value`, and the TabsContent with the same `value` is its panel. Give the list an `aria-label` if the page has more than one.
+
+## Anatomy
+
+- **List** (`role="tablist"`): the row of tabs, with a 3px divider under it (`divider`). It scrolls sideways when the tabs do not fit.
+- **Tab** (`role="tab"`): an optional icon and a label. The selected tab is bold with a 3px bar in `border-primary`.
+- **Panel** (`role="tabpanel"`): the content of the selected tab.
+
+## Examples
+
+### Sizes and icons
+
+`size` is `sm`, `md` (default) or `lg`. Put an icon before the label. A disabled tab can be reached with the arrow keys but not selected.
+
+<Preview compact name="tabs-horizontal" title="Sizes and icons" />
+
+### Vertical
+
+`orientation="vertical"` puts the list beside the panel, with the bar on the end side. Up and Down move between tabs.
+
+<Preview compact name="tabs-vertical" title="Vertical" />
+
+## RTL
+
+The list starts on the right, and the Left and Right arrows swap: in Arabic, Left moves to the next tab. The components read the direction from `<html dir>` themselves, so you do not wrap them in a provider.
+
+<DirectionCompare name="tabs-horizontal" title="Tabs" />
+
+## Accessibility
+
+| Key | Action |
+| --- | --- |
+| <kbd>Tab</kbd> | Moves focus into the list (to the selected tab), then into the panel. |
+| <kbd>ArrowRight</kbd> | Moves to the next tab and opens its panel (the previous tab in Arabic). |
+| <kbd>ArrowLeft</kbd> | Moves to the previous tab (the next tab in Arabic). |
+| <kbd>ArrowDown</kbd> | In a vertical list, moves to the next tab (ArrowUp to the previous). |
+| <kbd>Home</kbd> | Moves to the first tab (and End to the last). |
+
+- Built on Base UI Tabs: `role="tablist"`, `tab` and `tabpanel`, with `aria-selected`, `aria-controls` and `aria-orientation`. Only the selected tab is in the tab order (roving focus).
+- A tab opens its panel as soon as it gets focus. The panel itself is focusable, so keyboard users can reach content that has no focusable control.
+- The selected tab is shown by bold text and a bar, not colour alone. Text is 4.5:1, icons and the bar 3:1 or better, on every surface, in light and dark. Focus is a 2px outline inside the tab.
+
+## API Reference
+
+<ApiReference component="tabs" />
+
+## Deviations from DGA
+
+- The More tab (an overflow menu on horizontal tabs) is not built. A list that does not fit scrolls sideways instead; for an overflow menu, put a [Menu](/docs/components/menu) in the last tab.
+- Vertical tabs also show a neutral bar on hover and press (as in the DGA CSS); every tab shows the primary bar when selected.
+
+<ComponentDeviations component="tabs" />
+
+## Contrast
+
+<ComponentContrast component="tabs" />

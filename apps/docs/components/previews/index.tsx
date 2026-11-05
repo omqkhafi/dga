@@ -46,6 +46,28 @@ import {
   TypographyDemo,
   WeightsDemo,
 } from "./foundations";
+import {
+  AccordionBasic,
+  AccordionVariants,
+  ContentSwitcherBasic,
+  ContentSwitcherOnColor,
+  DialogBasic,
+  DialogForm,
+  DialogSizes,
+  DrawerNav,
+  DrawerSides,
+  InlineAlertKinds,
+  MenuBasic,
+  MenuGroups,
+  MenuSubmenu,
+  NotificationKinds,
+  TabsHorizontal,
+  TabsVertical,
+  ToastDemo,
+  TooltipBasic,
+  TooltipHelpDemo,
+  TooltipPlacements,
+} from "./interactive";
 import { LinkInline, LinkVariants } from "./link";
 import { ServiceCard } from "./service-card";
 import { ServiceRequestForm } from "./service-request";
@@ -103,6 +125,26 @@ export const previews = {
   "switch-trailing": SwitchTrailing,
   "file-upload-demo": FileUploadDemo,
   "file-upload-states": FileUploadStates,
+  "dialog-basic": DialogBasic,
+  "dialog-sizes": DialogSizes,
+  "dialog-form": DialogForm,
+  "drawer-sides": DrawerSides,
+  "drawer-nav": DrawerNav,
+  "tooltip-basic": TooltipBasic,
+  "tooltip-placements": TooltipPlacements,
+  "tooltip-help": TooltipHelpDemo,
+  "menu-basic": MenuBasic,
+  "menu-groups": MenuGroups,
+  "menu-submenu": MenuSubmenu,
+  "tabs-horizontal": TabsHorizontal,
+  "tabs-vertical": TabsVertical,
+  "accordion-basic": AccordionBasic,
+  "accordion-variants": AccordionVariants,
+  "content-switcher-basic": ContentSwitcherBasic,
+  "content-switcher-on-color": ContentSwitcherOnColor,
+  "toast-demo": ToastDemo,
+  "notification-kinds": NotificationKinds,
+  "inline-alert-kinds": InlineAlertKinds,
 } satisfies Record<string, ComponentType>;
 
 export const previewNames = Object.keys(previews);

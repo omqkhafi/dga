@@ -1,7 +1,7 @@
 // Data the docs site renders (swatches, scales, deviations). Generated, never hand-edited.
 
 import { contrastRatio } from "./color";
-import { ITALIC_WEIGHTS, SHADCN_VARS, tailwindTheme } from "./emit";
+import { fontWeightNumber, ITALIC_WEIGHTS, SHADCN_VARS, tailwindTheme } from "./emit";
 import { BREAKPOINTS, MODE_MIN_WIDTH } from "./fixes";
 import { auditContrast, type Model, resolve, tokenValue } from "./model";
 import type { Mode } from "./source";
@@ -128,7 +128,10 @@ export function docsData(model: Model) {
 
   const weights = [...model.responsive.values()]
     .filter((t) => t.name.startsWith("font-weight-") && !ITALIC_WEIGHTS.test(t.name))
-    .map((t) => ({ name: t.name, value: resolve(model, t.values.desktop) }));
+    .map((t) => ({
+      name: t.name,
+      value: fontWeightNumber(t.name, resolve(model, t.values.desktop)),
+    }));
 
   const spacingScale = [...model.primitives.values()]
     .filter((p) => /^spacing-\d/.test(p.name))
@@ -150,7 +153,10 @@ export function docsData(model: Model) {
 
   const radius = [...model.responsive.values()]
     .filter((t) => t.group === "Radius")
-    .map((t) => ({ name: t.name, value: resolve(model, t.values.desktop) }));
+    .map((t) => ({
+      name: t.name,
+      value: fontWeightNumber(t.name, resolve(model, t.values.desktop)),
+    }));
 
   return {
     shadcn: Object.entries(SHADCN_VARS).map(([name, token]) => ({ name, token })),

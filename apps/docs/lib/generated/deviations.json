@@ -3170,6 +3170,14 @@
     "reason": "Typo: Wieght → Weight. Only the Figma group name was wrong."
   },
   {
+    "area": "Typography",
+    "item": "--font-weight-* and --primitive-font-weight-*",
+    "original": "The Figma variable holds the font style name: Regular, Medium, Semibold, Bold.",
+    "ours": "400, 500, 600, 700.",
+    "reason": "CSS needs a number or a keyword: font-weight: Semibold is invalid, so font-medium, font-semibold and font-bold all fell back to 400 and every label, heading and tab rendered regular. Found while building the Phase 4 components, and fixed for all of them.",
+    "status": "fixed"
+  },
+  {
     "area": "Breakpoints",
     "item": "sm / md / lg / xl / 2xl",
     "original": "Not defined. Figma has Desktop, Tablet and Mobile modes with no pixel widths.",
@@ -3566,5 +3574,110 @@
     "ours": "Each name has dir=\"auto\" and is wrapped in <bdi>, so an Arabic name reads right to left and \"report.pdf\" left to right, whatever the page direction. Sizes and percentages are always left to right Western digits.",
     "reason": "A name mixing Arabic and Latin text must not be reordered around its extension.",
     "component": "file-upload"
+  },
+  {
+    "area": "Components",
+    "item": "Dialog: name, close and focus",
+    "original": "Modal: a 600px card (padding 24, radius-md, shadow-3xl). No close button, focus or keyboard behaviour is specified; width: 100% on mobile.",
+    "ours": "Dialog (DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter, DialogClose). A close button in the corner, Escape, a focus trap, focus returning to the trigger, an inert page behind it, sm 400 / md 600 / lg 800px, and 16px of page padding on phones.",
+    "reason": "A window that takes over the page must be operable by keyboard and announced (WAI-ARIA dialog pattern, WCAG 2.1.1, 2.4.3). Built on Base UI Dialog.",
+    "component": "dialog"
+  },
+  {
+    "area": "Components",
+    "item": "Drawer: from Slideout Menu to a modal drawer",
+    "original": "Slideout Menu: a 346px side panel (.sidepanel) with a physical border-right, always visible in the layout.",
+    "ours": "Drawer: a modal panel that slides in from the start, end, top or bottom. start and end follow the page direction, the edge border is logical (border-e or border-s) and a touch swipe closes it. White or gray (neutral-100).",
+    "reason": "A panel that covers the page needs the same focus trap and Escape as a dialog. DGA's border-right and its slide direction are physical, so they would be on the wrong side in Arabic.",
+    "component": "drawer"
+  },
+  {
+    "area": "Components",
+    "item": "Tooltip: placement and behaviour",
+    "original": "A 240px bubble with a 14px physical margin per direction (margin-right for left, margin-left for right) and a beak placement and alignment from Figma. Shown on hover.",
+    "ours": "side is top, bottom, start or end, so start and end swap on Arabic pages and the beak follows. It opens on hover and on keyboard focus, stays open while the pointer is over it, and closes with Escape (WCAG 1.4.13). The Help Icon is TooltipHelp: a 20px button with an accessible name that opens the same bubble as a popover on hover, focus, click and touch.",
+    "reason": "A tooltip that shows only on hover is invisible to keyboard users, and a physical margin would sit on the wrong side in RTL. Base UI also advises that an info icon whose purpose is to show the text be a popover, so touch and screen reader users can read it.",
+    "component": "tooltip"
+  },
+  {
+    "area": "Components",
+    "item": "Menu: states and disabled",
+    "original": ".menu-item:hover is defined twice with different fills (neutral-100 and button-background-neutral-hovered); focus is a 2px black border; disabled is opacity .5.",
+    "ours": "The Figma fills: button-background-neutral-hovered and -pressed, background-primary-50 for the selected item. Focus is a 2px outline, drawn inside the item and only for keyboard focus. Disabled uses text-default-disabled and icon-default-disabled instead of opacity.",
+    "reason": "Figma is the source of truth where the CSS disagrees with itself. Opacity on the whole item also fades the focus ring.",
+    "component": "menu"
+  },
+  {
+    "area": "Components",
+    "item": "Menu: trailing element",
+    "original": "Five trail variants: Text, Button, Tag, Switch and Icon.",
+    "ours": "MenuShortcut for text and any element you place after the label (Tag, Switch, an icon). Submenus (MenuSub) and checkbox and radio items are added, with a check mark or a dot on the end side.",
+    "reason": "One slot covers every trail variant and the extra items cover the menus that apps actually need.",
+    "component": "menu"
+  },
+  {
+    "area": "Components",
+    "item": "Tabs: selected, hover and More tab",
+    "original": "A 3px bar for hover, press and selected on vertical tabs; a Closed and Open More tab on horizontal tabs.",
+    "ours": "A 3px bar under (or beside) the selected tab in border-primary; vertical tabs also show a neutral bar on hover and press. A list that does not fit scrolls sideways. The More tab (an overflow menu) is not built: compose a Menu in the last tab.",
+    "reason": "A scrolling list needs no extra control and keeps every tab reachable with Tab and the arrow keys. The overflow menu is on the roadmap.",
+    "status": "pending",
+    "component": "tabs"
+  },
+  {
+    "area": "Components",
+    "item": "Tabs, Content Switcher: arrow keys in RTL",
+    "original": "Not specified.",
+    "ours": "Left and Right swap on Arabic pages (Base UI DirectionProvider, set from the dir attribute of html by the components themselves), so the arrow that points at the next tab moves to it.",
+    "reason": "The arrow keys must match what the eyes see, in both directions (WAI-ARIA tabs pattern).",
+    "component": "tabs"
+  },
+  {
+    "area": "Components",
+    "item": "Accordion: RTL padding, flush and disabled",
+    "original": "Body padding in physical sides with two [dir=rtl] overrides per variant; flush draws its line with a border-image gradient at 16px and 382px; disabled is neutral-300 with !important.",
+    "ours": "Logical padding (ps and pe), so no RTL overrides are needed; flush is a 16px margin on each side of the line (the width follows the container); disabled uses text-default-disabled.",
+    "reason": "The CSS needs twelve rules where logical properties need none, and the gradient hard-codes a 382px width.",
+    "component": "accordion"
+  },
+  {
+    "area": "Components",
+    "item": "Content Switcher: design and on-colour",
+    "original": "Figma has two to three items with a white label (text-oncolor-primary) and an OnColor variant. The CSS only sets margin: 10px.",
+    "ours": "A neutral-100 track with the chosen option in the primary fill and a white label; one option is always chosen. On a brand fill the track is a translucent black (not white) and the chosen option is white with a dark green label.",
+    "reason": "White on a white-lightened brand fill is 3.34:1 (down to 2.81:1 pressed); a darkened track keeps 4.5:1 or better, as the on-colour buttons do.",
+    "component": "content-switcher"
+  },
+  {
+    "area": "Components",
+    "item": "Toast: neutral bar, timing and live region",
+    "original": "Notification Toast: an 8px bar in the kind's 400 colour (white for neutral, so invisible), no timing or announcement.",
+    "ours": "A bar on the logical start in the kind's 400 colour (neutral uses border-neutral-primary), an icon and a title for each kind, a close button and an optional action. It is announced (polite; assertive for error and warning), pauses while hovered or focused, and can be swiped away. Toaster sits at the bottom end of the screen.",
+    "reason": "A message that disappears must be announced and must not vanish while someone is reading it (WCAG 4.1.3, 2.2.1).",
+    "component": "toast"
+  },
+  {
+    "area": "Components",
+    "item": "Notification: the icon colour",
+    "original": "The icon is icon-oncolor (white) on a 50 tint, and the success style uses the brand green where the other kinds use their own colour.",
+    "ours": "The icon uses the kind's icon colour (3:1 or better on the tint); success uses the success tokens like the Figma fill and text.",
+    "reason": "A white icon on a 50 tint is 1.0 to 1.1:1: it cannot be seen. The kinds should read as one set.",
+    "component": "notification"
+  },
+  {
+    "area": "Components",
+    "item": "Notification, Inline Alert: live regions",
+    "original": "Not specified.",
+    "ours": "critical (Notification) and destructive or warning (Inline Alert) are role=alert, the rest role=status, and each hides itself when dismissed.",
+    "reason": "A message that appears on its own must be announced without moving focus (WCAG 4.1.3). Urgent kinds interrupt; the rest wait.",
+    "component": "notification"
+  },
+  {
+    "area": "Components",
+    "item": "Inline Alert: icon colour and neutral bar",
+    "original": "The tinted info and warning alerts with a close button use icon-default for the icon, and the neutral bar is white.",
+    "ours": "The icon is always the kind's icon colour, and the neutral bar is border-neutral-primary. A tinted alert takes the kind's text colour for the title and the text.",
+    "reason": "The icon should not change when a close button is added, and a white bar on a white alert is not there.",
+    "component": "inline-alert"
   }
 ]
