@@ -1,7 +1,7 @@
 ---
 title: Select
 description: "اختيار خيار واحد من قائمة (في DGA: Dropdown Input أي القائمة المنسدلة). حجمان وثلاث تعبئات ومجموعات وكل الحالات، على Base UI Select."
-sourceHash: 433efd941b7f
+sourceHash: a4c3ec5d460d
 ---
 
 <Preview name="select-states" title="حالات القائمة المنسدلة" />
@@ -15,14 +15,14 @@ sourceHash: 433efd941b7f
 ## الاستخدام [#usage]
 
 ```tsx title="page.tsx"
-import { Field, FieldLabel } from "@/components/ui/field";
+import { Field, FieldLabel } from "@/components/dga/field";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
+} from "@/components/dga/select";
 
 const services = [
   { value: "issue", label: "إصدار رخصة" },

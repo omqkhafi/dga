@@ -2,7 +2,11 @@
   "extends": "../tsconfig.base.json",
   "compilerOptions": {
     "baseUrl": ".",
-    "paths": { "@/registry/*": ["./*"] }
+    "paths": {
+      "@/registry/*": ["./*"],
+      "@/components/dga/*": ["./bases/base/ui/*"],
+      "@/lib/dga/*": ["./bases/base/lib/*"]
+    }
   },
   "include": ["bases/**/*.ts", "bases/**/*.tsx"]
 }

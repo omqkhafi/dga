@@ -2,7 +2,7 @@ import { createI18nMiddleware } from "fumadocs-core/i18n/middleware";
 import { isMarkdownPreferred } from "fumadocs-core/negotiation";
 import { type NextFetchEvent, type NextRequest, NextResponse } from "next/server";
 import { discoveryLink, localeOf, markdownAlternateLink, markdownRoutePath } from "@/lib/discovery";
-import { i18n, isLocale, LOCALE_COOKIE } from "@/lib/i18n";
+import { i18n, isLocale, LANG_HEADER, LOCALE_COOKIE } from "@/lib/i18n";
 
 const fumadocs = createI18nMiddleware(i18n);
 
@@ -44,6 +44,10 @@ export default async function proxy(request: NextRequest, event: NextFetchEvent)
  * and the skills, and a docs page also names its Markdown twin (and varies on Accept).
  */
 function stamp(response: Response, pathname: string) {
+  // The language of the URL, for app/global-not-found.tsx: Next renders it outside the layouts
+  // and it reads this header to answer /ar/nope in Arabic.
+  const lang = localeOf(pathname);
+  if (lang) response.headers.set(LANG_HEADER, lang);
   response.headers.append("Link", discoveryLink(localeOf(pathname)));
   const alternate = markdownAlternateLink(pathname);
   if (alternate) {

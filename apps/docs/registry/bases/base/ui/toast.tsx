@@ -11,7 +11,7 @@ import {
 import { HugeiconsIcon } from "@hugeicons/react";
 import { cva } from "class-variance-authority";
 
-import { useDocumentDirection } from "@/registry/bases/base/lib/direction";
+import { useDocumentDirection } from "@/lib/dga/direction";
 
 type ToastType = "neutral" | "info" | "success" | "warning" | "error";
 

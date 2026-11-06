@@ -75,3 +75,34 @@ test("cn-* classes are inlined from the style map, including compound variants a
 test("an unknown cn-* class fails the build", () => {
   expect(() => inlineStyles('cva("cn-missing")', {})).toThrow(/cn-missing/);
 });
+
+describe("install path isolation (0.4.2)", () => {
+  type File = { path: string; type: string; target?: string };
+  const registry = JSON.parse(readFileSync(join(ROOT, "registry", "registry.json"), "utf8")) as {
+    items: { name: string; type: string; files?: File[] }[];
+  };
+
+  test("every registry:ui item installs to components/dga/<name>.tsx", () => {
+    const ui = registry.items.filter((i) => i.type === "registry:ui");
+    expect(ui.length).toBeGreaterThan(20);
+    for (const item of ui) {
+      expect(item.files?.map((f) => f.target)).toEqual([`components/dga/${item.name}.tsx`]);
+    }
+  });
+
+  test("the direction helper installs to lib/dga, not a name shadcn projects may use", () => {
+    const item = registry.items.find((i) => i.name === "direction");
+    expect(item?.files?.[0]?.target).toBe("lib/dga/direction.tsx");
+  });
+
+  test("no source imports components/ui or the registry paths; only cn is shared", () => {
+    for (const item of registry.items) {
+      for (const file of item.files ?? []) {
+        const source = readFileSync(join(ROOT, "registry", file.path), "utf8");
+        expect(source).not.toContain("components/ui");
+        expect(source).not.toMatch(/@\/registry\/bases\/base\/(ui|components)/);
+        expect(source).not.toMatch(/@\/lib\/direction/);
+      }
+    }
+  });
+});

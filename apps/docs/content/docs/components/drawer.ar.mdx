@@ -1,7 +1,7 @@
 ---
 title: Drawer
 description: "لوحة تنزلق من بداية الشاشة أو نهايتها أو أعلاها أو أسفلها (في DGA: Slideout Menu). بيضاء أو رمادية، وتُغلق بالسحب، وتنعكس مع اتجاه الصفحة."
-sourceHash: d6b2eb69c912
+sourceHash: dfd10e0880d4
 ---
 
 <Preview name="drawer-sides" title="جهات اللوحة" minHeight={420} />
@@ -13,7 +13,7 @@ sourceHash: d6b2eb69c912
 ## الاستخدام [#usage]
 
 ```tsx title="page.tsx"
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/dga/button";
 import {
   Drawer,
   DrawerClose,
@@ -23,7 +23,7 @@ import {
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
-} from "@/components/ui/drawer";
+} from "@/components/dga/drawer";
 
 export function FilterDrawer() {
   return (

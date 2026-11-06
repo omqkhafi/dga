@@ -3,6 +3,8 @@
 //   1. `shadcn init <url>/r/dga.json`          the registry:base item (recommended path)
 //   2. `shadcn init <url>/r/dga-style.json`    the style item on its own (Phase 1 path)
 //   3. `shadcn add  <url>/r/dga-tokens.json`   tokens only, no components
+//   5. a project with stock shadcn button, input and dialog in components/ui: @dga items land in
+//      components/dga and leave components/ui byte-identical
 //   4. `shadcn init <url>/r/dga.json`, then `shadcn add @dga/number-input`: one form control on
 //      its own, to check that its registry dependencies (input, field, utils) are pulled in
 // Path 1 also adds every registry:ui component and renders them on a page. Every app must build.
@@ -11,7 +13,7 @@
 //   DGA_REGISTRY_URL=https://dga.omqkhafi.dev bun run test:install   test the production registry
 //   KEEP=1 bun run test:install                            keep the temp apps for inspection
 
-import { cpSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { cpSync, existsSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { $ } from "bun";
@@ -134,7 +136,7 @@ async function build(label: string, app: string) {
 /** A page that renders every component, so the build type-checks their public API. */
 function smokePage(names: string[]) {
   const pascal = (n: string) => n.replace(/(^|-)(\w)/g, (_, __, c: string) => c.toUpperCase());
-  const imports = names.map((n) => `import * as ${pascal(n)}Module from "@/components/ui/${n}";`);
+  const imports = names.map((n) => `import * as ${pascal(n)}Module from "@/components/dga/${n}";`);
   const uses = names.map((n) => `  ${pascal(n)}Module,`);
   return `${imports.join("\n")}
 
@@ -205,7 +207,7 @@ try {
       }
       if (add.exitCode !== 0) console.error(add.stderr.toString() || add.stdout.toString());
       for (const c of components) {
-        const source = reader(app).text(`src/components/ui/${c}.tsx`);
+        const source = reader(app).text(`src/components/dga/${c}.tsx`);
         check(!/\bcn-[a-z]/.test(source.replace(/data-slot=|"cn"/g, "")), `${c}: cn-* inlined`);
         check(!/clsx|tailwind-merge/.test(source), `${c}: no clsx or tailwind-merge`);
       }
@@ -229,13 +231,13 @@ try {
     for (const file of ["number-input", "input", "field"]) {
       let found = true;
       try {
-        r.text(`src/components/ui/${file}.tsx`);
+        r.text(`src/components/dga/${file}.tsx`);
       } catch {
         found = false;
       }
       check(found, `${label}: ${file}.tsx was installed with number-input`);
     }
-    const source = r.text("src/components/ui/number-input.tsx");
+    const source = r.text("src/components/dga/number-input.tsx");
     check(source.startsWith('"use client"'), `${label}: number-input.tsx is a client component`);
     check(!/\bcn-[a-z]/.test(source.replace(/data-slot=|"cn"/g, "")), `${label}: cn-* inlined`);
     check(
@@ -244,8 +246,8 @@ try {
     );
     writeFileSync(
       join(app, "src/app/page.tsx"),
-      `import { Field, FieldLabel } from "@/components/ui/field";
-import { NumberInput } from "@/components/ui/number-input";
+      `import { Field, FieldLabel } from "@/components/dga/field";
+import { NumberInput } from "@/components/dga/number-input";
 
 export default function Page() {
   return (
@@ -271,19 +273,19 @@ export default function Page() {
     const r = reader(app);
     let direction = "";
     try {
-      direction = r.text("src/lib/direction.tsx");
+      direction = r.text("src/lib/dga/direction.tsx");
     } catch {}
     check(
       direction.includes("AutoDirection"),
-      `${label}: lib/direction.tsx was installed with tabs`,
+      `${label}: lib/dga/direction.tsx was installed with tabs`,
     );
-    const tabs = r.text("src/components/ui/tabs.tsx");
+    const tabs = r.text("src/components/dga/tabs.tsx");
     check(tabs.startsWith('"use client"'), `${label}: tabs.tsx is a client component`);
-    check(tabs.includes("@/lib/direction"), `${label}: tabs.tsx imports the direction helper`);
+    check(tabs.includes("@/lib/dga/direction"), `${label}: tabs.tsx imports the direction helper`);
     check(!/\bcn-[a-z]/.test(tabs.replace(/data-slot=|"cn"/g, "")), `${label}: cn-* inlined`);
     writeFileSync(
       join(app, "src/app/page.tsx"),
-      `import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+      `import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/dga/tabs";
 
 export default function Page() {
   return (
@@ -299,6 +301,85 @@ export default function Page() {
 }
 `,
     );
+    await build(label, app);
+  }
+
+  // 5. a project that already has stock shadcn button, input and dialog in components/ui:
+  //    installing @dga items must not touch them, and must not import them.
+  {
+    const label = "dga-collision";
+    const app = await fresh(label);
+    await $`bunx ${shadcn} init --defaults --yes --no-monorepo < /dev/null`.cwd(app).quiet();
+    const stock = await $`bunx ${shadcn} add button input dialog --yes < /dev/null`
+      .cwd(app)
+      .nothrow()
+      .quiet();
+    check(stock.exitCode === 0, `${label}: stock shadcn add button input dialog`);
+    const r = reader(app);
+    const stockFiles = ["button", "input", "dialog"].map((n) => `src/components/ui/${n}.tsx`);
+    const before = stockFiles.map((f) => r.text(f));
+    // Register @dga by hand, as a user with an existing shadcn project would.
+    const config = r.json<{ registries: Record<string, string> }>("components.json");
+    config.registries["@dga"] = `${url}/r/{name}.json`;
+    writeFileSync(join(app, "components.json"), JSON.stringify(config, null, 2));
+    // --overwrite answers the one prompt left: lib/utils.ts (both export cn). With the old
+    // components/ui path it would also have replaced the stock files.
+    const add =
+      await $`bunx ${shadcn} add @dga/button @dga/field @dga/dialog --yes --overwrite < /dev/null`
+        .cwd(app)
+        .nothrow()
+        .quiet();
+    check(add.exitCode === 0, `${label}: shadcn add @dga/button @dga/field @dga/dialog`);
+    if (add.exitCode !== 0) console.error(add.stderr.toString() || add.stdout.toString());
+    stockFiles.forEach((f, i) => {
+      check(r.text(f) === before[i], `${label}: ${f} is byte-identical after installing @dga`);
+    });
+    for (const n of ["button", "field", "dialog", "spinner"]) {
+      check(
+        existsSync(join(app, `src/components/dga/${n}.tsx`)),
+        `${label}: components/dga/${n}.tsx`,
+      );
+    }
+    check(
+      !existsSync(join(app, "src/components/ui/field.tsx")),
+      `${label}: no @dga file in components/ui`,
+    );
+    for (const n of ["button", "field", "dialog", "spinner"]) {
+      const source = r.text(`src/components/dga/${n}.tsx`);
+      check(!source.includes("components/ui"), `${label}: ${n}.tsx never imports components/ui`);
+    }
+    check(
+      r.text("src/components/dga/button.tsx").includes('"@/components/dga/spinner"'),
+      `${label}: button imports @/components/dga/spinner`,
+    );
+    writeFileSync(
+      join(app, "src/app/page.tsx"),
+      `import { Button as DgaButton } from "@/components/dga/button";
+import { Dialog } from "@/components/dga/dialog";
+import { Field, FieldLabel } from "@/components/dga/field";
+import { Button } from "@/components/ui/button";
+import { Dialog as StockDialog } from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+
+export default function Page() {
+  return (
+    <main>
+      <Button>Stock</Button>
+      <DgaButton>DGA</DgaButton>
+      <Field>
+        <FieldLabel>Name</FieldLabel>
+        <Input />
+      </Field>
+      <Dialog />
+      <StockDialog />
+    </main>
+  );
+}
+`,
+    );
+    const tsc = await $`bunx tsc --noEmit -p .`.cwd(app).nothrow().quiet();
+    check(tsc.exitCode === 0, `${label}: the project typechecks`);
+    if (tsc.exitCode !== 0) console.error(tsc.stdout.toString());
     await build(label, app);
   }
 

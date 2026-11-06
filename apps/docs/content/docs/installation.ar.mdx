@@ -1,7 +1,7 @@
 ---
 title: التثبيت
 description: أضف نمط DGA إلى مشروع جديد أو قائم عبر سطر أوامر shadcn.
-sourceHash: a54dc40eee7b
+sourceHash: 924cf8cffe3c
 ---
 
 يحتاج كود المنصات إلى مشروع React مع Tailwind CSS v4. تستخدم هذه الخطوات Next.js، وتُذكر الأطر الأخرى في الختام.
@@ -50,7 +50,7 @@ npx shadcn@latest init https://dga.omqkhafi.dev/r/dga.json
 npx shadcn@latest add https://dga.omqkhafi.dev/r/dga-style.json
 ```
 
-يدمج سطر الأوامر قيم DGA في ملف `globals.css` الخاص بك. وتصبح متغيرات shadcn الموجودة لديك (`--background` و`--primary` …) مرتبطة برموز DGA.
+يدمج سطر الأوامر قيم DGA في ملف `globals.css` الخاص بك. وتصبح متغيرات shadcn الموجودة لديك (`--background` و`--primary` …) مرتبطة برموز DGA، فتأخذ مكوّنات shadcn الأصلية في `components/ui` ألوان DGA أيضًا. وهذا هو التغيير الوحيد في سمتك؛ أما رموز DGA فمتغيرات جديدة لا وجود لها في مشروع shadcn الأصلي. أما المكوّنات فخطوة منفصلة ولا تمسّ `components/ui` أبدًا: انظر [أين تُثبَّت المكوّنات](#install-location).
 
 ## الرموز فقط [#tokens-only]
 
@@ -78,6 +78,25 @@ npx shadcn@latest add https://dga.omqkhafi.dev/r/dga-tokens.json
 npx shadcn@latest add @dga/button @dga/badge
 ```
 
+## أين تُثبَّت المكوّنات [#install-location]
+
+يُكتب كل مكوّن من `@dga` في `components/dga/<name>.tsx`، ويُستورد من هناك:
+
+```tsx title="page.tsx"
+import { Button } from "@/components/dga/button";
+```
+
+قد يحتوي المشروع أصلًا على shadcn الأصلي، أو على مكتبة مشتقة منه، في `components/ui`. الزر `@dga/button` و`ui/button` ملفان مختلفان بواجهتين مختلفتين، فلا يشتركان في مسار واحد: تثبيت عناصر `@dga` لا يستبدل ولا يعيد تسمية ولا يستورد أي شيء من `components/ui`، ويمكن استخدام الاثنين معًا. والاستيراد بين عناصر `@dga` (يستخدم Field المكوّن Input، ويستخدم Search Box المكوّن Input) يشير إلى `@/components/dga/*` وليس إلى `components/ui`.
+
+يُشترك في أمرين عن قصد:
+
+- الملف `lib/utils.ts` يصدّر `cn`، وهو موجود أصلًا في كل مشروع shadcn. وتستورد نسخة `@dga` الدالة `cn` من الحزمة `cn`. يسأل سطر الأوامر قبل استبدال `lib/utils.ts` الموجود، وتصلح أي إجابة لأن التوقيع واحد.
+- الملف `lib/dga/direction.tsx` (العنصر `direction` الذي تستخدمه Tabs وMenu وTooltip وغيرها) داخل مجلد `dga` حتى لا يتعارض مع مساعد بالاسم نفسه.
+
+### لماذا `target` وليس اسمًا بديلًا [#install-target]
+
+يكتب سطر أوامر shadcn ملف `registry:ui` في الاسم البديل `ui` من `components.json` (`@/components/ui` افتراضيًا). ووضع `@dga` هناك يتعارض مع shadcn الأصلي، وحلّ ذلك بالأسماء البديلة يلزم كل مستخدم بتعديل `components.json`. لذلك يعلن كل ملف في `@dga` الحقل `files[].target` (`components/dga/button.tsx`)، ويحترمه سطر الأوامر لكل أنواع العناصر، نسبةً إلى المشروع (وإلى `src/` إن وُجد)، دون أي تغيير في `components.json`. ويعيد سطر الأوامر كتابة الاستيراد بين العناصر إلى الأسماء البديلة (`@/components/ui/input`) ويُبقي الاستيراد الذي يشير إلى ملف موجود، فكان `components/ui/input.tsx` الأصلي سيُلتقط بصمت. لذلك تستورد مصادر السجل `@/components/dga/*` مباشرة، ويثبّت الأمر `bun run test:install` عناصر `@dga` في مشروع فيه `button` و`input` و`dialog` الأصلية، ويتحقق أن تلك الملفات لم يتغير منها بايت واحد وأن المشروع يُبنى.
+
 ## الوضع الداكن [#dark-mode]
 
 تُطبَّق الرموز الداكنة تحت `.dark` (next-themes وshadcn) أو `[data-theme="dark"]` (عُرف موقع DGA). يعمل الاثنان على `<html>` أو على أي عنصر، فيمكن أن يكون قسم واحد داكنًا.
@@ -102,4 +121,5 @@ npx shadcn@latest add @dga/button @dga/badge
 | [`dga-style`](/r/dga-style.json) | `registry:style` | الاعتماديات واستيرادات CSS وخريطة الأنماط `cn-*` للمكوّنات، ويسحب `dga-tokens` و`utils` والخط |
 | [`dga-tokens`](/r/dga-tokens.json) | `registry:theme` | كل الرموز، والسمتان الفاتحة والداكنة، والأنماط المتجاوبة، وسمة Tailwind، وربط shadcn، وطبقة الأساس |
 | [`utils`](/r/utils.json) | `registry:lib` | الملف `lib/utils.ts` الذي يعيد تصدير `cn` من الحزمة `cn` (دون clsx أو tailwind-merge) |
+| المكوّنات (`@dga/button` …) | `registry:ui` | `components/dga/<name>.tsx`، وليس `components/ui` أبدًا |
 | [`font-ibm-plex-sans-arabic`](/r/font-ibm-plex-sans-arabic.json) | `registry:font` | خط IBM Plex Sans Arabic بالأوزان 400 إلى 700، مجموعتا الحروف العربية واللاتينية |

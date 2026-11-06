@@ -1,7 +1,7 @@
 import { Button as ButtonPrimitive } from "@base-ui/react/button";
 import { cva, type VariantProps } from "class-variance-authority";
+import { Spinner } from "@/components/dga/spinner";
 import { cn } from "@/registry/bases/base/lib/utils";
-import { Spinner } from "@/registry/bases/base/ui/spinner";
 
 const buttonVariants = cva("relative inline-flex shrink-0 cursor-pointer items-center justify-center rounded-sm border border-transparent font-medium whitespace-nowrap transition-colors select-none focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-offset-1 focus-visible:outline-border-black data-disabled:cursor-not-allowed data-loading:cursor-progress [&_svg]:pointer-events-none [&_svg]:shrink-0 data-loading:[&>[data-icon=inline-start]]:hidden", {
   variants: {

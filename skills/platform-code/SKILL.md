@@ -16,6 +16,8 @@ npx shadcn@latest add @dga/<name>
 
 `init` writes `components.json` (Hugeicons, `rtl: true`, the `@dga` registry), the DGA tokens, the dark theme and the Arabic font. Then add components by name, for example `@dga/button @dga/field @dga/input`.
 
+Components install to `components/dga/<name>.tsx`, never `components/ui`, so they can sit beside stock shadcn. Import them as `import { Button } from "@/components/dga/button"`. Do not move them to `components/ui` and do not import `@/components/ui/*` for a `@dga` component. Only `@/lib/utils` (`cn`) is shared.
+
 ## Read the docs, not memory
 
 1. `https://dga.omqkhafi.dev/{lang}/llms.txt` lists every page; `{lang}` is `en` or `ar`.
@@ -31,7 +33,7 @@ npx shadcn@latest add @dga/<name>
 - **DGA tokens only.** Colours, spacing, radius, type and shadows come from DGA tokens (`text-text-default`, `bg-background-card`, `border-border-neutral-secondary`). No raw hex, no arbitrary palette values, no invented tokens.
 - **Icons are Hugeicons** (`@hugeicons/core-free-icons`).
 - **Digits.** Western digits (0 to 9) in technical content: code, props, versions, ids, numeric inputs. Arabic-Indic digits only inside Arabic citizen-facing sample content. Never mix both in one view.
-- **One language per view.** Arabic views contain no English words and English views contain no Arabic, except code identifiers, package names, URLs and proper nouns.
+- **One language per view.** Arabic views contain no English words and English views contain no Arabic, except code identifiers, package names, URLs and proper nouns. One accepted exception: on Arabic pages the generated Deviation reasons and Contrast state labels stay English (marked `lang="en"`), because their source data is English; do not translate them.
 - **Deviations before contrast fixes.** DGA values that fail WCAG AA are already logged with a reason at `/{lang}/docs/deviations`. Read it before "fixing" a colour; do not silently change a token.
 
 ## Never

@@ -6,7 +6,7 @@ import { HelpCircleIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { cva, type VariantProps } from "class-variance-authority";
 import type * as React from "react";
-import { AutoDirection, useDocumentDirection } from "@/registry/bases/base/lib/direction";
+import { AutoDirection, useDocumentDirection } from "@/lib/dga/direction";
 import { cn } from "@/registry/bases/base/lib/utils";
 
 const tooltipVariants = cva("relative flex w-max max-w-60 min-w-40 flex-col gap-1 rounded-xs bg-(--tt-bg) p-tooltip-padding text-xs text-(--tt-text) shadow-lg outline-hidden origin-(--transform-origin) transition-[opacity,scale] duration-150 data-ending-style:scale-95 data-ending-style:opacity-0 data-starting-style:scale-95 data-starting-style:opacity-0 motion-reduce:transition-none", {

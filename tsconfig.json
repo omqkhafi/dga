@@ -1,5 +1,12 @@
 {
   "extends": "./tsconfig.base.json",
-  "compilerOptions": { "types": ["bun"], "paths": { "@/registry/*": ["./registry/*"] } },
+  "compilerOptions": {
+    "types": ["bun"],
+    "paths": {
+      "@/registry/*": ["./registry/*"],
+      "@/components/dga/*": ["./registry/bases/base/ui/*"],
+      "@/lib/dga/*": ["./registry/bases/base/lib/*"]
+    }
+  },
   "include": ["scripts/**/*.ts"]
 }

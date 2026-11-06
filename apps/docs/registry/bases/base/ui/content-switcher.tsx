@@ -4,7 +4,7 @@ import { Toggle as TogglePrimitive } from "@base-ui/react/toggle";
 import { ToggleGroup as ToggleGroupPrimitive } from "@base-ui/react/toggle-group";
 import { cva, type VariantProps } from "class-variance-authority";
 import * as React from "react";
-import { AutoDirection } from "@/registry/bases/base/lib/direction";
+import { AutoDirection } from "@/lib/dga/direction";
 import { cn } from "@/registry/bases/base/lib/utils";
 
 const contentSwitcherVariants = cva("inline-flex w-fit max-w-full items-stretch rounded-sm border border-border-neutral-primary bg-background-neutral-100 p-0.5", {

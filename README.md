@@ -13,6 +13,12 @@ npx shadcn@latest init https://dga.omqkhafi.dev/r/dga.json
 npx shadcn@latest add @dga/button
 ```
 
+```tsx
+import { Button } from "@/components/dga/button";
+```
+
+Components are installed to `components/dga/<name>.tsx`, never `components/ui`, so they sit beside stock shadcn (or a shadcn-derived library) without overwriting it. Only `lib/utils.ts` (`cn`) is shared. See [Installation](https://dga.omqkhafi.dev/en/docs/installation#where-components-are-installed).
+
 ## Languages
 
 The documentation is published in English (`/en`) and Arabic (`/ar`). A URL without a language goes to the language the visitor chose with the switcher in the header (the `dga_locale` cookie: SameSite=Lax, path `/`, one year), then to the language in `Accept-Language`, then to English. Both are first-class: every page, every UI string and every Open Graph image exists in both, and a new component is not done until both are written (see [ROADMAP.md](ROADMAP.md)). Arabic follows its own typography rules (line height 1.8, no letter spacing, Western digits in technical values); they are documented under Foundations > Typography.

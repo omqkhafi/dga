@@ -5,6 +5,28 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
 
 ## [Unreleased]
 
+## [0.4.2] - 2026-11-06
+
+Patch: `@dga` components get their own install path so they never collide with stock shadcn, `/ar/*` 404s are in Arabic, and the Arabic exception is written down. No component API or visual changes. **Breaking: the install path moved.**
+
+### Changed
+
+- **Breaking: components install to `components/dga/<name>.tsx`, not `components/ui/<name>.tsx`.** A project can already have stock shadcn, or a library derived from it, in `components/ui`, and `@dga/button` would have overwritten `ui/button.tsx` (or been skipped, leaving the wrong component). Now every `@dga` UI item writes to `components/dga` (`src/components/dga` when the project has `src/`), and `components/ui` is never touched. Import as `import { Button } from "@/components/dga/button"`.
+  - **Migration:** move the `@dga` files from `components/ui` to `components/dga` (or delete them and run `npx shadcn@latest add @dga/<name> --overwrite`), then change `@/components/ui/<name>` to `@/components/dga/<name>` in your imports. If you had replaced a stock shadcn file with a `@dga` one, restore the stock file.
+  - **How:** each registry file declares `files[].target` (`components/dga/button.tsx`), which the shadcn CLI honours for every item type, so nothing needs to change in `components.json` (no alias to edit). A `registry:ui` file without `target` goes to the `ui` alias, and an alias change would make every user edit `components.json`. The registry sources import each other as `@/components/dga/*`: the CLI rewrites `@/registry/…/ui/input` to the `ui` alias, and keeps that import when `components/ui/input.tsx` already exists, so Field, Search Box and Number Input would have imported the stock Input.
+  - **Shared on purpose:** `lib/utils.ts` (`cn`), which every shadcn project has. The CLI asks before replacing an existing one; either answer works. The `direction` helper moved from `lib/direction.tsx` to `lib/dga/direction.tsx` (import `@/lib/dga/direction`) so it cannot collide with a helper of that name.
+  - **Theme:** unchanged and documented. Installing `dga-style` or `dga-tokens` redefines the shadcn variables (`--background`, `--primary` …) to DGA tokens, so stock components in `components/ui` take DGA colours; installing components alone does not touch your theme.
+  - **Docs:** the Installation page (a "Where components are installed" section, English and Arabic), every component page's import snippet, the AI Resources skill and `AGENTS.md` block, and the README.
+- **Tests:** `bun run test:install` has a collision fixture: a project with stock shadcn `button`, `input` and `dialog` in `components/ui`, then `@dga/button`, `@dga/field` and `@dga/dialog`. It checks that the stock files are byte-identical, the `@dga` files are in `components/dga`, none of them import `components/ui`, and the project typechecks and builds. `bun test` checks that every `registry:ui` item has a `components/dga` target and that no source imports `components/ui`.
+
+### Fixed
+
+- **`/ar/nope` and `/ar/docs/nope` served the English 404** with `lang="en" dir="ltr"`. A URL that matches no route is served by `app/global-not-found.tsx`, which sits outside the layouts and was written in English. (The locale layout cannot render its own `not-found`: with a root layout on a dynamic `[lang]` segment, Next.js returns an empty error shell for `notFound()`, reproduced in a bare app.) The proxy now sends the language of the URL in the `x-dga-lang` header, and the page reads it: `lang`, `dir`, the title and the copy follow it, and links stay in the language. A URL with no language (`/r/nope`) is English. `bun run test:e2e` checks `/en/nope`, `/en/docs/nope`, `/ar/nope`, `/ar/docs/nope` and a nested docs URL in both languages: 404 status, `lang`, `dir`, copy, and links, in the raw HTML and in the browser.
+
+### Policy
+
+- **Arabic locale exception, documented.** On Arabic pages, the generated Deviation reasons and the Contrast state labels stay in English: their source data is English, and a full translation would be unclear. They stay marked `lang="en"` and are covered by the purity audit, which skips text marked with another language. It is now stated in CONTRIBUTING.md, the `platform-code` skill and the comments of the locale tests, so an audit treats it as accepted, and `bun run test:e2e` checks that they are marked and `dir="ltr"`. Nothing was translated.
+
 ## [0.4.1] - 2026-11-05
 
 Polish and AI Resources. The docs get a section for coding agents, and the home page, the preview chrome and the Phase 4 pages are tidied from the owner's review notes. No registry component changes.

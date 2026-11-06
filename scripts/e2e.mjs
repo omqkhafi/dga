@@ -18,6 +18,10 @@
 //   8. Polish: locale purity (no Arabic on English pages, no English words on Arabic ones,
 //      previews and the hero card included), the hero on registry components, RTL comparisons
 //      with no dead space, one size in the preview toolbar and centred single-trigger previews.
+//   9. Not found: /en/nope, /en/docs/nope, /ar/nope and /ar/docs/nope answer 404 in their own
+//      language (lang, dir, title, h1), both in the raw HTML and in the browser.
+//  10. Arabic exception: Deviation reasons and Contrast state labels stay English on Arabic
+//      pages, marked lang="en" (an accepted policy, see CONTRIBUTING.md).
 //   4. Forms: every form component page fits at 375 and 1280 px in both languages, and the
 //      service request form can be completed with the keyboard alone in /en and /ar.
 import { createHash } from "node:crypto";
@@ -860,8 +864,10 @@ const ARABIC = /[\u0600-\u065F\u066D-\u06EF\u06FA-\u06FF\u0750-\u077F\uFB50-\uFD
 const visibleText = (frame, pageLang) =>
   frame.evaluate((pageLang) => {
     // Code, keys, icons, monospace identifiers, the language switcher (an endonym), and runs the
-    // page marks as another language (lang="en" on an Arabic page: the logged Deviations reasons
-    // and the Figma role names, which are the English record).
+    // page marks as another language. That last rule is the accepted exception: on Arabic pages
+    // the generated Deviation reasons and the Contrast state labels stay English (their source
+    // data is English and a full translation would be unclear), marked lang="en". It is policy,
+    // not a gap: do not translate them, and do not use lang="en" for anything else.
     const skip = `pre,code,kbd,samp,script,style,svg,noscript,.font-mono,[data-skip-purity],a[hreflang],[lang]:not([lang=${pageLang}])`;
     const out = [];
     const walk = (node) => {
@@ -1105,6 +1111,78 @@ async function polishChecks() {
   }
 }
 
+/** A URL under /en or /ar that matches no page is a 404 in that language, not in English. */
+async function notFoundChecks() {
+  const expected = {
+    en: { dir: "ltr", title: "This page does not exist", home: "Home" },
+    ar: { dir: "rtl", title: "هذه الصفحة غير موجودة", home: "الرئيسية" },
+  };
+  for (const lang of ["en", "ar"]) {
+    const want = expected[lang];
+    for (const slug of ["nope", "docs/nope", "docs/components/nope"]) {
+      const url = `${BASE}/${lang}/${slug}`;
+      const label = `/${lang}/${slug}`;
+      // The HTML a crawler or an agent gets, with no JavaScript.
+      const res = await fetch(url, { redirect: "manual" });
+      const html = await res.text();
+      const root = html.match(/<html[^>]*>/)?.[0] ?? "";
+      check(res.status === 404, `${label}: status 404 (got ${res.status})`);
+      check(root.includes(`lang="${lang}"`), `${label}: <html lang="${lang}"> (got ${root})`);
+      check(root.includes(`dir="${want.dir}"`), `${label}: <html dir="${want.dir}"> (got ${root})`);
+      check(html.includes(want.title), `${label}: the not-found copy is in ${lang}`);
+      if (lang === "ar")
+        check(!html.includes("This page does not exist"), `${label}: no English not-found copy`);
+
+      // And what a visitor sees.
+      const context = await browser.newContext({ viewport: { width: 1280, height: 800 } });
+      const page = await context.newPage();
+      const response = await page.goto(url, { waitUntil: "networkidle" });
+      check(response?.status() === 404, `${label}: the browser gets 404`);
+      const state = await page.evaluate(() => ({
+        lang: document.documentElement.lang,
+        dir: document.documentElement.dir,
+        h1: document.querySelector("h1")?.textContent ?? "",
+        links: [...document.querySelectorAll("main a")].map((a) => a.getAttribute("href")),
+      }));
+      check(state.lang === lang, `${label}: rendered lang is ${lang} (got ${state.lang})`);
+      check(state.dir === want.dir, `${label}: rendered dir is ${want.dir} (got ${state.dir})`);
+      check(state.h1 === want.title, `${label}: h1 is the ${lang} title (got ${state.h1})`);
+      check(
+        state.links.every((href) => href?.startsWith(`/${lang}`)),
+        `${label}: the links stay in /${lang} (${state.links.join(", ")})`,
+      );
+      await context.close();
+    }
+  }
+  // A URL with no language has no language to answer in: English.
+  const res = await fetch(`${BASE}/r/does-not-exist`, { redirect: "manual" });
+  check(res.status === 404, `/r/does-not-exist: status 404 (got ${res.status})`);
+  check((await res.text()).includes('lang="en"'), "/r/does-not-exist: English");
+}
+
+/** The accepted exception: on Arabic pages the generated Deviation reasons and Contrast state
+ * labels stay English, and are marked lang="en" so the purity audit covers them. */
+async function arabicExceptionChecks() {
+  const context = await browser.newContext({ viewport: { width: 1280, height: 800 } });
+  const page = await context.newPage();
+  for (const [path, what] of [
+    ["/ar/docs/deviations", "Deviation reasons"],
+    ["/ar/docs/components/button", "Contrast state labels"],
+  ]) {
+    await page.goto(`${BASE}${path}`, { waitUntil: "networkidle" });
+    const marked = await page.evaluate(() => {
+      const spans = [...document.querySelectorAll('main [lang="en"]')];
+      return {
+        count: spans.length,
+        ltr: spans.every((el) => el.closest("[dir=ltr]") !== null),
+      };
+    });
+    check(marked.count > 0, `${path}: ${what} are present and marked lang="en"`);
+    check(marked.ltr, `${path}: ${what} are set dir=ltr`);
+  }
+  await context.close();
+}
+
 await localeChecks();
 await layoutChecks();
 await aiResourceChecks();
@@ -1114,6 +1192,8 @@ await formPageChecks();
 await fieldStateChecks();
 await keyboardChecks();
 await interactiveChecks();
+await notFoundChecks();
+await arabicExceptionChecks();
 await browser.close();
 console.log(`${passed} checks passed, ${failures.length} failed.`);
 process.exit(failures.length ? 1 : 0);

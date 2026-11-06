@@ -10,7 +10,8 @@
     {
       "path": "bases/base/lib/direction.tsx",
       "content": "\"use client\";\n\nimport { DirectionProvider } from \"@base-ui/react/direction-provider\";\nimport * as React from \"react\";\n\ntype Direction = \"ltr\" | \"rtl\";\n\nfunction subscribe(callback: () => void) {\n  const observer = new MutationObserver(callback);\n  observer.observe(document.documentElement, { attributes: true, attributeFilter: [\"dir\"] });\n  return () => observer.disconnect();\n}\n\n/** The direction of the page: the `dir` attribute of `<html>`, kept up to date when it changes. */\nfunction useDocumentDirection(): Direction {\n  return React.useSyncExternalStore(\n    subscribe,\n    () => (document.documentElement.dir === \"rtl\" ? \"rtl\" : \"ltr\"),\n    () => \"ltr\",\n  );\n}\n\n/**\n * Tells Base UI which way the page reads, so arrow keys, submenu placement and tooltip\n * alignment follow `<html dir>`. Base UI only knows the direction from a DirectionProvider;\n * this reads it from the page instead, so no setup is needed.\n */\nfunction AutoDirection({ children }: { children: React.ReactNode }) {\n  return <DirectionProvider direction={useDocumentDirection()}>{children}</DirectionProvider>;\n}\n\nexport type { Direction };\nexport { AutoDirection, useDocumentDirection };\n",
-      "type": "registry:lib"
+      "type": "registry:lib",
+      "target": "lib/dga/direction.tsx"
     }
   ],
   "type": "registry:lib"
