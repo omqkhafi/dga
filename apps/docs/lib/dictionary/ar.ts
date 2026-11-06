@@ -378,7 +378,7 @@ export const ar: Dictionary = {
   "home.step2.body":
     "يضبط الرموز والخط والاتجاه من اليمين إلى اليسار ونمط Base UI في components.json.",
   "home.step3.title": "أضف مكوّنًا",
-  "home.step3.body": "ينسخ الشيفرة المصدرية إلى components/ui. عدّلها كما تعدّل شيفرتك.",
+  "home.step3.body": "ينسخ الشيفرة المصدرية إلى components/dga. عدّلها كما تعدّل شيفرتك.",
   "home.open.eyebrow": "مفتوح المصدر",
   "home.open.title": "يُبنى علنًا",
   "home.open.source": "الشيفرة المصدرية",

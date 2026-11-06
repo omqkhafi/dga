@@ -1,7 +1,7 @@
 ---
 title: Content Switcher
 description: "صف قصير من خيارين إلى أربعة يبدّل العرض تحته. ثلاثة أحجام ونسخة للألوان الداكنة، ويبقى خيار واحد مختارًا دائمًا."
-sourceHash: e0fe11f1957f
+sourceHash: 1147dcc10ea1
 ---
 
 <Preview name="content-switcher-basic" title="مبدّل المحتوى" />
@@ -14,7 +14,7 @@ sourceHash: e0fe11f1957f
 
 ```tsx title="page.tsx"
 import { useState } from "react";
-import { ContentSwitcher, ContentSwitcherItem } from "@/components/ui/content-switcher";
+import { ContentSwitcher, ContentSwitcherItem } from "@/components/dga/content-switcher";
 
 export function PeriodSwitcher() {
   const [period, setPeriod] = useState("week");

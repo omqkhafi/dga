@@ -49,7 +49,7 @@ If the project already has a `components.json`, add the style directly:
 npx shadcn@latest add https://dga.omqkhafi.dev/r/dga-style.json
 ```
 
-The CLI merges DGA's values into your `globals.css`. Your existing shadcn variables (`--background`, `--primary` …) now point at DGA tokens.
+The CLI merges DGA's values into your `globals.css`. Your existing shadcn variables (`--background`, `--primary` …) now point at DGA tokens, so stock shadcn components in `components/ui` take DGA colours too. That is the only change to your theme; the DGA tokens are new variables that do not exist in a stock project. Components are a separate step and never touch `components/ui`: see [Where components are installed](#where-components-are-installed).
 
 ## Tokens only
 
@@ -77,6 +77,25 @@ Then install items by name:
 npx shadcn@latest add @dga/button @dga/badge
 ```
 
+## Where components are installed
+
+Every `@dga` component is written to `components/dga/<name>.tsx`, and imported from there:
+
+```tsx title="page.tsx"
+import { Button } from "@/components/dga/button";
+```
+
+A project can already have stock shadcn, or a library derived from it, in `components/ui`. `@dga/button` and `ui/button` are different files with different APIs, so they never share a path: installing `@dga` items does not overwrite, rename or import anything in `components/ui`, and both can be used side by side. Imports between `@dga` items (Field uses Input, Search Box uses Input) point at `@/components/dga/*`, never at `components/ui`.
+
+Two things are shared on purpose:
+
+- `lib/utils.ts` exports `cn`, which every shadcn project already has. The `@dga` version imports `cn` from the `cn` package. The CLI asks before replacing an existing `lib/utils.ts`; either answer works, because the signature is the same.
+- `lib/dga/direction.tsx` (the `direction` item, used by Tabs, Menu, Tooltip and others) lives in a `dga` folder so it cannot collide with a helper of the same name.
+
+### Why a `target` and not an alias
+
+The shadcn CLI writes a `registry:ui` file to the `ui` alias in `components.json` (`@/components/ui` by default). Putting `@dga` there would collide with stock shadcn, and fixing it with an alias would make every user edit `components.json`. Instead each `@dga` file declares `files[].target` (`components/dga/button.tsx`), which the CLI honours for every item type, relative to the project (and `src/` when the project has one), with no change to `components.json`. The CLI also rewrites imports between items to the aliases (`@/components/ui/input`), and keeps an import that resolves to an existing file, so a stock `components/ui/input.tsx` would have been picked up silently. The registry sources therefore import `@/components/dga/*` directly, and `bun run test:install` installs `@dga` items into a project that already has stock `button`, `input` and `dialog`, and checks that those files are byte-identical and that the project builds.
+
 ## Dark mode
 
 Dark tokens apply under either `.dark` (next-themes, shadcn) or `[data-theme="dark"]` (the DGA site convention). Both work on `<html>` or on any element, so a single section can be dark.
@@ -101,4 +120,5 @@ A coding agent builds best with the project's rules in front of it. [Set up your
 | [`dga-style`](/r/dga-style.json) | `registry:style` | Dependencies, CSS imports and the `cn-*` component style map; pulls in `dga-tokens`, `utils` and the font |
 | [`dga-tokens`](/r/dga-tokens.json) | `registry:theme` | Every token, light and dark themes, responsive modes, Tailwind theme, shadcn mapping, base layer |
 | [`utils`](/r/utils.json) | `registry:lib` | `lib/utils.ts`, which re-exports `cn` from the `cn` package (no clsx or tailwind-merge) |
+| Components (`@dga/button` …) | `registry:ui` | `components/dga/<name>.tsx`; never `components/ui` |
 | [`font-ibm-plex-sans-arabic`](/r/font-ibm-plex-sans-arabic.json) | `registry:font` | IBM Plex Sans Arabic 400–700, Arabic and Latin subsets |

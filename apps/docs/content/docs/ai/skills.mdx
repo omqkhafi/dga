@@ -38,6 +38,7 @@ An agent that supports Agent Skills discovery can find it from the index at `htt
 | --- | --- |
 | Install | `npx shadcn@latest init https://dga.omqkhafi.dev/r/dga.json`, then `npx shadcn@latest add @dga/<name>`. |
 | Docs | Read `/{lang}/llms.txt` and the Markdown twin of each page, not memory. |
+| Import path | Components install to `components/dga/<name>.tsx`: `import { Button } from "@/components/dga/button"`. Never `components/ui`, which may hold stock shadcn. |
 | Components | Use only components that exist in the registry. Never invent one. |
 | Forms | Wrap every control in `Field`. |
 | Direction | RTL first, with CSS logical properties. No `left` or `right`. |

@@ -4,8 +4,8 @@ import { Input as InputPrimitive } from "@base-ui/react/input";
 import { Cancel01Icon, Search01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import * as React from "react";
+import { inputVariants } from "@/components/dga/input";
 import { cn } from "@/registry/bases/base/lib/utils";
-import { inputVariants } from "@/registry/bases/base/ui/input";
 
 type SearchBoxProps = Omit<InputPrimitive.Props, "size" | "type" | "onChange" | "onValueChange"> & {
   /** Height: `md` 32px, `lg` 40px. */

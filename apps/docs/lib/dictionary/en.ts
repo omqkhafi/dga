@@ -376,7 +376,7 @@ export const en = {
   "home.step2.title": "Add the DGA style",
   "home.step2.body": "Sets the tokens, the font, RTL and the Base UI style in components.json.",
   "home.step3.title": "Add a component",
-  "home.step3.body": "Copies the source into components/ui. Edit it like your own code.",
+  "home.step3.body": "Copies the source into components/dga. Edit it like your own code.",
   "home.open.eyebrow": "Open source",
   "home.open.title": "Built in the open",
   "home.open.source": "Source",

@@ -1,7 +1,7 @@
 ---
 title: Field
 description: "يلفّ عنصر تحكم بتسميته ونصه المساعد ورسالة الخطأ، ويربطها لتقنيات المساعدة. علامتا المطلوب والاختياري، وتخطيطان عمودي وأفقي، ومجموعات."
-sourceHash: 97a0c205c352
+sourceHash: c1a64e3be57a
 ---
 
 <Preview name="field-anatomy" title="التسمية والنص المساعد ورسالة الخطأ" />
@@ -15,8 +15,8 @@ Field هو أساس كل عنصر تحكم في النماذج. وكل عنصر 
 ## الاستخدام [#usage]
 
 ```tsx title="page.tsx"
-import { Field, FieldDescription, FieldError, FieldLabel } from "@/components/ui/field";
-import { Input } from "@/components/ui/input";
+import { Field, FieldDescription, FieldError, FieldLabel } from "@/components/dga/field";
+import { Input } from "@/components/dga/input";
 
 export function NationalIdField({ error }: { error?: string }) {
   return (

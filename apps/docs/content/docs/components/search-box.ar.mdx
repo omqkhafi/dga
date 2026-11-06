@@ -1,7 +1,7 @@
 ---
 title: Search Box
 description: "حقل بحث فيه أيقونة بحث وزر مسح. حجمان وثلاث تعبئات وكل الحالات."
-sourceHash: 8c6375ec3b06
+sourceHash: ddd363c67b4f
 ---
 
 <Preview name="search-box-states" title="حالات مربع البحث" />
@@ -16,8 +16,8 @@ sourceHash: 8c6375ec3b06
 
 ```tsx title="page.tsx"
 import { useState } from "react";
-import { Field, FieldLabel } from "@/components/ui/field";
-import { SearchBox } from "@/components/ui/search-box";
+import { Field, FieldLabel } from "@/components/dga/field";
+import { SearchBox } from "@/components/dga/search-box";
 
 export function ServiceSearch() {
   const [query, setQuery] = useState("");

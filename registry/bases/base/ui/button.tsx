@@ -1,7 +1,7 @@
 import { Button as ButtonPrimitive } from "@base-ui/react/button";
 import { cva, type VariantProps } from "class-variance-authority";
+import { Spinner } from "@/components/dga/spinner";
 import { cn } from "@/registry/bases/base/lib/utils";
-import { Spinner } from "@/registry/bases/base/ui/spinner";
 
 const buttonVariants = cva("cn-button", {
   variants: {

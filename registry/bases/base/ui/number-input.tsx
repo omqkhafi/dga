@@ -4,8 +4,8 @@ import { NumberField as NumberFieldPrimitive } from "@base-ui/react/number-field
 import { Add01Icon, MinusSignIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import * as React from "react";
+import { inputVariants } from "@/components/dga/input";
 import { cn } from "@/registry/bases/base/lib/utils";
-import { inputVariants } from "@/registry/bases/base/ui/input";
 
 const NON_WESTERN = /[٠-٩۰-۹٫٬،]/g;
 

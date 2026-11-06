@@ -4,7 +4,7 @@ import { Menu as MenuPrimitive } from "@base-ui/react/menu";
 import { ArrowRight01Icon, CircleIcon, Tick02Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import type * as React from "react";
-import { AutoDirection } from "@/registry/bases/base/lib/direction";
+import { AutoDirection } from "@/lib/dga/direction";
 import { cn } from "@/registry/bases/base/lib/utils";
 
 /**

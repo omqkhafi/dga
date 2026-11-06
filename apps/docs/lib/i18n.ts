@@ -22,6 +22,12 @@ export const isLocale = (value: string | undefined): value is Locale =>
 
 export const dirOf = (locale: Locale): "ltr" | "rtl" => (locale === "ar" ? "rtl" : "ltr");
 
+/**
+ * Request header the proxy sets to the locale of the URL, for `app/global-not-found.tsx`, which
+ * runs outside the layouts and cannot read the route params.
+ */
+export const LANG_HEADER = "x-dga-lang";
+
 /** The cookie the language switcher writes and `proxy.ts` reads. */
 export const LOCALE_COOKIE = "dga_locale";
 

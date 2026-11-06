@@ -6,7 +6,7 @@ import { HelpCircleIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { cva, type VariantProps } from "class-variance-authority";
 import type * as React from "react";
-import { AutoDirection, useDocumentDirection } from "@/registry/bases/base/lib/direction";
+import { AutoDirection, useDocumentDirection } from "@/lib/dga/direction";
 import { cn } from "@/registry/bases/base/lib/utils";
 
 const tooltipVariants = cva("cn-tooltip", {

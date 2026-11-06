@@ -1,7 +1,7 @@
 ---
 title: Menu
 description: "قائمة إجراءات على سطح مؤقت. أيقونات ونص في النهاية وعناصر مربع اختيار وراديو ومجموعات وقوائم فرعية، مع تنقل بمفاتيح الأسهم."
-sourceHash: 89cdc752ab04
+sourceHash: 89b953fbe8f8
 ---
 
 <Preview name="menu-basic" title="القائمة" minHeight={300} />
@@ -15,14 +15,14 @@ sourceHash: 89cdc752ab04
 ```tsx title="page.tsx"
 import { Edit02Icon, Delete02Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/dga/button";
 import {
   Menu,
   MenuContent,
   MenuItem,
   MenuSeparator,
   MenuTrigger,
-} from "@/components/ui/menu";
+} from "@/components/dga/menu";
 
 export function RequestActions() {
   return (

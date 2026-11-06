@@ -1,7 +1,7 @@
 ---
 title: إعداد الوكيل
 description: ثبّت مهارة كود المنصات وملفي AGENTS.md وCLAUDE.md ليبني وكيل البرمجة بالسجل والرموز وقواعد الاتجاه من اليمين إلى اليسار.
-sourceHash: 17a9c83af31e
+sourceHash: b52925c19cd0
 ---
 
 يحتاج وكيل البرمجة الذي يبني الواجهات إلى ما يحتاجه الشخص من ملاحظات المشروع: كيف يُثبَّت، وما المكوّنات الموجودة، وما القواعد التي تُبقي التخطيطين العربي والإنجليزي صحيحين. تعلّمه المهارة هذا مرة واحدة، وتُبقيه الملفات أدناه داخل المشروع.
@@ -39,6 +39,7 @@ curl -fsSL https://dga.omqkhafi.dev/.well-known/agent-skills/platform-code/SKILL
 | --- | --- |
 | التثبيت | `npx shadcn@latest init https://dga.omqkhafi.dev/r/dga.json` ثم `npx shadcn@latest add @dga/<name>`. |
 | التوثيق | اقرأ `/{lang}/llms.txt` ونسخة Markdown لكل صفحة، لا من الذاكرة. |
+| مسار الاستيراد | تُثبَّت المكوّنات في `components/dga/<name>.tsx`: `import { Button } from "@/components/dga/button"`. وليس `components/ui` أبدًا، فقد يحتوي shadcn الأصلي. |
 | المكوّنات | استخدم المكوّنات الموجودة في السجل فقط. لا تخترع مكوّنًا. |
 | النماذج | غلّف كل عنصر تحكم بـ `Field`. |
 | الاتجاه | ابدأ من اليمين إلى اليسار، بخصائص CSS المنطقية. دون `left` أو `right`. |

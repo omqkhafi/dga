@@ -5,7 +5,7 @@ import { Cancel01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { cva, type VariantProps } from "class-variance-authority";
 import * as React from "react";
-import { useDocumentDirection } from "@/registry/bases/base/lib/direction";
+import { useDocumentDirection } from "@/lib/dga/direction";
 import { cn } from "@/registry/bases/base/lib/utils";
 
 type DrawerSide = "start" | "end" | "top" | "bottom";

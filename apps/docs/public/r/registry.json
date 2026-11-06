@@ -3218,7 +3218,8 @@
       "files": [
         {
           "path": "bases/base/ui/spinner.tsx",
-          "type": "registry:ui"
+          "type": "registry:ui",
+          "target": "components/dga/spinner.tsx"
         }
       ]
     },
@@ -3238,7 +3239,8 @@
       "files": [
         {
           "path": "bases/base/ui/button.tsx",
-          "type": "registry:ui"
+          "type": "registry:ui",
+          "target": "components/dga/button.tsx"
         }
       ]
     },
@@ -3259,7 +3261,8 @@
       "files": [
         {
           "path": "bases/base/ui/link.tsx",
-          "type": "registry:ui"
+          "type": "registry:ui",
+          "target": "components/dga/link.tsx"
         }
       ]
     },
@@ -3278,7 +3281,8 @@
       "files": [
         {
           "path": "bases/base/ui/badge.tsx",
-          "type": "registry:ui"
+          "type": "registry:ui",
+          "target": "components/dga/badge.tsx"
         }
       ]
     },
@@ -3298,7 +3302,8 @@
       "files": [
         {
           "path": "bases/base/ui/tag.tsx",
-          "type": "registry:ui"
+          "type": "registry:ui",
+          "target": "components/dga/tag.tsx"
         }
       ]
     },
@@ -3317,7 +3322,8 @@
       "files": [
         {
           "path": "bases/base/ui/divider.tsx",
-          "type": "registry:ui"
+          "type": "registry:ui",
+          "target": "components/dga/divider.tsx"
         }
       ]
     },
@@ -3338,7 +3344,8 @@
       "files": [
         {
           "path": "bases/base/ui/avatar.tsx",
-          "type": "registry:ui"
+          "type": "registry:ui",
+          "target": "components/dga/avatar.tsx"
         }
       ]
     },
@@ -3356,7 +3363,8 @@
       "files": [
         {
           "path": "bases/base/ui/featured-icon.tsx",
-          "type": "registry:ui"
+          "type": "registry:ui",
+          "target": "components/dga/featured-icon.tsx"
         }
       ]
     },
@@ -3374,7 +3382,8 @@
       "files": [
         {
           "path": "bases/base/ui/skeleton.tsx",
-          "type": "registry:ui"
+          "type": "registry:ui",
+          "target": "components/dga/skeleton.tsx"
         }
       ]
     },
@@ -3394,7 +3403,8 @@
       "files": [
         {
           "path": "bases/base/ui/field.tsx",
-          "type": "registry:ui"
+          "type": "registry:ui",
+          "target": "components/dga/field.tsx"
         }
       ]
     },
@@ -3414,7 +3424,8 @@
       "files": [
         {
           "path": "bases/base/ui/input.tsx",
-          "type": "registry:ui"
+          "type": "registry:ui",
+          "target": "components/dga/input.tsx"
         }
       ]
     },
@@ -3434,7 +3445,8 @@
       "files": [
         {
           "path": "bases/base/ui/textarea.tsx",
-          "type": "registry:ui"
+          "type": "registry:ui",
+          "target": "components/dga/textarea.tsx"
         }
       ]
     },
@@ -3456,7 +3468,8 @@
       "files": [
         {
           "path": "bases/base/ui/checkbox.tsx",
-          "type": "registry:ui"
+          "type": "registry:ui",
+          "target": "components/dga/checkbox.tsx"
         }
       ]
     },
@@ -3476,7 +3489,8 @@
       "files": [
         {
           "path": "bases/base/ui/radio.tsx",
-          "type": "registry:ui"
+          "type": "registry:ui",
+          "target": "components/dga/radio.tsx"
         }
       ]
     },
@@ -3497,7 +3511,8 @@
       "files": [
         {
           "path": "bases/base/ui/switch.tsx",
-          "type": "registry:ui"
+          "type": "registry:ui",
+          "target": "components/dga/switch.tsx"
         }
       ]
     },
@@ -3519,7 +3534,8 @@
       "files": [
         {
           "path": "bases/base/ui/select.tsx",
-          "type": "registry:ui"
+          "type": "registry:ui",
+          "target": "components/dga/select.tsx"
         }
       ]
     },
@@ -3542,7 +3558,8 @@
       "files": [
         {
           "path": "bases/base/ui/number-input.tsx",
-          "type": "registry:ui"
+          "type": "registry:ui",
+          "target": "components/dga/number-input.tsx"
         }
       ]
     },
@@ -3565,7 +3582,8 @@
       "files": [
         {
           "path": "bases/base/ui/search-box.tsx",
-          "type": "registry:ui"
+          "type": "registry:ui",
+          "target": "components/dga/search-box.tsx"
         }
       ]
     },
@@ -3586,7 +3604,8 @@
       "files": [
         {
           "path": "bases/base/ui/file-upload.tsx",
-          "type": "registry:ui"
+          "type": "registry:ui",
+          "target": "components/dga/file-upload.tsx"
         }
       ]
     },
@@ -3601,7 +3620,8 @@
       "files": [
         {
           "path": "bases/base/lib/direction.tsx",
-          "type": "registry:lib"
+          "type": "registry:lib",
+          "target": "lib/dga/direction.tsx"
         }
       ]
     },
@@ -3622,7 +3642,8 @@
       "files": [
         {
           "path": "bases/base/ui/dialog.tsx",
-          "type": "registry:ui"
+          "type": "registry:ui",
+          "target": "components/dga/dialog.tsx"
         }
       ]
     },
@@ -3644,7 +3665,8 @@
       "files": [
         {
           "path": "bases/base/ui/drawer.tsx",
-          "type": "registry:ui"
+          "type": "registry:ui",
+          "target": "components/dga/drawer.tsx"
         }
       ]
     },
@@ -3666,7 +3688,8 @@
       "files": [
         {
           "path": "bases/base/ui/tooltip.tsx",
-          "type": "registry:ui"
+          "type": "registry:ui",
+          "target": "components/dga/tooltip.tsx"
         }
       ]
     },
@@ -3688,7 +3711,8 @@
       "files": [
         {
           "path": "bases/base/ui/menu.tsx",
-          "type": "registry:ui"
+          "type": "registry:ui",
+          "target": "components/dga/menu.tsx"
         }
       ]
     },
@@ -3710,7 +3734,8 @@
       "files": [
         {
           "path": "bases/base/ui/tabs.tsx",
-          "type": "registry:ui"
+          "type": "registry:ui",
+          "target": "components/dga/tabs.tsx"
         }
       ]
     },
@@ -3731,7 +3756,8 @@
       "files": [
         {
           "path": "bases/base/ui/accordion.tsx",
-          "type": "registry:ui"
+          "type": "registry:ui",
+          "target": "components/dga/accordion.tsx"
         }
       ]
     },
@@ -3753,7 +3779,8 @@
       "files": [
         {
           "path": "bases/base/ui/content-switcher.tsx",
-          "type": "registry:ui"
+          "type": "registry:ui",
+          "target": "components/dga/content-switcher.tsx"
         }
       ]
     },
@@ -3775,7 +3802,8 @@
       "files": [
         {
           "path": "bases/base/ui/toast.tsx",
-          "type": "registry:ui"
+          "type": "registry:ui",
+          "target": "components/dga/toast.tsx"
         }
       ]
     },
@@ -3796,7 +3824,8 @@
       "files": [
         {
           "path": "bases/base/ui/notification.tsx",
-          "type": "registry:ui"
+          "type": "registry:ui",
+          "target": "components/dga/notification.tsx"
         }
       ]
     },
@@ -3817,7 +3846,8 @@
       "files": [
         {
           "path": "bases/base/ui/inline-alert.tsx",
-          "type": "registry:ui"
+          "type": "registry:ui",
+          "target": "components/dga/inline-alert.tsx"
         }
       ]
     }

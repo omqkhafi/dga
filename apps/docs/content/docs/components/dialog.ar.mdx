@@ -1,7 +1,7 @@
 ---
 title: Dialog
 description: "نافذة فوق الصفحة لقرار أو مهمة قصيرة. ثلاثة عروض وزر إغلاق، ويُحبس التركيز فيها ثم يعود إلى الزر."
-sourceHash: 08fceb6ab4ec
+sourceHash: 91bec4324da7
 ---
 
 <Preview name="dialog-basic" title="نافذة حوار" minHeight={360} />
@@ -13,7 +13,7 @@ sourceHash: 08fceb6ab4ec
 ## الاستخدام [#usage]
 
 ```tsx title="page.tsx"
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/dga/button";
 import {
   Dialog,
   DialogClose,
@@ -23,7 +23,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog";
+} from "@/components/dga/dialog";
 
 export function CancelRequest() {
   return (

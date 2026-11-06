@@ -4,7 +4,11 @@
     "allowJs": true,
     "incremental": true,
     "types": ["node"],
-    "paths": { "@/*": ["./*"] },
+    "paths": {
+      "@/components/dga/*": ["./registry/bases/base/ui/*"],
+      "@/lib/dga/*": ["./registry/bases/base/lib/*"],
+      "@/*": ["./*"]
+    },
     "plugins": [{ "name": "next" }]
   },
   "include": [

@@ -24,6 +24,12 @@ Every docs page and every UI string exists in English and Arabic. A pull request
 - **UI strings.** Add each key to `apps/docs/lib/dictionary/en.ts` and `ar.ts`. The Arabic dictionary is typed against the English keys, so a missing one fails the typecheck.
 - **API reference.** Every prop and part needs a `descriptionAr` in `scripts/api-descriptions-ar.ts`; `bun run api` fails without it.
 
+### Locale purity
+
+One language per view. English pages, previews and strings contain no Arabic, and Arabic ones contain no English words, apart from code, package, prop and component names, URLs and product names (`scripts/locale-allowlist.json`). `bun run test` checks the dictionaries and every docs page, and `bun run test:e2e` checks 18 rendered pages in both languages.
+
+**Accepted exception.** On Arabic pages, the generated **Deviation reasons** and the **Contrast state labels** stay in English. Their source data (the logged reasons, the Figma variant and state names) is English, and a full translation would be unclear. They are marked `lang="en"` (with `dir="ltr"`), and the audit skips anything marked with a language other than the page's, so they are covered by the allowlist rule rather than reported. This is a decision, not a gap: do not translate them, and do not use `lang="en"` to excuse any other English text on an Arabic page.
+
 ### Arabic writing and typography
 
 - Modern Standard Arabic, plain and specific, the same register as the English. Use the same Arabic term for the same thing everywhere; look it up in existing pages first.

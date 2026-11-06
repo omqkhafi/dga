@@ -1,6 +1,14 @@
 // Locale purity: English pages and strings contain no Arabic, Arabic ones contain no English
 // words. Allowed: code (fences, inline code, JSX attributes, URLs, anchors) and proper nouns
 // (product, standard and key names). A generic English word in Arabic prose is a failure.
+//
+// ACCEPTED EXCEPTION (owner decision, 0.4.2, not a failure for an audit): on Arabic pages the
+// generated Deviation reasons and the Contrast state labels stay in English. Their source data
+// (the logged reasons, the Figma variant and state names) is English, and a full translation
+// would be unclear. They are rendered as <span lang="en" dir="ltr">, and the browser audit in
+// scripts/e2e.mjs skips any element marked with a language other than the page's, which is how
+// they are covered. Do not translate them, and do not extend the exception to prose: only these
+// two generated kinds of text may be English on an Arabic page.
 import { expect, test } from "bun:test";
 import { Glob } from "bun";
 import { ar } from "../apps/docs/lib/dictionary/ar";
