@@ -5,6 +5,18 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
 
 ## [Unreleased]
 
+## [0.7.4] - 2026-11-08
+
+Patch: one Header fix found by looking at the published 0.7.3 previews.
+
+### Fixed
+
+- **Header:** a selected item that is also disabled (`aria-current="page"` with `disabled` or `aria-disabled`) drops the brand block but kept its white label, so the label was invisible on the white bar and only the muted bottom bar showed. It now uses the disabled text and icon colours, in `Header` items and `HeaderAction`. This showed in the "Selected, disabled" examples of Menu items and Action states.
+
+### Tests
+
+- The composite browser group checks that a selected, disabled Header item has a label that is not white.
+
 ## [0.7.3] - 2026-11-08
 
 Patch: DGA conformance fixes from a side-by-side review of Figma, the DGA docs and the site. What was and was not checked against Figma is in [docs/conformance/0.7.3.md](docs/conformance/0.7.3.md); the Figma connector was unavailable, so the values listed there as unverified follow the findings and the earlier Figma dumps.

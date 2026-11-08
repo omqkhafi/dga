@@ -1753,6 +1753,24 @@ async function compositeChecks() {
       `${lang}: the dark green sub-menu opens`,
     );
 
+    // A selected item that is disabled drops the brand block, so its label must not stay white.
+    await open("header-menu-items", 1280);
+    const selectedDisabled = await page.evaluate(() => {
+      const el = [...document.querySelectorAll("[data-slot=header-item]")].find(
+        (e) =>
+          e.getAttribute("aria-current") === "page" && e.getAttribute("aria-disabled") === "true",
+      );
+      if (!el) return null;
+      const style = getComputedStyle(el);
+      return { color: style.color, background: style.backgroundColor };
+    });
+    check(
+      selectedDisabled !== null &&
+        selectedDisabled.background === "rgba(0, 0, 0, 0)" &&
+        selectedDisabled.color !== "lab(100 0 0)",
+      `${lang}: a selected, disabled item has a visible label (${selectedDisabled?.color})`,
+    );
+
     // ---------------------------------------------------------------- Header, mobile Drawer
     await open("header-basic", 375);
     check(

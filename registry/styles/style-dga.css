@@ -2216,8 +2216,8 @@
     @apply hover:bg-button-background-neutral-hovered active:bg-button-background-neutral-pressed;
     @apply focus-visible:outline-2 focus-visible:outline-solid focus-visible:-outline-offset-2 focus-visible:outline-border-black;
     @apply data-current:bg-button-background-primary-default data-current:text-text-oncolor-primary data-current:after:bg-primary-sa-flag-200 data-current:[&_svg]:text-icon-oncolor data-current:hover:bg-button-background-primary-hovered data-current:active:bg-button-background-primary-pressed;
-    @apply disabled:pointer-events-none disabled:cursor-not-allowed disabled:bg-transparent disabled:text-text-default-disabled disabled:[&_svg]:text-icon-default-disabled disabled:data-current:bg-transparent disabled:data-current:after:bg-border-disabled;
-    @apply aria-disabled:pointer-events-none aria-disabled:cursor-not-allowed aria-disabled:bg-transparent aria-disabled:text-text-default-disabled aria-disabled:[&_svg]:text-icon-default-disabled aria-disabled:data-current:bg-transparent aria-disabled:data-current:after:bg-border-disabled;
+    @apply disabled:pointer-events-none disabled:cursor-not-allowed disabled:bg-transparent disabled:text-text-default-disabled disabled:[&_svg]:text-icon-default-disabled disabled:data-current:bg-transparent disabled:data-current:text-text-default-disabled disabled:data-current:[&_svg]:text-icon-default-disabled disabled:data-current:after:bg-border-disabled;
+    @apply aria-disabled:pointer-events-none aria-disabled:cursor-not-allowed aria-disabled:bg-transparent aria-disabled:text-text-default-disabled aria-disabled:[&_svg]:text-icon-default-disabled aria-disabled:data-current:bg-transparent aria-disabled:data-current:text-text-default-disabled aria-disabled:data-current:[&_svg]:text-icon-default-disabled aria-disabled:data-current:after:bg-border-disabled;
     @apply transition-colors motion-reduce:transition-none;
   }
   .cn-header-item {
