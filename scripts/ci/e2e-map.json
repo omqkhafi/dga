@@ -14,6 +14,9 @@
     "ext-overlays",
     "ext-inputs",
     "ext-misc",
+    "ext-nav",
+    "ext-layout",
+    "ext-display",
     "not-found",
     "arabic-exception",
     "preview-language"
@@ -36,7 +39,10 @@
     "ext-misc": 92,
     "not-found": 5,
     "arabic-exception": 3,
-    "preview-language": 172
+    "preview-language": 172,
+    "ext-nav": 60,
+    "ext-layout": 60,
+    "ext-display": 60
   },
   "contentOther": ["polish", "ai-resources"],
   "components": {
@@ -62,7 +68,7 @@
     "inline-alert": ["form-pages", "interactive", "polish"],
     "breadcrumb": ["form-pages", "navigation", "polish"],
     "pagination": ["form-pages", "navigation", "polish"],
-    "card": ["form-pages", "navigation", "polish"],
+    "card": ["form-pages", "navigation", "polish", "ext-layout"],
     "data-table": ["form-pages", "navigation", "polish"],
     "stepper": ["form-pages", "navigation", "polish"],
     "table-of-contents": ["form-pages", "navigation"],
@@ -97,7 +103,18 @@
     "avatar": [],
     "spinner": [],
     "skeleton": [],
-    "featured-icon": []
+    "featured-icon": [],
+    "menubar": ["ext-nav"],
+    "navigation-menu": ["ext-nav"],
+    "sidebar": ["ext-nav"],
+    "collapsible": ["ext-layout"],
+    "scroll-area": ["ext-layout"],
+    "resizable": ["ext-layout"],
+    "aspect-ratio": ["ext-layout"],
+    "kbd": ["ext-display"],
+    "empty": ["ext-display"],
+    "item": ["ext-display"],
+    "chart": ["ext-display"]
   },
   "previews": {
     "badge.tsx": ["polish"],
@@ -105,10 +122,16 @@
     "composite.tsx": ["form-pages", "composite"],
     "data-display.tsx": ["form-pages", "navigation", "polish"],
     "display.tsx": ["polish"],
+    "ext-display-map.ts": ["ext-display"],
+    "ext-display.tsx": ["ext-display"],
     "ext-inputs-demos.tsx": ["ext-inputs"],
     "ext-inputs.tsx": ["ext-inputs"],
+    "ext-layout-map.ts": ["ext-layout"],
+    "ext-layout.tsx": ["ext-layout"],
     "ext-misc-map.ts": ["ext-misc"],
     "ext-misc.tsx": ["ext-misc"],
+    "ext-nav-map.ts": ["ext-nav"],
+    "ext-nav.tsx": ["ext-nav"],
     "ext-overlays-map.ts": ["ext-overlays"],
     "ext-overlays.tsx": ["ext-overlays"],
     "forms.tsx": ["form-pages", "field-states", "keyboard", "preview-language", "polish"],
@@ -123,5 +146,5 @@
     "tag.tsx": ["preview-language"]
   },
   "scoped": ["form-pages", "polish"],
-  "pages": 40
+  "pages": 51
 }

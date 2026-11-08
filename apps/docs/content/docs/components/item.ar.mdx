@@ -1,0 +1,103 @@
+---
+title: Item
+description: "صف واحد بصورة أو أيقونة وعنوان ووصف وإجراءات. استخدمه لقوائم الأشخاص والملفات والإعدادات والخدمات."
+sourceHash: d576787425df
+---
+
+<ExtensionNote
+  name="Item"
+  primitive="عناصر HTML عادية مع خاصية render من Base UI"
+  from="القائمة List في DGA (ألوان النص والمسافات) والبطاقة Card (السطح والحد ولون التمرير على الرابط)"
+  tokens={["text-display", "text-primary-paragraph", "icon-default", "background-neutral-50", "background-neutral-100", "border-neutral-primary"]}
+/>
+
+<Preview name="item-variants" title="Item" minHeight={340} />
+
+## التثبيت [#installation]
+
+<ComponentInstall name="item" />
+
+## الاستخدام [#usage]
+
+```tsx title="page.tsx"
+import { Item, ItemActions, ItemContent, ItemDescription, ItemMedia, ItemTitle } from "@/components/dga/item";
+import { Button } from "@/components/dga/button";
+
+export function Request() {
+  return (
+    <Item variant="outline">
+      <ItemMedia variant="icon">{/* أيقونة */}</ItemMedia>
+      <ItemContent>
+        <ItemTitle>تجديد جواز السفر</ItemTitle>
+        <ItemDescription>قُدّم في ٨ نوفمبر.</ItemDescription>
+      </ItemContent>
+      <ItemActions>
+        <Button variant="outline" size="sm">عرض</Button>
+      </ItemActions>
+    </Item>
+  );
+}
+```
+
+استخدم Item لصف فيه أكثر من سطر نص: له متسع للوسائط وسطرين من النص والإجراءات. وللقائمة النقطية أو المرقمة العادية استخدم [List](/docs/components/list)، ولكتلة محتوى استخدم [Card](/docs/components/card)، وللصفوف ذات الأعمدة استخدم [Table](/docs/components/table).
+
+## البنية [#anatomy]
+
+- **Item**: الصف. الأنماط `default` (بلا تعبئة) و`outline` (حد 1px بلون `border-neutral-primary`) و`muted` (`background-neutral-50`). والحجمان `default` (حشوة 16px) و`sm`.
+- **الوسائط**: `default` لأي محتوى مثل Avatar، و`icon` لأيقونة داخل إطار بقياس 40px، و`image` لصورة مقصوصة بقياس 40px.
+- **المحتوى**: العنوان (`text-md` شبه عريض بلون `text-display`) والوصف (`text-sm` بلون `text-primary-paragraph`، سطران على الأكثر).
+- **الإجراءات**: أزرار أو شارة في النهاية. أما **الترويسة** و**التذييل** فسطران بعرض كامل فوق الصف وتحته.
+- **المجموعة** و**الفاصل**: تكدّس ItemGroup الصفوف، وItemSeparator هو Divider من DGA بينها.
+
+## أمثلة [#examples]
+
+### الأحجام [#sizes]
+
+<Preview compact name="item-sizes" title="الأحجام" minHeight={260} />
+
+### الوسائط [#media]
+
+<Preview compact name="item-media" title="الوسائط" minHeight={420} />
+
+### رابطًا [#as-a-link]
+
+مرّر `render` ليصير الصف كله عنصرًا من اختيارك، مثل رابط أو `Link` من Next.js. فيظهر عليه لون تمرير Card على الرابط ولون الضغط وإطار التركيز.
+
+<Preview compact name="item-link" title="رابطًا" minHeight={160} />
+
+### في قائمة [#in-a-list]
+
+اعرض المجموعة بوسم `ul` وكل صف بوسم `li` لتعلن قارئات الشاشة عدد العناصر.
+
+<Preview compact name="item-group" title="في قائمة" minHeight={300} />
+
+### ترويسة وتذييل [#header-and-footer]
+
+<Preview compact name="item-header-footer" title="ترويسة وتذييل" minHeight={220} />
+
+## RTL [#rtl]
+
+تقع الوسائط في جهة البداية والإجراءات في جهة النهاية، فينعكس الصف. ويتبع النص اتجاه الصفحة.
+
+<DirectionCompare name="item-variants" title="Item" minHeight={340} />
+
+## إمكانية الوصول [#accessibility]
+
+- ليس لـ Item دور. والصف الذي هو رابط يحتفظ بدلالة الرابط، ويكون الصف كله محطة Tab واحدة، فلا تضع أزرارًا متداخلة في صف رابط.
+- للقائمة استخدم `render={<ul />}` على ItemGroup و`render={<li />}` على كل Item.
+- يظهر التركيز بإطار 2px بلون `border-black`، بنسبة 3:1 أو أفضل على كل سطح.
+- النص 4.5:1 والأيقونات 3:1 على الصفحة وعلى لون التمرير وعلى التعبئة الخافتة، فاتحًا وداكنًا.
+
+## مرجع API [#api-reference]
+
+<ApiReference component="item" />
+
+## الاشتقاق من DGA [#derivation-from-dga]
+
+لا تعرّف DGA صفًّا بوسائط وإجراءات. ألوان النص والأيقونة من List، والحد والانحناء ولون التمرير من Card. ولا لون جديد فيه.
+
+<ComponentDeviations component="item" />
+
+## التباين [#contrast]
+
+<ComponentContrast component="item" />

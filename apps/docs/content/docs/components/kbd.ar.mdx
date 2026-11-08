@@ -1,0 +1,78 @@
+---
+title: Kbd
+description: "مفتاح لوحة مفاتيح أو تلميح اختصار، يُرسم قبعةً صغيرة بتعبئة DGA المحايدة. من اليسار إلى اليمين دائمًا."
+sourceHash: 66ebc7ebbfc4
+---
+
+<ExtensionNote
+  name="Kbd"
+  primitive="عنصر kbd في HTML"
+  from="إضافة المفتاح في Input Group، ورموز التعبئة والحد المحايدة في DGA"
+  tokens={["background-neutral-100", "border-neutral-primary", "text-default"]}
+/>
+
+<Preview name="kbd-basic" title="Kbd" minHeight={220} />
+
+## التثبيت [#installation]
+
+<ComponentInstall name="kbd" />
+
+## الاستخدام [#usage]
+
+```tsx title="page.tsx"
+import { Kbd, KbdGroup } from "@/components/dga/kbd";
+
+export function Hint() {
+  return (
+    <p>
+      اضغط{" "}
+      <KbdGroup>
+        <Kbd>Ctrl</Kbd>
+        <Kbd>K</Kbd>
+      </KbdGroup>{" "}
+      للبحث.
+    </p>
+  );
+}
+```
+
+استخدم Kbd لعرض مفتاح يمكن للشخص ضغطه، في نص المساعدة والقوائم والتلميحات والأزرار. هو تلميح ولا يأخذ التركيز، ولا يستمع إلى المفاتيح: ربط الاختصار نفسه عليك. لعرض اختصار في نهاية صف قائمة استخدم نص الاختصار في Menu، ولعرضه داخل حقل استخدم إضافة المفتاح في Input Group وهي Kbd.
+
+## البنية [#anatomy]
+
+- **المفتاح**: قبعة بارتفاع 20px وعرض 20px على الأقل، و`background-neutral-100` وحد بسمك 1px بلون `border-neutral-primary` وانحناء radius-xs، والنص `text-xs` متوسط الوزن بلون `text-default`.
+- **المجموعة**: تضع KbdGroup مفاتيح التركيبة الواحدة على بعد 4px.
+
+## أمثلة [#examples]
+
+### في سياق [#in-context]
+
+بجانب النص، وداخل Input Group، وداخل زر.
+
+<Preview compact name="kbd-context" title="في سياق" minHeight={300} />
+
+## RTL [#rtl]
+
+تُقرأ أسماء المفاتيح من اليسار إلى اليمين في الصفحات العربية، فلا تنقلب `Ctrl+K` إلى `K+Ctrl`. يضبط كل من Kbd وKbdGroup القيمة `dir="ltr"`. مرّر `dir="rtl"` إلى Kbd يكون اسمه كلمة عربية.
+
+<DirectionCompare name="kbd-context" title="Kbd" minHeight={300} />
+
+## إمكانية الوصول [#accessibility]
+
+- يُنتج عنصر `<kbd>` حقيقيًا تقرؤه التقنيات المساعدة إدخالًا من لوحة المفاتيح.
+- لا يأخذ التركيز ولا دور له. سمِّ الإجراء في النص المحيط به لا في المفاتيح وحدها.
+- النص `text-default` على `background-neutral-100`، أفضل من 4.5:1 فاتحًا وداكنًا.
+
+## مرجع API [#api-reference]
+
+<ApiReference component="kbd" />
+
+## الاشتقاق من DGA [#derivation-from-dga]
+
+لا تعرّف DGA عنصر مفتاح لوحة مفاتيح، فهذا ليس مكوّنًا من DGA. القبعة هي المظهر الذي كانت إضافة المفتاح في Input Group تحمله، وتستخدم الإضافة الآن Kbd بدل نسختها الخاصة. ولا لون جديد فيه.
+
+<ComponentDeviations component="kbd" />
+
+## التباين [#contrast]
+
+<ComponentContrast component="kbd" />

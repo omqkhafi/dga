@@ -1,0 +1,98 @@
+---
+title: Empty
+description: "The state of a list, table or page with nothing to show: an icon, a title, a short explanation and the next step."
+---
+
+<ExtensionNote
+  name="Empty"
+  primitive="plain HTML elements"
+  from="the empty state of the DGA Data Table (icon, text colours and centring)"
+  tokens={["icon-default-500", "text-display", "text-primary-paragraph", "background-neutral-100", "border-neutral-primary"]}
+/>
+
+<Preview name="empty-basic" title="Empty" minHeight={420} />
+
+## Installation
+
+<ComponentInstall name="empty" />
+
+## Usage
+
+```tsx title="page.tsx"
+import { Button } from "@/components/dga/button";
+import {
+  Empty,
+  EmptyContent,
+  EmptyDescription,
+  EmptyHeader,
+  EmptyMedia,
+  EmptyTitle,
+} from "@/components/dga/empty";
+
+export function NoRequests() {
+  return (
+    <Empty>
+      <EmptyHeader>
+        <EmptyMedia variant="icon">{/* an icon */}</EmptyMedia>
+        <EmptyTitle>No requests yet</EmptyTitle>
+        <EmptyDescription>Requests you submit appear here.</EmptyDescription>
+      </EmptyHeader>
+      <EmptyContent>
+        <Button>New request</Button>
+      </EmptyContent>
+    </Empty>
+  );
+}
+```
+
+Use Empty when a whole area has nothing to show: no results, nothing created yet, a folder with no files, or an error that left the area empty. Say why and what to do next. The [Data Table](/docs/components/data-table) keeps its own compact empty row for a table; use Empty for the page or card around it.
+
+## Anatomy
+
+- **Media**: the icon in `icon-default-500`, or with `variant="icon"` on a 48px round `background-neutral-100` fill with an `icon-default` glyph.
+- **Title**: `text-lg` semibold in `text-display`. It is a paragraph, so it fits under any heading level.
+- **Description**: `text-md` in `text-primary-paragraph`. A link inside it takes the DGA link colour.
+- **Content**: buttons or a field, centred below.
+- **Border** (optional): `bordered` draws a dashed `border-neutral-primary` line, for an empty area inside a page.
+
+## Examples
+
+### With a border
+
+<Preview compact name="empty-bordered" title="With a border" minHeight={380} />
+
+### No search results
+
+<Preview compact name="empty-search" title="No search results" minHeight={420} />
+
+### An error
+
+An error that leaves the area empty uses the same layout; word the title and the retry action for the failure.
+
+<Preview compact name="empty-error" title="An error" minHeight={380} />
+
+## RTL
+
+All content is centred, so nothing flips. The buttons in `EmptyContent` follow the page direction.
+
+<DirectionCompare name="empty-basic" title="Empty" minHeight={420} />
+
+## Accessibility
+
+- Empty is plain content with no role. If it replaces results that were loading, announce the change with a live region in your page, such as an [Inline Alert](/docs/components/inline-alert) with `role="status"`.
+- Decorative icons should be hidden from screen readers (`aria-hidden`).
+- Text is 4.5:1 and icons 3:1 or better on every surface, in light and dark.
+
+## API Reference
+
+<ApiReference component="empty" />
+
+## Derivation from DGA
+
+DGA has no standalone empty state; its Data Table has one empty row. This component keeps that row's icon, text colours and centring and adds the layout, the dashed border and the round icon fill. No colour is new.
+
+<ComponentDeviations component="empty" />
+
+## Contrast
+
+<ComponentContrast component="empty" />

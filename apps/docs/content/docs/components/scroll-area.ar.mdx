@@ -1,0 +1,93 @@
+---
+title: Scroll Area
+description: "منطقة بأشرطة تمرير مخصصة بلون رمادي من DGA. يستطيع مستخدم لوحة المفاتيح التركيز عليها والتمرير بمفاتيح الأسهم."
+sourceHash: 21c0546db006
+---
+
+<ExtensionNote
+  name="منطقة التمرير"
+  primitive="Base UI Scroll Area"
+  from="رموز النص الرمادية في DGA (لا شريط تمرير في DGA) وانحناء البطاقة"
+  tokens={["text-secondary-paragraph", "text-primary-paragraph", "icon-default", "border-black"]}
+/>
+
+<Preview name="scroll-area-vertical" title="منطقة التمرير" minHeight={300} />
+
+## التثبيت [#installation]
+
+<ComponentInstall name="scroll-area" />
+
+## الاستخدام [#usage]
+
+```tsx title="page.tsx"
+import { ScrollArea } from "@/components/dga/scroll-area";
+
+export function Applications({ items }: { items: string[] }) {
+  return (
+    <ScrollArea label="الطلبات" className="h-60 w-72 rounded-md border">
+      <ul>{items.map((item) => <li key={item}>{item}</li>)}</ul>
+    </ScrollArea>
+  );
+}
+```
+
+استخدمها لقائمة أو جدول أو لوحة تتمرر داخل صفحة لا تتمرر، مثل قائمة أو قسم في شريط جانبي أو سجل. أعطها ارتفاعًا (للمنطقة العمودية) أو عرضًا (للأفقية). وإن كانت الصفحة كلها تتمرر فاترك شريط المتصفح كما هو.
+
+## البنية [#anatomy]
+
+- **منطقة العرض**: العنصر الذي يتمرر. وهي منطقة تأخذ التركيز (`tabindex="0"` و`role="region"`) واسمها من `label`، فيستطيع مستخدم لوحة المفاتيح التركيز عليها والتمرير.
+- **شريط التمرير**: بعرض 12px على جهة النهاية من المنطقة. لا يزيح المحتوى بل يقع فوقه.
+- **المؤشر**: شريط مستدير بلون `text-secondary-paragraph`، أغمق عند المرور والضغط. ولا تعبئة للمسار.
+- **الزاوية**: مع `orientation="both"`، المربع الذي يلتقي فيه الشريطان.
+
+## أمثلة [#examples]
+
+### عمودي وأفقي وكلاهما
+
+`orientation` هو `vertical` (الافتراضي) أو `horizontal` أو `both`.
+
+<Preview compact name="scroll-area-vertical" title="عمودي" minHeight={300} />
+
+<Preview compact name="scroll-area-horizontal" title="أفقي" minHeight={180} />
+
+<Preview compact name="scroll-area-both" title="كلاهما" minHeight={300} />
+
+### متى يظهر الشريط
+
+`visibility="hover"` (الافتراضي) يُظهر الشريط ما دام المؤشر فوق المنطقة وأثناء التمرير وعند وجود التركيز. و`visibility="always"` يُبقيه ظاهرًا، وهو يناسب شاشات اللمس وكل موضع يحتاج الناس فيه إلى رؤية أن هناك المزيد.
+
+<Preview compact name="scroll-area-visibility" title="الظهور" minHeight={300} />
+
+## RTL [#rtl]
+
+يقع الشريط العمودي على اليسار في العربية، وهي جهة نهاية النص، ويبدأ المحتوى من اليمين. ويتمرر الشريط الأفقي من اليمين.
+
+<DirectionCompare name="scroll-area-vertical" title="منطقة التمرير" minHeight={300} />
+
+## إمكانية الوصول [#accessibility]
+
+| المفتاح | الإجراء |
+| --- | --- |
+| <kbd>Tab</kbd> | يركّز على المنطقة القابلة للتمرير. |
+| <kbd>↑</kbd> <kbd>↓</kbd> <kbd>←</kbd> <kbd>→</kbd> | يمرّر سطرًا. |
+| <kbd>Page Up</kbd> <kbd>Page Down</kbd> | يمرّر صفحة. |
+| <kbd>Home</kbd> <kbd>End</kbd> | ينتقلان إلى بداية المنطقة العمودية أو نهايتها. |
+
+- منطقة العرض عنصر `region` باسم من `label`. مرّره دائمًا وترجمه في الصفحات العربية.
+- المتصفح هو الذي يمرّر، فيسلك اللمس والعجلة ولوحة المفاتيح سلوكها المعتاد في كل موضع.
+- المؤشر بنسبة 3:1 أو أفضل مقابل الصفحة في الوضعين الفاتح والداكن، وحلقة التركيز خط بسمك 2px بلون `border-black` داخل المنطقة.
+- يظهر الشريط ويختفي بتلاشٍ؛ وعند تقليل الحركة يظهر بلا تلاشٍ.
+
+## مرجع API [#api-reference]
+
+<ApiReference component="scroll-area" />
+
+## الاشتقاق من DGA [#derivation-from-dga]
+
+لا تعرّف DGA شريط تمرير، فهذا ليس مكوّنًا من DGA وليس له مواصفة فيها. رموز الحد والخلفية المحايدة بنسبة 1.1:1 إلى 1.7:1 مقابل الصفحة، فيستخدم المؤشر رموز النص الرمادية ليبلغ 3:1. لا لون جديد.
+
+<ComponentDeviations component="scroll-area" />
+
+## التباين [#contrast]
+
+<ComponentContrast component="scroll-area" />

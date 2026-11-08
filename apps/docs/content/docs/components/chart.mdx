@@ -1,0 +1,140 @@
+---
+title: Chart
+description: "Bar, line, area and pie charts on Recharts, with a DGA colour palette, a tooltip, a legend, a table for screen readers, and axes that follow the page direction."
+---
+
+<ExtensionNote
+  name="Chart"
+  primitive="Recharts"
+  from="the DGA Card surface for the tooltip, the DGA text colours for axes and legend, and four chart colours built from the DGA colour scales"
+  tokens={["chart-series-1", "chart-series-2", "chart-series-3", "chart-series-4", "text-primary-paragraph", "border-neutral-secondary"]}
+/>
+
+<Preview name="chart-bar" title="Chart" minHeight={420} />
+
+## Installation
+
+<ComponentInstall name="chart" />
+
+This is the only component that installs a charting library. It pins `recharts@3.8.0` (the version shadcn's chart uses, tested with React 19) and `react-is@19.3.1`, which Recharts needs beside React.
+
+## Usage
+
+```tsx title="page.tsx"
+"use client";
+
+import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from "recharts";
+import {
+  CHART_SERIES,
+  type ChartConfig,
+  ChartContainer,
+  ChartLegend,
+  ChartLegendContent,
+  ChartTooltip,
+  ChartTooltipContent,
+  useChartDirection,
+} from "@/components/dga/chart";
+
+const data = [
+  { month: "Jan", applications: 186, renewals: 80 },
+  { month: "Feb", applications: 305, renewals: 200 },
+];
+const config = {
+  applications: { label: "Applications", color: CHART_SERIES[0] },
+  renewals: { label: "Renewals", color: CHART_SERIES[1] },
+} satisfies ChartConfig;
+
+export function Requests() {
+  const { xAxisProps, yAxisProps } = useChartDirection();
+  return (
+    <ChartContainer
+      config={config}
+      title="Applications and renewals by month"
+      description="Applications peak in February at 305."
+      table={{ data, categoryKey: "month", categoryLabel: "Month" }}
+    >
+      <BarChart data={data}>
+        <CartesianGrid vertical={false} />
+        <XAxis dataKey="month" {...xAxisProps} />
+        <YAxis {...yAxisProps} />
+        <ChartTooltip content={<ChartTooltipContent />} />
+        <ChartLegend content={<ChartLegendContent />} />
+        <Bar dataKey="applications" fill="var(--color-applications)" />
+        <Bar dataKey="renewals" fill="var(--color-renewals)" />
+      </BarChart>
+    </ChartContainer>
+  );
+}
+```
+
+ChartContainer wraps one Recharts chart. The `config` gives each series a label and a colour, and exposes the colour as `--color-<key>`. Everything inside is plain Recharts, so any Recharts chart or component works. Use a chart to show a trend, a comparison or a share. Give every chart a `title` and a `description`, and the data as a `table`.
+
+## Anatomy
+
+- **ChartContainer**: names the chart, applies the colours, and renders the optional table and its button.
+- **ChartTooltip** with **ChartTooltipContent**: the DGA Card surface, a title, one row per series with its marker, and the value.
+- **ChartLegend** with **ChartLegendContent**: a marker and a label per series.
+- **Table**: `table` renders the same numbers as a table. `tableMode="toggle"` (the default) adds a "View as table" button, `"hidden"` keeps it for screen readers only, `"none"` leaves it out.
+- **ChartDot** and **ChartSwatch**: the marker shapes (circle, square, triangle, diamond) for lines, the legend and the tooltip.
+
+## The DGA chart palette
+
+DGA publishes no data colours, so Platform Code adds four tokens, `chart-series-1` to `chart-series-4` (`CHART_SERIES`). Each is built from existing colour scales and is 3:1 or better against every page surface, and against the series next to it (1 and 2, 2 and 3, 3 and 4, 4 and 1), in light and dark. Series 1 and 3 are the dark pair and 2 and 4 the light pair, so neighbours differ in lightness and not only hue. Series two apart (1 and 3, 2 and 4) are in the same lightness band: lines also differ by marker shape and dash, and a bar, area or pie slice is told apart by its position, label and legend.
+
+<Preview compact name="chart-palette" title="The palette" minHeight={200} />
+
+## Examples
+
+### Line
+
+Each line has its own marker and dash, so crossing lines are not told apart by colour alone.
+
+<Preview compact name="chart-line" title="Line" minHeight={420} />
+
+### Area
+
+<Preview compact name="chart-area" title="Area" minHeight={420} />
+
+### Pie
+
+The first slice starts at 12 o'clock and the rest follow the reading direction: clockwise in English, counter-clockwise in Arabic. Spread `pieProps` from `useChartDirection` on the Pie.
+
+<Preview compact name="chart-pie" title="Pie" minHeight={440} />
+
+### The data as a table
+
+<Preview compact name="chart-table" title="The data as a table" minHeight={320} />
+
+### With the keyboard
+
+Set `interactive` and the chart becomes a focusable group: the arrow keys move between the points and show the tooltip. The table remains the static alternative.
+
+<Preview compact name="chart-interactive" title="With the keyboard" minHeight={460} />
+
+## RTL
+
+`useChartDirection` returns the props that put a chart in reading order. In Arabic the first category is on the right, the vertical axis is on the right, and a pie turns counter-clockwise. Spread `xAxisProps` on the XAxis, `yAxisProps` on the YAxis and `pieProps` on the Pie. The tooltip and legend follow the direction. Numbers stay Western digits, left to right, so `1,200` never reads as `0021,`.
+
+<DirectionCompare name="chart-bar" title="Chart" minHeight={420} />
+
+## Accessibility
+
+- By default the chart is a picture for assistive technology: `role="img"`, named by `title` and described by `description`. Give the trend or the largest value in the description. The table carries the numbers.
+- With `interactive` the chart is `role="group"` with a roledescription of "chart"; arrow keys move between points, and a 2px focus outline shows where focus is.
+- The "View as table" button has `aria-expanded` and `aria-controls`.
+- Series are 3:1 against the page and each other; text in axes, legend and tooltip is 4.5:1. Colour is never the only cue: markers, dashes, labels and the table repeat it.
+- Animation is off when the person prefers reduced motion (`useChartAnimation`).
+
+## API Reference
+
+<ApiReference component="chart" />
+
+## Derivation from DGA
+
+DGA has no data visualisation. The container, tooltip and legend follow shadcn's chart; the tooltip surface, text colours and focus ring are DGA's, and the four series colours are new tokens built from DGA colour primitives (see the entries below).
+
+<ComponentDeviations component="chart" />
+
+## Contrast
+
+<ComponentContrast component="chart" />

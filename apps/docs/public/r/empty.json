@@ -1,0 +1,21 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "empty",
+  "title": "Empty",
+  "description": "Platform Code extension (not DGA). Empty: the state of a list, table or page with nothing to show: media (or a round icon), title, description and next steps, on the look of the Data Table's empty state.",
+  "dependencies": [
+    "class-variance-authority"
+  ],
+  "registryDependencies": [
+    "https://dga.omqkhafi.dev/r/utils.json"
+  ],
+  "files": [
+    {
+      "path": "bases/base/ui/empty.tsx",
+      "content": "import { cva, type VariantProps } from \"class-variance-authority\";\nimport type * as React from \"react\";\nimport { cn } from \"@/registry/bases/base/lib/utils\";\n\n/**\n * The state of a list, table or page with nothing to show (Platform Code extension, not part of\n * DGA). It follows the empty state of the Data Table: a centred icon, a title, a short\n * explanation and the next step. Use it for \"no results\", \"nothing here yet\" and for errors that\n * leave the area empty. Every string is yours; translate them on Arabic pages.\n */\nfunction Empty({\n  className,\n  bordered = false,\n  ...props\n}: React.ComponentProps<\"div\"> & {\n  /** Draws a dashed border, for an empty area inside a page. */\n  bordered?: boolean;\n}) {\n  return (\n    <div\n      data-slot=\"empty\"\n      data-bordered={bordered ? \"\" : undefined}\n      className={cn(\"flex w-full min-w-0 flex-1 flex-col items-center justify-center gap-4 rounded-lg p-6 text-center text-balance md:p-10 data-bordered:border data-bordered:border-dashed data-bordered:border-border-neutral-primary\", className)}\n      {...props}\n    />\n  );\n}\n\n/** Groups the icon, title and description. */\nfunction EmptyHeader({ className, ...props }: React.ComponentProps<\"div\">) {\n  return <div data-slot=\"empty-header\" className={cn(\"flex max-w-sm flex-col items-center gap-2 text-center\", className)} {...props} />;\n}\n\nconst emptyMediaVariants = cva(\"mb-2 flex shrink-0 items-center justify-center text-icon-default-500 [&_svg]:pointer-events-none [&_svg]:shrink-0\", {\n  variants: {\n    variant: {\n      default: \"\",\n      icon: \"size-12 rounded-full bg-background-neutral-100 text-icon-default [&_svg:not([class*='size-'])]:size-6\",\n    },\n  },\n  defaultVariants: { variant: \"default\" },\n});\n\n/** The icon or picture. `variant=\"icon\"` puts an icon on a round neutral fill. */\nfunction EmptyMedia({\n  className,\n  variant = \"default\",\n  ...props\n}: React.ComponentProps<\"div\"> & VariantProps<typeof emptyMediaVariants>) {\n  return (\n    <div\n      data-slot=\"empty-media\"\n      data-variant={variant}\n      className={cn(emptyMediaVariants({ variant }), className)}\n      {...props}\n    />\n  );\n}\n\n/** The title. A paragraph, not a heading, so it fits under any heading level on the page. */\nfunction EmptyTitle({ className, ...props }: React.ComponentProps<\"p\">) {\n  return <p data-slot=\"empty-title\" className={cn(\"m-0 text-lg font-semibold text-text-display\", className)} {...props} />;\n}\n\n/** One or two sentences that say why it is empty and what to do. */\nfunction EmptyDescription({ className, ...props }: React.ComponentProps<\"p\">) {\n  return (\n    <p data-slot=\"empty-description\" className={cn(\"m-0 text-md text-text-primary-paragraph [&>a]:text-link-primary [&>a]:underline [&>a]:underline-offset-4\", className)} {...props} />\n  );\n}\n\n/** The next step: buttons or links. */\nfunction EmptyContent({ className, ...props }: React.ComponentProps<\"div\">) {\n  return <div data-slot=\"empty-content\" className={cn(\"flex w-full max-w-sm min-w-0 flex-col items-center gap-3 text-md\", className)} {...props} />;\n}\n\nexport { Empty, EmptyContent, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle };\n",
+      "type": "registry:ui",
+      "target": "components/dga/empty.tsx"
+    }
+  ],
+  "type": "registry:ui"
+}

@@ -1,0 +1,96 @@
+---
+title: Collapsible
+description: "One panel that opens and closes from a trigger. The Card's Expandable is built on it."
+---
+
+<ExtensionNote
+  name="Collapsible"
+  primitive="Base UI Collapsible"
+  from="the DGA Card's Expandable (the trigger, the chevron and the panel), which now uses this component"
+  tokens={["text-display", "text-primary-paragraph", "icon-default", "border-black"]}
+/>
+
+<Preview name="collapsible-basic" title="Collapsible" minHeight={240} />
+
+## Installation
+
+<ComponentInstall name="collapsible" />
+
+## Usage
+
+```tsx title="page.tsx"
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/dga/collapsible";
+
+export function RequiredDocuments() {
+  return (
+    <Collapsible className="flex flex-col gap-3">
+      <CollapsibleTrigger showChevron>Required documents</CollapsibleTrigger>
+      <CollapsibleContent>National ID, a recent photograph, the previous passport.</CollapsibleContent>
+    </Collapsible>
+  );
+}
+```
+
+Use a Collapsible for one block of detail that most people do not need: a longer description, extra options, a "show more" list. For several panels where opening one closes the others, use an [Accordion](/docs/components/accordion). For a card whose details open, use the [Card](/docs/components/card) Expandable, which is this component inside a card.
+
+## Anatomy
+
+- **Trigger**: a button with `aria-expanded` and `aria-controls`. It is `text-display`, bold, 18px. Turn on the chevron with `showChevron`, or render your own button with `render`.
+- **Chevron** (optional): a 20px `icon-default` arrow that turns when the panel is open.
+- **Content**: the panel, `text-primary-paragraph`. Its height animates over 200ms.
+
+The root has no style of its own, so give it the layout you need (`flex flex-col gap-3` above).
+
+## Examples
+
+### Controlled, open at first and disabled
+
+Pass `open` and `onOpenChange` to read or set the state, `defaultOpen` to start open, and `disabled` to stop the trigger.
+
+<Preview compact name="collapsible-states" title="Controlled, open at first and disabled" minHeight={420} />
+
+### A "show more" list
+
+Put the always-visible part before the content and render the trigger as a Button.
+
+<Preview compact name="collapsible-list" title="A show more list" minHeight={360} />
+
+## The Card's Expandable
+
+The Card's `CardExpandable`, `CardExpandableTrigger` and `CardExpandablePanel` are this component with the card surface around it. Installing the Card installs the Collapsible with it, and there is one implementation of the open and close behaviour. Nothing changed in how the Card looks.
+
+## RTL
+
+The chevron and the text follow the page direction. The chevron points down in both directions, so nothing mirrors.
+
+<DirectionCompare name="collapsible-basic" title="Collapsible" minHeight={240} />
+
+## Accessibility
+
+| Key | Action |
+| --- | --- |
+| <kbd>Enter</kbd> or <kbd>Space</kbd> | On the trigger, opens or closes the panel. |
+| <kbd>Tab</kbd> | Moves to the trigger and on to the controls inside an open panel. |
+
+- Built on Base UI Collapsible: the trigger is a real `button` with `aria-expanded` and `aria-controls` pointing at the panel.
+- A closed panel is hidden, so its links and buttons are not reachable with the keyboard and a screen reader does not read it.
+- The trigger has a 2px `border-black` focus ring, 3:1 or better, in light and dark.
+- With reduced motion the panel opens and closes without animation.
+
+## API Reference
+
+<ApiReference component="collapsible" />
+
+## Derivation from DGA
+
+DGA does not define a standalone collapsible. Its look is the Expandable card's trigger and panel, moved here so the Card and this component share one implementation. No colour is new: every one comes from an existing DGA token.
+
+<ComponentDeviations component="collapsible" />
+
+## Contrast
+
+<ComponentContrast component="collapsible" />

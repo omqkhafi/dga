@@ -1,0 +1,92 @@
+---
+title: Scroll Area
+description: "A region with custom scrollbars in DGA gray. Keyboard users can focus it and scroll with the arrow keys."
+---
+
+<ExtensionNote
+  name="Scroll Area"
+  primitive="Base UI Scroll Area"
+  from="the DGA gray text tokens (DGA has no scrollbar) and the Card's radius"
+  tokens={["text-secondary-paragraph", "text-primary-paragraph", "icon-default", "border-black"]}
+/>
+
+<Preview name="scroll-area-vertical" title="Scroll Area" minHeight={300} />
+
+## Installation
+
+<ComponentInstall name="scroll-area" />
+
+## Usage
+
+```tsx title="page.tsx"
+import { ScrollArea } from "@/components/dga/scroll-area";
+
+export function Applications({ items }: { items: string[] }) {
+  return (
+    <ScrollArea label="Applications" className="h-60 w-72 rounded-md border">
+      <ul>{items.map((item) => <li key={item}>{item}</li>)}</ul>
+    </ScrollArea>
+  );
+}
+```
+
+Use it for a list, a table or a panel that scrolls inside a page that does not, such as a menu, a sidebar section or a log. Give it a height (for a vertical area) or a width (for a horizontal one). If the whole page scrolls, leave the browser's own scrollbar alone.
+
+## Anatomy
+
+- **Viewport**: the scrolling element. It is a focusable region (`tabindex="0"`, `role="region"`) named by `label`, so a keyboard user can focus it and scroll.
+- **Scrollbar**: 12px, on the end side of the area. It does not move the content, it sits on top.
+- **Thumb**: a rounded bar in `text-secondary-paragraph`, darker when hovered and pressed. There is no track fill.
+- **Corner**: with `orientation="both"`, the square where the two bars meet.
+
+## Examples
+
+### Vertical, horizontal and both
+
+`orientation` is `vertical` (default), `horizontal` or `both`.
+
+<Preview compact name="scroll-area-vertical" title="Vertical" minHeight={300} />
+
+<Preview compact name="scroll-area-horizontal" title="Horizontal" minHeight={180} />
+
+<Preview compact name="scroll-area-both" title="Both" minHeight={300} />
+
+### When the scrollbar shows
+
+`visibility="hover"` (default) shows the bar while the pointer is over the area, while it scrolls and while it has keyboard focus. `visibility="always"` keeps it visible, which suits touch screens and anywhere people need to see that there is more.
+
+<Preview compact name="scroll-area-visibility" title="Visibility" minHeight={300} />
+
+## RTL
+
+The vertical bar is on the left in Arabic, the end side of the text, and the content starts at the right. The horizontal bar scrolls from the right.
+
+<DirectionCompare name="scroll-area-vertical" title="Scroll Area" minHeight={300} />
+
+## Accessibility
+
+| Key | Action |
+| --- | --- |
+| <kbd>Tab</kbd> | Focuses the scrollable region. |
+| <kbd>↑</kbd> <kbd>↓</kbd> <kbd>←</kbd> <kbd>→</kbd> | Scroll by a line. |
+| <kbd>Page Up</kbd> <kbd>Page Down</kbd> | Scroll by a page. |
+| <kbd>Home</kbd> <kbd>End</kbd> | Go to the start or the end of a vertical area. |
+
+- The viewport is a `region` with an accessible name from `label`. Always pass one, and translate it on Arabic pages.
+- The browser does the scrolling, so touch, wheel and keyboard behave as they do everywhere else.
+- The thumb is 3:1 or better against the page in light and dark, and the focus ring is a 2px `border-black` line drawn inside the area.
+- The scrollbar fades in and out; with reduced motion it appears without a fade.
+
+## API Reference
+
+<ApiReference component="scroll-area" />
+
+## Derivation from DGA
+
+DGA has no scrollbar, so this is not a DGA component and has no DGA specification. The neutral border and background tokens are 1.1:1 to 1.7:1 against the page, so the thumb uses the gray text tokens to meet 3:1. No colour is new.
+
+<ComponentDeviations component="scroll-area" />
+
+## Contrast
+
+<ComponentContrast component="scroll-area" />

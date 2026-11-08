@@ -1,11 +1,10 @@
 "use client";
 
-import { Collapsible as CollapsiblePrimitive } from "@base-ui/react/collapsible";
-import { ArrowDown01Icon } from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
+import type { Collapsible as CollapsiblePrimitive } from "@base-ui/react/collapsible";
 import { cva, type VariantProps } from "class-variance-authority";
 import * as React from "react";
 import { Checkbox } from "@/components/dga/checkbox";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/dga/collapsible";
 import { cn } from "@/registry/bases/base/lib/utils";
 
 const cardVariants = cva("relative flex min-w-0 flex-col gap-(--card-gap) rounded-lg border border-transparent bg-background-card p-(--card-pad) text-text-default transition-colors has-[[data-slot=card-link]]:cursor-pointer has-[[data-slot=card-link]]:hover:bg-background-neutral-50 has-[[data-slot=card-link]:focus-visible]:outline-2 has-[[data-slot=card-link]:focus-visible]:outline-solid has-[[data-slot=card-link]:focus-visible]:outline-border-black data-disabled:pointer-events-none data-disabled:bg-background-disabled data-disabled:text-text-default-disabled data-disabled:shadow-none motion-reduce:transition-none", {
@@ -109,7 +108,7 @@ function CardLink({
 // ---------------------------------------------------------------------------------------------
 
 /**
- * A card whose details open and close (DGA: Expandable). Built on Base UI Collapsible. Put a
+ * A card whose details open and close (DGA: Expandable). Built on the Collapsible. Put a
  * `CardExpandableTrigger` and a `CardExpandablePanel` inside, with the always-visible part first.
  */
 function CardExpandable({
@@ -120,7 +119,7 @@ function CardExpandable({
   ...props
 }: CollapsiblePrimitive.Root.Props & VariantProps<typeof cardVariants>) {
   return (
-    <CollapsiblePrimitive.Root
+    <Collapsible
       data-slot="card"
       data-size={size ?? "lg"}
       data-expandable=""
@@ -138,24 +137,20 @@ function CardExpandableTrigger({
   ...props
 }: CollapsiblePrimitive.Trigger.Props) {
   return (
-    <CollapsiblePrimitive.Trigger
+    <CollapsibleTrigger
       data-slot="card-expandable-trigger"
-      className={cn("flex w-full cursor-pointer items-center justify-between gap-3 rounded-xs border-0 bg-transparent p-0 text-start text-lg font-bold text-text-display focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-offset-4 focus-visible:outline-border-black disabled:cursor-not-allowed disabled:text-text-default-disabled", className)}
+      showChevron
+      className={cn("w-full", className)}
       {...props}
     >
       {children}
-      <HugeiconsIcon icon={ArrowDown01Icon} aria-hidden className="size-5 shrink-0 text-icon-default transition-transform in-data-panel-open:rotate-180 motion-reduce:transition-none" />
-    </CollapsiblePrimitive.Trigger>
+    </CollapsibleTrigger>
   );
 }
 
 function CardExpandablePanel({ className, ...props }: CollapsiblePrimitive.Panel.Props) {
   return (
-    <CollapsiblePrimitive.Panel
-      data-slot="card-expandable-panel"
-      className={cn("h-(--collapsible-panel-height) overflow-hidden text-md text-text-primary-paragraph transition-[height] duration-200 ease-out data-ending-style:h-0 data-starting-style:h-0 motion-reduce:transition-none", className)}
-      {...props}
-    />
+    <CollapsibleContent data-slot="card-expandable-panel" className={cn(className)} {...props} />
   );
 }
 

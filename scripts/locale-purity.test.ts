@@ -107,6 +107,18 @@ test("the Arabic API descriptions have no English words", async () => {
     "input-otp",
     "input-group",
     "button-group",
+    // The Phase 7 part 2 components (0.7.1).
+    "menubar",
+    "navigation-menu",
+    "sidebar",
+    "collapsible",
+    "scroll-area",
+    "resizable",
+    "aspect-ratio",
+    "kbd",
+    "empty",
+    "item",
+    "chart",
   ];
   for (const [slug, parts] of Object.entries(api)) {
     if (!phase5.includes(slug)) continue;

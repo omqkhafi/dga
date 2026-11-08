@@ -1,11 +1,10 @@
 "use client";
 
-import { Collapsible as CollapsiblePrimitive } from "@base-ui/react/collapsible";
-import { ArrowDown01Icon } from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
+import type { Collapsible as CollapsiblePrimitive } from "@base-ui/react/collapsible";
 import { cva, type VariantProps } from "class-variance-authority";
 import * as React from "react";
 import { Checkbox } from "@/components/dga/checkbox";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/dga/collapsible";
 import { cn } from "@/registry/bases/base/lib/utils";
 
 const cardVariants = cva("cn-card", {
@@ -109,7 +108,7 @@ function CardLink({
 // ---------------------------------------------------------------------------------------------
 
 /**
- * A card whose details open and close (DGA: Expandable). Built on Base UI Collapsible. Put a
+ * A card whose details open and close (DGA: Expandable). Built on the Collapsible. Put a
  * `CardExpandableTrigger` and a `CardExpandablePanel` inside, with the always-visible part first.
  */
 function CardExpandable({
@@ -120,7 +119,7 @@ function CardExpandable({
   ...props
 }: CollapsiblePrimitive.Root.Props & VariantProps<typeof cardVariants>) {
   return (
-    <CollapsiblePrimitive.Root
+    <Collapsible
       data-slot="card"
       data-size={size ?? "lg"}
       data-expandable=""
@@ -138,24 +137,20 @@ function CardExpandableTrigger({
   ...props
 }: CollapsiblePrimitive.Trigger.Props) {
   return (
-    <CollapsiblePrimitive.Trigger
+    <CollapsibleTrigger
       data-slot="card-expandable-trigger"
-      className={cn("cn-card-expand-trigger", className)}
+      showChevron
+      className={cn("w-full", className)}
       {...props}
     >
       {children}
-      <HugeiconsIcon icon={ArrowDown01Icon} aria-hidden className="cn-card-expand-chevron" />
-    </CollapsiblePrimitive.Trigger>
+    </CollapsibleTrigger>
   );
 }
 
 function CardExpandablePanel({ className, ...props }: CollapsiblePrimitive.Panel.Props) {
   return (
-    <CollapsiblePrimitive.Panel
-      data-slot="card-expandable-panel"
-      className={cn("cn-card-expand-panel", className)}
-      {...props}
-    />
+    <CollapsibleContent data-slot="card-expandable-panel" className={cn(className)} {...props} />
   );
 }
 

@@ -5,6 +5,37 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
 
 ## [Unreleased]
 
+## [0.7.1] - 2026-11-08
+
+Phase 7, part 2: navigation, layout and display. Eleven more Platform Code extensions (components DGA does not define), each with the Extension badge and the "derived from" note, English and Arabic pages with previews of every variant and state, API references with Arabic descriptions, contrast tables, registry items that declare the `@dga` items they use, and install and collision tests.
+
+### Added
+
+- **Navigation:** **Menubar** (Base UI Menubar; the Menu look; submenus open on the end side), **Navigation Menu** (Base UI Navigation Menu; Menu and Header navigation look; links with `aria-current`) and **Sidebar** (collapsible to an icon-only rail with tooltips, the mobile form in the Drawer, nested groups on the Collapsible, an active state, an open state persisted in a cookie, `side` that mirrors in RTL, Ctrl/Cmd+B).
+- **Layout:** **Collapsible** (its own item; Card's Expandable now depends on it), **Scroll Area** (focusable viewport, scrollbar on the end side), **Resizable** (keyboard resize, mirrored in RTL) and **Aspect Ratio**.
+- **Display:** **Kbd**, **Empty**, **Item** and **Chart** (bar, line, area and pie on Recharts with tooltip, legend, a data-table fallback, and the X axis reversed with the Y axis on the right in RTL).
+- **Docs and tests:** the new groups in the sidebar, search, `llms.txt`, the sitemap, Open Graph images, the agent skill and the Extensions page; `scripts/ci/e2e-map.json` covers the new items; the install test installs them and checks the pinned versions; the collision fixture keeps stock shadcn `menubar`, `navigation-menu`, `sidebar`, `collapsible`, `scroll-area`, `resizable`, `aspect-ratio`, `kbd`, `empty`, `item` and `chart` byte-identical; browser tests cover keyboard and RTL for Menubar, Navigation Menu, Sidebar, Resizable and Chart.
+
+### Scope decisions
+
+Each candidate was checked against the shadcn registry and the existing `@dga` items.
+
+- **Merged:** Collapsible is exposed as its own item and Card's Expandable is built on it, so the code is not duplicated. Kbd is the one key-cap element; `InputGroupKbd` now wraps it with identical styling.
+- **Kept separate:** `CommandShortcut` (plain trailing text, not a cap); Navigation Menu beside the Header (standalone primitive versus site composite); Sidebar beside the Header Nav Drawer and Second Nav (app navigation); Empty beside Data Table's empty state (Data Table unchanged); Item beside List and Card.
+- **Dropped:** none of the eleven. shadcn's Sidebar rail handle is not built (the icon rail is `collapsible="icon"`).
+
+### Dependencies
+
+- `recharts@3.8.0`, the version shadcn's chart item pins, and its peer `react-is@19.3.1`, only with Chart.
+- `react-resizable-panels@4.14.8`, only with Resizable: the newest stable release at least two weeks old, with the Group, Panel and Separator API shadcn uses (4.20.0 is two days old). It has no RTL support, so Resizable lays out left to right and mirrors the panel order and keys itself; the page documents the reading order.
+
+### Deviations
+
+New entries under Extensions, all "new, no DGA source": Menubar, Navigation Menu, Sidebar, Collapsible, Scroll Area (thumb in `text-secondary-paragraph`), Resizable (and its right-to-left layout), Aspect Ratio, Kbd, Empty, Item, Chart, and four new tokens `chart-series-1` to `chart-series-4` (no pair of existing semantic colours is 3:1 from its neighbour). The Chart tooltip uses `background-card`, not `background-menu`, which fails 3:1 for two series in dark mode.
+
+### Changed
+
+- **CI:** when a newer push cancels a pull request run, the browser checks report and the `CI result` job are skipped instead of reporting red on the superseded commit. A failed job still fails `CI result`.
 - CI runs only what a pull request can affect and runs the browser checks in parallel shards; the full suite still runs on every push to main. See CONTRIBUTING.md.
 
 ## [0.7.0] - 2026-11-08

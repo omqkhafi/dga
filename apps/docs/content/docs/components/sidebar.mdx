@@ -1,0 +1,164 @@
+---
+title: Sidebar
+description: "A panel of navigation beside the page. It can shrink to an icon rail, hide, or become a Drawer on phones, with nested groups and a remembered open state."
+---
+
+<ExtensionNote
+  name="Sidebar"
+  primitive="the Collapsible, Drawer and Tooltip"
+  from="the Header navigation Drawer for the items and the Second Nav for the states"
+  tokens={["background-menu", "border-neutral-primary", "button-background-neutral-hovered", "button-background-neutral-selected", "link-primary-pressed", "text-default", "text-primary-paragraph"]}
+/>
+
+<Preview name="sidebar-basic" title="Sidebar" minHeight={420} />
+
+## Installation
+
+<ComponentInstall name="sidebar" />
+
+## Usage
+
+```tsx title="layout.tsx"
+import {
+  Sidebar,
+  SidebarContent,
+  SidebarGroup,
+  SidebarGroupContent,
+  SidebarGroupLabel,
+  SidebarInset,
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
+  SidebarProvider,
+  SidebarTrigger,
+} from "@/components/dga/sidebar";
+
+export function AppLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <SidebarProvider>
+      <Sidebar aria-label="Main navigation" collapsible="icon">
+        <SidebarContent>
+          <SidebarGroup>
+            <SidebarGroupLabel>Services</SidebarGroupLabel>
+            <SidebarGroupContent>
+              <SidebarMenu>
+                <SidebarMenuItem>
+                  <SidebarMenuButton isActive tooltip="Requests" render={<a href="/requests" />}>
+                    <InboxIcon />
+                    <span>Requests</span>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              </SidebarMenu>
+            </SidebarGroupContent>
+          </SidebarGroup>
+        </SidebarContent>
+      </Sidebar>
+      <SidebarInset>
+        <SidebarTrigger />
+        <main>{children}</main>
+      </SidebarInset>
+    </SidebarProvider>
+  );
+}
+```
+
+Use the Sidebar for the main navigation of an application with many sections. For the navigation of a public site use the [Header](/docs/components/header). The Sidebar is a layout: it sits beside the page and takes its height from its parent (a full-height shell, or a `className` such as `h-96` inside a container). Wrap the label of every item in an element such as `<span>`: on the icon rail it is hidden visually and still read by screen readers. Every visible string is yours to pass in.
+
+## Anatomy
+
+- **Provider**: holds the open state, the Ctrl or Command + B shortcut, the Tooltips of the rail and the Drawer breakpoint.
+- **Sidebar** (`aside`): 256px wide, `background-menu`, a border on the page side. `side` places it at the start or the end.
+- **Header, Content and Footer**: the top, the scrolling middle and the bottom.
+- **Group**: SidebarGroup (named by its SidebarGroupLabel) with a SidebarMenu inside.
+- **Item**: SidebarMenuButton, 36px high, an icon and a label, with the Header Drawer item states: hovered, pressed, current page (`isActive`, a selected fill and a link-coloured label) and a focus ring. SidebarMenuBadge puts a count at the end.
+- **Nested group**: SidebarMenuCollapsible, built on the Collapsible, with a SidebarMenuCollapsibleTrigger, and a SidebarMenuSub of SidebarMenuSubButton items.
+- **Trigger and Inset**: SidebarTrigger toggles the sidebar; SidebarInset is the page beside it.
+
+## Examples
+
+### Nested groups
+
+A group that opens and closes with the Collapsible; the current page inside it is marked.
+
+<Preview compact name="sidebar-nested" title="Nested groups" minHeight={460} />
+
+### Icon rail
+
+`collapsible="icon"` shrinks the sidebar to a 56px rail of icons. Hover or focus an icon to see its `tooltip`. Pressing a nested group's button on the rail opens the sidebar.
+
+<Preview compact name="sidebar-icon" title="Icon rail" minHeight={420} />
+
+### Collapsed rail
+
+The same sidebar closed at first with `defaultOpen={false}`.
+
+<Preview compact name="sidebar-rail" title="Collapsed rail" minHeight={420} />
+
+### Hidden when closed
+
+`collapsible="offcanvas"` hides the sidebar completely. The hidden content is made `inert`, so keyboard and screen reader users cannot reach it.
+
+<Preview compact name="sidebar-offcanvas" title="Hidden when closed" minHeight={420} />
+
+### End side
+
+`side="end"` puts it on the end edge: the right in English and the left in Arabic.
+
+<Preview compact name="sidebar-end" title="End side" minHeight={420} />
+
+### Remembered state
+
+The open state is saved in a cookie (`persist`, the default) and restored on the next visit. Close the sidebar and reload this page. Give each sidebar its own `cookieName`.
+
+<Preview compact name="sidebar-persisted" title="Remembered state" minHeight={420} />
+
+### On a phone
+
+Below `mobileBreakpoint` (768px) the sidebar becomes a [Drawer](/docs/components/drawer) that slides in from its side, with the same content, a focus trap and a close button. This example forces that form at any width.
+
+<Preview compact name="sidebar-mobile" title="On a phone" minHeight={200} />
+
+To start with the saved state already applied on the server, read the cookie with `parseSidebarState` and pass the result as `defaultOpen`:
+
+```tsx title="layout.tsx"
+import { cookies } from "next/headers";
+import { parseSidebarState, SIDEBAR_COOKIE_NAME } from "@/components/dga/sidebar";
+
+const store = await cookies();
+const defaultOpen = store.get(SIDEBAR_COOKIE_NAME)?.value !== "false";
+```
+
+## RTL
+
+The sidebar sits on the start side, so it is on the right in Arabic, with its border and the Drawer on that side. The trigger icon, the group chevrons and the tooltip side (the end side of the rail) mirror. Nothing needs an Arabic variant.
+
+<DirectionCompare name="sidebar-icon" title="Sidebar" minHeight={420} />
+
+## Accessibility
+
+| Key | Action |
+| --- | --- |
+| <kbd>Ctrl</kbd> or <kbd>⌘</kbd> + <kbd>B</kbd> | Opens or closes the sidebar. Change the key with `shortcut`, or turn it off with `shortcut={false}`. |
+| <kbd>Tab</kbd> | Moves through the items in order. |
+| <kbd>Enter</kbd> / <kbd>Space</kbd> | Follows an item, or opens and closes a nested group. |
+| <kbd>Escape</kbd> | In the phone Drawer, closes it and returns focus to the trigger. |
+
+- The sidebar is an `aside`: give it an `aria-label`. Groups are `role="group"` named by their label. The current page has `aria-current="page"`.
+- The trigger is a button with an `aria-label`, `aria-expanded` and `aria-controls`.
+- On the icon rail every item keeps its text for screen readers, and the Tooltip repeats it for sighted users. A hidden sidebar is `inert`.
+- The Drawer form traps focus, closes with Escape and has a name and description (`mobileTitle`, `mobileDescription`).
+- Text is 4.5:1 and icons and rings 3:1 or better in every state, in light and dark.
+
+## API Reference
+
+<ApiReference component="sidebar" />
+
+## Derivation from DGA
+
+DGA has no sidebar. The items are the Header Nav Drawer items (36px, semibold, hovered, pressed and the selected fill with the link colour) and the states follow the Second Nav. The phone form is the DGA Drawer. No colour is new.
+
+<ComponentDeviations component="sidebar" />
+
+## Contrast
+
+<ComponentContrast component="sidebar" />

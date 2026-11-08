@@ -4,6 +4,7 @@ import { Input as InputPrimitive } from "@base-ui/react/input";
 import type { VariantProps } from "class-variance-authority";
 import type * as React from "react";
 import { inputVariants } from "@/components/dga/input";
+import { Kbd } from "@/components/dga/kbd";
 import { cn } from "@/registry/bases/base/lib/utils";
 
 type InputGroupProps = React.ComponentProps<"div"> & VariantProps<typeof inputVariants>;
@@ -61,16 +62,9 @@ function InputGroupText({ className, ...props }: React.ComponentProps<"span">) {
   );
 }
 
-/** A keyboard shortcut hint in an addon, such as ⌘K. Always left to right. */
+/** A keyboard shortcut hint in an addon, such as ⌘K. Always left to right. This is the Kbd. */
 function InputGroupKbd({ className, ...props }: React.ComponentProps<"kbd">) {
-  return (
-    <kbd
-      data-slot="input-group-kbd"
-      dir="ltr"
-      className={cn("inline-flex h-5 min-w-5 items-center justify-center rounded-xs border border-border-neutral-primary bg-background-neutral-100 px-1 text-xs font-medium text-text-default", className)}
-      {...props}
-    />
-  );
+  return <Kbd data-slot="input-group-kbd" className={className} {...props} />;
 }
 
 export type { InputGroupProps };

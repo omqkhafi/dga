@@ -1386,6 +1386,42 @@
     "component": "checkbox"
   },
   {
+    "area": "Extensions",
+    "item": "--chart-series-1 (new)",
+    "original": "—",
+    "ours": "--colors-primary-sa-flag-950 (light), --colors-primary-sa-flag-200 (dark)",
+    "reason": "New, no DGA source. First chart series: the deepest green of the brand scale in light, its pale step in dark. 3:1 or better on every surface and on series 2 and 4 in both themes.",
+    "status": "fixed",
+    "component": "chart"
+  },
+  {
+    "area": "Extensions",
+    "item": "--chart-series-2 (new)",
+    "original": "—",
+    "ours": "--colors-secondary-gold-700 (light), --colors-secondary-gold-800 (dark)",
+    "reason": "New, no DGA source. Second chart series: gold. The mid-lightness step on each theme, so it is 3:1 against the page and against the dark and light series beside it.",
+    "status": "fixed",
+    "component": "chart"
+  },
+  {
+    "area": "Extensions",
+    "item": "--chart-series-3 (new)",
+    "original": "—",
+    "ours": "--colors-tertiary-lavender-900 (light), --colors-tertiary-lavender-200 (dark)",
+    "reason": "New, no DGA source. Third chart series: lavender, the dark of the pair in light and the pale one in dark.",
+    "status": "fixed",
+    "component": "chart"
+  },
+  {
+    "area": "Extensions",
+    "item": "--chart-series-4 (new)",
+    "original": "—",
+    "ours": "--colors-blue-light-600 (light), --colors-blue-dark-600 (dark)",
+    "reason": "New, no DGA source. Fourth chart series: blue. Blue-light 600 in light mode and blue-dark 600 in dark mode, the steps that are 3:1 against the page and the neighbouring series.",
+    "status": "fixed",
+    "component": "chart"
+  },
+  {
     "area": "Dark theme",
     "item": "--background-white (dark)",
     "original": "--colors-neutral-950",
@@ -4289,5 +4325,122 @@
     "reason": "One responsive component instead of four frames. The tokens (background-neutral-100, text-default, section-padding, icon-success) are DGA's.",
     "status": "fixed",
     "component": "digital-stamp"
+  },
+  {
+    "area": "Extensions",
+    "item": "Menubar (new component)",
+    "original": "—",
+    "ours": "A bar of Base UI Menubar triggers that open the DGA Menu list.",
+    "reason": "New, no DGA source. DGA has no menubar. The triggers take the Header navigation item states at a compact 32px height; the lists are the Menu. No token was added.",
+    "status": "fixed",
+    "component": "menubar"
+  },
+  {
+    "area": "Extensions",
+    "item": "Navigation Menu (new component)",
+    "original": "—",
+    "ours": "Header-style bar items and a shared panel on the Menu surface with a title and a description per link.",
+    "reason": "New, no DGA source. DGA has the Header navigation but no standalone navigation menu. The current page uses the Header's primary fill. No token was added.",
+    "status": "fixed",
+    "component": "navigation-menu"
+  },
+  {
+    "area": "Extensions",
+    "item": "Sidebar (new component)",
+    "original": "—",
+    "ours": "A 256px panel on background-menu with Header Nav Drawer items, an icon rail, a Drawer on phones, nested groups and a remembered open state.",
+    "reason": "New, no DGA source. DGA has the Header Nav Drawer and the Second Nav but no sidebar. The panel border, the 56px rail width and the 256px width are layout values with no token. No colour was added.",
+    "status": "fixed",
+    "component": "sidebar"
+  },
+  {
+    "area": "Extensions",
+    "item": "Collapsible (new component)",
+    "original": "—",
+    "ours": "One panel that opens and closes, with an optional chevron. The trigger and panel are the ones the Card's Expandable already had, now shared.",
+    "reason": "New, no DGA source. DGA has no standalone collapsible. The Card's Expandable is built on it, so there is one implementation; no visual change to the Card and no token was added.",
+    "status": "fixed",
+    "component": "collapsible"
+  },
+  {
+    "area": "Extensions",
+    "item": "Scroll Area (new component)",
+    "original": "—",
+    "ours": "A 12px scrollbar with a rounded thumb in text-secondary-paragraph (hovered text-primary-paragraph, pressed icon-default) and no track fill; shown on hover or always.",
+    "reason": "New, no DGA source. DGA has no scrollbar. The thumb uses an existing gray text token because the neutral border and background tokens are 1.1:1 to 1.7:1 against the page, below the 3:1 non-text minimum (WCAG 1.4.11). No token was added.",
+    "status": "fixed",
+    "component": "scroll-area"
+  },
+  {
+    "area": "Extensions",
+    "item": "Resizable (new component)",
+    "original": "—",
+    "ours": "A 1px handle line in text-secondary-paragraph (hovered, dragging and focused: icon-default), an optional grip, and a focus ring in border-black.",
+    "reason": "New, no DGA source. The Divider's border-neutral-primary is 1.5:1 against the page, too faint for a control that has to be found and focused, so the line is a darker existing gray at 4.3:1 or better. No token was added.",
+    "status": "fixed",
+    "component": "resizable"
+  },
+  {
+    "area": "Extensions",
+    "item": "Resizable: right to left layout",
+    "original": "react-resizable-panels works in physical left to right only",
+    "ours": "In Arabic the group lays itself out left to right with the panels in reverse order, so the first panel is on the right and dragging and the arrow keys follow the eye.",
+    "reason": "New, no DGA source. The library has no RTL support: pointer deltas are physical, so a logical flip alone would drag the wrong way. Each panel keeps dir=rtl for its own content.",
+    "status": "fixed",
+    "component": "resizable"
+  },
+  {
+    "area": "Extensions",
+    "item": "Aspect Ratio (new component)",
+    "original": "—",
+    "ours": "A box with the CSS aspect-ratio and a rounded-md corner, with cover or contain fit for media.",
+    "reason": "New, no DGA source. Base UI has no primitive and DGA has no ratio box (the Card has no ratio prop). It draws no colour, so no token was added.",
+    "status": "fixed",
+    "component": "aspect-ratio"
+  },
+  {
+    "area": "Extensions",
+    "item": "Kbd (new component)",
+    "original": "—",
+    "ours": "A key cap: background-neutral-100, a 1px border-neutral-primary, radius-xs, 20px high, text-xs medium text-default.",
+    "reason": "New, no DGA source. DGA has no keyboard key element. The cap is the look Input Group's key addon already had (0.7.0), now one component that the addon reuses. No token was added.",
+    "status": "fixed",
+    "component": "kbd"
+  },
+  {
+    "area": "Extensions",
+    "item": "Empty (new component)",
+    "original": "—",
+    "ours": "A centred icon, title, description and next steps, with an optional dashed border and a round neutral fill behind an icon.",
+    "reason": "New, no DGA source. DGA only has the empty state inside the Data Table, which this follows (icon-default-500, text-primary-paragraph); the standalone layout, the dashed border and the round icon fill are ours. No token was added.",
+    "status": "fixed",
+    "component": "empty"
+  },
+  {
+    "area": "Extensions",
+    "item": "Item (new component)",
+    "original": "—",
+    "ours": "A row with media, title, description and actions; default, outline and muted; hover, pressed and focus when it is a link.",
+    "reason": "New, no DGA source. DGA has the List and the Card but no row with media and actions. Text, icon and fills are the List and Card tokens; the hover tint is the Card link's. No token was added.",
+    "status": "fixed",
+    "component": "item"
+  },
+  {
+    "area": "Extensions",
+    "item": "Chart (new component)",
+    "original": "—",
+    "ours": "Bar, line, area and pie on Recharts with a four-colour DGA palette, a tooltip on the Card surface, a legend with marker shapes, a data-table fallback and RTL axes.",
+    "reason": "New, no DGA source. DGA publishes no data-visualisation guidance. Axis text, tooltip and table use existing text tokens. The series colours are the four new tokens chart-series-1 to chart-series-4.",
+    "status": "fixed",
+    "component": "chart"
+  },
+  {
+    "area": "Extensions",
+    "item": "Chart series colours (chart-series-1 to 4)",
+    "original": "—",
+    "ours": "Four themed tokens built from existing primitives: green, gold, lavender and blue, alternating dark and light so neighbours differ in lightness.",
+    "reason": "New, no DGA source. No pair of existing semantic colours is 3:1 from its neighbour, so colour tokens at the same lightness (the status and icon colours) fail the series-to-series check. Only the pairing is new, not the primitives. Every series is 3:1 or better on every surface and on its neighbours in light and dark; series two apart share a lightness band, so lines also use marker shapes.",
+    "status": "fixed",
+    "component": "chart"
   }
 ]

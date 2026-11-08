@@ -1,0 +1,112 @@
+---
+title: Navigation Menu
+description: "روابط ولوحات روابط لموقع أو تطبيق. تفتح العناصر بالتمرير وبتركيز لوحة المفاتيح وتتشارك لوحة واحدة."
+sourceHash: 8f1fb8229e28
+---
+
+<ExtensionNote
+  name="قائمة التنقل"
+  primitive="Base UI Navigation Menu"
+  from="عناصر تنقل Header للشريط، والقائمة Menu في DGA للوحة"
+  tokens={["background-menu", "border-neutral-primary", "button-background-neutral-hovered", "button-background-primary-default", "text-default", "text-primary-paragraph", "shadow-2xl"]}
+/>
+
+<Preview name="navigation-menu-basic" title="قائمة التنقل" minHeight={320} />
+
+## التثبيت [#installation]
+
+<ComponentInstall name="navigation-menu" />
+
+## الاستخدام [#usage]
+
+```tsx title="page.tsx"
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuLinkDescription,
+  NavigationMenuLinkTitle,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+} from "@/components/dga/navigation-menu";
+
+export function MainNavigation() {
+  return (
+    <NavigationMenu aria-label="الرئيسية">
+      <NavigationMenuList>
+        <NavigationMenuItem>
+          <NavigationMenuLink variant="bar" href="/" active>
+            الرئيسية
+          </NavigationMenuLink>
+        </NavigationMenuItem>
+        <NavigationMenuItem>
+          <NavigationMenuTrigger>الخدمات</NavigationMenuTrigger>
+          <NavigationMenuContent>
+            <NavigationMenuLink href="/traffic">
+              <NavigationMenuLinkTitle>المرور</NavigationMenuLinkTitle>
+              <NavigationMenuLinkDescription>الرخص والمخالفات.</NavigationMenuLinkDescription>
+            </NavigationMenuLink>
+          </NavigationMenuContent>
+        </NavigationMenuItem>
+      </NavigationMenuList>
+    </NavigationMenu>
+  );
+}
+```
+
+استخدمها للروابط الرئيسية في موقع أو تطبيق يفتح بعضها لوحة من الروابط المتصلة. لرأس موقع كامل بشعاره وبحثه وقائمة جانبية على الهاتف استخدم [Header](/docs/components/header). يفتح الزر لوحته بالتمرير وبتركيز لوحة المفاتيح، ويفتحها مستخدم اللمس ولوحة المفاتيح بالنقر أو Enter. مرّر `active` لرابط الصفحة الحالية. كل نص ظاهر تمرّره أنت.
+
+## البنية [#anatomy]
+
+- **التنقل** (`nav`): معلم في الصفحة. أعطه `aria-label`.
+- **روابط الشريط وأزراره**: بارتفاع 40px، وحالات عنصر Header: التمرير والضغط والفتح والصفحة الحالية (تعبئة أساسية) وحلقة التركيز.
+- **اللوحة**: سطح القائمة Menu في DGA (`background-menu` وحد 1px وانحناء radius-md و`shadow-2xl`). تشترك كل العناصر في لوحة واحدة فتنتقل وتتغير مقاساتها بينها.
+- **روابط اللوحة**: أيقونة اختيارية وNavigationMenuLinkTitle وNavigationMenuLinkDescription. ويظهر عنوان الصفحة الحالية بخط عريض وتحته خط.
+
+## أمثلة [#examples]
+
+### روابط فقط [#links-only]
+
+روابط في الشريط دون لوحة، مع الصفحة الحالية ورابط معطّل.
+
+<Preview compact name="navigation-menu-links" title="روابط فقط" />
+
+### لوحة مفتوحة [#open-panel]
+
+اللوحة مفتوحة في البداية بـ `defaultValue`.
+
+<Preview compact name="navigation-menu-open" title="لوحة مفتوحة" minHeight={400} />
+
+## RTL [#rtl]
+
+يُقرأ الشريط واللوحة من جهة البداية، فيكون العنصر الأول على اليمين بالعربية. ويتبادل اليمين واليسار، وتحاذي اللوحة حافة البداية لزرها.
+
+<DirectionCompare name="navigation-menu-basic" title="قائمة التنقل" minHeight={320} />
+
+## إمكانية الوصول [#accessibility]
+
+| المفتاح | الإجراء |
+| --- | --- |
+| <kbd>ArrowRight</kbd> / <kbd>ArrowLeft</kbd> | ينتقل بين عناصر الشريط (يتبادلان بالعربية). |
+| <kbd>Enter</kbd> / <kbd>Space</kbd> / <kbd>ArrowDown</kbd> | يفتح لوحة الزر المركَّز. |
+| <kbd>Tab</kbd> | ينتقل من الزر إلى روابط لوحته ثم يتابع. |
+| <kbd>Escape</kbd> | يغلق اللوحة ويعيد التركيز إلى زرها. |
+
+- مبنية على Base UI Navigation Menu: معلم `nav` مع قائمة وأزرار بـ `aria-expanded` وروابط. وللصفحة الحالية `aria-current="page"`.
+- لا يلزم التمرير أبدًا: تفتح كل لوحة بلوحة المفاتيح وبالنقر.
+- النص بنسبة 4.5:1 والأيقونات والحلقات 3:1 أو أفضل في كل حالة، فاتحًا وداكنًا.
+
+## مرجع API [#api-reference]
+
+<ApiReference component="navigation-menu" />
+
+## الاشتقاق من DGA [#derivation-from-dga]
+
+لا تعرّف DGA مكوّن قائمة تنقل. عناصر الشريط هي عناصر تنقل Header بارتفاع 40px، واللوحة هي سطح القائمة Menu في DGA بتخطيط روابط القائمة الفرعية في Header. ولا لون جديد فيها.
+
+<ComponentDeviations component="navigation-menu" />
+
+## التباين [#contrast]
+
+<ComponentContrast component="navigation-menu" />

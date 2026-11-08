@@ -1,0 +1,19 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "kbd",
+  "title": "Kbd",
+  "description": "Platform Code extension (not DGA). Kbd: a keyboard key or shortcut hint drawn as a small cap in the DGA neutral fill, with KbdGroup for combinations. Always left to right. Input Group's key addon is built on it.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://dga.omqkhafi.dev/r/utils.json"
+  ],
+  "files": [
+    {
+      "path": "bases/base/ui/kbd.tsx",
+      "content": "import type * as React from \"react\";\nimport { cn } from \"@/registry/bases/base/lib/utils\";\n\n/**\n * A keyboard key or shortcut hint, such as Ctrl or ⌘K (Platform Code extension, not part of DGA).\n * It is a real `<kbd>` element, drawn as a small cap in the DGA neutral fill. Key names read left\n * to right even on Arabic pages; pass `dir=\"rtl\"` for a key named in Arabic. It is a hint, not a\n * control: it takes no focus. Input Group's key addon is this component.\n */\nfunction Kbd({ className, ...props }: React.ComponentProps<\"kbd\">) {\n  return <kbd data-slot=\"kbd\" dir=\"ltr\" className={cn(\"inline-flex h-5 min-w-5 w-fit items-center justify-center rounded-xs border border-border-neutral-primary bg-background-neutral-100 px-1 font-sans text-xs font-medium text-text-default select-none\", className)} {...props} />;\n}\n\n/** Keys that are pressed together, in order: `<Kbd>Ctrl</Kbd><Kbd>K</Kbd>`. */\nfunction KbdGroup({ className, ...props }: React.ComponentProps<\"span\">) {\n  return (\n    <span data-slot=\"kbd-group\" dir=\"ltr\" className={cn(\"inline-flex items-center gap-1\", className)} {...props} />\n  );\n}\n\nexport { Kbd, KbdGroup };\n",
+      "type": "registry:ui",
+      "target": "components/dga/kbd.tsx"
+    }
+  ],
+  "type": "registry:ui"
+}

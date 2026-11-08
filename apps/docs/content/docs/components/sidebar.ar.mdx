@@ -1,0 +1,165 @@
+---
+title: Sidebar
+description: "لوحة تنقل بجوار الصفحة. يمكن أن تتقلص إلى عمود أيقونات أو تختفي أو تصير Drawer على الهاتف، مع مجموعات متداخلة وحالة فتح محفوظة."
+sourceHash: 9e1b0fffe7db
+---
+
+<ExtensionNote
+  name="الشريط الجانبي"
+  primitive="Collapsible وDrawer وTooltip"
+  from="قائمة التنقل الجانبية Drawer في Header للعناصر، وSecond Nav للحالات"
+  tokens={["background-menu", "border-neutral-primary", "button-background-neutral-hovered", "button-background-neutral-selected", "link-primary-pressed", "text-default", "text-primary-paragraph"]}
+/>
+
+<Preview name="sidebar-basic" title="الشريط الجانبي" minHeight={420} />
+
+## التثبيت [#installation]
+
+<ComponentInstall name="sidebar" />
+
+## الاستخدام [#usage]
+
+```tsx title="layout.tsx"
+import {
+  Sidebar,
+  SidebarContent,
+  SidebarGroup,
+  SidebarGroupContent,
+  SidebarGroupLabel,
+  SidebarInset,
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
+  SidebarProvider,
+  SidebarTrigger,
+} from "@/components/dga/sidebar";
+
+export function AppLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <SidebarProvider>
+      <Sidebar aria-label="التنقل الرئيسي" collapsible="icon">
+        <SidebarContent>
+          <SidebarGroup>
+            <SidebarGroupLabel>الخدمات</SidebarGroupLabel>
+            <SidebarGroupContent>
+              <SidebarMenu>
+                <SidebarMenuItem>
+                  <SidebarMenuButton isActive tooltip="الطلبات" render={<a href="/requests" />}>
+                    <InboxIcon />
+                    <span>الطلبات</span>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              </SidebarMenu>
+            </SidebarGroupContent>
+          </SidebarGroup>
+        </SidebarContent>
+      </Sidebar>
+      <SidebarInset>
+        <SidebarTrigger />
+        <main>{children}</main>
+      </SidebarInset>
+    </SidebarProvider>
+  );
+}
+```
+
+استخدم الشريط الجانبي للتنقل الرئيسي في تطبيق كثير الأقسام. أما تنقل موقع عام فاستخدم له [Header](/docs/components/header). الشريط الجانبي تخطيط: يقع بجوار الصفحة ويأخذ ارتفاعه من أصله (هيكل بارتفاع الشاشة، أو `className` مثل `h-96` داخل حاوية). لُفّ تسمية كل عنصر في عنصر مثل `<span>`: ففي عمود الأيقونات تُخفى بصريًا ويبقى قارئ الشاشة يقرؤها. كل نص ظاهر تمرّره أنت.
+
+## البنية [#anatomy]
+
+- **المزوّد**: يحمل حالة الفتح، واختصار Ctrl أو Command مع B، وتلميحات العمود، ونقطة تحويله إلى Drawer.
+- **الشريط** (`aside`): بعرض 256px و`background-menu` وحد في جهة الصفحة. و`side` يضعه في البداية أو النهاية.
+- **الرأس والمحتوى والتذييل**: الأعلى والوسط القابل للتمرير والأسفل.
+- **المجموعة**: SidebarGroup (يسمّيها SidebarGroupLabel) وبداخلها SidebarMenu.
+- **العنصر**: SidebarMenuButton بارتفاع 36px وأيقونة وتسمية، بحالات عنصر قائمة Drawer في Header: التمرير والضغط والصفحة الحالية (`isActive`، تعبئة محددة وتسمية بلون الرابط) وحلقة التركيز. ويضع SidebarMenuBadge عدّادًا في النهاية.
+- **المجموعة المتداخلة**: SidebarMenuCollapsible المبني على Collapsible، مع SidebarMenuCollapsibleTrigger، وSidebarMenuSub من عناصر SidebarMenuSubButton.
+- **الزر والصفحة**: SidebarTrigger يبدّل الشريط، وSidebarInset هي الصفحة بجواره.
+
+## أمثلة [#examples]
+
+### مجموعات متداخلة [#nested-groups]
+
+مجموعة تفتح وتُغلق بـ Collapsible، وتُعلَّم الصفحة الحالية داخلها.
+
+<Preview compact name="sidebar-nested" title="مجموعات متداخلة" minHeight={460} />
+
+### عمود الأيقونات [#icon-rail]
+
+`collapsible="icon"` يقلّص الشريط إلى عمود بعرض 56px من الأيقونات. مرّر المؤشر على أيقونة أو ركّز عليها لترى `tooltip`. والضغط على زر مجموعة متداخلة في العمود يفتح الشريط.
+
+<Preview compact name="sidebar-icon" title="عمود الأيقونات" minHeight={420} />
+
+### عمود مغلق [#collapsed-rail]
+
+الشريط نفسه مغلق في البداية بـ `defaultOpen={false}`.
+
+<Preview compact name="sidebar-rail" title="عمود مغلق" minHeight={420} />
+
+### مخفي عند الإغلاق [#hidden-when-closed]
+
+`collapsible="offcanvas"` يخفي الشريط تمامًا. ويصير المحتوى المخفي `inert` فلا يصل إليه مستخدم لوحة المفاتيح ولا قارئ الشاشة.
+
+<Preview compact name="sidebar-offcanvas" title="مخفي عند الإغلاق" minHeight={420} />
+
+### جهة النهاية [#end-side]
+
+`side="end"` يضعه على حافة النهاية: يمين الصفحة بالإنجليزية ويسارها بالعربية.
+
+<Preview compact name="sidebar-end" title="جهة النهاية" minHeight={420} />
+
+### حالة محفوظة [#remembered-state]
+
+تُحفظ حالة الفتح في ملف تعريف ارتباط (`persist`، وهو الافتراضي) وتُستعاد في الزيارة التالية. أغلق الشريط وأعد تحميل هذه الصفحة. أعطِ كل شريط `cookieName` خاصًا به.
+
+<Preview compact name="sidebar-persisted" title="حالة محفوظة" minHeight={420} />
+
+### على الهاتف [#on-a-phone]
+
+دون `mobileBreakpoint` (768px) يصير الشريط [Drawer](/docs/components/drawer) ينزلق من جهته بالمحتوى نفسه، مع حبس للتركيز وزر إغلاق. يفرض هذا المثال تلك الصيغة بأي عرض.
+
+<Preview compact name="sidebar-mobile" title="على الهاتف" minHeight={200} />
+
+لتبدأ الصفحة بالحالة المحفوظة مطبّقة على الخادم، اقرأ الملف بـ `parseSidebarState` ومرّر النتيجة إلى `defaultOpen`:
+
+```tsx title="layout.tsx"
+import { cookies } from "next/headers";
+import { parseSidebarState, SIDEBAR_COOKIE_NAME } from "@/components/dga/sidebar";
+
+const store = await cookies();
+const defaultOpen = store.get(SIDEBAR_COOKIE_NAME)?.value !== "false";
+```
+
+## RTL [#rtl]
+
+يقع الشريط في جهة البداية، فيكون على اليمين بالعربية، بحدّه والـ Drawer في تلك الجهة. وتنعكس أيقونة الزر وأسهم المجموعات وجهة التلميح (جهة النهاية للعمود). ولا يحتاج شيء إلى نسخة عربية.
+
+<DirectionCompare name="sidebar-icon" title="الشريط الجانبي" minHeight={420} />
+
+## إمكانية الوصول [#accessibility]
+
+| المفتاح | الإجراء |
+| --- | --- |
+| <kbd>Ctrl</kbd> أو <kbd>⌘</kbd> + <kbd>B</kbd> | يفتح الشريط ويغلقه. غيّر المفتاح بـ `shortcut` أو أوقفه بـ `shortcut={false}`. |
+| <kbd>Tab</kbd> | ينتقل عبر العناصر بالترتيب. |
+| <kbd>Enter</kbd> / <kbd>Space</kbd> | يتبع العنصر، أو يفتح مجموعة متداخلة ويغلقها. |
+| <kbd>Escape</kbd> | في Drawer الهاتف يغلقه ويعيد التركيز إلى الزر. |
+
+- الشريط `aside`: أعطه `aria-label`. والمجموعات `role="group"` تسمّيها تسمياتها. وللصفحة الحالية `aria-current="page"`.
+- الزر عنصر button بـ `aria-label` و`aria-expanded` و`aria-controls`.
+- في عمود الأيقونات يحتفظ كل عنصر بنصه لقارئ الشاشة، ويكرره التلميح لمن يبصر. والشريط المخفي `inert`.
+- يحبس Drawer التركيز ويغلق بـ Escape وله اسم ووصف (`mobileTitle` و`mobileDescription`).
+- النص بنسبة 4.5:1 والأيقونات والحلقات 3:1 أو أفضل في كل حالة، فاتحًا وداكنًا.
+
+## مرجع API [#api-reference]
+
+<ApiReference component="sidebar" />
+
+## الاشتقاق من DGA [#derivation-from-dga]
+
+لا تعرّف DGA شريطًا جانبيًا. العناصر هي عناصر قائمة Drawer في Header (36px وخط شبه عريض والتمرير والضغط والتعبئة المحددة بلون الرابط)، والحالات تتبع Second Nav. وصيغة الهاتف هي Drawer في DGA. ولا لون جديد فيها.
+
+<ComponentDeviations component="sidebar" />
+
+## التباين [#contrast]
+
+<ComponentContrast component="sidebar" />

@@ -64,6 +64,20 @@
     "command",
     "input-otp",
     "input-group",
-    "button-group"
+    "button-group",
+    "---Extension: navigation---",
+    "menubar",
+    "navigation-menu",
+    "sidebar",
+    "---Extension: layout---",
+    "collapsible",
+    "scroll-area",
+    "resizable",
+    "aspect-ratio",
+    "---Extension: display---",
+    "kbd",
+    "empty",
+    "item",
+    "chart"
   ]
 }

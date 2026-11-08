@@ -1,0 +1,106 @@
+---
+title: Menubar
+description: "شريط أفقي من القوائم، مثل ملف وتحرير وعرض في التطبيقات. يفتح كل زر قائمة Menu من DGA."
+sourceHash: c523f3ede256
+---
+
+<ExtensionNote
+  name="شريط القوائم"
+  primitive="Base UI Menubar"
+  from="القائمة Menu في DGA لكل قائمة، وعناصر تنقل Header للأزرار"
+  tokens={["background-menu", "border-neutral-primary", "button-background-neutral-hovered", "button-background-neutral-pressed", "text-default", "shadow-2xl"]}
+/>
+
+<Preview name="menubar-basic" title="شريط القوائم" minHeight={300} />
+
+## التثبيت [#installation]
+
+<ComponentInstall name="menubar" />
+
+## الاستخدام [#usage]
+
+```tsx title="page.tsx"
+import {
+  Menubar,
+  MenubarContent,
+  MenubarItem,
+  MenubarMenu,
+  MenubarShortcut,
+  MenubarTrigger,
+} from "@/components/dga/menubar";
+
+export function DocumentMenus() {
+  return (
+    <Menubar aria-label="المستند">
+      <MenubarMenu>
+        <MenubarTrigger>ملف</MenubarTrigger>
+        <MenubarContent>
+          <MenubarItem>
+            طلب جديد <MenubarShortcut>⌘N</MenubarShortcut>
+          </MenubarItem>
+          <MenubarItem>فتح</MenubarItem>
+        </MenubarContent>
+      </MenubarMenu>
+    </Menubar>
+  );
+}
+```
+
+استخدم شريط القوائم لأوامر تطبيق أو محرر، حيث ينتقل الناس عبر عدة قوائم. لقائمة واحدة خلف زر واحد استخدم [Menu](/docs/components/menu)، ولروابط الصفحات استخدم [Navigation Menu](/docs/components/navigation-menu). القوائم هي Menu في DGA، فتعمل العناصر والمجموعات وعناصر مربع الاختيار والراديو والقوائم الفرعية بالطريقة نفسها. كل نص ظاهر، ومنه الاختصارات، تمرّره أنت.
+
+## البنية [#anatomy]
+
+- **الشريط** (`role="menubar"`): `background-menu` وحد بسمك 1px وانحناء radius-md، بارتفاع 40px. مرّر له `aria-label`.
+- **الزر** (`role="menuitem"` مع `aria-haspopup`): بارتفاع 32px، وحالات عنصر Header: التمرير والضغط والفتح وحلقة التركيز.
+- **القائمة**: Menu في DGA، تفتح أسفل زرها في جهة البداية.
+- **العناصر**: MenubarItem وMenubarCheckboxItem وMenubarRadioItem، مع MenubarGroup وMenubarLabel وMenubarSeparator وMenubarShortcut.
+- **القائمة الفرعية**: MenubarSub مع MenubarSubTrigger وMenubarSubContent.
+
+## أمثلة [#examples]
+
+### عناصر مربع الاختيار والراديو [#checkbox-and-radio-items]
+
+يعرض العنصر المحدد علامة صح أو نقطة في جهة النهاية.
+
+<Preview compact name="menubar-groups" title="عناصر مربع الاختيار والراديو" minHeight={300} />
+
+### الحالات [#states]
+
+قائمة مفتوحة وأخرى مغلقة وزر معطّل، مع عنصر معطّل داخل القائمة المفتوحة.
+
+<Preview compact name="menubar-states" title="الحالات" minHeight={300} />
+
+## RTL [#rtl]
+
+يُقرأ الشريط من جهة البداية، فيكون الزر الأول على اليمين بالعربية. ويتبادل اليمين واليسار، وتفتح القائمة محاذية لحافة البداية لزرها، وتفتح القائمة الفرعية في جهة النهاية (اليسار بالعربية) بسهم معكوس، وتبقى الاختصارات من اليسار إلى اليمين.
+
+<DirectionCompare name="menubar-basic" title="شريط القوائم" minHeight={300} />
+
+## إمكانية الوصول [#accessibility]
+
+| المفتاح | الإجراء |
+| --- | --- |
+| <kbd>ArrowRight</kbd> / <kbd>ArrowLeft</kbd> | ينتقل إلى الزر التالي أو السابق (يتبادلان بالعربية). وإن كانت قائمة مفتوحة فتح قائمة الجار. |
+| <kbd>ArrowDown</kbd> أو <kbd>Enter</kbd> أو <kbd>Space</kbd> | يفتح قائمة الزر المركَّز. |
+| <kbd>ArrowDown</kbd> / <kbd>ArrowUp</kbd> | ينتقل بين العناصر. |
+| <kbd>Home</kbd> / <kbd>End</kbd> | ينتقل إلى أول زر أو عنصر وآخره. |
+| <kbd>ArrowRight</kbd> | يفتح قائمة فرعية (ArrowLeft بالعربية)؛ ويغلقها السهم المعاكس. |
+| <kbd>Escape</kbd> | يغلق القائمة ويعيد التركيز إلى زرها. |
+
+- مبني على Base UI Menubar وMenu: `role="menubar"` وعناصر `menuitem` و`menuitemcheckbox` و`menuitemradio`، مع `aria-expanded` على الأزرار.
+- زر واحد فقط في ترتيب Tab، ويغادر Tab الشريط.
+- النص بنسبة 4.5:1 والأيقونات والحلقات 3:1 أو أفضل في كل حالة، فاتحًا وداكنًا.
+
+## مرجع API [#api-reference]
+
+<ApiReference component="menubar" />
+
+## الاشتقاق من DGA [#derivation-from-dga]
+
+لا تعرّف DGA شريط قوائم، فهذا ليس مكوّنًا من DGA. القوائم هي Menu في DGA، وتأخذ الأزرار حالات عنصر تنقل Header (التمرير والضغط والفتح وحلقة التركيز) بارتفاع مضغوط 32px. ولا لون جديد فيه.
+
+<ComponentDeviations component="menubar" />
+
+## التباين [#contrast]
+
+<ComponentContrast component="menubar" />

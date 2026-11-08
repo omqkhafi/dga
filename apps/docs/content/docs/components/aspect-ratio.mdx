@@ -1,0 +1,76 @@
+---
+title: Aspect Ratio
+description: "A box with a fixed width to height ratio, for images, video and embeds. A thin wrapper on the CSS aspect-ratio property."
+---
+
+<ExtensionNote
+  name="Aspect Ratio"
+  primitive="a plain element (Base UI has no primitive for it)"
+  from="the DGA radius-md corner; it draws no colour of its own"
+  tokens={["radius-md"]}
+/>
+
+<Preview name="aspect-ratio-ratios" title="Aspect Ratio" minHeight={240} />
+
+## Installation
+
+<ComponentInstall name="aspect-ratio" />
+
+## Usage
+
+```tsx title="page.tsx"
+import { AspectRatio } from "@/components/dga/aspect-ratio";
+
+export function Cover() {
+  return (
+    <AspectRatio ratio={16 / 9} className="w-80">
+      <img src="/cover.jpg" alt="The new service centre" />
+    </AspectRatio>
+  );
+}
+```
+
+Use it when the box must keep its shape before the media loads, so the page does not jump. It sets the CSS `aspect-ratio`; it needs no script. An `img`, `video` or `iframe` inside fills the box. Tailwind's `aspect-video` does the same for a one-off; this component adds the `ratio` and `fit` props and the radius.
+
+It does not replace anything in DGA: the [Card](/docs/components/card) media has no ratio of its own, so put an Aspect Ratio inside it when you need one.
+
+## Anatomy
+
+- **Box**: `position: relative`, the `aspect-ratio` from `ratio` (default 16 / 9), `overflow: hidden` and a `radius-md` corner. Give it a width (or let it fill its parent); the height follows.
+- **Media**: an `img` or `video` fills the box, `object-fit: cover` by default.
+
+## Examples
+
+### Ratios
+
+`ratio` is the width divided by the height: `16 / 9`, `4 / 3` or `1`.
+
+<Preview compact name="aspect-ratio-ratios" title="Ratios" minHeight={240} />
+
+### Fit
+
+`fit="cover"` crops the media to fill the box. `fit="contain"` shows all of it and leaves space at the sides.
+
+<Preview compact name="aspect-ratio-fit" title="Fit" minHeight={240} />
+
+## RTL
+
+The box has no direction of its own. Text inside it follows the page direction.
+
+<DirectionCompare name="aspect-ratio-ratios" title="Aspect Ratio" minHeight={240} />
+
+## Accessibility
+
+- It is a plain `div` with no role. Give an image inside it an `alt`; a decorative image gets `alt=""`.
+- It has no colour, so it adds nothing to the contrast audit. Keep text over media at 4.5:1.
+- Nothing moves, so reduced motion has no effect.
+
+## API Reference
+
+<ApiReference component="aspect-ratio" />
+
+## Derivation from DGA
+
+DGA has no ratio box, so this is not a DGA component and has no DGA specification. It uses the `radius-md` corner of the Card and draws no colour.
+
+<ComponentDeviations component="aspect-ratio" />
