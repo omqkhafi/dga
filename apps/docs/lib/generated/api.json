@@ -115,6 +115,157 @@
       "props": []
     }
   ],
+  "alert-dialog": [
+    {
+      "name": "AlertDialog",
+      "description": "A dialog that interrupts to confirm an action that is hard to undo (Platform Code extension, not part of DGA). It is the DGA Dialog (Modal) with the alert dialog behaviour: `role` `alertdialog`, focus starts on the cancel button, and clicking outside does not close it, so people must choose. Escape still cancels. For anything with a form or longer content, use a Dialog.",
+      "descriptionAr": "حوار يقاطع المستخدم لتأكيد إجراء يصعب التراجع عنه (امتداد من كود المنصات وليس جزءًا من DGA). هو Dialog (النافذة المنبثقة) من DGA بسلوك حوار التنبيه: الدور `alertdialog`، ويبدأ التركيز على زر الإلغاء، ولا يغلقه النقر خارجه فيجب أن يختار الشخص. ويبقى Escape للإلغاء. وللنماذج أو المحتوى الأطول استخدم Dialog.",
+      "inherits": {
+        "name": "AlertDialog",
+        "url": "https://base-ui.com/react/components/alert-dialog"
+      },
+      "props": [
+        {
+          "name": "defaultOpen",
+          "type": "boolean",
+          "default": null,
+          "required": false,
+          "description": "Whether the dialog is initially open. To render a controlled dialog, use the `open` prop instead.",
+          "descriptionAr": "مفتوحة في البداية (دون تحكم)."
+        },
+        {
+          "name": "onOpenChange",
+          "type": "(open: boolean) => void",
+          "default": null,
+          "required": false,
+          "description": "Event handler called when the alert dialog is opened or closed.",
+          "descriptionAr": "تُستدعى عند فتحها أو إغلاقها."
+        },
+        {
+          "name": "open",
+          "type": "boolean",
+          "default": null,
+          "required": false,
+          "description": "Whether the dialog is currently open.",
+          "descriptionAr": "حالة الفتح بتحكّم خارجي."
+        }
+      ]
+    },
+    {
+      "name": "AlertDialogAction",
+      "description": "Confirms the action and closes the dialog. Run your code in `onClick`.",
+      "descriptionAr": "يؤكد الإجراء ويغلق الحوار. نفّذ شيفرتك في `onClick`.",
+      "inherits": {
+        "name": "AlertDialog",
+        "url": "https://base-ui.com/react/components/alert-dialog"
+      },
+      "props": [
+        {
+          "name": "destructive",
+          "type": "boolean",
+          "default": "false",
+          "required": false,
+          "description": "Uses the destructive Button, for an action that deletes or withdraws something.",
+          "descriptionAr": "يستخدم زر Button المدمّر، لإجراء يحذف شيئًا أو يسحبه."
+        },
+        {
+          "name": "onClick",
+          "type": "(event) => void",
+          "default": null,
+          "required": false,
+          "description": "Called when the action is chosen. The dialog closes after it.",
+          "descriptionAr": "تُستدعى عند اختيار الإجراء. يُغلق الحوار بعدها."
+        }
+      ]
+    },
+    {
+      "name": "AlertDialogCancel",
+      "description": "Cancels and closes the dialog. Focus starts here when the dialog opens.",
+      "descriptionAr": "يلغي ويغلق الحوار. يبدأ التركيز هنا عند فتح الحوار.",
+      "inherits": {
+        "name": "AlertDialog",
+        "url": "https://base-ui.com/react/components/alert-dialog"
+      },
+      "props": []
+    },
+    {
+      "name": "AlertDialogContent",
+      "description": "The window: a dimmed backdrop and the card, 400px wide by default.",
+      "descriptionAr": "النافذة: خلفية معتمة وبطاقة بعرض 400px افتراضيًا.",
+      "inherits": {
+        "name": "AlertDialog",
+        "url": "https://base-ui.com/react/components/alert-dialog"
+      },
+      "props": [
+        {
+          "name": "size",
+          "type": "\"sm\" | \"md\"",
+          "default": "\"sm\"",
+          "required": false,
+          "description": "Width: `sm` 400px (default), `md` 600px.",
+          "descriptionAr": "العرض: `sm` ‏400px (الافتراضي) أو `md` ‏600px."
+        },
+        {
+          "name": "initialFocus",
+          "type": "RefObject | function",
+          "default": null,
+          "required": false,
+          "description": "Determines the element to focus when the dialog is opened. By default, focus moves to the first tabbable element inside the popup, except when the dialog is opened by touch — then the popup itself is focused to avoid opening the virtual keyboard. - `false`: Do not move focus. - `true`: Move focus based on the default behavior (first tabbable element or popup). - `RefObject`: Move focus to the ref element. - `function`: Called with the interaction type (`mouse`, `touch`, `pen`, or `keyboard`). Return an element to focus, `true` to use the default behavior, `null` to fall back to the default behavior, or `false`/`undefined` to do nothing.",
+          "descriptionAr": "العنصر الذي يناله التركيز أولًا. الافتراضي: زر الإلغاء."
+        }
+      ]
+    },
+    {
+      "name": "AlertDialogDescription",
+      "description": "Says what will happen. Screen readers read it with the title.",
+      "descriptionAr": "يذكر ما الذي سيحدث. يقرؤه قارئ الشاشة مع العنوان.",
+      "inherits": {
+        "name": "AlertDialog",
+        "url": "https://base-ui.com/react/components/alert-dialog"
+      },
+      "props": []
+    },
+    {
+      "name": "AlertDialogFooter",
+      "description": "The actions, aligned to the end. Put the main action last.",
+      "descriptionAr": "الإجراءات، محاذاة لجهة النهاية. ضع الإجراء الرئيسي أخيرًا.",
+      "inherits": {
+        "name": "AlertDialog",
+        "url": "https://base-ui.com/react/components/alert-dialog"
+      },
+      "props": []
+    },
+    {
+      "name": "AlertDialogHeader",
+      "description": "Groups the title and description at the top of the window.",
+      "descriptionAr": "يجمع العنوان والوصف في أعلى النافذة.",
+      "inherits": {
+        "name": "AlertDialog",
+        "url": "https://base-ui.com/react/components/alert-dialog"
+      },
+      "props": []
+    },
+    {
+      "name": "AlertDialogTitle",
+      "description": "The question or statement. Screen readers announce it when the dialog opens.",
+      "descriptionAr": "السؤال أو العبارة. يعلنه قارئ الشاشة عند فتح الحوار.",
+      "inherits": {
+        "name": "AlertDialog",
+        "url": "https://base-ui.com/react/components/alert-dialog"
+      },
+      "props": []
+    },
+    {
+      "name": "AlertDialogTrigger",
+      "description": "The button that opens the dialog.",
+      "descriptionAr": "الزر الذي يفتح الحوار.",
+      "inherits": {
+        "name": "AlertDialog",
+        "url": "https://base-ui.com/react/components/alert-dialog"
+      },
+      "props": []
+    }
+  ],
   "avatar": [
     {
       "name": "Avatar",
@@ -313,6 +464,38 @@
       "name": "BreadcrumbSeparator",
       "description": "The chevron between levels. It mirrors on Arabic pages and is hidden from screen readers.",
       "descriptionAr": "السهم بين المستويات. ينعكس في الصفحات العربية ويُخفى عن قارئات الشاشة.",
+      "inherits": null,
+      "props": []
+    }
+  ],
+  "button-group": [
+    {
+      "name": "ButtonGroup",
+      "description": "Joins related Buttons into one block with shared edges (Platform Code extension). Put Buttons, a ButtonGroupText and a ButtonGroupSeparator inside. It is only layout: each Button keeps its own action. Use a Toggle Group when the buttons are pressed on and off, and a Content Switcher when exactly one option is always chosen. Name the group with `aria-label`.",
+      "descriptionAr": "يضم أزرارًا مترابطة في كتلة واحدة بحواف مشتركة (امتداد من كود المنصات). ضع داخله Button وButtonGroupText وButtonGroupSeparator. هو تخطيط فقط: يحتفظ كل زر بإجرائه. استخدم Toggle Group إن كانت الأزرار تُضغط وتُرفع، ومبدّل المحتوى إن كان خيار واحد مختارًا دائمًا. سمِّه بـ `aria-label`.",
+      "inherits": null,
+      "props": [
+        {
+          "name": "orientation",
+          "type": "\"horizontal\" | \"vertical\"",
+          "default": "\"horizontal\"",
+          "required": false,
+          "description": "`horizontal` (default) or `vertical`.",
+          "descriptionAr": "`horizontal` (الافتراضي) أو `vertical`."
+        }
+      ]
+    },
+    {
+      "name": "ButtonGroupSeparator",
+      "description": "A thin line between two buttons that share a fill, so their edge stays visible.",
+      "descriptionAr": "خط رفيع بين زرين لهما التعبئة نفسها لتبقى حافتهما ظاهرة.",
+      "inherits": null,
+      "props": []
+    },
+    {
+      "name": "ButtonGroupText",
+      "description": "A non-interactive text segment, such as a count or a label, drawn like the buttons.",
+      "descriptionAr": "مقطع نصي غير تفاعلي، مثل عدد أو تسمية، يُرسم مثل الأزرار.",
       "inherits": null,
       "props": []
     }
@@ -874,6 +1057,467 @@
       ]
     }
   ],
+  "combobox": [
+    {
+      "name": "Combobox",
+      "description": "A text field with a list of options that narrows as you type (shadcn: Combobox, a Platform Code extension; the look is DGA's Dropdown Input). Single or `multiple`, flat or grouped, `creatable`. Compose it from ComboboxControl and ComboboxContent, and label it with a Field. Arrow keys move through the list, Enter chooses, Escape closes, and the list shows the number of results to screen readers.",
+      "descriptionAr": "حقل نصي مع قائمة خيارات تضيق أثناء الكتابة (امتداد من كود المنصات، شكله شكل قائمة الإدخال المنسدلة في DGA). اختيار واحد أو متعدد `multiple`، بخيارات مسطحة أو في مجموعات، وقابل للإنشاء `creatable`. تنقل مفاتيح الأسهم بين الخيارات، ويختار Enter، ويغلق Esc، ويقرأ قارئ الشاشة عدد النتائج.",
+      "inherits": {
+        "name": "Combobox",
+        "url": "https://base-ui.com/react/components/combobox"
+      },
+      "props": [
+        {
+          "name": "creatable",
+          "type": "boolean",
+          "default": "false",
+          "required": false,
+          "description": "Adds a \"Create …\" row when what was typed matches no option (our addition, shadcn has none).",
+          "descriptionAr": "يعرض سطر إنشاء حين لا يطابق النص المكتوب أي خيار (إضافة منا، لا يوفرها shadcn)."
+        },
+        {
+          "name": "items",
+          "type": "ComboboxItemData[]",
+          "default": null,
+          "required": true,
+          "description": "The options, or groups of options.",
+          "descriptionAr": "الخيارات، أو مجموعات الخيارات. الخيار `{ value, label }` والمجموعة `{ label, items }`."
+        },
+        {
+          "name": "filter",
+          "type": "(option: ComboboxOption, query: string) => boolean",
+          "default": null,
+          "required": false,
+          "description": "Custom matching. The default ignores case and Arabic diacritics.",
+          "descriptionAr": "مطابقة مخصصة. الافتراضية تتجاهل حالة الأحرف، وفي العربية تتجاهل التشكيل وفروق الألف والياء والتاء المربوطة. مرّر `null` حين يكون الخادم قد صفّى القائمة."
+        },
+        {
+          "name": "createLabel",
+          "type": "(query: string) => string",
+          "default": "(query) => `Create \"${query}\"`",
+          "required": false,
+          "description": "The text of the create row. Default: `Create \"{query}\"`. Translate it on Arabic pages.",
+          "descriptionAr": "دالة تعيد نص سطر الإنشاء من النص المكتوب. ترجمه في الصفحات العربية."
+        },
+        {
+          "name": "onCreate",
+          "type": "(label: string) => ComboboxOption | undefined",
+          "default": null,
+          "required": false,
+          "description": "Called when someone chooses the create row. Return the new option (and add it to `items`) and it is selected. Return nothing to ignore it.",
+          "descriptionAr": "يُستدعى عند اختيار سطر الإنشاء، ومعه النص. أعد الخيار الجديد (وأضفه إلى `items`) فيُختار، أو لا تعد شيئًا لتجاهله."
+        }
+      ]
+    },
+    {
+      "name": "ComboboxContent",
+      "description": "The popup list: as wide as the field, on the card surface, with the empty and loading states.",
+      "descriptionAr": "القائمة المنبثقة: بعرض الحقل، على سطح البطاقة، وفيها حالتا الفراغ والتحميل وإعلان عدد النتائج.",
+      "inherits": {
+        "name": "Combobox",
+        "url": "https://base-ui.com/react/components/combobox"
+      },
+      "props": [
+        {
+          "name": "children",
+          "type": "string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<AwaitedReactNode> | ((item: ComboboxItemData, index: number) => ReactNode)",
+          "default": null,
+          "required": false,
+          "description": "Custom rows. Default: every option as a ComboboxItem, groups with their heading.",
+          "descriptionAr": "أسطر مخصصة. الافتراضي: كل خيار ComboboxItem، وكل مجموعة بعنوانها."
+        },
+        {
+          "name": "emptyText",
+          "type": "string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<AwaitedReactNode>",
+          "default": "\"No results found.\"",
+          "required": false,
+          "description": "Shown when nothing matches. Translate it on Arabic pages.",
+          "descriptionAr": "يظهر حين لا يطابق شيء. ترجمه في الصفحات العربية."
+        },
+        {
+          "name": "loading",
+          "type": "boolean",
+          "default": "false",
+          "required": false,
+          "description": "Shows `loadingText` with a spinner. Use it while options load from a server.",
+          "descriptionAr": "يعرض `loadingText` مع مؤشر تحميل. استخدمه أثناء جلب الخيارات من خادم."
+        },
+        {
+          "name": "loadingText",
+          "type": "string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<AwaitedReactNode>",
+          "default": "\"Loading…\"",
+          "required": false,
+          "description": "Shown instead of the list while `loading`.",
+          "descriptionAr": "يظهر بدل القائمة أثناء `loading`."
+        },
+        {
+          "name": "statusLabel",
+          "type": "(count: number) => string",
+          "default": "(count) => (count === 1 ? \"1 result\" : `${count} results`)",
+          "required": false,
+          "description": "The text read to screen readers when the number of results changes.",
+          "descriptionAr": "دالة تعيد النص الذي يقرؤه قارئ الشاشة عند تغيّر عدد النتائج."
+        },
+        {
+          "name": "itemClassName",
+          "type": "string",
+          "default": null,
+          "required": false,
+          "description": "Class names for every option.",
+          "descriptionAr": "أصناف كل خيار."
+        }
+      ]
+    },
+    {
+      "name": "ComboboxControl",
+      "description": "The field: an input in the DGA Input box with the clear button and the arrow. In a `multiple` combobox the chosen options show as removable chips before the input and wrap onto new lines. Backspace in the empty input removes the last chip.",
+      "descriptionAr": "الحقل: خانة كتابة داخل إطار Input مع زر المسح والسهم. في الصندوق المتعدد تظهر الخيارات المختارة رقائق قابلة للحذف قبل الخانة ويحذف Backspace آخرها.",
+      "inherits": {
+        "name": "Combobox",
+        "url": "https://base-ui.com/react/components/combobox"
+      },
+      "props": [
+        {
+          "name": "size",
+          "type": "\"md\" | \"lg\"",
+          "default": null,
+          "required": false,
+          "description": "Height: `md` 32px, `lg` 40px. A multiple combobox grows taller as chips wrap.",
+          "descriptionAr": "الارتفاع: `md` ‏32px و`lg` ‏40px. ويزداد ارتفاع الصندوق المتعدد كلما التفّت الرقائق."
+        },
+        {
+          "name": "appearance",
+          "type": "\"default\" | \"lighter\" | \"darker\"",
+          "default": null,
+          "required": false,
+          "description": "Fill style. `lighter` and `darker` keep the border.",
+          "descriptionAr": "نمط التعبئة. `lighter` و`darker` يُبقيان الحد."
+        },
+        {
+          "name": "clearable",
+          "type": "boolean",
+          "default": "true",
+          "required": false,
+          "description": "Shows the clear button once something is chosen or typed. Default `true`.",
+          "descriptionAr": "يعرض زر المسح حين يوجد اختيار أو نص. الافتراضي `true`."
+        },
+        {
+          "name": "clearLabel",
+          "type": "string",
+          "default": "\"Clear\"",
+          "required": false,
+          "description": "Accessible name of the clear button. Translate it on Arabic pages.",
+          "descriptionAr": "اسم زر المسح لقارئ الشاشة. ترجمه في الصفحات العربية."
+        },
+        {
+          "name": "triggerLabel",
+          "type": "string",
+          "default": "\"Show options\"",
+          "required": false,
+          "description": "Accessible name of the arrow button that opens the list. Translate it on Arabic pages.",
+          "descriptionAr": "اسم زر السهم الذي يفتح القائمة. ترجمه في الصفحات العربية."
+        },
+        {
+          "name": "removeLabel",
+          "type": "(label: string) => string",
+          "default": "(label) => `Remove ${label}`",
+          "required": false,
+          "description": "Accessible name of each chip's remove button. Gets the option's label.",
+          "descriptionAr": "دالة تعيد اسم زر حذف كل رقاقة، وتستقبل تسمية الخيار."
+        },
+        {
+          "name": "removeHint",
+          "type": "string",
+          "default": "\"Press Backspace or Delete to remove\"",
+          "required": false,
+          "description": "Hint for removing a chip with the keyboard, read with the chip.",
+          "descriptionAr": "تلميح حذف الرقاقة بلوحة المفاتيح، يُقرأ مع الرقاقة."
+        },
+        {
+          "name": "chipsLabel",
+          "type": "string",
+          "default": "\"Selected\"",
+          "required": false,
+          "description": "Names the group of chips for screen readers.",
+          "descriptionAr": "اسم مجموعة الرقائق لقارئ الشاشة."
+        },
+        {
+          "name": "boxClassName",
+          "type": "string",
+          "default": null,
+          "required": false,
+          "description": "Class names for the box around the input.",
+          "descriptionAr": "أصناف الإطار حول الخانة."
+        }
+      ]
+    },
+    {
+      "name": "ComboboxGroup",
+      "description": "Groups related options under a ComboboxLabel.",
+      "descriptionAr": "يجمع الخيارات المتقاربة تحت ComboboxLabel.",
+      "inherits": {
+        "name": "Combobox",
+        "url": "https://base-ui.com/react/components/combobox"
+      },
+      "props": []
+    },
+    {
+      "name": "ComboboxItem",
+      "description": "One option. The chosen options show a check mark on the end side.",
+      "descriptionAr": "خيار واحد. تظهر علامة صح في جهة النهاية عند اختياره.",
+      "inherits": {
+        "name": "Combobox",
+        "url": "https://base-ui.com/react/components/combobox"
+      },
+      "props": []
+    },
+    {
+      "name": "ComboboxLabel",
+      "description": "The heading of a ComboboxGroup.",
+      "descriptionAr": "عنوان ComboboxGroup.",
+      "inherits": {
+        "name": "Combobox",
+        "url": "https://base-ui.com/react/components/combobox"
+      },
+      "props": []
+    },
+    {
+      "name": "ComboboxSeparator",
+      "description": "A line between groups.",
+      "descriptionAr": "خط بين المجموعات.",
+      "inherits": {
+        "name": "Combobox",
+        "url": "https://base-ui.com/react/components/combobox"
+      },
+      "props": []
+    }
+  ],
+  "command": [
+    {
+      "name": "Command",
+      "description": "A search box over a list of actions (shadcn: Command, a Platform Code extension; the look is DGA's Search Box and Menu). It runs actions, it does not store a value: for a form field that stores a choice use Combobox. Type to filter, arrow keys move, Enter runs the highlighted action. The first match is highlighted as you type. Put it in a CommandDialog for a palette. Built on Base UI Autocomplete, so there is no cmdk dependency.",
+      "descriptionAr": "مربع بحث فوق قائمة إجراءات (امتداد من كود المنصات، شكله شكل Search Box وMenu). ينفّذ إجراءات ولا يحفظ قيمة: وللحقل الذي يحفظ اختيارًا استخدم Combobox. اكتب للتصفية، وتنقل مفاتيح الأسهم، وينفّذ Enter الإجراء المظلَّل، ويُظلَّل أول مطابق أثناء الكتابة. مبني على Base UI Autocomplete بلا cmdk.",
+      "inherits": {
+        "name": "Autocomplete",
+        "url": "https://base-ui.com/react/components/autocomplete"
+      },
+      "props": [
+        {
+          "name": "onSelect",
+          "type": "(option: CommandOption) => void",
+          "default": null,
+          "required": false,
+          "description": "Called after an action is chosen, with that action.",
+          "descriptionAr": "يُستدعى بعد اختيار إجراء، ومعه ذلك الإجراء."
+        },
+        {
+          "name": "items",
+          "type": "CommandGroupData[]",
+          "default": null,
+          "required": true,
+          "description": "The actions, in groups.",
+          "descriptionAr": "الإجراءات، في مجموعات. لكل مجموعة `label` و`items`."
+        },
+        {
+          "name": "filter",
+          "type": "(option: CommandOption, query: string) => boolean",
+          "default": null,
+          "required": false,
+          "description": "Custom matching. The default ignores case and Arabic diacritics.",
+          "descriptionAr": "مطابقة مخصصة. الافتراضية تتجاهل حالة الأحرف وتشكيل العربية. مرّر `null` لإيقاف التصفية."
+        },
+        {
+          "name": "placeholder",
+          "type": "string",
+          "default": "\"Type a command or search…\"",
+          "required": false,
+          "description": "The hint in the empty search box. Translate it on Arabic pages.",
+          "descriptionAr": "النص التلميحي في المربع الفارغ. ترجمه في الصفحات العربية."
+        },
+        {
+          "name": "inputLabel",
+          "type": "string",
+          "default": "\"Search commands\"",
+          "required": false,
+          "description": "Accessible name of the search box. Translate it on Arabic pages.",
+          "descriptionAr": "اسم مربع البحث لقارئ الشاشة. ترجمه في الصفحات العربية."
+        },
+        {
+          "name": "emptyText",
+          "type": "string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<AwaitedReactNode>",
+          "default": "\"No results found.\"",
+          "required": false,
+          "description": "Shown when nothing matches. Translate it on Arabic pages.",
+          "descriptionAr": "يظهر حين لا يطابق أي إجراء. ترجمه في الصفحات العربية."
+        },
+        {
+          "name": "countLabel",
+          "type": "(count: number) => string",
+          "default": "(count) => (count === 1 ? \"1 result\" : `${count} results`)",
+          "required": false,
+          "description": "The text read to screen readers when the number of results changes.",
+          "descriptionAr": "دالة تعيد النص الذي يقرؤه قارئ الشاشة عند تغيّر عدد النتائج."
+        },
+        {
+          "name": "query",
+          "type": "string",
+          "default": null,
+          "required": false,
+          "description": "The text typed into the search box. Use it to control the search.",
+          "descriptionAr": "نص البحث. استخدمه للتحكم في البحث."
+        },
+        {
+          "name": "onQueryChange",
+          "type": "(query: string) => void",
+          "default": null,
+          "required": false,
+          "description": "Called when the search text changes.",
+          "descriptionAr": "يُستدعى عند تغيّر نص البحث."
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "default": null,
+          "required": false,
+          "description": "Class names for the outer box.",
+          "descriptionAr": "أصناف الصندوق الخارجي."
+        }
+      ]
+    },
+    {
+      "name": "CommandDialog",
+      "description": "Command in a Dialog, centred over the page. Open it from a button with `trigger`, or control `open` yourself and listen for <kbd>Ctrl</kbd>+<kbd>K</kbd> or <kbd>⌘</kbd>+<kbd>K</kbd> in your app: the component does not bind keys on its own. Focus goes to the search box, Escape closes it and focus returns to what had it before.",
+      "descriptionAr": "Command داخل Dialog في وسط الصفحة. افتحه بزر `trigger` أو تحكّم في `open`. لا يربط المكوّن مفاتيح الاختصار، فيقرر تطبيقك ذلك. ينتقل التركيز إلى مربع البحث، ويغلقه Esc ويعود التركيز إلى ما كان عليه.",
+      "inherits": {
+        "name": "Autocomplete",
+        "url": "https://base-ui.com/react/components/autocomplete"
+      },
+      "props": [
+        {
+          "name": "onSelect",
+          "type": "(option: CommandOption) => void",
+          "default": null,
+          "required": false,
+          "description": "Called after an action is chosen, with that action.",
+          "descriptionAr": "يُستدعى بعد اختيار إجراء، ومعه ذلك الإجراء."
+        },
+        {
+          "name": "items",
+          "type": "CommandGroupData[]",
+          "default": null,
+          "required": true,
+          "description": "The actions, in groups.",
+          "descriptionAr": "الإجراءات، في مجموعات. لكل مجموعة `label` و`items`."
+        },
+        {
+          "name": "open",
+          "type": "boolean",
+          "default": null,
+          "required": false,
+          "description": "",
+          "descriptionAr": ""
+        },
+        {
+          "name": "filter",
+          "type": "(option: CommandOption, query: string) => boolean",
+          "default": null,
+          "required": false,
+          "description": "Custom matching. The default ignores case and Arabic diacritics.",
+          "descriptionAr": "مطابقة مخصصة. الافتراضية تتجاهل حالة الأحرف وتشكيل العربية. مرّر `null` لإيقاف التصفية."
+        },
+        {
+          "name": "placeholder",
+          "type": "string",
+          "default": null,
+          "required": false,
+          "description": "The hint in the empty search box. Translate it on Arabic pages.",
+          "descriptionAr": "النص التلميحي في المربع الفارغ. ترجمه في الصفحات العربية."
+        },
+        {
+          "name": "inputLabel",
+          "type": "string",
+          "default": null,
+          "required": false,
+          "description": "Accessible name of the search box. Translate it on Arabic pages.",
+          "descriptionAr": "اسم مربع البحث لقارئ الشاشة. ترجمه في الصفحات العربية."
+        },
+        {
+          "name": "emptyText",
+          "type": "string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<AwaitedReactNode>",
+          "default": null,
+          "required": false,
+          "description": "Shown when nothing matches. Translate it on Arabic pages.",
+          "descriptionAr": "يظهر حين لا يطابق أي إجراء. ترجمه في الصفحات العربية."
+        },
+        {
+          "name": "countLabel",
+          "type": "(count: number) => string",
+          "default": null,
+          "required": false,
+          "description": "The text read to screen readers when the number of results changes.",
+          "descriptionAr": "دالة تعيد النص الذي يقرؤه قارئ الشاشة عند تغيّر عدد النتائج."
+        },
+        {
+          "name": "query",
+          "type": "string",
+          "default": null,
+          "required": false,
+          "description": "The text typed into the search box. Use it to control the search.",
+          "descriptionAr": "نص البحث. استخدمه للتحكم في البحث."
+        },
+        {
+          "name": "onQueryChange",
+          "type": "(query: string) => void",
+          "default": null,
+          "required": false,
+          "description": "Called when the search text changes.",
+          "descriptionAr": "يُستدعى عند تغيّر نص البحث."
+        },
+        {
+          "name": "title",
+          "type": "string",
+          "default": "\"Command menu\"",
+          "required": false,
+          "description": "The name of the dialog, read when it opens. Translate it on Arabic pages.",
+          "descriptionAr": "اسم الحوار الذي يُقرأ عند فتحه. ترجمه في الصفحات العربية."
+        },
+        {
+          "name": "description",
+          "type": "string",
+          "default": "\"Search for an action and press Enter to run it.\"",
+          "required": false,
+          "description": "Explains the dialog to screen readers. Translate it on Arabic pages.",
+          "descriptionAr": "يشرح الحوار لقارئ الشاشة. ترجمه في الصفحات العربية."
+        },
+        {
+          "name": "closeOnSelect",
+          "type": "boolean",
+          "default": "true",
+          "required": false,
+          "description": "Closes the dialog after an action runs. Default `true`.",
+          "descriptionAr": "يغلق الحوار بعد تنفيذ إجراء. الافتراضي `true`."
+        },
+        {
+          "name": "trigger",
+          "type": "ReactElement<unknown, string | JSXElementConstructor<any>>",
+          "default": null,
+          "required": false,
+          "description": "The button that opens it.",
+          "descriptionAr": "الزر الذي يفتح الحوار."
+        }
+      ]
+    },
+    {
+      "name": "CommandShortcut",
+      "description": "Keys at the end of an action. They stay left to right in Arabic.",
+      "descriptionAr": "مفاتيح في نهاية الإجراء. تبقى من اليسار إلى اليمين في العربية.",
+      "inherits": {
+        "name": "Autocomplete",
+        "url": "https://base-ui.com/react/components/autocomplete"
+      },
+      "props": []
+    }
+  ],
   "content-switcher": [
     {
       "name": "ContentSwitcher",
@@ -950,6 +1594,207 @@
           "required": false,
           "description": "Whether the component should ignore user interaction.",
           "descriptionAr": "لا يمكن اختيار الخيار."
+        }
+      ]
+    }
+  ],
+  "context-menu": [
+    {
+      "name": "ContextMenu",
+      "description": "A menu of actions that opens where people click with the secondary mouse button, long-press on a touch screen, or press Shift+F10 or the Menu key on a focused area (Platform Code extension, not part of DGA). The list is the DGA Menu, so items, checkbox and radio items, groups and submenus are the same. A context menu is a shortcut: every action in it must also be reachable another way on the page, because most people never open it.",
+      "descriptionAr": "قائمة إجراءات تفتح حيث ينقر الشخص بزر الفأرة الأيمن، أو بالضغط المطول على شاشة اللمس، أو بـ `Shift+F10` أو مفتاح القائمة على منطقة مركَّزة (امتداد من كود المنصات وليس جزءًا من DGA). قائمتها هي Menu من DGA فالعناصر وعناصر مربع الاختيار والراديو والمجموعات والقوائم الفرعية هي نفسها. قائمة السياق اختصار: يجب أن يمكن الوصول إلى كل إجراء فيها بطريقة أخرى في الصفحة لأن أغلب الناس لا يفتحونها.",
+      "inherits": {
+        "name": "ContextMenu",
+        "url": "https://base-ui.com/react/components/context-menu"
+      },
+      "props": [
+        {
+          "name": "open",
+          "type": "boolean",
+          "default": null,
+          "required": false,
+          "description": "Whether the menu is currently open.",
+          "descriptionAr": "حالة الفتح بتحكّم خارجي."
+        },
+        {
+          "name": "defaultOpen",
+          "type": "boolean",
+          "default": null,
+          "required": false,
+          "description": "Whether the menu is initially open. To render a controlled menu, use the `open` prop instead.",
+          "descriptionAr": "مفتوحة في البداية (دون تحكم)."
+        },
+        {
+          "name": "onOpenChange",
+          "type": "(open: boolean) => void",
+          "default": null,
+          "required": false,
+          "description": "Event handler called when the menu is opened or closed.",
+          "descriptionAr": "تُستدعى عند فتحها أو إغلاقها."
+        }
+      ]
+    },
+    {
+      "name": "ContextMenuCheckboxItem",
+      "description": "An item that can be turned on and off. It shows a check mark while it is on.",
+      "descriptionAr": "عنصر يمكن تشغيله وإيقافه. يعرض علامة صح وهو مشغّل.",
+      "inherits": {
+        "name": "ContextMenu",
+        "url": "https://base-ui.com/react/components/context-menu"
+      },
+      "props": []
+    },
+    {
+      "name": "ContextMenuContent",
+      "description": "The popup list. It opens at the pointer and keeps clear of the screen edges.",
+      "descriptionAr": "القائمة المنبثقة. تفتح عند المؤشر وتبقى بعيدة عن حواف الشاشة.",
+      "inherits": {
+        "name": "ContextMenu",
+        "url": "https://base-ui.com/react/components/context-menu"
+      },
+      "props": [
+        {
+          "name": "align",
+          "type": "\"start\" | \"center\" | \"end\"",
+          "default": "\"start\"",
+          "required": false,
+          "description": "How to align the popup relative to the specified side.",
+          "descriptionAr": "المحاذاة مع الزر. و`start` هي الحافة اليمنى في RTL."
+        },
+        {
+          "name": "sideOffset",
+          "type": "number",
+          "default": "2",
+          "required": false,
+          "description": "Distance between the anchor and the popup in pixels. Also accepts a function that returns the distance to read the dimensions of the anchor and positioner elements, along with its side and alignment. The function takes a `data` object parameter with the following properties: - `data.anchor`: the dimensions of the anchor element with properties `width` and `height`. - `data.positioner`: the dimensions of the positioner element with properties `width` and `height`. - `data.side`: which side of the anchor element the positioner is aligned against. - `data.align`: how the positioner is aligned relative to the specified side. Defaults to `-5` for root context menus when `side` is not specified and `align` is not `'center'`. Otherwise, it defaults to `0`.",
+          "descriptionAr": "الفجوة بين المؤشر والقائمة بالبكسل. الافتراضي 2."
+        },
+        {
+          "name": "alignOffset",
+          "type": "number",
+          "default": "0",
+          "required": false,
+          "description": "Additional offset along the alignment axis in pixels. Also accepts a function that returns the offset to read the dimensions of the anchor and positioner elements, along with its side and alignment. The function takes a `data` object parameter with the following properties: - `data.anchor`: the dimensions of the anchor element with properties `width` and `height`. - `data.positioner`: the dimensions of the positioner element with properties `width` and `height`. - `data.side`: which side of the anchor element the positioner is aligned against. - `data.align`: how the positioner is aligned relative to the specified side. Defaults to `2` for root context menus when `side` is not specified and `align` is not `'center'`. Otherwise, it defaults to `0`.",
+          "descriptionAr": "يزيحها على طول حافة الزر بالبكسل."
+        }
+      ]
+    },
+    {
+      "name": "ContextMenuGroup",
+      "description": "Groups related items under a ContextMenuLabel.",
+      "descriptionAr": "يجمع عناصر متصلة تحت ContextMenuLabel.",
+      "inherits": {
+        "name": "ContextMenu",
+        "url": "https://base-ui.com/react/components/context-menu"
+      },
+      "props": []
+    },
+    {
+      "name": "ContextMenuItem",
+      "description": "One action. Put an icon first, the label, then an optional ContextMenuShortcut.",
+      "descriptionAr": "إجراء واحد. ضع أيقونة أولًا ثم التسمية ثم ContextMenuShortcut اختياريًا.",
+      "inherits": {
+        "name": "ContextMenu",
+        "url": "https://base-ui.com/react/components/context-menu"
+      },
+      "props": []
+    },
+    {
+      "name": "ContextMenuLabel",
+      "description": "The heading of a ContextMenuGroup.",
+      "descriptionAr": "عنوان ContextMenuGroup.",
+      "inherits": {
+        "name": "ContextMenu",
+        "url": "https://base-ui.com/react/components/context-menu"
+      },
+      "props": []
+    },
+    {
+      "name": "ContextMenuRadioGroup",
+      "description": "Groups ContextMenuRadioItem options so only one is chosen.",
+      "descriptionAr": "يجمع خيارات ContextMenuRadioItem ليُختار واحد فقط.",
+      "inherits": {
+        "name": "ContextMenu",
+        "url": "https://base-ui.com/react/components/context-menu"
+      },
+      "props": []
+    },
+    {
+      "name": "ContextMenuRadioItem",
+      "description": "One option of a ContextMenuRadioGroup. The chosen one shows a dot.",
+      "descriptionAr": "خيار واحد من ContextMenuRadioGroup. المختار يعرض نقطة.",
+      "inherits": {
+        "name": "ContextMenu",
+        "url": "https://base-ui.com/react/components/context-menu"
+      },
+      "props": []
+    },
+    {
+      "name": "ContextMenuSeparator",
+      "description": "A line between groups of items.",
+      "descriptionAr": "خط بين مجموعات العناصر.",
+      "inherits": {
+        "name": "ContextMenu",
+        "url": "https://base-ui.com/react/components/context-menu"
+      },
+      "props": []
+    },
+    {
+      "name": "ContextMenuShortcut",
+      "description": "Trailing text of an item, such as a shortcut. Digits and symbols stay left to right.",
+      "descriptionAr": "نص في نهاية العنصر مثل اختصار. تبقى الأرقام والرموز من اليسار إلى اليمين.",
+      "inherits": {
+        "name": "ContextMenu",
+        "url": "https://base-ui.com/react/components/context-menu"
+      },
+      "props": []
+    },
+    {
+      "name": "ContextMenuSub",
+      "description": "Groups a ContextMenuSubTrigger and its ContextMenuSubContent.",
+      "descriptionAr": "يجمع ContextMenuSubTrigger وContextMenuSubContent.",
+      "inherits": {
+        "name": "ContextMenu",
+        "url": "https://base-ui.com/react/components/context-menu"
+      },
+      "props": []
+    },
+    {
+      "name": "ContextMenuSubContent",
+      "description": "The submenu list. It opens beside its trigger on the end side.",
+      "descriptionAr": "القائمة الفرعية. تفتح بجانب عنصرها في جهة النهاية.",
+      "inherits": {
+        "name": "ContextMenu",
+        "url": "https://base-ui.com/react/components/context-menu"
+      },
+      "props": []
+    },
+    {
+      "name": "ContextMenuSubTrigger",
+      "description": "An item that opens a submenu. Its chevron points to the end side and mirrors in RTL.",
+      "descriptionAr": "عنصر يفتح قائمة فرعية. يشير سهمه إلى جهة النهاية ويُعكس في RTL.",
+      "inherits": {
+        "name": "ContextMenu",
+        "url": "https://base-ui.com/react/components/context-menu"
+      },
+      "props": []
+    },
+    {
+      "name": "ContextMenuTrigger",
+      "description": "The area that opens the menu. It can be focused with the keyboard, so Shift+F10 or the Menu key opens the menu at the area. Style it, or render your own element with `render`.",
+      "descriptionAr": "المنطقة التي تفتح القائمة. يمكن تركيزها بلوحة المفاتيح فيفتح `Shift+F10` أو مفتاح القائمة القائمة عندها. نسّقها أو اعرض عنصرك عبر `render`.",
+      "inherits": {
+        "name": "ContextMenu",
+        "url": "https://base-ui.com/react/components/context-menu"
+      },
+      "props": [
+        {
+          "name": "tabIndex",
+          "type": "number",
+          "default": "0",
+          "required": false,
+          "description": "Tab order of the area. Default 0, so the keyboard can open the menu.",
+          "descriptionAr": "ترتيب المنطقة في Tab. الافتراضي 0 ليمكن فتح القائمة بلوحة المفاتيح."
         }
       ]
     }
@@ -1632,6 +2477,120 @@
         "url": "https://base-ui.com/react/components/dialog"
       },
       "props": []
+    }
+  ],
+  "digital-stamp": [
+    {
+      "name": "DigitalStamp",
+      "description": "The official-site strip (DGA: Digital Stamp): a 32px bar at the very top of a government site that says the site is official, with a button that opens a panel explaining how to check it: the address ends in `gov.sa` (or `edu.sa`, `med.sa`, `org.sa`, `sch.sa`, `.sa`), the connection is https, and the site is registered with the Digital Government Authority. Put it in the `stamp` slot of the Header. The button is a real disclosure button (`aria-expanded`), and Escape closes the panel and returns focus to it.",
+      "descriptionAr": "شريط الموقع الرسمي (DGA: Digital Stamp): شريط بارتفاع 32px في أعلى موقع حكومي يعلن أن الموقع رسمي، وزر يفتح لوحة تشرح كيف يُتحقق منه: العنوان ينتهي بنطاق سعودي، والاتصال https، والموقع مسجّل لدى هيئة الحكومة الرقمية. ضعه في خانة `stamp` من Header. الزر مبدّل حقيقي بـ `aria-expanded`، ويغلق Esc اللوحة ويعيد التركيز إليه.",
+      "inherits": null,
+      "props": [
+        {
+          "name": "domain",
+          "type": "\"gov.sa\" | \"edu.sa\" | \"med.sa\" | \"org.sa\" | \"sch.sa\" | \".sa\"",
+          "default": "\"gov.sa\"",
+          "required": false,
+          "description": "The suffix the site's address ends with. It is shown in the opened panel.",
+          "descriptionAr": "لاحقة عنوان الموقع، وتظهر في اللوحة. تُقرأ من اليسار إلى اليمين."
+        },
+        {
+          "name": "label",
+          "type": "string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<AwaitedReactNode>",
+          "default": "\"An official website of the Saudi government\"",
+          "required": false,
+          "description": "The line in the strip. Translate it on Arabic pages.",
+          "descriptionAr": "السطر في الشريط. ترجمه في الصفحات العربية."
+        },
+        {
+          "name": "toggleLabel",
+          "type": "string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<AwaitedReactNode>",
+          "default": "\"How to check\"",
+          "required": false,
+          "description": "The text of the button that opens the panel. Translate it on Arabic pages.",
+          "descriptionAr": "نص الزر الذي يفتح اللوحة. ترجمه في الصفحات العربية."
+        },
+        {
+          "name": "domainTitle",
+          "type": "string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<AwaitedReactNode>",
+          "default": "\"Official websites end in a Saudi domain\"",
+          "required": false,
+          "description": "Heading of the domain item in the panel.",
+          "descriptionAr": "عنوان بند النطاق في اللوحة."
+        },
+        {
+          "name": "domainText",
+          "type": "string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<AwaitedReactNode>",
+          "default": null,
+          "required": false,
+          "description": "Explains the domain. Default: the address ends in the suffix of `domain`.",
+          "descriptionAr": "يشرح النطاق. الافتراضي: عنوان الموقع ينتهي باللاحقة `domain`."
+        },
+        {
+          "name": "httpsTitle",
+          "type": "string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<AwaitedReactNode>",
+          "default": "\"Secure websites use https\"",
+          "required": false,
+          "description": "Heading of the secure connection item.",
+          "descriptionAr": "عنوان بند الاتصال الآمن."
+        },
+        {
+          "name": "httpsText",
+          "type": "string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<AwaitedReactNode>",
+          "default": "\"Look for the padlock and https:// before the address. It means the connection to this site is encrypted.\"",
+          "required": false,
+          "description": "Explains the padlock and https.",
+          "descriptionAr": "يشرح القفل وhttps."
+        },
+        {
+          "name": "registrationTitle",
+          "type": "string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<AwaitedReactNode>",
+          "default": "\"Registered with the Digital Government Authority\"",
+          "required": false,
+          "description": "Heading of the registration item. Pass `null` to leave the item out.",
+          "descriptionAr": "عنوان بند التسجيل. مرّر `null` لحذف البند."
+        },
+        {
+          "name": "registrationText",
+          "type": "string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<AwaitedReactNode>",
+          "default": "\"Government websites are registered with the Digital Government Authority.\"",
+          "required": false,
+          "description": "Explains the Digital Government Authority registration.",
+          "descriptionAr": "يشرح التسجيل لدى هيئة الحكومة الرقمية."
+        },
+        {
+          "name": "open",
+          "type": "boolean",
+          "default": null,
+          "required": false,
+          "description": "Opens or closes the panel. Use it to control the stamp.",
+          "descriptionAr": "يفتح اللوحة أو يغلقها. استخدمه للتحكم في الختم."
+        },
+        {
+          "name": "defaultOpen",
+          "type": "boolean",
+          "default": "false",
+          "required": false,
+          "description": "Whether the panel starts open.",
+          "descriptionAr": "هل تبدأ اللوحة مفتوحة."
+        },
+        {
+          "name": "onOpenChange",
+          "type": "(open: boolean) => void",
+          "default": null,
+          "required": false,
+          "description": "",
+          "descriptionAr": ""
+        },
+        {
+          "name": "hideIcon",
+          "type": "boolean",
+          "default": "false",
+          "required": false,
+          "description": "Hides the Saudi flag icon at the start of the strip.",
+          "descriptionAr": "يخفي أيقونة العلم في بداية الشريط."
+        }
+      ]
     }
   ],
   "divider": [
@@ -2445,7 +3404,7 @@
           "type": "string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<AwaitedReactNode>",
           "default": null,
           "required": false,
-          "description": "A strip above the bar: put a Second Nav here.",
+          "description": "A strip above the bar, below the stamp: put a Second Nav here.",
           "descriptionAr": "شريط فوق الترويسة: ضع هنا Second Nav."
         },
         {
@@ -2503,6 +3462,14 @@
           "required": false,
           "description": "The user area: a sign-in button or an account menu.",
           "descriptionAr": "منطقة المستخدم: زر تسجيل الدخول أو قائمة الحساب."
+        },
+        {
+          "name": "stamp",
+          "type": "string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<AwaitedReactNode>",
+          "default": null,
+          "required": false,
+          "description": "The official-site strip above everything else: put a Digital Stamp here.",
+          "descriptionAr": "شريط الموقع الرسمي فوق كل شيء: ضع هنا Digital Stamp. يقع فوق `top`."
         },
         {
           "name": "fullWidth",
@@ -2646,6 +3613,121 @@
       ]
     }
   ],
+  "hover-card": [
+    {
+      "name": "HoverCard",
+      "description": "A preview of what a link points to, shown when people hover or focus the link (Platform Code extension, not part of DGA). Its surface is the DGA Menu and Popover. Touch screens and screen readers do not get the card, so the trigger must be a real link to the same content, and the card never holds the only copy of anything. The card stays open while the pointer is over it and closes with Escape (WCAG 1.4.13).",
+      "descriptionAr": "معاينة لما يشير إليه رابط، تظهر عند تمرير المؤشر على الرابط أو تركيزه (امتداد من كود المنصات وليس جزءًا من DGA). سطحها سطح Menu وPopover من DGA. شاشات اللمس وقارئات الشاشة لا تحصل على البطاقة، لذلك يجب أن يكون الزر رابطًا حقيقيًا إلى المحتوى نفسه، ولا تحمل البطاقة النسخة الوحيدة من أي شيء. تبقى البطاقة مفتوحة ما دام المؤشر فوقها ويغلقها Escape (WCAG 1.4.13).",
+      "inherits": {
+        "name": "PreviewCard",
+        "url": "https://base-ui.com/react/components/preview-card"
+      },
+      "props": [
+        {
+          "name": "open",
+          "type": "boolean",
+          "default": null,
+          "required": false,
+          "description": "Whether the preview card is currently open.",
+          "descriptionAr": "حالة الفتح بتحكّم خارجي."
+        },
+        {
+          "name": "defaultOpen",
+          "type": "boolean",
+          "default": null,
+          "required": false,
+          "description": "Whether the preview card is initially open. To render a controlled preview card, use the `open` prop instead.",
+          "descriptionAr": "مفتوحة في البداية (دون تحكم)."
+        },
+        {
+          "name": "onOpenChange",
+          "type": "(open: boolean) => void",
+          "default": null,
+          "required": false,
+          "description": "Event handler called when the preview card is opened or closed.",
+          "descriptionAr": "تُستدعى عند فتحها أو إغلاقها."
+        }
+      ]
+    },
+    {
+      "name": "HoverCardContent",
+      "description": "The card. It is 320px wide at most and keeps clear of the screen edges.",
+      "descriptionAr": "البطاقة. عرضها 320px كحد أقصى وتبقى بعيدة عن حواف الشاشة.",
+      "inherits": {
+        "name": "PreviewCard",
+        "url": "https://base-ui.com/react/components/preview-card"
+      },
+      "props": [
+        {
+          "name": "align",
+          "type": "\"start\" | \"center\" | \"end\"",
+          "default": "\"center\"",
+          "required": false,
+          "description": "How to align the popup relative to the specified side.",
+          "descriptionAr": "المحاذاة مع الزر. و`start` هي الحافة اليمنى في RTL."
+        },
+        {
+          "name": "alignOffset",
+          "type": "number",
+          "default": "0",
+          "required": false,
+          "description": "Additional offset along the alignment axis in pixels. Also accepts a function that returns the offset to read the dimensions of the anchor and positioner elements, along with its side and alignment. The function takes a `data` object parameter with the following properties: - `data.anchor`: the dimensions of the anchor element with properties `width` and `height`. - `data.positioner`: the dimensions of the positioner element with properties `width` and `height`. - `data.side`: which side of the anchor element the positioner is aligned against. - `data.align`: how the positioner is aligned relative to the specified side.",
+          "descriptionAr": "يزيحها على طول حافة الزر بالبكسل."
+        },
+        {
+          "name": "sideOffset",
+          "type": "number",
+          "default": "8",
+          "required": false,
+          "description": "The gap between the link and the card in pixels.",
+          "descriptionAr": "الفجوة بين الرابط والبطاقة بالبكسل. الافتراضي 8."
+        },
+        {
+          "name": "side",
+          "type": "\"top\" | \"bottom\" | \"start\" | \"end\"",
+          "default": "\"bottom\"",
+          "required": false,
+          "description": "Where it opens. `start` and `end` are the sides of the text, so they swap on Arabic pages.",
+          "descriptionAr": "الجهة التي تفتح عليها. `start` و`end` جهتان للنص فتتبادلان في الصفحات العربية. الافتراضي `bottom`."
+        },
+        {
+          "name": "showArrow",
+          "type": "boolean",
+          "default": "false",
+          "required": false,
+          "description": "Shows the beak that points to the link.",
+          "descriptionAr": "يعرض السهم الذي يشير إلى الرابط."
+        }
+      ]
+    },
+    {
+      "name": "HoverCardTrigger",
+      "description": "The link the card previews. It renders an anchor: give it an `href`. `delay` is how long the pointer must rest on it before the card opens, `closeDelay` how long the card stays after the pointer leaves, both in milliseconds.",
+      "descriptionAr": "الرابط الذي تعاينه البطاقة. يعرض وسم `a` فأعطه `href`. `delay` مدة بقاء المؤشر على الرابط قبل فتح البطاقة، و`closeDelay` مدة بقائها بعد مغادرة المؤشر، بالمللي ثانية.",
+      "inherits": {
+        "name": "PreviewCard",
+        "url": "https://base-ui.com/react/components/preview-card"
+      },
+      "props": [
+        {
+          "name": "delay",
+          "type": "number",
+          "default": "400",
+          "required": false,
+          "description": "How long to wait before the preview card opens. Specified in milliseconds.",
+          "descriptionAr": "المللي ثانية التي يبقاها المؤشر على الرابط قبل فتح البطاقة. الافتراضي 400."
+        },
+        {
+          "name": "closeDelay",
+          "type": "number",
+          "default": "200",
+          "required": false,
+          "description": "How long to wait before closing the preview card. Specified in milliseconds.",
+          "descriptionAr": "المللي ثانية التي تبقاها البطاقة بعد مغادرة المؤشر. الافتراضي 200."
+        }
+      ]
+    }
+  ],
   "inline-alert": [
     {
       "name": "InlineAlert",
@@ -2716,6 +3798,183 @@
           "required": false,
           "description": "Accessible name of the close button. Translate it on Arabic pages.",
           "descriptionAr": "الاسم الذي يقرؤه قارئ الشاشة لزر الإغلاق. ترجمه في الصفحات العربية."
+        }
+      ]
+    }
+  ],
+  "input-group": [
+    {
+      "name": "InputGroup",
+      "description": "An Input box that holds more than text: addons before and after the field, such as a prefix, an icon, a unit, a shortcut hint or a button (Platform Code extension; the box is the DGA Input, with the same states). Put one InputGroupInput and any InputGroupAddon inside. The focus underline, border and error state belong to the whole group. Use the Input's own `startAdornment` and `endAdornment` when a single icon or short prefix is enough. Label it with a Field.",
+      "descriptionAr": "صندوق Input يحوي أكثر من نص: إضافات قبل الحقل وبعده، مثل بادئة أو أيقونة أو وحدة أو اختصار لوحة مفاتيح أو زر (امتداد من كود المنصات؛ الصندوق هو Input من DGA بحالاته نفسها). ضع InputGroupInput واحدًا وما تشاء من InputGroupAddon. الخط السفلي للتركيز والحد وحالة الخطأ تخص المجموعة كلها. استخدم `startAdornment` و`endAdornment` في Input إن كفت أيقونة أو بادئة قصيرة. سمِّه بـ Field.",
+      "inherits": {
+        "name": "Input",
+        "url": "https://base-ui.com/react/components/input"
+      },
+      "props": []
+    },
+    {
+      "name": "InputGroupAddon",
+      "description": "Holds an icon, text, a Kbd or a Button at the start or end of the group.",
+      "descriptionAr": "يحمل أيقونة أو نصًا أو اختصارًا أو زرًا في بداية المجموعة أو نهايتها.",
+      "inherits": {
+        "name": "Input",
+        "url": "https://base-ui.com/react/components/input"
+      },
+      "props": []
+    },
+    {
+      "name": "InputGroupInput",
+      "description": "The text field inside an InputGroup. It takes the Field's label, helper text and error.",
+      "descriptionAr": "حقل النص داخل InputGroup. يأخذ تسمية Field ونصه المساعد وخطأه.",
+      "inherits": {
+        "name": "Input",
+        "url": "https://base-ui.com/react/components/input"
+      },
+      "props": []
+    },
+    {
+      "name": "InputGroupKbd",
+      "description": "A keyboard shortcut hint in an addon, such as ⌘K. Always left to right.",
+      "descriptionAr": "تلميح لاختصار لوحة مفاتيح داخل إضافة. من اليسار إلى اليمين دائمًا.",
+      "inherits": {
+        "name": "Input",
+        "url": "https://base-ui.com/react/components/input"
+      },
+      "props": []
+    },
+    {
+      "name": "InputGroupText",
+      "description": "Plain text in an addon, such as `https://`, `SAR` or `kg`. Keeps its own reading direction.",
+      "descriptionAr": "نص داخل إضافة، مثل `https://` أو ريال أو كيلوغرام. يحتفظ باتجاه قراءته.",
+      "inherits": {
+        "name": "Input",
+        "url": "https://base-ui.com/react/components/input"
+      },
+      "props": []
+    }
+  ],
+  "input-otp": [
+    {
+      "name": "InputOTP",
+      "description": "A one-time code in separate boxes, for example an SMS code (Platform Code extension, on Base UI OTP Field). Typing moves to the next box, Backspace to the previous one, and pasting fills them all. Arabic-Indic digits (٣) become Western ones (3). The boxes always run left to right, also on Arabic pages, because that is the order digits are read and sent. The boxes follow the Input states and work inside a Field: the FieldLabel names the first box.",
+      "descriptionAr": "رمز لمرة واحدة في خانات منفصلة، مثل رمز الرسالة النصية (امتداد من كود المنصات على Base UI OTP Field). الكتابة تنقل إلى الخانة التالية، والحذف إلى السابقة، واللصق يملأها كلها. الأرقام العربية الهندية (٣) تتحول إلى غربية (3). تبقى الخانات من اليسار إلى اليمين في الصفحات العربية أيضًا لأن هذا ترتيب قراءة الأرقام وإرسالها. تتبع حالات Input وتعمل داخل Field.",
+      "inherits": {
+        "name": "OtpField",
+        "url": "https://base-ui.com/react/components/otp-field"
+      },
+      "props": [
+        {
+          "name": "length",
+          "type": "number",
+          "default": "6",
+          "required": false,
+          "description": "How many characters. Default 6.",
+          "descriptionAr": "عدد الخانات. الافتراضي 6."
+        },
+        {
+          "name": "size",
+          "type": "\"md\" | \"lg\"",
+          "default": "\"lg\"",
+          "required": false,
+          "description": "Height of the boxes: `md` 32px or `lg` 40px (the Input sizes).",
+          "descriptionAr": "ارتفاع الخانات: `md` ‏32px أو `lg` ‏40px (حجما Input)."
+        },
+        {
+          "name": "groups",
+          "type": "number[]",
+          "default": null,
+          "required": false,
+          "description": "Where to put separators, as the number of boxes before each one. `[3]` on six boxes gives 3 + 3. Default: none.",
+          "descriptionAr": "مواضع الفواصل بعدد الخانات قبل كل فاصل. `[3]` على ست خانات تعطي 3 + 3. الافتراضي: بلا فواصل."
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "default": null,
+          "required": false,
+          "description": "Identifies the field when a form is submitted.",
+          "descriptionAr": "اسم الحقل عند إرسال النموذج."
+        },
+        {
+          "name": "slotLabel",
+          "type": "string",
+          "default": "\"Digit {index} of {length}\"",
+          "required": false,
+          "description": "Accessible name of boxes 2 and up. `{index}` and `{length}` are replaced, for example \"Digit 2 of 6\". The first box is named by the Field label or the group's `aria-label`.",
+          "descriptionAr": "الاسم البرمجي للخانات من الثانية فصاعدًا. يستبدل `{index}` و`{length}`، مثل «الرقم 2 من 6». تُسمّى الخانة الأولى بتسمية Field أو `aria-label` المجموعة."
+        },
+        {
+          "name": "invalid",
+          "type": "boolean",
+          "default": null,
+          "required": false,
+          "description": "Marks the code as wrong: red border and underline on every box.",
+          "descriptionAr": "يعلّم الرمز بأنه خاطئ: حد وخط سفلي أحمران على كل خانة."
+        },
+        {
+          "name": "value",
+          "type": "string",
+          "default": null,
+          "required": false,
+          "description": "The OTP value.",
+          "descriptionAr": "الرمز (متحكَّم به). أرقام فقط."
+        },
+        {
+          "name": "autoSubmit",
+          "type": "boolean",
+          "default": null,
+          "required": false,
+          "description": "Whether to submit the owning form when the OTP becomes complete.",
+          "descriptionAr": "يرسل النموذج عند اكتمال الرمز. الافتراضي `false`."
+        },
+        {
+          "name": "defaultValue",
+          "type": "string",
+          "default": null,
+          "required": false,
+          "description": "The uncontrolled OTP value when the component is initially rendered.",
+          "descriptionAr": "الرمز الأولي (غير متحكَّم به)."
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "default": null,
+          "required": false,
+          "description": "Whether the component should ignore user interaction.",
+          "descriptionAr": "يتجاهل كل تفاعل."
+        },
+        {
+          "name": "mask",
+          "type": "boolean",
+          "default": null,
+          "required": false,
+          "description": "Whether the slot inputs should mask entered characters. Pass `type` directly to individual `<OTPField.Input>` parts to use a custom input type.",
+          "descriptionAr": "يعرض نقاطًا بدل الأرقام، للرقم السري. الافتراضي `false`."
+        },
+        {
+          "name": "onValueChange",
+          "type": "(value, details) => void",
+          "default": null,
+          "required": false,
+          "description": "Callback fired when the OTP value changes. The `eventDetails.reason` indicates what triggered the change: - `'input-change'` for typing or autofill - `'input-clear'` when a character is removed by text input - `'input-paste'` for paste interactions - `'keyboard'` for keyboard interactions that change the value",
+          "descriptionAr": "يُستدعى عند تغير الرمز بالكتابة أو اللصق أو الحذف."
+        },
+        {
+          "name": "onValueComplete",
+          "type": "(value, details) => void",
+          "default": null,
+          "required": false,
+          "description": "Callback function that is fired when the OTP value becomes complete, or when a complete value is pasted while the OTP is already complete. When the value changes, it runs later than `onValueChange`, after the internal value update is applied. If a complete pasted value matches the current value, `onValueChange` does not fire. If `autoSubmit` is enabled, it runs immediately before the owning form is submitted.",
+          "descriptionAr": "يُستدعى عند امتلاء كل الخانات أو لصق رمز كامل."
+        },
+        {
+          "name": "readOnly",
+          "type": "boolean",
+          "default": null,
+          "required": false,
+          "description": "Whether the user should be unable to change the field value.",
+          "descriptionAr": "يعرض الرمز دون السماح بتغييره."
         }
       ]
     }
@@ -3665,6 +4924,170 @@
       ]
     }
   ],
+  "popover": [
+    {
+      "name": "Popover",
+      "description": "A panel of content or a small form that opens from a button and stays until it is dismissed (Platform Code extension, not part of DGA). Its surface is the DGA Menu and its optional beak is the DGA Tooltip's. Focus moves into the panel when it opens, Escape or a click outside closes it, and focus returns to the trigger. For a hint that only names something, use a Tooltip; for a list of actions, use a Menu.",
+      "descriptionAr": "لوحة محتوى أو نموذج صغير تفتح من زر وتبقى حتى تُغلق (امتداد من كود المنصات وليس جزءًا من DGA). سطحها سطح Menu من DGA وسهمها الاختياري سهم Tooltip. ينتقل التركيز إلى اللوحة عند فتحها، ويغلقها Escape أو النقر خارجها، ويعود التركيز إلى الزر. للتلميح استخدم Tooltip، ولقائمة الإجراءات استخدم Menu.",
+      "inherits": {
+        "name": "Popover",
+        "url": "https://base-ui.com/react/components/popover"
+      },
+      "props": [
+        {
+          "name": "defaultOpen",
+          "type": "boolean",
+          "default": null,
+          "required": false,
+          "description": "Whether the popover is initially open. To render a controlled popover, use the `open` prop instead.",
+          "descriptionAr": "مفتوحة في البداية (دون تحكم)."
+        },
+        {
+          "name": "onOpenChange",
+          "type": "(open: boolean) => void",
+          "default": null,
+          "required": false,
+          "description": "Event handler called when the popover is opened or closed.",
+          "descriptionAr": "تُستدعى عند فتحها أو إغلاقها."
+        },
+        {
+          "name": "open",
+          "type": "boolean",
+          "default": null,
+          "required": false,
+          "description": "Whether the popover is currently open.",
+          "descriptionAr": "حالة الفتح بتحكّم خارجي."
+        }
+      ]
+    },
+    {
+      "name": "PopoverClose",
+      "description": "Closes the popover. Render a Button with it: `<PopoverClose render={<Button />}>`.",
+      "descriptionAr": "يغلق اللوحة. اعرض Button معه: `<PopoverClose render={<Button />}>`.",
+      "inherits": {
+        "name": "Popover",
+        "url": "https://base-ui.com/react/components/popover"
+      },
+      "props": []
+    },
+    {
+      "name": "PopoverContent",
+      "description": "The panel. It is at most 320px wide, and keeps clear of the screen edges.",
+      "descriptionAr": "اللوحة. عرضها 320px كحد أقصى وتبقى بعيدة عن حواف الشاشة.",
+      "inherits": {
+        "name": "Popover",
+        "url": "https://base-ui.com/react/components/popover"
+      },
+      "props": [
+        {
+          "name": "align",
+          "type": "\"start\" | \"center\" | \"end\"",
+          "default": "\"center\"",
+          "required": false,
+          "description": "How to align the popup relative to the specified side.",
+          "descriptionAr": "المحاذاة مع الزر. و`start` هي الحافة اليمنى في RTL."
+        },
+        {
+          "name": "alignOffset",
+          "type": "number",
+          "default": "0",
+          "required": false,
+          "description": "Additional offset along the alignment axis in pixels. Also accepts a function that returns the offset to read the dimensions of the anchor and positioner elements, along with its side and alignment. The function takes a `data` object parameter with the following properties: - `data.anchor`: the dimensions of the anchor element with properties `width` and `height`. - `data.positioner`: the dimensions of the positioner element with properties `width` and `height`. - `data.side`: which side of the anchor element the positioner is aligned against. - `data.align`: how the positioner is aligned relative to the specified side.",
+          "descriptionAr": "يزيحها على طول حافة الزر بالبكسل."
+        },
+        {
+          "name": "sideOffset",
+          "type": "number",
+          "default": "8",
+          "required": false,
+          "description": "The gap between the trigger and the panel in pixels.",
+          "descriptionAr": "الفجوة بين الزر واللوحة بالبكسل. الافتراضي 8."
+        },
+        {
+          "name": "side",
+          "type": "\"top\" | \"bottom\" | \"start\" | \"end\"",
+          "default": "\"bottom\"",
+          "required": false,
+          "description": "Where it opens. `start` and `end` are the sides of the text, so they swap on Arabic pages.",
+          "descriptionAr": "الجهة التي تفتح عليها. `start` و`end` جهتان للنص فتتبادلان في الصفحات العربية. الافتراضي `bottom`."
+        },
+        {
+          "name": "showArrow",
+          "type": "boolean",
+          "default": "false",
+          "required": false,
+          "description": "Shows the beak that points to the trigger.",
+          "descriptionAr": "يعرض السهم الذي يشير إلى الزر."
+        },
+        {
+          "name": "showCloseButton",
+          "type": "boolean",
+          "default": "false",
+          "required": false,
+          "description": "Shows a close button in the corner.",
+          "descriptionAr": "يعرض زر إغلاق في الزاوية."
+        },
+        {
+          "name": "closeLabel",
+          "type": "string",
+          "default": "\"Close\"",
+          "required": false,
+          "description": "Accessible name of the close button. Translate it on Arabic pages.",
+          "descriptionAr": "الاسم المتاح لزر الإغلاق. ترجمه في الصفحات العربية."
+        }
+      ]
+    },
+    {
+      "name": "PopoverDescription",
+      "description": "Explains the popover. Linked to the panel with `aria-describedby`.",
+      "descriptionAr": "يشرح اللوحة. مرتبط بها عبر `aria-describedby`.",
+      "inherits": {
+        "name": "Popover",
+        "url": "https://base-ui.com/react/components/popover"
+      },
+      "props": []
+    },
+    {
+      "name": "PopoverFooter",
+      "description": "The actions at the bottom of the panel, aligned to the end.",
+      "descriptionAr": "الإجراءات أسفل اللوحة، محاذاة لجهة النهاية.",
+      "inherits": {
+        "name": "Popover",
+        "url": "https://base-ui.com/react/components/popover"
+      },
+      "props": []
+    },
+    {
+      "name": "PopoverHeader",
+      "description": "Groups the title and description at the top of the panel.",
+      "descriptionAr": "يجمع العنوان والوصف في أعلى اللوحة.",
+      "inherits": {
+        "name": "Popover",
+        "url": "https://base-ui.com/react/components/popover"
+      },
+      "props": []
+    },
+    {
+      "name": "PopoverTitle",
+      "description": "The name of the popover. Screen readers read it with the panel.",
+      "descriptionAr": "اسم اللوحة. يقرؤه قارئ الشاشة مع اللوحة.",
+      "inherits": {
+        "name": "Popover",
+        "url": "https://base-ui.com/react/components/popover"
+      },
+      "props": []
+    },
+    {
+      "name": "PopoverTrigger",
+      "description": "The button that opens the popover. Render your own Button with `render`.",
+      "descriptionAr": "الزر الذي يفتح اللوحة. اعرض Button الخاص بك عبر `render`.",
+      "inherits": {
+        "name": "Popover",
+        "url": "https://base-ui.com/react/components/popover"
+      },
+      "props": []
+    }
+  ],
   "progress": [
     {
       "name": "Progress",
@@ -4402,6 +5825,147 @@
           "required": false,
           "description": "Figma size. Omit it and size the skeleton with `className`.",
           "descriptionAr": "الحجم في Figma. احذفه وحدّد حجم الهيكل بـ `className`."
+        }
+      ]
+    }
+  ],
+  "slider": [
+    {
+      "name": "Slider",
+      "description": "Picks a value, or a range of two values, by dragging a handle along a track (DGA: Slider). Left and Right (or Up and Down) move a thumb by `step`, Page Up and Down by `largeStep`, Home and End to the ends. The fill and the arrow keys follow the page direction: on Arabic pages the minimum is on the right, Left raises the value and Right lowers it. Pass an array as `value` or `defaultValue` for a range.",
+      "descriptionAr": "يختار قيمة، أو نطاقًا من قيمتين، بسحب مقبض على مسار (DGA: Slider). السهمان الأيمن والأيسر (أو الأعلى والأسفل) يحركان المقبض بمقدار `step`، ومفتاحا Page Up وDown بمقدار `largeStep`، وHome وEnd إلى الطرفين. يتبع الملء والسهمان اتجاه الصفحة: في الصفحات العربية يكون الحد الأدنى على اليمين، ويرفع السهم الأيسر القيمة ويخفضها الأيمن. مرّر مصفوفة في `value` أو `defaultValue` للنطاق.",
+      "inherits": {
+        "name": "Slider",
+        "url": "https://base-ui.com/react/components/slider"
+      },
+      "props": [
+        {
+          "name": "size",
+          "type": "\"sm\" | \"md\"",
+          "default": "\"md\"",
+          "required": false,
+          "description": "Small (4px track, 16px thumb) or medium (6px track, 20px thumb).",
+          "descriptionAr": "صغير (مسار 4px ومقبض 16px) أو متوسط (مسار 6px ومقبض 20px)."
+        },
+        {
+          "name": "label",
+          "type": "string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<AwaitedReactNode>",
+          "default": null,
+          "required": false,
+          "description": "The visible name, above the track. Inside a Field leave it out and use FieldLabel.",
+          "descriptionAr": "الاسم المرئي فوق المسار. داخل Field اتركه واستخدم FieldLabel."
+        },
+        {
+          "name": "helperText",
+          "type": "string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<AwaitedReactNode>",
+          "default": null,
+          "required": false,
+          "description": "Helper text under the track. Inside a Field use FieldDescription.",
+          "descriptionAr": "نص مساعد تحت المسار. داخل Field استخدم FieldDescription."
+        },
+        {
+          "name": "error",
+          "type": "string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<AwaitedReactNode>",
+          "default": null,
+          "required": false,
+          "description": "An error message with an icon; also turns the thumbs red. Inside a Field use FieldError.",
+          "descriptionAr": "رسالة خطأ بأيقونة، وتحمّر معها المقابض. داخل Field استخدم FieldError."
+        },
+        {
+          "name": "value",
+          "type": "number | number[]",
+          "default": null,
+          "required": false,
+          "description": "The value of the slider. For range sliders, provide an array with one value per thumb.",
+          "descriptionAr": "القيمة (متحكَّم بها). مصفوفة من رقمين تجعله نطاقًا."
+        },
+        {
+          "name": "showValue",
+          "type": "boolean",
+          "default": "false",
+          "required": false,
+          "description": "Shows the current value (or both values of a range) opposite the label.",
+          "descriptionAr": "يعرض القيمة الحالية (أو قيمتي النطاق) مقابل التسمية."
+        },
+        {
+          "name": "thumbLabels",
+          "type": "string[]",
+          "default": null,
+          "required": false,
+          "description": "Accessible names of the thumbs. A range needs two (for example Minimum and Maximum); a single slider is named by the label. Translate them on Arabic pages.",
+          "descriptionAr": "الأسماء البرمجية للمقابض. النطاق يحتاج اسمين (مثل الحد الأدنى والأقصى)، والمقبض المفرد تسميه التسمية. ترجمها في الصفحات العربية."
+        },
+        {
+          "name": "step",
+          "type": "number",
+          "default": null,
+          "required": false,
+          "description": "The granularity with which the slider can step through values. (A \"discrete\" slider.) The `min` prop serves as the origin for the valid values. We recommend (max - min) to be evenly divisible by the step.",
+          "descriptionAr": "خطوة مفاتيح الأسهم. الافتراضي 1."
+        },
+        {
+          "name": "largeStep",
+          "type": "number",
+          "default": null,
+          "required": false,
+          "description": "The granularity with which the slider can step through values when using Page Up/Page Down or Shift + Arrow Up/Arrow Down.",
+          "descriptionAr": "خطوة Page Up وDown ومفتاح Shift مع السهم. الافتراضي 10."
+        },
+        {
+          "name": "defaultValue",
+          "type": "number | number[]",
+          "default": null,
+          "required": false,
+          "description": "The uncontrolled value of the slider when it's initially rendered. To render a controlled slider, use the `value` prop instead.",
+          "descriptionAr": "القيمة الأولية (غير متحكَّم بها). مصفوفة من رقمين تجعله نطاقًا."
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "default": null,
+          "required": false,
+          "description": "Whether the slider should ignore user interaction.",
+          "descriptionAr": "يتجاهل كل تفاعل."
+        },
+        {
+          "name": "locale",
+          "type": "Intl.LocalesArgument",
+          "default": null,
+          "required": false,
+          "description": "The locale used by `Intl.NumberFormat` when formatting the value. Defaults to the user's runtime locale.",
+          "descriptionAr": "لغة عرض القيمة ونطقها، مثل `ar-EG` للأرقام العربية الهندية."
+        },
+        {
+          "name": "max",
+          "type": "number",
+          "default": null,
+          "required": false,
+          "description": "The maximum allowed value of the slider. Should not be equal to min.",
+          "descriptionAr": "أعلى قيمة. الافتراضي 100."
+        },
+        {
+          "name": "min",
+          "type": "number",
+          "default": null,
+          "required": false,
+          "description": "The minimum allowed value of the slider. Should not be equal to max.",
+          "descriptionAr": "أدنى قيمة. الافتراضي 0."
+        },
+        {
+          "name": "onValueChange",
+          "type": "(value, details) => void",
+          "default": null,
+          "required": false,
+          "description": "Callback function that is fired when the slider's value changed. Receives the new value as the first argument; the originating event is available as `eventDetails.event`. The value is also reflected on `eventDetails.event.target.value` for form integration. The `eventDetails.reason` indicates what triggered the change: - `'input-change'` when the hidden range input emits a change event (for example, via form integration) - `'track-press'` when the control track is pressed - `'drag'` while dragging a thumb - `'keyboard'` for keyboard input - `'none'` when the change is triggered without a specific interaction",
+          "descriptionAr": "يُستدعى أثناء تحريك مقبض، مع الرقم أو المصفوفة."
+        },
+        {
+          "name": "onValueCommitted",
+          "type": "(value, details) => void",
+          "default": null,
+          "required": false,
+          "description": "Callback function that is fired when a value change is committed. Does not fire if the value did not change, or if the change was canceled. **Warning**: This is a generic event, not a change event. The `eventDetails.reason` indicates what triggered the commit: - `'drag'` while dragging a thumb - `'track-press'` when the control track is pressed - `'keyboard'` for keyboard input - `'input-change'` when the hidden range input emits a change event (for example, via form integration) - `'none'` when the commit occurs without a specific interaction",
+          "descriptionAr": "يُستدعى عند رفع المؤشر أو ضغط مفتاح، مع القيمة النهائية."
         }
       ]
     }
@@ -5203,6 +6767,210 @@
           "required": false,
           "description": "Accessible name of the region that holds the toasts. Translate it on Arabic pages.",
           "descriptionAr": "الاسم الذي يقرؤه قارئ الشاشة للمنطقة التي تحمل الإشعارات. ترجمه في الصفحات العربية."
+        }
+      ]
+    }
+  ],
+  "toggle-group": [
+    {
+      "name": "ToggleGroup",
+      "description": "A row (or column) of Toggles that belong together (Platform Code extension). By default one option can be pressed at a time; set `multiple` to allow several, as in a text style toolbar. Unlike a Content Switcher, nothing has to stay chosen: pressing the pressed option turns it off. One toggle is in the tab order and the arrow keys move between them (they swap in RTL). Name the group with `aria-label`.",
+      "descriptionAr": "صف (أو عمود) من أزرار التبديل المترابطة (امتداد من كود المنصات). يمكن ضغط خيار واحد في كل مرة افتراضيًا، وبضبط `multiple` يمكن عدة خيارات كما في شريط أنماط النص. وعلى خلاف مبدّل المحتوى لا يلزم أن يبقى خيار مختارًا: الضغط على المضغوط يوقفه. زر واحد فقط في ترتيب Tab، وتنقل مفاتيح الأسهم بين الأزرار (وتتبادل في الاتجاه من اليمين إلى اليسار). سمِّ المجموعة بـ `aria-label`.",
+      "inherits": {
+        "name": "ToggleGroup",
+        "url": "https://base-ui.com/react/components/toggle-group"
+      },
+      "props": [
+        {
+          "name": "attached",
+          "type": "boolean",
+          "default": "true",
+          "required": false,
+          "description": "Joins the toggles with shared edges (default), or keeps them 8px apart.",
+          "descriptionAr": "يصل الأزرار بحواف مشتركة (الافتراضي)، أو يبقيها متباعدة 8px."
+        },
+        {
+          "name": "variant",
+          "type": "any",
+          "default": "\"outline\"",
+          "required": true,
+          "description": "",
+          "descriptionAr": "مظهر كل الأزرار، كما في Toggle."
+        },
+        {
+          "name": "size",
+          "type": "any",
+          "default": "\"md\"",
+          "required": true,
+          "description": "",
+          "descriptionAr": "ارتفاع كل الأزرار: `sm` أو `md` أو `lg`."
+        },
+        {
+          "name": "iconOnly",
+          "type": "any",
+          "default": null,
+          "required": true,
+          "description": "",
+          "descriptionAr": "أزرار مربعة بأيقونة فقط. تحتاج `aria-label`."
+        },
+        {
+          "name": "multiple",
+          "type": "boolean",
+          "default": null,
+          "required": false,
+          "description": "When `false` only one item in the group can be pressed. If any item in the group becomes pressed, the others will become unpressed. When `true` multiple items can be pressed.",
+          "descriptionAr": "يسمح بضغط عدة أزرار معًا. الافتراضي `false`."
+        },
+        {
+          "name": "orientation",
+          "type": "\"horizontal\" | \"vertical\"",
+          "default": "\"horizontal\"",
+          "required": false,
+          "description": "Direction of the row. Vertical uses Up and Down arrows. Default horizontal.",
+          "descriptionAr": "اتجاه الصف. العمودي يستخدم السهمين الأعلى والأسفل. الافتراضي أفقي."
+        },
+        {
+          "name": "value",
+          "type": "string[]",
+          "default": null,
+          "required": false,
+          "description": "The pressed state of the toggle group represented by an array of the values of all pressed toggle buttons. This is the controlled counterpart of `defaultValue`.",
+          "descriptionAr": "قيم الأزرار المضغوطة (متحكَّم بها)."
+        },
+        {
+          "name": "defaultValue",
+          "type": "string[]",
+          "default": null,
+          "required": false,
+          "description": "The pressed state of the toggle group represented by an array of the values of all pressed toggle buttons. This is the uncontrolled counterpart of `value`.",
+          "descriptionAr": "القيم المضغوطة في البداية (غير متحكَّم بها)."
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "default": null,
+          "required": false,
+          "description": "Whether the toggle group should ignore user interaction.",
+          "descriptionAr": "يتجاهل كل تفاعل."
+        },
+        {
+          "name": "loopFocus",
+          "type": "boolean",
+          "default": null,
+          "required": false,
+          "description": "Whether to loop keyboard focus back to the first item when the end of the list is reached while using the arrow keys.",
+          "descriptionAr": "هل يلتف السهم من آخر زر إلى الأول. الافتراضي `true`."
+        },
+        {
+          "name": "onValueChange",
+          "type": "(value, details) => void",
+          "default": null,
+          "required": false,
+          "description": "Callback fired when the pressed states of the toggle group changes.",
+          "descriptionAr": "يُستدعى بمصفوفة القيم المضغوطة الجديدة."
+        }
+      ]
+    },
+    {
+      "name": "ToggleGroupItem",
+      "description": "One option. It takes the look of its group; `value` identifies it in the group's value.",
+      "descriptionAr": "خيار واحد. يأخذ مظهر مجموعته؛ و`value` يحدده ضمن قيمة المجموعة.",
+      "inherits": {
+        "name": "ToggleGroup",
+        "url": "https://base-ui.com/react/components/toggle-group"
+      },
+      "props": []
+    }
+  ],
+  "toggle": [
+    {
+      "name": "Toggle",
+      "description": "A two-state button that stays pressed (Platform Code extension; looks like a DGA Button). Use it for a setting that applies right away and can be turned off again, such as Bold or Show filters. Space and Enter flip it. The pressed state is the Button selected fill plus a dark border, and `aria-pressed`, so it is not colour alone. An icon-only toggle needs an `aria-label`. Use a Switch for on and off settings in a form, and a Checkbox for choices sent with a form.",
+      "descriptionAr": "زر بحالتين يبقى مضغوطًا (امتداد من كود المنصات، ومظهره مثل زر DGA). استخدمه لإعداد يسري فورًا ويمكن إيقافه، مثل «عريض» أو «إظهار المرشحات». ‏Space وEnter يقلبانه. حالة الضغط هي تعبئة الزر المحدد مع حد داكن، مع `aria-pressed`، فلا تعتمد على اللون وحده. الزر بأيقونة فقط يحتاج `aria-label`. استخدم Switch لإعدادات النماذج، وCheckbox للخيارات التي تُرسل مع النموذج.",
+      "inherits": {
+        "name": "Toggle",
+        "url": "https://base-ui.com/react/components/toggle"
+      },
+      "props": [
+        {
+          "name": "value",
+          "type": "string",
+          "default": null,
+          "required": false,
+          "description": "The value inside a ToggleGroup.",
+          "descriptionAr": "القيمة داخل ToggleGroup."
+        },
+        {
+          "name": "size",
+          "type": "any",
+          "default": "\"md\"",
+          "required": true,
+          "description": "Height: `sm` 24px, `md` 32px, `lg` 40px, like Button.",
+          "descriptionAr": "الارتفاع: `sm` ‏24px، و`md` ‏32px، و`lg` ‏40px، مثل الزر."
+        },
+        {
+          "name": "iconOnly",
+          "type": "any",
+          "default": "false",
+          "required": true,
+          "description": "Square, icon only. Needs an `aria-label`.",
+          "descriptionAr": "مربع بأيقونة فقط. يحتاج إلى `aria-label`."
+        },
+        {
+          "name": "onColor",
+          "type": "any",
+          "default": "false",
+          "required": true,
+          "description": "For toggles on brand fills.",
+          "descriptionAr": "لأزرار التبديل على خلفيات لون العلامة."
+        },
+        {
+          "name": "variant",
+          "type": "\"outline\" | \"subtle\" | \"transparent\" | \"secondary\"",
+          "default": "\"outline\"",
+          "required": false,
+          "description": "Look of the button. `outline` (default), `subtle` and `transparent` follow the DGA Button styles; `secondary` is the solid one.",
+          "descriptionAr": "المظهر. `outline` (الافتراضي) و`subtle` و`transparent` تتبع أنماط الزر في DGA، و`secondary` هو المصمت."
+        },
+        {
+          "name": "pressed",
+          "type": "boolean",
+          "default": null,
+          "required": false,
+          "description": "Whether the toggle button is currently pressed. This is the controlled counterpart of `defaultPressed`.",
+          "descriptionAr": "هل هو مضغوط (متحكَّم به)."
+        },
+        {
+          "name": "defaultPressed",
+          "type": "boolean",
+          "default": null,
+          "required": false,
+          "description": "Whether the toggle button is currently pressed. This is the uncontrolled counterpart of `pressed`.",
+          "descriptionAr": "هل هو مضغوط في البداية (غير متحكَّم به)."
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "default": null,
+          "required": false,
+          "description": "Whether the component should ignore user interaction.",
+          "descriptionAr": "يتجاهل كل تفاعل."
+        },
+        {
+          "name": "onPressedChange",
+          "type": "(pressed, details) => void",
+          "default": null,
+          "required": false,
+          "description": "Callback fired when the pressed state is changed.",
+          "descriptionAr": "يُستدعى عند الضغط عليه أو تحريره."
+        },
+        {
+          "name": "render",
+          "type": "ReactElement | function",
+          "default": null,
+          "required": false,
+          "description": "Allows you to replace the component's HTML element with a different tag, or compose it with another component. Accepts a `ReactElement` or a function that returns the element to render.",
+          "descriptionAr": "يتيح لك استبدال عنصر HTML الخاص بالمكوّن بوسم آخر. من Base UI."
         }
       ]
     }

@@ -93,6 +93,20 @@ test("the Arabic API descriptions have no English words", async () => {
     "date-picker",
     "carousel",
     "filtration",
+    // The Phase 7 components (0.7.0).
+    "slider",
+    "digital-stamp",
+    "popover",
+    "hover-card",
+    "alert-dialog",
+    "context-menu",
+    "toggle",
+    "toggle-group",
+    "combobox",
+    "command",
+    "input-otp",
+    "input-group",
+    "button-group",
   ];
   for (const [slug, parts] of Object.entries(api)) {
     if (!phase5.includes(slug)) continue;

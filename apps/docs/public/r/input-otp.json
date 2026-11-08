@@ -1,0 +1,24 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "input-otp",
+  "title": "Input OTP",
+  "description": "Platform Code extension on Base UI OTP Field: a one-time code in separate Input boxes with separators, paste and Arabic-Indic digit input. The boxes always run left to right.",
+  "dependencies": [
+    "@base-ui/react",
+    "class-variance-authority"
+  ],
+  "registryDependencies": [
+    "https://dga.omqkhafi.dev/r/utils.json",
+    "https://dga.omqkhafi.dev/r/input.json",
+    "https://dga.omqkhafi.dev/r/number-input.json"
+  ],
+  "files": [
+    {
+      "path": "bases/base/ui/input-otp.tsx",
+      "content": "\"use client\";\n\nimport { OTPField as OTPFieldPrimitive } from \"@base-ui/react/otp-field\";\nimport * as React from \"react\";\nimport { inputVariants } from \"@/components/dga/input\";\nimport { normalizeDigits } from \"@/components/dga/number-input\";\nimport { cn } from \"@/registry/bases/base/lib/utils\";\n\ntype InputOTPProps = Omit<\n  OTPFieldPrimitive.Root.Props,\n  \"length\" | \"children\" | \"validationType\" | \"inputMode\"\n> & {\n  /** How many characters. Default 6. */\n  length?: number;\n  /** Height of the boxes: `md` 32px or `lg` 40px (the Input sizes). */\n  size?: \"md\" | \"lg\";\n  /**\n   * Where to put separators, as the number of boxes before each one. `[3]` on six boxes gives\n   * 3 + 3. Default: none.\n   */\n  groups?: number[];\n  /**\n   * Accessible name of boxes 2 and up. `{index}` and `{length}` are replaced, for example\n   * \"Digit 2 of 6\". The first box is named by the Field label or the group's `aria-label`.\n   */\n  slotLabel?: string;\n  /** Marks the code as wrong: red border and underline on every box. */\n  invalid?: boolean;\n};\n\n/**\n * A one-time code in separate boxes, for example an SMS code (Platform Code extension, on Base UI\n * OTP Field). Typing moves to the next box, Backspace to the previous one, and pasting fills them\n * all. Arabic-Indic digits (٣) become Western ones (3). The boxes always run left to right, also on\n * Arabic pages, because that is the order digits are read and sent. The boxes follow the Input\n * states and work inside a Field: the FieldLabel names the first box.\n */\nfunction InputOTP({\n  className,\n  length = 6,\n  size = \"lg\",\n  groups,\n  slotLabel = \"Digit {index} of {length}\",\n  invalid,\n  normalizeValue,\n  ...props\n}: InputOTPProps) {\n  const separators = new Set(groups ?? []);\n  return (\n    <OTPFieldPrimitive.Root\n      data-slot=\"input-otp\"\n      length={length}\n      dir=\"ltr\"\n      // Base UI filters by validationType before it normalizes, so \"numeric\" would drop ٣ before\n      // it could become 3. Filtering is done here instead: Western digits only.\n      validationType=\"none\"\n      inputMode=\"numeric\"\n      normalizeValue={(value) =>\n        normalizeDigits(normalizeValue ? normalizeValue(value) : value).replace(/\\D/g, \"\")\n      }\n      className={cn(\"flex w-fit max-w-full items-center gap-2\", className)}\n      {...props}\n    >\n      {Array.from({ length }, (_, index) => (\n        // biome-ignore lint/suspicious/noArrayIndexKey: boxes are positional\n        <React.Fragment key={index}>\n          {index > 0 && separators.has(index) ? (\n            <OTPFieldPrimitive.Separator\n              data-slot=\"input-otp-separator\"\n              className=\"h-0.5 w-3 shrink-0 rounded-full bg-icon-default-500\"\n            />\n          ) : null}\n          <div\n            data-slot=\"input-otp-slot\"\n            data-size={size}\n            className={cn(inputVariants({ size }), \"w-10 shrink justify-center px-0 data-[size=md]:w-8\")}\n          >\n            <OTPFieldPrimitive.Input\n              data-slot=\"input-otp-input\"\n              // The first box is named by the Field label or the group name; Base UI ignores\n              // aria-label there.\n              aria-label={\n                index === 0\n                  ? undefined\n                  : slotLabel\n                      .replace(\"{index}\", String(index + 1))\n                      .replace(\"{length}\", String(length))\n              }\n              aria-invalid={invalid ? true : undefined}\n              className=\"h-full min-w-0 flex-1 bg-transparent p-0 text-inherit [outline:0_none] placeholder:text-(--field-placeholder) disabled:cursor-not-allowed disabled:text-text-default-disabled disabled:placeholder:text-text-default-disabled read-only:text-field-text-readonly [&::-webkit-search-cancel-button]:appearance-none [&::-webkit-search-decoration]:appearance-none w-full text-center\"\n            />\n          </div>\n        </React.Fragment>\n      ))}\n    </OTPFieldPrimitive.Root>\n  );\n}\n\nexport type { InputOTPProps };\nexport { InputOTP };\n",
+      "type": "registry:ui",
+      "target": "components/dga/input-otp.tsx"
+    }
+  ],
+  "type": "registry:ui"
+}

@@ -1,0 +1,24 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "button-group",
+  "title": "Button Group",
+  "description": "Platform Code extension: related DGA Buttons joined into one block with shared edges, a text segment and a separator, horizontal or vertical.",
+  "dependencies": [
+    "@base-ui/react",
+    "class-variance-authority"
+  ],
+  "registryDependencies": [
+    "https://dga.omqkhafi.dev/r/utils.json",
+    "https://dga.omqkhafi.dev/r/button.json",
+    "https://dga.omqkhafi.dev/r/divider.json"
+  ],
+  "files": [
+    {
+      "path": "bases/base/ui/button-group.tsx",
+      "content": "import { cva, type VariantProps } from \"class-variance-authority\";\nimport type * as React from \"react\";\nimport { Divider } from \"@/components/dga/divider\";\nimport { cn } from \"@/registry/bases/base/lib/utils\";\n\nconst buttonGroupVariants = cva(\"gap-0 [&>*]:rounded-none [&>*]:focus-visible:z-10 [&>*]:hover:z-10 [&>[aria-pressed=true]]:z-10 data-[orientation=horizontal]:[&>*:first-child]:rounded-s-sm data-[orientation=horizontal]:[&>*:last-child]:rounded-e-sm data-[orientation=horizontal]:[&>*:not(:first-child)]:-ms-px data-[orientation=vertical]:[&>*:first-child]:rounded-t-sm data-[orientation=vertical]:[&>*:last-child]:rounded-b-sm data-[orientation=vertical]:[&>*:not(:first-child)]:-mt-px flex w-fit max-w-full items-stretch\", {\n  variants: {\n    orientation: {\n      horizontal: \"flex-row\",\n      vertical: \"flex-col\",\n    },\n  },\n  defaultVariants: { orientation: \"horizontal\" },\n});\n\ntype ButtonGroupProps = React.ComponentProps<\"div\"> & VariantProps<typeof buttonGroupVariants>;\n\n/**\n * Joins related Buttons into one block with shared edges (Platform Code extension). Put Buttons,\n * a ButtonGroupText and a ButtonGroupSeparator inside. It is only layout: each Button keeps its\n * own action. Use a Toggle Group when the buttons are pressed on and off, and a Content Switcher\n * when exactly one option is always chosen. Name the group with `aria-label`.\n */\nfunction ButtonGroup({ className, orientation = \"horizontal\", ...props }: ButtonGroupProps) {\n  return (\n    // biome-ignore lint/a11y/useSemanticElements: a fieldset would add its own border and legend layout\n    <div\n      role=\"group\"\n      data-slot=\"button-group\"\n      data-orientation={orientation}\n      className={cn(buttonGroupVariants({ orientation }), className)}\n      {...props}\n    />\n  );\n}\n\n/** A non-interactive text segment, such as a count or a label, drawn like the buttons. */\nfunction ButtonGroupText({ className, ...props }: React.ComponentProps<\"div\">) {\n  return (\n    <div\n      data-slot=\"button-group-text\"\n      className={cn(\"inline-flex min-h-8 items-center gap-2 border border-border-neutral-primary bg-background-neutral-100 px-buttons-md-padding text-sm font-medium whitespace-nowrap text-text-default [&_svg]:size-5 [&_svg]:shrink-0\", className)}\n      {...props}\n    />\n  );\n}\n\n/** A thin line between two buttons that share a fill, so their edge stays visible. */\nfunction ButtonGroupSeparator({\n  className,\n  orientation = \"vertical\",\n  ...props\n}: React.ComponentProps<typeof Divider>) {\n  return (\n    <Divider\n      data-slot=\"button-group-separator\"\n      orientation={orientation}\n      className={cn(\"self-stretch\", className)}\n      {...props}\n    />\n  );\n}\n\nexport type { ButtonGroupProps };\nexport { ButtonGroup, ButtonGroupSeparator, ButtonGroupText, buttonGroupVariants };\n",
+      "type": "registry:ui",
+      "target": "components/dga/button-group.tsx"
+    }
+  ],
+  "type": "registry:ui"
+}

@@ -4076,9 +4076,9 @@
   },
   {
     "area": "Components",
-    "item": "Header: no official site strip, Header Menu and Nav Drawer composed",
-    "original": "The spec has no \"official site\" strip. The Second Nav Header is the strip above the primary navigation. Header Menu (a chevron button) and the Nav Drawer are separate components.",
-    "ours": "Header takes a `top` slot for a Second Nav and renders no strip of its own. The chevron is part of the menu item and the sub-menu is the DGA Menu. On narrow screens the navigation is the DGA Drawer with expandable parents; Level 2 links are indented.",
+    "item": "Header: official site strip, Header Menu and Nav Drawer composed",
+    "original": "The official site strip is the separate Digital Stamp component, and the Second Nav Header is the strip above the primary navigation. Header Menu (a chevron button) and the Nav Drawer are separate components.",
+    "ours": "Header takes a `stamp` slot for the Digital Stamp (0.7.0) and a `top` slot for a Second Nav, and renders no strip of its own. The chevron is part of the menu item and the sub-menu is the DGA Menu. On narrow screens the navigation is the DGA Drawer with expandable parents; Level 2 links are indented.",
     "reason": "Reusing Menu and Drawer keeps the focus, dismissal and mirroring behaviour in one place instead of copying it into the header.",
     "status": "fixed",
     "component": "header"
@@ -4190,5 +4190,104 @@
     "reason": "The spec has the button only. The panel is composed from the DGA Checkbox, Radio, Select, Input, Tag and Drawer so it needs no new colour.",
     "status": "fixed",
     "component": "filtration"
+  },
+  {
+    "area": "Extensions",
+    "item": "popover",
+    "original": "Not defined by DGA",
+    "ours": "Extension, new, no DGA source: the DGA Menu surface (background-menu, border, radius-md, shadow-2xl) with the Tooltip beak",
+    "reason": "There is no DGA specification to compare it with. It adds no token: every colour comes from an existing DGA token.",
+    "status": "fixed",
+    "component": "popover"
+  },
+  {
+    "area": "Extensions",
+    "item": "hover-card",
+    "original": "Not defined by DGA",
+    "ours": "Extension, new, no DGA source: the Popover surface, opened by hover or focus on a primary link",
+    "reason": "There is no DGA specification to compare it with. It adds no token: every colour comes from an existing DGA token.",
+    "status": "fixed",
+    "component": "hover-card"
+  },
+  {
+    "area": "Extensions",
+    "item": "alert-dialog",
+    "original": "Not defined by DGA",
+    "ours": "Extension, new, no DGA source: the DGA Dialog (Modal) with the alert dialog behaviour and the Button",
+    "reason": "There is no DGA specification to compare it with. It adds no token: every colour comes from an existing DGA token.",
+    "status": "fixed",
+    "component": "alert-dialog"
+  },
+  {
+    "area": "Extensions",
+    "item": "context-menu",
+    "original": "Not defined by DGA",
+    "ours": "Extension, new, no DGA source: the DGA Menu list, opened by right-click, long-press or the Menu key",
+    "reason": "There is no DGA specification to compare it with. It adds no token: every colour comes from an existing DGA token.",
+    "status": "fixed",
+    "component": "context-menu"
+  },
+  {
+    "area": "Components",
+    "item": "Slider track, fill and thumb colours",
+    "original": "The Figma Slider page lists only the label and helper text tokens (field-text-label)",
+    "ours": "Track --control-border, fill and thumb --control-primary-checked (hovered and pressed variants), thumb ring --control-thumb",
+    "reason": "The spec gives no colours for the track and thumb. The Switch control tokens are reused, so the track and the fill are 3:1 or better on every surface (WCAG 1.4.11) in light and dark. No new token.",
+    "status": "fixed",
+    "component": "slider"
+  },
+  {
+    "area": "Extensions",
+    "item": "Toggle and Toggle Group pressed state",
+    "original": "Not defined by DGA (the Button has aria-pressed fills in the spec)",
+    "ours": "The Button selected fill plus a 1px --border-black border",
+    "reason": "The Button selected fill is background-neutral-selected, which is 1.2:1 against the page in light mode, so a pressed toggle would be told apart by colour alone. The dark border (3:1 or better) is a second cue. Uses an existing token: new behaviour, no new colour.",
+    "status": "fixed",
+    "component": "toggle"
+  },
+  {
+    "area": "Extensions",
+    "item": "Combobox (new component)",
+    "original": "—",
+    "ours": "Field, arrow and clear button from Input and Select; list from Select; chips from the neutral Tag.",
+    "reason": "New, no DGA source. DGA has no searchable select. Every colour is an existing DGA token and no token was added.",
+    "status": "fixed",
+    "component": "combobox"
+  },
+  {
+    "area": "Extensions",
+    "item": "Combobox: creatable mode",
+    "original": "—",
+    "ours": "A create row with a plus icon when the typed text matches no option.",
+    "reason": "New, no DGA source. shadcn's registry has no creatable combobox; the behaviour follows Base UI's creatable recipe.",
+    "status": "fixed",
+    "component": "combobox"
+  },
+  {
+    "area": "Extensions",
+    "item": "Command (new component)",
+    "original": "—",
+    "ours": "Search Box over a Menu-style list of actions, with a dialog form.",
+    "reason": "New, no DGA source. DGA has no command menu. Items follow Menu; a 2px start bar marks the highlighted action because focus stays in the search box and the Menu tint alone is 1.1:1. No token was added.",
+    "status": "fixed",
+    "component": "command"
+  },
+  {
+    "area": "Components",
+    "item": "Digital Stamp: wording, flag icon and the https and registration rows",
+    "original": "Figma draws the 32px strip, its opened state and the domain Extension part; no text",
+    "ours": "English defaults for every string (all props), a Hugeicons flag, lock and security-check icon, and three rows in the opened panel.",
+    "reason": "New, no DGA source. The spec gives the layout and tokens, not the wording or artwork. The wording is ours; DGA's registration and domain purposes are taken from the spec's description.",
+    "status": "fixed",
+    "component": "digital-stamp"
+  },
+  {
+    "area": "Components",
+    "item": "Digital Stamp: opened state and mobile layout",
+    "original": "A separate Opened frame, a Mobile frame, and the Extension part as an 88px bar",
+    "ours": "One component: the strip wraps on narrow screens and the Extension part is the first row of the panel.",
+    "reason": "One responsive component instead of four frames. The tokens (background-neutral-100, text-default, section-padding, icon-success) are DGA's.",
+    "status": "fixed",
+    "component": "digital-stamp"
   }
 ]

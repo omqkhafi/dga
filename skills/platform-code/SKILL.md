@@ -44,3 +44,4 @@ Components install to `components/dga/<name>.tsx`, never `components/ui`, so the
 - Do not edit generated token files by hand.
 - Do not replace a registry component with plain HTML to avoid reading its page.
 - Do not add physical (left/right) properties to make a layout "work" in one direction.
+- **Extensions (0.7.0), not part of DGA:** Popover, Hover Card, Alert Dialog, Context Menu, Toggle, Toggle Group, Combobox (`multiple`, `creatable`), Command (`CommandDialog`; bind Ctrl/Cmd+K yourself), Input OTP (digits stay left to right), Input Group and Button Group. **DGA-defined, new in 0.7.0:** Slider (`value` is a number or `[min, max]`) and Digital Stamp (pass it to Header as `stamp`). All their texts are props.
