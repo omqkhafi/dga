@@ -2213,15 +2213,15 @@
   .cn-header-action {
     @apply relative inline-flex h-18 cursor-pointer items-center justify-center gap-1 overflow-hidden rounded-sm border-0 bg-transparent px-4 py-2 text-md font-medium whitespace-nowrap text-text-default no-underline;
     @apply after:pointer-events-none after:absolute after:inset-x-2 after:bottom-0 after:h-1.5 after:rounded-full after:bg-transparent after:content-[''];
-    @apply hover:bg-button-background-neutral-hovered hover:after:bg-background-neutral-400 active:bg-button-background-neutral-pressed active:after:bg-background-neutral-800;
+    @apply hover:bg-button-background-neutral-hovered hover:after:bg-icon-default-500 active:bg-button-background-neutral-pressed active:after:bg-icon-default;
     @apply focus-visible:outline-2 focus-visible:outline-solid focus-visible:-outline-offset-2 focus-visible:outline-border-black;
-    @apply data-current:bg-button-background-primary-default data-current:text-text-oncolor-primary data-current:after:bg-background-primary-400 data-current:[&_svg]:text-icon-oncolor data-current:hover:bg-button-background-primary-hovered data-current:hover:after:bg-background-primary-400 data-current:active:bg-button-background-primary-pressed data-current:active:after:bg-background-primary-400 data-current:focus-visible:after:bg-background-primary-400;
+    @apply data-current:bg-button-background-primary-default data-current:text-text-oncolor-primary data-current:after:bg-primary-sa-flag-200 data-current:[&_svg]:text-icon-oncolor data-current:hover:bg-button-background-primary-hovered data-current:hover:after:bg-primary-sa-flag-200 data-current:active:bg-button-background-primary-pressed data-current:active:after:bg-primary-sa-flag-200 data-current:focus-visible:after:bg-primary-sa-flag-200;
     @apply disabled:pointer-events-none disabled:cursor-not-allowed disabled:bg-transparent disabled:text-text-default-disabled disabled:[&_svg]:text-icon-default-disabled disabled:data-current:bg-transparent disabled:data-current:text-text-default-disabled disabled:data-current:[&_svg]:text-icon-default-disabled disabled:data-current:after:bg-background-neutral-100;
     @apply aria-disabled:pointer-events-none aria-disabled:cursor-not-allowed aria-disabled:bg-transparent aria-disabled:text-text-default-disabled aria-disabled:[&_svg]:text-icon-default-disabled aria-disabled:data-current:bg-transparent aria-disabled:data-current:text-text-default-disabled aria-disabled:data-current:[&_svg]:text-icon-default-disabled aria-disabled:data-current:after:bg-background-neutral-100;
     @apply transition-colors motion-reduce:transition-none;
   }
   .cn-header-item {
-    @apply data-popup-open:bg-button-background-neutral-hovered data-popup-open:after:bg-background-neutral-800;
+    @apply data-popup-open:bg-button-background-neutral-hovered data-popup-open:after:bg-icon-default;
   }
   .cn-header-action {
     @apply data-[icon-position=top]:flex-col data-[icon-position=top]:gap-1;
