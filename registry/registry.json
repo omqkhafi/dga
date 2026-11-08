@@ -957,6 +957,62 @@
           "target": "components/dga/filtration.tsx"
         }
       ]
+    },
+    {
+      "name": "combobox",
+      "type": "registry:ui",
+      "title": "Combobox",
+      "description": "Platform Code extension (not in DGA) on Base UI Combobox: a searchable select with the DGA Input box and Select list. Single, multiple with removable chips, groups, creatable, async loading, clear button, Arabic-aware search.",
+      "dependencies": ["@base-ui/react", "@hugeicons/react", "@hugeicons/core-free-icons"],
+      "registryDependencies": [
+        "{{REGISTRY_URL}}/r/utils.json",
+        "{{REGISTRY_URL}}/r/direction.json",
+        "{{REGISTRY_URL}}/r/input.json",
+        "{{REGISTRY_URL}}/r/spinner.json"
+      ],
+      "files": [
+        {
+          "path": "bases/base/ui/combobox.tsx",
+          "type": "registry:ui",
+          "target": "components/dga/combobox.tsx"
+        }
+      ]
+    },
+    {
+      "name": "command",
+      "type": "registry:ui",
+      "title": "Command",
+      "description": "Platform Code extension (not in DGA) on Base UI Autocomplete, no cmdk: a Search Box over a Menu-style list of actions with groups, icons and shortcuts, and a CommandDialog palette. Arrow keys, Enter runs the action, Arabic-aware search.",
+      "dependencies": ["@base-ui/react", "@hugeicons/react", "@hugeicons/core-free-icons"],
+      "registryDependencies": [
+        "{{REGISTRY_URL}}/r/utils.json",
+        "{{REGISTRY_URL}}/r/direction.json",
+        "{{REGISTRY_URL}}/r/input.json",
+        "{{REGISTRY_URL}}/r/combobox.json",
+        "{{REGISTRY_URL}}/r/dialog.json"
+      ],
+      "files": [
+        {
+          "path": "bases/base/ui/command.tsx",
+          "type": "registry:ui",
+          "target": "components/dga/command.tsx"
+        }
+      ]
+    },
+    {
+      "name": "digital-stamp",
+      "type": "registry:ui",
+      "title": "Digital Stamp",
+      "description": "DGA Digital Stamp: the official-site strip with a disclosure panel that explains how to check the domain (gov.sa, edu.sa and the rest), https and registration. Goes in the Header's stamp slot.",
+      "dependencies": ["@hugeicons/react", "@hugeicons/core-free-icons"],
+      "registryDependencies": ["{{REGISTRY_URL}}/r/utils.json"],
+      "files": [
+        {
+          "path": "bases/base/ui/digital-stamp.tsx",
+          "type": "registry:ui",
+          "target": "components/dga/digital-stamp.tsx"
+        }
+      ]
     }
   ]
 }
