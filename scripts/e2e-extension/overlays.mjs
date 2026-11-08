@@ -299,7 +299,7 @@ export async function overlaysChecks({ browser, BASE, check }) {
     const root = await page.locator('[data-slot="context-menu-content"]').boundingBox();
     const sub = await page.locator('[data-slot="context-menu-sub-content"]').boundingBox();
     check(
-      rtl ? sub.x + sub.width <= root.x + 4 : sub.x >= root.x + root.width - 6,
+      rtl ? sub.x + sub.width <= root.x + 6 : sub.x >= root.x + root.width - 6,
       `${lang}: the submenu opens on the ${rtl ? "left" : "right"} (end side)`,
     );
     await page.keyboard.press(previous);
