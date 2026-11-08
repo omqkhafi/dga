@@ -455,7 +455,7 @@ export const en = {
   "bento.privacy": "Privacy",
   "bento.accessibility": "Accessibility statement",
 
-  // Component previews: default strings of the components, by page language
+  // Component previews: default strings of the components, in the preview content language (RTL is Arabic, LTR is English)
   "ui.optional": "Optional",
   "ui.clearSearch": "Clear search",
   "ui.decrease": "Decrease",

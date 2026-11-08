@@ -15,13 +15,17 @@
 //      region.
 //   7. AI Resources: the AI pages, the skills index and its digest, llms.json, llms.txt,
 //      Accept: text/markdown, the Link header, WebMCP and the Copy page menu.
-//   8. Polish: locale purity (no Arabic on English pages, no English words on Arabic ones,
-//      previews and the hero card included), the hero on registry components, RTL comparisons
+//   8. Polish: locale purity (no Arabic on English pages, no English words on Arabic ones, the
+//      hero card included; previews checked against the language of their direction), the hero on registry components, RTL comparisons
 //      with no dead space, one size in the preview toolbar and centred single-trigger previews.
 //   9. Not found: /en/nope, /en/docs/nope, /ar/nope and /ar/docs/nope answer 404 in their own
 //      language (lang, dir, title, h1), both in the raw HTML and in the browser.
 //  10. Arabic exception: Deviation reasons and Contrast state labels stay English on Arabic
 //      pages, marked lang="en" (an accepted policy, see CONTRIBUTING.md).
+//  11. Preview content language: inside a preview the content follows the direction toggle
+//      (RTL is Arabic, LTR is English) on /en and /ar pages, the default view is the page
+//      language, the page around the frame stays in its own language, and every preview is
+//      pure in both directions (Field, Input, Select, Dialog, Toast and Tabs toggled in place).
 //   4. Forms: every form component page fits at 375 and 1280 px in both languages, and the
 //      service request form can be completed with the keyboard alone in /en and /ar.
 import { createHash } from "node:crypto";
@@ -853,8 +857,8 @@ async function aiResourceChecks() {
 // --------------------------------------------------------------------- Polish
 
 const ALLOWED = new Set(
-  JSON.parse(readFileSync(new URL("./locale-allowlist.json", import.meta.url), "utf8")).map((w) =>
-    w.toLowerCase(),
+  JSON.parse(readFileSync(new URL("./locale-allowlist.json", import.meta.url), "utf8")).words.map(
+    (w) => w.toLowerCase(),
   ),
 );
 // The digits (Arabic-Indic U+0660 to U+0669, Persian U+06F0 to U+06F9) are not words.
@@ -949,19 +953,36 @@ async function polishChecks() {
       const url = `${BASE}/${lang}${path}`;
       await page.goto(url, { waitUntil: "networkidle" });
       await scrollThrough(page);
-      const texts = [];
-      for (const frame of page.frames()) texts.push(await visibleText(frame, lang));
-      const text = texts.join(" ");
-      if (lang === "en") {
-        const found = text.match(new RegExp(`.{0,30}${ARABIC.source}+.{0,30}`));
-        check(!found, `${lang}${path}: no Arabic on the page, previews included (${found?.[0]})`);
-      } else {
-        const words = [...new Set(latinWords(text))];
+      // The page is checked against its own language. A preview frame is checked against the
+      // language its direction toggle selects (RTL is Arabic, LTR is English), which is the
+      // page language in the default view but not in the RTL comparison panels of an EN page.
+      const texts = { en: [], ar: [] };
+      for (const frame of page.frames()) {
+        if (frame === page.mainFrame()) {
+          texts[lang].push(await visibleText(frame, lang));
+          continue;
+        }
+        const root = await frame.evaluate(() => ({
+          lang: document.documentElement.lang,
+          dir: document.documentElement.dir,
+        }));
         check(
-          words.length === 0,
-          `${lang}${path}: no English words on the page, previews included (${words.slice(0, 8).join(", ")})`,
+          root.lang === (root.dir === "rtl" ? "ar" : "en"),
+          `${lang}${path}: a preview in ${root.dir} has content lang ${root.lang}`,
         );
+        if (root.lang === "en" || root.lang === "ar")
+          texts[root.lang].push(await visibleText(frame, root.lang));
       }
+      const found = texts.en.join(" ").match(new RegExp(`.{0,30}${ARABIC.source}+.{0,30}`));
+      check(
+        !found,
+        `${lang}${path}: no Arabic in English text, LTR previews included (${found?.[0]})`,
+      );
+      const words = [...new Set(latinWords(texts.ar.join(" ")))];
+      check(
+        words.length === 0,
+        `${lang}${path}: no English words in Arabic text, RTL previews included (${words.slice(0, 8).join(", ")})`,
+      );
       check(
         (await page.evaluate(
           () => document.documentElement.scrollWidth - document.documentElement.clientWidth,
@@ -1183,6 +1204,141 @@ async function arabicExceptionChecks() {
   await context.close();
 }
 
+// ------------------------------------------------------------- Preview content language
+
+/**
+ * Inside a preview the content language follows the direction toggle: RTL renders the Arabic
+ * sample content (lang="ar") and LTR the English one (lang="en"), on /en and /ar pages alike.
+ * The default direction is the page's. Everything outside the frame (prose, headings, code,
+ * the toolbar and the example titles) stays in the page language. Each direction is pure.
+ */
+async function previewLanguageChecks() {
+  const components = ["field", "input", "select", "dialog", "toast", "tabs"];
+  const frameState = (frame) =>
+    frame.evaluate(() => ({
+      lang: document.documentElement.lang,
+      dir: document.documentElement.dir,
+    }));
+  const purity = async (frame, contentLang) => {
+    const text = await visibleText(frame, contentLang);
+    if (contentLang === "en") {
+      const found = text.match(new RegExp(`.{0,25}${ARABIC.source}+.{0,25}`));
+      return found ? [found[0]] : [];
+    }
+    return [...new Set(latinWords(text))];
+  };
+  for (const lang of ["en", "ar"]) {
+    const pageDir = lang === "ar" ? "rtl" : "ltr";
+    const context = await browser.newContext({ viewport: { width: 1280, height: 900 } });
+    const page = await context.newPage();
+    for (const component of components) {
+      const tag = `${lang}/${component}`;
+      await page.goto(`${BASE}/${lang}/docs/components/${component}`, { waitUntil: "networkidle" });
+      const figure = page.locator("figure[data-preview]").first();
+      await figure.scrollIntoViewIfNeeded();
+      await figure.locator("iframe").waitFor();
+      const name = await figure.getAttribute("data-preview");
+      const frameOf = async () => {
+        const handle = await figure.locator("iframe").elementHandle();
+        return handle.contentFrame();
+      };
+      const outside = async () => ({
+        lang: await page.evaluate(() => document.documentElement.lang),
+        caption: (await figure.locator("figcaption").first().textContent()) ?? "",
+        heading: (await page.locator("main h2").first().textContent()) ?? "",
+      });
+      const before = await outside();
+      // Default: the page's own direction, so the content is in the page language.
+      let frame = await frameOf();
+      await page.waitForTimeout(300);
+      let state = await frameState(frame);
+      check(
+        state.dir === pageDir && state.lang === lang,
+        `${tag}: ${name} opens in ${pageDir} with ${lang} content (got ${state.dir} ${state.lang})`,
+      );
+      for (const dir of ["rtl", "ltr", pageDir]) {
+        const contentLang = dir === "rtl" ? "ar" : "en";
+        const toggle = figure.locator("[data-slot=content-switcher]").first();
+        await toggle
+          .locator("[data-slot=content-switcher-item]")
+          .nth(dir === "ltr" ? 0 : 1)
+          .click();
+        await page.waitForTimeout(400);
+        frame = await frameOf();
+        state = await frameState(frame);
+        check(
+          state.dir === dir && state.lang === contentLang,
+          `${tag}: toggled to ${dir}, ${name} has dir=${dir} lang=${contentLang} (got ${state.dir} ${state.lang})`,
+        );
+        const bad = await purity(frame, contentLang);
+        check(
+          bad.length === 0,
+          `${tag}: ${name} in ${dir} is pure ${contentLang} (${bad.slice(0, 6).join(", ")})`,
+        );
+        const after = await outside();
+        check(
+          after.lang === lang &&
+            after.caption === before.caption &&
+            after.heading === before.heading,
+          `${tag}: in ${dir}, the page, the example title and the headings stay ${lang}`,
+        );
+        const pageText = await visibleText(page.mainFrame(), lang);
+        if (lang === "en")
+          check(
+            !ARABIC.test(pageText),
+            `${tag}: in ${dir}, the English page around it has no Arabic`,
+          );
+        else
+          check(
+            latinWords(pageText).length === 0,
+            `${tag}: in ${dir}, the Arabic page around it has no English words`,
+          );
+      }
+      // Fullscreen opens the same direction and content language.
+      await figure
+        .locator("[data-slot=content-switcher]")
+        .first()
+        .locator("[data-slot=content-switcher-item]")
+        .nth(1)
+        .click();
+      const href = await figure.locator("a[target=_blank]").first().getAttribute("href");
+      check(
+        href.includes("dir=rtl") && href.includes("lang=ar"),
+        `${tag}: fullscreen in RTL opens the Arabic content (${href})`,
+      );
+    }
+    await context.close();
+  }
+
+  // Every preview, both directions: the frame sets lang from dir and holds one language only.
+  const names = [
+    ...readFileSync(
+      new URL("../apps/docs/components/previews/index.tsx", import.meta.url),
+      "utf8",
+    ).matchAll(/^\s+"?([a-z-]+)"?: [A-Z]\w+,$/gm),
+  ].map((m) => m[1]);
+  check(names.length > 50, `every preview is listed (${names.length})`);
+  const context = await browser.newContext({ viewport: { width: 1000, height: 800 } });
+  const page = await context.newPage();
+  for (const name of names) {
+    for (const dir of ["ltr", "rtl"]) {
+      const contentLang = dir === "rtl" ? "ar" : "en";
+      await page.goto(`${BASE}/preview/${name}?dir=${dir}`, { waitUntil: "networkidle" });
+      const state = await frameState(page.mainFrame());
+      check(
+        state.dir === dir && state.lang === contentLang,
+        `preview ${name} ${dir}: lang ${contentLang} (got ${state.lang})`,
+      );
+      const bad = await purity(page.mainFrame(), contentLang);
+      check(
+        bad.length === 0,
+        `preview ${name} ${dir}: pure ${contentLang} (${bad.slice(0, 6).join(", ")})`,
+      );
+    }
+  }
+  await context.close();
+}
+
 await localeChecks();
 await layoutChecks();
 await aiResourceChecks();
@@ -1194,6 +1350,7 @@ await keyboardChecks();
 await interactiveChecks();
 await notFoundChecks();
 await arabicExceptionChecks();
+await previewLanguageChecks();
 await browser.close();
 console.log(`${passed} checks passed, ${failures.length} failed.`);
 process.exit(failures.length ? 1 : 0);
