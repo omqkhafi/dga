@@ -58,6 +58,9 @@ import {
   SkeletonDemo,
   SkeletonLayouts,
 } from "./display";
+import { inputsPreviews } from "./ext-inputs";
+import { miscPreviews } from "./ext-misc";
+import { overlaysPreviews } from "./ext-overlays";
 import {
   CheckboxGroupDemo,
   CheckboxSizes,
@@ -141,6 +144,9 @@ import { StatusColors } from "./status";
 import { StatusTags, TagDismiss, TagVariants } from "./tag";
 
 export const previews = {
+  ...overlaysPreviews,
+  ...inputsPreviews,
+  ...miscPreviews,
   "header-basic": HeaderBasic,
   "header-submenu": HeaderSubmenu,
   "header-submenu-green": HeaderSubmenuGreen,

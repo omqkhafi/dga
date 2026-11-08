@@ -1,0 +1,18 @@
+---
+title: Extensions
+description: Components DGA does not define, added by Platform Code and derived from DGA tokens and components. Each one is marked with an Extension badge.
+---
+
+DGA defines a fixed set of components. Platform Code adds a few more that shadcn users expect (a popover, a combobox, a toggle group) and builds them from DGA parts so they sit naturally on a government page. They are **Platform Code extensions, not part of DGA**: there is no DGA specification to compare them with, and an extension can change in a future release if DGA publishes its own version.
+
+## Rules for an extension
+
+- **No new colours.** Every colour comes from an existing DGA semantic token. If a token had to be added, it is listed on the [Deviations](/docs/deviations) page under Extensions as "new, no DGA source".
+- **The nearest DGA component sets the look.** Popovers follow Menu and Tooltip, inputs follow the Input field states, toggles follow Button, and command and combobox lists follow Menu and Select.
+- **DGA wins where it has a component.** Dialog, Drawer, Tooltip, Menu, Select, Checkbox, Radio, Switch and the others have no shadcn duplicate here.
+- **The same rules as every component:** Base UI, the `cn-*` classes, RTL and LTR, light and dark, the contrast audit, and English and Arabic docs.
+- Every extension page starts with a note that says it is an extension, and shows an Extension badge in the sidebar and in the page header.
+
+## All extensions and how each is derived
+
+<ExtensionsTable />

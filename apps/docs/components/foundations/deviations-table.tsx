@@ -14,6 +14,7 @@ const AREA_KEYS: Record<string, Key> = {
   Breakpoints: "dev.area.breakpoints",
   Components: "dev.area.components",
   Contrast: "dev.area.contrast",
+  Extensions: "dev.area.extensions",
   "Dark theme": "dev.area.darkTheme",
   Naming: "dev.area.naming",
   Tailwind: "dev.area.tailwind",

@@ -1,4 +1,5 @@
 import { COMPONENT_ADDITIONS, COMPONENT_DEVIATIONS, COMPONENT_OVERRIDES } from "./component-fixes";
+import { EXTENSION_ADDITIONS, EXTENSION_DEVIATIONS } from "./extensions";
 
 // Every place where Platform Code intentionally differs from the DGA Figma source.
 // Each entry is applied by the generator AND listed on the docs "Deviations from DGA" page,
@@ -13,7 +14,8 @@ export type DeviationArea =
   | "Theming"
   | "Dark theme"
   | "Tailwind"
-  | "Components";
+  | "Components"
+  | "Extensions";
 
 export type Deviation = {
   area: DeviationArea;
@@ -330,6 +332,7 @@ export const ADDITIONS: Addition[] = [
       "White on the gold fill (background-secondary, gold-600) is 2.30:1. Text on gold uses black (7.85:1), which keeps the brand gold fill.",
   },
   ...COMPONENT_ADDITIONS,
+  ...EXTENSION_ADDITIONS,
 ];
 
 // ---------------------------------------------------------------------------
@@ -860,4 +863,5 @@ export const OTHER_DEVIATIONS: Deviation[] = [
   ...COMPONENT_DEVIATIONS,
   ...NAVIGATION_DEVIATIONS,
   ...COMPOSITE_DEVIATIONS,
+  ...EXTENSION_DEVIATIONS,
 ];

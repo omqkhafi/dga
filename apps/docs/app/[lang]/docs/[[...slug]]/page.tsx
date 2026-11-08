@@ -12,6 +12,7 @@ import { CopyPage } from "@/components/shell/copy-page";
 import { InlineToc, Toc } from "@/components/shell/toc";
 import { latestVersion } from "@/lib/changelog";
 import { getT } from "@/lib/dictionary";
+import { isExtensionPath } from "@/lib/extension-slugs";
 import api from "@/lib/generated/api.json";
 import { isLocale, type Locale, locales } from "@/lib/i18n";
 import { lastUpdated } from "@/lib/last-updated";
@@ -19,6 +20,7 @@ import { FIGMA_URL, orderedPages, RELATED } from "@/lib/nav";
 import { gitConfig, siteUrl } from "@/lib/shared";
 import { source } from "@/lib/source";
 import { translationStatus } from "@/lib/translations";
+import { Badge } from "@/registry/bases/base/ui/badge";
 import { Button } from "@/registry/bases/base/ui/button";
 import { Divider } from "@/registry/bases/base/ui/divider";
 import { Link } from "@/registry/bases/base/ui/link";
@@ -85,6 +87,13 @@ export default async function Page(props: PageProps<"/[lang]/docs/[[...slug]]">)
             <div className="flex items-start justify-between gap-6">
               <div className="flex min-w-0 flex-col gap-3">
                 <h1 className="t-h1 text-text-display">{page.data.title}</h1>
+                {isExtensionPath(page.url) ? (
+                  <div>
+                    <Badge variant="neutral" size="md" outlined title={t("ext.badgeTitle")}>
+                      {t("ext.badge")}
+                    </Badge>
+                  </div>
+                ) : null}
                 {page.data.description ? (
                   <p className="t-body max-w-xl text-text-primary-paragraph">
                     {page.data.description}

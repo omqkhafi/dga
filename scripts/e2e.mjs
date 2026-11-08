@@ -40,6 +40,9 @@
 import { createHash } from "node:crypto";
 import { readFileSync } from "node:fs";
 import { chromium } from "playwright";
+import { inputsChecks } from "./e2e-extension/inputs.mjs";
+import { miscChecks } from "./e2e-extension/misc.mjs";
+import { overlaysChecks } from "./e2e-extension/overlays.mjs";
 
 const BASE = process.env.E2E_BASE_URL ?? "http://localhost:3000";
 const failures = [];
@@ -2405,6 +2408,9 @@ await keyboardChecks();
 await interactiveChecks();
 await navigationChecks();
 await compositeChecks();
+await overlaysChecks({ browser, BASE, check });
+await inputsChecks({ browser, BASE, check });
+await miscChecks({ browser, BASE, check });
 await notFoundChecks();
 await arabicExceptionChecks();
 await previewLanguageChecks();
