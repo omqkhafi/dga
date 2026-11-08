@@ -12,6 +12,10 @@
 //   bun run test:install                                   local registry (needs network for npm)
 //   DGA_REGISTRY_URL=https://dga.omqkhafi.dev bun run test:install   test the production registry
 //   KEEP=1 bun run test:install                            keep the temp apps for inspection
+//   INSTALL_ITEMS=button,dialog bun run test:install       only those items and the scenarios that
+//                                                           involve them (pull requests; CI passes the
+//                                                           changed items plus their dependants).
+//                                                           Unset or "all": everything.
 
 import { cpSync, existsSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
@@ -99,6 +103,12 @@ const EXTENSION_ITEMS = [
 const PHASE7_DGA_ITEMS = ["slider", "digital-stamp"];
 const PHASE7_ITEMS = [...EXTENSION_ITEMS, ...PHASE7_DGA_ITEMS];
 const STOCK_PHASE7 = EXTENSION_ITEMS.concat("slider");
+
+/** INSTALL_ITEMS narrows the run to the changed items; unset or "all" runs everything. */
+const only = process.env.INSTALL_ITEMS;
+const selected = !only || only === "all" ? undefined : new Set(only.split(",").filter(Boolean));
+const wants = (names: string[]) => !selected || names.some((n) => selected.has(n));
+const installable = selected ? components.filter((c) => selected.has(c)) : components;
 
 const work = mkdtempSync(join(tmpdir(), "dga-install-"));
 const registryDir = join(work, "serve");
@@ -231,13 +241,13 @@ try {
       `${label}: components.json has the @dga registry`,
     );
     checkStyle(label, app);
-    if (components.length > 0) {
+    if (installable.length > 0) {
       const add =
-        await $`bunx ${shadcn} add ${components.map((c) => `@dga/${c}`)} --yes --overwrite < /dev/null`
+        await $`bunx ${shadcn} add ${installable.map((c) => `@dga/${c}`)} --yes --overwrite < /dev/null`
           .cwd(app)
           .nothrow()
           .quiet();
-      check(add.exitCode === 0, `${label}: shadcn add @dga/{${components.join(",")}}`);
+      check(add.exitCode === 0, `${label}: shadcn add @dga/{${installable.join(",")}}`);
       for (const item of FORM_ITEMS) {
         check(components.includes(item), `${label}: the registry has the form item ${item}`);
       }
@@ -254,18 +264,18 @@ try {
         check(components.includes(item), `${label}: the registry has the Phase 7 item ${item}`);
       }
       if (add.exitCode !== 0) console.error(add.stderr.toString() || add.stdout.toString());
-      for (const c of components) {
+      for (const c of installable) {
         const source = reader(app).text(`src/components/dga/${c}.tsx`);
         check(!/\bcn-[a-z]/.test(source.replace(/data-slot=|"cn"/g, "")), `${c}: cn-* inlined`);
         check(!/clsx|tailwind-merge/.test(source), `${c}: no clsx or tailwind-merge`);
       }
-      writeFileSync(join(app, "src/app/page.tsx"), smokePage(components));
+      writeFileSync(join(app, "src/app/page.tsx"), smokePage(installable));
     }
     await build(label, app);
   }
 
   // 4. one form control on its own: its dependencies come with it
-  {
+  if (wants(["number-input", "input", "field"])) {
     const label = "dga-form-control";
     const app = await fresh(label);
     await $`bunx ${shadcn} init ${url}/r/dga.json --yes --no-monorepo < /dev/null`.cwd(app).quiet();
@@ -311,7 +321,7 @@ export default function Page() {
   }
 
   // 4b. one interactive control on its own: the direction helper it needs comes with it
-  {
+  if (wants(["tabs"])) {
     const label = "dga-interactive-control";
     const app = await fresh(label);
     await $`bunx ${shadcn} init ${url}/r/dga.json --yes --no-monorepo < /dev/null`.cwd(app).quiet();
@@ -354,7 +364,7 @@ export default function Page() {
 
   // 4c. the Data Table on its own: Table, Pagination, Checkbox and Skeleton come with it, and so
   //     does the @tanstack/react-table dependency
-  {
+  if (wants(["data-table", "table", "pagination", "checkbox", "skeleton"])) {
     const label = "dga-data-table";
     const app = await fresh(label);
     await $`bunx ${shadcn} init ${url}/r/dga.json --yes --no-monorepo < /dev/null`.cwd(app).quiet();
@@ -404,7 +414,7 @@ export default function Page() {
 
   // 4d. composite items on their own: the @dga items each one uses come with it, and the Date
   //     Picker adds no date library
-  {
+  if (wants(COMPOSITE_ITEMS)) {
     const label = "dga-composite";
     const app = await fresh(label);
     await $`bunx ${shadcn} init ${url}/r/dga.json --yes --no-monorepo < /dev/null`.cwd(app).quiet();
@@ -484,7 +494,7 @@ export default function Page() {
 
   // 4e. Phase 7 items on their own: no cmdk or input-otp package comes with them, and the @dga
   //     items they use (dialog, button, menu, field, input, select) come along
-  {
+  if (wants(PHASE7_ITEMS)) {
     const label = "dga-extensions";
     const app = await fresh(label);
     await $`bunx ${shadcn} init ${url}/r/dga.json --yes --no-monorepo < /dev/null`.cwd(app).quiet();
@@ -519,7 +529,20 @@ export default function Page() {
 
   // 5. a project that already has stock shadcn button, input and dialog in components/ui:
   //    installing @dga items must not touch them, and must not import them.
-  {
+  if (
+    wants([
+      "button",
+      "field",
+      "dialog",
+      "table",
+      "card",
+      "pagination",
+      "breadcrumb",
+      "progress",
+      "carousel",
+      "date-picker",
+    ])
+  ) {
     const label = "dga-collision";
     const app = await fresh(label);
     await $`bunx ${shadcn} init --defaults --yes --no-monorepo < /dev/null`.cwd(app).quiet();
@@ -632,7 +655,7 @@ export default function Page() {
   // 5b. the same for the Phase 7 names: stock shadcn popover, hover-card, alert-dialog,
   //     context-menu, toggle, toggle-group, combobox, command, input-otp, input-group,
   //     button-group and slider sit in components/ui and must come out byte-identical.
-  {
+  if (wants(STOCK_PHASE7)) {
     const label = "dga-collision-extensions";
     const app = await fresh(label);
     await $`bunx ${shadcn} init --defaults --yes --no-monorepo < /dev/null`.cwd(app).quiet();
@@ -679,7 +702,7 @@ export default function Page() {
   }
 
   // 2. registry:style on its own
-  {
+  if (!selected) {
     const label = "dga-style";
     const app = await fresh(label);
     await $`bunx ${shadcn} init ${url}/r/dga-style.json --base base --rtl --yes --no-monorepo < /dev/null`
@@ -690,7 +713,7 @@ export default function Page() {
   }
 
   // 3. tokens only
-  {
+  if (!selected) {
     const label = "dga-tokens";
     const app = await fresh(label);
     writeFileSync(

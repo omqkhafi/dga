@@ -48,6 +48,22 @@ One language per view. English pages and strings contain no Arabic, and Arabic o
 
 A component phase follows the rules at the top of [ROADMAP.md](ROADMAP.md): Base UI, logical properties, every state in the contrast audit, a docs page in both languages, the install test, and CHANGELOG and Deviations updated.
 
+## What CI runs
+
+`scripts/ci/affected.ts` reads the changed files and tells `.github/workflows/ci.yml` which jobs to run. A push to main, a manual run, and any change it cannot classify run everything.
+
+| Change | Runs |
+| --- | --- |
+| Markdown (README, ROADMAP, CONTRIBUTING, `docs/`), CHANGELOG | Lint. CHANGELOG also runs its unit test, which is also what keeps the version in `package.json` in step. |
+| `tokens/`, `scripts/tokens/`, `scripts/generate-tokens.ts`, `registry/styles/`, `.github/`, dependencies | The full suite: tokens check with the contrast audit, install of every item, every browser group, Lighthouse. |
+| A registry component | The install test for that item and everything that depends on it through `registryDependencies`, and the browser groups mapped to them in `scripts/ci/e2e-map.json`. |
+| Preview, layout, locale, global CSS, the browser harness | Every browser group. |
+| The shell (header, footer, sidebar), layout or global CSS | The shell groups, and Lighthouse. Lighthouse otherwise runs only on push to main. |
+
+The browser checks are the groups in `scripts/e2e.mjs`. A pull request runs the shell groups plus the groups mapped to the changed components, split over up to four shards, with one merged report. When you add a component, add it to `scripts/ci/e2e-map.json` (a test fails until you do). Run a group yourself with `E2E_GROUPS=navigation E2E_COMPONENTS=rating bun run test:e2e` and one item's install with `INSTALL_ITEMS=rating bun run test:install`.
+
+Agents: after opening a pull request, subscribe to its events and stop. Do not poll or wait through a run. Before pushing, run only the tests for what you changed; the full suite runs on main.
+
 ## Commits
 
 Describe what changed and why. Update `CHANGELOG.md` under `[Unreleased]`; `package.json` must match the latest released version.

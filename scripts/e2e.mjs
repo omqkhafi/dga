@@ -38,11 +38,16 @@
 //   4. Forms: every form component page fits at 375 and 1280 px in both languages, and the
 //      service request form can be completed with the keyboard alone in /en and /ar.
 import { createHash } from "node:crypto";
-import { readFileSync } from "node:fs";
+import { readFileSync, writeFileSync } from "node:fs";
 import { chromium } from "playwright";
 import { inputsChecks } from "./e2e-extension/inputs.mjs";
 import { miscChecks } from "./e2e-extension/misc.mjs";
 import { overlaysChecks } from "./e2e-extension/overlays.mjs";
+
+// E2E_COMPONENTS=button,dialog narrows the page loops of `form-pages` and `polish` to those
+// component pages (pull requests: the changed components and their dependants). Unset: every page.
+const ONLY = process.env.E2E_COMPONENTS?.split(",").filter(Boolean);
+const inScope = (name) => !ONLY || ONLY.includes(name);
 
 const BASE = process.env.E2E_BASE_URL ?? "http://localhost:3000";
 const failures = [];
@@ -302,7 +307,7 @@ async function formPageChecks() {
           ...INTERACTIVE_PAGES,
           ...NAVIGATION_PAGES,
           ...COMPOSITE_PAGES,
-        ]) {
+        ].filter(inScope)) {
           const url = `/${lang}/docs/components/${name}`;
           await page.goto(`${BASE}${url}`, { waitUntil: "networkidle" });
           const r = await page.evaluate(() => ({
@@ -986,7 +991,7 @@ async function polishChecks() {
     page.on("response", (r) => {
       if (r.status() >= 400) issues.push(`${r.status()} ${r.url()}`);
     });
-    for (const path of pages) {
+    for (const path of pages.filter((p) => inScope(p.split("/").pop()))) {
       const url = `${BASE}/${lang}${path}`;
       await page.goto(url, { waitUntil: "networkidle" });
       await scrollThrough(page);
@@ -2397,23 +2402,99 @@ async function compositeChecks() {
   }
 }
 
-await localeChecks();
-await layoutChecks();
-await aiResourceChecks();
-await polishChecks();
-await discoveryChecks();
-await formPageChecks();
-await fieldStateChecks();
-await keyboardChecks();
-await interactiveChecks();
-await navigationChecks();
-await compositeChecks();
-await overlaysChecks({ browser, BASE, check });
-await inputsChecks({ browser, BASE, check });
-await miscChecks({ browser, BASE, check });
-await notFoundChecks();
-await arabicExceptionChecks();
-await previewLanguageChecks();
+// Every group is one `*Checks` function above. A pull request runs only the groups its changes
+// can affect (scripts/ci/affected.ts decides), split over shards:
+//   E2E_GROUPS=locale,layout   run only these groups (default: all)
+//   E2E_SHARD=2/4              run the 2nd of 4 shards of the selected groups
+//   E2E_REPORT=file.json       write the result (per group time, checks, failures) as JSON
+//   E2E_LIST=1                 print the group names and exit
+// The default (no variables) runs every group in order, as before.
+const GROUPS = [
+  ["locale", localeChecks],
+  ["layout", layoutChecks],
+  ["ai-resources", aiResourceChecks],
+  ["polish", polishChecks],
+  ["discovery", discoveryChecks],
+  ["form-pages", formPageChecks],
+  ["field-states", fieldStateChecks],
+  ["keyboard", keyboardChecks],
+  ["interactive", interactiveChecks],
+  ["navigation", navigationChecks],
+  ["composite", compositeChecks],
+  ["ext-overlays", () => overlaysChecks({ browser, BASE, check })],
+  ["ext-inputs", () => inputsChecks({ browser, BASE, check })],
+  ["ext-misc", () => miscChecks({ browser, BASE, check })],
+  ["not-found", notFoundChecks],
+  ["arabic-exception", arabicExceptionChecks],
+  ["preview-language", previewLanguageChecks],
+];
+const names = GROUPS.map(([name]) => name);
+if (process.env.E2E_LIST) {
+  console.log(names.join("\n"));
+  await browser.close();
+  process.exit(0);
+}
+const map = JSON.parse(readFileSync(new URL("./ci/e2e-map.json", import.meta.url), "utf8"));
+if (names.join() !== map.groups.join()) {
+  console.error(
+    `scripts/ci/e2e-map.json "groups" must list the groups in order: ${names.join(", ")}`,
+  );
+  await browser.close();
+  process.exit(2);
+}
+const wanted = process.env.E2E_GROUPS ? process.env.E2E_GROUPS.split(",").filter(Boolean) : names;
+const unknown = wanted.filter((name) => !names.includes(name));
+if (unknown.length) {
+  console.error(`Unknown e2e group(s): ${unknown.join(", ")}. Known: ${names.join(", ")}`);
+  await browser.close();
+  process.exit(2);
+}
+// Shard i of n takes the selected groups at positions i-1, i-1+n, ... of the list sorted by weight
+// (scripts/ci/e2e-map.json), heaviest first, so the shards finish at about the same time.
+const [shardIndex, shardCount] = (process.env.E2E_SHARD ?? "1/1").split("/").map(Number);
+const { weights } = map;
+const selected = GROUPS.filter(([name]) => wanted.includes(name));
+const bins = Array.from({ length: shardCount }, () => ({ load: 0, groups: [] }));
+for (const group of [...selected].sort((a, b) => (weights[b[0]] ?? 1) - (weights[a[0]] ?? 1))) {
+  const scale =
+    ONLY && map.scoped.includes(group[0]) ? Math.min(1, Math.max(0.1, ONLY.length / map.pages)) : 1;
+  bins.sort((a, b) => a.load - b.load);
+  bins[0].groups.push(group);
+  bins[0].load += (weights[group[0]] ?? 1) * scale;
+}
+// Shard i is the i-th bin by name order, which is stable: re-sort by the first group's position.
+bins.sort(
+  (a, b) => names.indexOf(a.groups[0]?.[0] ?? "~") - names.indexOf(b.groups[0]?.[0] ?? "~"),
+);
+const mine = (bins[shardIndex - 1]?.groups ?? []).sort(
+  (a, b) => names.indexOf(a[0]) - names.indexOf(b[0]),
+);
+console.log(
+  `Shard ${shardIndex}/${shardCount}: ${mine.map(([name]) => name).join(", ") || "(none)"}`,
+);
+
+const timings = {};
+for (const [name, run] of mine) {
+  const started = Date.now();
+  const before = { passed, failed: failures.length };
+  await run();
+  timings[name] = {
+    seconds: Math.round((Date.now() - started) / 100) / 10,
+    passed: passed - before.passed,
+    failed: failures.length - before.failed,
+  };
+  console.log(`group ${name}: ${timings[name].seconds}s`);
+}
 await browser.close();
+if (process.env.E2E_REPORT) {
+  writeFileSync(
+    process.env.E2E_REPORT,
+    JSON.stringify(
+      { shard: `${shardIndex}/${shardCount}`, passed, failures, groups: timings },
+      null,
+      2,
+    ),
+  );
+}
 console.log(`${passed} checks passed, ${failures.length} failed.`);
 process.exit(failures.length ? 1 : 0);
