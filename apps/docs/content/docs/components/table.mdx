@@ -1,0 +1,107 @@
+---
+title: Table
+description: "A plain semantic table with a header, striped rows, dividers, compact and contained sizes, sort and filter buttons, and sideways scrolling."
+---
+
+<Preview name="table-basic" title="Table" />
+
+## Installation
+
+<ComponentInstall name="table" />
+
+## Usage
+
+```tsx title="page.tsx"
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/dga/table";
+
+export function Requests() {
+  return (
+    <Table aria-label="Requests">
+      <TableHeader>
+        <TableRow>
+          <TableHead>Request</TableHead>
+          <TableHead>Service</TableHead>
+        </TableRow>
+      </TableHeader>
+      <TableBody>
+        <TableRow>
+          <TableCell>REQ-1001</TableCell>
+          <TableCell>Renew commercial licence</TableCell>
+        </TableRow>
+      </TableBody>
+    </Table>
+  );
+}
+```
+
+Use a table for data that people compare across rows and columns. It is plain HTML, so it needs no JavaScript. For sorting, filtering, selecting and paging use the [Data Table](/docs/components/data-table). For a short list of facts use the [Structured List](/docs/components/list).
+
+## Anatomy
+
+- **Table**: wrapped in a scrolling region. Text md in `table-text-body`, cell padding from `table-cell-*-padding`.
+- **Header** (`TableHeader`): 48px, Text xs Medium in `table-text-head` on `table-background-header`.
+- **Row**: 64px (48px compact). Hover, alternating and selected rows use the `table-background-*` tokens.
+- **Cell types**: text, link, badge, status, avatar, checkbox, switch, actions, feedback icon and any custom content. See the example below.
+- **Sort and filter buttons**: 20px buttons in a heading, black when active.
+
+## Examples
+
+### Variants
+
+`striped` shades every other row, `compact` shrinks the rows, `contained` adds a border and rounded corners, `columnDivider` draws vertical lines and `rowDivider={false}` removes the horizontal ones. A `selected` row has the selected fill.
+
+<Preview compact name="table-variants" title="Variants" />
+
+### Cell types
+
+<Preview compact name="table-cells" title="Cell types" />
+
+### Sort and filter
+
+`TableSortButton` takes `direction` (`false`, `"asc"` or `"desc"`) and the heading takes `aria-sort`. `TableFilterButton` takes `active`.
+
+<Preview compact name="table-sort-filter" title="Sort and filter" />
+
+### On narrow screens
+
+Pass `scrollLabel` and the table scrolls sideways inside a region that takes keyboard focus (<kbd>Tab</kbd>, then the arrow keys).
+
+## RTL
+
+Columns run from the right. Dividers and padding are logical.
+
+<DirectionCompare name="table-basic" title="Table" />
+
+## Accessibility
+
+| Key | Action |
+| --- | --- |
+| <kbd>Tab</kbd> | Moves to the next focusable cell content, such as a link, checkbox or button. |
+| <kbd>Enter</kbd> | Presses a focused sort or filter button. |
+| <kbd>ArrowLeft</kbd> / <kbd>ArrowRight</kbd> | Scroll a focused wide table sideways. |
+
+- Semantic `table`, `thead`, `tbody`, `th` with `scope`, and a `caption` or `aria-label` to name it.
+- A sorted heading carries `aria-sort`; the sort and filter buttons are named by `aria-label`.
+- Body text is 4.5:1 on the row, striped, hovered and selected fills, and so is a primary link, in light and dark.
+
+## API Reference
+
+<ApiReference component="table" />
+
+## Deviations from DGA
+
+- Figma gives the alternate row the same fill as the row, so stripes could not be seen. Rows are white and the alternate row keeps the grey fill; the hover is a faint brand tint that keeps links at 4.5:1.
+- Compact heights are not specified; rows are 48px and the header 40px.
+
+<ComponentDeviations component="table" />
+
+## Contrast
+
+<ComponentContrast component="table" />

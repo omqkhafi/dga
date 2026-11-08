@@ -1,0 +1,96 @@
+---
+title: Breadcrumb
+description: "The path to the current page. Folds behind an ellipsis button above five levels and on narrow screens, and the separator mirrors in Arabic."
+---
+
+<Preview name="breadcrumb-basic" title="Breadcrumb" />
+
+## Installation
+
+<ComponentInstall name="breadcrumb" />
+
+## Usage
+
+```tsx title="page.tsx"
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbPage,
+} from "@/components/dga/breadcrumb";
+
+export function Trail() {
+  return (
+    <Breadcrumb aria-label="Breadcrumb">
+      <BreadcrumbItem>
+        <BreadcrumbLink href="/">Home</BreadcrumbLink>
+      </BreadcrumbItem>
+      <BreadcrumbItem>
+        <BreadcrumbLink href="/services">Services</BreadcrumbLink>
+      </BreadcrumbItem>
+      <BreadcrumbItem>
+        <BreadcrumbPage>Renewal</BreadcrumbPage>
+      </BreadcrumbItem>
+    </Breadcrumb>
+  );
+}
+```
+
+A breadcrumb shows where the current page sits in the site and lets people go back to a wider page. Put it above the page title, list the levels from the home page down, and end with the current page as plain text. It shows the path, not the history: for the way back to the previous screen use a [Link](/docs/components/link) or a [Button](/docs/components/button). Name the navigation with `aria-label`.
+
+## Anatomy
+
+- **Breadcrumb** (`nav` with an `ol`): Text sm, wraps if it must.
+- **Link** (`BreadcrumbLink`): `link-neutral`, underlined on hover, 24px high.
+- **Current page** (`BreadcrumbPage`): Medium `text-default` with `aria-current="page"`. It is not a link.
+- **Separator**: a chevron in `icon-default-400`, hidden from screen readers.
+- **Ellipsis button**: shown in place of the folded levels.
+
+## Examples
+
+### Two to five levels
+
+Two, three and four levels are shown in full. DGA's Breadcrumb has variants for 2, 3, 4, 5 and more than 5 levels; the same component covers all of them.
+
+<Preview compact name="breadcrumb-basic" title="Two to four levels" />
+
+### Folded levels
+
+Above `maxItems` levels (default 5) the levels between the first and the last two fold behind an ellipsis button. Below the `sm` width the same fold happens from four levels up, so the path fits a phone. Choosing the ellipsis shows the full path.
+
+<Preview compact name="breadcrumb-collapsed" title="Seven levels, folded" />
+
+Long labels are cut with an ellipsis at 12rem; give each link a `title` if the full text matters.
+
+## RTL
+
+The separator is a chevron that mirrors, so it points to the left in Arabic, and the first level is on the right.
+
+<DirectionCompare name="breadcrumb-basic" title="Breadcrumb" />
+
+## Accessibility
+
+| Key | Action |
+| --- | --- |
+| <kbd>Tab</kbd> | Moves to the next link, and to the ellipsis button when it is shown. |
+| <kbd>Enter</kbd> | Follows the link, or shows the full path from the ellipsis button. |
+| <kbd>Space</kbd> | Shows the full path from the ellipsis button. |
+
+- A `nav` landmark named by `aria-label`, with an ordered list of levels. The current page has `aria-current="page"`.
+- The separators are decoration (`aria-hidden`), so a screen reader reads the levels as a list. They are not required to tell the levels apart.
+- Link text is 4.5:1 on the page in light and dark. The ellipsis button is a real button named by `expandLabel`; translate it on Arabic pages.
+
+## API Reference
+
+<ApiReference component="breadcrumb" />
+
+## Deviations from DGA
+
+- Figma defines only the link colour, the icon and the level counts. The current page style and the fold are designed here.
+- The separator keeps the DGA `icon-default-400`. It is 2.5:1 on white, below the 3:1 for graphics, because it is decorative.
+
+<ComponentDeviations component="breadcrumb" />
+
+## Contrast
+
+<ComponentContrast component="breadcrumb" />

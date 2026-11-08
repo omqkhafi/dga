@@ -1,0 +1,88 @@
+---
+title: Stepper
+description: "Where someone is in a process. Horizontal and vertical, completed, current, upcoming and error steps, and a compact ring on narrow screens."
+---
+
+<Preview name="stepper-horizontal" title="Stepper" />
+
+## Installation
+
+<ComponentInstall name="stepper" />
+
+## Usage
+
+```tsx title="page.tsx"
+import { Stepper, StepperItem } from "@/components/dga/stepper";
+
+export function RequestSteps({ step }: { step: number }) {
+  return (
+    <Stepper aria-label="Request progress" value={step}>
+      <StepperItem title="Details" description="Your information" />
+      <StepperItem title="Documents" description="Upload files" />
+      <StepperItem title="Review" description="Check and confirm" />
+    </Stepper>
+  );
+}
+```
+
+Use a stepper for a process of three to seven steps in a fixed order, such as a form in parts. It combines DGA's Progress Indicator and Radial Stepper. Put the form itself below it. For a bar that fills continuously use [Progress](/docs/components/progress).
+
+## Anatomy
+
+- **Step**: a 32px indicator, a title and an optional description, joined to the next step by a 2px line.
+- **States**: completed (a filled circle with a tick), current (a brand ring), upcoming (a neutral ring) and error (a red circle with an alert). `value` sets the current step; steps before it are completed. Set `status` on a step to force a state.
+- **Vertical**: the indicators stack and the line runs down the start side.
+- **Compact** (below the `sm` width): the Radial Stepper form, a ring with "2 of 4", the step's name and the next one.
+
+## Examples
+
+### Horizontal
+
+The three steppers are on steps one, two and four.
+
+<Preview compact name="stepper-horizontal" title="Horizontal" />
+
+### Vertical and error
+
+<Preview compact name="stepper-vertical" title="Vertical, with an error step" />
+
+### Interactive
+
+With `onValueChange` the steps are buttons. Disable a step with `disabled` to stop people jumping ahead.
+
+<Preview compact name="stepper-interactive" title="Interactive" />
+
+Translate `labels`, `compactLabel` and `nextLabel`, and pass `formatNumber`, on Arabic pages. Narrow the preview to see the compact form.
+
+## RTL
+
+Steps run from the right, the line grows to the left and the compact ring fills the other way.
+
+<DirectionCompare name="stepper-horizontal" title="Stepper" />
+
+## Accessibility
+
+| Key | Action |
+| --- | --- |
+| <kbd>Tab</kbd> | Moves through the steps (interactive steppers only). |
+| <kbd>Enter</kbd> | Goes to the focused step. |
+| <kbd>Space</kbd> | Goes to the focused step. |
+
+- An ordered list, so the position is announced. The current step has `aria-current="step"`, and every step reads its state in words ("completed", "current step") besides colour and icon.
+- The step connectors are decoration. The indicator rings and fills are 3:1 and the titles 4.5:1, in light and dark.
+- In the compact form the step name is a polite live region.
+
+## API Reference
+
+<ApiReference component="stepper" />
+
+## Deviations from DGA
+
+- The upcoming step is 1.48:1 in DGA grey; it uses stronger neutral tokens here.
+- The error state and the automatic compact form are added. The token names `upcomming` are spelled `upcoming`.
+
+<ComponentDeviations component="stepper" />
+
+## Contrast
+
+<ComponentContrast component="stepper" />

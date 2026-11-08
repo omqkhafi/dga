@@ -1,0 +1,92 @@
+---
+title: List
+description: "قوائم مرتبة وغير مرتبة وبأيقونات بألوان أساسية ومحايدة وعلى لون العلامة، مع مستوى ثانٍ، إضافة إلى Structured List لصفوف في أعمدة."
+sourceHash: a102972674c5
+---
+
+<Preview name="list-basic" title="القائمة" />
+
+## التثبيت [#installation]
+
+<ComponentInstall name="list" />
+
+## الاستخدام [#usage]
+
+```tsx title="page.tsx"
+import { List, ListItem } from "@/components/dga/list";
+
+export function Steps() {
+  return (
+    <List type="ordered" markers="arabic" aria-label="الخطوات">
+      <ListItem>أنشئ حسابًا</ListItem>
+      <ListItem>وثّق هويتك</ListItem>
+      <ListItem>أرسل النموذج</ListItem>
+    </List>
+  );
+}
+```
+
+استخدم القائمة لعناصر قصيرة قليلة مترابطة: خطوات أو متطلبات أو ملاحظات. واستخدم `ordered` حين يهم الترتيب، و`unordered` حين لا يهم، و`icon` حين تعين الأيقونة على المسح البصري. ولصفوف بأعمدة عدة استخدم `StructuredList` أدناه، أو [Table](/docs/components/table) لبيانات تُرتَّب. ولا يعرّف DGA صفوف قوائم بصور شخصية أو أوصاف أو إجراءات؛ فضعها في [Card](/docs/components/card) أو صف في Table.
+
+## البنية [#anatomy]
+
+- **List** (عنصر `ul` أو `ol`): خط Text md، وارتفاع العنصر 24px على الأقل. وقيمة `tone` إما `primary` أو `neutral` (الافتراضي) أو `onColor` للخلفيات بلون العلامة.
+- **العلامة**: نقطة 4px، أو `١-` ثم `أ-` في المستوى الأدنى (مع `markers="arabic"`)، أو أيقونة 16px. وتأخذ العلامة لون النص.
+- **المستوى الثاني**: ضع `List` داخل `ListItem`؛ فيُزاح 24px.
+
+## أمثلة [#examples]
+
+### الأنواع والألوان [#types-and-tones]
+
+<Preview compact name="list-basic" title="قوائم غير مرتبة ومرتبة وبأيقونات" />
+
+### مستويان [#two-levels]
+
+يستخدم المستوى الثاني من القائمة المرتبة الحروف.
+
+<Preview compact name="list-nested" title="قوائم متداخلة" />
+
+### Structured List [#structured-list]
+
+`StructuredList` جدول بمظهر أخف: صف رأس، وصفوف من الخلايا، وخيارات `compact` و`contained` و`rowDivider` و`columnDivider`.
+
+<Preview compact name="structured-list" title="Structured List" />
+
+### صفوف قابلة للاختيار [#selectable-rows]
+
+مع `selectable` يكون لكل صف زر اختيار، فيُختار صف واحد. أعطِ كل صف `value` و`label` لزره، وللرأس خلية أولى فارغة.
+
+<Preview compact name="structured-list-selectable" title="Structured List قابل للاختيار" />
+
+## RTL [#rtl]
+
+تقع العلامات والإزاحات عند جهة البداية. وتُقرأ العلامات المرتبة `١-` و`٢-`، و`أ-` و`ب-` مع `markers="arabic"`.
+
+<DirectionCompare name="list-basic" title="القائمة" />
+
+## إمكانية الوصول [#accessibility]
+
+| المفتاح | الإجراء |
+| --- | --- |
+| <kbd>Tab</kbd> | يدخل Structured List القابل للاختيار (إلى الصف المختار) ثم يخرج منه. |
+| <kbd>ArrowDown</kbd> | يختار الصف التالي. |
+| <kbd>ArrowUp</kbd> | يختار الصف السابق. |
+
+- القوائم عناصر `ul` و`ol` حقيقية، والعلامات المرئية مخفية عن قارئات الشاشة فتُقرأ القائمة المرتبة مرة واحدة مع موضع العنصر.
+- Structured List جدول HTML. والقابل للاختيار مجموعة أزرار اختيار: تغيّر مفاتيح الأسهم الصف ويُعلَن الصف المختار.
+- النص بنسبة 4.5:1 والأيقونات 3:1 في كل لون، فاتحًا وداكنًا، وعلى لون العلامة فوق تعبئاته.
+
+## مرجع API [#api-reference]
+
+<ApiReference component="list" />
+
+## الاختلافات عن DGA [#deviations-from-dga]
+
+- يستخدم CSS `margin-left` وألوانًا بقيم `hex`. وهنا الإزاحات منطقية والألوان رموز.
+- لـ Structured List في Figma حالات اختيار دون عنصر تحكم؛ فيأخذ كل صف زر اختيار.
+
+<ComponentDeviations component="list" />
+
+## التباين [#contrast]
+
+<ComponentContrast component="list" />

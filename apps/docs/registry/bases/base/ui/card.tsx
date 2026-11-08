@@ -58,12 +58,28 @@ function CardHeader({ className, ...props }: React.ComponentProps<"div">) {
 }
 
 /** The card's title. A heading: pass `level` (default 3) to fit the page outline. */
-function CardTitle({ className, level = 3, ...props
-}: React.ComponentProps<"h3"> & { level?: 2 | 3 | 4 | 5 | 6 }) { const Heading = `h${level}` as "h3"; return <Heading data-slot="card-title" className={cn("m-0 text-lg font-bold text-text-display in-data-disabled:text-text-default-disabled", className)} {...props} />;
-} function CardDescription({ className, ...props }: React.ComponentProps<"p">) { return ( <p data-slot="card-description" className={cn("m-0 text-md text-text-primary-paragraph in-data-disabled:text-text-default-disabled", className)} {...props} /> );
-} /** Free content: tags, a rating, a table, anything. */
-function CardContent({ className, ...props }: React.ComponentProps<"div">) { return <div data-slot="card-content" className={cn("flex min-w-0 flex-col gap-3", className)} {...props} />;
-} /** * The primary and secondary actions. They sit above the card's link, so they stay clickable when
+function CardTitle({
+  className,
+  level = 3,
+  ...props
+}: React.ComponentProps<"h3"> & { level?: 2 | 3 | 4 | 5 | 6 }) {
+  const Heading = `h${level}` as "h3";
+  return <Heading data-slot="card-title" className={cn("m-0 text-lg font-bold text-text-display in-data-disabled:text-text-default-disabled", className)} {...props} />;
+}
+
+function CardDescription({ className, ...props }: React.ComponentProps<"p">) {
+  return (
+    <p data-slot="card-description" className={cn("m-0 text-md text-text-primary-paragraph in-data-disabled:text-text-default-disabled", className)} {...props} />
+  );
+}
+
+/** Free content: tags, a rating, a table, anything. */
+function CardContent({ className, ...props }: React.ComponentProps<"div">) {
+  return <div data-slot="card-content" className={cn("flex min-w-0 flex-col gap-3", className)} {...props} />;
+}
+
+/**
+ * The primary and secondary actions. They sit above the card's link, so they stay clickable when
  * the whole card is a link.
  */
 function CardActions({ className, ...props }: React.ComponentProps<"div">) {
@@ -73,21 +89,99 @@ function CardActions({ className, ...props }: React.ComponentProps<"div">) {
 /**
  * The link that makes the whole card clickable. Put it around the title text. Its click area
  * stretches over the card, so a screen reader still gets one link named by the title, and
- * keyboard focus draws the ring around the card. Pass `render` to use your router's link. */
-function CardLink({ className, render, ...props
-}: React.ComponentProps<"a"> & { render?: React.ReactElement<React.ComponentProps<"a">> }) { const merged = { "data-slot": "card-link", className: cn("text-inherit no-underline after:absolute after:inset-0 after:z-0 after:rounded-lg after:content-[''] focus-visible:outline-none", className), ...props, }; return render ? React.cloneElement(render, merged) : <a {...merged} />;
-} // ---------------------------------------------------------------------------------------------
+ * keyboard focus draws the ring around the card. Pass `render` to use your router's link.
+ */
+function CardLink({
+  className,
+  render,
+  ...props
+}: React.ComponentProps<"a"> & { render?: React.ReactElement<React.ComponentProps<"a">> }) {
+  const merged = {
+    "data-slot": "card-link",
+    className: cn("text-inherit no-underline after:absolute after:inset-0 after:z-0 after:rounded-lg after:content-[''] focus-visible:outline-none", className),
+    ...props,
+  };
+  return render ? React.cloneElement(render, merged) : <a {...merged} />;
+}
+
+// ---------------------------------------------------------------------------------------------
 // Expandable
-// --------------------------------------------------------------------------------------------- /** * A card whose details open and close (DGA: Expandable). Built on Base UI Collapsible. Put a * `CardExpandableTrigger` and a `CardExpandablePanel` inside, with the always-visible part first. */
-function CardExpandable({ className, effect, size, disabled, ...props
-}: CollapsiblePrimitive.Root.Props & VariantProps<typeof cardVariants>) { return ( <CollapsiblePrimitive.Root data-slot="card" data-size={size ?? "lg"} data-expandable="" disabled={disabled} className={cn(cardVariants({ effect, size }), "hover:bg-background-neutral-50 data-disabled:hover:bg-background-disabled", className)} {...props} /> );
-} /** The button that opens and closes the details. Its `aria-expanded` tells screen readers. */
-function CardExpandableTrigger({ className, children, ...props
-}: CollapsiblePrimitive.Trigger.Props) { return ( <CollapsiblePrimitive.Trigger data-slot="card-expandable-trigger" className={cn("flex w-full cursor-pointer items-center justify-between gap-3 rounded-xs border-0 bg-transparent p-0 text-start text-lg font-bold text-text-display focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-offset-4 focus-visible:outline-border-black disabled:cursor-not-allowed disabled:text-text-default-disabled", className)} {...props} > {children} <HugeiconsIcon icon={ArrowDown01Icon} aria-hidden className="size-5 shrink-0 text-icon-default transition-transform in-data-panel-open:rotate-180 motion-reduce:transition-none" /> </CollapsiblePrimitive.Trigger> );
-} function CardExpandablePanel({ className, ...props }: CollapsiblePrimitive.Panel.Props) { return ( <CollapsiblePrimitive.Panel data-slot="card-expandable-panel" className={cn("h-(--collapsible-panel-height) overflow-hidden text-md text-text-primary-paragraph transition-[height] duration-200 ease-out data-ending-style:h-0 data-starting-style:h-0 motion-reduce:transition-none", className)} {...props} /> );
-} // ---------------------------------------------------------------------------------------------
+// ---------------------------------------------------------------------------------------------
+
+/**
+ * A card whose details open and close (DGA: Expandable). Built on Base UI Collapsible. Put a
+ * `CardExpandableTrigger` and a `CardExpandablePanel` inside, with the always-visible part first.
+ */
+function CardExpandable({
+  className,
+  effect,
+  size,
+  disabled,
+  ...props
+}: CollapsiblePrimitive.Root.Props & VariantProps<typeof cardVariants>) {
+  return (
+    <CollapsiblePrimitive.Root
+      data-slot="card"
+      data-size={size ?? "lg"}
+      data-expandable=""
+      disabled={disabled}
+      className={cn(cardVariants({ effect, size }), "hover:bg-background-neutral-50 data-disabled:hover:bg-background-disabled", className)}
+      {...props}
+    />
+  );
+}
+
+/** The button that opens and closes the details. Its `aria-expanded` tells screen readers. */
+function CardExpandableTrigger({
+  className,
+  children,
+  ...props
+}: CollapsiblePrimitive.Trigger.Props) {
+  return (
+    <CollapsiblePrimitive.Trigger
+      data-slot="card-expandable-trigger"
+      className={cn("flex w-full cursor-pointer items-center justify-between gap-3 rounded-xs border-0 bg-transparent p-0 text-start text-lg font-bold text-text-display focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-offset-4 focus-visible:outline-border-black disabled:cursor-not-allowed disabled:text-text-default-disabled", className)}
+      {...props}
+    >
+      {children}
+      <HugeiconsIcon icon={ArrowDown01Icon} aria-hidden className="size-5 shrink-0 text-icon-default transition-transform in-data-panel-open:rotate-180 motion-reduce:transition-none" />
+    </CollapsiblePrimitive.Trigger>
+  );
+}
+
+function CardExpandablePanel({ className, ...props }: CollapsiblePrimitive.Panel.Props) {
+  return (
+    <CollapsiblePrimitive.Panel
+      data-slot="card-expandable-panel"
+      className={cn("h-(--collapsible-panel-height) overflow-hidden text-md text-text-primary-paragraph transition-[height] duration-200 ease-out data-ending-style:h-0 data-starting-style:h-0 motion-reduce:transition-none", className)}
+      {...props}
+    />
+  );
+}
+
+// ---------------------------------------------------------------------------------------------
 // Selectable
-// --------------------------------------------------------------------------------------------- type SelectableCardProps = Omit<React.ComponentProps<"label">, "onChange"> & VariantProps<typeof cardVariants> & { /** Whether the card is selected (controlled). */ checked?: boolean; /** Whether the card is selected at first (uncontrolled). */ defaultChecked?: boolean; /** Called with the new state. */ onCheckedChange?: (checked: boolean) => void; /** The card cannot be selected. */ disabled?: boolean; /** The form field name. */ name?: string; /** The form field value. */ value?: string; }; /** * A card you pick (DGA: Selectable), built on a checkbox: clicking anywhere on the card, or * pressing Space on the focused checkbox, toggles it. The card's text names the checkbox. Do not
+// ---------------------------------------------------------------------------------------------
+
+type SelectableCardProps = Omit<React.ComponentProps<"label">, "onChange"> &
+  VariantProps<typeof cardVariants> & {
+    /** Whether the card is selected (controlled). */
+    checked?: boolean;
+    /** Whether the card is selected at first (uncontrolled). */
+    defaultChecked?: boolean;
+    /** Called with the new state. */
+    onCheckedChange?: (checked: boolean) => void;
+    /** The card cannot be selected. */
+    disabled?: boolean;
+    /** The form field name. */
+    name?: string;
+    /** The form field value. */
+    value?: string;
+  };
+
+/**
+ * A card you pick (DGA: Selectable), built on a checkbox: clicking anywhere on the card, or
+ * pressing Space on the focused checkbox, toggles it. The card's text names the checkbox. Do not
  * put links or buttons inside; use a `Card` with a `CardLink` for something that navigates.
  */
 function SelectableCard({
@@ -104,6 +198,7 @@ function SelectableCard({
   ...props
 }: SelectableCardProps) {
   return (
+    // biome-ignore lint/a11y/noLabelWithoutControl: the Checkbox inside is the control
     <label
       data-slot="card"
       data-selectable=""

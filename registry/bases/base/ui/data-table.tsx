@@ -160,7 +160,6 @@ function DataTable<TData>({
       ),
     };
     return [select, ...base];
-    // biome-ignore lint/correctness/useExhaustiveDependencies: the labels object is rebuilt each render
   }, [columnDefs, selectable, labels.selectAll, labels.selectRow]);
 
   const table = useReactTable<TData>({

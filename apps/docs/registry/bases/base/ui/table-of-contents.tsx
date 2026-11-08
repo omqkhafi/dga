@@ -80,6 +80,7 @@ function TableOfContents({
   const [chosen, setChosen] = React.useState<string | undefined>(undefined);
   // A link you chose stays active until the scroll position catches up with it.
   const active = activeId ?? chosen ?? tracked;
+  // biome-ignore lint/correctness/useExhaustiveDependencies: forget the chosen link once scrolling catches up
   React.useEffect(() => {
     setChosen(undefined);
   }, [tracked]);
@@ -124,7 +125,6 @@ function TableOfContents({
           {title}
         </p>
       ) : null}
-      {/* biome-ignore lint/a11y/noNoninteractiveElementInteractions: arrow keys move between the links inside */}
       <ul ref={listRef} className="m-0 flex list-none flex-col gap-0.5 p-0" onKeyDown={onKeyDown}>
         {items.map((item) => {
           const current = item.id === active;

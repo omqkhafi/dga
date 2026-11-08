@@ -245,6 +245,78 @@
       ]
     }
   ],
+  "breadcrumb": [
+    {
+      "name": "Breadcrumb",
+      "description": "The path to the current page (DGA: Breadcrumb). Put `BreadcrumbItem`s in order, the last one holding a `BreadcrumbPage`. Name it with `aria-label` (\"Breadcrumb\"). Above `maxItems` levels the middle ones fold behind an ellipsis button, and below the `sm` width everything between the first level and the last two folds the same way. The separators mirror on Arabic pages.",
+      "descriptionAr": "مسار الوصول إلى الصفحة الحالية (في DGA: Breadcrumb). ضع عناصر `BreadcrumbItem` بالترتيب على أن يحمل آخرها `BreadcrumbPage`. وسمِّه بـ `aria-label`. فوق `maxItems` مستوى تُطوى المستويات الوسطى خلف زر حذف، وتحت عرض `sm` يُطوى كل ما بين المستوى الأول والأخيرين بالطريقة نفسها. وتنعكس الفواصل في الصفحات العربية.",
+      "inherits": null,
+      "props": [
+        {
+          "name": "maxItems",
+          "type": "number",
+          "default": "5",
+          "required": false,
+          "description": "The most levels shown before the middle ones fold into an ellipsis button. DGA folds above 5 levels. The first level and the last two are always kept. Default 5.",
+          "descriptionAr": "أكثر عدد من المستويات يُعرض قبل أن تُطوى الوسطى خلف زر حذف. تطويها DGA فوق 5 مستويات. ويبقى المستوى الأول والأخيران دائمًا. الافتراضي 5."
+        },
+        {
+          "name": "expandLabel",
+          "type": "string",
+          "default": "\"Show full path\"",
+          "required": false,
+          "description": "The name of the ellipsis button that shows the folded levels. Translate it on Arabic pages.",
+          "descriptionAr": "اسم زر الحذف الذي يعرض المستويات المطوية. ترجمه في الصفحات العربية."
+        }
+      ]
+    },
+    {
+      "name": "BreadcrumbItem",
+      "description": "One level. Holds a `BreadcrumbLink`, or a `BreadcrumbPage` for the current page.",
+      "descriptionAr": "مستوى واحد. يحمل `BreadcrumbLink`، أو `BreadcrumbPage` للصفحة الحالية.",
+      "inherits": null,
+      "props": [
+        {
+          "name": "separator",
+          "type": "boolean",
+          "default": "true",
+          "required": false,
+          "description": "Draws the separator after the item. `Breadcrumb` turns it off for the last item.",
+          "descriptionAr": "يرسم الفاصل بعد العنصر. يوقفه `Breadcrumb` للعنصر الأخير."
+        }
+      ]
+    },
+    {
+      "name": "BreadcrumbLink",
+      "description": "A link to an ancestor page. Pass `render` to use your router's link.",
+      "descriptionAr": "رابط إلى صفحة أعم. مرّر `render` لاستخدام رابط موجّهك.",
+      "inherits": null,
+      "props": [
+        {
+          "name": "render",
+          "type": "ReactElement<DetailedHTMLProps<AnchorHTMLAttributes<HTMLAnchorElement>, HTMLAnchorElement>, string | JSXElementConstructor<any>>",
+          "default": null,
+          "required": false,
+          "description": "",
+          "descriptionAr": ""
+        }
+      ]
+    },
+    {
+      "name": "BreadcrumbPage",
+      "description": "The current page: plain text with `aria-current=\"page\"`.",
+      "descriptionAr": "الصفحة الحالية: نص عادي مع `aria-current=\"page\"`.",
+      "inherits": null,
+      "props": []
+    },
+    {
+      "name": "BreadcrumbSeparator",
+      "description": "The chevron between levels. It mirrors on Arabic pages and is hidden from screen readers.",
+      "descriptionAr": "السهم بين المستويات. ينعكس في الصفحات العربية ويُخفى عن قارئات الشاشة.",
+      "inherits": null,
+      "props": []
+    }
+  ],
   "button": [
     {
       "name": "Button",
@@ -310,6 +382,255 @@
           "required": false,
           "description": "Allows you to replace the component's HTML element with a different tag, or compose it with another component. Accepts a `ReactElement` or a function that returns the element to render.",
           "descriptionAr": "يتيح لك استبدال عنصر HTML الخاص بالمكوّن بوسم آخر، أو تركيبه مع مكوّن آخر. يقبل `ReactElement` أو دالة تعيد العنصر المراد عرضه."
+        }
+      ]
+    }
+  ],
+  "card": [
+    {
+      "name": "Card",
+      "description": "A container for information and actions about one thing (DGA: Card). `effect` is a soft `shadow` (default), a `stroke`, or `none`; `size` sets the padding and gaps (`lg` is the DGA default). A card that goes somewhere holds a `CardLink` in its title: the whole card then works as that link and keeps real link semantics. Give a card that is a list item or an article the matching `role`.",
+      "descriptionAr": "حاوية لمعلومات وإجراءات عن شيء واحد (في DGA: Card). قيمة `effect` إما `shadow` (ظل خفيف، الافتراضي) أو `stroke` أو `none`، وقيمة `size` تضبط الحشو والفجوات (`lg` هو الافتراضي في DGA). والبطاقة التي تنقل إلى مكان تحمل `CardLink` في عنوانها: فتعمل البطاقة كلها رابطًا وتحتفظ بدلالات الرابط الحقيقية. وأعطِ البطاقة التي هي عنصر قائمة أو مقال `role` المناسب.",
+      "inherits": {
+        "name": "Collapsible",
+        "url": "https://base-ui.com/react/components/collapsible"
+      },
+      "props": [
+        {
+          "name": "effect",
+          "type": "\"shadow\" | \"none\" | \"stroke\"",
+          "default": "\"shadow\"",
+          "required": false,
+          "description": "`shadow` (default), `stroke` (a 1px border) or `none`. No shadow in dark mode.",
+          "descriptionAr": "`shadow` (الافتراضي) أو `stroke` (حد 1px) أو `none`. ولا ظل في الوضع الداكن."
+        },
+        {
+          "name": "size",
+          "type": "\"sm\" | \"md\" | \"lg\"",
+          "default": "\"lg\"",
+          "required": false,
+          "description": "Padding and gap: `sm`, `md` or `lg` (default, 16px and 24px).",
+          "descriptionAr": "الحشو والفجوة: `sm` أو `md` أو `lg` (الافتراضي، ‏16px و24px)."
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "default": null,
+          "required": false,
+          "description": "Greys the card out and ignores clicks. Use it for something that is not available now.",
+          "descriptionAr": "يُظلِّل البطاقة ويتجاهل النقر. استخدمه لشيء غير متاح الآن."
+        }
+      ]
+    },
+    {
+      "name": "CardActions",
+      "description": "The primary and secondary actions. They sit above the card's link, so they stay clickable when the whole card is a link.",
+      "descriptionAr": "الإجراءات الأساسية والثانوية. تقع فوق رابط البطاقة، فتبقى قابلة للنقر حين تكون البطاقة كلها رابطًا.",
+      "inherits": {
+        "name": "Collapsible",
+        "url": "https://base-ui.com/react/components/collapsible"
+      },
+      "props": []
+    },
+    {
+      "name": "CardContent",
+      "description": "Free content: tags, a rating, a table, anything.",
+      "descriptionAr": "محتوى حر: وسوم أو تقييم أو جدول أو أي شيء.",
+      "inherits": {
+        "name": "Collapsible",
+        "url": "https://base-ui.com/react/components/collapsible"
+      },
+      "props": []
+    },
+    {
+      "name": "CardDescription",
+      "description": "",
+      "descriptionAr": "نص الوصف.",
+      "inherits": {
+        "name": "Collapsible",
+        "url": "https://base-ui.com/react/components/collapsible"
+      },
+      "props": []
+    },
+    {
+      "name": "CardExpandable",
+      "description": "A card whose details open and close (DGA: Expandable). Built on Base UI Collapsible. Put a `CardExpandableTrigger` and a `CardExpandablePanel` inside, with the always-visible part first.",
+      "descriptionAr": "بطاقة تُفتح تفاصيلها وتُغلق (في DGA: Expandable). مبنية على Base UI Collapsible. ضع `CardExpandableTrigger` و`CardExpandablePanel` داخلها، والجزء الظاهر دائمًا أولًا.",
+      "inherits": {
+        "name": "Collapsible",
+        "url": "https://base-ui.com/react/components/collapsible"
+      },
+      "props": [
+        {
+          "name": "effect",
+          "type": "\"shadow\" | \"none\" | \"stroke\"",
+          "default": "\"shadow\"",
+          "required": false,
+          "description": "`shadow` (default), `stroke` (a 1px border) or `none`. No shadow in dark mode.",
+          "descriptionAr": "`shadow` (الافتراضي) أو `stroke` (حد 1px) أو `none`. ولا ظل في الوضع الداكن."
+        },
+        {
+          "name": "size",
+          "type": "\"sm\" | \"md\" | \"lg\"",
+          "default": "\"lg\"",
+          "required": false,
+          "description": "Padding and gap: `sm`, `md` or `lg` (default, 16px and 24px).",
+          "descriptionAr": "الحشو والفجوة: `sm` أو `md` أو `lg` (الافتراضي، ‏16px و24px)."
+        }
+      ]
+    },
+    {
+      "name": "CardExpandablePanel",
+      "description": "",
+      "descriptionAr": "التفاصيل التي تُفتح وتُغلق.",
+      "inherits": {
+        "name": "Collapsible",
+        "url": "https://base-ui.com/react/components/collapsible"
+      },
+      "props": []
+    },
+    {
+      "name": "CardExpandableTrigger",
+      "description": "The button that opens and closes the details. Its `aria-expanded` tells screen readers.",
+      "descriptionAr": "الزر الذي يفتح التفاصيل ويغلقها. يخبر `aria-expanded` قارئات الشاشة بحالته.",
+      "inherits": {
+        "name": "Collapsible",
+        "url": "https://base-ui.com/react/components/collapsible"
+      },
+      "props": []
+    },
+    {
+      "name": "CardHeader",
+      "description": "Groups the title and the description.",
+      "descriptionAr": "يجمع العنوان والوصف.",
+      "inherits": {
+        "name": "Collapsible",
+        "url": "https://base-ui.com/react/components/collapsible"
+      },
+      "props": []
+    },
+    {
+      "name": "CardIcon",
+      "description": "The icon or Featured Icon above the title.",
+      "descriptionAr": "الأيقونة أو Featured Icon فوق العنوان.",
+      "inherits": {
+        "name": "Collapsible",
+        "url": "https://base-ui.com/react/components/collapsible"
+      },
+      "props": []
+    },
+    {
+      "name": "CardLink",
+      "description": "The link that makes the whole card clickable. Put it around the title text. Its click area stretches over the card, so a screen reader still gets one link named by the title, and keyboard focus draws the ring around the card. Pass `render` to use your router's link.",
+      "descriptionAr": "الرابط الذي يجعل البطاقة كلها قابلة للنقر. ضعه حول نص العنوان. تمتد مساحة نقره على البطاقة، فتجد قارئة الشاشة رابطًا واحدًا باسم العنوان، ويرسم تركيز لوحة المفاتيح الحلقة حول البطاقة. مرّر `render` لاستخدام رابط موجّهك.",
+      "inherits": {
+        "name": "Collapsible",
+        "url": "https://base-ui.com/react/components/collapsible"
+      },
+      "props": [
+        {
+          "name": "render",
+          "type": "ReactElement<DetailedHTMLProps<AnchorHTMLAttributes<HTMLAnchorElement>, HTMLAnchorElement>, string | JSXElementConstructor<any>>",
+          "default": null,
+          "required": false,
+          "description": "",
+          "descriptionAr": ""
+        }
+      ]
+    },
+    {
+      "name": "CardMedia",
+      "description": "An image or other media across the top of the card, edge to edge.",
+      "descriptionAr": "صورة أو وسائط أخرى في أعلى البطاقة، من الحافة إلى الحافة.",
+      "inherits": {
+        "name": "Collapsible",
+        "url": "https://base-ui.com/react/components/collapsible"
+      },
+      "props": []
+    },
+    {
+      "name": "CardTitle",
+      "description": "The card's title. A heading: pass `level` (default 3) to fit the page outline.",
+      "descriptionAr": "عنوان البطاقة. وهو عنوان فعلي: مرّر `level` (الافتراضي 3) ليلائم مخطط الصفحة.",
+      "inherits": {
+        "name": "Collapsible",
+        "url": "https://base-ui.com/react/components/collapsible"
+      },
+      "props": [
+        {
+          "name": "level",
+          "type": "3 | 2 | 4 | 5 | 6",
+          "default": "3",
+          "required": false,
+          "description": "",
+          "descriptionAr": ""
+        }
+      ]
+    },
+    {
+      "name": "SelectableCard",
+      "description": "A card you pick (DGA: Selectable), built on a checkbox: clicking anywhere on the card, or pressing Space on the focused checkbox, toggles it. The card's text names the checkbox. Do not put links or buttons inside; use a `Card` with a `CardLink` for something that navigates.",
+      "descriptionAr": "بطاقة تُختار (في DGA: Selectable)، مبنية على خانة اختيار: النقر في أي موضع منها، أو Space على الخانة المركَّزة، يبدّلها. ونص البطاقة يسمّي الخانة. لا تضع روابط أو أزرارًا داخلها؛ واستخدم `Card` مع `CardLink` لما ينقل إلى مكان.",
+      "inherits": {
+        "name": "Collapsible",
+        "url": "https://base-ui.com/react/components/collapsible"
+      },
+      "props": [
+        {
+          "name": "effect",
+          "type": "\"shadow\" | \"none\" | \"stroke\"",
+          "default": "\"shadow\"",
+          "required": false,
+          "description": "`shadow` (default), `stroke` (a 1px border) or `none`. No shadow in dark mode.",
+          "descriptionAr": "`shadow` (الافتراضي) أو `stroke` (حد 1px) أو `none`. ولا ظل في الوضع الداكن."
+        },
+        {
+          "name": "size",
+          "type": "\"sm\" | \"md\" | \"lg\"",
+          "default": "\"lg\"",
+          "required": false,
+          "description": "Padding and gap: `sm`, `md` or `lg` (default, 16px and 24px).",
+          "descriptionAr": "الحشو والفجوة: `sm` أو `md` أو `lg` (الافتراضي، ‏16px و24px)."
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "default": null,
+          "required": false,
+          "description": "The card cannot be selected.",
+          "descriptionAr": "لا يمكن اختيار البطاقة."
+        },
+        {
+          "name": "checked",
+          "type": "boolean",
+          "default": null,
+          "required": false,
+          "description": "Whether the card is selected (controlled).",
+          "descriptionAr": "هل البطاقة مختارة (بتحكم خارجي)."
+        },
+        {
+          "name": "onCheckedChange",
+          "type": "(checked: boolean) => void",
+          "default": null,
+          "required": false,
+          "description": "Called with the new state.",
+          "descriptionAr": "تُستدعى بالحالة الجديدة."
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "default": null,
+          "required": false,
+          "description": "The form field name.",
+          "descriptionAr": "اسم حقل النموذج."
+        },
+        {
+          "name": "value",
+          "type": "string",
+          "default": null,
+          "required": false,
+          "description": "The form field value.",
+          "descriptionAr": "قيمة حقل النموذج."
         }
       ]
     }
@@ -491,6 +812,112 @@
           "required": false,
           "description": "Whether the component should ignore user interaction.",
           "descriptionAr": "لا يمكن اختيار الخيار."
+        }
+      ]
+    }
+  ],
+  "data-table": [
+    {
+      "name": "DataTable",
+      "description": "A table of records with sorting, filtering, row selection and pagination (built on TanStack Table, the DGA Table and the DGA Pagination). It is a plain `table` underneath: headings have `aria-sort`, selection is real checkboxes, and a table wider than the screen scrolls sideways inside a region you can reach with the keyboard. Columns follow the page direction, so they run right to left on Arabic pages. Set `loading` while fetching.",
+      "descriptionAr": "جدول سجلات بالترتيب والتصفية وتحديد الصفوف والترقيم (مبني على TanStack Table وTable وPagination من DGA). هو جدول عادي في أساسه: للعناوين `aria-sort`، والتحديد خانات اختيار حقيقية، والجدول الأعرض من الشاشة يتمرر أفقيًا داخل منطقة تقبل تركيز لوحة المفاتيح. وتتبع الأعمدة اتجاه الصفحة فتمتد من اليمين في الصفحات العربية. اضبط `loading` أثناء الجلب.",
+      "inherits": null,
+      "props": [
+        {
+          "name": "data",
+          "type": "TData[]",
+          "default": null,
+          "required": true,
+          "description": "The rows.",
+          "descriptionAr": "الصفوف."
+        },
+        {
+          "name": "loading",
+          "type": "boolean",
+          "default": null,
+          "required": false,
+          "description": "Shows placeholder rows and marks the table `aria-busy`.",
+          "descriptionAr": "يعرض صفوفًا نائبة ويضع على الجدول `aria-busy`."
+        },
+        {
+          "name": "labels",
+          "type": "Partial<DataTableLabels>",
+          "default": null,
+          "required": false,
+          "description": "The strings the table shows by itself.",
+          "descriptionAr": "النصوص التي يعرضها الجدول بنفسه. ترجمها في الصفحات العربية."
+        },
+        {
+          "name": "columns",
+          "type": "ColumnDef<TData, any>[]",
+          "default": null,
+          "required": true,
+          "description": "TanStack Table column definitions. Give each a string `header` or `meta: { label }`.",
+          "descriptionAr": "تعريفات أعمدة TanStack Table. أعطِ كلًّا `header` نصًا أو `meta: { label }`."
+        },
+        {
+          "name": "getRowId",
+          "type": "(row: TData, index: number) => string",
+          "default": null,
+          "required": false,
+          "description": "A stable id for a row, so selection survives sorting and paging. Default: its index.",
+          "descriptionAr": "معرّف ثابت للصف ليبقى تحديده بعد الترتيب والتنقل. الافتراضي ترتيبه."
+        },
+        {
+          "name": "pageSize",
+          "type": "number",
+          "default": "10",
+          "required": false,
+          "description": "Rows per page. Default 10. Pass `0` to show every row and hide the pagination.",
+          "descriptionAr": "عدد الصفوف في الصفحة. الافتراضي 10. مرّر `0` لعرض كل الصفوف وإخفاء الترقيم."
+        },
+        {
+          "name": "globalFilter",
+          "type": "string",
+          "default": null,
+          "required": false,
+          "description": "Text to filter the rows by, across every column (controlled).",
+          "descriptionAr": "نص تُصفّى به الصفوف عبر كل الأعمدة (بتحكم خارجي)."
+        },
+        {
+          "name": "selectable",
+          "type": "boolean",
+          "default": null,
+          "required": false,
+          "description": "Adds a checkbox column and `aria-selected` rows.",
+          "descriptionAr": "يضيف عمود خانات اختيار وصفوفًا بـ `aria-selected`."
+        },
+        {
+          "name": "onSelectionChange",
+          "type": "(rows: TData[]) => void",
+          "default": null,
+          "required": false,
+          "description": "Called with the selected rows whenever the selection changes.",
+          "descriptionAr": "تُستدعى بالصفوف المحددة كلما تغيّر التحديد."
+        },
+        {
+          "name": "defaultSorting",
+          "type": "SortingState",
+          "default": "[]",
+          "required": false,
+          "description": "The sort at first, for example `[{ id: \"name\", desc: false }]`.",
+          "descriptionAr": "الترتيب في البداية، مثل `[{ id: \"name\", desc: false }]`."
+        },
+        {
+          "name": "emptyState",
+          "type": "string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<AwaitedReactNode>",
+          "default": null,
+          "required": false,
+          "description": "What to show when there are no rows. A string or any content.",
+          "descriptionAr": "ما يُعرض حين لا توجد صفوف. نص أو أي محتوى."
+        },
+        {
+          "name": "caption",
+          "type": "string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<AwaitedReactNode>",
+          "default": null,
+          "required": false,
+          "description": "A visible title for the table, also its accessible name.",
+          "descriptionAr": "عنوان مرئي للجدول وهو اسمه المقروء."
         }
       ]
     }
@@ -1430,6 +1857,188 @@
       ]
     }
   ],
+  "list": [
+    {
+      "name": "List",
+      "description": "A short list of related items (DGA: List). `tone` is `primary`, `neutral` (default) or `onColor` for brand fills. Put a `List` inside a `ListItem` for the second level. Ordered lists are real `ol` elements, so a screen reader announces the position; the visual markers are decoration. The markers sit on the start side, so they mirror on Arabic pages.",
+      "descriptionAr": "قائمة قصيرة من عناصر مترابطة (في DGA: List). قيمة `tone` إما `primary` أو `neutral` (الافتراضي) أو `onColor` لخلفيات العلامة. ضع `List` داخل `ListItem` للمستوى الثاني. القوائم المرتبة عناصر `ol` حقيقية فتعلن قارئة الشاشة الموضع؛ والعلامات المرئية زخرفة. وتقع العلامات عند جهة البداية فتنعكس في الصفحات العربية.",
+      "inherits": null,
+      "props": [
+        {
+          "name": "type",
+          "type": "\"unordered\" | \"ordered\" | \"icon\"",
+          "default": "\"unordered\"",
+          "required": false,
+          "description": "`unordered` (bullets, default), `ordered` (numbers, then letters one level down) or `icon`.",
+          "descriptionAr": "`unordered` (نقاط، الافتراضي) أو `ordered` (أرقام ثم حروف في المستوى الأدنى) أو `icon`."
+        },
+        {
+          "name": "tone",
+          "type": "\"neutral\" | \"primary\" | \"onColor\"",
+          "default": "\"neutral\"",
+          "required": false,
+          "description": "Colour: `primary`, `neutral` (default) or `onColor` for brand fills.",
+          "descriptionAr": "اللون: `primary` أو `neutral` (الافتراضي) أو `onColor` لخلفيات العلامة."
+        },
+        {
+          "name": "markers",
+          "type": "\"latin\" | \"arabic\"",
+          "default": null,
+          "required": false,
+          "description": "The script of ordered markers: `latin` (1-, a-) or `arabic` (١-, أ-). Default `latin`.",
+          "descriptionAr": "خط العلامات المرتبة: `latin` (‏1- وa-) أو `arabic` (‏١- وأ-). الافتراضي `latin`."
+        }
+      ]
+    },
+    {
+      "name": "ListItem",
+      "description": "One item. In an icon list, `icon` replaces the default tick (any Hugeicons icon). Nest a `List` after the text for the second level.",
+      "descriptionAr": "عنصر واحد. في قائمة الأيقونات يستبدل `icon` علامة الصح الافتراضية (أي أيقونة من Hugeicons). ضع `List` بعد النص للمستوى الثاني.",
+      "inherits": null,
+      "props": [
+        {
+          "name": "icon",
+          "type": "IconSvgElement",
+          "default": null,
+          "required": false,
+          "description": "The icon of an item in an icon list. Default a tick.",
+          "descriptionAr": "أيقونة العنصر في قائمة الأيقونات. الافتراضي علامة صح."
+        }
+      ]
+    },
+    {
+      "name": "StructuredList",
+      "description": "Rows of text in columns (DGA: Structured List), an HTML table with a lighter look. Use it for short, read-only facts or for a single choice among rows; for data to sort and filter use `Table` or `DataTable`. With `selectable` each row has a radio button and the arrow keys move between rows.",
+      "descriptionAr": "صفوف نص في أعمدة (في DGA: Structured List)، وهي جدول HTML بمظهر أخف. استخدمها لحقائق قصيرة للقراءة أو لاختيار واحد بين الصفوف؛ ولبيانات تُرتَّب وتُصفّى استخدم `Table` أو `DataTable`. ومع `selectable` يكون لكل صف زر اختيار وتنقل مفاتيح الأسهم بين الصفوف.",
+      "inherits": null,
+      "props": [
+        {
+          "name": "value",
+          "type": "string",
+          "default": null,
+          "required": false,
+          "description": "The chosen row's `value` (controlled).",
+          "descriptionAr": "قيمة الصف المختار (بتحكم خارجي)."
+        },
+        {
+          "name": "compact",
+          "type": "boolean",
+          "default": "false",
+          "required": false,
+          "description": "Shorter rows (48px).",
+          "descriptionAr": "صفوف أقصر (48px)."
+        },
+        {
+          "name": "contained",
+          "type": "boolean",
+          "default": "false",
+          "required": false,
+          "description": "A border and rounded corners around the list.",
+          "descriptionAr": "حد وزوايا مدورة حول القائمة."
+        },
+        {
+          "name": "rowDivider",
+          "type": "boolean",
+          "default": "true",
+          "required": false,
+          "description": "A line between rows. Default true.",
+          "descriptionAr": "خط بين الصفوف. الافتراضي true."
+        },
+        {
+          "name": "columnDivider",
+          "type": "boolean",
+          "default": "false",
+          "required": false,
+          "description": "A line between columns.",
+          "descriptionAr": "خط بين الأعمدة."
+        },
+        {
+          "name": "selectable",
+          "type": "boolean",
+          "default": null,
+          "required": false,
+          "description": "Makes the rows choosable, one at a time (a radio button in the first column). Pair it with `StructuredListRow value`.",
+          "descriptionAr": "يجعل الصفوف قابلة للاختيار، واحدًا في كل مرة (زر اختيار في العمود الأول). اقرنه بـ `StructuredListRow value`."
+        },
+        {
+          "name": "onValueChange",
+          "type": "(value: string) => void",
+          "default": null,
+          "required": false,
+          "description": "Called with the chosen row's `value`.",
+          "descriptionAr": "تُستدعى بقيمة الصف المختار."
+        },
+        {
+          "name": "groupLabel",
+          "type": "string",
+          "default": null,
+          "required": false,
+          "description": "Names the group of radio buttons when `selectable`.",
+          "descriptionAr": "يسمّي مجموعة أزرار الاختيار حين يكون `selectable`."
+        }
+      ]
+    },
+    {
+      "name": "StructuredListBody",
+      "description": "",
+      "descriptionAr": "",
+      "inherits": null,
+      "props": []
+    },
+    {
+      "name": "StructuredListCell",
+      "description": "",
+      "descriptionAr": "",
+      "inherits": null,
+      "props": []
+    },
+    {
+      "name": "StructuredListHead",
+      "description": "A column heading. Use `scope=\"col\"` (the default).",
+      "descriptionAr": "عنوان عمود. استخدم `scope=\"col\"` (الافتراضي).",
+      "inherits": null,
+      "props": []
+    },
+    {
+      "name": "StructuredListHeader",
+      "description": "",
+      "descriptionAr": "",
+      "inherits": null,
+      "props": []
+    },
+    {
+      "name": "StructuredListRow",
+      "description": "",
+      "descriptionAr": "",
+      "inherits": null,
+      "props": [
+        {
+          "name": "value",
+          "type": "string",
+          "default": null,
+          "required": false,
+          "description": "What identifies the row in a `selectable` list.",
+          "descriptionAr": "ما يعرّف الصف في قائمة `selectable`."
+        },
+        {
+          "name": "label",
+          "type": "string",
+          "default": null,
+          "required": false,
+          "description": "The name a screen reader reads for the row's radio button, for example the row's title.",
+          "descriptionAr": "الاسم الذي تقرؤه قارئة الشاشة لزر اختيار الصف، مثل عنوان الصف."
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "default": null,
+          "required": false,
+          "description": "The row cannot be chosen.",
+          "descriptionAr": "لا يمكن اختيار الصف."
+        }
+      ]
+    }
+  ],
   "menu": [
     {
       "name": "Menu",
@@ -1896,6 +2505,240 @@
       ]
     }
   ],
+  "pagination": [
+    {
+      "name": "Pagination",
+      "description": "Moves through a long list one page at a time (DGA: Pagination). Name it with `aria-label`. The current page has `aria-current=\"page\"`. Below the `sm` width the numbers fold into a compact \"3 of 12\" between the previous and next arrows. The arrows mirror on Arabic pages.",
+      "descriptionAr": "يتنقل في قائمة طويلة صفحةً صفحة (في DGA: Pagination). سمِّه بـ `aria-label`. للصفحة الحالية `aria-current=\"page\"`. وتحت عرض `sm` تُطوى الأرقام إلى «3 من 12» بين سهمي السابق والتالي. وينعكس السهمان في الصفحات العربية.",
+      "inherits": null,
+      "props": [
+        {
+          "name": "size",
+          "type": "\"sm\" | \"md\" | \"lg\"",
+          "default": "\"md\"",
+          "required": false,
+          "description": "Item size: `sm` 24px, `md` 32px (default), `lg` 40px.",
+          "descriptionAr": "حجم العنصر: `sm` ‏24px، و`md` ‏32px (الافتراضي)، و`lg` ‏40px."
+        },
+        {
+          "name": "page",
+          "type": "number",
+          "default": null,
+          "required": false,
+          "description": "The current page, from 1 (controlled).",
+          "descriptionAr": "الصفحة الحالية، من 1 (بتحكم خارجي)."
+        },
+        {
+          "name": "siblingCount",
+          "type": "number",
+          "default": "1",
+          "required": false,
+          "description": "Pages shown on each side of the current one. Default 1.",
+          "descriptionAr": "عدد الصفحات المعروضة على كل جانب من الحالية. الافتراضي 1."
+        },
+        {
+          "name": "pageCount",
+          "type": "number",
+          "default": null,
+          "required": true,
+          "description": "How many pages there are.",
+          "descriptionAr": "عدد الصفحات."
+        },
+        {
+          "name": "defaultPage",
+          "type": "number",
+          "default": "1",
+          "required": false,
+          "description": "The page shown at first (uncontrolled). Default 1.",
+          "descriptionAr": "الصفحة المعروضة في البداية (دون تحكم). الافتراضي 1."
+        },
+        {
+          "name": "onPageChange",
+          "type": "(page: number) => void",
+          "default": null,
+          "required": false,
+          "description": "Called with the page the person chose.",
+          "descriptionAr": "تُستدعى بالصفحة التي اختارها الشخص."
+        },
+        {
+          "name": "getHref",
+          "type": "(page: number) => string",
+          "default": null,
+          "required": false,
+          "description": "Makes each control a link to this address instead of a button, for server-rendered or router-driven pagination. `onPageChange` still runs on click.",
+          "descriptionAr": "يجعل كل عنصر رابطًا إلى هذا العنوان بدل زر، للترقيم من الخادم أو بالموجّه. ويعمل `onPageChange` عند النقر كذلك."
+        },
+        {
+          "name": "previousLabel",
+          "type": "string",
+          "default": "\"Previous page\"",
+          "required": false,
+          "description": "The name of the previous button. Translate it on Arabic pages.",
+          "descriptionAr": "اسم زر السابق. ترجمه في الصفحات العربية."
+        },
+        {
+          "name": "nextLabel",
+          "type": "string",
+          "default": "\"Next page\"",
+          "required": false,
+          "description": "The name of the next button. Translate it on Arabic pages.",
+          "descriptionAr": "اسم زر التالي. ترجمه في الصفحات العربية."
+        },
+        {
+          "name": "pageLabel",
+          "type": "(page: number) => string",
+          "default": "(n) => `Page ${n}`",
+          "required": false,
+          "description": "The name of a page button, for example \"Page 3\". Translate it on Arabic pages.",
+          "descriptionAr": "اسم زر الصفحة، مثل «الصفحة 3». ترجمه في الصفحات العربية."
+        },
+        {
+          "name": "compactLabel",
+          "type": "(page: number, pageCount: number) => string",
+          "default": "(n, count) => `${n} of ${count}`",
+          "required": false,
+          "description": "The text between the arrows on narrow screens, for example \"3 of 12\".",
+          "descriptionAr": "النص بين السهمين في الشاشات الضيقة، مثل «3 من 12»."
+        },
+        {
+          "name": "formatNumber",
+          "type": "(value: number) => string",
+          "default": "String",
+          "required": false,
+          "description": "Turns a number into the digits shown, for example Arabic-Indic digits on Arabic pages.",
+          "descriptionAr": "يحوّل الرقم إلى الأرقام المعروضة، مثل الأرقام الهندية في الصفحات العربية."
+        }
+      ]
+    }
+  ],
+  "progress": [
+    {
+      "name": "Progress",
+      "description": "A bar showing how far a task has got (DGA: Progress Bar), on Base UI Progress. `value` is 0 to `max` (100); pass `null` while the length is unknown and the bar animates. `status` is `success` or `error` for a finished task: it adds an icon and the matching colour, and the helper text should say what happened. Name it with `label` (or `aria-label`).",
+      "descriptionAr": "شريط يبيّن مدى تقدم مهمة (في DGA: Progress Bar)، على Base UI Progress. قيمة `value` من 0 إلى `max` (100)؛ ومرّر `null` حين لا يُعرف الطول فيتحرك الشريط. تضيف `status` ‏`success` أو `error` لمهمة منتهية أيقونة واللون المناسب، وينبغي أن يقول نص المساعدة ما حدث. سمِّه بـ `label` (أو `aria-label`).",
+      "inherits": {
+        "name": "Progress",
+        "url": "https://base-ui.com/react/components/progress"
+      },
+      "props": [
+        {
+          "name": "size",
+          "type": "\"sm\" | \"md\" | \"lg\"",
+          "default": "120",
+          "required": false,
+          "description": "Bar height: `sm` 8px, `md` 12px (default), `lg` 16px.",
+          "descriptionAr": "ارتفاع الشريط: `sm` ‏8px، و`md` ‏12px (الافتراضي)، و`lg` ‏16px."
+        },
+        {
+          "name": "tone",
+          "type": "\"primary\" | \"neutral\"",
+          "default": "\"primary\"",
+          "required": false,
+          "description": "Fill colour: `primary` (default) or `neutral`.",
+          "descriptionAr": "لون التعبئة: `primary` (الافتراضي) أو `neutral`."
+        },
+        {
+          "name": "status",
+          "type": "\"default\" | \"success\" | \"error\"",
+          "default": "\"default\"",
+          "required": false,
+          "description": "`success` or `error` for a finished task: adds an icon and the matching colour.",
+          "descriptionAr": "`success` أو `error` لمهمة منتهية: يضيف أيقونة واللون المناسب."
+        },
+        {
+          "name": "label",
+          "type": "string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<AwaitedReactNode>",
+          "default": null,
+          "required": false,
+          "description": "The label above the bar. It also names the progress bar for screen readers.",
+          "descriptionAr": "التسمية فوق الشريط. وهي اسم شريط التقدم لقارئات الشاشة."
+        },
+        {
+          "name": "showValue",
+          "type": "boolean",
+          "default": "true",
+          "required": false,
+          "description": "Shows the percentage at the end of the label row. Default true.",
+          "descriptionAr": "يعرض النسبة المئوية في نهاية صف التسمية. الافتراضي true."
+        },
+        {
+          "name": "helperText",
+          "type": "string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<AwaitedReactNode>",
+          "default": null,
+          "required": false,
+          "description": "A line of help below the bar.",
+          "descriptionAr": "سطر مساعدة تحت الشريط."
+        },
+        {
+          "name": "formatValue",
+          "type": "(value: number) => string",
+          "default": "(v) => `${Math.round(v)}%`",
+          "required": false,
+          "description": "Turns the value into the text shown, for example Arabic-Indic digits: `(v) => \"٥٠٪\"`.",
+          "descriptionAr": "يحوّل القيمة إلى النص المعروض، مثل الأرقام الهندية: `(v) => \"٥٠٪\"`."
+        }
+      ]
+    },
+    {
+      "name": "ProgressCircle",
+      "description": "A ring showing progress (DGA: Circular Progress Bar), on Base UI Progress. Sizes 64, 80, 120, 160 and 200px. `status` `success` shows a tick and `error` an alert in place of the percentage. With `value={null}` the ring turns (a still arc when the person prefers reduced motion).",
+      "descriptionAr": "حلقة تبيّن التقدم (في DGA: Circular Progress Bar)، على Base UI Progress. الأحجام 64 و80 و120 و160 و200px. تعرض `status` ‏`success` علامة صح و`error` تنبيهًا بدل النسبة. ومع `value={null}` تدور الحلقة (قوس ثابت حين يفضّل الشخص تقليل الحركة).",
+      "inherits": {
+        "name": "Progress",
+        "url": "https://base-ui.com/react/components/progress"
+      },
+      "props": [
+        {
+          "name": "size",
+          "type": "64 | 80 | 120 | 160 | 200",
+          "default": "120",
+          "required": false,
+          "description": "Diameter in pixels: 64, 80, 120 (default), 160 or 200.",
+          "descriptionAr": "القطر بالبكسل: 64 أو 80 أو 120 (الافتراضي) أو 160 أو 200."
+        },
+        {
+          "name": "tone",
+          "type": "\"primary\" | \"neutral\"",
+          "default": "\"primary\"",
+          "required": false,
+          "description": "Fill colour: `primary` (default) or `neutral`.",
+          "descriptionAr": "لون التعبئة: `primary` (الافتراضي) أو `neutral`."
+        },
+        {
+          "name": "status",
+          "type": "\"default\" | \"success\" | \"error\"",
+          "default": "\"default\"",
+          "required": false,
+          "description": "`success` or `error` for a finished task: adds an icon and the matching colour.",
+          "descriptionAr": "`success` أو `error` لمهمة منتهية: يضيف أيقونة واللون المناسب."
+        },
+        {
+          "name": "label",
+          "type": "string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<AwaitedReactNode>",
+          "default": null,
+          "required": false,
+          "description": "A short caption under the percentage, for example \"Active users\". Hidden below 120px.",
+          "descriptionAr": "عنوان قصير تحت النسبة، مثل «مستخدم نشط». يُخفى دون 120px."
+        },
+        {
+          "name": "showValue",
+          "type": "boolean",
+          "default": "true",
+          "required": false,
+          "description": "Shows the percentage in the middle. Default true.",
+          "descriptionAr": "يعرض النسبة في الوسط. الافتراضي true."
+        },
+        {
+          "name": "formatValue",
+          "type": "(value: number) => string",
+          "default": "(v) => `${Math.round(v)}%`",
+          "required": false,
+          "description": "Turns the value into the text shown. Default `\"50%\"`.",
+          "descriptionAr": "يحوّل القيمة إلى النص المعروض. الافتراضي `\"50%\"`."
+        }
+      ]
+    }
+  ],
   "radio": [
     {
       "name": "Radio",
@@ -1996,6 +2839,115 @@
           "required": false,
           "description": "Whether the user must choose a value before submitting a form.",
           "descriptionAr": "لا يمكن إرسال النموذج دون اختيار."
+        }
+      ]
+    }
+  ],
+  "rating": [
+    {
+      "name": "Rating",
+      "description": "A star rating (DGA: Rating). Interactive by default: a group of radio buttons, so one star is in the tab order and the arrow keys change the rating (Left and Right swap on Arabic pages); hovering a star previews it. With `readOnly` it is an image with a text alternative. Whole stars only, as DGA defines. The first star sits on the start side, so the fill runs right to left on Arabic pages. `brand` uses the primary colour instead of gold.",
+      "descriptionAr": "تقييم بالنجوم (في DGA: Rating). تفاعلي افتراضيًا: مجموعة أزرار اختيار، فتكون نجمة واحدة في ترتيب Tab وتغيّر مفاتيح الأسهم التقييم (يمين ويسار يتبادلان في الصفحات العربية)، والمرور على نجمة يعاينها. ومع `readOnly` يصير صورة ببديل نصي. نجوم كاملة فقط كما تعرّف DGA. تقع النجمة الأولى عند جهة البداية، فتمتلئ من اليمين إلى اليسار في الصفحات العربية. ويستخدم `brand` اللون الأساسي بدل الذهبي.",
+      "inherits": {
+        "name": "Radio",
+        "url": "https://base-ui.com/react/components/radio"
+      },
+      "props": [
+        {
+          "name": "size",
+          "type": "\"sm\" | \"md\" | \"lg\"",
+          "default": "\"md\"",
+          "required": false,
+          "description": "Star size: `sm` 24px, `md` 32px (default), `lg` 48px.",
+          "descriptionAr": "حجم النجمة: `sm` ‏24px، و`md` ‏32px (الافتراضي)، و`lg` ‏48px."
+        },
+        {
+          "name": "brand",
+          "type": "boolean",
+          "default": "false",
+          "required": false,
+          "description": "The primary colour instead of gold.",
+          "descriptionAr": "اللون الأساسي بدل الذهبي."
+        },
+        {
+          "name": "defaultValue",
+          "type": "number",
+          "default": "0",
+          "required": false,
+          "description": "The rating at first (uncontrolled). Default 0, meaning none.",
+          "descriptionAr": "التقييم في البداية (دون تحكم). الافتراضي 0، أي بلا تقييم."
+        },
+        {
+          "name": "max",
+          "type": "number",
+          "default": "5",
+          "required": false,
+          "description": "How many stars there are. Default 5.",
+          "descriptionAr": "عدد النجوم. الافتراضي 5."
+        },
+        {
+          "name": "value",
+          "type": "number",
+          "default": null,
+          "required": false,
+          "description": "The rating, from 0 to `max` (controlled).",
+          "descriptionAr": "التقييم من 0 إلى `max` (بتحكم خارجي)."
+        },
+        {
+          "name": "onValueChange",
+          "type": "(value: number) => void",
+          "default": null,
+          "required": false,
+          "description": "Called with the star the person chose, from 1 to `max`.",
+          "descriptionAr": "تُستدعى بالنجمة التي اختارها الشخص، من 1 إلى `max`."
+        },
+        {
+          "name": "readOnly",
+          "type": "boolean",
+          "default": null,
+          "required": false,
+          "description": "Shows the rating without letting anyone change it.",
+          "descriptionAr": "يعرض التقييم دون السماح بتغييره."
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "default": null,
+          "required": false,
+          "description": "The rating cannot be changed and is dimmed.",
+          "descriptionAr": "لا يمكن تغيير التقييم ويُخفَّف لونه."
+        },
+        {
+          "name": "required",
+          "type": "boolean",
+          "default": null,
+          "required": false,
+          "description": "Marks the field as required in a form.",
+          "descriptionAr": "يجعل الحقل مطلوبًا في نموذج."
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "default": null,
+          "required": false,
+          "description": "The form field name.",
+          "descriptionAr": "اسم حقل النموذج."
+        },
+        {
+          "name": "summaryLabel",
+          "type": "(value: number, max: number) => string",
+          "default": "(n, total) => `Rated ${n} out of ${total}`",
+          "required": false,
+          "description": "The read-only text for a screen reader, for example \"Rated 4 out of 5\".",
+          "descriptionAr": "النص المقروء للتقييم في وضع القراءة فقط، مثل «التقييم 4 من 5». ترجمه في الصفحات العربية."
+        },
+        {
+          "name": "starLabel",
+          "type": "(value: number) => string",
+          "default": "(n) => (n === 1 ? \"1 star\" : `${n} stars`)",
+          "required": false,
+          "description": "The name of one star, for example \"3 stars\". It names each star for a screen reader, and the read-only summary reads it as \"3 stars out of 5\" through `summaryLabel`.",
+          "descriptionAr": "اسم نجمة واحدة، مثل «3 نجوم». يسمّي كل نجمة لقارئة الشاشة. ترجمه في الصفحات العربية."
         }
       ]
     }
@@ -2384,6 +3336,112 @@
       ]
     }
   ],
+  "stepper": [
+    {
+      "name": "Stepper",
+      "description": "Shows where someone is in a process (DGA: Progress Indicator), horizontal or vertical. Put `StepperItem`s in order and set `value` to the current one: the earlier ones are completed and the later ones upcoming, and an item can be marked `status=\"error\"`. Each item announces its state, and the current one has `aria-current=\"step\"`. Below the `sm` width a horizontal stepper folds into the compact radial form (DGA: Radial Stepper): a ring with \"2 of 4\", the step's name and the next one. With `onValueChange` the steps are buttons, reachable with Tab.",
+      "descriptionAr": "يبيّن موضع الشخص في عملية (في DGA: Progress Indicator)، أفقيًا أو رأسيًا. ضع عناصر `StepperItem` بالترتيب واضبط `value` على الخطوة الحالية: فما قبلها مكتمل وما بعدها قادم، ويمكن وسم عنصر بـ `status=\"error\"`. يعلن كل عنصر حالته، وللحالي `aria-current=\"step\"`. وتحت عرض `sm` يُطوى Stepper الأفقي إلى شكل Radial Stepper المضغوط: حلقة فيها «2 من 4» واسم الخطوة والتالية. ومع `onValueChange` تكون الخطوات أزرارًا تُبلَغ بـ Tab.",
+      "inherits": null,
+      "props": [
+        {
+          "name": "orientation",
+          "type": "\"horizontal\" | \"vertical\"",
+          "default": "\"horizontal\"",
+          "required": false,
+          "description": "`horizontal` (default) or `vertical`.",
+          "descriptionAr": "`horizontal` (الافتراضي) أو `vertical`."
+        },
+        {
+          "name": "labels",
+          "type": "Partial<StepperLabels>",
+          "default": null,
+          "required": false,
+          "description": "Words read after each step's title, for example \"completed\". Translate them on Arabic pages.",
+          "descriptionAr": "كلمات تُقرأ بعد عنوان كل خطوة، مثل «مكتملة». ترجمها في الصفحات العربية."
+        },
+        {
+          "name": "formatNumber",
+          "type": "(value: number) => string",
+          "default": "String",
+          "required": false,
+          "description": "Turns a number into the digits shown, for example Arabic-Indic digits on Arabic pages.",
+          "descriptionAr": "يحوّل الرقم إلى الأرقام المعروضة، مثل الأرقام الهندية في الصفحات العربية."
+        },
+        {
+          "name": "value",
+          "type": "number",
+          "default": null,
+          "required": false,
+          "description": "The current step, from 0 (controlled). Earlier steps are completed, later ones upcoming.",
+          "descriptionAr": "الخطوة الحالية، من 0 (بتحكم خارجي). الخطوات قبلها مكتملة وبعدها قادمة."
+        },
+        {
+          "name": "onValueChange",
+          "type": "(value: number) => void",
+          "default": null,
+          "required": false,
+          "description": "Called with a step's index when someone chooses it. Passing it turns the steps into buttons; leave it out for a display-only stepper.",
+          "descriptionAr": "تُستدعى بفهرس الخطوة حين يختارها شخص. تمريرها يحوّل الخطوات إلى أزرار؛ واتركها لـ Stepper للعرض فقط."
+        },
+        {
+          "name": "compactLabel",
+          "type": "false | ((step: number, total: number) => string)",
+          "default": "(step, total) => `${step} of ${total}`",
+          "required": false,
+          "description": "The text in the ring of the compact form on narrow screens, for example \"2 of 4\". You format the digits. Pass `false` to keep the full stepper at every width.",
+          "descriptionAr": "النص داخل حلقة الشكل المضغوط في الشاشات الضيقة، مثل «2 من 4». تنسّق الأرقام بنفسك. مرّر `false` ليبقى Stepper الكامل في كل عرض."
+        },
+        {
+          "name": "nextLabel",
+          "type": "string",
+          "default": "\"Next:\"",
+          "required": false,
+          "description": "The prefix before the next step's name in the compact form, for example \"Next:\".",
+          "descriptionAr": "البادئة قبل اسم الخطوة التالية في الشكل المضغوط، مثل «التالي:»."
+        }
+      ]
+    },
+    {
+      "name": "StepperItem",
+      "description": "One step. It must be a direct child of `Stepper`.",
+      "descriptionAr": "خطوة واحدة. يجب أن تكون ابنًا مباشرًا لـ `Stepper`.",
+      "inherits": null,
+      "props": [
+        {
+          "name": "title",
+          "type": "string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<AwaitedReactNode>",
+          "default": null,
+          "required": true,
+          "description": "The step's name.",
+          "descriptionAr": "اسم الخطوة."
+        },
+        {
+          "name": "status",
+          "type": "\"completed\" | \"current\" | \"upcoming\" | \"error\"",
+          "default": null,
+          "required": false,
+          "description": "Forces a state, for example `error` when the step has a problem. Default: from `value`.",
+          "descriptionAr": "يفرض حالة، مثل `error` حين تكون في الخطوة مشكلة. الافتراضي من `value`."
+        },
+        {
+          "name": "description",
+          "type": "string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<AwaitedReactNode>",
+          "default": null,
+          "required": false,
+          "description": "A line under the name.",
+          "descriptionAr": "سطر تحت الاسم."
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "default": null,
+          "required": false,
+          "description": "The step cannot be chosen when the stepper has `onValueChange`.",
+          "descriptionAr": "لا يمكن اختيار الخطوة حين يكون لـ Stepper الخاصية `onValueChange`."
+        }
+      ]
+    }
+  ],
   "switch": [
     {
       "name": "Switch",
@@ -2457,6 +3515,204 @@
           "required": false,
           "description": "Whether the user must activate the switch before submitting a form.",
           "descriptionAr": "لا يمكن إرسال النموذج قبل تشغيله."
+        }
+      ]
+    }
+  ],
+  "table-of-contents": [
+    {
+      "name": "TableOfContents",
+      "description": "An outline of the page with links to its sections (DGA: Table of Content). The section being read is highlighted and has `aria-current=\"location\"`. Tab moves through the links; the Up and Down arrows, Home and End move between them too. Pair each link with an element that has the matching `id`, and add `scroll-margin-top` to those elements for a sticky header.",
+      "descriptionAr": "مخطط للصفحة بروابط إلى أقسامها (في DGA: Table of Content). يُميَّز القسم المقروء ويحمل `aria-current=\"location\"`. ينقل Tab بين الروابط، وكذلك مفتاحا السهم لأعلى وأسفل وHome وEnd. اقرن كل رابط بعنصر له `id` مطابق، وأضف `scroll-margin-top` إلى تلك العناصر للترويسة الثابتة.",
+      "inherits": null,
+      "props": [
+        {
+          "name": "offset",
+          "type": "number",
+          "default": "96",
+          "required": false,
+          "description": "Pixels from the top of the viewport at which a section counts as reached. Default 96.",
+          "descriptionAr": "عدد البكسلات من أعلى نافذة العرض الذي يُعدّ عنده القسم قد بُلغ. الافتراضي 96."
+        },
+        {
+          "name": "items",
+          "type": "TableOfContentsItem[]",
+          "default": null,
+          "required": true,
+          "description": "The sections, in page order. Levels nest by indentation.",
+          "descriptionAr": "الأقسام بترتيب الصفحة. تتداخل المستويات بالإزاحة."
+        },
+        {
+          "name": "activeId",
+          "type": "string",
+          "default": null,
+          "required": false,
+          "description": "The active section (controlled). Leave it out to follow the scroll position.",
+          "descriptionAr": "القسم الحالي (بتحكم خارجي). اتركه ليتبع موضع التمرير."
+        },
+        {
+          "name": "onActiveChange",
+          "type": "(id: string) => void",
+          "default": null,
+          "required": false,
+          "description": "Called when the active section changes, by scrolling or by choosing a link.",
+          "descriptionAr": "تُستدعى حين يتغير القسم الحالي، بالتمرير أو باختيار رابط."
+        }
+      ]
+    }
+  ],
+  "table": [
+    {
+      "name": "Table",
+      "description": "A plain semantic HTML table (DGA: Table). `compact` shrinks the rows, `striped` shades every other row (DGA: alternating rows), `contained` adds a border and rounded corners, and `rowDivider` (default) and `columnDivider` draw the lines. The table scrolls sideways inside its own wrapper when the screen is narrow, and columns follow the page direction. Give it a `TableCaption` or an `aria-label`.",
+      "descriptionAr": "جدول HTML دلالي بسيط (في DGA: Table). يصغّر `compact` الصفوف، ويظلل `striped` كل صف ثانٍ (في DGA: Alternating rows)، ويضيف `contained` حدًا وزوايا مدورة، وترسم `rowDivider` (الافتراضي) و`columnDivider` الخطوط. يتمرر الجدول أفقيًا داخل غلافه حين تضيق الشاشة، وتتبع الأعمدة اتجاه الصفحة. أعطه `TableCaption` أو `aria-label`.",
+      "inherits": null,
+      "props": [
+        {
+          "name": "compact",
+          "type": "boolean",
+          "default": "false",
+          "required": false,
+          "description": "Shorter rows (48px) and header (40px).",
+          "descriptionAr": "صفوف أقصر (48px) ورأس أقصر (40px)."
+        },
+        {
+          "name": "contained",
+          "type": "boolean",
+          "default": "false",
+          "required": false,
+          "description": "A border and rounded corners around the table.",
+          "descriptionAr": "حد وزوايا مدورة حول الجدول."
+        },
+        {
+          "name": "striped",
+          "type": "boolean",
+          "default": "false",
+          "required": false,
+          "description": "Shades every other row (DGA: alternating rows).",
+          "descriptionAr": "يظلل كل صف ثانٍ (في DGA: Alternating rows)."
+        },
+        {
+          "name": "rowDivider",
+          "type": "boolean",
+          "default": "true",
+          "required": false,
+          "description": "A line between rows. Default true.",
+          "descriptionAr": "خط بين الصفوف. الافتراضي true."
+        },
+        {
+          "name": "columnDivider",
+          "type": "boolean",
+          "default": "false",
+          "required": false,
+          "description": "A line between columns.",
+          "descriptionAr": "خط بين الأعمدة."
+        },
+        {
+          "name": "containerClassName",
+          "type": "string",
+          "default": null,
+          "required": false,
+          "description": "Classes for the scrolling wrapper around the table.",
+          "descriptionAr": "أصناف الغلاف الذي يتمرر حول الجدول."
+        },
+        {
+          "name": "scrollLabel",
+          "type": "string",
+          "default": null,
+          "required": false,
+          "description": "The name of the scrolling region, read by screen readers when the table is wider than its container. Leave it out for a table that always fits.",
+          "descriptionAr": "اسم منطقة التمرير الذي تقرؤه قارئات الشاشة حين يكون الجدول أعرض من حاويته. اتركه لجدول يتسع دائمًا."
+        }
+      ]
+    },
+    {
+      "name": "TableBody",
+      "description": "",
+      "descriptionAr": "",
+      "inherits": null,
+      "props": []
+    },
+    {
+      "name": "TableCaption",
+      "description": "",
+      "descriptionAr": "",
+      "inherits": null,
+      "props": []
+    },
+    {
+      "name": "TableCell",
+      "description": "",
+      "descriptionAr": "",
+      "inherits": null,
+      "props": []
+    },
+    {
+      "name": "TableFilterButton",
+      "description": "The filter button in a column heading (DGA: Table Header Cell, Filter). `active` is true while a filter is applied; set `aria-pressed` or `aria-expanded` to match what the button does.",
+      "descriptionAr": "زر التصفية في عنوان عمود (في DGA: Table Header Cell، Filter). قيمة `active` صحيحة ما دام مرشح مطبقًا؛ واضبط `aria-pressed` أو `aria-expanded` بما يفعله الزر.",
+      "inherits": null,
+      "props": [
+        {
+          "name": "active",
+          "type": "boolean",
+          "default": "false",
+          "required": false,
+          "description": "",
+          "descriptionAr": ""
+        }
+      ]
+    },
+    {
+      "name": "TableFooter",
+      "description": "",
+      "descriptionAr": "",
+      "inherits": null,
+      "props": []
+    },
+    {
+      "name": "TableHead",
+      "description": "A column or row heading. `scope` is `col` by default; pass `scope=\"row\"` for a row heading.",
+      "descriptionAr": "عنوان عمود أو صف. قيمة `scope` هي `col` افتراضيًا؛ ومرّر `scope=\"row\"` لعنوان صف.",
+      "inherits": null,
+      "props": []
+    },
+    {
+      "name": "TableHeader",
+      "description": "",
+      "descriptionAr": "",
+      "inherits": null,
+      "props": []
+    },
+    {
+      "name": "TableRow",
+      "description": "A row. `selected` shades it; rows also darken on hover and when they hold the focus.",
+      "descriptionAr": "صف. يظلله `selected`، وتغمق الصفوف عند المرور.",
+      "inherits": null,
+      "props": [
+        {
+          "name": "selected",
+          "type": "boolean",
+          "default": null,
+          "required": false,
+          "description": "Marks the row as selected: the selected fill and `aria-selected`.",
+          "descriptionAr": "يضع على الصف تعبئة التحديد و`aria-selected`."
+        }
+      ]
+    },
+    {
+      "name": "TableSortButton",
+      "description": "The sort button in a column heading (DGA: Table Header Cell, Sort). `direction` is `false` (not sorted), `\"asc\"` or `\"desc\"`. Put it in the `TableHead` and set `aria-sort` on that heading. Name it, for example \"Sort by Name\".",
+      "descriptionAr": "زر الترتيب في عنوان عمود (في DGA: Table Header Cell، Sort). قيمة `direction` هي `false` (غير مرتب) أو `\"asc\"` أو `\"desc\"`. ضعه في `TableHead` وضع `aria-sort` على ذلك العنوان. وسمِّه، مثل «ترتيب حسب الاسم».",
+      "inherits": null,
+      "props": [
+        {
+          "name": "direction",
+          "type": "SortDirection",
+          "default": "false",
+          "required": false,
+          "description": "",
+          "descriptionAr": ""
         }
       ]
     }

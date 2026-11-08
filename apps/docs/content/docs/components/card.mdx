@@ -1,0 +1,113 @@
+---
+title: Card
+description: "A container for information and actions about one thing. Shadow, stroke or no effect, three sizes, media, a clickable-card link pattern, and expandable and selectable cards."
+---
+
+<Preview name="card-effects" title="Card" />
+
+## Installation
+
+<ComponentInstall name="card" />
+
+## Usage
+
+```tsx title="page.tsx"
+import { Button } from "@/components/dga/button";
+import {
+  Card,
+  CardActions,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/dga/card";
+
+export function ServiceCard() {
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle>Service request</CardTitle>
+        <CardDescription>Track the status of your application.</CardDescription>
+      </CardHeader>
+      <CardActions>
+        <Button size="sm">Open</Button>
+      </CardActions>
+    </Card>
+  );
+}
+```
+
+Use a card for a group of related content and actions: a service, a person, a place. Cards in a row should hold the same kind of thing. For a card that goes to another page, use a `CardLink`; for a choice, use `SelectableCard`; for details that open and close, use `CardExpandable`.
+
+## Anatomy
+
+- **Card**: `background-card`, radius lg, padding and gap from `card-lg-*` (16px and 24px).
+- **Effect**: `shadow` (`shadow-md`), `stroke` (1px `border-neutral-primary`) or `none`. The shadow is off in dark mode, where the lighter surface and the stroke carry the edge.
+- **Parts**: `CardMedia`, `CardIcon`, `CardHeader` with `CardTitle` and `CardDescription`, `CardContent`, `CardActions`.
+- **States**: hover fills `background-neutral-50` on a card that is clickable, expandable or selectable; focus is a 2px outline; disabled uses the disabled tokens.
+
+## Examples
+
+### Effects and sizes
+
+`effect` is `shadow` (default), `stroke` or `none`. `size` is `sm`, `md` or `lg` (default), which sets the padding and the gap.
+
+<Preview compact name="card-effects" title="Effects" />
+
+### Media, tags and a rating
+
+`CardMedia` runs edge to edge across the top. Tags, a [Rating](/docs/components/rating) or any content go in `CardContent`.
+
+<Preview compact name="card-media" title="Media, tags and rating" />
+
+### A clickable card
+
+Put a `CardLink` around the text of the title. Its click area stretches over the whole card, so the card is one link named by the title. Buttons in `CardActions` stay clickable above it. A disabled card ignores clicks.
+
+<Preview compact name="card-link" title="Clickable and disabled" />
+
+### Expandable
+
+`CardExpandable` hides details until the trigger is chosen. `defaultOpen` shows them at first, and `open` with `onOpenChange` controls them.
+
+<Preview compact name="card-expandable" title="Expandable" />
+
+### Selectable
+
+`SelectableCard` is a checkbox that looks like a card. Clicking anywhere on it toggles it, and a selected card gets a primary border.
+
+<Preview compact name="card-selectable" title="Selectable" />
+
+## RTL
+
+Padding, the media, the actions and the expand chevron follow the page direction.
+
+<DirectionCompare name="card-effects" title="Card" />
+
+## Accessibility
+
+| Key | Action |
+| --- | --- |
+| <kbd>Tab</kbd> | Moves to the card link, then to each action inside. |
+| <kbd>Enter</kbd> | Follows the card link, or presses the focused action. |
+| <kbd>Space</kbd> | Opens or closes an expandable card, or toggles a selectable one. |
+
+- A clickable card contains a real link, so a screen reader finds one link named by the title, and keyboard focus draws the ring around the whole card. Do not wrap a card in another link, and do not put links in a selectable card.
+- `CardTitle` is a heading; set `level` so it fits the page outline.
+- An expandable card's trigger has `aria-expanded`. A selectable card is a labelled checkbox named by its text.
+- Text is 4.5:1 on the card and on the hover fill, in light and dark. Disabled text is exempt.
+
+## API Reference
+
+<ApiReference component="card" />
+
+## Deviations from DGA
+
+- The CSS gives every card a 2px border with a white fallback. The border is transparent, 1px for the stroke effect, and focus is a 2px outline, so focus does not shift the layout.
+- Disabled uses the Figma tokens, not a translucent overlay. The "With Sahdow" variant is `shadow`.
+- A selected card gets a border; Figma shows only the checkbox.
+
+<ComponentDeviations component="card" />
+
+## Contrast
+
+<ComponentContrast component="card" />

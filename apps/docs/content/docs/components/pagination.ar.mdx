@@ -1,0 +1,83 @@
+---
+title: Pagination
+description: "تنقّل في قائمة طويلة صفحةً صفحة. أرقام الصفحات مع الحذف، والسابق والتالي، وثلاثة أحجام، وأزرار أو روابط، وشكل مضغوط على الشاشات الضيقة."
+sourceHash: 7bc7a40b902b
+---
+
+<Preview name="pagination-basic" title="ترقيم الصفحات" />
+
+## التثبيت [#installation]
+
+<ComponentInstall name="pagination" />
+
+## الاستخدام [#usage]
+
+```tsx title="page.tsx"
+import { useState } from "react";
+import { Pagination } from "@/components/dga/pagination";
+
+export function Results() {
+  const [page, setPage] = useState(1);
+  return <Pagination aria-label="النتائج" pageCount={12} page={page} onPageChange={setPage} />;
+}
+```
+
+استخدم ترقيم الصفحات لتقسيم قائمة أو جدول طويل إلى صفحات يتنقل بينها الشخص. أظهر رقم الصفحة الحالية وأتح القفز إلى الأولى والأخيرة. ولا تستخدمه لقائمة تتحمّل المزيد أثناء التمرير، ولا لأقل من صفحتين. وفي [Data Table](/docs/components/data-table) يكون الترقيم مدمجًا.
+
+## البنية [#anatomy]
+
+- **Pagination** (عنصر `nav` مع قائمة): عناصر مربعة بحجم 24 أو 32 أو 40px، بينها 8px.
+- **الصفحة** (زر أو رابط): خط Text md. وللصفحة الحالية التعبئة الأساسية و`aria-current="page"`.
+- **السابق والتالي**: سهمان ينعكسان في العربية، ويُعطَّلان عند الصفحة الأولى والأخيرة.
+- **الحذف**: يمثل الصفحات المتخطاة.
+- **الشكل المضغوط**: تحت عرض `sm` تُطوى الأرقام إلى «الصفحة من العدد» بين السهمين.
+
+## أمثلة [#examples]
+
+### الأحجام [#sizes]
+
+قيمة `size` إما `sm` (24px) أو `md` (32px، الافتراضي) أو `lg` (40px).
+
+<Preview compact name="pagination-basic" title="الأحجام" />
+
+### الصفحة الأولى والأخيرة والروابط وقلة الصفحات [#first-and-last-page-links-and-few-pages]
+
+يحتفظ الصف بعدد الخانات نفسه ما دامت الصفحات كافية، فلا يقفز أثناء التنقل. مرّر `getHref` لتصير كل خانة رابطًا حين تكون للصفحات عناوين مستقلة؛ ويعمل `onPageChange` كذلك.
+
+<Preview compact name="pagination-states" title="الحالات" />
+
+ترجم التسميات وحوّل الأرقام إلى الأرقام الهندية في الصفحات العربية بـ `previousLabel` و`nextLabel` و`pageLabel` و`compactLabel` و`formatNumber`.
+
+## RTL [#rtl]
+
+ينعكس السهمان، فيشير السابق إلى اليمين والتالي إلى اليسار، وتمتد الأرقام من اليمين.
+
+<DirectionCompare name="pagination-basic" title="ترقيم الصفحات" />
+
+## إمكانية الوصول [#accessibility]
+
+| المفتاح | الإجراء |
+| --- | --- |
+| <kbd>Tab</kbd> | ينتقل إلى العنصر التالي: السابق ثم كل صفحة ثم التالي. |
+| <kbd>Shift</kbd> + <kbd>Tab</kbd> | يرجع إلى الوراء. |
+| <kbd>Enter</kbd> | ينتقل إلى الصفحة المركَّزة. |
+| <kbd>Space</kbd> | ينتقل إلى الصفحة المركَّزة (الأزرار). |
+
+- معلم `nav` مع قائمة. وللصفحة الحالية `aria-current="page"` ولكل عنصر اسم يُقرأ، مثل «الصفحة 3».
+- يُعطَّل السابق والتالي ويخرجان من ترتيب Tab عند الطرفين. وفي وضع الروابط لا يكونان رابطين هناك.
+- النص بنسبة 4.5:1 والأسهم وحلقة التركيز 3:1، فاتحًا وداكنًا.
+
+## مرجع API [#api-reference]
+
+<ApiReference component="pagination" />
+
+## الاختلافات عن DGA [#deviations-from-dga]
+
+- لا يعطي Figma إلا الأحجام والفجوة. وصُممت هنا من رموز Button حالات المرور والضغط والحالية والتعطيل والأسهم والحذف والشكل المضغوط.
+- يُكتب اسم الحجم `Meduim` في الشيفرة `md`.
+
+<ComponentDeviations component="pagination" />
+
+## التباين [#contrast]
+
+<ComponentContrast component="pagination" />

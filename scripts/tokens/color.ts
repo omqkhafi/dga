@@ -137,7 +137,9 @@ const LMS_TO_LAB: Matrix = [
 
 const multiply = (a: Matrix, b: Matrix): Matrix =>
   a.map((row) =>
-    [0, 1, 2].map((j) => row[0] * b[0][j]! + row[1] * b[1][j]! + row[2] * b[2][j]!),
+    [0, 1, 2].map(
+      (j) => row[0] * (b[0][j] ?? 0) + row[1] * (b[1][j] ?? 0) + row[2] * (b[2][j] ?? 0),
+    ),
   ) as Matrix;
 
 function invert(m: Matrix): Matrix {

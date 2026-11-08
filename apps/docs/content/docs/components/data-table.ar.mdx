@@ -1,0 +1,94 @@
+---
+title: Data Table
+description: "جدول بالترتيب والتصفية وتحديد الصفوف والترقيم وحالتي التحميل والفراغ، مبني على TanStack Table وTable وPagination من DGA."
+sourceHash: 5add91eea892
+---
+
+<Preview name="data-table-basic" title="جدول البيانات" />
+
+## التثبيت [#installation]
+
+<ComponentInstall name="data-table" />
+
+يثبّت هذا أيضًا [Table](/docs/components/table) و[Pagination](/docs/components/pagination) و[Checkbox](/docs/components/checkbox) و[Skeleton](/docs/components/skeleton)، ويضيف `@tanstack/react-table`.
+
+## الاستخدام [#usage]
+
+```tsx title="page.tsx"
+import type { ColumnDef } from "@tanstack/react-table";
+import { DataTable } from "@/components/dga/data-table";
+
+type Request = { id: string; service: string };
+
+const columns: ColumnDef<Request>[] = [
+  { accessorKey: "id", header: "الطلب" },
+  { accessorKey: "service", header: "الخدمة" },
+];
+
+export function Requests({ rows }: { rows: Request[] }) {
+  return (
+    <DataTable aria-label="الطلبات" columns={columns} data={rows} pageSize={10} selectable />
+  );
+}
+```
+
+استخدمه لسجلات يحتاج الناس إلى ترتيبها أو البحث فيها أو اختيار منها. والجدول يعمل على جهة العميل: يرتّب `data` التي تعطيها ويصفّيها ويقسمها صفحات. وللبيانات الكبيرة جدًا أو المرقّمة من الخادم استخدم [Table](/docs/components/table) و[Pagination](/docs/components/pagination) بحالتك أنت. والأعمدة تعريفات أعمدة TanStack Table: أعطِ كل عمود `header` نصًا (أو `meta: { label }`) ليُسمّى زر الترتيب.
+
+## البنية [#anatomy]
+
+- **الجدول**: Table من DGA بصفوف متبادلة، في منطقة تتمرر أفقيًا.
+- **الترتيب**: زر ترتيب في كل عنوان قابل للترتيب؛ ويحمل العنوان `aria-sort`.
+- **التحديد**: عمود خانات اختيار؛ وتحدد خانة الرأس الصفحة وتُظهر شرطة حين يُحدَّد بعض الصفوف.
+- **التذييل**: النطاق («من 1 إلى 5 من 12») وعدد المحدد وPagination.
+- **الحالات**: صفوف نائبة عند `loading`، ورسالة فراغ حين لا يطابق شيء.
+
+## أمثلة [#examples]
+
+### الترتيب والتصفية والتحديد والصفحات [#sorting-filtering-selection-and-pages]
+
+اكتب في مربع البحث لتصفية كل الأعمدة، واختر زر العنوان للترتيب، واستخدم خانات الاختيار للتحديد. مرّر `globalFilter` من حقلك أنت؛ ويتلقى `onSelectionChange` الصفوف المحددة.
+
+<Preview compact name="data-table-basic" title="الترتيب والتصفية والتحديد والترقيم" />
+
+### التحميل والفراغ والمضغوط [#loading-empty-and-compact]
+
+يعرض `loading` صفوفًا نائبة ويعلن «جارٍ التحميل». ومن دون صفوف يعرض الجدول `emptyState` أو رسالة `labels.empty`. ويعرض `pageSize={0}` كل الصفوف دون ترقيم.
+
+<Preview compact name="data-table-states" title="التحميل والفراغ والمضغوط" />
+
+### التسميات [#labels]
+
+كل نص يعرضه الجدول بنفسه موجود في `labels`: ترجمها، ومرّر `formatNumber` داخل `labels.pagination` للأرقام الهندية.
+
+## RTL [#rtl]
+
+تمتد الأعمدة من اليمين، وتنعكس أسهم الترقيم.
+
+<DirectionCompare name="data-table-basic" title="جدول البيانات" />
+
+## إمكانية الوصول [#accessibility]
+
+| المفتاح | الإجراء |
+| --- | --- |
+| <kbd>Tab</kbd> | ينتقل عبر أزرار الترتيب وخانات الاختيار ومحتوى الخلايا والترقيم. |
+| <kbd>Enter</kbd> | يضغط زر ترتيب أو صفحة. |
+| <kbd>Space</kbd> | يبدّل خانة اختيار مركَّزة. |
+| <kbd>ArrowLeft</kbd> / <kbd>ArrowRight</kbd> | يمرّر جدولًا عريضًا مركَّزًا أفقيًا. |
+
+- جدول دلالي: ترتيب الفرز في `aria-sort`، وللصفوف المحددة `aria-selected`، وكل خانة اختيار مسمّاة («تحديد الصف 3»).
+- سطر النطاق منطقة حية مهذبة، فيُعلَن الترقيم والتصفية. وأثناء التحميل يكون الجدول `aria-busy` وتخبر حالة بذلك.
+- لمنطقة التمرير اسم وتقبل التركيز، فيصل مستخدم لوحة المفاتيح إلى الأعمدة التي لا تتسع.
+
+## مرجع API [#api-reference]
+
+<ApiReference component="data-table" />
+
+## الاختلافات عن DGA [#deviations-from-dga]
+
+- لا جدول بيانات في DGA. وهذا مكوّن من Platform Code لا يضيف لونًا: فيستخدم رموز Table وPagination.
+
+<ComponentDeviations component="data-table" />
+
+## التباين [#contrast]
+
+<ComponentContrast component="data-table" />

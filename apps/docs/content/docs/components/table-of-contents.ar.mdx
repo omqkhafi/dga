@@ -1,0 +1,81 @@
+---
+title: جدول المحتويات
+description: "روابط إلى أقسام الصفحة بثلاثة مستويات، مع تمييز القسم المقروء، وتنقل بمفاتيح الأسهم."
+sourceHash: 558ffa6a4952
+---
+
+<Preview name="table-of-contents-basic" title="جدول المحتويات" />
+
+## التثبيت [#installation]
+
+<ComponentInstall name="table-of-contents" />
+
+## الاستخدام [#usage]
+
+```tsx title="page.tsx"
+import { TableOfContents } from "@/components/dga/table-of-contents";
+
+const sections = [
+  { id: "overview", title: "نظرة عامة" },
+  { id: "eligibility", title: "الأهلية" },
+  { id: "citizens", title: "المواطنون", level: 2 },
+  { id: "documents", title: "المستندات" },
+];
+
+export function PageOutline() {
+  return <TableOfContents title="في هذه الصفحة" items={sections} />;
+}
+```
+
+استخدمه في صفحة طويلة بأقسام عدة، في عمود جانبي يبقى ظاهرًا. يجب أن يطابق كل `id` عنصرًا في الصفحة (غالبًا عنوان)، ويحتاج هذا العنصر إلى `scroll-margin-top` إن كانت الترويسة ثابتة. وهو يتبع موضع التمرير تلقائيًا؛ ومرّر `activeId` لتتحكم فيه. وللتنقل بين الصفحات استخدم [Tabs](/docs/components/tabs) أو [Breadcrumb](/docs/components/breadcrumb).
+
+## البنية [#anatomy]
+
+- **جدول المحتويات** (`nav`): بعرض 228px على الأكثر. والعنوان بخط Text sm وبوزن Medium ولون `text-primary-paragraph`.
+- **الرابط**: ارتفاعه 32px، وحشوه 16px عند البداية و8px عند النهاية، ونصف قطره xs. وتُزاح المستويات 2 و3 (`h3` و`h4`).
+- **القسم الحالي**: بوزن Semibold ولون `text-default`، مع `aria-current="location"`.
+- **المرور والضغط**: تعبئتا الأزرار المحايدة. **التركيز**: حد بسمك 2px.
+
+## أمثلة [#examples]
+
+### المستويات والقسم الحالي [#levels-and-the-current-section]
+
+ثلاثة مستويات. القسم الأقرب إلى أعلى الصفحة هو الحالي، واختيار رابط يجعله حاليًا فورًا.
+
+<Preview compact name="table-of-contents-basic" title="ثلاثة مستويات" />
+
+الخط على بعد `offset` بكسل من الأعلى (الافتراضي 96). اجعله بارتفاع ترويستك الثابتة.
+
+## RTL [#rtl]
+
+الإزاحة والحشو عند جهة البداية، فهما على اليمين في العربية.
+
+<DirectionCompare name="table-of-contents-basic" title="جدول المحتويات" />
+
+## إمكانية الوصول [#accessibility]
+
+| المفتاح | الإجراء |
+| --- | --- |
+| <kbd>Tab</kbd> | ينتقل إلى القائمة ثم يخرج منها. |
+| <kbd>ArrowDown</kbd> | ينتقل إلى الرابط التالي. |
+| <kbd>ArrowUp</kbd> | ينتقل إلى الرابط السابق. |
+| <kbd>Home</kbd> | ينتقل إلى أول رابط. |
+| <kbd>End</kbd> | ينتقل إلى آخر رابط. |
+| <kbd>Enter</kbd> | ينتقل إلى القسم. |
+
+- معلم `nav` مسمّى بعنوانه، وفيه روابط إلى مراسٍ داخل الصفحة. وللرابط الحالي `aria-current="location"`؛ ووزن Semibold إشارة ثانية إلى جانب اللون.
+- كل رابط بنسبة 4.5:1 فاتحًا وداكنًا، وعند المرور والضغط أيضًا.
+
+## مرجع API [#api-reference]
+
+<ApiReference component="table-of-contents" />
+
+## الاختلافات عن DGA [#deviations-from-dga]
+
+- يضع CSS قاعدة ثانية بعرض `100%` وارتفاع `100vh` تلغي عرض 228px في Figma. ويبقى عرض 228px ويتبع الارتفاع العناصر.
+
+<ComponentDeviations component="table-of-contents" />
+
+## التباين [#contrast]
+
+<ComponentContrast component="table-of-contents" />

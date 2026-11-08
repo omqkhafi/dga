@@ -1,0 +1,79 @@
+---
+title: Rating
+description: "Five stars to collect or show an opinion. Interactive with the arrow keys or read-only, three sizes, gold or brand colour."
+---
+
+<Preview name="rating-basic" title="Rating" />
+
+## Installation
+
+<ComponentInstall name="rating" />
+
+## Usage
+
+```tsx title="page.tsx"
+import { useState } from "react";
+import { Rating } from "@/components/dga/rating";
+
+export function RateService() {
+  const [value, setValue] = useState(0);
+  return <Rating aria-label="Rate this service" value={value} onValueChange={setValue} />;
+}
+```
+
+Use a rating to ask how satisfied someone was, and to show the result. Pair it with a way to say why when the score is low. Use `readOnly` to display a score (an average, or a submitted answer). DGA defines whole stars, so there are no half stars.
+
+## Anatomy
+
+- **Stars**: five, 24, 32 or 48px, 4px apart (`size` `sm`, `md`, `lg`).
+- **Colour**: `background-secondary` (gold) or, with `brand`, `background-primary`. Every star is outlined so its shape is clear.
+- **Interactive**: a radio group. Hovering a star previews the rating.
+- **Read-only**: an image with a text alternative, "Rated 4 out of 5".
+
+## Examples
+
+### Interactive
+
+The rating is uncontrolled with `defaultValue`, or controlled with `value` and `onValueChange`. Name the group with `aria-label`.
+
+<Preview compact name="rating-basic" title="Sizes and controlled" />
+
+### Read-only, disabled and empty
+
+<Preview compact name="rating-states" title="Read-only, disabled and not rated" />
+
+Translate `starLabel` and `summaryLabel` on Arabic pages.
+
+## RTL
+
+The first star is on the right and the fill grows from the right. The arrow keys follow: the left arrow raises the rating in Arabic.
+
+<DirectionCompare name="rating-basic" title="Rating" />
+
+## Accessibility
+
+| Key | Action |
+| --- | --- |
+| <kbd>Tab</kbd> | Moves into the rating (to the chosen star, or the first), then out. |
+| <kbd>ArrowRight</kbd> | Chooses the next star (the previous one in Arabic). |
+| <kbd>ArrowLeft</kbd> | Chooses the previous star (the next one in Arabic). |
+| <kbd>Space</kbd> | Chooses the focused star. |
+
+- Built on Base UI Radio Group: a `radiogroup` of radios named "1 star", "2 stars" and so on, with one in the tab order.
+- A read-only rating is an `img` named by `summaryLabel`, so the score is never only in the stars.
+- The star outline is 3:1 on the page in light and dark, so the shape is clear although the gold fill alone is 2.30:1.
+
+## API Reference
+
+<ApiReference component="rating" />
+
+## Deviations from DGA
+
+- The CSS colours the stars `#faaf00` and Figma uses `background-secondary` (2.30:1). Stars are outlined to reach 3:1.
+- DGA has no interaction states; keyboard, hover and focus are added.
+
+<ComponentDeviations component="rating" />
+
+## Contrast
+
+<ComponentContrast component="rating" />

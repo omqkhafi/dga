@@ -1,0 +1,93 @@
+---
+title: Data Table
+description: "A table with sorting, filtering, row selection, pagination, loading and empty states, built on TanStack Table, the DGA Table and the DGA Pagination."
+---
+
+<Preview name="data-table-basic" title="Data Table" />
+
+## Installation
+
+<ComponentInstall name="data-table" />
+
+This also installs the [Table](/docs/components/table), [Pagination](/docs/components/pagination), [Checkbox](/docs/components/checkbox) and [Skeleton](/docs/components/skeleton), and adds `@tanstack/react-table`.
+
+## Usage
+
+```tsx title="page.tsx"
+import type { ColumnDef } from "@tanstack/react-table";
+import { DataTable } from "@/components/dga/data-table";
+
+type Request = { id: string; service: string };
+
+const columns: ColumnDef<Request>[] = [
+  { accessorKey: "id", header: "Request" },
+  { accessorKey: "service", header: "Service" },
+];
+
+export function Requests({ rows }: { rows: Request[] }) {
+  return (
+    <DataTable aria-label="Requests" columns={columns} data={rows} pageSize={10} selectable />
+  );
+}
+```
+
+Use it for records people need to sort, search or pick. The table is client-side: it sorts, filters and pages the `data` you give it. For very large or server-paged data, use [Table](/docs/components/table) and [Pagination](/docs/components/pagination) with your own state. Columns are TanStack Table column definitions: give each a string `header` (or `meta: { label }`) so the sort button can be named.
+
+## Anatomy
+
+- **Table**: the DGA Table with striped rows, in a region that scrolls sideways.
+- **Sort**: a sort button in every sortable heading; the heading carries `aria-sort`.
+- **Selection**: a checkbox column; the header checkbox selects the page and shows a dash when some rows are selected.
+- **Footer**: the range ("1 to 5 of 12"), the selection count and the Pagination.
+- **States**: placeholder rows while `loading`, and an empty message when nothing matches.
+
+## Examples
+
+### Sorting, filtering, selection and pages
+
+Type in the search box to filter every column, choose a heading's button to sort, and use the checkboxes to select. Pass `globalFilter` from your own input; `onSelectionChange` receives the selected rows.
+
+<Preview compact name="data-table-basic" title="Sorting, filtering, selection and pagination" />
+
+### Loading, empty and compact
+
+`loading` shows placeholder rows and announces "Loading". With no rows the table shows `emptyState`, or the `labels.empty` message. `pageSize={0}` shows every row without pagination.
+
+<Preview compact name="data-table-states" title="Loading, empty and compact" />
+
+### Labels
+
+Every string the table shows by itself is in `labels`: translate them, and pass `formatNumber` inside `labels.pagination` for Arabic-Indic digits.
+
+## RTL
+
+Columns run from the right, and the pagination arrows mirror.
+
+<DirectionCompare name="data-table-basic" title="Data Table" />
+
+## Accessibility
+
+| Key | Action |
+| --- | --- |
+| <kbd>Tab</kbd> | Moves through the sort buttons, the checkboxes, the cell content and the pagination. |
+| <kbd>Enter</kbd> | Presses a sort button or a page. |
+| <kbd>Space</kbd> | Toggles a focused checkbox. |
+| <kbd>ArrowLeft</kbd> / <kbd>ArrowRight</kbd> | Scroll a focused wide table sideways. |
+
+- A semantic table: the sort order is in `aria-sort`, selected rows have `aria-selected`, and every checkbox is named ("Select row 3").
+- The range line is a polite live region, so paging and filtering are announced. While loading the table is `aria-busy` and a status says so.
+- The scrolling region has a name and takes focus, so a keyboard user can reach the columns that do not fit.
+
+## API Reference
+
+<ApiReference component="data-table" />
+
+## Deviations from DGA
+
+- DGA has no data table. This is a Platform Code component that adds no colour: it uses the Table and Pagination tokens.
+
+<ComponentDeviations component="data-table" />
+
+## Contrast
+
+<ComponentContrast component="data-table" />

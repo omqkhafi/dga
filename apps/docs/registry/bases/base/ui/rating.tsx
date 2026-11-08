@@ -92,7 +92,6 @@ function Rating({
 
   if (readOnly) {
     return (
-      // biome-ignore lint/a11y/useSemanticElements: an image with a text alternative is the read-only pattern
       <div
         data-slot="rating"
         data-readonly=""

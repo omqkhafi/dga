@@ -1,0 +1,91 @@
+---
+title: List
+description: "Ordered, unordered and icon lists in primary, neutral and on-colour, with a second level, plus the Structured List for rows in columns."
+---
+
+<Preview name="list-basic" title="List" />
+
+## Installation
+
+<ComponentInstall name="list" />
+
+## Usage
+
+```tsx title="page.tsx"
+import { List, ListItem } from "@/components/dga/list";
+
+export function Steps() {
+  return (
+    <List type="ordered" aria-label="Steps">
+      <ListItem>Create an account</ListItem>
+      <ListItem>Verify your ID</ListItem>
+      <ListItem>Submit the form</ListItem>
+    </List>
+  );
+}
+```
+
+Use a list for a few short, related items: steps, requirements, notes. Use `ordered` when the order matters, `unordered` when it does not, and `icon` when an icon helps scanning. For rows with several columns use the `StructuredList` below, or a [Table](/docs/components/table) for data to sort. DGA does not define list rows with avatars, descriptions or actions; put those in a [Card](/docs/components/card) or a Table row.
+
+## Anatomy
+
+- **List** (`ul` or `ol`): Text md, items at least 24px high. `tone` is `primary`, `neutral` (default) or `onColor` for brand fills.
+- **Marker**: a 4px dot, `1-` then `a-` one level down (Arabic-Indic digits and Arabic letters with `markers="arabic"`), or a 16px icon. The marker takes the text colour.
+- **Second level**: put a `List` inside a `ListItem`; it indents by 24px.
+
+## Examples
+
+### Types and tones
+
+<Preview compact name="list-basic" title="Unordered, ordered and icon lists" />
+
+### Two levels
+
+The second level of an ordered list uses letters.
+
+<Preview compact name="list-nested" title="Nested lists" />
+
+### Structured List
+
+`StructuredList` is a table with a lighter look: a header row, rows of cells, optional `compact`, `contained`, `rowDivider` and `columnDivider`.
+
+<Preview compact name="structured-list" title="Structured List" />
+
+### Selectable rows
+
+With `selectable` each row has a radio button, so one row can be chosen. Give each row a `value` and a `label` for its radio, and the header an empty first cell.
+
+<Preview compact name="structured-list-selectable" title="Selectable Structured List" />
+
+## RTL
+
+Markers and indents sit on the start side. With `markers="arabic"` the ordered markers use Arabic-Indic digits and Arabic letters.
+
+<DirectionCompare name="list-basic" title="List" />
+
+## Accessibility
+
+| Key | Action |
+| --- | --- |
+| <kbd>Tab</kbd> | Moves into a selectable Structured List (to the chosen row), then out of it. |
+| <kbd>ArrowDown</kbd> | Chooses the next row. |
+| <kbd>ArrowUp</kbd> | Chooses the previous row. |
+
+- Lists are real `ul` and `ol` elements, and the visual markers are hidden from screen readers so an ordered list is read once, with its position.
+- The Structured List is an HTML table. A selectable one is a radio group: the arrow keys change the row and the chosen row is announced.
+- Text is 4.5:1 and icons 3:1 in every tone, in light and dark, including on-colour on the brand fills.
+
+## API Reference
+
+<ApiReference component="list" />
+
+## Deviations from DGA
+
+- The CSS uses `margin-left` and hex colours. Indents are logical and the colours are tokens.
+- Figma's Structured List has selectable states but no control; the rows get a radio button.
+
+<ComponentDeviations component="list" />
+
+## Contrast
+
+<ComponentContrast component="list" />

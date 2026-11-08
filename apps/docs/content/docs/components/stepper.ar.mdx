@@ -1,0 +1,89 @@
+---
+title: Stepper
+description: "موضع الشخص في عملية ما. أفقي ورأسي، بخطوات مكتملة وحالية وقادمة وبها خطأ، وحلقة مضغوطة على الشاشات الضيقة."
+sourceHash: 64cb63e31e95
+---
+
+<Preview name="stepper-horizontal" title="خطوات العملية" />
+
+## التثبيت [#installation]
+
+<ComponentInstall name="stepper" />
+
+## الاستخدام [#usage]
+
+```tsx title="page.tsx"
+import { Stepper, StepperItem } from "@/components/dga/stepper";
+
+export function RequestSteps({ step }: { step: number }) {
+  return (
+    <Stepper aria-label="تقدّم الطلب" value={step}>
+      <StepperItem title="البيانات" description="معلوماتك" />
+      <StepperItem title="المستندات" description="ارفع الملفات" />
+      <StepperItem title="المراجعة" description="تحقق وأكّد" />
+    </Stepper>
+  );
+}
+```
+
+استخدم Stepper لعملية من ثلاث إلى سبع خطوات بترتيب ثابت، كنموذج على أجزاء. وهو يجمع Progress Indicator وRadial Stepper من DGA. وضع النموذج نفسه تحته. ولشريط يمتلئ باستمرار استخدم [Progress](/docs/components/progress).
+
+## البنية [#anatomy]
+
+- **الخطوة**: مؤشر بحجم 32px وعنوان ووصف اختياري، يصلها بالخطوة التالية خط بسمك 2px.
+- **الحالات**: مكتملة (دائرة مملوءة وعلامة صح) وحالية (حلقة بلون العلامة) وقادمة (حلقة محايدة) وبها خطأ (دائرة حمراء مع تنبيه). تضبط `value` الخطوة الحالية، والخطوات قبلها مكتملة. واضبط `status` على خطوة لفرض حالة.
+- **الرأسي**: تتراص المؤشرات ويمتد الخط على جهة البداية.
+- **المضغوط** (تحت عرض `sm`): شكل Radial Stepper، حلقة فيها «2 من 4» واسم الخطوة والتالية.
+
+## أمثلة [#examples]
+
+### أفقي [#horizontal]
+
+تقف الخطوات الثلاث عند الخطوة الأولى والثانية والرابعة.
+
+<Preview compact name="stepper-horizontal" title="أفقي" />
+
+### رأسي وخطأ [#vertical-and-error]
+
+<Preview compact name="stepper-vertical" title="رأسي وبه خطوة بها خطأ" />
+
+### تفاعلي [#interactive]
+
+مع `onValueChange` تكون الخطوات أزرارًا. وعطّل خطوة بـ `disabled` لمنع القفز إلى الأمام.
+
+<Preview compact name="stepper-interactive" title="تفاعلي" />
+
+ترجم `labels` و`compactLabel` و`nextLabel`، ومرّر `formatNumber`، في الصفحات العربية. وضيّق المعاينة لترى الشكل المضغوط.
+
+## RTL [#rtl]
+
+تمتد الخطوات من اليمين، ويمتد الخط إلى اليسار، وتمتلئ الحلقة المضغوطة في الاتجاه المعاكس.
+
+<DirectionCompare name="stepper-horizontal" title="خطوات العملية" />
+
+## إمكانية الوصول [#accessibility]
+
+| المفتاح | الإجراء |
+| --- | --- |
+| <kbd>Tab</kbd> | ينتقل عبر الخطوات (في الخطوات التفاعلية فقط). |
+| <kbd>Enter</kbd> | ينتقل إلى الخطوة المركَّزة. |
+| <kbd>Space</kbd> | ينتقل إلى الخطوة المركَّزة. |
+
+- قائمة مرتبة فيُعلَن الموضع. وللخطوة الحالية `aria-current="step"`، وتقرأ كل خطوة حالتها بالكلمات («مكتملة» و«الخطوة الحالية») إلى جانب اللون والأيقونة.
+- الخطوط الواصلة زخرفة. وحلقات المؤشرات وتعبئاتها 3:1 والعناوين 4.5:1، فاتحًا وداكنًا.
+- في الشكل المضغوط يكون اسم الخطوة منطقة حية مهذبة.
+
+## مرجع API [#api-reference]
+
+<ApiReference component="stepper" />
+
+## الاختلافات عن DGA [#deviations-from-dga]
+
+- الخطوة القادمة 1.48:1 بالرمادي الأصلي في DGA؛ وتستخدم هنا رموزًا محايدة أقوى.
+- أُضيفت حالة الخطأ والشكل المضغوط التلقائي. وتُكتب أسماء الرموز `upcomming` هنا `upcoming`.
+
+<ComponentDeviations component="stepper" />
+
+## التباين [#contrast]
+
+<ComponentContrast component="stepper" />

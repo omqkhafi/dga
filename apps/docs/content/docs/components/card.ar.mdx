@@ -1,0 +1,114 @@
+---
+title: Card
+description: "حاوية لمعلومات وإجراءات عن شيء واحد. ظل أو حد أو بلا تأثير، وثلاثة أحجام، ووسائط، ونمط بطاقة قابلة للنقر برابط حقيقي، وبطاقات قابلة للتوسيع والاختيار."
+sourceHash: 57cfd8c0f10f
+---
+
+<Preview name="card-effects" title="البطاقة" />
+
+## التثبيت [#installation]
+
+<ComponentInstall name="card" />
+
+## الاستخدام [#usage]
+
+```tsx title="page.tsx"
+import { Button } from "@/components/dga/button";
+import {
+  Card,
+  CardActions,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/dga/card";
+
+export function ServiceCard() {
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle>طلب خدمة</CardTitle>
+        <CardDescription>تابع حالة طلبك.</CardDescription>
+      </CardHeader>
+      <CardActions>
+        <Button size="sm">فتح</Button>
+      </CardActions>
+    </Card>
+  );
+}
+```
+
+استخدم البطاقة لمجموعة محتوى وإجراءات مترابطة: خدمة أو شخص أو مكان. وينبغي أن تحمل البطاقات في صف النوع نفسه من الأشياء. وللبطاقة التي تنقل إلى صفحة أخرى استخدم `CardLink`؛ وللاختيار استخدم `SelectableCard`؛ وللتفاصيل التي تُفتح وتُغلق استخدم `CardExpandable`.
+
+## البنية [#anatomy]
+
+- **Card**: بلون `background-card` ونصف قطر lg، وحشو وفجوة من `card-lg-*` (16px و24px).
+- **التأثير**: `shadow` (الظل `shadow-md`) أو `stroke` (حد 1px بلون `border-neutral-primary`) أو `none`. ويُلغى الظل في الوضع الداكن، فيحمل السطح الأفتح والحد الحافة.
+- **الأجزاء**: `CardMedia` و`CardIcon` و`CardHeader` مع `CardTitle` و`CardDescription` و`CardContent` و`CardActions`.
+- **الحالات**: يملأ المرور `background-neutral-50` في البطاقة القابلة للنقر أو التوسيع أو الاختيار؛ والتركيز حد بسمك 2px؛ والتعطيل برموزه.
+
+## أمثلة [#examples]
+
+### التأثيرات والأحجام [#effects-and-sizes]
+
+قيمة `effect` إما `shadow` (الافتراضي) أو `stroke` أو `none`. وقيمة `size` إما `sm` أو `md` أو `lg` (الافتراضي)، وتضبط الحشو والفجوة.
+
+<Preview compact name="card-effects" title="التأثيرات" />
+
+### وسائط ووسوم وتقييم [#media-tags-and-a-rating]
+
+يمتد `CardMedia` من الحافة إلى الحافة في الأعلى. وتوضع الوسوم أو [Rating](/docs/components/rating) أو أي محتوى في `CardContent`.
+
+<Preview compact name="card-media" title="وسائط ووسوم وتقييم" />
+
+### بطاقة قابلة للنقر [#a-clickable-card]
+
+ضع `CardLink` حول نص العنوان. تمتد مساحة نقره على البطاقة كلها، فتكون البطاقة رابطًا واحدًا باسم العنوان. وتبقى الأزرار في `CardActions` قابلة للنقر فوقه. والبطاقة المعطّلة تتجاهل النقر.
+
+<Preview compact name="card-link" title="قابلة للنقر ومعطّلة" />
+
+### قابلة للتوسيع [#expandable]
+
+يخفي `CardExpandable` التفاصيل حتى يُختار المحفّز. ويعرضها `defaultOpen` في البداية، ويتحكم فيها `open` مع `onOpenChange`.
+
+<Preview compact name="card-expandable" title="قابلة للتوسيع" />
+
+### قابلة للاختيار [#selectable]
+
+`SelectableCard` خانة اختيار على هيئة بطاقة. والنقر في أي موضع منها يبدّلها، وتأخذ البطاقة المختارة حدًا أساسيًا.
+
+<Preview compact name="card-selectable" title="قابلة للاختيار" />
+
+## RTL [#rtl]
+
+يتبع الحشو والوسائط والإجراءات وسهم التوسيع اتجاه الصفحة.
+
+<DirectionCompare name="card-effects" title="البطاقة" />
+
+## إمكانية الوصول [#accessibility]
+
+| المفتاح | الإجراء |
+| --- | --- |
+| <kbd>Tab</kbd> | ينتقل إلى رابط البطاقة ثم إلى كل إجراء داخلها. |
+| <kbd>Enter</kbd> | يتبع رابط البطاقة، أو ينفّذ الإجراء المركَّز. |
+| <kbd>Space</kbd> | يفتح البطاقة القابلة للتوسيع أو يغلقها، أو يبدّل القابلة للاختيار. |
+
+- تحتوي البطاقة القابلة للنقر على رابط حقيقي، فتجد قارئة الشاشة رابطًا واحدًا باسم العنوان، ويرسم تركيز لوحة المفاتيح الحلقة حول البطاقة كلها. لا تلفّ البطاقة برابط آخر، ولا تضع روابط داخل بطاقة قابلة للاختيار.
+- `CardTitle` عنوان؛ فاضبط `level` ليلائم مخطط الصفحة.
+- لمحفّز البطاقة القابلة للتوسيع `aria-expanded`. والقابلة للاختيار خانة اختيار مسمّاة بنصها.
+- النص بنسبة 4.5:1 على البطاقة وعلى تعبئة المرور، فاتحًا وداكنًا. ونص التعطيل مستثنى.
+
+## مرجع API [#api-reference]
+
+<ApiReference component="card" />
+
+## الاختلافات عن DGA [#deviations-from-dga]
+
+- يعطي CSS كل بطاقة حدًا بسمك 2px مع لون احتياطي أبيض. وهنا الحد شفاف، وبسمك 1px مع تأثير الحد، والتركيز حد بسمك 2px، فلا يزيح التركيز التخطيط.
+- يستخدم التعطيل رموز Figma لا طبقة شفافة. ويُكتب متغير `With Sahdow` `shadow`.
+- تأخذ البطاقة المختارة حدًا؛ ولا يُظهر Figma إلا خانة الاختيار.
+
+<ComponentDeviations component="card" />
+
+## التباين [#contrast]
+
+<ComponentContrast component="card" />

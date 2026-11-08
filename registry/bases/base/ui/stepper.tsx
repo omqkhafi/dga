@@ -148,7 +148,7 @@ function Stepper({
       {list}
       <div data-slot="stepper-compact" className="cn-stepper-compact">
         <div className="cn-stepper-ring" aria-hidden>
-          <svg viewBox="0 0 100 100" focusable="false" className="cn-stepper-ring-svg">
+          <svg viewBox="0 0 100 100" aria-hidden focusable="false" className="cn-stepper-ring-svg">
             <circle cx="50" cy="50" r="45" fill="none" className="cn-stepper-ring-track" />
             <circle
               cx="50"

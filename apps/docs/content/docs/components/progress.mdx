@@ -1,0 +1,72 @@
+---
+title: Progress
+description: "A bar or ring that shows how far a task has got. Determinate and indeterminate, three bar sizes, five ring sizes, with success and error states."
+---
+
+<Preview name="progress-linear" title="Progress" />
+
+## Installation
+
+<ComponentInstall name="progress" />
+
+## Usage
+
+```tsx title="page.tsx"
+import { Progress } from "@/components/dga/progress";
+
+export function Upload({ percent }: { percent: number }) {
+  return <Progress value={percent} label="Uploading" helperText="Keep this page open." />;
+}
+```
+
+Use progress for a task with a known length, such as an upload or a form with several parts. When the length is not known pass `value={null}`. For a wait of a second or two, use a [Spinner](/docs/components/spinner). To show where someone is in a sequence of pages use a [Stepper](/docs/components/stepper).
+
+## Anatomy
+
+- **Linear**: a label and the percentage, a track with a fill, and a helper line. The bar is 8, 12 or 16px high (`size` `sm`, `md`, `lg`). `tone` is `primary` or `neutral`.
+- **Circular** (`ProgressCircle`): 64, 80, 120, 160 or 200px, with the percentage and a short caption in the middle (hidden below 120px).
+- **Status**: `success` and `error` add a round icon and the matching colour; the helper text says what happened.
+
+## Examples
+
+### Linear
+
+<Preview compact name="progress-linear" title="Sizes and neutral" />
+
+### Status, indeterminate and controlled
+
+<Preview compact name="progress-states" title="Success, error, indeterminate" />
+
+### Circular
+
+<Preview compact name="progress-circle" title="Circular sizes and states" />
+
+`formatValue` turns the number into the text, for Arabic-Indic digits on Arabic pages.
+
+## RTL
+
+The bar fills from the right and the ring turns the other way.
+
+<DirectionCompare name="progress-linear" title="Progress" />
+
+## Accessibility
+
+- Built on Base UI Progress: `role="progressbar"` with `aria-valuenow`, `aria-valuemin` and `aria-valuemax`, named by the label. An indeterminate bar has no `aria-valuenow`.
+- Progress is not interactive and takes no keyboard focus. Announce the end of a task in a live region or a [Notification](/docs/components/notification), as the bar does not.
+- The fill is 3:1 on the track, and the label, value and helper text are 4.5:1, in light and dark. Success and error are never colour alone: they add an icon and the helper text.
+- Animation stops when the person prefers reduced motion.
+
+## API Reference
+
+<ApiReference component="progress" />
+
+## Deviations from DGA
+
+- Figma gives the frame heights but not the bar thickness or an indeterminate state; both are designed here.
+- In dark mode the fills use the `icon-*` tokens, because the DGA brand, success and error fills are below 3:1 on the dark track.
+
+<ComponentDeviations component="progress" />
+
+## Contrast
+
+<ComponentContrast component="progress" />

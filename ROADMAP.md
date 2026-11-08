@@ -1,7 +1,7 @@
 # Roadmap
 
-Phases 0, 1 and 2 are done (0.1.0), the Phase 2.5 docs polish is in 0.1.1 and 0.1.2, the Arabic locale (Phase 2.6) is in 0.2.0, the forms (Phase 3) are in 0.3.0, the interactive components (Phase 4) are in 0.4.0, the AI Resources docs and the docs polish are in 0.4.1, 0.4.2 moves component installs to `components/dga` and fixes the Arabic 404, and 0.4.3 makes preview content follow the direction toggle; see [CHANGELOG.md](CHANGELOG.md).
-Next: Patch 0.4.4 (OKLCH colour output), Phase 5 (Navigation and data display), Phase 6 (Composite), Phase 7 (shadcn extension: components DGA does not define), Phase 8 (Section blocks) and Phase 9 (Mobile components, as needed), then the Release.
+Phases 0, 1 and 2 are done (0.1.0), the Phase 2.5 docs polish is in 0.1.1 and 0.1.2, the Arabic locale (Phase 2.6) is in 0.2.0, the forms (Phase 3) are in 0.3.0, the interactive components (Phase 4) are in 0.4.0, the AI Resources docs and the docs polish are in 0.4.1, 0.4.2 moves component installs to `components/dga` and fixes the Arabic 404, and 0.4.3 makes preview content follow the direction toggle, and 0.5.0 emits every colour as OKLCH and adds the navigation and data display components (Phase 5); see [CHANGELOG.md](CHANGELOG.md).
+Next: Phase 6 (Composite), Phase 7 (shadcn extension: components DGA does not define), Phase 8 (Section blocks) and Phase 9 (Mobile components, as needed), then the Release.
 Component specs for each phase are in `docs/design-system/components/`.
 
 ## Rules for every phase
@@ -94,22 +94,25 @@ Follow-ups, not blocking Phase 4:
 - [x] One mechanism for every preview and example: the preview sets the frame's language from its direction (`contentLang`), and every example reads it. Missing Arabic strings added, and names, IDs and dates use natural Arabic forms in RTL.
 - [x] Locale purity per direction: preview content is checked against its toggled language (no English words in RTL, no Arabic in LTR, same allowlist), in `bun run test` and `bun run test:e2e`, on an English and an Arabic page.
 
-## Patch 0.4.4: OKLCH colour output
+## OKLCH colour output (done, 0.5.0)
 
-- [ ] The source of truth stays the DGA Figma hex values in `scripts/tokens`. The token build emits every colour in the CSS output as `oklch()`: primitives, semantic tokens and the shadcn variable mapping, in light and dark.
-- [ ] Round-trip check in `tokens:check`: every emitted `oklch()` value converts back to the exact source hex (8-bit sRGB). Any mismatch fails the build. Alpha values keep their exact opacity.
-- [ ] The contrast audit keeps working from the source values, so its results do not change.
-- [ ] The Colors, Deviations and Contrast pages show hex next to OKLCH, because designers and Figma work in hex.
-- [ ] This matches the `oklch()` format shadcn and Tailwind v4 use by default.
-- [ ] No visual change and no Deviations entries: the same colours in a different notation.
+- [x] The source of truth stays the DGA Figma hex values in `scripts/tokens`. The token build emits every colour in the CSS output as `oklch()`: primitives, semantic tokens, the shadcn variable mapping and the shadow colours, in light and dark.
+- [x] Round-trip check in `tokens:check`: every emitted `oklch()` value converts back to the exact source hex (8-bit sRGB). Any mismatch fails the build. Alpha values keep their exact opacity.
+- [x] The contrast audit keeps working from the source values, so its results do not change.
+- [x] The Colors, Deviations and Contrast pages show hex next to OKLCH, because designers and Figma work in hex.
+- [x] This matches the `oklch()` format shadcn and Tailwind v4 use by default.
+- [x] No visual change and no Deviations entries: the same colours in a different notation.
 
-## Phase 5: Navigation and data display
+## Phase 5: Navigation and data display (done, 0.5.0)
 
-Breadcrumbs, Pagination, Table of Content, Card, List, Table, Data Table, Rating, Progress, Stepper.
+- [x] **Breadcrumb**, **Pagination**, **Table of Content**, **Card**, **List** (with Structured List), **Table**, **Data Table** (TanStack Table on the DGA Table and Pagination, no DGA spec), **Rating**, **Progress** (linear and circular) and **Stepper** (DGA Progress Indicator and Radial Stepper), each on Base UI where a primitive exists, with stable `cn-*` classes and DGA tokens only.
+- [x] Every state from the specs, RTL and LTR, light and dark, responsive: Breadcrumb and Stepper fold on narrow screens, Pagination has a compact form, Table and Data Table scroll sideways, and arrows, separators and fills mirror in RTL.
+- [x] The contrast audit covers every state of every component. DGA's own bugs are fixed and logged in `scripts/tokens/fixes.ts` (the Deviations page): the upcoming step at 1.48:1, the gold Rating, the Table alternate row equal to the row, the Table hover that put the link below 4.5:1, a dark neutral Progress fill that was its own track, physical margins and hex colours in the List CSS, the Card border fallback, and the `upcomming` and `boarder` token typos.
+- [x] Docs pages in English and Arabic under "Navigation and data display", registry items on the `components/dga` path, the install and collision tests, keyboard and RTL browser tests for Pagination, Stepper, Rating, Data Table, Breadcrumb and Table of Contents.
 
 ## Phase 6: Composite
 
-Header with slide-out menu, Footer, Date Picker (Hijri and Gregorian), Carousel, Filtration.
+Header with slide-out menu, Second nav, Footer, Date Picker (Hijri and Gregorian), Carousel, Filtration.
 
 ## Phase 7: shadcn extension (components DGA does not define)
 

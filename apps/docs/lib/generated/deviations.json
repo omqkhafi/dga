@@ -3942,7 +3942,7 @@
     "area": "Components",
     "item": "List: physical margins and hard-coded colours",
     "original": ".list { margin-left: 24px }, .list--unordered>ul { margin-left: 18px } and list colours #1b8354, #0d121c and #fff written as hex, with --Link-2-link-default_on-color as the on-colour.",
-    "ours": "Logical margins (ms-6), so a nested list indents from the start side in Arabic. Colours are text-primary, text-default and text-oncolor-primary with icon-primary, icon-default and icon-oncolor. Ordered markers are 1- then a- (أ- in Arabic).",
+    "ours": "Logical margins (ms-6), so a nested list indents from the start side in Arabic. Colours are text-primary, text-default and text-oncolor-primary with icon-primary, icon-default and icon-oncolor. Ordered markers are 1- then a-, with Arabic letters in Arabic.",
     "reason": "A margin-left puts the indent on the wrong side in RTL, and hex values do not follow dark mode.",
     "status": "fixed",
     "component": "list",

@@ -1,0 +1,80 @@
+---
+title: Rating
+description: "خمس نجوم لجمع رأي أو عرضه. تفاعلي بمفاتيح الأسهم أو للقراءة فقط، وثلاثة أحجام، بالذهبي أو بلون العلامة."
+sourceHash: 097aaca62d77
+---
+
+<Preview name="rating-basic" title="التقييم" />
+
+## التثبيت [#installation]
+
+<ComponentInstall name="rating" />
+
+## الاستخدام [#usage]
+
+```tsx title="page.tsx"
+import { useState } from "react";
+import { Rating } from "@/components/dga/rating";
+
+export function RateService() {
+  const [value, setValue] = useState(0);
+  return <Rating aria-label="قيّم هذه الخدمة" value={value} onValueChange={setValue} />;
+}
+```
+
+استخدم التقييم لسؤال الناس عن رضاهم ولعرض النتيجة. واقرنه بطريقة لقول السبب حين تكون الدرجة منخفضة. واستخدم `readOnly` لعرض درجة (متوسط أو إجابة مرسلة). ويعرّف DGA نجومًا كاملة، فلا نجوم نصفية.
+
+## البنية [#anatomy]
+
+- **النجوم**: خمس، بحجم 24 أو 32 أو 48px، بينها 4px (قيمة `size` هي `sm` أو `md` أو `lg`).
+- **اللون**: `background-secondary` (ذهبي) أو `background-primary` مع `brand`. وكل نجمة بحد خارجي ليتضح شكلها.
+- **التفاعلي**: مجموعة أزرار اختيار. والمرور على نجمة يعاين التقييم.
+- **للقراءة فقط**: صورة ببديل نصي، «التقييم 4 من 5».
+
+## أمثلة [#examples]
+
+### تفاعلي [#interactive]
+
+يكون التقييم بلا تحكم خارجي مع `defaultValue`، أو بتحكم خارجي مع `value` و`onValueChange`. وسمِّ المجموعة بـ `aria-label`.
+
+<Preview compact name="rating-basic" title="الأحجام وبتحكم خارجي" />
+
+### للقراءة فقط ومعطّل وغير مُقيَّم [#read-only-disabled-and-empty]
+
+<Preview compact name="rating-states" title="للقراءة فقط ومعطّل وغير مُقيَّم" />
+
+ترجم `starLabel` و`summaryLabel` في الصفحات العربية.
+
+## RTL [#rtl]
+
+النجمة الأولى على اليمين وينمو التعبئة من اليمين. وتتبعها المفاتيح: يرفع السهم الأيسر التقييم في العربية.
+
+<DirectionCompare name="rating-basic" title="التقييم" />
+
+## إمكانية الوصول [#accessibility]
+
+| المفتاح | الإجراء |
+| --- | --- |
+| <kbd>Tab</kbd> | يدخل التقييم (إلى النجمة المختارة أو الأولى) ثم يخرج منه. |
+| <kbd>ArrowRight</kbd> | يختار النجمة التالية (والسابقة بالعربية). |
+| <kbd>ArrowLeft</kbd> | يختار النجمة السابقة (والتالية بالعربية). |
+| <kbd>Space</kbd> | يختار النجمة المركَّزة. |
+
+- مبنية على Base UI Radio Group: `radiogroup` من أزرار اختيار مسمّاة «نجمة واحدة» و«نجمتان» وهكذا، وأحدها في ترتيب Tab.
+- التقييم للقراءة فقط `img` مسمّى بـ `summaryLabel`، فلا تكون الدرجة في النجوم وحدها.
+- حد النجمة 3:1 على الصفحة فاتحًا وداكنًا، فيتضح الشكل رغم أن التعبئة الذهبية وحدها 2.30:1.
+
+## مرجع API [#api-reference]
+
+<ApiReference component="rating" />
+
+## الاختلافات عن DGA [#deviations-from-dga]
+
+- يلوّن CSS النجوم بـ `#faaf00` ويستخدم Figma `background-secondary` (2.30:1). وتُحاط النجوم بحد لتبلغ 3:1.
+- لا حالات تفاعل في DGA؛ وأُضيف التركيز بلوحة المفاتيح والمرور.
+
+<ComponentDeviations component="rating" />
+
+## التباين [#contrast]
+
+<ComponentContrast component="rating" />

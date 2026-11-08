@@ -151,16 +151,16 @@ export function navigationPairs(): ComponentPair[] {
     );
   }
   add("table", "sort and filter focus ring", "border-black", "table-background-header", 3);
-  add("structured-list", "header text", "table-text-head", "background-body", 4.5);
-  add("structured-list", "cell text", "table-text-body", "background-body", 4.5);
+  add("list", "structured / header text", "table-text-head", "background-body", 4.5);
+  add("list", "structured / cell text", "table-text-body", "background-body", 4.5);
   add(
-    "structured-list",
-    "selected row text",
+    "list",
+    "structured / selected row text",
     "table-text-body",
     "table-background-row-select",
     4.5,
   );
-  add("structured-list", "focus ring", "table-cell-border-inverse", "background-body", 3);
+  add("list", "structured / focus ring", "table-cell-border-inverse", "background-body", 3);
   add("data-table", "summary", "text-primary-paragraph", "background-body", 4.5);
   add("data-table", "empty message", "text-primary-paragraph", "table-background-row", 4.5);
   add("data-table", "empty icon", "icon-default-500", "table-background-row", 3);

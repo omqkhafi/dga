@@ -13,11 +13,39 @@ type StepperLabels = {
   completed: string;
   /** Read after the current step's title. */
   current: string;
-  /** Read after an upcoming step's title. */ upcoming: string; /** Read after a step with a problem. */ error: string;
-}; type StepContext = { index: number; status: StepStatus; last: boolean; orientation: "horizontal" | "vertical"; interactive: boolean; labels: StepperLabels; formatNumber: (value: number) => string; select: (index: number) => void;
+  /** Read after an upcoming step's title. */
+  upcoming: string;
+  /** Read after a step with a problem. */
+  error: string;
 };
-const StepContext = React.createContext<StepContext | null>(null); const stepperVariants = cva("m-0 flex list-none p-0", { variants: { orientation: { horizontal: "w-full flex-row items-start", vertical: "flex-col" }, }, defaultVariants: { orientation: "horizontal" },
-}); type StepperProps = Omit<React.ComponentProps<"ol">, "onChange"> & VariantProps<typeof stepperVariants> & { /** The current step, from 0 (controlled). Earlier steps are completed, later ones upcoming. */ value?: number; /** The current step at first (uncontrolled). Default 0. */ defaultValue?: number; /** * Called with a step's index when someone chooses it. Passing it turns the steps into
+
+type StepContext = {
+  index: number;
+  status: StepStatus;
+  last: boolean;
+  orientation: "horizontal" | "vertical";
+  interactive: boolean;
+  labels: StepperLabels;
+  formatNumber: (value: number) => string;
+  select: (index: number) => void;
+};
+const StepContext = React.createContext<StepContext | null>(null);
+
+const stepperVariants = cva("m-0 flex list-none p-0", {
+  variants: {
+    orientation: { horizontal: "w-full flex-row items-start", vertical: "flex-col" },
+  },
+  defaultVariants: { orientation: "horizontal" },
+});
+
+type StepperProps = Omit<React.ComponentProps<"ol">, "onChange"> &
+  VariantProps<typeof stepperVariants> & {
+    /** The current step, from 0 (controlled). Earlier steps are completed, later ones upcoming. */
+    value?: number;
+    /** The current step at first (uncontrolled). Default 0. */
+    defaultValue?: number;
+    /**
+     * Called with a step's index when someone chooses it. Passing it turns the steps into
      * buttons; leave it out for a display-only stepper.
      */
     onValueChange?: (value: number) => void;
@@ -46,10 +74,112 @@ const defaultLabels: StepperLabels = {
  * `StepperItem`s in order and set `value` to the current one: the earlier ones are completed and
  * the later ones upcoming, and an item can be marked `status="error"`. Each item announces its
  * state, and the current one has `aria-current="step"`. Below the `sm` width a horizontal stepper
- * folds into the compact radial form (DGA: Radial Stepper): a ring with "2 of 4", the step's name * and the next one. With `onValueChange` the steps are buttons, reachable with Tab. */
-function Stepper({ className, orientation = "horizontal", value: valueProp, defaultValue = 0, onValueChange, labels, formatNumber = String, compactLabel = (step, total) => `${step} of ${total}`, nextLabel = "Next:", children, ...props
-}: StepperProps) { const [inner, setInner] = React.useState(defaultValue); const value = valueProp ?? inner; const items = React.Children.toArray(children).filter(React.isValidElement); const merged = { ...defaultLabels, ...labels }; const select = (index: number) => { if (valueProp === undefined) setInner(index); onValueChange?.(index); }; const list = ( <ol data-slot="stepper" data-orientation={orientation} className={cn( stepperVariants({ orientation }), orientation === "horizontal" && compactLabel !== false && "max-sm:hidden", className, )} {...props} > {items.map((item, index) => { const own = (item.props as { status?: StepStatus }).status; const status: StepStatus = own ?? (index < value ? "completed" : index === value ? "current" : "upcoming"); return ( <StepContext.Provider key={item.key ?? index} value={{ index, status, last: index === items.length - 1, orientation: orientation ?? "horizontal", interactive: onValueChange !== undefined, labels: merged, formatNumber, select, }} > {item} </StepContext.Provider> ); })} </ol> ); if (orientation === "vertical" || compactLabel === false) return list; // The compact (radial) form for narrow screens. const total = items.length; const current = Math.min(Math.max(value, 0), total - 1); const read = (el?: React.ReactElement) => el?.props as { title?: React.ReactNode; description?: React.ReactNode } | undefined; const now = read(items[current]); const next = read(items[current + 1]); const fraction = total === 0 ? 0 : (current + 1) / total; return ( <> {list} <div data-slot="stepper-compact" className="hidden items-center gap-4 max-sm:flex"> <div className="relative inline-flex size-16 shrink-0 items-center justify-center text-sm font-bold text-text-primary-paragraph tabular-nums" aria-hidden> <svg viewBox="0 0 100 100" focusable="false" className="absolute inset-0 size-full -rotate-90 rtl:-scale-x-100"> <circle cx="50" cy="50" r="45" fill="none" className="stroke-border-neutral-primary [stroke-width:8]" /> <circle cx="50" cy="50" r="45" fill="none" strokeLinecap="round" strokeDasharray={`${fraction * 282.74} 282.74`} className="stroke-stepper-button-current [stroke-width:8]" /> </svg> <span>{compactLabel(current + 1, total)}</span> </div> <div className="flex min-w-0 flex-col gap-0.5"> <p className="m-0 text-md font-semibold text-text-default" aria-live="polite"> {now?.title} </p> {now?.description ? <p className="block text-sm text-text-primary-paragraph">{now.description}</p> : null} {next?.title ? ( <p className="m-0 text-sm text-text-primary-paragraph"> {nextLabel} {next.title} </p> ) : null} </div> </div> </> );
-} type StepperItemProps = Omit<React.ComponentProps<"li">, "title"> & { /** The step's name. */
+ * folds into the compact radial form (DGA: Radial Stepper): a ring with "2 of 4", the step's name
+ * and the next one. With `onValueChange` the steps are buttons, reachable with Tab.
+ */
+function Stepper({
+  className,
+  orientation = "horizontal",
+  value: valueProp,
+  defaultValue = 0,
+  onValueChange,
+  labels,
+  formatNumber = String,
+  compactLabel = (step, total) => `${step} of ${total}`,
+  nextLabel = "Next:",
+  children,
+  ...props
+}: StepperProps) {
+  const [inner, setInner] = React.useState(defaultValue);
+  const value = valueProp ?? inner;
+  const items = React.Children.toArray(children).filter(React.isValidElement);
+  const merged = { ...defaultLabels, ...labels };
+  const select = (index: number) => {
+    if (valueProp === undefined) setInner(index);
+    onValueChange?.(index);
+  };
+  const list = (
+    <ol
+      data-slot="stepper"
+      data-orientation={orientation}
+      className={cn(
+        stepperVariants({ orientation }),
+        orientation === "horizontal" && compactLabel !== false && "max-sm:hidden",
+        className,
+      )}
+      {...props}
+    >
+      {items.map((item, index) => {
+        const own = (item.props as { status?: StepStatus }).status;
+        const status: StepStatus =
+          own ?? (index < value ? "completed" : index === value ? "current" : "upcoming");
+        return (
+          <StepContext.Provider
+            key={item.key ?? index}
+            value={{
+              index,
+              status,
+              last: index === items.length - 1,
+              orientation: orientation ?? "horizontal",
+              interactive: onValueChange !== undefined,
+              labels: merged,
+              formatNumber,
+              select,
+            }}
+          >
+            {item}
+          </StepContext.Provider>
+        );
+      })}
+    </ol>
+  );
+  if (orientation === "vertical" || compactLabel === false) return list;
+
+  // The compact (radial) form for narrow screens.
+  const total = items.length;
+  const current = Math.min(Math.max(value, 0), total - 1);
+  const read = (el?: React.ReactElement) =>
+    el?.props as { title?: React.ReactNode; description?: React.ReactNode } | undefined;
+  const now = read(items[current]);
+  const next = read(items[current + 1]);
+  const fraction = total === 0 ? 0 : (current + 1) / total;
+  return (
+    <>
+      {list}
+      <div data-slot="stepper-compact" className="hidden items-center gap-4 max-sm:flex">
+        <div className="relative inline-flex size-16 shrink-0 items-center justify-center text-sm font-bold text-text-primary-paragraph tabular-nums" aria-hidden>
+          <svg viewBox="0 0 100 100" aria-hidden focusable="false" className="absolute inset-0 size-full -rotate-90 rtl:-scale-x-100">
+            <circle cx="50" cy="50" r="45" fill="none" className="stroke-border-neutral-primary [stroke-width:8]" />
+            <circle
+              cx="50"
+              cy="50"
+              r="45"
+              fill="none"
+              strokeLinecap="round"
+              strokeDasharray={`${fraction * 282.74} 282.74`}
+              className="stroke-stepper-button-current [stroke-width:8]"
+            />
+          </svg>
+          <span>{compactLabel(current + 1, total)}</span>
+        </div>
+        <div className="flex min-w-0 flex-col gap-0.5">
+          <p className="m-0 text-md font-semibold text-text-default" aria-live="polite">
+            {now?.title}
+          </p>
+          {now?.description ? <p className="block text-sm text-text-primary-paragraph">{now.description}</p> : null}
+          {next?.title ? (
+            <p className="m-0 text-sm text-text-primary-paragraph">
+              {nextLabel} {next.title}
+            </p>
+          ) : null}
+        </div>
+      </div>
+    </>
+  );
+}
+
+type StepperItemProps = Omit<React.ComponentProps<"li">, "title"> & {
+  /** The step's name. */
   title: React.ReactNode;
   /** A line under the name. */
   description?: React.ReactNode;

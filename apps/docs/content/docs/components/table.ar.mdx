@@ -1,0 +1,108 @@
+---
+title: Table
+description: "جدول دلالي بسيط برأس وصفوف متبادلة وفواصل وأحجام مضغوطة ومحاطة بحد، وأزرار ترتيب وتصفية، وتمرير أفقي."
+sourceHash: ddddde5ef124
+---
+
+<Preview name="table-basic" title="الجدول" />
+
+## التثبيت [#installation]
+
+<ComponentInstall name="table" />
+
+## الاستخدام [#usage]
+
+```tsx title="page.tsx"
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/dga/table";
+
+export function Requests() {
+  return (
+    <Table aria-label="الطلبات">
+      <TableHeader>
+        <TableRow>
+          <TableHead>الطلب</TableHead>
+          <TableHead>الخدمة</TableHead>
+        </TableRow>
+      </TableHeader>
+      <TableBody>
+        <TableRow>
+          <TableCell>طلب-١٠٠١</TableCell>
+          <TableCell>تجديد رخصة تجارية</TableCell>
+        </TableRow>
+      </TableBody>
+    </Table>
+  );
+}
+```
+
+استخدم الجدول لبيانات يقارنها الناس عبر الصفوف والأعمدة. وهو HTML عادي فلا يحتاج إلى JavaScript. وللترتيب والتصفية والتحديد والترقيم استخدم [Data Table](/docs/components/data-table). ولقائمة قصيرة من الحقائق استخدم [Structured List](/docs/components/list).
+
+## البنية [#anatomy]
+
+- **Table**: داخل منطقة تمرير. نص Text md بلون `table-text-body`، وحشو الخلايا من `table-cell-*-padding`.
+- **الرأس** (`TableHeader`): ارتفاعه 48px، بخط Text xs وبوزن Medium ولون `table-text-head` على `table-background-header`.
+- **الصف**: 64px (و48px مضغوطًا). وللصفوف عند المرور والمتبادلة والمحددة رموز `table-background-*`.
+- **أنواع الخلايا**: نص ورابط ووسم وحالة وصورة شخصية وخانة اختيار ومفتاح وإجراءات وأيقونة تقييم وأي محتوى مخصص. انظر المثال أدناه.
+- **زرا الترتيب والتصفية**: زران بحجم 20px في العنوان، يصيران أسودين عند التفعيل.
+
+## أمثلة [#examples]
+
+### المتغيرات [#variants]
+
+يظلل `striped` كل صف ثانٍ، ويصغّر `compact` الصفوف، ويضيف `contained` حدًا وزوايا مدورة، ويرسم `columnDivider` خطوطًا عمودية، ويزيل `rowDivider={false}` الخطوط الأفقية. وللصف `selected` تعبئة التحديد.
+
+<Preview compact name="table-variants" title="المتغيرات" />
+
+### أنواع الخلايا [#cell-types]
+
+<Preview compact name="table-cells" title="أنواع الخلايا" />
+
+### الترتيب والتصفية [#sort-and-filter]
+
+يأخذ `TableSortButton` القيمة `direction` ‏(`false` أو `"asc"` أو `"desc"`) ويأخذ العنوان `aria-sort`. ويأخذ `TableFilterButton` القيمة `active`.
+
+<Preview compact name="table-sort-filter" title="الترتيب والتصفية" />
+
+### على الشاشات الضيقة [#on-narrow-screens]
+
+مرّر `scrollLabel` فيتمرر الجدول أفقيًا داخل منطقة تقبل تركيز لوحة المفاتيح (<kbd>Tab</kbd> ثم مفاتيح الأسهم).
+
+## RTL [#rtl]
+
+تمتد الأعمدة من اليمين. والفواصل والحشو منطقية.
+
+<DirectionCompare name="table-basic" title="الجدول" />
+
+## إمكانية الوصول [#accessibility]
+
+| المفتاح | الإجراء |
+| --- | --- |
+| <kbd>Tab</kbd> | ينتقل إلى محتوى الخلية التالي القابل للتركيز، كرابط أو خانة أو زر. |
+| <kbd>Enter</kbd> | يضغط زر ترتيب أو تصفية مركَّزًا. |
+| <kbd>ArrowLeft</kbd> / <kbd>ArrowRight</kbd> | يمرّر جدولًا عريضًا مركَّزًا أفقيًا. |
+
+- عناصر دلالية `table` و`thead` و`tbody` و`th` مع `scope`، مع `caption` أو `aria-label` لتسميته.
+- يحمل العنوان المرتّب `aria-sort`؛ وزرا الترتيب والتصفية مسمّيان بـ `aria-label`.
+- نص المتن بنسبة 4.5:1 على الصف والصف المتبادل والمرور والمحدد، وكذلك الرابط الأساسي، فاتحًا وداكنًا.
+
+## مرجع API [#api-reference]
+
+<ApiReference component="table" />
+
+## الاختلافات عن DGA [#deviations-from-dga]
+
+- يعطي Figma الصف المتبادل تعبئة الصف نفسها، فلا تُرى الخطوط المتبادلة. وهنا الصفوف بيضاء ويحتفظ الصف المتبادل بالتعبئة الرمادية؛ وتظليل المرور خفيف بلون العلامة يُبقي الروابط عند 4.5:1.
+- لا تُحدَّد ارتفاعات الشكل المضغوط؛ فالصفوف 48px والرأس 40px.
+
+<ComponentDeviations component="table" />
+
+## التباين [#contrast]
+
+<ComponentContrast component="table" />

@@ -1,6 +1,6 @@
 import { getT } from "./dictionary";
 import type { Locale } from "./i18n";
-import { FORM_COMPONENTS, INTERACTIVE_COMPONENTS } from "./nav";
+import { FORM_COMPONENTS, INTERACTIVE_COMPONENTS, NAVIGATION_COMPONENTS } from "./nav";
 import { siteUrl } from "./shared";
 import { getPageMarkdown, source } from "./source";
 
@@ -15,13 +15,17 @@ export function llmsIndex(lang: Locale) {
     const isForm = page.slugs[0] === "components" && FORM_COMPONENTS.includes(page.slugs[1] ?? "");
     const isInteractive =
       page.slugs[0] === "components" && INTERACTIVE_COMPONENTS.includes(page.slugs[1] ?? "");
+    const isNavigation =
+      page.slugs[0] === "components" && NAVIGATION_COMPONENTS.includes(page.slugs[1] ?? "");
     const group = isForm
       ? "forms"
       : isInteractive
         ? "interactive"
-        : page.slugs.length > 1
-          ? (page.slugs[0] as string)
-          : "";
+        : isNavigation
+          ? "navigation"
+          : page.slugs.length > 1
+            ? (page.slugs[0] as string)
+            : "";
     const line = `- [${page.data.title}](${mdUrl(page.url, lang)})${page.data.description ? `: ${page.data.description}` : ""}`;
     groups.set(group, [...(groups.get(group) ?? []), line]);
   }
@@ -31,6 +35,7 @@ export function llmsIndex(lang: Locale) {
     components: t("search.crumb.components"),
     forms: t("search.crumb.forms"),
     interactive: t("search.crumb.interactive"),
+    navigation: t("search.crumb.navigation"),
     ai: t("search.crumb.ai"),
   };
   const body = [...groups]

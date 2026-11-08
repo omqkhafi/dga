@@ -1,0 +1,82 @@
+---
+title: Pagination
+description: "Move through a long list one page at a time. Page numbers with an ellipsis, previous and next, three sizes, buttons or links, and a compact form on narrow screens."
+---
+
+<Preview name="pagination-basic" title="Pagination" />
+
+## Installation
+
+<ComponentInstall name="pagination" />
+
+## Usage
+
+```tsx title="page.tsx"
+import { useState } from "react";
+import { Pagination } from "@/components/dga/pagination";
+
+export function Results() {
+  const [page, setPage] = useState(1);
+  return <Pagination aria-label="Results" pageCount={12} page={page} onPageChange={setPage} />;
+}
+```
+
+Use pagination to split a long list or table into pages the person can step through. Show the number of the current page and let them jump to the first and last. For a list that loads more as you scroll, or for fewer than two pages, do not use it. In a [Data Table](/docs/components/data-table) the pagination is built in.
+
+## Anatomy
+
+- **Pagination** (`nav` with a list): items 24, 32 or 40px square, 8px apart.
+- **Page** (button or link): Text md. The current page has the primary fill and `aria-current="page"`.
+- **Previous and next**: chevrons that mirror in Arabic. They are disabled at the first and last page.
+- **Ellipsis**: stands for the skipped pages.
+- **Compact form**: below the `sm` width the numbers fold into "page of count" between the two arrows.
+
+## Examples
+
+### Sizes
+
+`size` is `sm` (24px), `md` (32px, default) or `lg` (40px).
+
+<Preview compact name="pagination-basic" title="Sizes" />
+
+### First and last page, links, and few pages
+
+The row keeps the same number of slots while there are enough pages, so it does not jump as you move. Pass `getHref` to make each control a link, for pages that are addresses of their own; `onPageChange` still runs.
+
+<Preview compact name="pagination-states" title="States" />
+
+Translate the labels and turn the digits into Arabic-Indic digits for Arabic pages with `previousLabel`, `nextLabel`, `pageLabel`, `compactLabel` and `formatNumber`.
+
+## RTL
+
+The arrows mirror, so previous points to the right and next to the left, and the numbers run from the right.
+
+<DirectionCompare name="pagination-basic" title="Pagination" />
+
+## Accessibility
+
+| Key | Action |
+| --- | --- |
+| <kbd>Tab</kbd> | Moves to the next control: previous, each page, next. |
+| <kbd>Shift</kbd> + <kbd>Tab</kbd> | Moves back. |
+| <kbd>Enter</kbd> | Goes to the focused page. |
+| <kbd>Space</kbd> | Goes to the focused page (buttons). |
+
+- A `nav` landmark with a list. The current page has `aria-current="page"` and every control has an accessible name such as "Page 3".
+- Previous and next are disabled, and out of the tab order, at the ends. In link mode they are not links there.
+- Text is 4.5:1, arrows and the focus ring are 3:1, in light and dark.
+
+## API Reference
+
+<ApiReference component="pagination" />
+
+## Deviations from DGA
+
+- Figma gives the sizes and the gap only. The hover, pressed, current and disabled states, the arrows, the ellipsis and the compact form are designed here from the Button tokens.
+- The size name "Meduim" is spelled `md`.
+
+<ComponentDeviations component="pagination" />
+
+## Contrast
+
+<ComponentContrast component="pagination" />

@@ -198,6 +198,7 @@ function SelectableCard({
   ...props
 }: SelectableCardProps) {
   return (
+    // biome-ignore lint/a11y/noLabelWithoutControl: the Checkbox inside is the control
     <label
       data-slot="card"
       data-selectable=""

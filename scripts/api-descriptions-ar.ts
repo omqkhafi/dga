@@ -474,4 +474,193 @@ export const API_DESCRIPTIONS_AR: Record<string, string> = {
   "inline-alert.InlineAlert.onDismiss": "تُستدعى بعد إغلاق التنبيه.",
   "inline-alert.InlineAlert.dismissLabel":
     "الاسم الذي يقرؤه قارئ الشاشة لزر الإغلاق. ترجمه في الصفحات العربية.",
+  // Breadcrumb, Pagination, Table of Content, Card, List, Table, Data Table, Rating, Progress, Stepper
+  "breadcrumb.Breadcrumb":
+    "مسار الوصول إلى الصفحة الحالية (في DGA: Breadcrumb). ضع عناصر `BreadcrumbItem` بالترتيب على أن يحمل آخرها `BreadcrumbPage`. وسمِّه بـ `aria-label`. فوق `maxItems` مستوى تُطوى المستويات الوسطى خلف زر حذف، وتحت عرض `sm` يُطوى كل ما بين المستوى الأول والأخيرين بالطريقة نفسها. وتنعكس الفواصل في الصفحات العربية.",
+  "breadcrumb.Breadcrumb.maxItems":
+    "أكثر عدد من المستويات يُعرض قبل أن تُطوى الوسطى خلف زر حذف. تطويها DGA فوق 5 مستويات. ويبقى المستوى الأول والأخيران دائمًا. الافتراضي 5.",
+  "breadcrumb.Breadcrumb.expandLabel":
+    "اسم زر الحذف الذي يعرض المستويات المطوية. ترجمه في الصفحات العربية.",
+  "breadcrumb.BreadcrumbItem":
+    "مستوى واحد. يحمل `BreadcrumbLink`، أو `BreadcrumbPage` للصفحة الحالية.",
+  "breadcrumb.BreadcrumbItem.separator":
+    "يرسم الفاصل بعد العنصر. يوقفه `Breadcrumb` للعنصر الأخير.",
+  "breadcrumb.BreadcrumbLink": "رابط إلى صفحة أعم. مرّر `render` لاستخدام رابط موجّهك.",
+  "breadcrumb.BreadcrumbPage": 'الصفحة الحالية: نص عادي مع `aria-current="page"`.',
+  "breadcrumb.BreadcrumbSeparator":
+    "السهم بين المستويات. ينعكس في الصفحات العربية ويُخفى عن قارئات الشاشة.",
+  "card.Card":
+    "حاوية لمعلومات وإجراءات عن شيء واحد (في DGA: Card). قيمة `effect` إما `shadow` (ظل خفيف، الافتراضي) أو `stroke` أو `none`، وقيمة `size` تضبط الحشو والفجوات (`lg` هو الافتراضي في DGA). والبطاقة التي تنقل إلى مكان تحمل `CardLink` في عنوانها: فتعمل البطاقة كلها رابطًا وتحتفظ بدلالات الرابط الحقيقية. وأعطِ البطاقة التي هي عنصر قائمة أو مقال `role` المناسب.",
+  "card.Card.disabled": "يُظلِّل البطاقة ويتجاهل النقر. استخدمه لشيء غير متاح الآن.",
+  "card.CardMedia": "صورة أو وسائط أخرى في أعلى البطاقة، من الحافة إلى الحافة.",
+  "card.CardIcon": "الأيقونة أو Featured Icon فوق العنوان.",
+  "card.CardHeader": "يجمع العنوان والوصف.",
+  "card.CardTitle": "عنوان البطاقة. وهو عنوان فعلي: مرّر `level` (الافتراضي 3) ليلائم مخطط الصفحة.",
+  "card.CardDescription": "نص الوصف.",
+  "card.CardContent": "محتوى حر: وسوم أو تقييم أو جدول أو أي شيء.",
+  "card.CardActions":
+    "الإجراءات الأساسية والثانوية. تقع فوق رابط البطاقة، فتبقى قابلة للنقر حين تكون البطاقة كلها رابطًا.",
+  "card.CardLink":
+    "الرابط الذي يجعل البطاقة كلها قابلة للنقر. ضعه حول نص العنوان. تمتد مساحة نقره على البطاقة، فتجد قارئة الشاشة رابطًا واحدًا باسم العنوان، ويرسم تركيز لوحة المفاتيح الحلقة حول البطاقة. مرّر `render` لاستخدام رابط موجّهك.",
+  "card.CardExpandable":
+    "بطاقة تُفتح تفاصيلها وتُغلق (في DGA: Expandable). مبنية على Base UI Collapsible. ضع `CardExpandableTrigger` و`CardExpandablePanel` داخلها، والجزء الظاهر دائمًا أولًا.",
+  "card.CardExpandableTrigger":
+    "الزر الذي يفتح التفاصيل ويغلقها. يخبر `aria-expanded` قارئات الشاشة بحالته.",
+  "card.CardExpandablePanel": "التفاصيل التي تُفتح وتُغلق.",
+  "card.SelectableCard":
+    "بطاقة تُختار (في DGA: Selectable)، مبنية على خانة اختيار: النقر في أي موضع منها، أو Space على الخانة المركَّزة، يبدّلها. ونص البطاقة يسمّي الخانة. لا تضع روابط أو أزرارًا داخلها؛ واستخدم `Card` مع `CardLink` لما ينقل إلى مكان.",
+  "card.SelectableCard.checked": "هل البطاقة مختارة (بتحكم خارجي).",
+  "card.SelectableCard.onCheckedChange": "تُستدعى بالحالة الجديدة.",
+  "card.SelectableCard.disabled": "لا يمكن اختيار البطاقة.",
+  "card.SelectableCard.name": "اسم حقل النموذج.",
+  "card.SelectableCard.value": "قيمة حقل النموذج.",
+  "data-table.DataTable":
+    "جدول سجلات بالترتيب والتصفية وتحديد الصفوف والترقيم (مبني على TanStack Table وTable وPagination من DGA). هو جدول عادي في أساسه: للعناوين `aria-sort`، والتحديد خانات اختيار حقيقية، والجدول الأعرض من الشاشة يتمرر أفقيًا داخل منطقة تقبل تركيز لوحة المفاتيح. وتتبع الأعمدة اتجاه الصفحة فتمتد من اليمين في الصفحات العربية. اضبط `loading` أثناء الجلب.",
+  "data-table.DataTable.columns":
+    "تعريفات أعمدة TanStack Table. أعطِ كلًّا `header` نصًا أو `meta: { label }`.",
+  "data-table.DataTable.data": "الصفوف.",
+  "data-table.DataTable.getRowId":
+    "معرّف ثابت للصف ليبقى تحديده بعد الترتيب والتنقل. الافتراضي ترتيبه.",
+  "data-table.DataTable.pageSize":
+    "عدد الصفوف في الصفحة. الافتراضي 10. مرّر `0` لعرض كل الصفوف وإخفاء الترقيم.",
+  "data-table.DataTable.globalFilter": "نص تُصفّى به الصفوف عبر كل الأعمدة (بتحكم خارجي).",
+  "data-table.DataTable.selectable": "يضيف عمود خانات اختيار وصفوفًا بـ `aria-selected`.",
+  "data-table.DataTable.onSelectionChange": "تُستدعى بالصفوف المحددة كلما تغيّر التحديد.",
+  "data-table.DataTable.defaultSorting": 'الترتيب في البداية، مثل `[{ id: "name", desc: false }]`.',
+  "data-table.DataTable.loading": "يعرض صفوفًا نائبة ويضع على الجدول `aria-busy`.",
+  "data-table.DataTable.emptyState": "ما يُعرض حين لا توجد صفوف. نص أو أي محتوى.",
+  "data-table.DataTable.caption": "عنوان مرئي للجدول وهو اسمه المقروء.",
+  "data-table.DataTable.labels": "النصوص التي يعرضها الجدول بنفسه. ترجمها في الصفحات العربية.",
+  "list.List":
+    "قائمة قصيرة من عناصر مترابطة (في DGA: List). قيمة `tone` إما `primary` أو `neutral` (الافتراضي) أو `onColor` لخلفيات العلامة. ضع `List` داخل `ListItem` للمستوى الثاني. القوائم المرتبة عناصر `ol` حقيقية فتعلن قارئة الشاشة الموضع؛ والعلامات المرئية زخرفة. وتقع العلامات عند جهة البداية فتنعكس في الصفحات العربية.",
+  "list.List.type":
+    "`unordered` (نقاط، الافتراضي) أو `ordered` (أرقام ثم حروف في المستوى الأدنى) أو `icon`.",
+  "list.List.markers":
+    "خط العلامات المرتبة: `latin` (‏1- وa-) أو `arabic` (‏١- وأ-). الافتراضي `latin`.",
+  "list.ListItem":
+    "عنصر واحد. في قائمة الأيقونات يستبدل `icon` علامة الصح الافتراضية (أي أيقونة من Hugeicons). ضع `List` بعد النص للمستوى الثاني.",
+  "list.ListItem.icon": "أيقونة العنصر في قائمة الأيقونات. الافتراضي علامة صح.",
+  "list.StructuredList":
+    "صفوف نص في أعمدة (في DGA: Structured List)، وهي جدول HTML بمظهر أخف. استخدمها لحقائق قصيرة للقراءة أو لاختيار واحد بين الصفوف؛ ولبيانات تُرتَّب وتُصفّى استخدم `Table` أو `DataTable`. ومع `selectable` يكون لكل صف زر اختيار وتنقل مفاتيح الأسهم بين الصفوف.",
+  "list.StructuredList.selectable":
+    "يجعل الصفوف قابلة للاختيار، واحدًا في كل مرة (زر اختيار في العمود الأول). اقرنه بـ `StructuredListRow value`.",
+  "list.StructuredList.value": "قيمة الصف المختار (بتحكم خارجي).",
+  "list.StructuredList.onValueChange": "تُستدعى بقيمة الصف المختار.",
+  "list.StructuredList.groupLabel": "يسمّي مجموعة أزرار الاختيار حين يكون `selectable`.",
+  "list.StructuredListHead": 'عنوان عمود. استخدم `scope="col"` (الافتراضي).',
+  "list.StructuredListRow.value": "ما يعرّف الصف في قائمة `selectable`.",
+  "list.StructuredListRow.label": "الاسم الذي تقرؤه قارئة الشاشة لزر اختيار الصف، مثل عنوان الصف.",
+  "list.StructuredListRow.disabled": "لا يمكن اختيار الصف.",
+  "pagination.Pagination":
+    'يتنقل في قائمة طويلة صفحةً صفحة (في DGA: Pagination). سمِّه بـ `aria-label`. للصفحة الحالية `aria-current="page"`. وتحت عرض `sm` تُطوى الأرقام إلى «3 من 12» بين سهمي السابق والتالي. وينعكس السهمان في الصفحات العربية.',
+  "pagination.Pagination.page": "الصفحة الحالية، من 1 (بتحكم خارجي).",
+  "pagination.Pagination.defaultPage": "الصفحة المعروضة في البداية (دون تحكم). الافتراضي 1.",
+  "pagination.Pagination.pageCount": "عدد الصفحات.",
+  "pagination.Pagination.onPageChange": "تُستدعى بالصفحة التي اختارها الشخص.",
+  "pagination.Pagination.siblingCount": "عدد الصفحات المعروضة على كل جانب من الحالية. الافتراضي 1.",
+  "pagination.Pagination.getHref":
+    "يجعل كل عنصر رابطًا إلى هذا العنوان بدل زر، للترقيم من الخادم أو بالموجّه. ويعمل `onPageChange` عند النقر كذلك.",
+  "pagination.Pagination.previousLabel": "اسم زر السابق. ترجمه في الصفحات العربية.",
+  "pagination.Pagination.nextLabel": "اسم زر التالي. ترجمه في الصفحات العربية.",
+  "pagination.Pagination.pageLabel": "اسم زر الصفحة، مثل «الصفحة 3». ترجمه في الصفحات العربية.",
+  "pagination.Pagination.compactLabel": "النص بين السهمين في الشاشات الضيقة، مثل «3 من 12».",
+  "pagination.Pagination.formatNumber":
+    "يحوّل الرقم إلى الأرقام المعروضة، مثل الأرقام الهندية في الصفحات العربية.",
+  "progress.Progress":
+    "شريط يبيّن مدى تقدم مهمة (في DGA: Progress Bar)، على Base UI Progress. قيمة `value` من 0 إلى `max` (100)؛ ومرّر `null` حين لا يُعرف الطول فيتحرك الشريط. تضيف `status` ‏`success` أو `error` لمهمة منتهية أيقونة واللون المناسب، وينبغي أن يقول نص المساعدة ما حدث. سمِّه بـ `label` (أو `aria-label`).",
+  "progress.Progress.label": "التسمية فوق الشريط. وهي اسم شريط التقدم لقارئات الشاشة.",
+  "progress.Progress.showValue": "يعرض النسبة المئوية في نهاية صف التسمية. الافتراضي true.",
+  "progress.Progress.helperText": "سطر مساعدة تحت الشريط.",
+  "progress.Progress.formatValue":
+    'يحوّل القيمة إلى النص المعروض، مثل الأرقام الهندية: `(v) => "٥٠٪"`.',
+  "progress.ProgressCircle":
+    "حلقة تبيّن التقدم (في DGA: Circular Progress Bar)، على Base UI Progress. الأحجام 64 و80 و120 و160 و200px. تعرض `status` ‏`success` علامة صح و`error` تنبيهًا بدل النسبة. ومع `value={null}` تدور الحلقة (قوس ثابت حين يفضّل الشخص تقليل الحركة).",
+  "progress.ProgressCircle.label": "عنوان قصير تحت النسبة، مثل «مستخدم نشط». يُخفى دون 120px.",
+  "progress.ProgressCircle.showValue": "يعرض النسبة في الوسط. الافتراضي true.",
+  "progress.ProgressCircle.formatValue": 'يحوّل القيمة إلى النص المعروض. الافتراضي `"50%"`.',
+  "rating.Rating":
+    "تقييم بالنجوم (في DGA: Rating). تفاعلي افتراضيًا: مجموعة أزرار اختيار، فتكون نجمة واحدة في ترتيب Tab وتغيّر مفاتيح الأسهم التقييم (يمين ويسار يتبادلان في الصفحات العربية)، والمرور على نجمة يعاينها. ومع `readOnly` يصير صورة ببديل نصي. نجوم كاملة فقط كما تعرّف DGA. تقع النجمة الأولى عند جهة البداية، فتمتلئ من اليمين إلى اليسار في الصفحات العربية. ويستخدم `brand` اللون الأساسي بدل الذهبي.",
+  "rating.Rating.value": "التقييم من 0 إلى `max` (بتحكم خارجي).",
+  "rating.Rating.defaultValue": "التقييم في البداية (دون تحكم). الافتراضي 0، أي بلا تقييم.",
+  "rating.Rating.onValueChange": "تُستدعى بالنجمة التي اختارها الشخص، من 1 إلى `max`.",
+  "rating.Rating.max": "عدد النجوم. الافتراضي 5.",
+  "rating.Rating.readOnly": "يعرض التقييم دون السماح بتغييره.",
+  "rating.Rating.disabled": "لا يمكن تغيير التقييم ويُخفَّف لونه.",
+  "rating.Rating.required": "يجعل الحقل مطلوبًا في نموذج.",
+  "rating.Rating.name": "اسم حقل النموذج.",
+  "rating.Rating.starLabel":
+    "اسم نجمة واحدة، مثل «3 نجوم». يسمّي كل نجمة لقارئة الشاشة. ترجمه في الصفحات العربية.",
+  "rating.Rating.summaryLabel":
+    "النص المقروء للتقييم في وضع القراءة فقط، مثل «التقييم 4 من 5». ترجمه في الصفحات العربية.",
+  "stepper.Stepper":
+    'يبيّن موضع الشخص في عملية (في DGA: Progress Indicator)، أفقيًا أو رأسيًا. ضع عناصر `StepperItem` بالترتيب واضبط `value` على الخطوة الحالية: فما قبلها مكتمل وما بعدها قادم، ويمكن وسم عنصر بـ `status="error"`. يعلن كل عنصر حالته، وللحالي `aria-current="step"`. وتحت عرض `sm` يُطوى Stepper الأفقي إلى شكل Radial Stepper المضغوط: حلقة فيها «2 من 4» واسم الخطوة والتالية. ومع `onValueChange` تكون الخطوات أزرارًا تُبلَغ بـ Tab.',
+  "stepper.Stepper.value": "الخطوة الحالية، من 0 (بتحكم خارجي). الخطوات قبلها مكتملة وبعدها قادمة.",
+  "stepper.Stepper.onValueChange":
+    "تُستدعى بفهرس الخطوة حين يختارها شخص. تمريرها يحوّل الخطوات إلى أزرار؛ واتركها لـ Stepper للعرض فقط.",
+  "stepper.Stepper.labels":
+    "كلمات تُقرأ بعد عنوان كل خطوة، مثل «مكتملة». ترجمها في الصفحات العربية.",
+  "stepper.Stepper.formatNumber":
+    "يحوّل الرقم إلى الأرقام المعروضة، مثل الأرقام الهندية في الصفحات العربية.",
+  "stepper.Stepper.compactLabel":
+    "النص داخل حلقة الشكل المضغوط في الشاشات الضيقة، مثل «2 من 4». تنسّق الأرقام بنفسك. مرّر `false` ليبقى Stepper الكامل في كل عرض.",
+  "stepper.Stepper.nextLabel": "البادئة قبل اسم الخطوة التالية في الشكل المضغوط، مثل «التالي:».",
+  "stepper.StepperItem": "خطوة واحدة. يجب أن تكون ابنًا مباشرًا لـ `Stepper`.",
+  "stepper.StepperItem.title": "اسم الخطوة.",
+  "stepper.StepperItem.description": "سطر تحت الاسم.",
+  "stepper.StepperItem.status":
+    "يفرض حالة، مثل `error` حين تكون في الخطوة مشكلة. الافتراضي من `value`.",
+  "stepper.StepperItem.disabled":
+    "لا يمكن اختيار الخطوة حين يكون لـ Stepper الخاصية `onValueChange`.",
+  "table-of-contents.TableOfContents":
+    'مخطط للصفحة بروابط إلى أقسامها (في DGA: Table of Content). يُميَّز القسم المقروء ويحمل `aria-current="location"`. ينقل Tab بين الروابط، وكذلك مفتاحا السهم لأعلى وأسفل وHome وEnd. اقرن كل رابط بعنصر له `id` مطابق، وأضف `scroll-margin-top` إلى تلك العناصر للترويسة الثابتة.',
+  "table-of-contents.TableOfContents.items": "الأقسام بترتيب الصفحة. تتداخل المستويات بالإزاحة.",
+  "table-of-contents.TableOfContents.activeId":
+    "القسم الحالي (بتحكم خارجي). اتركه ليتبع موضع التمرير.",
+  "table-of-contents.TableOfContents.onActiveChange":
+    "تُستدعى حين يتغير القسم الحالي، بالتمرير أو باختيار رابط.",
+  "table-of-contents.TableOfContents.offset":
+    "عدد البكسلات من أعلى نافذة العرض الذي يُعدّ عنده القسم قد بُلغ. الافتراضي 96.",
+  "table.Table":
+    "جدول HTML دلالي بسيط (في DGA: Table). يصغّر `compact` الصفوف، ويظلل `striped` كل صف ثانٍ (في DGA: Alternating rows)، ويضيف `contained` حدًا وزوايا مدورة، وترسم `rowDivider` (الافتراضي) و`columnDivider` الخطوط. يتمرر الجدول أفقيًا داخل غلافه حين تضيق الشاشة، وتتبع الأعمدة اتجاه الصفحة. أعطه `TableCaption` أو `aria-label`.",
+  "table.Table.containerClassName": "أصناف الغلاف الذي يتمرر حول الجدول.",
+  "table.Table.scrollLabel":
+    "اسم منطقة التمرير الذي تقرؤه قارئات الشاشة حين يكون الجدول أعرض من حاويته. اتركه لجدول يتسع دائمًا.",
+  "table.TableRow": "صف. يظلله `selected`، وتغمق الصفوف عند المرور.",
+  "table.TableRow.selected": "يضع على الصف تعبئة التحديد و`aria-selected`.",
+  "table.TableHead":
+    'عنوان عمود أو صف. قيمة `scope` هي `col` افتراضيًا؛ ومرّر `scope="row"` لعنوان صف.',
+  "table.TableSortButton":
+    'زر الترتيب في عنوان عمود (في DGA: Table Header Cell، Sort). قيمة `direction` هي `false` (غير مرتب) أو `"asc"` أو `"desc"`. ضعه في `TableHead` وضع `aria-sort` على ذلك العنوان. وسمِّه، مثل «ترتيب حسب الاسم».',
+  "table.TableFilterButton":
+    "زر التصفية في عنوان عمود (في DGA: Table Header Cell، Filter). قيمة `active` صحيحة ما دام مرشح مطبقًا؛ واضبط `aria-pressed` أو `aria-expanded` بما يفعله الزر.",
+  "pagination.Pagination.size": "حجم العنصر: `sm` ‏24px، و`md` ‏32px (الافتراضي)، و`lg` ‏40px.",
+  "card.Card.effect":
+    "`shadow` (الافتراضي) أو `stroke` (حد 1px) أو `none`. ولا ظل في الوضع الداكن.",
+  "card.Card.size": "الحشو والفجوة: `sm` أو `md` أو `lg` (الافتراضي، ‏16px و24px).",
+  "card.CardExpandable.effect":
+    "`shadow` (الافتراضي) أو `stroke` (حد 1px) أو `none`. ولا ظل في الوضع الداكن.",
+  "card.CardExpandable.size": "الحشو والفجوة: `sm` أو `md` أو `lg` (الافتراضي، ‏16px و24px).",
+  "card.SelectableCard.effect":
+    "`shadow` (الافتراضي) أو `stroke` (حد 1px) أو `none`. ولا ظل في الوضع الداكن.",
+  "card.SelectableCard.size": "الحشو والفجوة: `sm` أو `md` أو `lg` (الافتراضي، ‏16px و24px).",
+  "list.List.tone": "اللون: `primary` أو `neutral` (الافتراضي) أو `onColor` لخلفيات العلامة.",
+  "list.StructuredList.compact": "صفوف أقصر (48px).",
+  "list.StructuredList.contained": "حد وزوايا مدورة حول القائمة.",
+  "list.StructuredList.rowDivider": "خط بين الصفوف. الافتراضي true.",
+  "list.StructuredList.columnDivider": "خط بين الأعمدة.",
+  "table.Table.compact": "صفوف أقصر (48px) ورأس أقصر (40px).",
+  "table.Table.contained": "حد وزوايا مدورة حول الجدول.",
+  "table.Table.striped": "يظلل كل صف ثانٍ (في DGA: Alternating rows).",
+  "table.Table.rowDivider": "خط بين الصفوف. الافتراضي true.",
+  "table.Table.columnDivider": "خط بين الأعمدة.",
+  "rating.Rating.size": "حجم النجمة: `sm` ‏24px، و`md` ‏32px (الافتراضي)، و`lg` ‏48px.",
+  "rating.Rating.brand": "اللون الأساسي بدل الذهبي.",
+  "progress.Progress.size": "ارتفاع الشريط: `sm` ‏8px، و`md` ‏12px (الافتراضي)، و`lg` ‏16px.",
+  "progress.Progress.tone": "لون التعبئة: `primary` (الافتراضي) أو `neutral`.",
+  "progress.Progress.status": "`success` أو `error` لمهمة منتهية: يضيف أيقونة واللون المناسب.",
+  "progress.ProgressCircle.size": "القطر بالبكسل: 64 أو 80 أو 120 (الافتراضي) أو 160 أو 200.",
+  "progress.ProgressCircle.tone": "لون التعبئة: `primary` (الافتراضي) أو `neutral`.",
+  "progress.ProgressCircle.status":
+    "`success` أو `error` لمهمة منتهية: يضيف أيقونة واللون المناسب.",
+  "stepper.Stepper.orientation": "`horizontal` (الافتراضي) أو `vertical`.",
 };

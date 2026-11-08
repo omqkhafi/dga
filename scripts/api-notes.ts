@@ -694,4 +694,33 @@ export const API_NOTES: Record<string, ApiNote> = {
   "inline-alert.tinted": {
     description: "Tinted fill and text in the kind's colour instead of white.",
   },
+  // Breadcrumb, Pagination, Table of Content, Card, List, Table, Rating, Progress, Stepper
+  "pagination.size": { description: "Item size: `sm` 24px, `md` 32px (default), `lg` 40px." },
+  "card.effect": {
+    description: "`shadow` (default), `stroke` (a 1px border) or `none`. No shadow in dark mode.",
+  },
+  "card.size": { description: "Padding and gap: `sm`, `md` or `lg` (default, 16px and 24px)." },
+  "list.tone": {
+    description: "Colour: `primary`, `neutral` (default) or `onColor` for brand fills.",
+  },
+  "list.StructuredList.compact": { description: "Shorter rows (48px)." },
+  "list.StructuredList.contained": { description: "A border and rounded corners around the list." },
+  "list.StructuredList.rowDivider": { description: "A line between rows. Default true." },
+  "list.StructuredList.columnDivider": { description: "A line between columns." },
+  "table.compact": { description: "Shorter rows (48px) and header (40px)." },
+  "table.contained": { description: "A border and rounded corners around the table." },
+  "table.striped": { description: "Shades every other row (DGA: alternating rows)." },
+  "table.rowDivider": { description: "A line between rows. Default true." },
+  "table.columnDivider": { description: "A line between columns." },
+  "rating.size": { description: "Star size: `sm` 24px, `md` 32px (default), `lg` 48px." },
+  "rating.brand": { description: "The primary colour instead of gold." },
+  "progress.size": { description: "Bar height: `sm` 8px, `md` 12px (default), `lg` 16px." },
+  "progress.tone": { description: "Fill colour: `primary` (default) or `neutral`." },
+  "progress.status": {
+    description: "`success` or `error` for a finished task: adds an icon and the matching colour.",
+  },
+  "progress.ProgressCircle.size": {
+    description: "Diameter in pixels: 64, 80, 120 (default), 160 or 200.",
+  },
+  "stepper.orientation": { description: "`horizontal` (default) or `vertical`." },
 };
