@@ -1,7 +1,12 @@
 "use client";
 
 import { Popover as PopoverPrimitive } from "@base-ui/react/popover";
-import { ArrowLeft01Icon, ArrowRight01Icon, Calendar03Icon } from "@hugeicons/core-free-icons";
+import {
+  ArrowDown01Icon,
+  ArrowLeft01Icon,
+  ArrowRight01Icon,
+  Calendar03Icon,
+} from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import * as React from "react";
 import { Button } from "@/components/dga/button";
@@ -169,6 +174,8 @@ type CalendarLabels = {
   nextMonth?: string;
   /** The name of the calendar switch. */
   calendarSwitch?: string;
+  /** The name of the year dropdown. */
+  year?: string;
   gregorian?: string;
   hijri?: string;
 };
@@ -197,6 +204,12 @@ type CalendarBaseProps = Omit<
   defaultMonth?: string;
   /** One month, or two side by side (DGA: dual-month view). */
   months?: 1 | 2;
+  /**
+   * Shows the year as a dropdown in the header (DGA: Year Dropdown), so a far-away year is one
+   * choice and not many clicks. It lists the years from `min` to `max` (a hundred years either side
+   * of today when they are not set). Default `true`; `false` shows the year as text.
+   */
+  yearDropdown?: boolean;
   /** The first day of the week: 0 is Sunday (default), 6 is Saturday. */
   weekStartsOn?: 0 | 1 | 2 | 3 | 4 | 5 | 6;
   /** The language of month and day names. Default: Arabic when the page direction is RTL, English otherwise. */
@@ -269,6 +282,7 @@ function Calendar(props: CalendarProps) {
     defaultMonth,
     months = 1,
     weekStartsOn = 0,
+    yearDropdown = true,
     locale: localeProp,
     numerals = "latn",
     today: todayProp,
@@ -292,6 +306,7 @@ function Calendar(props: CalendarProps) {
     previousMonth = "Previous month",
     nextMonth = "Next month",
     calendarSwitch = "Calendar",
+    year: yearLabel = "Year",
     gregorian = "Gregorian",
     hijri = "Hijri",
   } = labels;
@@ -391,6 +406,29 @@ function Calendar(props: CalendarProps) {
     }
   };
 
+  // The years the dropdown lists: min to max, else a hundred years either side of today. The Hijri
+  // calendar is only computed for 1300 to 1600 AH. The shown year is always in the list.
+  const yearBounds = (shown: number): [number, number] => {
+    const base = getParts(today ?? "2026-01-01", system).year;
+    const limit: [number, number] = system === "hijri" ? [1300, 1600] : [1, 9999];
+    let lo = min !== undefined ? getParts(min, system).year : base - 100;
+    let hi = max !== undefined ? getParts(max, system).year : base + 100;
+    lo = Math.max(limit[0], Math.min(lo, shown));
+    hi = Math.min(limit[1], Math.max(hi, shown));
+    return [lo, hi];
+  };
+
+  const pickYear = (index: number, shownMonth: number, year: number) => {
+    if (!firstMonth) return;
+    let target = fromParts(system, year, shownMonth, 1);
+    if (min !== undefined && target < min)
+      target = fromParts(system, getParts(min, system).year, getParts(min, system).month, 1);
+    if (max !== undefined && target > max)
+      target = fromParts(system, getParts(max, system).year, getParts(max, system).month, 1);
+    setView(addMonths(target, system, -index));
+    setFocused(null);
+  };
+
   const shiftView = (delta: number) => {
     if (!firstMonth) return;
     setView(addMonths(firstMonth, system, delta));
@@ -484,14 +522,45 @@ function Calendar(props: CalendarProps) {
                 ) : (
                   <span className="size-10 shrink-0" aria-hidden />
                 )}
-                <h2
-                  id={id}
-                  data-slot="calendar-heading"
-                  className="m-0 flex-1 text-center text-md font-bold text-text-display"
-                  aria-live="polite"
-                >
-                  {title}
-                </h2>
+                <div className="m-0 flex flex-1 items-center justify-center gap-1 text-center text-md font-bold text-text-display">
+                  <h2
+                    id={id}
+                    data-slot="calendar-heading"
+                    className={yearDropdown ? "sr-only" : "m-0 text-md font-bold text-text-display"}
+                    aria-live="polite"
+                  >
+                    {title}
+                  </h2>
+                  {yearDropdown ? (
+                    <>
+                      <span aria-hidden className="m-0 text-md font-bold text-text-display">
+                        {format.month.format(stamp)}
+                      </span>
+                      <span className="relative inline-flex items-center rounded-sm text-text-display [&_svg]:pointer-events-none [&_svg]:absolute [&_svg]:end-1 [&_svg]:size-4 [&_svg]:text-icon-default focus-within:outline-2 focus-within:outline-solid focus-within:outline-offset-1 focus-within:outline-border-black">
+                        <select
+                          data-slot="calendar-year"
+                          aria-label={yearLabel}
+                          className="h-10 cursor-pointer appearance-none rounded-sm border-0 bg-transparent ps-2 pe-6 text-md font-bold text-text-display outline-hidden hover:bg-button-background-neutral-hovered active:bg-button-background-neutral-pressed"
+                          value={p.year}
+                          onChange={(event) => pickYear(index, p.month, Number(event.target.value))}
+                        >
+                          {(() => {
+                            const [lo, hi] = yearBounds(p.year);
+                            return Array.from({ length: hi - lo + 1 }, (_, i) => {
+                              const y = lo + i;
+                              return (
+                                <option key={y} value={y}>
+                                  {format.year.format(isoToTime(fromParts(system, y, p.month, 1)))}
+                                </option>
+                              );
+                            });
+                          })()}
+                        </select>
+                        <HugeiconsIcon icon={ArrowDown01Icon} aria-hidden />
+                      </span>
+                    </>
+                  ) : null}
+                </div>
                 {index === months - 1 ? (
                   <button
                     type="button"
@@ -995,6 +1064,7 @@ export type {
   CalendarLabels,
   CalendarProps,
   CalendarSystem,
+  DatePickerBaseProps,
   DatePickerProps,
   DateRange,
   GridCell,

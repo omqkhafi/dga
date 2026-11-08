@@ -42,6 +42,8 @@ export function ContactField() {
 
 Use Radio when people must choose one of two to five options and seeing them all helps. Start with the most common choice selected only when it is a safe default. For more options use [Select](/docs/components/select); for several choices use [Checkbox](/docs/components/checkbox).
 
+The radio is on the right (start) of its label. Use <kbd>ArrowDown</kbd> and <kbd>ArrowUp</kbd> in a vertical group: they work the same in both directions. <kbd>ArrowRight</kbd> moves to the next option and <kbd>ArrowLeft</kbd> to the previous one in both directions too (Base UI does not mirror them).
+
 ## Anatomy
 
 - **RadioGroup**: the group; one value at a time.
@@ -62,12 +64,6 @@ Wrap the group in a Field, then a FieldSet that renders the RadioGroup, so the l
 Unselected and selected, in the primary and neutral tones, read-only and disabled.
 
 <Preview name="radio-states" title="States" />
-
-## RTL
-
-The radio is on the right (start) of its label. Use <kbd>ArrowDown</kbd> and <kbd>ArrowUp</kbd> in a vertical group: they work the same in both directions. <kbd>ArrowRight</kbd> moves to the next option and <kbd>ArrowLeft</kbd> to the previous one in both directions too (Base UI does not mirror them).
-
-<DirectionCompare name="radio-group" title="Radio group" />
 
 ## Accessibility
 

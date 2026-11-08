@@ -126,7 +126,7 @@ type ChartContainerProps = Omit<React.ComponentProps<"div">, "title"> & {
 };
 
 /**
- * A chart on Recharts (Platform Code extension, not part of DGA), with the DGA chart colours. Put
+ * A chart on Recharts (DGA: Charts: bar, line, pie and donut), with the DGA chart colours. Put
  * one Recharts chart inside (`BarChart`, `LineChart`, `AreaChart` or `PieChart`). By default the
  * chart is a picture for screen readers (`role="img"`, named by `title`, described by
  * `description`) and `table` gives the numbers.

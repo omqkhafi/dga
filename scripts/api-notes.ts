@@ -616,6 +616,17 @@ export const API_NOTES: Record<string, ApiNote> = {
     type: '"horizontal" | "vertical"',
     description: "Direction of the list. Vertical tabs use Up and Down arrows.",
   },
+  "tabs.TabsList.overflow": {
+    include: true,
+    type: '"scroll" | "menu"',
+    description:
+      "What happens to tabs that do not fit. `scroll` (default) scrolls sideways; `menu` collapses them into a More tab (DGA) that opens a menu.",
+  },
+  "tabs.TabsList.moreLabel": {
+    include: true,
+    type: "string",
+    description: 'The text of the More tab. Default "More". Translate it on Arabic pages.',
+  },
   "tabs.TabsTrigger.value": {
     include: true,
     type: "string | number",

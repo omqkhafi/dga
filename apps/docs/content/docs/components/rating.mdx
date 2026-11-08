@@ -1,6 +1,6 @@
 ---
 title: Rating
-description: "Five stars to collect or show an opinion. Interactive with the arrow keys or read-only, three sizes, gold or brand colour."
+description: "Five stars to collect or show an opinion. Whole or half stars, interactive with the arrow keys or read-only, three sizes, gold or brand colour."
 ---
 
 <Preview name="rating-basic" title="Rating" />
@@ -21,34 +21,46 @@ export function RateService() {
 }
 ```
 
-Use a rating to ask how satisfied someone was, and to show the result. Pair it with a way to say why when the score is low. Use `readOnly` to display a score (an average, or a submitted answer). DGA defines whole stars, so there are no half stars.
+Use a rating to ask how satisfied someone was, and to show the result. Pair it with a way to say why when the score is low. Use `readOnly` to display a score (an average, or a submitted answer). Add `allowHalf` when the score needs half stars; a read-only rating also draws a fractional value such as 4.3.
+
+The first star is on the start side: in Arabic it is on the right, the fill grows from the right (a half star fills its right half) and the left arrow raises the rating.
 
 ## Anatomy
 
 - **Stars**: five, 24, 32 or 48px, 4px apart (`size` `sm`, `md`, `lg`).
 - **Colour**: `background-secondary` (gold) or, with `brand`, `background-primary`. Every star is outlined so its shape is clear.
-- **Interactive**: a radio group. Hovering a star previews the rating.
+- **Half star**: with `allowHalf` each star has a start half and an end half; the start half fills first.
+- **States**: hover previews the rating, pressing shrinks the star slightly, and the chosen star has a heavier outline; focus shows a ring.
+- **Interactive**: a radio group (two radios per star with `allowHalf`).
 - **Read-only**: an image with a text alternative, "Rated 4 out of 5".
 
 ## Examples
 
-### Interactive
+### Sizes
 
 The rating is uncontrolled with `defaultValue`, or controlled with `value` and `onValueChange`. Name the group with `aria-label`.
 
-<Preview compact name="rating-basic" title="Sizes and controlled" />
+<Preview compact name="rating-basic" title="Sizes" />
 
-### Read-only, disabled and empty
+### Brand colour, controlled
 
-<Preview compact name="rating-states" title="Read-only, disabled and not rated" />
+<Preview compact name="rating-controlled" title="Brand colour, controlled" />
+
+### Half stars
+
+<Preview compact name="rating-half" title="Half stars" />
+
+### Read-only
+
+Whole and fractional values.
+
+<Preview compact name="rating-readonly" title="Read-only, whole and fractional" />
+
+### Disabled and not rated
+
+<Preview compact name="rating-states" title="Disabled and not rated" />
 
 Translate `starLabel` and `summaryLabel` on Arabic pages.
-
-## RTL
-
-The first star is on the right and the fill grows from the right. The arrow keys follow: the left arrow raises the rating in Arabic.
-
-<DirectionCompare name="rating-basic" title="Rating" />
 
 ## Accessibility
 
@@ -59,7 +71,9 @@ The first star is on the right and the fill grows from the right. The arrow keys
 | <kbd>ArrowLeft</kbd> | Chooses the previous star (the next one in Arabic). |
 | <kbd>Space</kbd> | Chooses the focused star. |
 
-- Built on Base UI Radio Group: a `radiogroup` of radios named "1 star", "2 stars" and so on, with one in the tab order.
+With `allowHalf` each arrow key moves by half a star.
+
+- Built on Base UI Radio Group: a `radiogroup` of radios named "1 star", "2 stars" and so on ("2.5 stars" with `allowHalf`), with one in the tab order.
 - A read-only rating is an `img` named by `summaryLabel`, so the score is never only in the stars.
 - The star outline is 3:1 on the page in light and dark, so the shape is clear although the gold fill alone is 2.30:1.
 
@@ -70,7 +84,7 @@ The first star is on the right and the fill grows from the right. The arrow keys
 ## Deviations from DGA
 
 - The CSS colours the stars `#faaf00` and Figma uses `background-secondary` (2.30:1). Stars are outlined to reach 3:1.
-- DGA has no interaction states; keyboard, hover and focus are added.
+- DGA defines half stars and pressed and selected states; they are built here. The pressed look (scale to 90%) and the selected look (2px outline instead of 1.5px) are our reading of them. Keyboard, hover and focus are added.
 
 <ComponentDeviations component="rating" />
 

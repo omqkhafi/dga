@@ -1,6 +1,6 @@
 # Roadmap
 
-Phases 0, 1 and 2 are done (0.1.0), the Phase 2.5 docs polish is in 0.1.1 and 0.1.2, the Arabic locale (Phase 2.6) is in 0.2.0, the forms (Phase 3) are in 0.3.0, the interactive components (Phase 4) are in 0.4.0, the AI Resources docs and the docs polish are in 0.4.1, 0.4.2 moves component installs to `components/dga` and fixes the Arabic 404, and 0.4.3 makes preview content follow the direction toggle, and 0.5.0 emits every colour as OKLCH and adds the navigation and data display components (Phase 5), and 0.6.0 adds the composite components (Phase 6), and 0.7.0 adds the first half of Phase 7 (overlays, inputs and the official-site strip), and 0.7.1 the second half (navigation, layout and display), and 0.7.2 moves the extensions into the sidebar sections of the DGA components and splits the Section blocks into versions; see [CHANGELOG.md](CHANGELOG.md).
+Phases 0, 1 and 2 are done (0.1.0), the Phase 2.5 docs polish is in 0.1.1 and 0.1.2, the Arabic locale (Phase 2.6) is in 0.2.0, the forms (Phase 3) are in 0.3.0, the interactive components (Phase 4) are in 0.4.0, the AI Resources docs and the docs polish are in 0.4.1, 0.4.2 moves component installs to `components/dga` and fixes the Arabic 404, and 0.4.3 makes preview content follow the direction toggle, and 0.5.0 emits every colour as OKLCH and adds the navigation and data display components (Phase 5), and 0.6.0 adds the composite components (Phase 6), and 0.7.0 adds the first half of Phase 7 (overlays, inputs and the official-site strip), and 0.7.1 the second half (navigation, layout and display), and 0.7.2 moves the extensions into the sidebar sections of the DGA components and splits the Section blocks into versions, and 0.7.3 fixes DGA conformance findings; see [CHANGELOG.md](CHANGELOG.md).
 Next: the Section blocks, one minor version per group (0.8.0 to 0.13.0), and the Mobile components (0.14.0 and later, as needed), then the Release.
 Component specs for each phase are in `docs/design-system/components/`.
 
@@ -163,6 +163,10 @@ Rules for both parts:
 - [x] No separate "Extension" groups in the sidebar, in English and Arabic: each extension sits in its natural section next to the DGA components (Button Group by Button; Input Group, Input OTP, Combobox, Toggle and Toggle Group in Forms; Popover, Hover Card, Alert Dialog, Context Menu and Command in Interactive; Menubar, Navigation Menu, Sidebar, Item, Chart, Empty and Kbd in Navigation and data display), plus a new **Layout** section for Collapsible, Scroll Area, Resizable and Aspect Ratio.
 - [x] The Extension badge in the sidebar item and the badge and "derived from" note in the page header are unchanged. Search, `llms.txt`, the sitemap and the agent skill follow the grouping; the Extensions page stays as a reference list.
 - [x] This ROADMAP: the Section blocks are split into one minor version per group, and Mobile components move to 0.14.0.
+
+## Patch 0.7.3: DGA conformance fixes (done, 0.7.3)
+
+- [x] Header, Second Nav, Footer, Accordion, Digital Stamp, Rating, Slider, Breadcrumb, Tabs, Date Picker, Filtration and Textarea fixed against the findings; Chart is a DGA component. The separate RTL section is gone from every component page. What was checked, and which values are unverified, is in [docs/conformance/0.7.3.md](docs/conformance/0.7.3.md).
 
 ## Section blocks (0.8.0 to 0.13.0)
 

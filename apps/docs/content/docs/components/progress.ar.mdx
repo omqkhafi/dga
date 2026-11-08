@@ -1,7 +1,7 @@
 ---
 title: Progress
 description: "شريط أو حلقة تبيّن مدى تقدم مهمة. محدد وغير محدد، وثلاثة أحجام للشريط وخمسة للحلقة، مع حالتي النجاح والخطأ."
-sourceHash: f8a4846ef7af
+sourceHash: 2ceadb4a71ee
 ---
 
 <Preview name="progress-linear" title="التقدم" />
@@ -21,6 +21,8 @@ export function Upload({ percent }: { percent: number }) {
 ```
 
 استخدم التقدم لمهمة معلومة المدة، كالرفع أو نموذج من أجزاء عدة. وحين لا يُعرف المدى مرّر `value={null}`. وللانتظار ثانية أو ثانيتين استخدم [Spinner](/docs/components/spinner). ولبيان موضع الشخص في تسلسل صفحات استخدم [Stepper](/docs/components/stepper).
+
+يمتلئ الشريط من اليمين وتدور الحلقة في الاتجاه المعاكس.
 
 ## البنية [#anatomy]
 
@@ -43,12 +45,6 @@ export function Upload({ percent }: { percent: number }) {
 <Preview compact name="progress-circle" title="أحجام الحلقة وحالاتها" />
 
 يحوّل `formatValue` الرقم إلى النص، لتظهر الأرقام الهندية في الصفحات العربية.
-
-## RTL [#rtl]
-
-يمتلئ الشريط من اليمين وتدور الحلقة في الاتجاه المعاكس.
-
-<DirectionCompare name="progress-linear" title="التقدم" />
 
 ## إمكانية الوصول [#accessibility]
 

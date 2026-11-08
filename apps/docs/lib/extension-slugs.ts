@@ -26,7 +26,7 @@ export const EXTENSION_LAYOUT_COMPONENTS = [
   "resizable",
   "aspect-ratio",
 ];
-export const EXTENSION_DISPLAY_COMPONENTS = ["kbd", "empty", "item", "chart"];
+export const EXTENSION_DISPLAY_COMPONENTS = ["kbd", "empty", "item"];
 export const EXTENSION_COMPONENTS = [
   ...EXTENSION_OVERLAY_COMPONENTS,
   ...EXTENSION_INPUT_COMPONENTS,

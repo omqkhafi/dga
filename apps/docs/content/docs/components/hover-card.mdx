@@ -37,6 +37,8 @@ export function Author() {
 
 Use a Hover Card to preview a profile, a service or a definition without leaving the page. It is a convenience for people with a pointer or a keyboard: **touch screens and screen readers do not get the card**, so the trigger must be a real link to the same content, and the card must never hold the only copy of anything. If people need to interact with the content, use a [Popover](/docs/components/popover). For a one-line hint, use a [Tooltip](/docs/components/tooltip).
 
+The card opens below the link and centred by default. `start` and `end` swap with the direction and the beak follows. Content inside the card reads in the page direction.
+
 ## Anatomy
 
 - **Trigger**: an anchor (`a`) styled as the DGA primary link: underlined, `link-primary`, with the hover, pressed and focus states of Link.
@@ -57,12 +59,6 @@ Use a Hover Card to preview a profile, a service or a definition without leaving
 `delay` and `closeDelay` on the trigger set how fast the card opens and closes.
 
 <Preview compact name="hover-card-states" title="Timing" minHeight={240} />
-
-## RTL
-
-The card opens below the link and centred by default. `start` and `end` swap with the direction and the beak follows. Content inside the card reads in the page direction.
-
-<DirectionCompare name="hover-card-placements" title="Hover Card" minHeight={600} />
 
 ## Accessibility
 

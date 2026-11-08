@@ -1,7 +1,7 @@
 ---
 title: Sidebar
 description: "لوحة تنقل بجوار الصفحة. يمكن أن تتقلص إلى عمود أيقونات أو تختفي أو تصير Drawer على الهاتف، مع مجموعات متداخلة وحالة فتح محفوظة."
-sourceHash: 9e1b0fffe7db
+sourceHash: 22caa3d3b24c
 ---
 
 <ExtensionNote
@@ -64,6 +64,8 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
 ```
 
 استخدم الشريط الجانبي للتنقل الرئيسي في تطبيق كثير الأقسام. أما تنقل موقع عام فاستخدم له [Header](/docs/components/header). الشريط الجانبي تخطيط: يقع بجوار الصفحة ويأخذ ارتفاعه من أصله (هيكل بارتفاع الشاشة، أو `className` مثل `h-96` داخل حاوية). لُفّ تسمية كل عنصر في عنصر مثل `<span>`: ففي عمود الأيقونات تُخفى بصريًا ويبقى قارئ الشاشة يقرؤها. كل نص ظاهر تمرّره أنت.
+
+يقع الشريط في جهة البداية، فيكون على اليمين بالعربية، بحدّه والـ Drawer في تلك الجهة. وتنعكس أيقونة الزر وأسهم المجموعات وجهة التلميح (جهة النهاية للعمود). ولا يحتاج شيء إلى نسخة عربية.
 
 ## البنية [#anatomy]
 
@@ -128,12 +130,6 @@ import { parseSidebarState, SIDEBAR_COOKIE_NAME } from "@/components/dga/sidebar
 const store = await cookies();
 const defaultOpen = store.get(SIDEBAR_COOKIE_NAME)?.value !== "false";
 ```
-
-## RTL [#rtl]
-
-يقع الشريط في جهة البداية، فيكون على اليمين بالعربية، بحدّه والـ Drawer في تلك الجهة. وتنعكس أيقونة الزر وأسهم المجموعات وجهة التلميح (جهة النهاية للعمود). ولا يحتاج شيء إلى نسخة عربية.
-
-<DirectionCompare name="sidebar-icon" title="الشريط الجانبي" minHeight={420} />
 
 ## إمكانية الوصول [#accessibility]
 

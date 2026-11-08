@@ -1,7 +1,7 @@
 ---
 title: Tag
 description: تسميات للفئات والمرشحات والحالات. Tag وStatus Tag، مملوءان أو بحد فقط، وثلاثة أحجام، وقابلان للإزالة اختياريًا.
-sourceHash: 5d546ed583eb
+sourceHash: 8bfb63e0c341
 ---
 
 <Preview name="tag-variants" title="Tag" />
@@ -20,6 +20,8 @@ import { StatusTag, Tag } from "@/components/dga/tag";
 ```
 
 تصنّف Tag المحتوى حسب الفئة أو تعرض المرشحات التي اختارها المستخدم. وتعرض Status Tag حالة عنصر أو مهمة أو طلب.
+
+تقع النقطة والأيقونة وزر الإغلاق على جهتي البداية والنهاية المنطقيتين.
 
 ## البنية [#anatomy]
 
@@ -40,12 +42,6 @@ import { StatusTag, Tag } from "@/components/dga/tag";
 يقع `subtle` (الافتراضي) على تظليل خفيف، و`inverted` على تعبئة مصمتة، و`ghost` بلا تعبئة. وتبدأ الثلاثة بنقطة ملونة.
 
 <Preview compact name="status-tags" title="Status Tag" />
-
-## اتجاه RTL [#rtl]
-
-تقع النقطة والأيقونة وزر الإغلاق على جهتي البداية والنهاية المنطقيتين.
-
-<DirectionCompare name="tag-dismiss" title="الوسوم القابلة للإزالة" />
 
 ## إمكانية الوصول [#accessibility]
 

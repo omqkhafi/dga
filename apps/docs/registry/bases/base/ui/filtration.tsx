@@ -5,6 +5,18 @@ import { HugeiconsIcon } from "@hugeicons/react";
 import * as React from "react";
 import { Button } from "@/components/dga/button";
 import { Checkbox } from "@/components/dga/checkbox";
+import { DatePicker, type DatePickerBaseProps } from "@/components/dga/date-picker";
+import {
+  Dialog,
+  DialogBody,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/dga/dialog";
 import {
   Drawer,
   DrawerClose,
@@ -17,6 +29,8 @@ import {
 } from "@/components/dga/drawer";
 import { Input } from "@/components/dga/input";
 import { Radio, RadioGroup } from "@/components/dga/radio";
+import { Rating } from "@/components/dga/rating";
+import { SearchBox } from "@/components/dga/search-box";
 import {
   Select,
   SelectContent,
@@ -42,9 +56,71 @@ type FiltrationGroupBase = {
   label: string;
 };
 
+/** What a group of options can add: a search field and a "Show more" button for a long list. */
+type FiltrationOptionsExtras = {
+  options: FiltrationOption[];
+  /** Adds a search field above the options. It narrows the list by label as you type. */
+  searchable?: boolean;
+  /** Placeholder of the search field. */
+  searchPlaceholder?: string;
+  /** The name of the search field. Default: "Search" and the group's heading. */
+  searchLabel?: string;
+  /** The name of the search field's clear button. */
+  searchClearLabel?: string;
+  /** Said when the search matches no option. */
+  noMatchLabel?: string;
+  /** Shows only this many options, then a "Show more" button for the rest. */
+  initialCount?: number;
+  /** The text of the button that shows all the options. */
+  showMoreLabel?: string;
+  /** The text of the button that folds the list back. */
+  showLessLabel?: string;
+};
+
+/** What a control you draw yourself in a group receives. */
+type FiltrationCustomContext = {
+  /** An id for the control, so the group's heading can name it with `labelId`. */
+  id: string;
+  /** The id of the group's heading. */
+  labelId: string;
+  /** The group's current value. */
+  value: string | string[] | undefined;
+  /** Sets the group's value. `undefined` or an empty value clears it. */
+  onValueChange: (next: string | string[] | undefined) => void;
+};
+
 type FiltrationGroup =
-  | (FiltrationGroupBase & { type: "checkbox"; options: FiltrationOption[] })
-  | (FiltrationGroupBase & { type: "radio"; options: FiltrationOption[] })
+  | (FiltrationGroupBase & { type: "checkbox" } & FiltrationOptionsExtras)
+  | (FiltrationGroupBase & { type: "radio" } & FiltrationOptionsExtras)
+  | (FiltrationGroupBase & {
+      /**
+       * A date (DGA: Date Picker). The value is an ISO date, or `[start, end]` for
+       * `mode="range"`. `datePickerProps` passes the Date Picker's own props (labels, numerals,
+       * min, max, calendars).
+       */
+      type: "date";
+      mode?: "single" | "range";
+      datePickerProps?: Omit<DatePickerBaseProps, "id" | "name">;
+      /** Writes a date in the applied-filter tag. Default: the ISO date. */
+      formatDate?: (iso: string) => string;
+    })
+  | (FiltrationGroupBase & {
+      /** A star rating (DGA: Rating). The value is the chosen number of stars, for example "4". */
+      type: "rating";
+      max?: number;
+      allowHalf?: boolean;
+      /** The name of one star, for example "3 stars". */
+      starLabel?: (value: number) => string;
+      /** Writes the applied-filter tag, for example "4 stars and up". */
+      formatApplied?: (value: number) => string;
+    })
+  | (FiltrationGroupBase & {
+      /** Any control you draw: it gets the value and a setter, and the group joins the tags. */
+      type: "custom";
+      render: (context: FiltrationCustomContext) => React.ReactNode;
+      /** Writes the applied-filter tag. Default: the value, joined with commas. */
+      formatApplied?: (value: string | string[]) => string;
+    })
   | (FiltrationGroupBase & {
       type: "select";
       options: FiltrationOption[];
@@ -98,8 +174,14 @@ type FiltrationProps = Omit<React.ComponentProps<"div">, "defaultValue" | "onCha
   applyLabel?: (count?: number) => string;
   /** A line under the drawer title for screen readers. */
   drawerDescription?: string;
-  /** The side the drawer opens from on small screens. */
+  /** The side the drawer opens from on small screens (with `placement="inline"`). */
   drawerSide?: "start" | "end";
+  /**
+   * Where the panel is (DGA: Placement). `inline` (default) puts it beside the results from the
+   * `lg` width and in a Drawer below it. `start` and `end` always show a button that opens the
+   * panel anchored to that side in a Drawer; `center` opens it in a centred Dialog.
+   */
+  placement?: "inline" | "start" | "end" | "center";
   /** Name of the drawer's close button. */
   closeLabel?: string;
   /** The results: any content, shown beside the panel. */
@@ -142,6 +224,36 @@ function getAppliedFilters(
             ),
         });
       }
+    } else if (group.type === "date") {
+      const dates = Array.isArray(current) ? current : [current as string];
+      const write = group.formatDate ?? ((iso: string) => iso);
+      const [from = "", to = ""] = dates;
+      applied.push({
+        key: group.id,
+        group,
+        text:
+          group.mode === "range"
+            ? `${from ? write(from) : ""} – ${to ? write(to) : ""}`.trim()
+            : write(from),
+        clear: () => set(group.id, undefined),
+      });
+    } else if (group.type === "rating") {
+      const stars = Number(current);
+      applied.push({
+        key: group.id,
+        group,
+        text: group.formatApplied?.(stars) ?? `${stars} stars and up`,
+        clear: () => set(group.id, undefined),
+      });
+    } else if (group.type === "custom") {
+      applied.push({
+        key: group.id,
+        group,
+        text:
+          group.formatApplied?.(current as string | string[]) ??
+          (Array.isArray(current) ? current.join(", ") : String(current)),
+        clear: () => set(group.id, undefined),
+      });
     } else if (group.type === "range") {
       const [min = "", max = ""] = current as string[];
       applied.push({
@@ -162,11 +274,78 @@ function getAppliedFilters(
   return applied;
 }
 
+/** The options of a checkbox or radio group, with the optional search field and "Show more". */
+function FiltrationOptions({
+  group,
+  id,
+  render,
+}: {
+  group: FiltrationOptionsExtras & FiltrationGroupBase;
+  id: string;
+  render: (options: FiltrationOption[]) => React.ReactNode;
+}) {
+  const [query, setQuery] = React.useState("");
+  const [expanded, setExpanded] = React.useState(false);
+  const {
+    searchable,
+    searchPlaceholder,
+    searchLabel = `Search ${group.label}`,
+    searchClearLabel = "Clear search",
+    noMatchLabel = "No matches",
+    initialCount,
+    showMoreLabel = "Show more",
+    showLessLabel = "Show less",
+  } = group;
+  const text = query.trim().toLowerCase();
+  const matches = text
+    ? group.options.filter((o) => o.label.toLowerCase().includes(text))
+    : group.options;
+  const folded = !text && initialCount !== undefined && !expanded && matches.length > initialCount;
+  const shown = folded ? matches.slice(0, initialCount) : matches;
+  const canFold = !text && initialCount !== undefined && group.options.length > initialCount;
+  return (
+    <>
+      {searchable ? (
+        <SearchBox
+          size="md"
+          value={query}
+          onValueChange={setQuery}
+          placeholder={searchPlaceholder}
+          aria-label={searchLabel}
+          clearLabel={searchClearLabel}
+          data-slot="filtration-search"
+        />
+      ) : null}
+      {shown.length === 0 ? (
+        <p role="status" className="m-0 text-md text-text-primary-paragraph">
+          {noMatchLabel}
+        </p>
+      ) : (
+        render(shown)
+      )}
+      {canFold ? (
+        <button
+          type="button"
+          data-slot="filtration-show-more"
+          className="w-fit cursor-pointer border-0 bg-transparent p-0 text-md font-semibold text-link-primary underline underline-offset-2 hover:text-link-primary-hovered active:text-link-primary-pressed focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-offset-2 focus-visible:outline-border-black"
+          aria-expanded={expanded}
+          aria-controls={id}
+          onClick={() => setExpanded((open) => !open)}
+        >
+          {expanded ? showLessLabel : showMoreLabel}
+        </button>
+      ) : null}
+    </>
+  );
+}
+
 /**
- * The filter pattern (DGA: Filtration): a panel of groups (checkboxes, radios, a select, a text
- * input or a range), the applied filters as removable Tags with a clear-all button, and a result
- * count above your results (`children`). From the `lg` width the panel sits beside the results;
- * below it a button opens the same panel in a Drawer. Use it controlled with `value` and
+ * The filter pattern (DGA: Filtration): a panel of groups (checkboxes and radios that can have
+ * a search field and a "Show more" button, a select, a text input, a range, a date, a rating or a
+ * control you draw), the applied filters as removable Tags with a clear-all button, and a result
+ * count above your results (`children`). By default the panel sits beside the results from
+ * the `lg` width, and below it a button opens the same panel in a Drawer; `placement` makes the
+ * button the only way in and opens the panel from a side or in the centre. Use it controlled with `value` and
  * `onValueChange`, or uncontrolled with `defaultValue`. Filter your data yourself with the value.
  */
 function Filtration({
@@ -185,6 +364,7 @@ function Filtration({
   applyLabel = (n) => (n === undefined ? "Show results" : `Show ${n} results`),
   drawerDescription,
   drawerSide = "start",
+  placement = "inline",
   closeLabel = "Close",
   children,
   ...props
@@ -213,28 +393,40 @@ function Filtration({
       return (
         <fieldset key={group.id} className="m-0 flex min-w-0 flex-col gap-2 border-0 p-0">
           <legend className="mb-1 p-0 text-md font-semibold text-text-default">{group.label}</legend>
-          {group.options.map((option) => (
-            // biome-ignore lint/a11y/noLabelWithoutControl: the Checkbox inside is the control
-            <label
-              key={option.value}
-              className="flex min-h-8 cursor-pointer items-center gap-2 text-md text-text-default data-disabled:cursor-not-allowed data-disabled:text-text-default-disabled"
-              data-disabled={option.disabled ? "" : undefined}
-            >
-              <Checkbox
-                size="sm"
-                checked={chosen.includes(option.value)}
-                disabled={option.disabled}
-                onCheckedChange={(checked) =>
-                  set(
-                    group.id,
-                    checked ? [...chosen, option.value] : chosen.filter((v) => v !== option.value),
-                  )
-                }
-              />
-              <span className="min-w-0 flex-1">{option.label}</span>
-              {option.count ? <span className="text-sm text-text-primary-paragraph tabular-nums">{option.count}</span> : null}
-            </label>
-          ))}
+          <FiltrationOptions
+            group={group}
+            id={`${id}-options`}
+            render={(options) => (
+              <div id={`${id}-options`} className="flex flex-col gap-2">
+                {options.map((option) => (
+                  // biome-ignore lint/a11y/noLabelWithoutControl: the Checkbox inside is the control
+                  <label
+                    key={option.value}
+                    className="flex min-h-8 cursor-pointer items-center gap-2 text-md text-text-default data-disabled:cursor-not-allowed data-disabled:text-text-default-disabled"
+                    data-disabled={option.disabled ? "" : undefined}
+                  >
+                    <Checkbox
+                      size="sm"
+                      checked={chosen.includes(option.value)}
+                      disabled={option.disabled}
+                      onCheckedChange={(checked) =>
+                        set(
+                          group.id,
+                          checked
+                            ? [...chosen, option.value]
+                            : chosen.filter((v) => v !== option.value),
+                        )
+                      }
+                    />
+                    <span className="min-w-0 flex-1">{option.label}</span>
+                    {option.count ? (
+                      <span className="text-sm text-text-primary-paragraph tabular-nums">{option.count}</span>
+                    ) : null}
+                  </label>
+                ))}
+              </div>
+            )}
+          />
         </fieldset>
       );
     }
@@ -242,23 +434,32 @@ function Filtration({
       return (
         <fieldset key={group.id} className="m-0 flex min-w-0 flex-col gap-2 border-0 p-0">
           <legend className="mb-1 p-0 text-md font-semibold text-text-default">{group.label}</legend>
-          <RadioGroup
-            value={(current as string | undefined) ?? ""}
-            onValueChange={(next) => set(group.id, next as string)}
-          >
-            {group.options.map((option) => (
-              // biome-ignore lint/a11y/noLabelWithoutControl: the Radio inside is the control
-              <label
-                key={option.value}
-                className="flex min-h-8 cursor-pointer items-center gap-2 text-md text-text-default data-disabled:cursor-not-allowed data-disabled:text-text-default-disabled"
-                data-disabled={option.disabled ? "" : undefined}
+          <FiltrationOptions
+            group={group}
+            id={`${id}-options`}
+            render={(options) => (
+              <RadioGroup
+                id={`${id}-options`}
+                value={(current as string | undefined) ?? ""}
+                onValueChange={(next) => set(group.id, next as string)}
               >
-                <Radio value={option.value} disabled={option.disabled} />
-                <span className="min-w-0 flex-1">{option.label}</span>
-                {option.count ? <span className="text-sm text-text-primary-paragraph tabular-nums">{option.count}</span> : null}
-              </label>
-            ))}
-          </RadioGroup>
+                {options.map((option) => (
+                  // biome-ignore lint/a11y/noLabelWithoutControl: the Radio inside is the control
+                  <label
+                    key={option.value}
+                    className="flex min-h-8 cursor-pointer items-center gap-2 text-md text-text-default data-disabled:cursor-not-allowed data-disabled:text-text-default-disabled"
+                    data-disabled={option.disabled ? "" : undefined}
+                  >
+                    <Radio value={option.value} disabled={option.disabled} />
+                    <span className="min-w-0 flex-1">{option.label}</span>
+                    {option.count ? (
+                      <span className="text-sm text-text-primary-paragraph tabular-nums">{option.count}</span>
+                    ) : null}
+                  </label>
+                ))}
+              </RadioGroup>
+            )}
+          />
         </fieldset>
       );
     }
@@ -304,6 +505,68 @@ function Filtration({
         </div>
       );
     }
+    if (group.type === "date") {
+      const dates = Array.isArray(current) ? current : current ? [current] : [];
+      const { labels: dateLabels, ...dateProps } = group.datePickerProps ?? {};
+      if (group.mode === "range") {
+        return (
+          <fieldset key={group.id} className="m-0 flex min-w-0 flex-col gap-2 border-0 p-0">
+            <legend className="mb-1 p-0 text-md font-semibold text-text-default">{group.label}</legend>
+            <DatePicker
+              {...dateProps}
+              labels={dateLabels}
+              mode="range"
+              value={{ start: dates[0] || null, end: dates[1] || null }}
+              onValueChange={(next) => set(group.id, [next.start ?? "", next.end ?? ""])}
+            />
+          </fieldset>
+        );
+      }
+      return (
+        <div key={group.id} className="m-0 flex min-w-0 flex-col gap-2 border-0 p-0">
+          <label htmlFor={id} className="mb-1 p-0 text-md font-semibold text-text-default">
+            {group.label}
+          </label>
+          <DatePicker
+            {...dateProps}
+            labels={dateLabels}
+            id={id}
+            mode="single"
+            value={dates[0] || null}
+            onValueChange={(next) => set(group.id, next ?? undefined)}
+          />
+        </div>
+      );
+    }
+    if (group.type === "rating") {
+      return (
+        <fieldset key={group.id} className="m-0 flex min-w-0 flex-col gap-2 border-0 p-0">
+          <legend className="mb-1 p-0 text-md font-semibold text-text-default">{group.label}</legend>
+          <Rating
+            value={Number(current) || 0}
+            max={group.max}
+            allowHalf={group.allowHalf}
+            starLabel={group.starLabel}
+            onValueChange={(next) => set(group.id, String(next))}
+          />
+        </fieldset>
+      );
+    }
+    if (group.type === "custom") {
+      return (
+        <div key={group.id} className="m-0 flex min-w-0 flex-col gap-2 border-0 p-0">
+          <span id={`${id}-label`} className="mb-1 p-0 text-md font-semibold text-text-default">
+            {group.label}
+          </span>
+          {group.render({
+            id,
+            labelId: `${id}-label`,
+            value: current,
+            onValueChange: (next) => set(group.id, next),
+          })}
+        </div>
+      );
+    }
     const [min = "", max = ""] = (current as string[] | undefined) ?? [];
     return (
       <fieldset key={group.id} className="m-0 flex min-w-0 flex-col gap-2 border-0 p-0">
@@ -340,54 +603,91 @@ function Filtration({
     <div className="flex flex-col gap-6">{groups.map((group) => renderGroup(group, prefix))}</div>
   );
 
+  const inline = placement === "inline";
+  const centred = placement === "center";
+  const side = inline ? drawerSide : (placement as "start" | "end");
+
+  const triggerContent = (
+    <>
+      <HugeiconsIcon icon={FilterIcon} aria-hidden />
+      {triggerLabel}
+      {applied.length > 0 ? (
+        <Tag size="xs" rounded variant="success">
+          {applied.length}
+        </Tag>
+      ) : null}
+    </>
+  );
+  const trigger = (
+    <Button variant="outline" size="md" className={inline ? "lg:hidden" : undefined} />
+  );
+  const footer = (
+    <>
+      {applied.length > 0 ? (
+        <Button variant="outline" onClick={clearAll}>
+          {clearAllLabel}
+        </Button>
+      ) : null}
+      {centred ? (
+        <DialogClose render={<Button variant="primary" />}>{applyLabel(resultCount)}</DialogClose>
+      ) : (
+        <DrawerClose render={<Button variant="primary" />}>{applyLabel(resultCount)}</DrawerClose>
+      )}
+    </>
+  );
+
   return (
-    <div data-slot="filtration" className={cn("flex w-full flex-col gap-6 lg:flex-row lg:items-start", className)} {...props}>
-      <aside aria-label={title} data-slot="filtration-panel" className="hidden w-72 shrink-0 flex-col gap-4 rounded-md border border-border-neutral-primary bg-background-card p-4 lg:flex">
-        <div className="flex items-center justify-between gap-2">
-          <h2 className="m-0 text-lg font-bold text-text-display">{title}</h2>
-          {applied.length > 0 ? (
-            <Button variant="transparent" size="sm" onClick={clearAll}>
-              {clearAllLabel}
-            </Button>
-          ) : null}
-        </div>
-        {panel(`${baseId}-panel`)}
-      </aside>
+    <div
+      data-slot="filtration"
+      data-placement={placement}
+      className={cn(inline ? "flex w-full flex-col gap-6 lg:flex-row lg:items-start" : "flex w-full flex-col gap-6", className)}
+      {...props}
+    >
+      {inline ? (
+        <aside aria-label={title} data-slot="filtration-panel" className="hidden w-72 shrink-0 flex-col gap-4 rounded-md border border-border-neutral-primary bg-background-card p-4 lg:flex">
+          <div className="flex items-center justify-between gap-2">
+            <h2 className="m-0 text-lg font-bold text-text-display">{title}</h2>
+            {applied.length > 0 ? (
+              <Button variant="transparent" size="sm" onClick={clearAll}>
+                {clearAllLabel}
+              </Button>
+            ) : null}
+          </div>
+          {panel(`${baseId}-panel`)}
+        </aside>
+      ) : null}
 
       <div data-slot="filtration-main" className="flex min-w-0 flex-1 flex-col gap-4">
         <div className="flex flex-wrap items-center gap-4">
-          <Drawer open={open} onOpenChange={setOpen} side={drawerSide}>
-            <DrawerTrigger
-              render={<Button variant="outline" size="md" className="lg:hidden" />}
-            >
-              <HugeiconsIcon icon={FilterIcon} aria-hidden />
-              {triggerLabel}
-              {applied.length > 0 ? (
-                <Tag size="xs" rounded variant="success">
-                  {applied.length}
-                </Tag>
-              ) : null}
-            </DrawerTrigger>
-            <DrawerContent closeLabel={closeLabel}>
-              <DrawerHeader>
-                <DrawerTitle>{title}</DrawerTitle>
-                <DrawerDescription className={drawerDescription ? undefined : "sr-only"}>
-                  {drawerDescription ?? title}
-                </DrawerDescription>
-              </DrawerHeader>
-              {panel(`${baseId}-drawer`)}
-              <DrawerFooter>
-                {applied.length > 0 ? (
-                  <Button variant="outline" onClick={clearAll}>
-                    {clearAllLabel}
-                  </Button>
-                ) : null}
-                <DrawerClose render={<Button variant="primary" />}>
-                  {applyLabel(resultCount)}
-                </DrawerClose>
-              </DrawerFooter>
-            </DrawerContent>
-          </Drawer>
+          {centred ? (
+            <Dialog open={open} onOpenChange={setOpen}>
+              <DialogTrigger render={trigger}>{triggerContent}</DialogTrigger>
+              <DialogContent closeLabel={closeLabel}>
+                <DialogHeader>
+                  <DialogTitle>{title}</DialogTitle>
+                  <DialogDescription className={drawerDescription ? undefined : "sr-only"}>
+                    {drawerDescription ?? title}
+                  </DialogDescription>
+                </DialogHeader>
+                <DialogBody>{panel(`${baseId}-dialog`)}</DialogBody>
+                <DialogFooter>{footer}</DialogFooter>
+              </DialogContent>
+            </Dialog>
+          ) : (
+            <Drawer open={open} onOpenChange={setOpen} side={side}>
+              <DrawerTrigger render={trigger}>{triggerContent}</DrawerTrigger>
+              <DrawerContent closeLabel={closeLabel}>
+                <DrawerHeader>
+                  <DrawerTitle>{title}</DrawerTitle>
+                  <DrawerDescription className={drawerDescription ? undefined : "sr-only"}>
+                    {drawerDescription ?? title}
+                  </DrawerDescription>
+                </DrawerHeader>
+                {panel(`${baseId}-drawer`)}
+                <DrawerFooter>{footer}</DrawerFooter>
+              </DrawerContent>
+            </Drawer>
+          )}
           {resultCount !== undefined ? (
             <p role="status" data-slot="filtration-result-count" className="m-0 text-md font-semibold text-text-default">
               {resultLabel(resultCount)}
@@ -427,5 +727,11 @@ function Filtration({
   );
 }
 
-export type { FiltrationGroup, FiltrationOption, FiltrationProps, FiltrationValue };
+export type {
+  FiltrationCustomContext,
+  FiltrationGroup,
+  FiltrationOption,
+  FiltrationProps,
+  FiltrationValue,
+};
 export { Filtration, getAppliedFilters };

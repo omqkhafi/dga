@@ -39,6 +39,8 @@ A Button Group is only layout: every [Button](/docs/components/button) keeps its
 
 **Which one?** Use [Toggle Group](/docs/components/toggle-group) when the buttons are pressed on and off, and [Content Switcher](/docs/components/content-switcher) when exactly one option is always chosen and switches the view.
 
+The first button is on the side where the text starts, and the rounded outer corners follow, so nothing is mirrored by hand. A split button's options button sits at the end, on the left in Arabic, and its menu opens aligned to that end.
+
 ## Anatomy
 
 - **Group**: `role="group"`, named with `aria-label`. Only the outer corners are rounded; neighbouring buttons overlap by 1px so borders are not doubled.
@@ -62,12 +64,6 @@ The split button opens a Menu from an icon-only button that has an accessible na
 ### Vertical and small
 
 <Preview compact name="button-group-vertical" title="Vertical" minHeight={260} />
-
-## RTL
-
-The first button is on the side where the text starts, and the rounded outer corners follow, so nothing is mirrored by hand. A split button's options button sits at the end, on the left in Arabic, and its menu opens aligned to that end.
-
-<DirectionCompare name="button-group-parts" title="Button Group" minHeight={260} />
 
 ## Accessibility
 

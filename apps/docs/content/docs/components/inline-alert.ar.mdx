@@ -1,7 +1,7 @@
 ---
 title: Inline Alert
 description: "رسالة داخل الصفحة بجانب ما تخصه. خمسة أنواع على تعبئة بيضاء أو مظللة وعنوان ونص وإجراءان على الأكثر وزر إغلاق."
-sourceHash: 4eb767c4e342
+sourceHash: f1d97dda8a63
 ---
 
 <Preview name="inline-alert-kinds" title="تنبيه مضمّن" />
@@ -31,6 +31,8 @@ export function DocumentsNeeded() {
 
 استخدم Inline Alert لرسالة تنتمي إلى مكان واحد: نموذج فيه مشكلة أو بطاقة تحتاج خطوة أو قسم فيه تنبيه. وهو جزء من الصفحة، فلا يتحرك ولا يختفي وحده. وللصفحة كلها استخدم [Notification](/docs/components/notification)؛ وللحدث الذي وقع للتو استخدم [Toast](/docs/components/toast). أعطه `title` قصيرًا وجملة أو جملتين من النص و`actions` اثنين على الأكثر: الرئيس أولًا. ويلوّن `tinted` التعبئة والنص بلون النوع؛ والافتراضي بطاقة بيضاء بشريط ملون.
 
+الشريط والأيقونة على اليمين، وزر الإغلاق على اليسار، وتبدأ الإجراءات من اليمين. وعرض التنبيه بعرض حاويته.
+
 ## البنية [#anatomy]
 
 - **التنبيه** (`role="status"` أو `role="alert"` لـ `warning` و`destructive`): انحناء radius-md وحد 1px وحشوة 16 في 24px.
@@ -51,12 +53,6 @@ export function DocumentsNeeded() {
 تزيل `hideIcon` أيقونة الحالة: ويبقى الشريط والعنوان حاملين للنوع. ويُعلَن التنبيه المدمّر أو التحذيري فورًا. وبعد إغلاقه تُستدعى `onDismiss` ولا يُعرض شيء مكانه.
 
 <Preview compact name="inline-alert-states" title="دون أيقونة ومُغلق" />
-
-## RTL [#rtl]
-
-الشريط والأيقونة على اليمين، وزر الإغلاق على اليسار، وتبدأ الإجراءات من اليمين. وعرض التنبيه بعرض حاويته.
-
-<DirectionCompare name="inline-alert-kinds" title="تنبيه مضمّن" />
 
 ## إمكانية الوصول [#accessibility]
 

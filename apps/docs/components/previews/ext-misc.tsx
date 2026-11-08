@@ -169,7 +169,7 @@ function ServiceCombobox({
 
 export function ComboboxBasic() {
   return (
-    <div className="max-w-sm">
+    <div className="mx-auto w-full max-w-sm">
       <Labelled
         label={["Service", "الخدمة"]}
         helper={["Type to search, or open the list.", "اكتب للبحث أو افتح القائمة."]}
@@ -184,7 +184,7 @@ export function ComboboxStates() {
   const services = useServices();
   const chosen = services[0];
   return (
-    <div className="grid max-w-3xl gap-4 sm:grid-cols-2">
+    <div className="mx-auto w-full grid max-w-3xl gap-4 sm:grid-cols-2">
       <Labelled label={["Default", "افتراضي"]}>
         <ServiceCombobox />
       </Labelled>
@@ -210,7 +210,7 @@ export function ComboboxStates() {
 /** The list open from the start, so the item states are visible. */
 export function ComboboxOpen() {
   return (
-    <div className="min-h-80 max-w-sm">
+    <div className="mx-auto w-full min-h-80 max-w-sm">
       <Labelled label={["Service", "الخدمة"]}>
         <ServiceCombobox defaultOpen />
       </Labelled>
@@ -223,7 +223,7 @@ export function ComboboxMultiple() {
   const text = useComboText();
   const lang = useLanguage();
   return (
-    <div className="max-w-md">
+    <div className="mx-auto w-full max-w-md">
       <Labelled
         label={["Services", "الخدمات"]}
         helper={[
@@ -256,7 +256,7 @@ export function ComboboxGroups() {
   const cities = useCityGroups();
   const t = useBi();
   return (
-    <div className="max-w-sm">
+    <div className="mx-auto w-full max-w-sm">
       <Labelled label={["City", "المدينة"]}>
         <ServiceCombobox items={cities} placeholder={t("Choose a city", "اختر مدينة")} />
       </Labelled>
@@ -274,7 +274,7 @@ export function ComboboxCreatable() {
   // biome-ignore lint/correctness/useExhaustiveDependencies: reset on language only
   useEffect(() => setItems(services), [lang]);
   return (
-    <div className="max-w-md">
+    <div className="mx-auto w-full max-w-md">
       <Labelled
         label={["Tags", "الوسوم"]}
         helper={[
@@ -330,7 +330,7 @@ export function ComboboxAsync() {
   };
   useEffect(() => () => clearTimeout(timer.current), []);
   return (
-    <div className="max-w-sm">
+    <div className="mx-auto w-full max-w-sm">
       <Labelled
         label={["Service", "الخدمة"]}
         helper={[
@@ -415,7 +415,7 @@ export function CommandBasic() {
   const t = useBi();
   const [last, setLast] = useState<string | null>(null);
   return (
-    <div className="flex max-w-md flex-col gap-3">
+    <div className="mx-auto w-full flex max-w-md flex-col gap-3">
       <Command items={commands} {...text} onSelect={(option) => setLast(option.label)} />
       <p aria-live="polite" className="m-0 min-h-5 text-sm text-text-primary-paragraph">
         {last
@@ -431,7 +431,7 @@ export function CommandEmpty() {
   const text = useCommandText();
   const t = useBi();
   return (
-    <div className="max-w-md">
+    <div className="mx-auto w-full max-w-md">
       <Command items={commands} {...text} query={t("zzz", "ززز")} />
     </div>
   );
@@ -464,29 +464,78 @@ export function CommandDialogDemo() {
 
 /* ------------------------------------------------------------ Digital Stamp */
 
-function useStampText() {
+const STAMP_DOMAIN_AR: Record<DigitalStampDomain, [string, string]> = {
+  "gov.sa": [
+    "المواقع الحكومية الرسمية تستخدم",
+    "تنتهي المواقع الحكومية الرسمية بهذا النطاق، وهو نطاق لا تملكه إلا الجهات الحكومية السعودية.",
+  ],
+  "edu.sa": [
+    "المواقع التعليمية الرسمية تستخدم",
+    "تنتهي المواقع الرسمية للجامعات والجهات التعليمية بهذا النطاق.",
+  ],
+  "med.sa": [
+    "المواقع الصحية الرسمية تستخدم",
+    "تنتهي المواقع الرسمية للجهات الصحية والمستشفيات بهذا النطاق.",
+  ],
+  "org.sa": [
+    "مواقع المنظمات غير الربحية الرسمية تستخدم",
+    "تنتهي المواقع الرسمية للمنظمات غير الربحية بهذا النطاق.",
+  ],
+  "sch.sa": ["مواقع المدارس الرسمية تستخدم", "تنتهي المواقع الرسمية للمدارس بهذا النطاق."],
+  ".sa": [
+    "المواقع السعودية الرسمية تستخدم",
+    "تنتهي المواقع السعودية الرسمية بهذا النطاق. تحقق من العنوان كاملًا قبل أن تثق بالموقع.",
+  ],
+};
+
+const STAMP_DOMAIN_EN: Record<DigitalStampDomain, [string, string]> = {
+  "gov.sa": [
+    "Official government websites use",
+    "Official government websites end with .gov.sa, a domain only Saudi government entities can have.",
+  ],
+  "edu.sa": [
+    "Official educational websites use",
+    "Official websites of universities and educational bodies end with .edu.sa.",
+  ],
+  "med.sa": [
+    "Official health websites use",
+    "Official websites of health entities and hospitals end with .med.sa.",
+  ],
+  "org.sa": [
+    "Official non-profit websites use",
+    "Official websites of non-profit organisations end with .org.sa.",
+  ],
+  "sch.sa": ["Official school websites use", "Official websites of schools end with .sch.sa."],
+  ".sa": [
+    "Official Saudi websites use",
+    "Official Saudi websites end with .sa. Check the whole address before you trust a site.",
+  ],
+};
+
+function useStampText(domain: DigitalStampDomain = "gov.sa") {
   const t = useBi();
+  const ar = useLanguage() === "ar";
+  const [domainTitle, domainText] = (ar ? STAMP_DOMAIN_AR : STAMP_DOMAIN_EN)[domain];
   return {
-    label: t("An official website of the Saudi government", "موقع رسمي تابع للحكومة السعودية"),
-    toggleLabel: t("How to check", "كيف تتحقق"),
-    domainTitle: t("Official websites end in a Saudi domain", "المواقع الرسمية تنتهي بنطاق سعودي"),
-    domainText: t(
-      "Check that the address of the site ends in the suffix shown here.",
-      "تأكد أن عنوان الموقع ينتهي باللاحقة الظاهرة هنا.",
+    domain,
+    label: t(
+      "A government website registered with the Digital Government Authority.",
+      "موقع حكومي مسجّل لدى هيئة الحكومة الرقمية.",
     ),
-    httpsTitle: t("Secure websites use https", "المواقع الآمنة تستخدم https"),
+    toggleLabel: t("How you know?", "كيف تعرف؟"),
+    domainTitle,
+    domainText,
+    httpsTitle: t("Secure websites use HTTPS", "المواقع الآمنة تستخدم https"),
     httpsText: t(
       "Look for the padlock and https:// before the address. It means the connection is encrypted.",
       "ابحث عن القفل وعن https:// قبل العنوان. فهذا يعني أن الاتصال مشفّر.",
     ),
-    registrationTitle: t(
-      "Registered with the Digital Government Authority",
-      "مسجّل لدى هيئة الحكومة الرقمية",
+    registrationLabel: t(
+      "Registered on Digital Government Authority:",
+      "مسجّل في هيئة الحكومة الرقمية:",
     ),
-    registrationText: t(
-      "Government websites are registered with the Digital Government Authority.",
-      "تُسجَّل المواقع الحكومية لدى هيئة الحكومة الرقمية.",
-    ),
+    registrationNumber: t("DGA-2025-004217", "٢٠٢٥-٠٠٤٢١٧"),
+    logoLabel: t("Digital Government Authority", "هيئة الحكومة الرقمية"),
   };
 }
 
@@ -510,12 +559,23 @@ export function DigitalStampOpen() {
 
 const DOMAINS: DigitalStampDomain[] = ["gov.sa", "edu.sa", "med.sa", "org.sa", "sch.sa", ".sa"];
 
-export function DigitalStampDomains() {
-  const text = useStampText();
+function StampDomain({ domain }: { domain: DigitalStampDomain }) {
+  const text = useStampText(domain);
   return (
-    <div className="-m-4 flex flex-col gap-px">
+    <div className="flex flex-col gap-2">
+      <p className="m-0 ps-4 text-sm font-semibold text-text-default">
+        <bdi dir="ltr">{domain.startsWith(".") ? domain : `.${domain}`}</bdi>
+      </p>
+      <DigitalStamp {...text} defaultOpen />
+    </div>
+  );
+}
+
+export function DigitalStampDomains() {
+  return (
+    <div className="-mx-4 flex flex-col gap-8">
       {DOMAINS.map((domain) => (
-        <DigitalStamp key={domain} {...text} domain={domain} defaultOpen registrationTitle={null} />
+        <StampDomain key={domain} domain={domain} />
       ))}
     </div>
   );

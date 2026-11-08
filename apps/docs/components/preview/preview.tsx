@@ -466,7 +466,7 @@ export function Preview({
 }
 
 /**
- * LTR and RTL side by side, for the RTL section of a component page. The theme follows the
+ * LTR and RTL side by side (no component page uses it since the RTL sections were removed). The theme follows the
  * docs; the viewport is mobile so both frames fit next to each other.
  */
 export function DirectionCompare({

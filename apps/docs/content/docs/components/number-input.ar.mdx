@@ -1,7 +1,7 @@
 ---
 title: Number Input
 description: "حقل رقمي بزرّي − و+. تبقى الأرقام من اليسار إلى اليمين ومعزولة، وتتحول الأرقام الهندية المكتوبة إلى أرقام غربية."
-sourceHash: 27c5354a30db
+sourceHash: 1020a5d90108
 ---
 
 <Preview name="number-input-states" title="حالات حقل الرقم" />
@@ -36,6 +36,8 @@ export function QuantityField() {
 
 استخدم Number Input للكميات والمبالغ التي يزيدها المستخدم وينقصها. وللمعرّفات التي هي أرقام وليست كميات (رقم الهوية أو الهاتف) استخدم [Input](/docs/components/input) مع `inputMode="numeric"`. وترجم دائمًا `decrementLabel` و`incrementLabel` في الصفحات العربية.
 
+يتبادل الزران الجهتين: − على اليمين (البداية) و+ على اليسار (النهاية). ولا تتحرك الأرقام ولا يُعاد ترتيبها: الحقل `dir="ltr"` ومعزول عن النص العربي حوله. كتابة ٣ تعطي 3، والفاصلة العشرية ٫ تعطي نقطة.
+
 ## البنية [#anatomy]
 
 - **الإطار**: الحد والتعبئة نفسهما في [Input](/docs/components/input).
@@ -67,12 +69,6 @@ export function QuantityField() {
   format={{ style: "currency", currency: "SAR", currencyDisplay: "code" }}
 />
 ```
-
-## RTL [#rtl]
-
-يتبادل الزران الجهتين: − على اليمين (البداية) و+ على اليسار (النهاية). ولا تتحرك الأرقام ولا يُعاد ترتيبها: الحقل `dir="ltr"` ومعزول عن النص العربي حوله. كتابة ٣ تعطي 3، والفاصلة العشرية ٫ تعطي نقطة.
-
-<DirectionCompare name="number-input-demo" title="حقل الرقم" />
 
 ## إمكانية الوصول [#accessibility]
 

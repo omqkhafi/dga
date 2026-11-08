@@ -34,6 +34,8 @@ Use it when the box must keep its shape before the media loads, so the page does
 
 It does not replace anything in DGA: the [Card](/docs/components/card) media has no ratio of its own, so put an Aspect Ratio inside it when you need one.
 
+The box has no direction of its own. Text inside it follows the page direction.
+
 ## Anatomy
 
 - **Box**: `position: relative`, the `aspect-ratio` from `ratio` (default 16 / 9), `overflow: hidden` and a `radius-md` corner. Give it a width (or let it fill its parent); the height follows.
@@ -52,12 +54,6 @@ It does not replace anything in DGA: the [Card](/docs/components/card) media has
 `fit="cover"` crops the media to fill the box. `fit="contain"` shows all of it and leaves space at the sides.
 
 <Preview compact name="aspect-ratio-fit" title="Fit" minHeight={240} />
-
-## RTL
-
-The box has no direction of its own. Text inside it follows the page direction.
-
-<DirectionCompare name="aspect-ratio-ratios" title="Aspect Ratio" minHeight={240} />
 
 ## Accessibility
 

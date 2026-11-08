@@ -56,6 +56,8 @@ export function MainNavigation() {
 
 Use it for the main links of a site or an application where some links open a panel of related links. For a full site header with a logo, search and a drawer on phones, use the [Header](/docs/components/header). A trigger opens its panel on hover and on keyboard focus; touch and keyboard users open it with a tap or Enter. Pass `active` on the link of the current page. Every visible string is yours to pass in.
 
+The bar and the panel read from the start side, so the first item is on the right in Arabic. Left and Right swap, and the panel aligns to the start edge of its trigger.
+
 ## Anatomy
 
 - **Navigation** (`nav`): a landmark. Give it an `aria-label`.
@@ -76,12 +78,6 @@ Bar links without a panel, with the current page and a disabled link.
 The panel open at first with `defaultValue`.
 
 <Preview compact name="navigation-menu-open" title="Open panel" minHeight={400} />
-
-## RTL
-
-The bar and the panel read from the start side, so the first item is on the right in Arabic. Left and Right swap, and the panel aligns to the start edge of its trigger.
-
-<DirectionCompare name="navigation-menu-basic" title="Navigation Menu" minHeight={320} />
 
 ## Accessibility
 

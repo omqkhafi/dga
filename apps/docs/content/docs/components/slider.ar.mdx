@@ -1,10 +1,10 @@
 ---
 title: Slider
-description: "يختار قيمة، أو نطاقًا من قيمتين، بسحب مقبض على مسار. بحجمين صغير ومتوسط، مع تسمية ونص مساعد وعرض للقيمة وخطأ. يتبع الملء والمفاتيح اتجاه الصفحة."
-sourceHash: 7ab7def47a9c
+description: "يختار قيمة، أو نطاقًا من قيمتين، بسحب مقبض على مسار. بحجمين صغير ومتوسط، مع تسمية ونص مساعد والقيمة وتسميتي الحد الأدنى والأقصى وخطأ. يتبع الملء والمفاتيح اتجاه الصفحة."
+sourceHash: 40ed4bbc6d27
 ---
 
-<Preview name="slider-basic" title="أحجام المنزلق" minHeight={420} />
+<Preview compact name="slider-basic" title="أحجام المنزلق" />
 
 ## التثبيت [#installation]
 
@@ -40,39 +40,52 @@ export function PriorityField() {
 />
 ```
 
+الحد الأدنى في الجهة التي يبدأ منها النص: اليمين في العربية. ينمو الملء من اليمين، ويعمل السحب كذلك، وتتبع مفاتيح الأسهم ما تراه: <kbd>Left</kbd> يرفع القيمة و<kbd>Right</kbd> يخفضها. وتبقى القيمة المعروضة معزولة من اليسار إلى اليمين فتحتفظ الأرقام بترتيبها.
+
 ## البنية [#anatomy]
 
-- **التسمية** و**القيمة**: بحجم نص sm. تعرض القيمة رقمًا واحدًا، أو رقمي النطاق، مقابل التسمية.
+- **التسمية** و**القيمة**: بحجم نص sm. تعرض القيمة رقمًا واحدًا، أو رقمي النطاق، مقابل التسمية (`showValue`).
 - **المسار**: بسمك 4px (صغير) أو 6px (متوسط)، باللون `control-border`.
 - **الملء**: الجزء بين البداية والمقبض (أو بين المقبضين)، باللون `control-primary-checked`.
 - **المقبض**: بقطر 16px (صغير) أو 20px (متوسط)، بلون الملء مع حلقة بسمك 2px باللون `control-thumb`.
+- **تسميتا الحد الأدنى والأقصى**: بحجم نص sm تحت طرفي المسار، `min` عند جهة البداية و`max` عند جهة النهاية (`showMinMax`، أو نص من عندك بـ `minLabel` و`maxLabel`).
 - **النص المساعد** و**الخطأ**: بحجم نص sm، والخطأ مع أيقونة.
 
 ## أمثلة [#examples]
 
-### قيمة واحدة والأحجام [#single-value-and-sizes]
+### الأحجام [#sizes]
+
+متوسط وصغير، مع تسمية ونص مساعد وعرض القيمة.
+
+<Preview compact name="slider-basic" title="الأحجام" />
+
+### قيم المواصفة [#values-from-the-specification]
 
 قيم مواصفة DGA هي 0 و20 و50 و100. مرّر المؤشر على المقبض أو اسحبه أو ركّز عليه لترى حالاته.
 
-<Preview name="slider-basic" title="قيمة واحدة" minHeight={420} />
+<Preview compact name="slider-values" title="القيم 0 و20 و50 و100" />
+
+### تسميتا الحد الأدنى والأقصى [#min-max-labels]
+
+يضيف `showMinMax` تسميتي الحد الأدنى والأقصى تحت طرفي المسار.
+
+<Preview compact name="slider-minmax" title="تسميتا الحد الأدنى والأقصى" />
 
 ### النطاق [#range]
 
 مصفوفة في `value` أو `defaultValue` تصنع نطاقًا بمقبضين. سمِّ كل مقبض بـ `thumbLabels`: فيقرأ قارئ الشاشة «الحد الأدنى للرسوم، منزلق، 20».
 
-<Preview compact name="slider-range" title="نطاق" minHeight={260} />
+<Preview compact name="slider-range" title="نطاق" />
 
-### الخطوة والتعطيل والخطأ والحقل [#step-disabled-error-and-field]
+### الخطوة والتعطيل والخطأ [#step-disabled-and-error]
 
 `step` و`largeStep` يحددان مقدار حركة مفاتيح الأسهم وPage Up وDown. ويحمّر الخطأ الملء والمقابض ويضيف رسالة بأيقونة.
 
-<Preview name="slider-states" title="الحالات" minHeight={520} />
+<Preview compact name="slider-states" title="الخطوة والتعطيل والخطأ" />
 
-## RTL [#rtl]
+### داخل حقل [#inside-a-field]
 
-الحد الأدنى في الجهة التي يبدأ منها النص: اليمين في العربية. ينمو الملء من اليمين، ويعمل السحب كذلك، وتتبع مفاتيح الأسهم ما تراه: <kbd>Left</kbd> يرفع القيمة و<kbd>Right</kbd> يخفضها. وتبقى القيمة المعروضة معزولة من اليسار إلى اليمين فتحتفظ الأرقام بترتيبها.
-
-<DirectionCompare name="slider-range" title="المنزلق" minHeight={260} />
+<Preview compact name="slider-field" title="داخل حقل" />
 
 ## إمكانية الوصول [#accessibility]
 
@@ -97,7 +110,7 @@ export function PriorityField() {
 ## الاختلافات عن DGA [#deviations-from-dga]
 
 - لا تحدد مواصفة DGA ألوانًا لمسار المنزلق ومقبضه، بل التسمية والنص المساعد فقط. اشتُقت الألوان من رموز التحكم في Switch وهي 3:1 أو أفضل.
-- حالة الخطأ وعرض القيمة ليسا في المواصفة. ويتبع الخطأ [Field](/docs/components/field): نص أحمر مع أيقونة.
+- القيمة وتسميتا الحد الأدنى والأقصى أجزاء من DGA وهي مبنية هنا؛ وحجمها ولونها (نص sm و`field-text-helper`) من اختيارنا لأن صفحة Figma لا تعطي رموزًا لها. أما حالة الخطأ فليست في المواصفة وتتبع [Field](/docs/components/field): نص أحمر مع أيقونة.
 
 <ComponentDeviations component="slider" />
 

@@ -1,7 +1,7 @@
 ---
 title: Notification
 description: "شريط بعرض كامل لرسالة تخص الصفحة كلها. خمسة أنواع ونص افتتاحي بخط عريض وإجراء وزر إغلاق، ويُعلَن بوصفه منطقة حية."
-sourceHash: 218061e5bd37
+sourceHash: 9db4c84576ba
 ---
 
 <Preview name="notification-kinds" title="الإشعار" />
@@ -32,6 +32,8 @@ export function MaintenanceNotice() {
 
 استخدم Notification في أعلى صفحة أو قسم لما يخصها كلها: صيانة مجدولة أو خدمة جديدة أو مشكلة في الحساب. ويبقى حتى يتجاهله الشخص أو يزول سببه. ولرسالة تخص نموذجًا أو بطاقة واحدة استخدم [Inline Alert](/docs/components/inline-alert)؛ وللحدث الذي وقع للتو استخدم [Toast](/docs/components/toast). أضف Notification عند انطباقه لا قبله: فالمنطقة الحية تُعلَن عند ظهور محتواها. وابدأه بـ `title` قصير بخط عريض («مهم:»).
 
+الأيقونة على اليمين، والإجراء وزر الإغلاق على اليسار، ويبدأ النص من اليمين. ولا شيء يُعكس يدويًا.
+
 ## البنية [#anatomy]
 
 - **الشريط** (`role="status"` أو `role="alert"` لـ `critical`): بعرض كامل وحشوة 8 في 24px وانحناء radius-xs وحد سفلي بسمك 2px بلون النوع.
@@ -51,12 +53,6 @@ export function MaintenanceNotice() {
 تزيل `hideIcon` أيقونة الحالة: ويبقى اللون والعنوان العريض حاملين للنوع. وبعد أن يغلق الشخص الإشعار تُستدعى `onDismiss` ولا يُعرض شيء مكانه، فاحتفظ بالحالة في الصفحة إن أردت إعادته.
 
 <Preview compact name="notification-states" title="دون أيقونة ومُغلق" />
-
-## RTL [#rtl]
-
-الأيقونة على اليمين، والإجراء وزر الإغلاق على اليسار، ويبدأ النص من اليمين. ولا شيء يُعكس يدويًا.
-
-<DirectionCompare name="notification-kinds" title="الإشعار" />
 
 ## إمكانية الوصول [#accessibility]
 

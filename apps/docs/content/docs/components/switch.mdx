@@ -31,6 +31,8 @@ export function UpdatesField() {
 
 Use a Switch for a setting that takes effect the moment it is flipped: notifications, a feature on or off. If the choice is only applied when a form is submitted, use [Checkbox](/docs/components/checkbox). Label what the switch does, not its state: "Request updates", not "On".
 
+The thumb moves along the logical axis: it starts on the right and slides left when on, the way the track reads. Nothing is flipped by hand; a trailing switch sits on the left.
+
 ## Anatomy
 
 - **Track** (`<span role="switch">` and a hidden `<input>`): 48 by 24px.
@@ -50,12 +52,6 @@ Off, on, with a check icon, read-only, disabled and error.
 Put the Switch after FieldContent and use `justify-between` for a settings list, with the switch at the end of each row.
 
 <Preview compact name="switch-trailing" title="Trailing switch" />
-
-## RTL
-
-The thumb moves along the logical axis: it starts on the right and slides left when on, the way the track reads. Nothing is flipped by hand; a trailing switch sits on the left.
-
-<DirectionCompare name="switch-states" title="Switch" />
 
 ## Accessibility
 

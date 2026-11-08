@@ -3,7 +3,7 @@ title: Digital Stamp
 description: "The official-site strip at the top of a government site, with a panel that shows how to check the domain, https and registration (DGA: Digital Stamp)."
 ---
 
-<Preview name="digital-stamp-open" title="Digital Stamp" minHeight={260} />
+<Preview compact name="digital-stamp-open" title="Digital Stamp" />
 
 ## Installation
 
@@ -20,44 +20,41 @@ export function SiteHeader() {
 }
 ```
 
-Put the stamp at the very top of every page of a government site, above the [Second Nav](/docs/components/second-nav) and the [Header](/docs/components/header): pass it in the Header's `stamp` slot, which sits above `top`. It tells visitors the site is official and lets them check it: the address ends in a Saudi domain, the connection is https, and the site is registered with the Digital Government Authority. DGA gives the layout but no wording, so every string is a prop with an English default; translate them on Arabic pages. Set `domain` to the suffix your site uses.
+Put the stamp at the very top of every page of a government site, above the [Second Nav](/docs/components/second-nav) and the [Header](/docs/components/header): pass it in the Header's `stamp` slot, which sits above `top`. It tells visitors the site is official and lets them check it: the address ends in a Saudi domain, the connection is HTTPS, and the site is registered with the Digital Government Authority. The banner reads "A government website registered with the Digital Government Authority." with the button "How you know?". Each `domain` has its own text; set it to the suffix your site uses and pass `registrationNumber` for the link in the registration card. Every string is a prop with an English default; translate them on Arabic pages.
+
+In Arabic the flag and text start on the right and the toggle follows the text; the items and the card run from the right. The domain suffix and the registration number stay left to right and isolated from the Arabic around them.
 
 ## Anatomy
 
-- **Strip**: 32px high, `background-neutral-100`, Text sm Medium, padded with `section-padding`. On narrow screens it wraps to a second line.
-- **Flag icon** (optional): `hideIcon` removes it.
+- **Banner**: 32px high, `background-neutral-100`, Text sm Medium, padded with `section-padding`. On mobile the text and the button stack vertically.
+- **Saudi flag** (optional): `hideIcon` removes it.
 - **Toggle**: a real button with `aria-expanded` and `aria-controls` that opens the panel.
-- **Panel**: one row per check, with an `icon-success` icon and a Text lg Semibold heading. The first row is the DGA Extension part: it shows the domain suffix (`gov.sa`, `edu.sa`, `med.sa`, `org.sa`, `sch.sa` or `.sa`). Pass `registrationTitle={null}` to leave the registration row out.
+- **Panel**: two items with a circular icon outlined in `icon-success` and a Text lg Semibold heading, then the registration card; on mobile they stack vertically. The first item is the DGA Extension part: its heading ends with the domain suffix in green (`gov.sa`, `edu.sa`, `med.sa`, `org.sa`, `sch.sa` or `.sa`), and each suffix has its own text. The second explains HTTPS.
+- **Registration card**: the DGA logo, "Registered on Digital Government Authority:" and the registration number as a link (`registrationNumber`, `registrationHref`). Pass `registrationLabel={null}` to leave the card out.
 
 ## Examples
 
 ### Closed
 
-The strip on its own, 32px.
+The banner on its own, 32px.
 
-<Preview compact name="digital-stamp-closed" title="Closed" minHeight={120} />
+<Preview compact name="digital-stamp-closed" title="Closed" />
 
 ### Opened
 
 Press the button to open it, and press it again or <kbd>Esc</kbd> to close.
 
-<Preview compact name="digital-stamp-open" title="Opened" minHeight={260} />
+<Preview compact name="digital-stamp-open" title="Opened" />
 
 ### Domains
 
-The six suffixes DGA lists. The suffix always reads left to right, even in Arabic.
+The six suffixes DGA lists, each with its own text. The suffix always reads left to right, even in Arabic.
 
-<Preview name="digital-stamp-domains" title="Domains" minHeight={720} />
+<Preview compact name="digital-stamp-domains" title="Domains" />
 
 ### In the Header
 
-<Preview compact name="header-stamp" title="In the Header" minHeight={260} />
-
-## RTL
-
-The flag and text start on the right and the toggle follows the text. The three rows run from the right. The domain suffix stays left to right and isolated from the Arabic around it.
-
-<DirectionCompare name="digital-stamp-open" title="Digital Stamp" minHeight={260} />
+<Preview compact name="header-stamp" title="In the Header" minHeight={200} />
 
 ## Accessibility
 
@@ -67,9 +64,9 @@ The flag and text start on the right and the toggle follows the text. The three 
 | <kbd>Enter</kbd> or <kbd>Space</kbd> | Opens or closes the panel. |
 | <kbd>Esc</kbd> | Closes the panel and keeps focus on the toggle. |
 
-- The strip is a labelled region. The toggle reports `aria-expanded` and points to the panel with `aria-controls`; a closed panel is hidden from the accessibility tree.
+- The banner is a labelled region. The toggle reports `aria-expanded` and points to the panel with `aria-controls`; a closed panel is hidden from the accessibility tree.
 - The panel opens without animation, so reduced-motion settings need no special case. The chevron's turn is switched off with reduced motion.
-- Text is 4.5:1 on the strip and the toggle too, with a 2px focus ring, in light and dark.
+- Text is 4.5:1 on the banner, the toggle, the green domain suffix and the registration link too, with a 2px focus ring, in light and dark.
 
 ## API Reference
 
@@ -77,8 +74,8 @@ The flag and text start on the right and the toggle follows the text. The three 
 
 ## Deviations from DGA
 
-- DGA's Figma has the strip (closed and opened, desktop and mobile) and the Extension part, but no wording or artwork. The wording, the flag icon and the rows for https and registration are new, no DGA source.
-- The strip wraps on narrow screens instead of using a separate mobile frame.
+- The wording and layout follow the DGA Digital Stamp. The flag and the DGA mark are redrawn as inline SVG because the official artwork is not in the registry; replace the logo with `registrationLogo`.
+- On mobile the banner and panel stack vertically in one component instead of using a separate mobile frame.
 - The Extension part is a row in the panel, not a separate 88px bar.
 
 <ComponentDeviations component="digital-stamp" />

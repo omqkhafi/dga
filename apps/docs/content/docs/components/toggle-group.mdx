@@ -38,6 +38,8 @@ export function TextStyle() {
 
 **Which one?** A Toggle Group holds options that are on or off, possibly none. A [Content Switcher](/docs/components/content-switcher) always has exactly one option chosen and switches a view. A [Button Group](/docs/components/button-group) only lays out buttons that each run an action.
 
+The first item is on the side where the text starts, so an attached group reads right to left in Arabic and the outer corners follow. <kbd>Left</kbd> and <kbd>Right</kbd> swap: <kbd>Right</kbd> moves to the previous item in RTL. Mirror direction-specific icons with `rtl:-scale-x-100`.
+
 ## Anatomy
 
 - **Group**: `role="group"`, named with `aria-label`.
@@ -59,12 +61,6 @@ Alignment as icons, and a view switch that follows the Subtle style, with a disa
 ### Vertical
 
 <Preview compact name="toggle-group-vertical" title="Vertical" minHeight={220} />
-
-## RTL
-
-The first item is on the side where the text starts, so an attached group reads right to left in Arabic and the outer corners follow. <kbd>Left</kbd> and <kbd>Right</kbd> swap: <kbd>Right</kbd> moves to the previous item in RTL. Mirror direction-specific icons with `rtl:-scale-x-100`.
-
-<DirectionCompare name="toggle-group-single" title="Toggle Group" minHeight={240} />
 
 ## Accessibility
 

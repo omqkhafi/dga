@@ -11,7 +11,11 @@ export const API_DESCRIPTIONS_AR_EXT_INPUTS: Record<string, string> = {
   "slider.Slider.label": "الاسم المرئي فوق المسار. داخل Field اتركه واستخدم FieldLabel.",
   "slider.Slider.helperText": "نص مساعد تحت المسار. داخل Field استخدم FieldDescription.",
   "slider.Slider.error": "رسالة خطأ بأيقونة، وتحمّر معها المقابض. داخل Field استخدم FieldError.",
-  "slider.Slider.showValue": "يعرض القيمة الحالية (أو قيمتي النطاق) مقابل التسمية.",
+  "slider.Slider.showValue": "يعرض القيمة الحالية (أو قيمتي النطاق) مقابل التسمية (في DGA: Value).",
+  "slider.Slider.showMinMax":
+    "يعرض تسميتي الحد الأدنى والأقصى (في DGA: الحد الأدنى والأقصى) تحت طرفي المسار. الافتراضي `false`.",
+  "slider.Slider.minLabel": "يستبدل نص تسمية الحد الأدنى، وهي `min` افتراضيًا.",
+  "slider.Slider.maxLabel": "يستبدل نص تسمية الحد الأقصى، وهي `max` افتراضيًا.",
   "slider.Slider.thumbLabels":
     "الأسماء البرمجية للمقابض. النطاق يحتاج اسمين (مثل الحد الأدنى والأقصى)، والمقبض المفرد تسميه التسمية. ترجمها في الصفحات العربية.",
   "slider.Slider.value": "القيمة (متحكَّم بها). مصفوفة من رقمين تجعله نطاقًا.",

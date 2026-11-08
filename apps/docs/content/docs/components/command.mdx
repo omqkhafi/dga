@@ -57,6 +57,8 @@ export function Palette() {
 
 Command **runs actions**; it does not store a value. For a form field that stores a choice, use [Combobox](/docs/components/combobox). They share the same search (case-insensitive, Arabic-aware) and a similar item look, but a Command item has an icon, a shortcut and an `onSelect`, and the list is always open. `Command` puts the box and list in the page; `CommandDialog` puts them in a [Dialog](/docs/components/dialog). The component does not bind <kbd>Ctrl</kbd> or <kbd>⌘</kbd> with <kbd>K</kbd>: your app decides which keys open it, as above.
 
+The search icon and the text are on the right, shortcuts are on the left and stay left to right, and the highlight bar is on the right.
+
 ## Anatomy
 
 - **Search box**: the [Search Box](/docs/components/search-box) look, with the search icon on the start side.
@@ -84,12 +86,6 @@ When nothing matches, the empty text replaces the list and screen readers hear t
 CommandDialog opens over the page. Focus goes to the search box, <kbd>Esc</kbd> closes it, and focus returns to the button.
 
 <Preview compact name="command-dialog" title="In a dialog" minHeight={160} />
-
-## RTL
-
-The search icon and the text are on the right, shortcuts are on the left and stay left to right, and the highlight bar is on the right.
-
-<DirectionCompare name="command-basic" title="Command" minHeight={380} />
 
 ## Accessibility
 

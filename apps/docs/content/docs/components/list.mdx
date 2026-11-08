@@ -27,6 +27,8 @@ export function Steps() {
 
 Use a list for a few short, related items: steps, requirements, notes. Use `ordered` when the order matters, `unordered` when it does not, and `icon` when an icon helps scanning. For rows with several columns use the `StructuredList` below, or a [Table](/docs/components/table) for data to sort. DGA does not define list rows with avatars, descriptions or actions; put those in a [Card](/docs/components/card) or a Table row.
 
+Markers and indents sit on the start side. With `markers="arabic"` the ordered markers use Arabic-Indic digits and Arabic letters.
+
 ## Anatomy
 
 - **List** (`ul` or `ol`): Text md, items at least 24px high. `tone` is `primary`, `neutral` (default) or `onColor` for brand fills.
@@ -56,12 +58,6 @@ The second level of an ordered list uses letters.
 With `selectable` each row has a radio button, so one row can be chosen. Give each row a `value` and a `label` for its radio, and the header an empty first cell.
 
 <Preview compact name="structured-list-selectable" title="Selectable Structured List" />
-
-## RTL
-
-Markers and indents sit on the start side. With `markers="arabic"` the ordered markers use Arabic-Indic digits and Arabic letters.
-
-<DirectionCompare name="list-basic" title="List" />
 
 ## Accessibility
 

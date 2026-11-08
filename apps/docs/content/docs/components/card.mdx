@@ -38,6 +38,8 @@ export function ServiceCard() {
 
 Use a card for a group of related content and actions: a service, a person, a place. Cards in a row should hold the same kind of thing. For a card that goes to another page, use a `CardLink`; for a choice, use `SelectableCard`; for details that open and close, use `CardExpandable`.
 
+Padding, the media, the actions and the expand chevron follow the page direction.
+
 ## Anatomy
 
 - **Card**: `background-card`, radius lg, padding and gap from `card-lg-*` (16px and 24px).
@@ -76,12 +78,6 @@ Put a `CardLink` around the text of the title. Its click area stretches over the
 `SelectableCard` is a checkbox that looks like a card. Clicking anywhere on it toggles it, and a selected card gets a primary border.
 
 <Preview compact name="card-selectable" title="Selectable" />
-
-## RTL
-
-Padding, the media, the actions and the expand chevron follow the page direction.
-
-<DirectionCompare name="card-effects" title="Card" />
 
 ## Accessibility
 

@@ -1,7 +1,7 @@
 ---
 title: Toggle Group
 description: "صف أو عمود من أزرار التبديل المترابطة. يمكن ضغط واحد أو عدة، متصلة أو متباعدة، بمفاتيح أسهم تتبع اتجاه الصفحة."
-sourceHash: 89211ff8c52b
+sourceHash: d66b67e7eafb
 ---
 
 <ExtensionNote
@@ -39,6 +39,8 @@ export function TextStyle() {
 
 **أيها أستخدم؟** Toggle Group لخيارات مفعّلة أو متوقفة، وقد لا يكون أي منها مفعّلًا. أما [Content Switcher](/docs/components/content-switcher) ففيه خيار واحد مختار دائمًا ويبدّل العرض. و[Button Group](/docs/components/button-group) يرتّب أزرارًا يشغّل كل منها إجراءً فقط.
 
+العنصر الأول في الجهة التي يبدأ منها النص، فالمجموعة المتصلة تُقرأ من اليمين إلى اليسار في العربية وتتبعها الزوايا الخارجية. ويتبادل <kbd>Left</kbd> و<kbd>Right</kbd>: ينقل <kbd>Right</kbd> إلى العنصر السابق في RTL. اعكس الأيقونات الاتجاهية بـ `rtl:-scale-x-100`.
+
 ## البنية [#anatomy]
 
 - **المجموعة**: `role="group"`، تُسمّى بـ `aria-label`.
@@ -60,12 +62,6 @@ export function TextStyle() {
 ### عمودي [#vertical]
 
 <Preview compact name="toggle-group-vertical" title="عمودي" minHeight={220} />
-
-## RTL [#rtl]
-
-العنصر الأول في الجهة التي يبدأ منها النص، فالمجموعة المتصلة تُقرأ من اليمين إلى اليسار في العربية وتتبعها الزوايا الخارجية. ويتبادل <kbd>Left</kbd> و<kbd>Right</kbd>: ينقل <kbd>Right</kbd> إلى العنصر السابق في RTL. اعكس الأيقونات الاتجاهية بـ `rtl:-scale-x-100`.
-
-<DirectionCompare name="toggle-group-single" title="Toggle Group" minHeight={240} />
 
 ## إمكانية الوصول [#accessibility]
 

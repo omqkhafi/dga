@@ -152,6 +152,12 @@ export function interactivePairs(): ComponentPair[] {
     }
   }
 
+  // Accordion, filled variant: the item sits on background-neutral-50.
+  add("accordion", "heading, filled", "text-default", "background-neutral-50", 4.5);
+  add("accordion", "chevron, filled", "icon-default", "background-neutral-50", 3);
+  add("accordion", "panel text, filled", "text-primary-paragraph", "background-neutral-50", 4.5);
+  add("accordion", "focus ring, filled", "border-black", "background-neutral-50", 3);
+
   // Content Switcher: track neutral-100; the chosen option is the primary button fill.
   for (const [state, bg] of [
     ["default", "background-neutral-100"],

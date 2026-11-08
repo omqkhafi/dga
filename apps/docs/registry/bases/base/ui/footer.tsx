@@ -41,6 +41,19 @@ type FooterSocialLink = {
   icon: IconSvg;
 };
 
+/** One accessibility tool: a bordered icon button, for example text size or contrast. */
+type FooterTool = {
+  /** The accessible name, for example "Increase text size". */
+  label: string;
+  icon: IconSvg;
+  /** Makes the tool a button. */
+  onClick?: () => void;
+  /** Makes the tool a link. */
+  href?: string;
+  /** For a toggle (such as high contrast): whether it is on. */
+  pressed?: boolean;
+};
+
 type FooterContactItem = {
   /** The kind of detail, for example "Phone". */
   label: string;
@@ -55,7 +68,7 @@ type FooterProps = Omit<React.ComponentProps<"footer">, "children"> &
   VariantProps<typeof footerVariants> & {
     /** The entity's logo. */
     logo?: React.ReactNode;
-    /** More logos (partners, Vision 2030) shown after the main one. */
+    /** Platform and partner logos (Vision 2030, national platforms), shown on a white tile. */
     partnerLogos?: React.ReactNode;
     /** A short text under the logo. */
     description?: React.ReactNode;
@@ -65,8 +78,14 @@ type FooterProps = Omit<React.ComponentProps<"footer">, "children"> &
     columnsLabel?: string;
     /** Social media links. */
     social?: FooterSocialLink[];
+    /** The heading of the social media block. */
+    socialTitle?: string;
     /** The name of the social links list. */
     socialLabel?: string;
+    /** Accessibility tools: bordered icon buttons in a block of their own. */
+    accessibilityTools?: FooterTool[];
+    /** The heading of the accessibility tools block. */
+    accessibilityTitle?: string;
     /** The heading of the contact block. */
     contactTitle?: string;
     contact?: FooterContactItem[];
@@ -74,13 +93,17 @@ type FooterProps = Omit<React.ComponentProps<"footer">, "children"> &
     badgesTitle?: string;
     /** App store badges: pass links with their images. */
     badges?: React.ReactNode;
-    /** The legal links row: privacy, terms, accessibility. */
+    /** A row of underlined links above the legal row, for example the owning entity's sites. */
+    bottomLinks?: FooterLink[];
+    /** The name of the bottom links list. */
+    bottomLabel?: string;
+    /** The legal links row: terms and conditions, privacy policy. */
     legalLinks?: FooterLink[];
     /** The name of the legal links list. */
     legalLabel?: string;
     /** The copyright line. */
     copyright?: React.ReactNode;
-    /** Folds the link columns into an Accordion on narrow screens. Default true. */
+    /** Folds the link columns into an Accordion on narrow screens. Default false: two columns. */
     collapsible?: boolean;
     /** Spans the whole width. Default: centred, 1280px at most. */
     fullWidth?: boolean;
@@ -114,11 +137,35 @@ function FooterAnchor({
   );
 }
 
+function FooterToolButton({ tool }: { tool: FooterTool }) {
+  const content = <HugeiconsIcon icon={tool.icon} aria-hidden />;
+  if (tool.href && !tool.onClick) {
+    return (
+      <a className="inline-flex size-10 cursor-pointer items-center justify-center rounded-sm border border-border-neutral-primary bg-transparent p-0 text-icon-default no-underline hover:bg-button-background-neutral-hovered active:bg-button-background-neutral-pressed aria-pressed:bg-button-background-neutral-pressed focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-offset-1 focus-visible:outline-border-black [&_svg]:size-5 in-data-[tone=green]:border-alpha-white-40 in-data-[tone=green]:text-icon-oncolor in-data-[tone=green]:hover:bg-button-background-transparent-hovered in-data-[tone=green]:active:bg-button-background-transparent-pressed in-data-[tone=green]:aria-pressed:bg-button-background-transparent-pressed in-data-[tone=green]:focus-visible:outline-border-white" href={tool.href} aria-label={tool.label}>
+        {content}
+      </a>
+    );
+  }
+  return (
+    <button
+      type="button"
+      className="inline-flex size-10 cursor-pointer items-center justify-center rounded-sm border border-border-neutral-primary bg-transparent p-0 text-icon-default no-underline hover:bg-button-background-neutral-hovered active:bg-button-background-neutral-pressed aria-pressed:bg-button-background-neutral-pressed focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-offset-1 focus-visible:outline-border-black [&_svg]:size-5 in-data-[tone=green]:border-alpha-white-40 in-data-[tone=green]:text-icon-oncolor in-data-[tone=green]:hover:bg-button-background-transparent-hovered in-data-[tone=green]:active:bg-button-background-transparent-pressed in-data-[tone=green]:aria-pressed:bg-button-background-transparent-pressed in-data-[tone=green]:focus-visible:outline-border-white"
+      aria-label={tool.label}
+      aria-pressed={tool.pressed}
+      onClick={tool.onClick}
+    >
+      {content}
+    </button>
+  );
+}
+
 /**
- * The site footer (DGA: Footer): logos, a description and social links, columns of navigation
- * links, contact details, app badges, and a row with the legal links and the copyright. Default
- * (gray) or dark green. Below the `sm` width the link columns fold into an Accordion, one
- * section per column. Every visible text is a prop, so translate it on Arabic pages.
+ * The site footer (DGA: Footer): logos (platform logos on white), link groups, a Social Media
+ * block, an Accessibility Tools block, a row of underlined links, and the legal row with the
+ * copyright, terms and privacy. Contact details, a description and app badges are optional.
+ * Default (gray) or dark green. Below `sm` the groups sit in two columns and the legal row is
+ * centred; `collapsible` folds them into an Accordion instead. Every visible text is a prop, so
+ * translate it on Arabic pages.
  */
 function Footer({
   className,
@@ -129,21 +176,27 @@ function Footer({
   columns = [],
   columnsLabel = "Footer links",
   social = [],
+  socialTitle,
   socialLabel = "Social media",
+  accessibilityTools = [],
+  accessibilityTitle,
   contactTitle,
   contact = [],
   badgesTitle,
   badges,
+  bottomLinks = [],
+  bottomLabel = "More links",
   legalLinks = [],
   legalLabel = "Legal",
   copyright,
-  collapsible = true,
+  collapsible = false,
   fullWidth = false,
   externalLabel = "(opens in a new tab)",
   ...props
 }: FooterProps) {
-  const hasBrand = logo || partnerLogos || description || social.length > 0;
-  const hasAside = contact.length > 0 || badges;
+  const hasBrand = logo || partnerLogos || description;
+  const hasAside =
+    social.length > 0 || accessibilityTools.length > 0 || contact.length > 0 || badges;
   return (
     <footer
       data-slot="footer"
@@ -155,37 +208,20 @@ function Footer({
         <div className="flex flex-col gap-8 lg:flex-row lg:gap-12">
           {hasBrand ? (
             <div data-slot="footer-brand" className="flex flex-col gap-4 lg:w-80 lg:shrink-0">
-              {logo || partnerLogos ? (
-                <div className="flex flex-wrap items-center gap-4">
-                  {logo}
+              {logo ? <div className="flex flex-wrap items-center gap-4">{logo}</div> : null}
+              {partnerLogos ? (
+                <div data-slot="footer-partner-logos" className="flex w-fit max-w-full flex-wrap items-center gap-4 rounded-sm bg-white p-3 text-black">
                   {partnerLogos}
                 </div>
               ) : null}
               {description ? <p className="m-0 max-w-prose text-md">{description}</p> : null}
-              {social.length > 0 ? (
-                <ul aria-label={socialLabel} className="m-0 flex list-none flex-wrap gap-2 p-0">
-                  {social.map((item) => (
-                    <li key={item.href}>
-                      <a
-                        href={item.href}
-                        aria-label={item.label}
-                        className="inline-flex size-10 items-center justify-center rounded-full text-icon-default no-underline hover:bg-button-background-neutral-hovered active:bg-button-background-neutral-pressed focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-offset-1 focus-visible:outline-border-black [&_svg]:size-5 in-data-[tone=green]:text-icon-oncolor in-data-[tone=green]:hover:bg-button-background-transparent-hovered in-data-[tone=green]:active:bg-button-background-transparent-pressed in-data-[tone=green]:focus-visible:outline-border-white"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        <HugeiconsIcon icon={item.icon} aria-hidden />
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              ) : null}
             </div>
           ) : null}
 
           {columns.length > 0 ? (
             <nav aria-label={columnsLabel} data-slot="footer-columns" className="min-w-0 flex-1">
               <div
-                className={cn("grid gap-8 [grid-template-columns:repeat(min(var(--footer-columns,1),4),minmax(0,1fr))]", collapsible && "max-sm:hidden")}
+                className={cn("grid grid-cols-2 gap-x-4 gap-y-6 sm:gap-8 sm:[grid-template-columns:repeat(min(var(--footer-columns,1),4),minmax(0,1fr))]", collapsible && "max-sm:hidden")}
                 style={{ "--footer-columns": columns.length } as React.CSSProperties}
               >
                 {columns.map((column) => (
@@ -224,6 +260,40 @@ function Footer({
 
           {hasAside ? (
             <div data-slot="footer-aside" className="flex flex-col gap-6 lg:w-64 lg:shrink-0">
+              {social.length > 0 ? (
+                <section className="flex min-w-0 flex-col gap-3">
+                  {socialTitle ? <h2 className="m-0 border-b border-border-neutral-primary pb-2 text-md font-bold text-inherit in-data-[tone=green]:border-alpha-white-30">{socialTitle}</h2> : null}
+                  <ul aria-label={socialLabel} className="m-0 flex list-none flex-wrap gap-2 p-0">
+                    {social.map((item) => (
+                      <li key={item.href}>
+                        <a
+                          href={item.href}
+                          aria-label={item.label}
+                          className="inline-flex size-10 cursor-pointer items-center justify-center rounded-sm border border-border-neutral-primary bg-transparent p-0 text-icon-default no-underline hover:bg-button-background-neutral-hovered active:bg-button-background-neutral-pressed aria-pressed:bg-button-background-neutral-pressed focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-offset-1 focus-visible:outline-border-black [&_svg]:size-5 in-data-[tone=green]:border-alpha-white-40 in-data-[tone=green]:text-icon-oncolor in-data-[tone=green]:hover:bg-button-background-transparent-hovered in-data-[tone=green]:active:bg-button-background-transparent-pressed in-data-[tone=green]:aria-pressed:bg-button-background-transparent-pressed in-data-[tone=green]:focus-visible:outline-border-white"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          <HugeiconsIcon icon={item.icon} aria-hidden />
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </section>
+              ) : null}
+              {accessibilityTools.length > 0 ? (
+                <section className="flex min-w-0 flex-col gap-3">
+                  {accessibilityTitle ? (
+                    <h2 className="m-0 border-b border-border-neutral-primary pb-2 text-md font-bold text-inherit in-data-[tone=green]:border-alpha-white-30">{accessibilityTitle}</h2>
+                  ) : null}
+                  <ul aria-label={accessibilityTitle} className="m-0 flex list-none flex-wrap gap-2 p-0">
+                    {accessibilityTools.map((tool) => (
+                      <li key={tool.label}>
+                        <FooterToolButton tool={tool} />
+                      </li>
+                    ))}
+                  </ul>
+                </section>
+              ) : null}
               {contact.length > 0 ? (
                 <section className="flex min-w-0 flex-col gap-3">
                   {contactTitle ? <h2 className="m-0 border-b border-border-neutral-primary pb-2 text-md font-bold text-inherit in-data-[tone=green]:border-alpha-white-30">{contactTitle}</h2> : null}
@@ -260,12 +330,24 @@ function Footer({
           ) : null}
         </div>
 
+        {bottomLinks.length > 0 ? (
+          <nav aria-label={bottomLabel} data-slot="footer-bottom-links">
+            <ul className="m-0 flex list-none flex-wrap justify-center gap-x-6 gap-y-2 border-t border-border-neutral-primary p-0 pt-6 in-data-[tone=green]:border-alpha-white-30 sm:justify-start">
+              {bottomLinks.map((link) => (
+                <li key={link.href}>
+                  <FooterAnchor link={link} externalLabel={externalLabel} className="underline" />
+                </li>
+              ))}
+            </ul>
+          </nav>
+        ) : null}
+
         {legalLinks.length > 0 || copyright ? (
-          <div data-slot="footer-bottom" className="flex flex-col gap-4 border-t border-border-neutral-primary pt-6 in-data-[tone=green]:border-alpha-white-30 sm:flex-row sm:items-center sm:justify-between">
+          <div data-slot="footer-bottom" className="flex flex-col items-center gap-4 border-t border-border-neutral-primary pt-6 text-center in-data-[tone=green]:border-alpha-white-30 sm:flex-row sm:justify-between sm:text-start">
             {copyright ? <p className="m-0 text-md">{copyright}</p> : null}
             {legalLinks.length > 0 ? (
               <nav aria-label={legalLabel}>
-                <ul className="m-0 flex list-none flex-wrap gap-x-6 gap-y-2 p-0">
+                <ul className="m-0 flex list-none flex-wrap justify-center gap-x-6 gap-y-2 p-0">
                   {legalLinks.map((link) => (
                     <li key={link.href}>
                       <FooterAnchor link={link} externalLabel={externalLabel} />
@@ -281,5 +363,12 @@ function Footer({
   );
 }
 
-export type { FooterColumn, FooterContactItem, FooterLink, FooterProps, FooterSocialLink };
+export type {
+  FooterColumn,
+  FooterContactItem,
+  FooterLink,
+  FooterProps,
+  FooterSocialLink,
+  FooterTool,
+};
 export { Footer, footerVariants };

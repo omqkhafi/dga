@@ -1,7 +1,7 @@
 ---
 title: Collapsible
 description: "لوحة واحدة تُفتح وتُغلق من زر. القسم القابل للتوسيع في البطاقة Card مبني عليها."
-sourceHash: 17542235cfdc
+sourceHash: 7c64b42a74a9
 ---
 
 <ExtensionNote
@@ -38,6 +38,8 @@ export function RequiredDocuments() {
 
 استخدم Collapsible لكتلة واحدة من التفاصيل لا يحتاجها معظم الناس: وصف أطول أو خيارات إضافية أو قائمة «عرض المزيد». ولعدة لوحات يغلق فتحُ إحداها الأخرى استخدم [Accordion](/docs/components/accordion). ولبطاقة تُفتح تفاصيلها استخدم القسم القابل للتوسيع في [Card](/docs/components/card)، وهو هذا المكوّن داخل بطاقة.
 
+يتبع السهم والنص اتجاه الصفحة. يشير السهم إلى الأسفل في الاتجاهين، فلا شيء ينعكس.
+
 ## البنية [#anatomy]
 
 - **الزر**: زر له `aria-expanded` و`aria-controls`. لونه `text-display` وخطه عريض بحجم 18px. فعّل السهم بـ `showChevron` أو اعرض زرك الخاص بـ `render`.
@@ -63,12 +65,6 @@ export function RequiredDocuments() {
 ## القسم القابل للتوسيع في البطاقة [#card-expandable]
 
 المكوّنات `CardExpandable` و`CardExpandableTrigger` و`CardExpandablePanel` في البطاقة هي هذا المكوّن وحوله سطح البطاقة. تثبيت البطاقة يثبّت Collapsible معها، فيوجد تنفيذ واحد لسلوك الفتح والإغلاق. ولم يتغير شكل البطاقة.
-
-## RTL [#rtl]
-
-يتبع السهم والنص اتجاه الصفحة. يشير السهم إلى الأسفل في الاتجاهين، فلا شيء ينعكس.
-
-<DirectionCompare name="collapsible-basic" title="القسم القابل للطي" minHeight={240} />
 
 ## إمكانية الوصول [#accessibility]
 

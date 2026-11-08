@@ -804,7 +804,7 @@ function useRatingLabels() {
   const n = useNumber();
   return {
     starLabel: (value: number) =>
-      t(value === 1 ? "1 star" : `${value} stars`, `${n(value)} من النجوم`),
+      t(value <= 1 ? `${value} star` : `${value} stars`, `${n(value)} من النجوم`),
     summaryLabel: (value: number, max: number) =>
       t(`Rated ${value} out of ${max}`, `التقييم ${n(value)} من ${n(max)}`),
   };
@@ -813,8 +813,6 @@ function useRatingLabels() {
 export function RatingBasic() {
   const t = useBi();
   const labels = useRatingLabels();
-  const number = useNumber();
-  const [value, setValue] = useState(3);
   return (
     <Stack>
       {(["sm", "md", "lg"] as const).map((size) => (
@@ -827,17 +825,63 @@ export function RatingBasic() {
           />
         </Row>
       ))}
-      <Row label={<Bi en="Brand colour, controlled" ar="بلون العلامة، بتحكّم خارجي" />}>
-        <Rating
-          brand
-          value={value}
-          onValueChange={setValue}
-          aria-label={t("Your rating", "تقييمك")}
-          {...labels}
-        />
-        <span className="text-md text-text-primary-paragraph tabular-nums">
-          <Bi en={`${value} of 5`} ar={`${number(value)} من ٥`} />
-        </span>
+    </Stack>
+  );
+}
+
+export function RatingControlled() {
+  const t = useBi();
+  const labels = useRatingLabels();
+  const number = useNumber();
+  const [value, setValue] = useState(3);
+  return (
+    <Row>
+      <Rating
+        brand
+        value={value}
+        onValueChange={setValue}
+        aria-label={t("Your rating", "تقييمك")}
+        {...labels}
+      />
+      <span className="text-md text-text-primary-paragraph tabular-nums">
+        <Bi en={`${value} of 5`} ar={`${number(value)} من ٥`} />
+      </span>
+    </Row>
+  );
+}
+
+export function RatingHalf() {
+  const t = useBi();
+  const labels = useRatingLabels();
+  const number = useNumber();
+  const [value, setValue] = useState(3.5);
+  return (
+    <Row>
+      <Rating
+        allowHalf
+        value={value}
+        onValueChange={setValue}
+        aria-label={t("Rate the service in half stars", "قيّم الخدمة بنصف نجمة")}
+        {...labels}
+      />
+      <span className="text-md text-text-primary-paragraph tabular-nums">
+        <Bi en={`${value} of 5`} ar={`${number(value)} من ٥`} />
+      </span>
+    </Row>
+  );
+}
+
+export function RatingReadOnly() {
+  const labels = useRatingLabels();
+  return (
+    <Stack>
+      <Row>
+        <Rating readOnly value={4} {...labels} />
+        <Rating readOnly value={4} brand {...labels} />
+      </Row>
+      <Row>
+        <Rating readOnly value={3.5} {...labels} />
+        <Rating readOnly value={4.3} brand {...labels} />
       </Row>
     </Stack>
   );
@@ -848,10 +892,6 @@ export function RatingStates() {
   const labels = useRatingLabels();
   return (
     <Stack>
-      <Row label={<Bi en="Read-only" ar="للقراءة فقط" />}>
-        <Rating readOnly value={4} {...labels} />
-        <Rating readOnly value={4} brand {...labels} />
-      </Row>
       <Row label={<Bi en="Disabled" ar="معطّل" />}>
         <Rating disabled defaultValue={2} aria-label={t("Rating", "التقييم")} {...labels} />
       </Row>

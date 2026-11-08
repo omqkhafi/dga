@@ -1,7 +1,7 @@
 ---
 title: Toggle
 description: "زر بحالتين يبقى مضغوطًا، بأنماط الزر المحدد بإطار والخفيف والشفاف والثانوي. لإعدادات تسري فورًا ويمكن إيقافها."
-sourceHash: 7c4068013758
+sourceHash: 9e6293346ebf
 ---
 
 <ExtensionNote
@@ -35,6 +35,8 @@ export function BoldToggle() {
 
 استخدم Toggle لخيار عرض أو تنسيق يسري لحظة الضغط ويمكن تحريره: عريض أو إظهار المرشحات أو العرض المضغوط. واستخدم [Switch](/docs/components/switch) لإعداد في نموذج، و[Checkbox](/docs/components/checkbox) لاختيار يُرسل مع النموذج، و[Button](/docs/components/button) لإجراء. ولعدة أزرار تبديل مترابطة استخدم [Toggle Group](/docs/components/toggle-group).
 
+زر التبديل متماثل، فلا ينعكس إلا ترتيب الأيقونة ونصها. والأيقونة الاتجاهية (كأيقونة المحاذاة) تُعكس بـ `rtl:-scale-x-100`.
+
 ## البنية [#anatomy]
 
 - هو زر Button: الارتفاعات نفسها (24 و32 و40px) والحواف والحشو وأحجام الأيقونات والنص.
@@ -53,12 +55,6 @@ export function BoldToggle() {
 زر التبديل بأيقونة فقط مربع ويحتاج `aria-label`.
 
 <Preview compact name="toggle-sizes" title="الأحجام" minHeight={200} />
-
-## RTL [#rtl]
-
-زر التبديل متماثل، فلا ينعكس إلا ترتيب الأيقونة ونصها. والأيقونة الاتجاهية (كأيقونة المحاذاة) تُعكس بـ `rtl:-scale-x-100`.
-
-<DirectionCompare name="toggle-sizes" title="Toggle" minHeight={200} />
 
 ## إمكانية الوصول [#accessibility]
 

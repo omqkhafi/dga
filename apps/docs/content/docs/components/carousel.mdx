@@ -27,6 +27,8 @@ export function Featured() {
 
 Each child is one slide. Use a carousel to show a few equal items in the space of one. Do not hide content people need to compare or must read. Name it with `aria-label` and translate `previousLabel`, `nextLabel`, `pauseLabel`, `playLabel`, `slideLabel`, `dotLabel` and `dotsLabel` on Arabic pages.
 
+The first slide is on the right, previous is on the right and its arrow points right, and a swipe to the right shows the next slide.
+
 ## Anatomy
 
 - **Slides**: one visible at a time, moved by the track. In a right-to-left page the first slide is on the right and the track moves the other way.
@@ -46,12 +48,6 @@ Each child is one slide. Use a carousel to show a few equal items in the space o
 `autoPlay` is a time in milliseconds. It stops while the pointer or focus is inside, can be paused, and never starts when the person prefers reduced motion.
 
 <Preview compact name="carousel-autoplay" title="Autoplay" minHeight={300} />
-
-## RTL
-
-The first slide is on the right, previous is on the right and its arrow points right, and a swipe to the right shows the next slide.
-
-<DirectionCompare name="carousel-basic" title="Carousel" minHeight={300} />
 
 ## Accessibility
 

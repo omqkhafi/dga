@@ -45,6 +45,8 @@ export function RequestRow() {
 
 A context menu is a shortcut for people who know to look for it. **Every action in it must also be reachable another way**, such as a visible [Menu](/docs/components/menu) button on the same row, because most people never right-click and touch users have to long-press. Use it on rows, cards, files and canvases. The list is the DGA Menu, so the items work the same way.
 
+The menu opens at the pointer and its text follows the page direction. A submenu opens on the end side, so on the left in Arabic, and its chevron is mirrored. Left and Right swap: Left opens a submenu in Arabic. Shortcuts stay left to right.
+
 ## Anatomy
 
 - **Trigger area**: any region. It is focusable (`tabIndex=0`), so keyboard users can open the menu. Name it with `aria-label` when its content does not say that a menu exists.
@@ -66,12 +68,6 @@ The same items as the Menu. A checked item shows a check mark or a dot on the en
 A submenu opens beside its item on the end side, with Enter, Space or the arrow that points at it.
 
 <Preview compact name="context-menu-submenu" title="Submenu" minHeight={300} />
-
-## RTL
-
-The menu opens at the pointer and its text follows the page direction. A submenu opens on the end side, so on the left in Arabic, and its chevron is mirrored. Left and Right swap: Left opens a submenu in Arabic. Shortcuts stay left to right.
-
-<DirectionCompare name="context-menu-submenu" title="Context Menu" minHeight={300} />
 
 ## Accessibility
 

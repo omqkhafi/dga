@@ -1,10 +1,10 @@
 ---
 title: Second Nav
-description: "الشريط الثانوي فوق الترويسة (DGA: Second Nav Header): عناصر سياقية مثل التاريخ أو الطقس، وإجراءات، وروابط إلى الصفحات الشقيقة. رمادي أو أساسي، ويتمرر أفقيًا على الشاشات الضيقة."
-sourceHash: 35117f124187
+description: "الشريط الثانوي فوق الترويسة (DGA: Second Nav Header): الطقس والتاريخ والوقت والموقع، ثم إجراءات بأيقونة أو نص. رمادي أو أساسي (أخضر)، ويتمرر أفقيًا على الشاشات الضيقة."
+sourceHash: ec9f64b59a82
 ---
 
-<Preview name="second-nav-tones" title="الشريط الثانوي" minHeight={160} />
+<Preview name="second-nav-gray" title="الشريط الثانوي" minHeight={80} />
 
 ## التثبيت [#installation]
 
@@ -13,6 +13,7 @@ sourceHash: 35117f124187
 ## الاستخدام [#usage]
 
 ```tsx title="layout.tsx"
+import { ZoomInAreaIcon, TextFontIcon } from "@hugeicons/core-free-icons";
 import { SecondNav } from "@/components/dga/second-nav";
 
 export function PageInfo() {
@@ -20,45 +21,65 @@ export function PageInfo() {
     <SecondNav
       aria-label="معلومات الصفحة"
       items={[
-        { label: "الأحد ٨ نوفمبر" },
-        { label: "٢٤° غائم" },
+        { kind: "weather", label: "غائم 24°" },
+        { kind: "date", label: "3-سبتمبر-2024" },
+        { kind: "time", label: "2:30 مساءً" },
+        { kind: "location", label: "الرياض" },
       ]}
       actions={[
-        { label: "حجم الخط", onClick: () => {} },
-        { label: "المساعدة", href: "/help" },
+        { label: "تكبير", icon: ZoomInAreaIcon, iconOnly: true, onClick: () => {} },
+        { label: "حجم الخط", icon: TextFontIcon, onClick: () => {} },
       ]}
     />
   );
 }
 ```
 
-استخدمه لسياق يخص الموقع كله، أو صفًّا من الروابط إلى الصفحات الشقيقة في قسم. ضعه في خانة `top` في [Header](/docs/components/header). مرّر الأيقونات بـ `icon`.
+استخدمه لسياق يخص الموقع كله: الطقس والتاريخ والوقت والموقع، وأدوات مثل التكبير. ضعه في خانة `top` في [Header](/docs/components/header). لكل إدخال `kind` (`weather` أو `date` أو `time` أو `location`) يأتي بأيقونته، أو `icon` من عندك؛ و`iconOnly` يعرض الأيقونة وحدها ويبقى `label` اسمًا للوصول. تبدأ العناصر من حافة البداية، وتكون الإجراءات في النهاية، ويتمرر الشريط من حافة البداية.
 
 ## البنية [#anatomy]
 
-- **الشريط**: ارتفاعه 40px، بحشوة 32px، في المنتصف وبعرض 1280px ما لم تستخدم `fullWidth`. خط Text md Regular. **الرمادي** هو neutral-100، و**الأساسي** هو التعبئة الأساسية مع نص على اللون.
-- **العناصر** (`items`): أيقونة ونص بينهما 4px. الإدخال نص عادي، أو رابط إن كان له `href`، أو زر إن كان له `onClick`.
+- **الشريط**: ارتفاعه 40px، بحشوة 32px، في المنتصف وبعرض 1280px ما لم تستخدم `fullWidth`. **الرمادي** هو neutral-100، و**الأساسي** هو التعبئة الأساسية مع نص على اللون.
+- **العنصر** (`items`، الجزء `SecondNavItem`، في DGA: عنصر الشريط الفرعي): أيقونة اختيارية ونص بخط md Regular، بينهما 4px وارتفاعه 24px. له حالة افتراضية وحالة على اللون (على الشريط الأساسي، أو `tone="on-color"` عند استخدامه وحده). الإدخال نص عادي، أو رابط إن كان له `href`، أو زر إن كان له `onClick`.
 - **الفاصل**: بين العناصر والإجراءات (`divider`).
-- **الإجراءات** (`actions`): في نهاية الشريط.
-- **الإدخال الحالي** (`current`): غامق ومسطّر، مع `aria-current="page"`.
+- **الإجراءات** (`actions`): العنصر نفسه في نهاية الشريط، بأيقونة ونص أو بأيقونة فقط.
+- **الإدخال الحالي** (`current`): غامق ومسطّر، مع `aria-current="page"`. يستخدمه صف الروابط الاختياري.
 
 ## أمثلة [#examples]
 
-### الأنماط والروابط والصفحة الحالية
+### الأساسي
 
-<Preview compact name="second-nav-tones" title="الأنماط" minHeight={160} />
+<Preview compact name="second-nav-primary" title="الشريط الأساسي" minHeight={80} />
+
+### أنواع العناصر
+
+العناصر الجاهزة الأربعة. صيغتا التاريخ والوقت كما في Figma: اليوم واسم الشهر والسنة بينها شرطات (`3-سبتمبر-2024`)، والوقت مع الفترة (`2:30 مساءً`). تستخدم الإنجليزية الشكلين نفسيهما بأسماء أشهر وفترات إنجليزية.
+
+<Preview compact name="second-nav-kinds" title="الطقس والتاريخ والوقت والموقع" minHeight={80} />
+
+### إجراءات بأيقونة فقط
+
+<Preview compact name="second-nav-actions" title="أيقونة فقط وأيقونة مع نص" minHeight={80} />
+
+### العنصر، الافتراضي
+
+<Preview compact name="second-nav-item-default" title="العنصر، الافتراضي" minHeight={80} />
+
+### العنصر، على اللون
+
+<Preview compact name="second-nav-item-on-color" title="العنصر، على اللون" minHeight={80} />
+
+### اختياري: روابط إلى الصفحات الشقيقة
+
+هذا ليس مثالًا من DGA. يمكن للشريط أيضًا أن يحمل صفًّا من الروابط إلى صفحات القسم، مع تمييز الحالية.
+
+<Preview compact name="second-nav-links" title="صف الروابط الاختياري (ليس من DGA)" minHeight={80} />
 
 ### الشاشات الضيقة
 
 حين لا تتسع الإدخالات يتمرر الشريط أفقيًا. لا يلتف أبدًا، فيبقى ارتفاعه 40px.
 
 <Preview compact name="second-nav-overflow" title="التمرير الأفقي" minHeight={80} />
-
-## الاتجاه من اليمين إلى اليسار [#rtl]
-
-تبدأ العناصر من اليمين، وتكون الإجراءات على اليسار، ويتمرر الشريط من اليمين.
-
-<DirectionCompare name="second-nav-tones" title="الشريط الثانوي" minHeight={160} />
 
 ## إمكانية الوصول [#accessibility]
 
@@ -79,7 +100,9 @@ export function PageInfo() {
 ## الاختلافات عن DGA [#deviations-from-dga]
 
 - يرسم Figma مفاتيح ثابتة (`Show Item 2` و`Show Item 3` و`Show Item 4` و`Show Action 2` وما بعدها). هنا `items` و`actions` مصفوفتان.
-- أُضيفت الروابط والأزرار والحالة الحالية، ويتمرر الشريط بدل أن يلتف.
+- أُضيفت أنواع جاهزة للعناصر (`kind`: الطقس والتاريخ والوقت والموقع) وإجراءات بأيقونة فقط (`iconOnly`)، فتأتي الأيقونات وأسماء الوصول مع العنصر.
+- أُضيفت الروابط والأزرار والحالة الحالية لصف الروابط الاختياري. لا يرسم DGA روابط هنا.
+- يتمرر الشريط بدل أن يلتف.
 
 <ComponentDeviations component="second-nav" />
 

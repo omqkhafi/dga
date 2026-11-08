@@ -1,10 +1,10 @@
 ---
 title: Header
 description: "ترويسة الموقع (DGA: Nav Header): الشعار وقائمة التنقل الرئيسية مع قوائم فرعية، والإجراءات، وخانات البحث واللغة والمستخدم. رابط تخطٍّ، وتنقل بلوحة المفاتيح، ودرج على الشاشات الصغيرة."
-sourceHash: 5782b2662589
+sourceHash: c4668d9d9bc1
 ---
 
-<Preview name="header-basic" title="الترويسة" minHeight={140} />
+<Preview compact name="header-basic" title="الترويسة" minHeight={110} />
 
 ## التثبيت [#installation]
 
@@ -16,7 +16,7 @@ sourceHash: 5782b2662589
 
 ```tsx title="layout.tsx"
 import { Header } from "@/components/dga/header";
-import { SecondNav } from "@/components/dga/second-nav";
+import { Globe02Icon, UserIcon } from "@hugeicons/core-free-icons";
 
 export function SiteHeader() {
   return (
@@ -38,64 +38,86 @@ export function SiteHeader() {
         },
         { label: "تواصل معنا", href: "/contact" },
       ]}
-      actions={[{ label: "الإشعارات", href: "/notifications", iconOnly: true }]}
-      language={<LanguageSwitcher />}
-      user={<SignInButton />}
-      top={<SecondNav aria-label="معلومات الصفحة" items={[{ label: "الأحد ٨ نوفمبر" }]} />}
+      actions={[
+        { label: "اللغة", href: "/en", icon: Globe02Icon },
+        { label: "تسجيل الدخول", href: "/sign-in", icon: UserIcon },
+      ]}
     />
   );
 }
 ```
 
-أعطِ العنصر `main` المعرّف `main-content`، أو اضبط `skipHref`. مرّر كل نص ظاهر خاصية: ترجم `skipLabel` و`navLabel` و`menuLabel` و`drawerTitle` و`closeLabel` في الصفحات العربية.
+أعطِ العنصر `main` المعرّف `main-content`، أو اضبط `skipHref`. مرّر كل نص ظاهر خاصية: ترجم `skipLabel` و`navLabel` و`menuLabel` و`moreLabel` و`drawerTitle` و`closeLabel` في الصفحات العربية.
+
+يقع الشعار على اليمين، وتجري العناصر من اليمين، وتكون الإجراءات على اليسار. تنعكس الأسهم والقوائم الفرعية وتخطيط الجوال والدرج (الذي يُفتح من جهة البداية)، ويتبادل اليمين واليسار.
 
 ## البنية [#anatomy]
 
 - **الشريط**: ارتفاعه 72px على سطح القائمة، بحشوة 32px، في المنتصف وبعرض 1280px ما لم تستخدم `fullWidth`.
-- **الشعار** (`logo`): أي عنصر، وهو رابط إلى الصفحة الرئيسية.
-- **قائمة التنقل الرئيسية** (`items`): كل عنصر رابط، أو زر يفتح قائمة فرعية إن كان له `sections`. ارتفاعه 72px وزواياه `sm`. للعنصر المحدد (`current`) التعبئة الأساسية.
+- **الشعار** (`logo`): شعار الجهة، أي عنصر، وهو رابط إلى الصفحة الرئيسية.
+- **عنصر القائمة** (`items`): رابط، أو زر يفتح قائمة فرعية إن كان له `sections`. ارتفاعه 72px وزواياه `sm`، وفيه أيقونة أمامية اختيارية وسهم للقائمة الفرعية. الحالات: افتراضي، تمرير، ضغط، تركيز، معطل. العنصر المحدد (`current`) كتلة بلون العلامة بكامل الارتفاع وفي حافتها السفلية شريط أفتح؛ وإذا عُطّل تزول الكتلة ويصير الشريط خافتًا.
 - **القائمة الفرعية**: [Menu](/docs/components/menu) من DGA بعمود لكل قسم، حتى أربعة. قيمة `linkStyle` هي `text` أو `icon` أو `boxed-icon`، وقيمة `submenuTone` هي `default` أو `green` (الأخضر الداكن لعلم DGA).
-- **الإجراءات** (`actions`، [`HeaderAction`](#api-reference)): أيقونة ونص، في سطر واحد أو بالأيقونة فوق النص (`iconPosition="top"`)، أو أيقونة فقط. تحت `lg` يُخفى النص ويبقى اسمًا.
-- **الخانات**: `search` و`language` و`user`.
-- **الدرج**: تحت عرض `lg` يفتح زر القائمة التنقل في [Drawer](/docs/components/drawer) من DGA. تتوسع العناصر الأم في مكانها، وتُزاح روابط المستوى الثاني.
+- **الإجراءات** (`actions`، [`HeaderAction`](#api-reference)): مضمّن (الأيقونة بجانب النص)، أو علوي (`iconPosition="top"`، الأيقونة فوق النص)، أو نص فقط (بلا أيقونة)، أو أيقونة فقط (`iconOnly`)، بالحالات الخمس نفسها وبكتلة التحديد وشريطها كعنصر القائمة.
+- **تخطيط الجوال**: تحت `lg` يتألف الشريط من زر القائمة في جهة البداية، والشعار في المنتصف، وزر فائض (…) في جهة النهاية يفتح الإجراءات. يفتح زر القائمة التنقل في درج التنقل: [Drawer](/docs/components/drawer) من DGA، حيث تتوسع العناصر الأم في مكانها وتُزاح روابط المستوى الثاني.
+- **الخانات الاختيارية**: `search` و`language` و`user`. ليست من بنية DGA وتظهر في مثال الإضافات فقط.
 
 ## أمثلة [#examples]
 
+### عنصر القائمة
+
+افتراضي، ومحدد بشريطه، وأم لقائمة فرعية بسهم، وبلا أيقونة، ومعطل. مرّر المؤشر واضغط وتنقل بـ Tab لترى بقية الحالات.
+
+<Preview compact name="header-menu-items" title="عنصر القائمة" minHeight={110} />
+
+### تخطيطات الإجراء
+
+<Preview compact name="header-action-layouts" title="تخطيطات الإجراء" minHeight={110} />
+
+### حالات الإجراء
+
+<Preview compact name="header-action-states" title="حالات الإجراء" minHeight={110} />
+
 ### القائمة الفرعية
 
-<Preview compact name="header-submenu" title="القائمة الفرعية" minHeight={380} />
+<Preview compact name="header-submenu" title="القائمة الفرعية" minHeight={330} />
 
 ### قائمة فرعية خضراء داكنة بأيقونات في مربعات
 
-<Preview compact name="header-submenu-green" title="قائمة فرعية خضراء داكنة" minHeight={380} />
+<Preview compact name="header-submenu-green" title="قائمة فرعية خضراء داكنة" minHeight={330} />
 
-### الدرج على الشاشات الصغيرة
+### تخطيط الجوال
 
-بدّل منفذ العرض إلى الجوال لترى الشريط ينطوي. يفتح هذا الإطار الدرج.
+زر القائمة في جهة البداية، والشعار في المنتصف، وزر الفائض (…) في جهة النهاية.
 
-<Preview compact name="header-drawer-open" title="الدرج" defaultViewport="mobile" minHeight={420} />
+<Preview compact name="header-mobile" title="تخطيط الجوال" defaultViewport="mobile" minHeight={110} />
+
+### درج التنقل
+
+الدرج مفتوحًا من زر القائمة.
+
+<Preview compact name="header-drawer-open" title="درج التنقل" defaultViewport="mobile" minHeight={380} />
 
 ### شريط الموقع الرسمي [#official-site-strip]
 
 مرّر [Digital Stamp](/docs/components/digital-stamp) في خانة `stamp`. يظهر فوق `top`، فيكون الترتيب من أعلى الصفحة: الختم، ثم Second Nav، ثم الشريط.
 
-<Preview compact name="header-stamp" title="شريط الموقع الرسمي" minHeight={260} />
+<Preview compact name="header-stamp" title="شريط الموقع الرسمي" minHeight={200} />
 
 ```tsx title="layout.tsx"
 <Header stamp={<DigitalStamp domain="gov.sa" />} top={<SecondNav items={[]} />} logo={<Logo />} items={items} />
 ```
 
-## الاتجاه من اليمين إلى اليسار [#rtl]
+### إضافات اختيارية
 
-يقع الشعار على اليمين، وتجري العناصر من اليمين، وتكون الإجراءات على اليسار. تنعكس الأسهم والقوائم الفرعية والدرج (الذي يُفتح من جهة البداية)، ويتبادل اليمين واليسار.
+البحث وجرس الإشعارات والمساعدة وزر اللغة وزر تسجيل الدخول ليست من ترويسة DGA. أضفها بـ `search` و`actions` و`language` و`user` عند حاجة موقعك إليها.
 
-<DirectionCompare name="header-basic" title="الترويسة" minHeight={140} />
+<Preview compact name="header-extras" title="البحث والجرس والمساعدة واللغة وتسجيل الدخول" minHeight={110} />
 
 ## إمكانية الوصول [#accessibility]
 
 | المفتاح | الإجراء |
 | --- | --- |
-| <kbd>Tab</kbd> | يأتي رابط التخطي أولًا، ثم زر القائمة (الشاشات الصغيرة)، ثم العناصر والإجراءات. |
+| <kbd>Tab</kbd> | يأتي رابط التخطي أولًا، ثم زر القائمة (الشاشات الصغيرة)، ثم العناصر والإجراءات، أو زر الفائض على الشاشات الصغيرة. |
 | <kbd>Left</kbd> / <kbd>Right</kbd> | ينتقل بين عناصر التنقل الرئيسية. يتبادلان في الصفحات العربية. |
 | <kbd>Home</kbd> / <kbd>End</kbd> | أول عنصر وآخر عنصر. |
 | <kbd>Enter</kbd> أو <kbd>Space</kbd> أو <kbd>Down</kbd> | يفتح قائمة فرعية. تتحرك مفاتيح الأسهم داخلها. |
@@ -115,6 +137,9 @@ export function SiteHeader() {
 - شريط الموقع الرسمي هو [الختم الرقمي](/docs/components/digital-stamp) ويُمرَّر في خانة `stamp` التي تقع فوق `top`. أما [Second Nav](/docs/components/second-nav) فيوضع في `top` تحته.
 - Header Menu وNav Drawer ليسا مكوّنين منفصلين: السهم جزء من العنصر، والقائمة الفرعية هي Menu، والتنقل في الشاشات الصغيرة هو Drawer.
 - يتولى الدرج الأمر تحت `lg` (1024px) لا عند 960px.
+- حالة التحديد في عنصر القائمة والإجراء كتلة بشريط كما في DGA؛ أما التمرير والضغط وحلقة التركيز فتستخدم تعبئتي التمرير والضغط المحايدتين وإطارًا بعرض 2px داخل العنصر، لا حدًّا من Figma.
+- درج التنقل: اللوحة البيضاء فقط. لم تُنفَّذ لوحتا DGA الخضراء والرمادية، ولا شارة العنصر، ولا أيقونة الرابط الخارجي، ولا عنصر الفاصل.
+- لا تظهر الإجراءات في الشريط تحت `lg`؛ تنتقل إلى قائمة الفائض (…)، وتنتقل `language` و`user` إلى أسفل درج التنقل.
 
 <ComponentDeviations component="header" />
 

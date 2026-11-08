@@ -1,7 +1,7 @@
 ---
 title: Drawer
 description: "لوحة تنزلق من بداية الشاشة أو نهايتها أو أعلاها أو أسفلها (في DGA: Slideout Menu). بيضاء أو رمادية، وتُغلق بالسحب، وتنعكس مع اتجاه الصفحة."
-sourceHash: dfd10e0880d4
+sourceHash: 966bf3fa77c3
 ---
 
 <Preview name="drawer-sides" title="جهات اللوحة" minHeight={420} />
@@ -45,6 +45,8 @@ export function FilterDrawer() {
 
 استخدم Drawer لمحتوى يقع بجانب الصفحة ولا ينبغي أن يغادرها: قائمة تنقل على الجوال أو مرشحات أو لوحة تفاصيل. ولقرار لا بد من الإجابة عنه استخدم [Dialog](/docs/components/dialog). قيمة `side` هي `start` أو `end` أو `top` أو `bottom`. وتتبع `start` و`end` اتجاه الصفحة، فاللوحة `start` على اليسار في الإنجليزية وعلى اليمين في العربية، ويغلقها السحب نحو تلك الحافة. وأعطها DrawerTitle.
 
+تتبادل `start` و`end`: فاللوحة نفسها تنزلق من اليمين في الصفحات العربية وحدّها على اليسار، ويغلقها السحب نحو اليمين. وتنعكس حركة الانزلاق معها.
+
 ## البنية [#anatomy]
 
 - **الخلفية**: تعتّم الصفحة وتعطّلها.
@@ -72,12 +74,6 @@ export function FilterDrawer() {
 مرّر `open` و`onOpenChange` لفتح الدرج من شيفرتك، واضبط `showCloseButton={false}` حين يحمل التذييل إجراء إغلاق أصلًا. ويظل Escape والنقر على الصفحة خلفه يغلقانه.
 
 <Preview compact name="drawer-controlled" title="مُدار" minHeight={420} />
-
-## RTL [#rtl]
-
-تتبادل `start` و`end`: فاللوحة نفسها تنزلق من اليمين في الصفحات العربية وحدّها على اليسار، ويغلقها السحب نحو اليمين. وتنعكس حركة الانزلاق معها.
-
-<DirectionCompare name="drawer-sides" title="اللوحة" minHeight={420} />
 
 ## إمكانية الوصول [#accessibility]
 

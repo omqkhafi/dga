@@ -1,6 +1,6 @@
 ---
 title: Breadcrumb
-description: "The path to the current page. Folds behind an ellipsis button above five levels and on narrow screens, and the separator mirrors in Arabic."
+description: "The path to the current page. A compact form shows a back link to the previous level; the full path can fold behind an ellipsis button, and the separator mirrors in Arabic."
 ---
 
 <Preview name="breadcrumb-basic" title="Breadcrumb" />
@@ -36,7 +36,9 @@ export function Trail() {
 }
 ```
 
-A breadcrumb shows where the current page sits in the site and lets people go back to a wider page. Put it above the page title, list the levels from the home page down, and end with the current page as plain text. It shows the path, not the history: for the way back to the previous screen use a [Link](/docs/components/link) or a [Button](/docs/components/button). Name the navigation with `aria-label`.
+A breadcrumb shows where the current page sits in the site and lets people go back to a wider page. Put it above the page title, list the levels from the home page down, and end with the current page as plain text. It shows the path, not the browser history. On small screens use the compact form, DGA's back link to the previous level. Name the navigation with `aria-label`.
+
+The separator is a chevron that mirrors, so it points to the left in Arabic, and the first level is on the right.
 
 ## Anatomy
 
@@ -44,7 +46,8 @@ A breadcrumb shows where the current page sits in the site and lets people go ba
 - **Link** (`BreadcrumbLink`): `link-neutral`, underlined on hover, 24px high.
 - **Current page** (`BreadcrumbPage`): Medium `text-default` with `aria-current="page"`. It is not a link.
 - **Separator**: a chevron in `icon-default-400`, hidden from screen readers.
-- **Ellipsis button**: shown in place of the folded levels.
+- **Compact form** (`compact`): one back link to the previous level, with an arrow in `icon-default-400` that mirrors in Arabic.
+- **Ellipsis button**: shown in place of the folded levels (our option for long paths).
 
 ## Examples
 
@@ -54,6 +57,12 @@ Two, three and four levels are shown in full. DGA's Breadcrumb has variants for 
 
 <Preview compact name="breadcrumb-basic" title="Two to four levels" />
 
+### Compact form
+
+`compact` replaces the path with a back link to the previous level, the link in the second to last item.
+
+<Preview compact name="breadcrumb-compact" title="Compact form, back link" />
+
 ### Folded levels
 
 Above `maxItems` levels (default 5) the levels between the first and the last two fold behind an ellipsis button. Below the `sm` width the same fold happens from four levels up, so the path fits a phone. Choosing the ellipsis shows the full path.
@@ -62,17 +71,11 @@ Above `maxItems` levels (default 5) the levels between the first and the last tw
 
 Long labels are cut with an ellipsis at 12rem; give each link a `title` if the full text matters.
 
-## RTL
-
-The separator is a chevron that mirrors, so it points to the left in Arabic, and the first level is on the right.
-
-<DirectionCompare name="breadcrumb-basic" title="Breadcrumb" />
-
 ## Accessibility
 
 | Key | Action |
 | --- | --- |
-| <kbd>Tab</kbd> | Moves to the next link, and to the ellipsis button when it is shown. |
+| <kbd>Tab</kbd> | Moves to the next link (the back link in the compact form), and to the ellipsis button when it is shown. |
 | <kbd>Enter</kbd> | Follows the link, or shows the full path from the ellipsis button. |
 | <kbd>Space</kbd> | Shows the full path from the ellipsis button. |
 
@@ -86,7 +89,7 @@ The separator is a chevron that mirrors, so it points to the left in Arabic, and
 
 ## Deviations from DGA
 
-- Figma defines only the link colour, the icon and the level counts. The current page style and the fold are designed here.
+- DGA's compact form (a back link to the previous level) is `compact`. Figma defines only the link colour, the icon and the level counts. The current page style and the ellipsis fold are designed here as options for long paths.
 - The separator keeps the DGA `icon-default-400`. It is 2.5:1 on white, below the 3:1 for graphics, because it is decorative.
 
 <ComponentDeviations component="breadcrumb" />

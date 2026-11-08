@@ -21,7 +21,7 @@ import { Row, Stack } from "./kit";
 
 export function CollapsibleBasic() {
   return (
-    <Collapsible className="flex flex-col w-full max-w-md gap-3">
+    <Collapsible className="mx-auto flex flex-col w-full max-w-md gap-3">
       <CollapsibleTrigger showChevron className="w-full">
         <Bi en="Required documents" ar="المستندات المطلوبة" />
       </CollapsibleTrigger>
@@ -45,7 +45,7 @@ export function CollapsibleBasic() {
 export function CollapsibleStates() {
   const [open, setOpen] = useState(false);
   return (
-    <Stack className="w-full max-w-md gap-6">
+    <Stack className="mx-auto w-full max-w-md gap-6">
       <Row label={<Bi en="Controlled" ar="متحكَّم به" />}>
         <Collapsible open={open} onOpenChange={setOpen} className="flex flex-col w-full gap-3">
           <CollapsibleTrigger showChevron className="w-full">
@@ -105,7 +105,11 @@ export function CollapsibleList() {
       </li>
     ));
   return (
-    <Collapsible open={open} onOpenChange={setOpen} className="flex flex-col w-full max-w-md gap-2">
+    <Collapsible
+      open={open}
+      onOpenChange={setOpen}
+      className="mx-auto flex flex-col w-full max-w-md gap-2"
+    >
       <ul className="m-0 flex list-none flex-col gap-2 p-0">{list(rows.slice(0, 2))}</ul>
       <CollapsibleContent>
         <ul className="m-0 mt-2 flex list-none flex-col gap-2 p-0">{list(rows.slice(2))}</ul>
@@ -262,7 +266,7 @@ export function ResizableHorizontal() {
 export function ResizableVertical() {
   const t = useBi();
   return (
-    <div className="h-72 w-full max-w-md overflow-hidden rounded-md border border-border-neutral-primary bg-background-white">
+    <div className="mx-auto h-72 w-full max-w-md overflow-hidden rounded-md border border-border-neutral-primary bg-background-white">
       <ResizablePanelGroup orientation="vertical">
         <ResizablePanel id="top" defaultSize="40%" minSize="20%">
           <PaneText en="Summary" ar="الملخص" />

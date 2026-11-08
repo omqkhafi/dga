@@ -449,7 +449,11 @@ export async function miscChecks({ browser, BASE, check }) {
       `${lang}: Enter opens the panel`,
     );
     check(await panel.isVisible(), `${lang}: the panel shows`);
-    check((await panel.locator("li").count()) === 3, `${lang}: three rows in the panel`);
+    check(
+      (await panel.locator("[data-slot=digital-stamp-item]").count()) === 2 &&
+        (await panel.locator("[data-slot=digital-stamp-registration]").count()) === 1,
+      `${lang}: the panel has the domain and HTTPS items and the registration card`,
+    );
     check(
       (await panel.locator("bdi[dir=ltr]").first().textContent())?.trim() === ".gov.sa",
       `${lang}: the domain suffix is shown`,
@@ -477,15 +481,13 @@ export async function miscChecks({ browser, BASE, check }) {
     );
     check(overflow <= 1, `${lang}: the open stamp fits at 375px (overflow ${overflow})`);
     check(
-      (await slot("digital-stamp-panel").locator("li").count()) === 3 &&
+      (await slot("digital-stamp-panel").locator("[data-slot=digital-stamp-item]").count()) === 2 &&
         (await slot("digital-stamp-panel").isVisible()),
       `${lang}: the panel shows its rows at 375px`,
     );
     // The six domains.
     await open("digital-stamp-domains");
-    const suffixes = await page
-      .locator("[data-slot=digital-stamp-panel] bdi[dir=ltr]")
-      .allTextContents();
+    const suffixes = await page.locator("[data-slot=digital-stamp-domain]").allTextContents();
     check(
       ["gov.sa", "edu.sa", "med.sa", "org.sa", "sch.sa", ".sa"].every(
         (d, i) => suffixes[i]?.trim() === (d.startsWith(".") ? d : `.${d}`),

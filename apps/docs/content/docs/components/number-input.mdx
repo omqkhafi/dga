@@ -35,6 +35,8 @@ export function QuantityField() {
 
 Use Number Input for quantities and amounts people nudge up and down. For identifiers that are digits but not quantities (a National ID, a phone number) use [Input](/docs/components/input) with `inputMode="numeric"`. Always translate `decrementLabel` and `incrementLabel` on Arabic pages.
 
+The buttons swap sides: − on the right (start) and + on the left (end). The digits do not move or reorder: the field is `dir="ltr"`, isolated from the Arabic text around it. Typing ٣ gives 3; the decimal mark ٫ gives a point.
+
 ## Anatomy
 
 - **Box**: the same border and fill as [Input](/docs/components/input).
@@ -66,12 +68,6 @@ Default, filled, read-only, disabled and error, and the medium size with a darke
   format={{ style: "currency", currency: "SAR", currencyDisplay: "code" }}
 />
 ```
-
-## RTL
-
-The buttons swap sides: − on the right (start) and + on the left (end). The digits do not move or reorder: the field is `dir="ltr"`, isolated from the Arabic text around it. Typing ٣ gives 3; the decimal mark ٫ gives a point.
-
-<DirectionCompare name="number-input-demo" title="Number Input" />
 
 ## Accessibility
 

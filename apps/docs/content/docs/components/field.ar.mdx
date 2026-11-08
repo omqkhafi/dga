@@ -1,7 +1,7 @@
 ---
 title: Field
 description: "يلفّ عنصر تحكم بتسميته ونصه المساعد ورسالة الخطأ، ويربطها لتقنيات المساعدة. علامتا المطلوب والاختياري، وتخطيطان عمودي وأفقي، ومجموعات."
-sourceHash: c1a64e3be57a
+sourceHash: ca7d5ca12fff
 ---
 
 <Preview name="field-anatomy" title="التسمية والنص المساعد ورسالة الخطأ" />
@@ -31,6 +31,8 @@ export function NationalIdField({ error }: { error?: string }) {
 ```
 
 ضع عنصر تحكم واحدًا في كل Field. تسمّي التسمية العنصر، ويُقرأ النص المساعد ورسالة الخطأ بعده عبر `aria-describedby`. استخدم [Input](/docs/components/input) أو [Textarea](/docs/components/textarea) أو [Select](/docs/components/select) أو [Number Input](/docs/components/number-input) أو [Search Box](/docs/components/search-box) أو [Checkbox](/docs/components/checkbox) أو [Radio](/docs/components/radio) أو [Switch](/docs/components/switch) أو [File Upload](/docs/components/file-upload) عنصرَ تحكم.
+
+تقع التسمية والنص المساعد والخطأ في جهة البداية، وتأتي أيقونة الخطأ أولًا في ترتيب القراءة. وتلي علامة المطلوب نص التسمية. وتضع الحقول الأفقية عنصر التحكم في جهة البداية.
 
 ## البنية [#anatomy]
 
@@ -75,12 +77,6 @@ export function NationalIdField({ error }: { error?: string }) {
   </FieldContent>
 </Field>
 ```
-
-## RTL [#rtl]
-
-تقع التسمية والنص المساعد والخطأ في جهة البداية، وتأتي أيقونة الخطأ أولًا في ترتيب القراءة. وتلي علامة المطلوب نص التسمية. وتضع الحقول الأفقية عنصر التحكم في جهة البداية.
-
-<DirectionCompare name="field-anatomy" title="الحقل" />
 
 ## إمكانية الوصول [#accessibility]
 

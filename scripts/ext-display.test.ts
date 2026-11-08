@@ -1,4 +1,4 @@
-// Phase 7 part 2 (0.7.1), display: Kbd, Empty, Item and Chart, which are Platform Code extensions.
+// Phase 7 part 2 (0.7.1), display: Kbd, Empty and Item (Platform Code extensions) and Chart (DGA Charts).
 // Behaviour (keys, RTL axis order, the table) is checked in the browser by
 // scripts/e2e-extension/display.mjs; this file covers what needs no browser.
 import { describe, expect, test } from "bun:test";
@@ -9,7 +9,9 @@ import { contrastRatio } from "./tokens/color";
 import { auditContrast, buildModel, tokenValue } from "./tokens/model";
 import { ROOT } from "./tokens/source";
 
-const ITEMS = ["kbd", "empty", "item", "chart"];
+const EXTENSIONS = ["kbd", "empty", "item"];
+// Chart is defined by DGA (Figma page Charts), so it is not an extension.
+const ITEMS = [...EXTENSIONS, "chart"];
 const read = (path: string) => readFileSync(join(ROOT, path), "utf8");
 type Item = {
   name: string;
@@ -33,11 +35,17 @@ const api = JSON.parse(read("apps/docs/lib/generated/api.json")) as Record<
 const U = "{{REGISTRY_URL}}/r/";
 
 describe("registry entries", () => {
+  test("Chart is a DGA component, not labelled as an extension", () => {
+    expect(item("chart").description).not.toContain("Platform Code extension");
+    expect(read("apps/docs/lib/extension-slugs.ts")).not.toContain('"chart"');
+    expect(read("apps/docs/lib/extensions.ts")).toContain('slug: "chart"');
+  });
   for (const name of ITEMS) {
-    test(`${name} is an extension registry:ui item that installs to components/dga`, () => {
+    test(`${name} is a registry:ui item that installs to components/dga`, () => {
       const entry = item(name);
       expect(entry?.type).toBe("registry:ui");
-      expect(entry.description).toStartWith("Platform Code extension (not DGA).");
+      if (name !== "chart")
+        expect(entry.description).toStartWith("Platform Code extension (not DGA).");
       expect(entry.files[0]?.path).toBe(`bases/base/ui/${name}.tsx`);
       expect(entry.files[0]?.target).toBe(`components/dga/${name}.tsx`);
       expect(entry.registryDependencies).toContain(`${U}utils.json`);
@@ -153,10 +161,10 @@ describe("the chart palette", () => {
       });
     });
   }
-  test("the tokens are logged in Deviations as new, with no DGA source", () => {
+  test("the tokens are logged in Deviations as corrections of the DGA charts-* colours", () => {
     const deviations = read("apps/docs/lib/generated/deviations.json");
     for (const s of series) expect(deviations).toContain(s);
-    expect(deviations).toContain("New, no DGA source");
+    expect(deviations).toContain("Contrast correction of the DGA charts-* colours");
   });
 });
 
@@ -187,16 +195,16 @@ describe("pages and previews", () => {
   const map = read("apps/docs/components/previews/ext-display-map.ts");
   for (const name of ITEMS) {
     for (const lang of ["", ".ar"]) {
-      test(`${name}${lang} page has the extension note, install, API, derivation, contrast`, () => {
+      test(`${name}${lang} page has the install, API, deviations and contrast${name === "chart" ? "" : ", and the extension note"}`, () => {
         const path = `apps/docs/content/docs/components/${name}${lang}.mdx`;
         expect(existsSync(join(ROOT, path))).toBe(true);
         const page = read(path);
-        expect(page).toContain("<ExtensionNote");
+        if (name === "chart") expect(page).not.toContain("<ExtensionNote");
+        else expect(page).toContain("<ExtensionNote");
         expect(page).toContain(`<ComponentInstall name="${name}" />`);
         expect(page).toContain(`<ApiReference component="${name}" />`);
         expect(page).toContain(`<ComponentContrast component="${name}" />`);
         expect(page).toContain(`<ComponentDeviations component="${name}" />`);
-        expect(page).toContain("<DirectionCompare");
         for (const [, preview] of page.matchAll(/<Preview[^>]*name="([^"]+)"/g))
           expect({ preview, mapped: map.includes(`"${preview}"`) }).toEqual({
             preview,
@@ -204,10 +212,11 @@ describe("pages and previews", () => {
           });
       });
     }
-    test(`${name} is on the Extensions list`, () => {
-      expect(read("apps/docs/lib/extensions.ts")).toContain(`slug: "${name}"`);
-      expect(read("apps/docs/lib/extension-slugs.ts")).toContain(`"${name}"`);
-    });
+    if (name !== "chart")
+      test(`${name} is on the Extensions list`, () => {
+        expect(read("apps/docs/lib/extensions.ts")).toContain(`slug: "${name}"`);
+        expect(read("apps/docs/lib/extension-slugs.ts")).toContain(`"${name}"`);
+      });
   }
 });
 

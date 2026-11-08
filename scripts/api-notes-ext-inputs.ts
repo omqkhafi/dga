@@ -9,6 +9,21 @@ export const API_NOTES_EXT_INPUTS: Record<string, ApiNote> = {
   "slider.size": {
     description: "Small (4px track, 16px thumb) or medium (6px track, 20px thumb).",
   },
+  "slider.showMinMax": {
+    include: true,
+    type: "boolean",
+    description: "Shows the Min and Max labels under the ends of the track (DGA). Default false.",
+  },
+  "slider.minLabel": {
+    include: true,
+    type: "ReactNode",
+    description: "Replaces the text of the Min label, which is `min` by default.",
+  },
+  "slider.maxLabel": {
+    include: true,
+    type: "ReactNode",
+    description: "Replaces the text of the Max label, which is `max` by default.",
+  },
   "slider.value": {
     include: true,
     type: "number | number[]",

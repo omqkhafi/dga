@@ -5,6 +5,44 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
 
 ## [Unreleased]
 
+## [0.7.3] - 2026-11-08
+
+Patch: DGA conformance fixes from a side-by-side review of Figma, the DGA docs and the site. What was and was not checked against Figma is in [docs/conformance/0.7.3.md](docs/conformance/0.7.3.md); the Figma connector was unavailable, so the values listed there as unverified follow the findings and the earlier Figma dumps.
+
+### Added
+
+- **Header:** Selected is a full-height brand block with a lighter bottom bar; five states (default, hovered, pressed, focused, disabled with a muted bar); optional leading icon and chevron. `HeaderAction` has Inline, Top, Text only and Icon only layouts. On phones the menu opens the Nav Drawer, the logo is centred and an overflow (...) menu takes the actions, mirrored in RTL (`moreLabel`).
+- **Second Nav:** `SecondNavItem` (default and on-colour), ready-made `kind` items (weather, date, time, location) and icon-only actions.
+- **Footer:** Social Media and Accessibility Tools blocks (`social`, `accessibilityTools`), a bottom row of underlined links (`bottomLinks`), white platform-logo tile.
+- **Accordion:** `variant="white" | "filled"`; closed heights of 56, 48 and 40px.
+- **Digital Stamp:** DGA banner wording, a Saudi flag mark, circular green-outlined domain and HTTPS items, a registration card (`registrationNumber`, `registrationHref`) and a text for each of the six domains.
+- **Rating:** `allowHalf`, half-star keyboard and fractional read-only values, pressed and selected states.
+- **Slider:** `showMinMax`, `minLabel`, `maxLabel`; Value and Min/Max are documented as DGA parts.
+- **Breadcrumb:** `compact`, the back link to the previous level.
+- **Tabs:** `TabsList overflow="menu"` with a More menu (Tabs now depends on Menu).
+- **Date Picker:** a year dropdown in the calendar header (`yearDropdown`).
+- **Filtration:** searchable options, Show more, date, rating and custom groups, and `placement` (inline, start, end, center).
+- **Docs:** `docs/conformance/0.7.3.md`; separate titled previews for Divider, Avatar and Spinner variants.
+
+### Changed
+
+- **Footer:** the accordion on small screens is the optional `collapsible` prop (off by default); the default preview shows DGA parts only, and the description, contact and app badges stay optional (`footer-optional`).
+- **Header:** the default preview shows only the logo, the navigation links and the actions; search, bell and help are one labelled optional example.
+- **Second Nav:** the links row is kept as an optional, labelled example, not a DGA part.
+- **Chart:** DGA defines charts, so Chart is no longer an Extension: the label, badge and "derived from" note are gone and its colour corrections are logged under Components. A donut (hole) pie was added.
+- **Digital Stamp:** `registrationTitle` and `registrationText` are replaced by the registration card props.
+- **Docs, all component pages:** the separate RTL section is removed in English and Arabic (the preview already has the LTR/RTL toggle); each page keeps its directional note as one line in Usage or Anatomy. Previews are centred at their natural width instead of sitting at one side.
+- **Textarea:** the Anatomy text now agrees with Accessibility about the state wrapper.
+
+### Fixed
+
+- **Second Nav:** the screen-reader labels of icon-only items no longer widen the page when the strip scrolls (the strip is now the containing block of its hidden labels).
+- Docs claims that contradicted DGA ("whole stars only", Slider Value and Min/Max "not in the specification", Digital Stamp "no DGA source") are gone, and the Deviations entries are rewritten.
+
+### Tests
+
+- New `scripts/docs-structure.test.ts` fails if a component page gets an RTL section again. The checks that expected the RTL section and the direction comparison were removed.
+
 ## [0.7.2] - 2026-11-08
 
 Patch: extensions move into the sidebar sections of the DGA components, and the ROADMAP is restructured. No component changes.

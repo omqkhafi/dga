@@ -34,6 +34,8 @@ export function SaveHint() {
 
 Use a Tooltip to name an icon-only button or to add a short hint to a control. Keep it to a sentence. It is a hint for sighted mouse and keyboard users, not the place for links, buttons or anything people must read: screen readers and touch screens do not rely on it. Wrap the app or a toolbar in a TooltipProvider so the second tooltip opens at once while the pointer moves along. For the question-mark that explains a label, use TooltipHelp: it opens on click and touch too and can be read by a screen reader.
 
+`side` takes `start` and `end` as well as `top` and `bottom`. They are the sides of the text, so `end` opens to the left on Arabic pages, and the beak follows. `align="start"` lines up with the right edge of the trigger in RTL.
+
 ## Anatomy
 
 - **Trigger**: the element it describes. Any button, link or input.
@@ -61,12 +63,6 @@ TooltipHelp next to a label. It is a real button with an accessible name that op
 A tooltip opens on hover and on keyboard focus, and closes on blur, Escape or when the pointer leaves. `showArrow={false}` drops the arrow, a `title` adds a bold first line for longer text, and `disabled` on Tooltip turns it off while keeping the trigger.
 
 <Preview compact name="tooltip-states" title="Arrow, title and disabled" minHeight={300} />
-
-## RTL
-
-`side` takes `start` and `end` as well as `top` and `bottom`. They are the sides of the text, so `end` opens to the left on Arabic pages, and the beak follows. `align="start"` lines up with the right edge of the trigger in RTL.
-
-<DirectionCompare name="tooltip-placements" title="Tooltip" minHeight={280} />
 
 ## Accessibility
 

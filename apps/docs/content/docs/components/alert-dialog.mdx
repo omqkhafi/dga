@@ -63,6 +63,8 @@ Use an Alert Dialog when the next step is hard or impossible to undo and the per
 
 It looks exactly like the Dialog (it uses the same classes), but it behaves differently in ways that matter for accessibility and cannot be a style: it has `role="alertdialog"`, so assistive technology announces it as an urgent question and reads its description straight away; focus starts on Cancel, the safe answer, not on the first control; and clicking the backdrop does not dismiss it, so people cannot lose the choice by accident. Keeping these in one small item means a Dialog never needs to guess which behaviour you want.
 
+The window is centred. The footer buttons follow the direction (the main action is on the left in Arabic) and the text reads right to left.
+
 ## Anatomy
 
 - **Window**: the Dialog card: `background-white`, radius-md, `shadow-3xl`, 400px wide (`size="md"` is 600px), on an `alpha-black-50` backdrop.
@@ -84,12 +86,6 @@ A confirmation that is not destructive uses the primary action. `size="md"` give
 Pass `open` and `onOpenChange` to open it from your own code. Clicking outside does not close it; Escape and the buttons do.
 
 <Preview compact name="alert-dialog-controlled" title="Controlled" minHeight={300} />
-
-## RTL
-
-The window is centred. The footer buttons follow the direction (the main action is on the left in Arabic) and the text reads right to left.
-
-<DirectionCompare name="alert-dialog-basic" title="Alert Dialog" minHeight={300} />
 
 ## Accessibility
 

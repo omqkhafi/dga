@@ -121,6 +121,7 @@
     "button.tsx": ["interactive", "polish"],
     "composite.tsx": ["form-pages", "composite"],
     "data-display.tsx": ["form-pages", "navigation", "polish"],
+    "footer-second-nav.tsx": ["form-pages", "composite"],
     "display.tsx": ["polish"],
     "ext-display-map.ts": ["ext-display"],
     "ext-display.tsx": ["ext-display"],

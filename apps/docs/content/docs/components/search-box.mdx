@@ -36,6 +36,8 @@ export function ServiceSearch() {
 
 Use Search Box for finding things in a list, a table or the whole site. Give it a visible label or an `aria-label`, and a placeholder that says what is searched. Translate `clearLabel` on Arabic pages. Search results are your own: this component only collects the query.
 
+The search icon is on the right (start) and the clear button on the left (end). The icons are not directional, so they are not flipped. Arabic placeholders and queries align right.
+
 ## Anatomy
 
 - **Box**: the same border and fill as [Input](/docs/components/input).
@@ -56,12 +58,6 @@ Type to show the clear button. It empties the field, returns focus to it and cal
 Default, filled with the clear button, read-only, disabled, and the medium size with a darker fill.
 
 <Preview name="search-box-states" title="States" />
-
-## RTL
-
-The search icon is on the right (start) and the clear button on the left (end). The icons are not directional, so they are not flipped. Arabic placeholders and queries align right.
-
-<DirectionCompare name="search-box-demo" title="Search Box" />
 
 ## Accessibility
 

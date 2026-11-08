@@ -1,7 +1,7 @@
 ---
 title: Avatar
 description: صورة شخص أو أحرفه الأولى أو أيقونة عامة. سبعة أحجام، دائري أو مربع، ومجموعات الصور الرمزية.
-sourceHash: bf6533015057
+sourceHash: aacb4de9a125
 ---
 
 <Preview name="avatar" title="Avatar" />
@@ -25,6 +25,8 @@ import { Avatar, AvatarGroup } from "@/components/dga/avatar";
 
 مبني على [Base UI Avatar](https://base-ui.com/react/components/avatar)، الذي يعرض البديل أثناء تحميل الصورة وعند فشلها.
 
+تتراكب المجموعة من جهة البداية، فينقلب اتجاه التراكب في العربية.
+
 ## البنية [#anatomy]
 
 - **Avatar**: الجذر، وفيه الصورة أو البديل.
@@ -38,15 +40,13 @@ import { Avatar, AvatarGroup } from "@/components/dga/avatar";
 
 الأحجام 24 و32 و40 (الافتراضي) و48 و64 و80 و120px. يستخدم `square` القيمة `radius-md`؛ ويضيف `bordered` حلقة بيضاء.
 
+<Preview compact name="avatar" title="الأحجام والشكل" />
+
 ### المجموعات [#groups]
 
 يُراكب `AvatarGroup` عناصره بمقدار 4px مع حلقة بيضاء (`stacked`، وهو الافتراضي). اضبط `stacked={false}` للتباعد.
 
-## اتجاه RTL [#rtl]
-
-تتراكب المجموعة من جهة البداية، فينقلب اتجاه التراكب في العربية.
-
-<DirectionCompare name="avatar" title="Avatar والمجموعة" />
+<Preview compact name="avatar-group" title="المجموعات" />
 
 ## إمكانية الوصول [#accessibility]
 

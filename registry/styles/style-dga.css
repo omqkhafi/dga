@@ -945,6 +945,12 @@
     @apply data-disabled:cursor-not-allowed data-disabled:bg-text-default-disabled data-disabled:hover:bg-text-default-disabled;
     @apply motion-reduce:transition-none;
   }
+  .cn-slider-range-labels {
+    @apply flex items-baseline justify-between gap-3;
+  }
+  .cn-slider-range-label {
+    @apply text-sm text-field-text-helper tabular-nums [unicode-bidi:isolate];
+  }
   .cn-slider-helper {
     @apply m-0 text-sm text-field-text-helper;
   }
@@ -1347,6 +1353,20 @@
   .cn-tabs-divider {
     @apply data-[orientation=horizontal]:shadow-[inset_0_-3px_0_0_var(--border-neutral-primary)] data-[orientation=vertical]:shadow-[inset_-3px_0_0_0_var(--border-neutral-primary)] data-[orientation=vertical]:rtl:shadow-[inset_3px_0_0_0_var(--border-neutral-primary)];
   }
+  /* The More tab (DGA): the list that fits plus a menu button at the end. */
+  .cn-tabs-overflow {
+    @apply flex min-w-0 items-stretch gap-0.75;
+  }
+  .cn-tabs-overflow-list {
+    @apply flex min-w-0 gap-0.75 overflow-hidden;
+  }
+  .cn-tabs-more {
+    @apply data-popup-open:bg-button-background-neutral-pressed data-popup-open:text-text-default;
+    @apply hover:data-active:bg-button-background-neutral-hovered;
+  }
+  .cn-tabs-more[hidden] {
+    @apply hidden;
+  }
   .cn-tabs-flush {
     @apply data-[orientation=horizontal]:ps-0;
   }
@@ -1388,13 +1408,13 @@
     @apply flex w-full min-w-0 flex-col border-b border-border-neutral-primary;
   }
   .cn-accordion-item {
-    @apply border-t border-border-neutral-primary;
+    @apply relative border-t border-border-neutral-primary data-disabled:[&_[data-slot=accordion-content]]:text-text-default-disabled;
   }
   .cn-accordion-header {
     @apply m-0 flex;
   }
   .cn-accordion-trigger {
-    @apply flex w-full cursor-pointer items-center justify-between gap-4 border-0 bg-transparent px-(--acc-px) py-(--acc-py) text-start text-md font-semibold text-text-default transition-colors;
+    @apply flex min-h-(--acc-h) w-full cursor-pointer items-center justify-between gap-4 border-0 bg-transparent px-(--acc-px) py-(--acc-py) text-start text-md font-semibold text-text-default transition-colors;
     @apply hover:bg-button-background-neutral-hovered active:bg-button-background-neutral-pressed;
     @apply focus-visible:z-10 focus-visible:outline-2 focus-visible:outline-solid focus-visible:-outline-offset-2 focus-visible:outline-border-black;
     @apply data-disabled:cursor-not-allowed data-disabled:bg-transparent data-disabled:text-text-default-disabled data-disabled:[&_svg]:text-icon-default-disabled;
@@ -1407,13 +1427,13 @@
     @apply size-5 shrink-0 text-icon-default transition-transform in-data-panel-open:rotate-180 motion-reduce:transition-none;
   }
   .cn-accordion-size-sm {
-    @apply [--acc-px:var(--spacing-accordion-lg-header-padding)] [--acc-py:var(--spacing-accordion-sm-header-padding)];
+    @apply [--acc-h:2.5rem] [--acc-px:var(--spacing-accordion-lg-header-padding)] [--acc-py:var(--spacing-accordion-sm-header-padding)];
   }
   .cn-accordion-size-md {
-    @apply [--acc-px:var(--spacing-accordion-lg-header-padding)] [--acc-py:var(--spacing-accordion-md-header-padding)];
+    @apply [--acc-h:3rem] [--acc-px:var(--spacing-accordion-lg-header-padding)] [--acc-py:var(--spacing-accordion-md-header-padding)];
   }
   .cn-accordion-size-lg {
-    @apply [--acc-px:var(--spacing-accordion-lg-header-padding)] [--acc-py:var(--spacing-accordion-lg-header-padding)];
+    @apply [--acc-h:3.5rem] [--acc-px:var(--spacing-accordion-lg-header-padding)] [--acc-py:var(--spacing-accordion-lg-header-padding)];
   }
   .cn-accordion-leading {
     @apply [--acc-body-ps:3rem] [--acc-body-pe:var(--acc-px)] [&_[data-slot=accordion-trigger]]:flex-row-reverse [&_[data-slot=accordion-trigger]]:justify-end;
@@ -1421,8 +1441,15 @@
   .cn-accordion-trailing {
     @apply [--acc-body-pe:3rem] [--acc-body-ps:var(--acc-px)];
   }
+  .cn-accordion-white {
+    @apply [&_[data-slot=accordion-item]]:bg-transparent;
+  }
+  .cn-accordion-filled {
+    @apply [&_[data-slot=accordion-item]]:bg-background-neutral-50;
+  }
+  /* Flush: the line stops 16px short of both edges; the heading and content keep their full width. */
   .cn-accordion-flush {
-    @apply border-b-0 [&_[data-slot=accordion-item]]:mx-4 [&_[data-slot=accordion-trigger]]:rounded-sm;
+    @apply border-b-0 [&_[data-slot=accordion-item]]:border-t-0 [&_[data-slot=accordion-item]]:before:absolute [&_[data-slot=accordion-item]]:before:inset-x-4 [&_[data-slot=accordion-item]]:before:top-0 [&_[data-slot=accordion-item]]:before:h-px [&_[data-slot=accordion-item]]:before:bg-border-neutral-primary [&_[data-slot=accordion-item]]:before:content-[''];
   }
   .cn-accordion-panel {
     @apply h-(--accordion-panel-height) overflow-hidden text-md text-text-primary-paragraph transition-[height] duration-200 ease-out data-ending-style:h-0 data-starting-style:h-0 motion-reduce:transition-none;
@@ -1623,6 +1650,12 @@
     @apply hover:text-link-neutral-hovered hover:underline active:text-link-neutral-pressed;
     @apply focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-offset-2 focus-visible:outline-border-black;
     @apply motion-reduce:transition-none;
+  }
+  .cn-breadcrumb-back {
+    @apply gap-1 pe-1;
+  }
+  .cn-breadcrumb-back-icon {
+    @apply size-4 shrink-0 text-icon-default-400 rtl:-scale-x-100;
   }
   .cn-breadcrumb-page {
     @apply inline-flex min-h-6 max-w-48 items-center truncate px-0.5 font-medium text-text-default;
@@ -1941,12 +1974,32 @@
     @apply [--r-size:3rem];
   }
   .cn-rating-item {
-    @apply inline-flex size-(--r-size) shrink-0 cursor-pointer items-center justify-center rounded-xs border-0 bg-transparent p-0;
-    @apply focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-offset-1 focus-visible:outline-border-black;
-    @apply data-disabled:cursor-not-allowed data-disabled:opacity-50;
+    @apply relative inline-flex size-(--r-size) shrink-0 cursor-pointer items-center justify-center rounded-xs;
+    @apply has-focus-visible:outline-2 has-focus-visible:outline-solid has-focus-visible:outline-offset-1 has-focus-visible:outline-border-black;
+    @apply has-data-disabled:cursor-not-allowed has-data-disabled:opacity-50;
+  }
+  /* The hit areas: the whole star, or its start and end halves with allowHalf. */
+  .cn-rating-hit {
+    @apply absolute inset-0 m-0 appearance-none border-0 bg-transparent p-0 outline-none;
+    @apply data-half:end-1/2;
+  }
+  .cn-rating-item:has(.cn-rating-hit[data-half]) .cn-rating-hit:not([data-half]) {
+    @apply start-1/2;
+  }
+  .cn-rating-star-wrap {
+    @apply pointer-events-none relative block size-(--r-size) transition-transform motion-reduce:transition-none;
+  }
+  .cn-rating-item:has(.cn-rating-hit:active) .cn-rating-star-wrap {
+    @apply scale-90;
+  }
+  .cn-rating-item[data-selected] .cn-rating-star {
+    @apply stroke-2;
   }
   .cn-rating-star {
-    @apply size-(--r-size) shrink-0 fill-transparent stroke-(--r-empty) stroke-[1.5] transition-colors data-filled:fill-(--r-fill) data-filled:stroke-(--r-line) motion-reduce:transition-none;
+    @apply size-(--r-size) shrink-0 fill-transparent stroke-(--r-empty) stroke-[1.5] transition-colors motion-reduce:transition-none;
+  }
+  .cn-rating-star-fill {
+    @apply absolute inset-0 fill-(--r-fill) stroke-(--r-line) [clip-path:inset(0_var(--r-cut)_0_0)] rtl:[clip-path:inset(0_0_0_var(--r-cut))];
   }
 
   /* ------------------------------------------------------------------------------------
@@ -2117,8 +2170,10 @@
   /* ------------------------------------------------------------------------------------
    * Header (Nav Header). Bar 72px high on background-menu, padded 32px (spacing-4xl) and, unless
    * full width, at most 1280px. Menu Item and Action: 72px high touch area with p 8/16, gap 4,
-   * radius-sm; Selected is the primary fill. The sub-menu is a panel of up to four columns.
-   * Below lg the navigation moves into a Drawer.
+   * radius-sm; Selected is a full-height primary block with a lighter bar along the bottom edge
+   * (muted when disabled). The sub-menu is a panel of up to four columns. Below lg the bar is
+   * the menu button (start), the centred logo and an overflow (…) button (end), and the
+   * navigation moves into a Drawer.
    * ---------------------------------------------------------------------------------- */
   .cn-header {
     @apply relative w-full bg-background-menu text-text-default;
@@ -2128,10 +2183,10 @@
     @apply focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-offset-2 focus-visible:outline-border-black;
   }
   .cn-header-bar {
-    @apply mx-auto flex h-18 w-full max-w-[1280px] items-center gap-4 px-4 lg:px-8 data-full:max-w-none;
+    @apply mx-auto grid h-18 w-full max-w-[1280px] grid-cols-[1fr_auto_1fr] items-center gap-4 px-4 data-full:max-w-none lg:flex lg:px-8;
   }
   .cn-header-logo {
-    @apply flex shrink-0 items-center;
+    @apply col-start-2 flex shrink-0 items-center justify-self-center lg:col-auto;
   }
   .cn-header-nav {
     @apply hidden min-w-0 flex-1 lg:block;
@@ -2143,7 +2198,7 @@
     @apply flex-row flex-nowrap items-center gap-1;
   }
   .cn-header-end {
-    @apply ms-auto flex shrink-0 items-center gap-2;
+    @apply ms-auto flex shrink-0 items-center gap-2 max-lg:hidden;
   }
   .cn-header-search {
     @apply hidden w-48 shrink-0 lg:block xl:w-56;
@@ -2154,31 +2209,43 @@
   .cn-header-chevron {
     @apply size-4 shrink-0 text-icon-default transition-transform in-data-popup-open:rotate-180 motion-reduce:transition-none;
   }
-  .cn-header-item {
-    @apply inline-flex h-18 cursor-pointer items-center gap-1 rounded-sm border-0 bg-transparent px-4 py-2 text-md font-medium whitespace-nowrap text-text-default no-underline;
-    @apply hover:bg-button-background-neutral-hovered active:bg-button-background-neutral-pressed data-popup-open:bg-button-background-neutral-hovered;
-    @apply focus-visible:outline-2 focus-visible:outline-solid focus-visible:-outline-offset-2 focus-visible:outline-border-black;
-    @apply data-current:bg-button-background-primary-default data-current:text-text-oncolor-primary data-current:[&_svg]:text-icon-oncolor data-current:hover:bg-button-background-primary-hovered data-current:active:bg-button-background-primary-pressed;
-    @apply disabled:pointer-events-none disabled:cursor-not-allowed disabled:bg-transparent disabled:text-text-default-disabled disabled:[&_svg]:text-icon-default-disabled;
-    @apply aria-disabled:pointer-events-none aria-disabled:cursor-not-allowed aria-disabled:bg-transparent aria-disabled:text-text-default-disabled aria-disabled:[&_svg]:text-icon-default-disabled;
-    @apply transition-colors motion-reduce:transition-none;
-  }
+  .cn-header-item,
   .cn-header-action {
-    @apply inline-flex h-18 min-w-10 cursor-pointer items-center justify-center gap-1 rounded-sm border-0 bg-transparent px-2 py-2 text-md font-medium whitespace-nowrap text-text-default no-underline lg:px-4;
+    @apply relative inline-flex h-18 cursor-pointer items-center justify-center gap-1 overflow-hidden rounded-sm border-0 bg-transparent px-4 py-2 text-md font-medium whitespace-nowrap text-text-default no-underline;
+    @apply after:pointer-events-none after:absolute after:inset-x-0 after:bottom-0 after:h-1 after:bg-transparent after:content-[''];
     @apply hover:bg-button-background-neutral-hovered active:bg-button-background-neutral-pressed;
     @apply focus-visible:outline-2 focus-visible:outline-solid focus-visible:-outline-offset-2 focus-visible:outline-border-black;
-    @apply data-current:bg-button-background-primary-default data-current:text-text-oncolor-primary data-current:[&_svg]:text-icon-oncolor data-current:hover:bg-button-background-primary-hovered data-current:active:bg-button-background-primary-pressed;
-    @apply data-[icon-position=top]:flex-col;
-    @apply disabled:pointer-events-none disabled:cursor-not-allowed disabled:bg-transparent disabled:text-text-default-disabled disabled:[&_svg]:text-icon-default-disabled;
+    @apply data-current:bg-button-background-primary-default data-current:text-text-oncolor-primary data-current:after:bg-primary-sa-flag-200 data-current:[&_svg]:text-icon-oncolor data-current:hover:bg-button-background-primary-hovered data-current:active:bg-button-background-primary-pressed;
+    @apply disabled:pointer-events-none disabled:cursor-not-allowed disabled:bg-transparent disabled:text-text-default-disabled disabled:[&_svg]:text-icon-default-disabled disabled:data-current:bg-transparent disabled:data-current:after:bg-border-disabled;
+    @apply aria-disabled:pointer-events-none aria-disabled:cursor-not-allowed aria-disabled:bg-transparent aria-disabled:text-text-default-disabled aria-disabled:[&_svg]:text-icon-default-disabled aria-disabled:data-current:bg-transparent aria-disabled:data-current:after:bg-border-disabled;
     @apply transition-colors motion-reduce:transition-none;
   }
-  .cn-header-action-label {
-    @apply max-lg:sr-only;
+  .cn-header-item {
+    @apply data-popup-open:bg-button-background-neutral-hovered;
   }
-  .cn-header-menu-button {
+  .cn-header-action {
+    @apply data-[icon-position=top]:flex-col data-[icon-position=top]:gap-1;
+  }
+  .cn-header-action-label {
+    @apply min-w-0;
+  }
+  .cn-header-menu-button,
+  .cn-header-overflow-button {
     @apply inline-flex size-10 shrink-0 cursor-pointer items-center justify-center rounded-sm border-0 bg-transparent text-icon-default lg:hidden [&_svg]:size-6;
     @apply hover:bg-button-background-neutral-hovered active:bg-button-background-neutral-pressed;
     @apply focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-offset-1 focus-visible:outline-border-black;
+  }
+  .cn-header-menu-button {
+    @apply col-start-1 justify-self-start;
+  }
+  .cn-header-overflow-button {
+    @apply col-start-3 justify-self-end;
+  }
+  .cn-header-overflow {
+    @apply min-w-48 lg:hidden;
+  }
+  .cn-header-overflow-item {
+    @apply gap-2 data-current:bg-button-background-primary-default data-current:text-text-oncolor-primary data-current:[&_svg]:text-icon-oncolor;
   }
   .cn-header-submenu {
     @apply min-w-80 max-w-[calc(100vw-2rem)] rounded-md p-6 shadow-lg;
@@ -2218,6 +2285,9 @@
   .cn-header-drawer-search {
     @apply mb-4;
   }
+  .cn-header-drawer-end {
+    @apply mt-4 flex flex-wrap items-center gap-2 border-t border-border-neutral-secondary pt-4;
+  }
   .cn-header-drawer-item {
     @apply flex min-h-9 w-full cursor-pointer items-center gap-2 rounded-sm border-0 bg-transparent px-4 py-2 text-start text-sm font-semibold text-text-default no-underline;
     @apply hover:bg-button-background-neutral-hovered active:bg-button-background-neutral-pressed;
@@ -2252,7 +2322,7 @@
     @apply bg-background-primary text-text-oncolor-primary;
   }
   .cn-second-nav-inner {
-    @apply mx-auto flex h-10 w-full max-w-[1280px] items-center gap-4 overflow-x-auto overflow-y-hidden px-4 whitespace-nowrap lg:px-8 data-full:max-w-none [scrollbar-width:none];
+    @apply relative mx-auto flex h-10 w-full max-w-[1280px] items-center gap-4 overflow-x-auto overflow-y-hidden px-4 whitespace-nowrap lg:px-8 data-full:max-w-none [scrollbar-width:none];
   }
   .cn-second-nav-group {
     @apply m-0 flex list-none items-center gap-4 p-0;
@@ -2264,10 +2334,11 @@
     @apply h-5 w-px shrink-0 bg-border-neutral-primary in-data-[tone=primary]:bg-alpha-white-30;
   }
   .cn-second-nav-item {
-    @apply inline-flex h-8 shrink-0 items-center gap-1 rounded-xs border-0 bg-transparent p-0 text-md font-normal text-inherit no-underline;
-    @apply [&_svg]:size-4 [&_svg]:shrink-0 [&_svg]:text-icon-neutral in-data-[tone=primary]:[&_svg]:text-icon-oncolor;
+    @apply inline-flex h-6 shrink-0 items-center gap-1 rounded-xs border-0 bg-transparent p-0 text-md font-normal text-inherit no-underline;
+    @apply [&_svg]:size-4 [&_svg]:shrink-0 [&_svg]:text-icon-neutral in-data-[tone=primary]:[&_svg]:text-icon-oncolor data-[tone=on-color]:text-text-oncolor-primary data-[tone=on-color]:[&_svg]:text-icon-oncolor;
+    @apply data-icon-only:min-w-6 data-icon-only:justify-center;
     @apply [&:is(a,button)]:cursor-pointer [&:is(a,button)]:hover:underline [&:is(a,button)]:hover:underline-offset-4 [&:is(a,button)]:active:underline [&:is(a,button)]:active:underline-offset-4;
-    @apply focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-offset-2 focus-visible:outline-border-black in-data-[tone=primary]:focus-visible:outline-border-white;
+    @apply focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-offset-2 focus-visible:outline-border-black in-data-[tone=primary]:focus-visible:outline-border-white data-[tone=on-color]:focus-visible:outline-border-white;
     @apply aria-[current=page]:font-bold aria-[current=page]:underline aria-[current=page]:underline-offset-4;
     @apply disabled:pointer-events-none disabled:cursor-not-allowed disabled:text-text-default-disabled aria-disabled:pointer-events-none aria-disabled:cursor-not-allowed aria-disabled:text-text-default-disabled;
   }
@@ -2299,23 +2370,26 @@
   .cn-footer-logos {
     @apply flex flex-wrap items-center gap-4;
   }
+  .cn-footer-partner-logos {
+    @apply flex w-fit max-w-full flex-wrap items-center gap-4 rounded-sm bg-white p-3 text-black;
+  }
   .cn-footer-description {
     @apply m-0 max-w-prose text-md;
   }
   .cn-footer-social {
     @apply m-0 flex list-none flex-wrap gap-2 p-0;
   }
-  .cn-footer-social-link {
-    @apply inline-flex size-10 items-center justify-center rounded-full text-icon-default no-underline;
-    @apply hover:bg-button-background-neutral-hovered active:bg-button-background-neutral-pressed;
+  .cn-footer-tool {
+    @apply inline-flex size-10 cursor-pointer items-center justify-center rounded-sm border border-border-neutral-primary bg-transparent p-0 text-icon-default no-underline;
+    @apply hover:bg-button-background-neutral-hovered active:bg-button-background-neutral-pressed aria-pressed:bg-button-background-neutral-pressed;
     @apply focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-offset-1 focus-visible:outline-border-black;
-    @apply [&_svg]:size-5 in-data-[tone=green]:text-icon-oncolor in-data-[tone=green]:hover:bg-button-background-transparent-hovered in-data-[tone=green]:active:bg-button-background-transparent-pressed in-data-[tone=green]:focus-visible:outline-border-white;
+    @apply [&_svg]:size-5 in-data-[tone=green]:border-alpha-white-40 in-data-[tone=green]:text-icon-oncolor in-data-[tone=green]:hover:bg-button-background-transparent-hovered in-data-[tone=green]:active:bg-button-background-transparent-pressed in-data-[tone=green]:aria-pressed:bg-button-background-transparent-pressed in-data-[tone=green]:focus-visible:outline-border-white;
   }
   .cn-footer-columns {
     @apply min-w-0 flex-1;
   }
   .cn-footer-grid {
-    @apply grid gap-8 [grid-template-columns:repeat(min(var(--footer-columns,1),4),minmax(0,1fr))];
+    @apply grid grid-cols-2 gap-x-4 gap-y-6 sm:gap-8 sm:[grid-template-columns:repeat(min(var(--footer-columns,1),4),minmax(0,1fr))];
   }
   .cn-footer-column {
     @apply flex min-w-0 flex-col gap-3;
@@ -2350,14 +2424,17 @@
     @apply in-data-[tone=green]:[&_[data-slot=accordion-trigger]]:text-text-oncolor-primary in-data-[tone=green]:[&_[data-slot=accordion-trigger]]:hover:bg-button-background-transparent-hovered in-data-[tone=green]:[&_[data-slot=accordion-trigger]]:active:bg-button-background-transparent-pressed in-data-[tone=green]:[&_[data-slot=accordion-trigger]]:focus-visible:outline-border-white;
     @apply in-data-[tone=green]:[&_[data-slot=accordion-trigger]_svg]:text-icon-oncolor in-data-[tone=green]:[&_[data-slot=accordion-content]]:text-text-oncolor-primary;
   }
+  .cn-footer-bottom-links {
+    @apply m-0 flex list-none flex-wrap justify-center gap-x-6 gap-y-2 border-t border-border-neutral-primary p-0 pt-6 in-data-[tone=green]:border-alpha-white-30 sm:justify-start;
+  }
   .cn-footer-bottom {
-    @apply flex flex-col gap-4 border-t border-border-neutral-primary pt-6 in-data-[tone=green]:border-alpha-white-30 sm:flex-row sm:items-center sm:justify-between;
+    @apply flex flex-col items-center gap-4 border-t border-border-neutral-primary pt-6 text-center in-data-[tone=green]:border-alpha-white-30 sm:flex-row sm:justify-between sm:text-start;
   }
   .cn-footer-copyright {
     @apply m-0 text-md;
   }
   .cn-footer-legal {
-    @apply m-0 flex list-none flex-wrap gap-x-6 gap-y-2 p-0;
+    @apply m-0 flex list-none flex-wrap justify-center gap-x-6 gap-y-2 p-0;
   }
 
   /* ------------------------------------------------------------------------------------
@@ -2429,6 +2506,20 @@
    * ---------------------------------------------------------------------------------- */
   .cn-filtration {
     @apply flex w-full flex-col gap-6 lg:flex-row lg:items-start;
+  }
+  .cn-filtration-stacked {
+    @apply flex w-full flex-col gap-6;
+  }
+  .cn-filtration-options {
+    @apply flex flex-col gap-2;
+  }
+  .cn-filtration-empty {
+    @apply m-0 text-md text-text-primary-paragraph;
+  }
+  .cn-filtration-more {
+    @apply w-fit cursor-pointer border-0 bg-transparent p-0 text-md font-semibold text-link-primary underline underline-offset-2;
+    @apply hover:text-link-primary-hovered active:text-link-primary-pressed;
+    @apply focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-offset-2 focus-visible:outline-border-black;
   }
   .cn-filtration-panel {
     @apply hidden w-72 shrink-0 flex-col gap-4 rounded-md border border-border-neutral-primary bg-background-card p-4 lg:flex;
@@ -2539,7 +2630,18 @@
     @apply flex items-center justify-between gap-2;
   }
   .cn-datepicker-title {
-    @apply m-0 flex-1 text-center text-md font-bold text-text-display;
+    @apply m-0 flex flex-1 items-center justify-center gap-1 text-center text-md font-bold text-text-display;
+  }
+  .cn-datepicker-title-text {
+    @apply m-0 text-md font-bold text-text-display;
+  }
+  .cn-datepicker-year {
+    @apply relative inline-flex items-center rounded-sm text-text-display [&_svg]:pointer-events-none [&_svg]:absolute [&_svg]:end-1 [&_svg]:size-4 [&_svg]:text-icon-default;
+    @apply focus-within:outline-2 focus-within:outline-solid focus-within:outline-offset-1 focus-within:outline-border-black;
+  }
+  .cn-datepicker-year-select {
+    @apply h-10 cursor-pointer appearance-none rounded-sm border-0 bg-transparent ps-2 pe-6 text-md font-bold text-text-display outline-hidden;
+    @apply hover:bg-button-background-neutral-hovered active:bg-button-background-neutral-pressed;
   }
   .cn-datepicker-nav {
     @apply inline-flex size-10 shrink-0 cursor-pointer items-center justify-center rounded-full border-0 bg-transparent p-0 text-icon-default [&_svg]:size-5 [&_svg]:rtl:-scale-x-100;
@@ -2696,19 +2798,19 @@
   }
 
   /* ------------------------------------------------------------------------------------
-   * Digital Stamp (DGA). A 32px strip, background-neutral-100, Text sm Medium, padded with
-   * section-padding. Opened: a panel under the strip with one row per check (domain, https,
-   * registration); each row is an icon-success icon and a Text lg Semibold title (the DGA
-   * "Extension" part shows the domain suffix), 16px (spacing-xl) apart.
+   * Digital Stamp (DGA). A 32px banner, background-neutral-100, Text sm Medium, padded with
+   * section-padding (from earlier Figma dump). Opened: a panel under it with the domain item,
+   * the https item (a circular icon-success outlined icon, Text lg Semibold title, the domain in
+   * green) and a registration card. On mobile everything stacks vertically.
    * ---------------------------------------------------------------------------------- */
   .cn-digital-stamp {
     @apply w-full bg-background-neutral-100 text-sm font-medium text-text-default;
   }
   .cn-digital-stamp-bar {
-    @apply mx-auto flex min-h-8 w-full max-w-[1280px] flex-wrap items-center gap-x-2 px-section-padding py-1;
+    @apply mx-auto flex min-h-8 w-full max-w-[1280px] flex-col items-start gap-x-2 gap-y-1 px-section-padding py-2 sm:flex-row sm:flex-wrap sm:items-center sm:py-1;
   }
   .cn-digital-stamp-flag {
-    @apply size-4 shrink-0 text-icon-default;
+    @apply h-4 w-6 shrink-0;
   }
   .cn-digital-stamp-label {
     @apply min-w-0;
@@ -2723,13 +2825,13 @@
     @apply border-t border-border-neutral-secondary;
   }
   .cn-digital-stamp-items {
-    @apply mx-auto m-0 grid w-full max-w-[1280px] list-none gap-6 p-0 px-section-padding py-4 md:grid-cols-3;
+    @apply mx-auto m-0 grid w-full max-w-[1280px] grid-cols-1 gap-6 px-section-padding py-4 md:grid-cols-3 md:items-start;
   }
   .cn-digital-stamp-item {
     @apply flex items-start gap-(--spacing-xl);
   }
   .cn-digital-stamp-icon {
-    @apply size-6 shrink-0 text-icon-success;
+    @apply inline-flex size-10 shrink-0 items-center justify-center rounded-full border-2 border-solid border-icon-success text-icon-success [&_svg]:size-5;
   }
   .cn-digital-stamp-text {
     @apply flex min-w-0 flex-col gap-1;
@@ -2741,7 +2843,19 @@
     @apply m-0 text-sm font-normal text-text-primary-paragraph;
   }
   .cn-digital-stamp-domain {
-    @apply font-bold;
+    @apply font-bold text-text-success;
+  }
+  .cn-digital-stamp-card {
+    @apply flex items-center gap-(--spacing-xl) rounded-md border border-solid border-border-neutral-primary bg-background-white p-4;
+  }
+  .cn-digital-stamp-logo {
+    @apply size-10 shrink-0;
+  }
+  .cn-digital-stamp-card-text {
+    @apply m-0 min-w-0 text-sm font-normal text-text-primary-paragraph;
+  }
+  .cn-digital-stamp-link {
+    @apply font-semibold text-link-primary underline underline-offset-4 hover:text-link-primary-hovered active:text-link-primary-pressed visited:text-link-primary-visited focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-offset-2 focus-visible:outline-border-black;
   }
 
   /* ------------------------------------------------------------------------------------

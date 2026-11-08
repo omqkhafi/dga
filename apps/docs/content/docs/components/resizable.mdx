@@ -44,6 +44,8 @@ export function Requests() {
 
 Use it for a work area where people decide how much room each part gets: a list beside a detail, a code editor above a console. For a fixed layout use a plain grid. Sizes are percentages (`"35%"`) or pixels (`240`). The group fills its parent, so give the parent a height.
 
+The first panel is the start panel: on the left in English and on the right in Arabic. The library only works left to right, so in Arabic the group is laid out left to right with the panels in reverse order. Dragging and the arrow keys then do what the eye expects: <kbd>←</kbd> moves the handle left in both languages. Home, End and Enter are mirrored for you, so they act on the start panel in both languages. Each panel keeps its own `dir`, so its content reads right to left.
+
 ## Anatomy
 
 - **Group**: lays the panels out in a row (`orientation="horizontal"`, default) or a column.
@@ -74,14 +76,6 @@ Drag the handle past the minimum, or press <kbd>Enter</kbd> on it, to fold the p
 `autoSaveId` keeps the sizes in `localStorage` under that key. Each group needs its own key and every panel an `id`.
 
 <Preview compact name="resizable-saved" title="Remembered layout" minHeight={300} />
-
-## RTL
-
-The first panel is the start panel: on the left in English and on the right in Arabic. The library only works left to right, so in Arabic the group is laid out left to right with the panels in reverse order. Dragging and the arrow keys then do what the eye expects: <kbd>←</kbd> moves the handle left in both languages. Home, End and Enter are mirrored for you, so they act on the start panel in both languages. Each panel keeps its own `dir`, so its content reads right to left.
-
-Because the order is reversed in the DOM, a screen reader meets the end panel first in Arabic, and `aria-valuenow` on the handle is the size of the panel on its left. Name each handle with `aria-label`.
-
-<DirectionCompare name="resizable-handle" title="Resizable" minHeight={300} />
 
 ## Accessibility
 

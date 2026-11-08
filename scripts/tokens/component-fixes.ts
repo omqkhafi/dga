@@ -794,10 +794,10 @@ export const INTERACTIVE_DEVIATIONS: Deviation[] = [
     item: "Tabs: selected, hover and More tab",
     original:
       "A 3px bar for hover, press and selected on vertical tabs; a Closed and Open More tab on horizontal tabs.",
-    ours: "A 3px bar under (or beside) the selected tab in border-primary; vertical tabs also show a neutral bar on hover and press. A list that does not fit scrolls sideways. The More tab (an overflow menu) is not built: compose a Menu in the last tab.",
+    ours: "A 3px bar under (or beside) the selected tab in border-primary; vertical tabs also show a neutral bar on hover and press. A list that does not fit scrolls sideways by default; with overflow set to menu the tabs that do not fit collapse into a More tab that opens a Menu (the More tab is selected while a hidden tab is). Its size, padding and 16px chevron are our choice.",
     reason:
-      "A scrolling list needs no extra control and keeps every tab reachable with Tab and the arrow keys. The overflow menu is on the roadmap.",
-    status: "pending",
+      "Scrolling stays the default because it keeps every tab reachable with Tab and the arrow keys. The More tab is opt-in and sits outside the tablist, so Tab reaches it after the visible tabs.",
+    status: "fixed",
     component: "tabs",
   },
   {
@@ -817,6 +817,16 @@ export const INTERACTIVE_DEVIATIONS: Deviation[] = [
     ours: "Logical padding (ps and pe), so no RTL overrides are needed; flush is a 16px margin on each side of the line (the width follows the container); disabled uses text-default-disabled.",
     reason:
       "The CSS needs twelve rules where logical properties need none, and the gradient hard-codes a 382px width.",
+    component: "accordion",
+  },
+  {
+    area: "Components",
+    item: "Accordion: filled variant and flush line",
+    original:
+      "The DGA CSS shows only the white item; flush is a border-image gradient at 16px and 382px.",
+    ours: 'variant="filled" fills each item with background-neutral-50 (our choice); flush draws the line 16px from both edges with a pseudo-element, so the heading and content keep their full width; the content text is grey in a disabled item.',
+    reason:
+      "A gradient at fixed pixels breaks at any other width and made the flush heading look indented. The filled colour has no source in the dump or the CSS and is contrast-checked at 4.5:1 and 3:1.",
     component: "accordion",
   },
   {

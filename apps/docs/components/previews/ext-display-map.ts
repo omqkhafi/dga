@@ -5,6 +5,7 @@ import type { ComponentType } from "react";
 import {
   ChartArea,
   ChartBar,
+  ChartDonut,
   ChartInteractive,
   ChartLine,
   ChartPalette,
@@ -42,6 +43,7 @@ export const displayPreviews = {
   "chart-line": ChartLine,
   "chart-area": ChartArea,
   "chart-pie": ChartPie,
+  "chart-donut": ChartDonut,
   "chart-interactive": ChartInteractive,
   "chart-table": ChartTableDemo,
   "chart-palette": ChartPalette,

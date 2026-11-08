@@ -1,10 +1,10 @@
 ---
 title: Footer
-description: "تذييل الموقع (DGA: Footer): الشعارات، ونص وصفي، وروابط التواصل الاجتماعي، وأعمدة الروابط، وبيانات التواصل، وشارات التطبيق، وصف قانوني. رمادي أو أخضر داكن، وتنطوي الأعمدة في أكورديون على الشاشات الصغيرة."
-sourceHash: 451f5d451a4f
+description: "تذييل الموقع (DGA: Footer): شعارات المنصات، ومجموعات الروابط، وقسما وسائل التواصل الاجتماعي وأدوات الوصول، وصف روابط والصف القانوني. رمادي أو أخضر داكن؛ والنص الوصفي وبيانات التواصل وشارات التطبيق اختيارية."
+sourceHash: 43b91e42aa16
 ---
 
-<Preview name="footer-default" title="التذييل" minHeight={420} />
+<Preview name="footer-default" title="التذييل" minHeight={360} />
 
 ## التثبيت [#installation]
 
@@ -15,13 +15,14 @@ sourceHash: 451f5d451a4f
 ## الاستخدام [#usage]
 
 ```tsx title="layout.tsx"
+import { YoutubeIcon, ZoomInAreaIcon } from "@hugeicons/core-free-icons";
 import { Footer } from "@/components/dga/footer";
 
 export function SiteFooter() {
   return (
     <Footer
       logo={<img src="/logo.svg" alt="الخدمات الرقمية" height={40} />}
-      description="الخدمات الرقمية للجهات الحكومية في مكان واحد."
+      partnerLogos={<img src="/platforms.svg" alt="المنصات الوطنية" height={32} />}
       columns={[
         {
           title: "الخدمات",
@@ -32,48 +33,61 @@ export function SiteFooter() {
         },
         { title: "الدعم", links: [{ label: "مركز المساعدة", href: "/help" }] },
       ]}
-      contactTitle="التواصل"
-      contact={[{ label: "الهاتف", value: "٩٢٠٠٠٠٠٠٠", href: "tel:920000000" }]}
-      legalLinks={[{ label: "الخصوصية", href: "/privacy" }]}
+      socialTitle="وسائل التواصل الاجتماعي"
+      social={[{ label: "يوتيوب", href: "https://youtube.com", icon: YoutubeIcon }]}
+      accessibilityTitle="أدوات الوصول"
+      accessibilityTools={[{ label: "تكبير", icon: ZoomInAreaIcon, onClick: () => {} }]}
+      bottomLinks={[{ label: "خريطة الموقع", href: "/sitemap" }]}
+      legalLinks={[
+        { label: "الشروط والأحكام", href: "/terms" },
+        { label: "سياسة الخصوصية", href: "/privacy" },
+      ]}
       copyright="© ٢٠٢٦ الخدمات الرقمية. جميع الحقوق محفوظة."
     />
   );
 }
 ```
 
-كل نص خاصية، فترجم `columnsLabel` و`socialLabel` و`legalLabel` و`externalLabel` في الصفحات العربية. شارات المتاجر روابطك الخاصة مع صورها (`badges`).
+كل نص خاصية، فترجم العناوين و`columnsLabel` و`socialLabel` و`bottomLabel` و`legalLabel` و`externalLabel` في الصفحات العربية. كل شيء يتبع الاتجاه: تقع الهوية عند حافة البداية وتمتد المجموعات منها.
 
 ## البنية [#anatomy]
 
 - **التذييل**: رمادي (neutral-100) أو `tone="green"` (أخضر علم DGA مع نص على اللون). بحشوة 32px، والمحتوى في المنتصف بعرض 1280px ما لم تستخدم `fullWidth`.
-- **الهوية**: الشعار و`partnerLogos` والنص الوصفي وروابط التواصل الاجتماعي (روابط أيقونات تسمّيها `label`).
-- **أعمدة الروابط** (`columns`): عنوان يعلوه خط وقائمة روابط؛ حتى أربعة أعمدة بالعرض.
-- **التواصل** و**شارات التطبيق**: قسمان لكل منهما عنوانه.
-- **الصف القانوني**: حقوق النشر والروابط القانونية، تحت خط.
-- **الشاشات الصغيرة**: تحت `sm` تصير الأعمدة أكورديون بقسم لكل عمود. يُبقيها `collapsible={false}` مفتوحة.
+- **الشعارات**: `logo`، و`partnerLogos` لشعارات المنصات، وتوضع دائمًا على لوح أبيض لتُقرأ على اللونين.
+- **مجموعات الروابط** (`columns`): عنوان يعلوه فاصل وقائمة روابط؛ حتى أربع بالعرض، واثنتان بالعرض تحت `sm`.
+- **وسائل التواصل الاجتماعي** (`social` و`socialTitle`): قسم بعنوان من روابط أيقونات بإطار.
+- **أدوات الوصول** (`accessibilityTools` و`accessibilityTitle`): قسم بعنوان من أزرار أيقونات بإطار، مثل التكبير والتباين. الأداة زر، أو رابط بـ `href`، أو مفتاح تبديل بـ `pressed`.
+- **الروابط السفلية** (`bottomLinks`): صف من روابط مسطّرة.
+- **الصف القانوني** (`copyright` و`legalLinks`): حقوق النشر والشروط وسياسة الخصوصية، تحت خط. في المنتصف تحت `sm`.
+- **اختياري**: `description` و`contact` و`badges` (شارات المتاجر) ليست من أجزاء DGA وهي مطفأة افتراضيًا.
+- **الشاشات الصغيرة**: تبقى المجموعات مفتوحة في عمودين. يطويها `collapsible` في أكورديون بقسم لكل مجموعة.
 
 ## أمثلة [#examples]
 
 ### أخضر داكن
 
-<Preview compact name="footer-green" title="تذييل أخضر داكن" minHeight={420} />
+<Preview compact name="footer-green" title="تذييل أخضر داكن" minHeight={360} />
 
-بدّل منفذ العرض إلى الجوال لترى الأكورديون.
+### اختياري: نص وصفي وتواصل وشارات التطبيق
 
-## الاتجاه من اليمين إلى اليسار [#rtl]
+هذه الأجزاء ليست في تذييل DGA. أضفها حين يحتاجها موقعك.
 
-تنتقل الهوية إلى اليمين، وتجري الأعمدة من اليمين، ويتبع صفا التواصل والروابط القانونية الاتجاه.
+<Preview compact name="footer-optional" title="مع نص وصفي وتواصل وشارات" minHeight={420} />
 
-<DirectionCompare name="footer-default" title="التذييل" minHeight={420} />
+### اختياري: أكورديون على الشاشات الصغيرة
+
+بدّل منفذ العرض إلى الجوال لترى المجموعات تنطوي.
+
+<Preview compact name="footer-accordion" title="مجموعات قابلة للطي" minHeight={360} />
 
 ## إمكانية الوصول [#accessibility]
 
 | المفتاح | الإجراء |
 | --- | --- |
 | <kbd>Tab</kbd> | ينتقل بين الروابط بترتيب القراءة. |
-| <kbd>Enter</kbd> / <kbd>Space</kbd> | يفتح قسم الأكورديون أو يغلقه على الشاشات الصغيرة. |
+| <kbd>Enter</kbd> / <kbd>Space</kbd> | يضغط زر أداة، أو يفتح قسم الأكورديون أو يغلقه حين يكون `collapsible` مفعّلًا. |
 
-- معلم `footer`. أعمدة الروابط `nav` اسمه `columnsLabel`، والروابط القانونية `nav` ثانٍ اسمه `legalLabel`. بيانات التواصل قائمة، وتقرأ قارئات الشاشة نوع كل بيان.
+- معلم `footer`. أعمدة الروابط `nav` اسمه `columnsLabel`، والروابط السفلية `nav` اسمه `bottomLabel`، والروابط القانونية `nav` آخر اسمه `legalLabel`. لكل أداة اسم للوصول من `label`. بيانات التواصل قائمة، وتقرأ قارئات الشاشة نوع كل بيان.
 - تفتح الروابط الخارجية في تبويب جديد وتعرض أيقونة وفيها ملاحظة لقارئ الشاشة (`externalLabel`).
 - التركيز حدّ بسمك 2px: أسود على الرمادي وأبيض على الأخضر. النص 4.5:1 والأيقونات 3:1 في الفاتح والداكن.
 
@@ -85,7 +99,8 @@ export function SiteFooter() {
 
 - لا يُشحن العنوان بحجم 72px وفقرته بحجم 24px من CSS الخاص بـ DGA: للتذييل نص وصفي بخط Text md، وأنت تضع أي نص بارز بنفسك.
 - الألوان رموز دلالية لا قيم مكتوبة يدويًا، فيعمل السمة الداكنة.
-- يغيّر Figma الوزن فقط تحت 600px. هنا تنطوي الأعمدة في أكورديون.
+- يغيّر Figma الوزن فقط تحت 600px. هنا تصير المجموعات عمودين ويتوسط الصف القانوني؛ والأكورديون خيار (`collapsible`).
+- أُضيفت اختياريًا الأجزاء: النص الوصفي وبيانات التواصل وشارات التطبيق.
 
 <ComponentDeviations component="footer" />
 

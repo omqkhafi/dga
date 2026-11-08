@@ -292,7 +292,7 @@ function Sample({
 
 export function ItemVariants() {
   return (
-    <Stack className="max-w-xl">
+    <Stack className="mx-auto w-full max-w-xl">
       <Sample variant="default" />
       <Sample variant="outline" />
       <Sample variant="muted" />
@@ -302,7 +302,7 @@ export function ItemVariants() {
 
 export function ItemSizes() {
   return (
-    <Stack className="max-w-xl">
+    <Stack className="mx-auto w-full max-w-xl">
       <Sample variant="outline" size="default" />
       <Sample variant="outline" size="sm" />
     </Stack>
@@ -311,7 +311,7 @@ export function ItemSizes() {
 
 export function ItemMediaKinds() {
   return (
-    <Stack className="max-w-xl">
+    <Stack className="mx-auto w-full max-w-xl">
       <Item variant="outline">
         <ItemMedia variant="icon">
           <HugeiconsIcon icon={Mail01Icon} aria-hidden />
@@ -370,7 +370,7 @@ export function ItemMediaKinds() {
 
 export function ItemLink() {
   return (
-    <Stack className="max-w-xl">
+    <Stack className="mx-auto w-full max-w-xl">
       <Item variant="outline" render={<a href="#item-link" />}>
         <ItemMedia variant="icon">
           <HugeiconsIcon icon={Settings02Icon} aria-hidden />
@@ -395,7 +395,7 @@ export function ItemGroupDemo() {
     ["Driving licence", "رخصة القيادة", "Needs a document", "تحتاج إلى مستند"],
   ];
   return (
-    <ItemGroup render={<ul />} className="max-w-xl">
+    <ItemGroup render={<ul />} className="mx-auto w-full max-w-xl">
       {rows.map(([en, ar, statusEn, statusAr], i) => (
         <li key={en} className="contents">
           <Item render={<div />}>
@@ -420,7 +420,7 @@ export function ItemGroupDemo() {
 
 export function ItemHeaderFooter() {
   return (
-    <Stack className="max-w-xl">
+    <Stack className="mx-auto w-full max-w-xl">
       <Item variant="muted">
         <ItemHeader>
           <ItemTitle>
@@ -619,7 +619,7 @@ export function ChartArea() {
   );
 }
 
-export function ChartPie() {
+function PieSample({ hole }: { hole: boolean }) {
   const t = useBi();
   const { pieProps } = useChartDirection();
   const animate = useChartAnimation();
@@ -662,7 +662,7 @@ export function ChartPie() {
           data={data}
           dataKey="requests"
           nameKey="channel"
-          innerRadius={48}
+          innerRadius={hole ? 48 : 0}
           strokeWidth={3}
           isAnimationActive={animate}
           {...pieProps}
@@ -675,6 +675,14 @@ export function ChartPie() {
       </PieChart>
     </ChartContainer>
   );
+}
+
+export function ChartPie() {
+  return <PieSample hole={false} />;
+}
+
+export function ChartDonut() {
+  return <PieSample hole />;
 }
 
 export function ChartInteractive() {

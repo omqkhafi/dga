@@ -1,7 +1,7 @@
 ---
 title: Button
 description: يُنفّذ إجراءً. ستة أنماط، ونسختان للإجراءات المدمّرة وللخلفيات الملونة، وثلاثة أحجام، وزر الأيقونة فقط وحالة التحميل.
-sourceHash: ad2eb606c965
+sourceHash: 9616d91ac108
 ---
 
 <Preview name="button-variants" title="الأنماط" />
@@ -21,6 +21,8 @@ export default function Page() {
   return <Button>إرسال الطلب</Button>;
 }
 ```
+
+تتبدل جهات الأيقونات والمسافات والحشوات من تلقاء نفسها (خصائص منطقية). أما الأيقونات الاتجاهية كالأسهم فلا تنقلب: أضف `rtl:-scale-x-100`.
 
 ## البنية [#anatomy]
 
@@ -80,12 +82,6 @@ export default function Page() {
   الخدمات
 </Button>
 ```
-
-## اتجاه RTL [#rtl]
-
-تتبدل جهات الأيقونات والمسافات والحشوات من تلقاء نفسها (خصائص منطقية). أما الأيقونات الاتجاهية كالأسهم فلا تنقلب: أضف `rtl:-scale-x-100`.
-
-<DirectionCompare name="button-variants" title="أنماط Button" />
 
 ## إمكانية الوصول [#accessibility]
 

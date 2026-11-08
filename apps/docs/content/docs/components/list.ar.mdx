@@ -1,7 +1,7 @@
 ---
 title: List
 description: "قوائم مرتبة وغير مرتبة وبأيقونات بألوان أساسية ومحايدة وعلى لون العلامة، مع مستوى ثانٍ، إضافة إلى Structured List لصفوف في أعمدة."
-sourceHash: a102972674c5
+sourceHash: 0b18befe3c3f
 ---
 
 <Preview name="list-basic" title="القائمة" />
@@ -27,6 +27,8 @@ export function Steps() {
 ```
 
 استخدم القائمة لعناصر قصيرة قليلة مترابطة: خطوات أو متطلبات أو ملاحظات. واستخدم `ordered` حين يهم الترتيب، و`unordered` حين لا يهم، و`icon` حين تعين الأيقونة على المسح البصري. ولصفوف بأعمدة عدة استخدم `StructuredList` أدناه، أو [Table](/docs/components/table) لبيانات تُرتَّب. ولا يعرّف DGA صفوف قوائم بصور شخصية أو أوصاف أو إجراءات؛ فضعها في [Card](/docs/components/card) أو صف في Table.
+
+تقع العلامات والإزاحات عند جهة البداية. وتُقرأ العلامات المرتبة `١-` و`٢-`، و`أ-` و`ب-` مع `markers="arabic"`.
 
 ## البنية [#anatomy]
 
@@ -57,12 +59,6 @@ export function Steps() {
 مع `selectable` يكون لكل صف زر اختيار، فيُختار صف واحد. أعطِ كل صف `value` و`label` لزره، وللرأس خلية أولى فارغة.
 
 <Preview compact name="structured-list-selectable" title="Structured List قابل للاختيار" />
-
-## RTL [#rtl]
-
-تقع العلامات والإزاحات عند جهة البداية. وتُقرأ العلامات المرتبة `١-` و`٢-`، و`أ-` و`ب-` مع `markers="arabic"`.
-
-<DirectionCompare name="list-basic" title="القائمة" />
 
 ## إمكانية الوصول [#accessibility]
 

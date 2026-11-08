@@ -34,6 +34,8 @@ export function BoldToggle() {
 
 Use a Toggle for a view or format option that applies the moment it is pressed and can be released: Bold, Show filters, Compact view. Use [Switch](/docs/components/switch) for a setting in a form, [Checkbox](/docs/components/checkbox) for a choice that is sent with the form, and [Button](/docs/components/button) for an action. For several related toggles use [Toggle Group](/docs/components/toggle-group).
 
+A Toggle is symmetrical, so nothing flips except the order of an icon and its text. A directional icon (an alignment icon, for example) must be mirrored with `rtl:-scale-x-100`.
+
 ## Anatomy
 
 - It is a Button: same heights (24, 32 and 40px), radius, padding, icon sizes and text.
@@ -52,12 +54,6 @@ Use a Toggle for a view or format option that applies the moment it is pressed a
 An icon-only toggle is square and needs an `aria-label`.
 
 <Preview compact name="toggle-sizes" title="Sizes" minHeight={200} />
-
-## RTL
-
-A Toggle is symmetrical, so nothing flips except the order of an icon and its text. A directional icon (an alignment icon, for example) must be mirrored with `rtl:-scale-x-100`.
-
-<DirectionCompare name="toggle-sizes" title="Toggle" minHeight={200} />
 
 ## Accessibility
 

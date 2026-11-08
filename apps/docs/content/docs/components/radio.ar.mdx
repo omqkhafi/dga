@@ -1,7 +1,7 @@
 ---
 title: Radio
 description: "اختيار خيار واحد بالضبط من مجموعة. Radio وRadio Group، أساسي ومحايد، مع كل الحالات."
-sourceHash: bc41f36e7b34
+sourceHash: 486dc2cf7d29
 ---
 
 <Preview name="radio-group" title="مجموعة أزرار الاختيار" />
@@ -43,6 +43,8 @@ export function ContactField() {
 
 استخدم Radio عندما يجب اختيار خيار واحد من اثنين إلى خمسة ورؤيتها كلها تفيد. ابدأ باختيار الخيار الأشيع محددًا فقط إن كان افتراضيًا آمنًا. وللخيارات الأكثر استخدم [Select](/docs/components/select)؛ ولاختيارات متعددة استخدم [Checkbox](/docs/components/checkbox).
 
+يقع زر الاختيار على يمين (بداية) تسميته. استخدم <kbd>ArrowDown</kbd> و<kbd>ArrowUp</kbd> في المجموعة العمودية: يعملان بالطريقة نفسها في الاتجاهين. وينتقل <kbd>ArrowRight</kbd> إلى الخيار التالي و<kbd>ArrowLeft</kbd> إلى السابق في الاتجاهين أيضًا (لا تعكسهما Base UI).
+
 ## البنية [#anatomy]
 
 - **RadioGroup**: المجموعة؛ قيمة واحدة في كل مرة.
@@ -63,12 +65,6 @@ export function ContactField() {
 غير محدد ومحدد، بالنغمتين الأساسية والمحايدة، وللقراءة فقط ومعطّل.
 
 <Preview name="radio-states" title="الحالات" />
-
-## RTL [#rtl]
-
-يقع زر الاختيار على يمين (بداية) تسميته. استخدم <kbd>ArrowDown</kbd> و<kbd>ArrowUp</kbd> في المجموعة العمودية: يعملان بالطريقة نفسها في الاتجاهين. وينتقل <kbd>ArrowRight</kbd> إلى الخيار التالي و<kbd>ArrowLeft</kbd> إلى السابق في الاتجاهين أيضًا (لا تعكسهما Base UI).
-
-<DirectionCompare name="radio-group" title="مجموعة أزرار الاختيار" />
 
 ## إمكانية الوصول [#accessibility]
 

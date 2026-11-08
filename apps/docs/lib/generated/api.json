@@ -2,7 +2,7 @@
   "accordion": [
     {
       "name": "Accordion",
-      "description": "Shows and hides sections of content under their headings (DGA: Accordion). Each heading is a button: Tab moves between headings and Enter or Space opens or closes the section. One section is open at a time unless you set `multiple`.",
+      "description": "Shows and hides sections of content under their headings (DGA: Accordion). Each heading is a button: Tab moves between headings and Enter or Space opens or closes the section. One section is open at a time unless you set `multiple`. `variant` is `white` (no fill) or `filled`; `flush` keeps the lines short of the edges. Sizes are 56, 48 and 40px tall when closed.",
       "descriptionAr": "يعرض أقسام المحتوى ويخفيها تحت عناوينها (في DGA: Accordion). كل عنوان زر: ينقل Tab بين العناوين ويفتح Enter أو Space القسم أو يغلقه. ويُفتح قسم واحد في كل مرة ما لم تضبط `multiple`.",
       "inherits": {
         "name": "Accordion",
@@ -15,7 +15,7 @@
           "default": "\"lg\"",
           "required": false,
           "description": "Header padding: `sm` 8px, `md` 12px, `lg` 16px (DGA).",
-          "descriptionAr": "حشوة العنوان: `sm` ‏8px، و`md` ‏12px، و`lg` ‏16px (كما في DGA)."
+          "descriptionAr": "حشوة العنوان وارتفاعه مغلقًا: `sm` ‏40px (حشوة 8px)، و`md` ‏48px (12px)، و`lg` ‏56px (16px)."
         },
         {
           "name": "iconPosition",
@@ -24,6 +24,14 @@
           "required": false,
           "description": "Where the chevron sits: `trailing` (default) or `leading`.",
           "descriptionAr": "موضع السهم: `trailing` في النهاية (الافتراضي) أو `leading` في البداية."
+        },
+        {
+          "name": "variant",
+          "type": "\"white\" | \"filled\"",
+          "default": "\"white\"",
+          "required": false,
+          "description": "",
+          "descriptionAr": "`white` بلا تعبئة (الافتراضي)، أو `filled` بتعبئة `background-neutral-50` لكل عنصر."
         },
         {
           "name": "flush",
@@ -425,8 +433,8 @@
   "breadcrumb": [
     {
       "name": "Breadcrumb",
-      "description": "The path to the current page (DGA: Breadcrumb). Put `BreadcrumbItem`s in order, the last one holding a `BreadcrumbPage`. Name it with `aria-label` (\"Breadcrumb\"). Above `maxItems` levels the middle ones fold behind an ellipsis button, and below the `sm` width everything between the first level and the last two folds the same way. The separators mirror on Arabic pages.",
-      "descriptionAr": "مسار الوصول إلى الصفحة الحالية (في DGA: Breadcrumb). ضع عناصر `BreadcrumbItem` بالترتيب على أن يحمل آخرها `BreadcrumbPage`. وسمِّه بـ `aria-label`. فوق `maxItems` مستوى تُطوى المستويات الوسطى خلف زر حذف، وتحت عرض `sm` يُطوى كل ما بين المستوى الأول والأخيرين بالطريقة نفسها. وتنعكس الفواصل في الصفحات العربية.",
+      "description": "The path to the current page (DGA: Breadcrumb). Put `BreadcrumbItem`s in order, the last one holding a `BreadcrumbPage`. Name it with `aria-label` (\"Breadcrumb\"). Above `maxItems` levels the middle ones fold behind an ellipsis button, and below the `sm` width everything between the first level and the last two folds the same way. `compact` shows only a back link to the previous level. The separators mirror on Arabic pages.",
+      "descriptionAr": "مسار الوصول إلى الصفحة الحالية (في DGA: Breadcrumb). ضع عناصر `BreadcrumbItem` بالترتيب على أن يحمل آخرها `BreadcrumbPage`. وسمِّه بـ `aria-label`. فوق `maxItems` مستوى تُطوى المستويات الوسطى خلف زر حذف، وتحت عرض `sm` يُطوى كل ما بين المستوى الأول والأخيرين بالطريقة نفسها. ويعرض `compact` رابط رجوع إلى المستوى السابق فقط. وتنعكس الفواصل في الصفحات العربية.",
       "inherits": null,
       "props": [
         {
@@ -436,6 +444,14 @@
           "required": false,
           "description": "The most levels shown before the middle ones fold into an ellipsis button. DGA folds above 5 levels. The first level and the last two are always kept. Default 5.",
           "descriptionAr": "أكثر عدد من المستويات يُعرض قبل أن تُطوى الوسطى خلف زر حذف. تطويها DGA فوق 5 مستويات. ويبقى المستوى الأول والأخيران دائمًا. الافتراضي 5."
+        },
+        {
+          "name": "compact",
+          "type": "boolean",
+          "default": "false",
+          "required": false,
+          "description": "The compact form (DGA): instead of the whole path, one back link to the previous level (the link in the second to last item). Use it on small screens or where space is tight; the arrow mirrors on Arabic pages. Default false.",
+          "descriptionAr": "الشكل المضغوط (في DGA): بدل المسار كاملًا، رابط رجوع واحد إلى المستوى السابق (الرابط في العنصر قبل الأخير). ينعكس السهم في الصفحات العربية. الافتراضي `false`."
         },
         {
           "name": "expandLabel",
@@ -985,7 +1001,7 @@
   "chart": [
     {
       "name": "ChartContainer",
-      "description": "A chart on Recharts (Platform Code extension, not part of DGA), with the DGA chart colours. Put one Recharts chart inside (`BarChart`, `LineChart`, `AreaChart` or `PieChart`). By default the chart is a picture for screen readers (`role=\"img\"`, named by `title`, described by `description`) and `table` gives the numbers.",
+      "description": "A chart on Recharts (DGA: Charts: bar, line, pie and donut), with the DGA chart colours. Put one Recharts chart inside (`BarChart`, `LineChart`, `AreaChart` or `PieChart`). By default the chart is a picture for screen readers (`role=\"img\"`, named by `title`, described by `description`) and `table` gives the numbers.",
       "descriptionAr": "يغلّف مخططًا واحدًا من Recharts (امتداد من كود المنصات وليس جزءًا من DGA) بألوان DGA. افتراضيًا هو صورة للتقنيات المساعدة (`role=\"img\"`) يسمّيها `title` ويصفها `description`، وبياناتها في `table`. لا يتحرك المخطط إن فضّل الشخص تقليل الحركة عند استخدام `useChartAnimation`.",
       "inherits": null,
       "props": [
@@ -2394,6 +2410,14 @@
           "descriptionAr": "الشهر المعروض في البداية، بأي تاريخ ISO منه. الافتراضي: التاريخ المختار وإلا اليوم."
         },
         {
+          "name": "yearDropdown",
+          "type": "boolean",
+          "default": null,
+          "required": false,
+          "description": "Shows the year as a dropdown in the header (DGA: Year Dropdown), so a far-away year is one choice and not many clicks. It lists the years from `min` to `max` (a hundred years either side of today when they are not set). Default `true`; `false` shows the year as text.",
+          "descriptionAr": "يعرض السنة قائمة منسدلة في الترويسة (في DGA: القائمة المنسدلة للسنة) فيصل المستخدم إلى سنة بعيدة باختيار واحد. تسرد السنوات من `min` إلى `max` (مئة سنة قبل اليوم وبعده عند عدم تحديدهما). الافتراضي `true`."
+        },
+        {
           "name": "locale",
           "type": "string",
           "default": null,
@@ -2563,6 +2587,14 @@
           "required": false,
           "description": "The month shown at first, as any ISO date in it. Default: the chosen date, else today.",
           "descriptionAr": "الشهر المعروض في البداية، بأي تاريخ ISO منه. الافتراضي: التاريخ المختار وإلا اليوم."
+        },
+        {
+          "name": "yearDropdown",
+          "type": "boolean",
+          "default": null,
+          "required": false,
+          "description": "Shows the year as a dropdown in the header (DGA: Year Dropdown), so a far-away year is one choice and not many clicks. It lists the years from `min` to `max` (a hundred years either side of today when they are not set). Default `true`; `false` shows the year as text.",
+          "descriptionAr": "يعرض السنة قائمة منسدلة في ترويسة التقويم (في DGA: القائمة المنسدلة للسنة). الافتراضي `true`."
         },
         {
           "name": "locale",
@@ -2856,8 +2888,8 @@
   "digital-stamp": [
     {
       "name": "DigitalStamp",
-      "description": "The official-site strip (DGA: Digital Stamp): a 32px bar at the very top of a government site that says the site is official, with a button that opens a panel explaining how to check it: the address ends in `gov.sa` (or `edu.sa`, `med.sa`, `org.sa`, `sch.sa`, `.sa`), the connection is https, and the site is registered with the Digital Government Authority. Put it in the `stamp` slot of the Header. The button is a real disclosure button (`aria-expanded`), and Escape closes the panel and returns focus to it.",
-      "descriptionAr": "شريط الموقع الرسمي (DGA: Digital Stamp): شريط بارتفاع 32px في أعلى موقع حكومي يعلن أن الموقع رسمي، وزر يفتح لوحة تشرح كيف يُتحقق منه: العنوان ينتهي بنطاق سعودي، والاتصال https، والموقع مسجّل لدى هيئة الحكومة الرقمية. ضعه في خانة `stamp` من Header. الزر مبدّل حقيقي بـ `aria-expanded`، ويغلق Esc اللوحة ويعيد التركيز إليه.",
+      "description": "The official-site banner (DGA: Digital Stamp): a bar at the very top of a government site with the Saudi flag, the line \"A government website registered with the Digital Government Authority.\" and a button (\"How you know?\") that opens a panel. The panel explains the domain (`gov.sa`, `edu.sa`, `med.sa`, `org.sa`, `sch.sa` or `.sa`, each with its own text), the https connection, and shows a registration card with the site's registration number as a link. Put it in the `stamp` slot of the Header. The button is a real disclosure button (`aria-expanded`), and Escape closes the panel and returns focus to it.",
+      "descriptionAr": "شريط الموقع الرسمي (DGA: Digital Stamp): شريط بارتفاع 32px في أعلى موقع حكومي يعلن أن الموقع رسمي، وزر يفتح لوحة تشرح كيف يُتحقق منه: العنوان ينتهي بنطاق سعودي، والاتصال https، والموقع مسجّل لدى هيئة الحكومة الرقمية، مع بطاقة تسجيل برقم الموقع. ضعه في خانة `stamp` من Header. الزر مبدّل حقيقي بـ `aria-expanded`، ويغلق Esc اللوحة ويعيد التركيز إليه.",
       "inherits": null,
       "props": [
         {
@@ -2865,13 +2897,13 @@
           "type": "\"gov.sa\" | \"edu.sa\" | \"med.sa\" | \"org.sa\" | \"sch.sa\" | \".sa\"",
           "default": "\"gov.sa\"",
           "required": false,
-          "description": "The suffix the site's address ends with. It is shown in the opened panel.",
-          "descriptionAr": "لاحقة عنوان الموقع، وتظهر في اللوحة. تُقرأ من اليسار إلى اليمين."
+          "description": "The suffix the site's address ends with. It sets the default wording of the domain item.",
+          "descriptionAr": "لاحقة عنوان الموقع. تظهر باللون الأخضر في اللوحة ولكل لاحقة نصها الافتراضي. تُقرأ من اليسار إلى اليمين."
         },
         {
           "name": "label",
           "type": "string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<AwaitedReactNode>",
-          "default": "\"An official website of the Saudi government\"",
+          "default": "\"A government website registered with the Digital Government Authority.\"",
           "required": false,
           "description": "The line in the strip. Translate it on Arabic pages.",
           "descriptionAr": "السطر في الشريط. ترجمه في الصفحات العربية."
@@ -2879,7 +2911,7 @@
         {
           "name": "toggleLabel",
           "type": "string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<AwaitedReactNode>",
-          "default": "\"How to check\"",
+          "default": "\"How you know?\"",
           "required": false,
           "description": "The text of the button that opens the panel. Translate it on Arabic pages.",
           "descriptionAr": "نص الزر الذي يفتح اللوحة. ترجمه في الصفحات العربية."
@@ -2887,23 +2919,23 @@
         {
           "name": "domainTitle",
           "type": "string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<AwaitedReactNode>",
-          "default": "\"Official websites end in a Saudi domain\"",
+          "default": null,
           "required": false,
-          "description": "Heading of the domain item in the panel.",
-          "descriptionAr": "عنوان بند النطاق في اللوحة."
+          "description": "Heading of the domain item in the panel (the suffix follows it in green). Default: by `domain`.",
+          "descriptionAr": "عنوان بند النطاق في اللوحة (تتبعه اللاحقة). الافتراضي بحسب `domain`."
         },
         {
           "name": "domainText",
           "type": "string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<AwaitedReactNode>",
           "default": null,
           "required": false,
-          "description": "Explains the domain. Default: the address ends in the suffix of `domain`.",
-          "descriptionAr": "يشرح النطاق. الافتراضي: عنوان الموقع ينتهي باللاحقة `domain`."
+          "description": "Explains the domain. Default: by `domain`.",
+          "descriptionAr": "يشرح النطاق. الافتراضي بحسب `domain`."
         },
         {
           "name": "httpsTitle",
           "type": "string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<AwaitedReactNode>",
-          "default": "\"Secure websites use https\"",
+          "default": "\"Secure websites use HTTPS\"",
           "required": false,
           "description": "Heading of the secure connection item.",
           "descriptionAr": "عنوان بند الاتصال الآمن."
@@ -2917,20 +2949,44 @@
           "descriptionAr": "يشرح القفل وhttps."
         },
         {
-          "name": "registrationTitle",
+          "name": "registrationLabel",
           "type": "string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<AwaitedReactNode>",
-          "default": "\"Registered with the Digital Government Authority\"",
+          "default": "\"Registered on Digital Government Authority:\"",
           "required": false,
-          "description": "Heading of the registration item. Pass `null` to leave the item out.",
-          "descriptionAr": "عنوان بند التسجيل. مرّر `null` لحذف البند."
+          "description": "The line before the registration number in the registration card. Pass `null` to leave the card out.",
+          "descriptionAr": "السطر قبل رقم التسجيل في بطاقة التسجيل. مرّر `null` لحذف البطاقة."
         },
         {
-          "name": "registrationText",
+          "name": "registrationNumber",
           "type": "string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<AwaitedReactNode>",
-          "default": "\"Government websites are registered with the Digital Government Authority.\"",
+          "default": null,
           "required": false,
-          "description": "Explains the Digital Government Authority registration.",
-          "descriptionAr": "يشرح التسجيل لدى هيئة الحكومة الرقمية."
+          "description": "The site's registration number with the Digital Government Authority. It is shown as a link.",
+          "descriptionAr": "رقم تسجيل الموقع لدى هيئة الحكومة الرقمية. يظهر رابطًا."
+        },
+        {
+          "name": "registrationHref",
+          "type": "string",
+          "default": "\"#\"",
+          "required": false,
+          "description": "Where the registration number links to (the site's record at the Authority).",
+          "descriptionAr": "وجهة رابط رقم التسجيل (سجل الموقع لدى الهيئة)."
+        },
+        {
+          "name": "registrationLogo",
+          "type": "string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<AwaitedReactNode>",
+          "default": null,
+          "required": false,
+          "description": "The logo in the registration card. Default: the DGA mark.",
+          "descriptionAr": "الشعار في بطاقة التسجيل. الافتراضي: شعار DGA."
+        },
+        {
+          "name": "logoLabel",
+          "type": "string",
+          "default": "\"Digital Government Authority\"",
+          "required": false,
+          "description": "Accessible name of the default logo. Translate it on Arabic pages.",
+          "descriptionAr": "الاسم المتاح للشعار الافتراضي. ترجمه في الصفحات العربية."
         },
         {
           "name": "open",
@@ -2961,7 +3017,7 @@
           "type": "boolean",
           "default": "false",
           "required": false,
-          "description": "Hides the Saudi flag icon at the start of the strip.",
+          "description": "Hides the Saudi flag at the start of the strip.",
           "descriptionAr": "يخفي أيقونة العلم في بداية الشريط."
         }
       ]
@@ -2979,7 +3035,7 @@
       "props": [
         {
           "name": "variant",
-          "type": "\"alpha-white\" | \"neutral\" | \"primary\" | \"white\"",
+          "type": "\"alpha-white\" | \"neutral\" | \"white\" | \"primary\"",
           "default": "\"neutral\"",
           "required": false,
           "description": "Colour. `alpha-white` and `white` are for dividers on brand fills.",
@@ -3544,8 +3600,8 @@
   "filtration": [
     {
       "name": "Filtration",
-      "description": "The filter pattern (DGA: Filtration): a panel of groups (checkboxes, radios, a select, a text input or a range), the applied filters as removable Tags with a clear-all button, and a result count above your results (`children`). From the `lg` width the panel sits beside the results; below it a button opens the same panel in a Drawer. Use it controlled with `value` and `onValueChange`, or uncontrolled with `defaultValue`. Filter your data yourself with the value.",
-      "descriptionAr": "نمط التصفية (DGA: Filtration): لوحة من المجموعات (خانات اختيار، وأزرار اختيار، وقائمة منسدلة، وحقل نص، ونطاق)، والمرشحات المطبّقة وسومًا قابلة للإزالة مع زر مسح الكل، وعدد النتائج فوق نتائجك (`children`). من عرض `lg` تقع اللوحة بجانب النتائج؛ وتحته يفتح زر اللوحة نفسها في درج. استخدمه بتحكم خارجي عبر `value` و`onValueChange`، أو دون تحكم عبر `defaultValue`. صفِّ بياناتك بنفسك بالقيمة.",
+      "description": "The filter pattern (DGA: Filtration): a panel of groups (checkboxes and radios that can have a search field and a \"Show more\" button, a select, a text input, a range, a date, a rating or a control you draw), the applied filters as removable Tags with a clear-all button, and a result count above your results (`children`). By default the panel sits beside the results from the `lg` width, and below it a button opens the same panel in a Drawer; `placement` makes the button the only way in and opens the panel from a side or in the centre. Use it controlled with `value` and `onValueChange`, or uncontrolled with `defaultValue`. Filter your data yourself with the value.",
+      "descriptionAr": "نمط التصفية (DGA: Filtration): لوحة من المجموعات (خانات اختيار وأزرار اختيار يمكن أن يكون لها حقل بحث وزر «عرض المزيد»، وقائمة منسدلة، وحقل نص، ونطاق، وتاريخ، وتقييم، أو عنصر تحكم ترسمه بنفسك)، والمرشحات المطبّقة وسومًا قابلة للإزالة مع زر مسح الكل، وعدد النتائج فوق نتائجك (`children`). تقع اللوحة افتراضيًا بجانب النتائج من عرض `lg` ويفتح زر اللوحة نفسها في درج تحته؛ ويجعل `placement` الزر هو المدخل الوحيد ويفتح اللوحة من جهة أو في الوسط. استخدمه بتحكم خارجي عبر `value` و`onValueChange`، أو دون تحكم عبر `defaultValue`. صفِّ بياناتك بنفسك بالقيمة.",
       "inherits": null,
       "props": [
         {
@@ -3555,6 +3611,14 @@
           "required": false,
           "description": "The chosen filters (controlled).",
           "descriptionAr": "المرشحات المختارة (بتحكم خارجي)."
+        },
+        {
+          "name": "onValueChange",
+          "type": "(value: FiltrationValue) => void",
+          "default": null,
+          "required": false,
+          "description": "Called with the new filters.",
+          "descriptionAr": "تُستدعى بالمرشحات الجديدة."
         },
         {
           "name": "defaultValue",
@@ -3571,14 +3635,6 @@
           "required": true,
           "description": "The filter groups, in order.",
           "descriptionAr": "مجموعات المرشحات بالترتيب."
-        },
-        {
-          "name": "onValueChange",
-          "type": "(value: FiltrationValue) => void",
-          "default": null,
-          "required": false,
-          "description": "Called with the new filters.",
-          "descriptionAr": "تُستدعى بالمرشحات الجديدة."
         },
         {
           "name": "resultCount",
@@ -3645,12 +3701,20 @@
           "descriptionAr": "سطر تحت عنوان الدرج لقارئات الشاشة."
         },
         {
+          "name": "placement",
+          "type": "\"inline\" | \"start\" | \"end\" | \"center\"",
+          "default": "\"inline\"",
+          "required": false,
+          "description": "Where the panel is (DGA: Placement). `inline` (default) puts it beside the results from the `lg` width and in a Drawer below it. `start` and `end` always show a button that opens the panel anchored to that side in a Drawer; `center` opens it in a centred Dialog.",
+          "descriptionAr": "موضع اللوحة (في DGA: موضع اللوحة). `inline` (الافتراضي) بجانب النتائج من عرض `lg` وفي درج تحته. `start` و`end` يعرضان زرًّا دائمًا يفتح اللوحة مثبّتة على تلك الجهة في درج، و`center` يفتحها في مربع حوار في الوسط."
+        },
+        {
           "name": "drawerSide",
           "type": "\"start\" | \"end\"",
           "default": "\"start\"",
           "required": false,
-          "description": "The side the drawer opens from on small screens.",
-          "descriptionAr": "الجهة التي يُفتح منها الدرج على الشاشات الصغيرة."
+          "description": "The side the drawer opens from on small screens (with `placement=\"inline\"`).",
+          "descriptionAr": "الجهة التي يُفتح منها الدرج على الشاشات الصغيرة (مع `placement=\"inline\"`)."
         },
         {
           "name": "closeLabel",
@@ -3666,8 +3730,8 @@
   "footer": [
     {
       "name": "Footer",
-      "description": "The site footer (DGA: Footer): logos, a description and social links, columns of navigation links, contact details, app badges, and a row with the legal links and the copyright. Default (gray) or dark green. Below the `sm` width the link columns fold into an Accordion, one section per column. Every visible text is a prop, so translate it on Arabic pages.",
-      "descriptionAr": "تذييل الموقع (DGA: Footer): شعارات، ونص وصفي وروابط التواصل الاجتماعي، وأعمدة روابط التنقل، وبيانات التواصل، وشارات التطبيق، وصف للروابط القانونية وحقوق النشر. افتراضي (رمادي) أو أخضر داكن. تحت عرض `sm` تنطوي أعمدة الروابط في أكورديون بقسم لكل عمود. كل نص ظاهر خاصية، فترجمه في الصفحات العربية.",
+      "description": "The site footer (DGA: Footer): logos (platform logos on white), link groups, a Social Media block, an Accessibility Tools block, a row of underlined links, and the legal row with the copyright, terms and privacy. Contact details, a description and app badges are optional. Default (gray) or dark green. Below `sm` the groups sit in two columns and the legal row is centred; `collapsible` folds them into an Accordion instead. Every visible text is a prop, so translate it on Arabic pages.",
+      "descriptionAr": "تذييل الموقع (DGA: Footer): شعارات (شعارات المنصات على الأبيض)، ومجموعات روابط، وقسم وسائل التواصل الاجتماعي، وقسم أدوات الوصول، وصف روابط مسطّرة، والصف القانوني بحقوق النشر والشروط والخصوصية. النص الوصفي وبيانات التواصل وشارات التطبيق اختيارية. افتراضي (رمادي) أو أخضر داكن. تحت عرض `sm` تصير المجموعات عمودين ويتوسط الصف القانوني؛ و`collapsible` يطويها في أكورديون. كل نص ظاهر خاصية، فترجمه في الصفحات العربية.",
       "inherits": null,
       "props": [
         {
@@ -3691,8 +3755,8 @@
           "type": "string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<AwaitedReactNode>",
           "default": null,
           "required": false,
-          "description": "More logos (partners, Vision 2030) shown after the main one.",
-          "descriptionAr": "شعارات أخرى (الشركاء، رؤية 2030) تظهر بعد الشعار الرئيسي."
+          "description": "Platform and partner logos (Vision 2030, national platforms), shown on a white tile.",
+          "descriptionAr": "شعارات المنصات والشركاء (رؤية 2030، المنصات الوطنية) على لوح أبيض."
         },
         {
           "name": "description",
@@ -3727,12 +3791,36 @@
           "descriptionAr": "روابط وسائل التواصل الاجتماعي."
         },
         {
+          "name": "socialTitle",
+          "type": "string",
+          "default": null,
+          "required": false,
+          "description": "The heading of the social media block.",
+          "descriptionAr": "عنوان قسم وسائل التواصل الاجتماعي."
+        },
+        {
           "name": "socialLabel",
           "type": "string",
           "default": "\"Social media\"",
           "required": false,
           "description": "The name of the social links list.",
           "descriptionAr": "اسم قائمة روابط التواصل الاجتماعي."
+        },
+        {
+          "name": "accessibilityTools",
+          "type": "FooterTool[]",
+          "default": "[]",
+          "required": false,
+          "description": "Accessibility tools: bordered icon buttons in a block of their own.",
+          "descriptionAr": "أدوات الوصول: أزرار أيقونات بإطار في قسم خاص بها."
+        },
+        {
+          "name": "accessibilityTitle",
+          "type": "string",
+          "default": null,
+          "required": false,
+          "description": "The heading of the accessibility tools block.",
+          "descriptionAr": "عنوان قسم أدوات الوصول."
         },
         {
           "name": "contact",
@@ -3767,12 +3855,28 @@
           "descriptionAr": "عنوان قسم شارات التطبيق."
         },
         {
+          "name": "bottomLinks",
+          "type": "FooterLink[]",
+          "default": "[]",
+          "required": false,
+          "description": "A row of underlined links above the legal row, for example the owning entity's sites.",
+          "descriptionAr": "صف روابط مسطّرة فوق الصف القانوني، مثل مواقع الجهة."
+        },
+        {
+          "name": "bottomLabel",
+          "type": "string",
+          "default": "\"More links\"",
+          "required": false,
+          "description": "The name of the bottom links list.",
+          "descriptionAr": "اسم قائمة الروابط السفلية."
+        },
+        {
           "name": "legalLinks",
           "type": "FooterLink[]",
           "default": "[]",
           "required": false,
-          "description": "The legal links row: privacy, terms, accessibility.",
-          "descriptionAr": "صف الروابط القانونية: الخصوصية والشروط وإمكانية الوصول."
+          "description": "The legal links row: terms and conditions, privacy policy.",
+          "descriptionAr": "صف الروابط القانونية: الشروط والأحكام وسياسة الخصوصية."
         },
         {
           "name": "legalLabel",
@@ -3793,10 +3897,10 @@
         {
           "name": "collapsible",
           "type": "boolean",
-          "default": "true",
+          "default": "false",
           "required": false,
-          "description": "Folds the link columns into an Accordion on narrow screens. Default true.",
-          "descriptionAr": "يطوي أعمدة الروابط في أكورديون على الشاشات الضيقة. الافتراضي `true`."
+          "description": "Folds the link columns into an Accordion on narrow screens. Default false: two columns.",
+          "descriptionAr": "يطوي مجموعات الروابط في أكورديون على الشاشات الضيقة. الافتراضي `false`: عمودان."
         },
         {
           "name": "fullWidth",
@@ -3820,8 +3924,8 @@
   "header": [
     {
       "name": "Header",
-      "description": "The site header (DGA: Nav Header): a logo, the main navigation with sub-menus, and actions, search, a language switcher and a user area. A skip link comes first in the tab order. Left and Right (swapped on Arabic pages), Home and End move between the items; Enter, Space or Down opens a sub-menu, which is a DGA Menu. Below the `lg` width the navigation moves into a Drawer. The page the person is on has `aria-current=\"page\"`.",
-      "descriptionAr": "ترويسة الموقع (DGA: Nav Header): شعار، وقائمة التنقل الرئيسية مع قوائم فرعية، وإجراءات وبحث ومبدّل لغة ومنطقة مستخدم. رابط التخطي أول ما يصله التركيز. مفتاحا اليمين واليسار (يتبادلان في الصفحات العربية) وHome وEnd ينقلان بين العناصر؛ وEnter أو Space أو السهم لأسفل يفتح القائمة الفرعية، وهي Menu من DGA. تحت عرض `lg` تنتقل القائمة إلى Drawer. للصفحة الحالية `aria-current=\"page\"`.",
+      "description": "The site header (DGA: Nav Header): a logo, the main navigation with sub-menus, and actions, search, a language switcher and a user area. A skip link comes first in the tab order. Left and Right (swapped on Arabic pages), Home and End move between the items; Enter, Space or Down opens a sub-menu, which is a DGA Menu. Below the `lg` width the navigation moves into a Drawer: on a phone the menu button is on the start side, the logo is centred and an overflow (…) button holding the actions is on the end side; the bar mirrors on Arabic pages. The page the person is on has `aria-current=\"page\"`.",
+      "descriptionAr": "ترويسة الموقع (DGA: Nav Header): شعار، وقائمة التنقل الرئيسية مع قوائم فرعية، وإجراءات وبحث ومبدّل لغة ومنطقة مستخدم. رابط التخطي أول ما يصله التركيز. مفتاحا اليمين واليسار (يتبادلان في الصفحات العربية) وHome وEnd ينقلان بين العناصر؛ وEnter أو Space أو السهم لأسفل يفتح القائمة الفرعية، وهي Menu من DGA. تحت عرض `lg` يصير الشريط زر القائمة والشعار في المنتصف وزر الفائض (…)، وتنتقل القائمة إلى Drawer. للصفحة الحالية `aria-current=\"page\"`.",
       "inherits": {
         "name": "Menu",
         "url": "https://base-ui.com/react/components/menu"
@@ -3842,6 +3946,14 @@
           "required": false,
           "description": "A strip above the bar, below the stamp: put a Second Nav here.",
           "descriptionAr": "شريط فوق الترويسة: ضع هنا Second Nav."
+        },
+        {
+          "name": "actions",
+          "type": "HeaderActionItem[]",
+          "default": "[]",
+          "required": false,
+          "description": "Actions at the end of the bar.",
+          "descriptionAr": "إجراءات في نهاية الشريط."
         },
         {
           "name": "submenuTone",
@@ -3866,14 +3978,6 @@
           "required": false,
           "description": "The main navigation.",
           "descriptionAr": "قائمة التنقل الرئيسية."
-        },
-        {
-          "name": "actions",
-          "type": "HeaderActionItem[]",
-          "default": "[]",
-          "required": false,
-          "description": "Actions at the end of the bar.",
-          "descriptionAr": "إجراءات في نهاية الشريط."
         },
         {
           "name": "search",
@@ -3948,6 +4052,14 @@
           "descriptionAr": "اسم الزر الذي يفتح القائمة على الشاشات الصغيرة."
         },
         {
+          "name": "moreLabel",
+          "type": "string",
+          "default": "\"More\"",
+          "required": false,
+          "description": "The name of the overflow (…) button on small screens, which opens the actions.",
+          "descriptionAr": "اسم زر الفائض (…) على الشاشات الصغيرة، وهو يفتح الإجراءات."
+        },
+        {
           "name": "drawerTitle",
           "type": "string",
           "default": "\"Menu\"",
@@ -3983,8 +4095,8 @@
     },
     {
       "name": "HeaderAction",
-      "description": "One action in the header bar (DGA: Header Action): an icon and a label, inline or with the icon above. It renders a link when it has an `href`, a button otherwise. Below the `lg` width the label is hidden and stays as the accessible name.",
-      "descriptionAr": "إجراء واحد في شريط الترويسة (DGA: `Header Action`): أيقونة ونص، في سطر واحد أو بالأيقونة فوق النص. يصير رابطًا إن كان له `href` وإلا زرًّا. تحت عرض `lg` يُخفى النص ويبقى اسمًا للوصول.",
+      "description": "One action in the header bar (DGA: Header Action): Inline (icon beside the label), Top (icon above the label), Text only (no icon) or Icon only, with default, hovered, pressed, focused and disabled states and the selected block with its bottom bar. It renders a link when it has an `href`, a button otherwise. Below the `lg` width the actions move into the overflow menu.",
+      "descriptionAr": "إجراء واحد في شريط الترويسة (DGA: `Header Action`): أيقونة ونص، في سطر واحد أو بالأيقونة فوق النص. يصير رابطًا إن كان له `href` وإلا زرًّا. الأنماط: مضمّن، وعلوي، ونص فقط، وأيقونة فقط، بالحالات الخمس وكتلة التحديد بشريطها السفلي. تحت عرض `lg` تنتقل الإجراءات إلى قائمة الفائض (…).",
       "inherits": {
         "name": "Menu",
         "url": "https://base-ui.com/react/components/menu"
@@ -4028,7 +4140,7 @@
           "default": null,
           "required": false,
           "description": "Hides the label (it stays as the accessible name).",
-          "descriptionAr": "يخفي النص (ويبقى اسمًا للوصول)."
+          "descriptionAr": "أيقونة فقط: يخفي النص (ويبقى اسمًا للوصول). يحتاج إلى `icon`."
         },
         {
           "name": "iconPosition",
@@ -6240,8 +6352,8 @@
   "rating": [
     {
       "name": "Rating",
-      "description": "A star rating (DGA: Rating). Interactive by default: a group of radio buttons, so one star is in the tab order and the arrow keys change the rating (Left and Right swap on Arabic pages); hovering a star previews it. With `readOnly` it is an image with a text alternative. Whole stars only, as DGA defines. The first star sits on the start side, so the fill runs right to left on Arabic pages. `brand` uses the primary colour instead of gold.",
-      "descriptionAr": "تقييم بالنجوم (في DGA: Rating). تفاعلي افتراضيًا: مجموعة أزرار اختيار، فتكون نجمة واحدة في ترتيب Tab وتغيّر مفاتيح الأسهم التقييم (يمين ويسار يتبادلان في الصفحات العربية)، والمرور على نجمة يعاينها. ومع `readOnly` يصير صورة ببديل نصي. نجوم كاملة فقط كما تعرّف DGA. تقع النجمة الأولى عند جهة البداية، فتمتلئ من اليمين إلى اليسار في الصفحات العربية. ويستخدم `brand` اللون الأساسي بدل الذهبي.",
+      "description": "A star rating (DGA: Rating). Interactive by default: a group of radio buttons, so one star is in the tab order and the arrow keys change the rating (Left and Right swap on Arabic pages); hovering a star previews it, pressing one shrinks it a little and the chosen one is drawn with a heavier outline. `allowHalf` adds half stars. With `readOnly` it is an image with a text alternative and shows fractional values. The first star sits on the start side, so the fill runs right to left on Arabic pages. `brand` uses the primary colour instead of gold.",
+      "descriptionAr": "تقييم بالنجوم (في DGA: Rating). تفاعلي افتراضيًا: مجموعة أزرار اختيار، فتكون نجمة واحدة في ترتيب Tab وتغيّر مفاتيح الأسهم التقييم (يمين ويسار يتبادلان في الصفحات العربية)، والمرور على نجمة يعاينها. ومع `readOnly` يصير صورة ببديل نصي. ويضيف `allowHalf` أنصاف النجوم، ويعرض للقراءة فقط القيم الكسرية. تقع النجمة الأولى عند جهة البداية، فتمتلئ من اليمين إلى اليسار في الصفحات العربية. ويستخدم `brand` اللون الأساسي بدل الذهبي.",
       "inherits": {
         "name": "Radio",
         "url": "https://base-ui.com/react/components/radio"
@@ -6264,20 +6376,20 @@
           "descriptionAr": "اللون الأساسي بدل الذهبي."
         },
         {
-          "name": "defaultValue",
-          "type": "number",
-          "default": "0",
-          "required": false,
-          "description": "The rating at first (uncontrolled). Default 0, meaning none.",
-          "descriptionAr": "التقييم في البداية (دون تحكم). الافتراضي 0، أي بلا تقييم."
-        },
-        {
           "name": "max",
           "type": "number",
           "default": "5",
           "required": false,
           "description": "How many stars there are. Default 5.",
           "descriptionAr": "عدد النجوم. الافتراضي 5."
+        },
+        {
+          "name": "defaultValue",
+          "type": "number",
+          "default": "0",
+          "required": false,
+          "description": "The rating at first (uncontrolled). Default 0, meaning none.",
+          "descriptionAr": "التقييم في البداية (دون تحكم). الافتراضي 0، أي بلا تقييم."
         },
         {
           "name": "value",
@@ -6288,12 +6400,20 @@
           "descriptionAr": "التقييم من 0 إلى `max` (بتحكم خارجي)."
         },
         {
+          "name": "allowHalf",
+          "type": "boolean",
+          "default": null,
+          "required": false,
+          "description": "Lets the rating be a half star (DGA: half stars). Each star has a start half and an end half, and the arrow keys move by half a star. In a read-only rating a fractional `value` is drawn as it is (3.5 fills three and a half stars) with or without this prop.",
+          "descriptionAr": "يتيح نصف نجمة (في DGA: نجوم نصفية). لكل نجمة نصف في جهة البداية ونصف في جهة النهاية، وتتحرك مفاتيح الأسهم بمقدار نصف نجمة. وفي التقييم للقراءة فقط تُرسم القيمة الكسرية كما هي مع هذه الخاصية أو بدونها."
+        },
+        {
           "name": "onValueChange",
           "type": "(value: number) => void",
           "default": null,
           "required": false,
-          "description": "Called with the star the person chose, from 1 to `max`.",
-          "descriptionAr": "تُستدعى بالنجمة التي اختارها الشخص، من 1 إلى `max`."
+          "description": "Called with the rating the person chose, from 1 to `max` (from 0.5 with `allowHalf`).",
+          "descriptionAr": "تُستدعى بالتقييم الذي اختاره الشخص، من 1 إلى `max` (من 0.5 مع `allowHalf`)."
         },
         {
           "name": "readOnly",
@@ -6338,7 +6458,7 @@
         {
           "name": "starLabel",
           "type": "(value: number) => string",
-          "default": "(n) => (n === 1 ? \"1 star\" : `${n} stars`)",
+          "default": "(n) => (n <= 1 ? `${n} star` : `${n} stars`)",
           "required": false,
           "description": "The name of one star, for example \"3 stars\". It names each star for a screen reader, and the read-only summary reads it as \"3 stars out of 5\" through `summaryLabel`.",
           "descriptionAr": "اسم نجمة واحدة، مثل «3 نجوم». يسمّي كل نجمة لقارئة الشاشة. ترجمه في الصفحات العربية."
@@ -6644,8 +6764,8 @@
   "second-nav": [
     {
       "name": "SecondNav",
-      "description": "The secondary strip above the header (DGA: Second Nav Header): contextual items such as the date, the weather or sibling pages, then actions, 40px high, gray or primary. Entries with an `href` are links, with `onClick` buttons, and the rest plain text. On narrow screens it scrolls sideways instead of wrapping. Name it with `aria-label`.",
-      "descriptionAr": "الشريط الثانوي فوق الترويسة (DGA: Second Nav Header): عناصر سياقية مثل التاريخ أو الطقس أو الصفحات الشقيقة، ثم الإجراءات، بارتفاع 40px، رمادي أو أساسي. الإدخال الذي له `href` رابط، والذي له `onClick` زر، وغيره نص عادي. على الشاشات الضيقة يتمرر أفقيًا بدل الالتفاف. سمِّه بـ `aria-label`.",
+      "description": "The secondary strip above the header (DGA: Second Nav Header): contextual items such as the weather, date, time and location, then actions (icon-only or icon and text), 40px high, gray or primary. Entries with an `href` are links, with `onClick` buttons, and the rest plain text. On narrow screens it scrolls sideways instead of wrapping. Name it with `aria-label`.",
+      "descriptionAr": "الشريط الثانوي فوق الترويسة (DGA: Second Nav Header): عناصر سياقية هي الطقس والتاريخ والوقت والموقع، ثم الإجراءات بأيقونة فقط أو بأيقونة ونص، بارتفاع 40px، رمادي أو أساسي. الإدخال الذي له `href` رابط، والذي له `onClick` زر، وغيره نص عادي. على الشاشات الضيقة يتمرر أفقيًا بدل الالتفاف. سمِّه بـ `aria-label`.",
       "inherits": null,
       "props": [
         {
@@ -6661,16 +6781,16 @@
           "type": "SecondNavEntry[]",
           "default": "[]",
           "required": false,
-          "description": "Contextual items at the start: a date, the weather, a location, or links to sibling pages.",
-          "descriptionAr": "عناصر سياقية في البداية: تاريخ أو طقس أو موقع، أو روابط إلى صفحات شقيقة."
+          "description": "Contextual items at the start: the weather, date, time or location (`kind`).",
+          "descriptionAr": "عناصر سياقية في البداية: الطقس أو التاريخ أو الوقت أو الموقع (`kind`)."
         },
         {
           "name": "actions",
           "type": "SecondNavEntry[]",
           "default": "[]",
           "required": false,
-          "description": "Actions at the end: text size, contrast, a help link.",
-          "descriptionAr": "إجراءات في النهاية: حجم الخط أو التباين أو رابط مساعدة."
+          "description": "Actions at the end: icon-only (`iconOnly`) or icon and text, such as zoom or contrast.",
+          "descriptionAr": "إجراءات في النهاية: بأيقونة فقط (`iconOnly`) أو بأيقونة ونص، مثل التكبير أو التباين."
         },
         {
           "name": "fullWidth",
@@ -6687,6 +6807,30 @@
           "required": false,
           "description": "Shows the divider between items and actions. Default true.",
           "descriptionAr": "يعرض الفاصل بين العناصر والإجراءات. الافتراضي `true`."
+        }
+      ]
+    },
+    {
+      "name": "SecondNavItem",
+      "description": "One item of the strip (DGA: sub-header-Item): an optional icon and text, 4px apart, in the default or on-colour state. `SecondNav` renders its entries with it; use it alone to build your own strip.",
+      "descriptionAr": "عنصر واحد من الشريط (في DGA: عنصر الشريط الفرعي): أيقونة اختيارية ونص بينهما 4px، بحالة افتراضية وحالة على اللون. يصير رابطًا إن كان له `href` وزرًّا إن كان له `onClick`. يستخدمه `SecondNav`، ويمكن استخدامه وحده.",
+      "inherits": null,
+      "props": [
+        {
+          "name": "tone",
+          "type": "\"default\" | \"on-color\"",
+          "default": "\"gray\"",
+          "required": false,
+          "description": "`on-color` is for the primary (green) strip. Inside a `SecondNav` it follows the strip.",
+          "descriptionAr": "`on-color` للشريط الأساسي (الأخضر). داخل `SecondNav` يتبع العنصر الشريط."
+        },
+        {
+          "name": "entry",
+          "type": "SecondNavEntry",
+          "default": null,
+          "required": true,
+          "description": "",
+          "descriptionAr": "الإدخال: `label` و`icon` أو `kind` (`weather` أو `date` أو `time` أو `location`) و`iconOnly` و`href` أو `onClick` و`current` و`disabled`."
         }
       ]
     }
@@ -7249,7 +7393,7 @@
   "slider": [
     {
       "name": "Slider",
-      "description": "Picks a value, or a range of two values, by dragging a handle along a track (DGA: Slider). Left and Right (or Up and Down) move a thumb by `step`, Page Up and Down by `largeStep`, Home and End to the ends. The fill and the arrow keys follow the page direction: on Arabic pages the minimum is on the right, Left raises the value and Right lowers it. Pass an array as `value` or `defaultValue` for a range.",
+      "description": "Picks a value, or a range of two values, by dragging a handle along a track (DGA: Slider). Left and Right (or Up and Down) move a thumb by `step`, Page Up and Down by `largeStep`, Home and End to the ends. The fill and the arrow keys follow the page direction: on Arabic pages the minimum is on the right, Left raises the value and Right lowers it. Pass an array as `value` or `defaultValue` for a range. DGA names two readouts: the Value (`showValue`) and the Min/Max labels at the ends of the track (`showMinMax`).",
       "descriptionAr": "يختار قيمة، أو نطاقًا من قيمتين، بسحب مقبض على مسار (DGA: Slider). السهمان الأيمن والأيسر (أو الأعلى والأسفل) يحركان المقبض بمقدار `step`، ومفتاحا Page Up وDown بمقدار `largeStep`، وHome وEnd إلى الطرفين. يتبع الملء والسهمان اتجاه الصفحة: في الصفحات العربية يكون الحد الأدنى على اليمين، ويرفع السهم الأيسر القيمة ويخفضها الأيمن. مرّر مصفوفة في `value` أو `defaultValue` للنطاق.",
       "inherits": {
         "name": "Slider",
@@ -7302,7 +7446,55 @@
           "default": "false",
           "required": false,
           "description": "Shows the current value (or both values of a range) opposite the label.",
-          "descriptionAr": "يعرض القيمة الحالية (أو قيمتي النطاق) مقابل التسمية."
+          "descriptionAr": "يعرض القيمة الحالية (أو قيمتي النطاق) مقابل التسمية (في DGA: Value)."
+        },
+        {
+          "name": "min",
+          "type": "number",
+          "default": null,
+          "required": false,
+          "description": "The minimum allowed value of the slider. Should not be equal to max.",
+          "descriptionAr": "أدنى قيمة. الافتراضي 0."
+        },
+        {
+          "name": "max",
+          "type": "number",
+          "default": null,
+          "required": false,
+          "description": "The maximum allowed value of the slider. Should not be equal to min.",
+          "descriptionAr": "أعلى قيمة. الافتراضي 100."
+        },
+        {
+          "name": "locale",
+          "type": "Intl.LocalesArgument",
+          "default": null,
+          "required": false,
+          "description": "The locale used by `Intl.NumberFormat` when formatting the value. Defaults to the user's runtime locale.",
+          "descriptionAr": "لغة عرض القيمة ونطقها، مثل `ar-EG` للأرقام العربية الهندية."
+        },
+        {
+          "name": "minLabel",
+          "type": "ReactNode",
+          "default": null,
+          "required": false,
+          "description": "Replaces the text of the Min label, for example \"0 SAR\".",
+          "descriptionAr": "يستبدل نص تسمية الحد الأدنى، وهي `min` افتراضيًا."
+        },
+        {
+          "name": "maxLabel",
+          "type": "ReactNode",
+          "default": null,
+          "required": false,
+          "description": "Replaces the text of the Max label, for example \"500 SAR\".",
+          "descriptionAr": "يستبدل نص تسمية الحد الأقصى، وهي `max` افتراضيًا."
+        },
+        {
+          "name": "showMinMax",
+          "type": "boolean",
+          "default": "false",
+          "required": false,
+          "description": "Shows the Min/Max labels (DGA) under the two ends of the track: `min` on the start side and `max` on the end side, formatted with `locale`. Replace either text with `minLabel` or `maxLabel`.",
+          "descriptionAr": "يعرض تسميتي الحد الأدنى والأقصى (في DGA: الحد الأدنى والأقصى) تحت طرفي المسار. الافتراضي `false`."
         },
         {
           "name": "thumbLabels",
@@ -7343,30 +7535,6 @@
           "required": false,
           "description": "Whether the slider should ignore user interaction.",
           "descriptionAr": "يتجاهل كل تفاعل."
-        },
-        {
-          "name": "locale",
-          "type": "Intl.LocalesArgument",
-          "default": null,
-          "required": false,
-          "description": "The locale used by `Intl.NumberFormat` when formatting the value. Defaults to the user's runtime locale.",
-          "descriptionAr": "لغة عرض القيمة ونطقها، مثل `ar-EG` للأرقام العربية الهندية."
-        },
-        {
-          "name": "max",
-          "type": "number",
-          "default": null,
-          "required": false,
-          "description": "The maximum allowed value of the slider. Should not be equal to min.",
-          "descriptionAr": "أعلى قيمة. الافتراضي 100."
-        },
-        {
-          "name": "min",
-          "type": "number",
-          "default": null,
-          "required": false,
-          "description": "The minimum allowed value of the slider. Should not be equal to max.",
-          "descriptionAr": "أدنى قيمة. الافتراضي 0."
         },
         {
           "name": "onValueChange",
@@ -7813,6 +7981,14 @@
       },
       "props": [
         {
+          "name": "value",
+          "type": "string | number",
+          "default": null,
+          "required": false,
+          "description": "The value of the currently active `Tab`. Use when the component is controlled. When the value is `null`, no Tab will be active.",
+          "descriptionAr": "التبويب المحدد بتحكّم خارجي."
+        },
+        {
           "name": "orientation",
           "type": "\"horizontal\" | \"vertical\"",
           "default": "\"horizontal\"",
@@ -7835,14 +8011,6 @@
           "required": false,
           "description": "Callback invoked when new value is being set. The event `reason` is `'none'` for user-initiated changes, such as a click or keyboard navigation; `'initial'` for the first automatic selection or fallback in uncontrolled roots when `defaultValue` is omitted or `undefined`, including when the implicit initial value is disabled or missing; `'disabled'` for automatic fallback when the selected tab becomes disabled in uncontrolled roots; or `'missing'` for automatic fallback when the selected tab is removed, or when an explicit `defaultValue` never matches a mounted tab in uncontrolled roots. For automatic changes, the selected value can be `null` when no enabled Tab is available as a fallback. Automatic changes cannot be canceled; calling `eventDetails.cancel()` for `'initial'`, `'disabled'`, or `'missing'` has no effect.",
           "descriptionAr": "تُستدعى بقيمة التبويب الذي حُدد."
-        },
-        {
-          "name": "value",
-          "type": "string | number",
-          "default": null,
-          "required": false,
-          "description": "The value of the currently active `Tab`. Use when the component is controlled. When the value is `null`, no Tab will be active.",
-          "descriptionAr": "التبويب المحدد بتحكّم خارجي."
         }
       ]
     },
@@ -7874,6 +8042,14 @@
         "url": "https://base-ui.com/react/components/tabs"
       },
       "props": [
+        {
+          "name": "overflow",
+          "type": "\"scroll\" | \"menu\"",
+          "default": "\"scroll\"",
+          "required": false,
+          "description": "What happens to tabs that do not fit (horizontal lists). `scroll` (default) scrolls sideways. `menu` is the DGA More tab: the tabs that do not fit collapse into a \"More\" menu at the end of the list, and the More tab is shown as selected while one of them is. Give the `Tabs` a `defaultValue` or `value` when you use it.",
+          "descriptionAr": "ما يحدث للتبويبات التي لا تتسع. `scroll` (الافتراضي) يمرّرها جانبيًا؛ و`menu` يطويها في تبويب «المزيد» (في DGA) يفتح قائمة."
+        },
         {
           "name": "size",
           "type": "\"sm\" | \"md\" | \"lg\"",
@@ -7907,6 +8083,14 @@
           "descriptionAr": "تُمرَّر جانبيًا بدل الالتفاف عندما لا تتسع التبويبات."
         },
         {
+          "name": "moreLabel",
+          "type": "string",
+          "default": "\"More\"",
+          "required": false,
+          "description": "The text of the More tab. Translate it on Arabic pages. Default \"More\".",
+          "descriptionAr": "نص تبويب «المزيد». ترجمه في الصفحات العربية."
+        },
+        {
           "name": "activateOnFocus",
           "type": "boolean",
           "default": "true",
@@ -7926,20 +8110,20 @@
       },
       "props": [
         {
-          "name": "disabled",
-          "type": "boolean",
-          "default": null,
-          "required": false,
-          "description": "Whether the Tab is disabled. If a first Tab on a `<Tabs.List>` is disabled, it won't initially be selected. Instead, the next enabled Tab will be selected. However, it does not work like this during server-side rendering, as it is not known during pre-rendering which Tabs are disabled. To work around it, ensure that `defaultValue` or `value` on `<Tabs.Root>` is set to an enabled Tab's value.",
-          "descriptionAr": "لا يمكن تحديد التبويب. ويبقى في ترتيب مفاتيح الأسهم ليمكن العثور عليه."
-        },
-        {
           "name": "value",
           "type": "string | number",
           "default": null,
           "required": true,
           "description": "The value of the Tab.",
           "descriptionAr": "ما يعرّف التبويب. وتظهر اللوحة ذات القيمة نفسها."
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "default": null,
+          "required": false,
+          "description": "Whether the Tab is disabled. If a first Tab on a `<Tabs.List>` is disabled, it won't initially be selected. Instead, the next enabled Tab will be selected. However, it does not work like this during server-side rendering, as it is not known during pre-rendering which Tabs are disabled. To work around it, ensure that `defaultValue` or `value` on `<Tabs.Root>` is set to an enabled Tab's value.",
+          "descriptionAr": "لا يمكن تحديد التبويب. ويبقى في ترتيب مفاتيح الأسهم ليمكن العثور عليه."
         }
       ]
     }
