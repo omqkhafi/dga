@@ -1,0 +1,110 @@
+---
+title: Popover
+description: "لوحة محتوى أو نموذج صغير تفتح من زر وتبقى حتى تُغلق. مبنية من سطح Menu في DGA وسهم Tooltip."
+sourceHash: 8204c81384fd
+---
+
+<ExtensionNote
+  name="النافذة المنبثقة"
+  primitive="Base UI Popover"
+  from="القائمة Menu في DGA (السطح والحد والانحناء والظل) وتلميح الأداة Tooltip (السهم والجهات)"
+  tokens={["background-menu", "border-neutral-primary", "text-display", "text-primary-paragraph", "icon-default", "shadow-2xl"]}
+/>
+
+<Preview name="popover-basic" title="النافذة المنبثقة" minHeight={300} />
+
+## التثبيت [#installation]
+
+<ComponentInstall name="popover" />
+
+## الاستخدام [#usage]
+
+```tsx title="page.tsx"
+import { Button } from "@/components/dga/button";
+import {
+  Popover,
+  PopoverContent,
+  PopoverDescription,
+  PopoverHeader,
+  PopoverTitle,
+  PopoverTrigger,
+} from "@/components/dga/popover";
+
+export function RequestDetails() {
+  return (
+    <Popover>
+      <PopoverTrigger render={<Button variant="outline" />}>تفاصيل الطلب</PopoverTrigger>
+      <PopoverContent showCloseButton closeLabel="إغلاق">
+        <PopoverHeader>
+          <PopoverTitle>الطلب ٢٤٨١٠</PopoverTitle>
+          <PopoverDescription>قُدّم في ٨ نوفمبر.</PopoverDescription>
+        </PopoverHeader>
+      </PopoverContent>
+    </Popover>
+  );
+}
+```
+
+استخدم Popover لتفاصيل إضافية أو نموذج قصير يخص عنصر تحكم واحدًا: نطاق تاريخ أو حقل إعادة تسمية أو مرشح. وتبقى مفتوحة حتى يغلقها الشخص، فيمكنها حمل محتوى تفاعلي. وللتلميح الذي يسمّي شيئًا فقط استخدم [Tooltip](/docs/components/tooltip). ولقائمة الإجراءات استخدم [Menu](/docs/components/menu). ولما يتطلب قرارًا قبل متابعة الصفحة استخدم [Dialog](/docs/components/dialog).
+
+## البنية [#anatomy]
+
+- **الزر**: الذي يفتحها. له `aria-expanded` و`aria-haspopup="dialog"`.
+- **اللوحة**: `background-menu` وحد بسمك 1px وانحناء radius-md و`shadow-2xl` وحشوة 16px وعرض 288px، ولا تتجاوز عرض الشاشة.
+- **الترويسة**: عنوان (`text-display` بوزن شبه عريض) ووصف (`text-primary-paragraph`). يسمّي العنوان اللوحة ويصفها الوصف.
+- **السهم** (اختياري): النقطة بعرض 14px نحو الزر، كما في Tooltip. فعّله بـ `showArrow`.
+- **زر الإغلاق** (اختياري): زر أيقونة بعرض 32px في الزاوية، بـ `showCloseButton`.
+- **التذييل**: إجراءات محاذاة لجهة النهاية. استخدم PopoverClose لإغلاق اللوحة من زر.
+
+## أمثلة [#examples]
+
+### الجهات والسهم [#placements-and-the-beak]
+
+يقبل `side` القيمتين `start` و`end` إضافة إلى `top` و`bottom`. وهما جهتا النص، فتفتح `start` إلى اليمين بالعربية.
+
+<Preview compact name="popover-placements" title="الجهات والسهم" minHeight={600} />
+
+### نموذج صغير [#a-small-form]
+
+ضع Field في اللوحة. ينتقل التركيز إلى أول حقل عند فتحها ويعود إلى الزر عند إغلاقها. ويعرض PopoverClose زرًّا يغلق اللوحة.
+
+<Preview compact name="popover-form" title="نموذج صغير" minHeight={360} />
+
+### بتحكّم خارجي ومعطّلة [#controlled-and-disabled]
+
+مرّر `open` و`onOpenChange` لقراءة الحالة أو ضبطها. والزر المعطّل لا يفتح اللوحة أبدًا.
+
+<Preview compact name="popover-states" title="بتحكّم خارجي ومعطّلة" minHeight={360} />
+
+## RTL [#rtl]
+
+تُحاذى اللوحة إلى منتصف الزر افتراضيًا؛ وبـ `align="start"` تصطف مع الحافة اليمنى بالعربية. وتتبادل `start` و`end` ويتبعهما السهم. ويتبع النص وزر الإغلاق والتذييل اتجاه الصفحة.
+
+<DirectionCompare name="popover-placements" title="النافذة المنبثقة" minHeight={600} />
+
+## إمكانية الوصول [#accessibility]
+
+| المفتاح | الإجراء |
+| --- | --- |
+| <kbd>Enter</kbd> أو <kbd>Space</kbd> | على الزر يفتح اللوحة وينقل التركيز إليها. |
+| <kbd>Tab</kbd> | ينتقل بين عناصر التحكم داخل اللوحة ثم إلى بقية الصفحة. |
+| <kbd>Escape</kbd> | يغلق اللوحة ويعيد التركيز إلى الزر. |
+
+- مبنية على Base UI Popover: اللوحة بالدور `role="dialog"` يسمّيها PopoverTitle ويصفها PopoverDescription. وليست مشروطة بالحجب، فتبقى الصفحة متاحة ولا يُحبس التركيز.
+- يغلقها النقر خارجها وكذلك زر الإغلاق. ولزر الإغلاق اسم متاح (`closeLabel`).
+- النص بنسبة 4.5:1 والأيقونات وحلقات التركيز 3:1 أو أفضل على اللوحة، فاتحًا وداكنًا.
+- تظهر بتلاشٍ وتكبير؛ ومع تقليل الحركة تظهر دون حركة.
+
+## مرجع API [#api-reference]
+
+<ApiReference component="popover" />
+
+## الاشتقاق من DGA [#derivation-from-dga]
+
+لا تعرّف DGA نافذة منبثقة، فهذا ليس مكوّنًا من DGA وليست له مواصفة منها. مظهره سطح Menu من DGA (`background-menu` والحد وradius-md و`shadow-2xl`) مع سهم Tooltip وزر إغلاق Dialog. ولا لون جديد فيه: كل لون من رمز موجود في DGA.
+
+<ComponentDeviations component="popover" />
+
+## التباين [#contrast]
+
+<ComponentContrast component="popover" />

@@ -1147,6 +1147,66 @@
   }
 
   /* ------------------------------------------------------------------------------------
+   * Popover, Hover Card, Alert Dialog and Context Menu: Platform Code extensions, no DGA spec.
+   * Popover and Hover Card use the Menu surface (background-menu, 1px border, radius-md,
+   * shadow-2xl) with padding 16 (spacing-4) and the Tooltip beak (14px, same offsets). Alert Dialog is the
+   * Dialog (cn-dialog-*). Context Menu is the Menu (cn-menu-*), so it has no classes of its own
+   * beyond the focus ring of its trigger area.
+   * ---------------------------------------------------------------------------------- */
+  .cn-popover-positioner {
+    @apply z-50 outline-hidden;
+  }
+  .cn-popover {
+    @apply relative flex w-72 max-w-(--available-width) flex-col gap-3 rounded-md border border-border-neutral-primary bg-background-menu p-4 text-md text-text-default shadow-2xl outline-hidden;
+    @apply origin-(--transform-origin) transition-[opacity,scale] duration-150 data-ending-style:scale-95 data-ending-style:opacity-0 data-starting-style:scale-95 data-starting-style:opacity-0 motion-reduce:transition-none;
+  }
+  .cn-hover-card {
+    @apply w-80;
+  }
+  .cn-popover-header {
+    @apply flex flex-col gap-1 in-data-has-close:pe-8;
+  }
+  .cn-popover-title {
+    @apply m-0 text-md font-semibold text-text-display;
+  }
+  .cn-popover-description {
+    @apply m-0 text-sm text-text-primary-paragraph;
+  }
+  .cn-popover-footer {
+    @apply flex flex-wrap justify-end gap-2 pt-1;
+  }
+  .cn-popover-close {
+    @apply absolute end-2 top-2 inline-flex size-8 cursor-pointer items-center justify-center rounded-sm border-0 bg-transparent p-0 text-icon-default transition-colors;
+    @apply hover:bg-button-background-neutral-hovered active:bg-button-background-neutral-pressed;
+    @apply focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-offset-1 focus-visible:outline-border-black;
+    @apply [&_svg]:size-5 motion-reduce:transition-none;
+  }
+  .cn-popover-arrow {
+    @apply flex;
+    /* logical-ok: Base UI positions the popup by physical side, so the beak sits on a physical edge. */
+    @apply data-[side=bottom]:-top-2.25 data-[side=top]:-bottom-2.25 data-[side=top]:rotate-180 data-[side=left]:-right-3.25 data-[side=left]:rotate-90 data-[side=right]:-left-3.25 data-[side=right]:-rotate-90; /* logical-ok */
+  }
+  .cn-popover-arrow-fill {
+    @apply fill-background-menu stroke-none;
+  }
+  .cn-popover-arrow-line {
+    @apply fill-none stroke-border-neutral-primary stroke-1;
+  }
+  .cn-hover-card-trigger {
+    @apply cursor-pointer rounded-xs text-link-primary underline underline-offset-4 transition-colors;
+    @apply hover:text-link-primary-hovered active:text-link-primary-pressed;
+    @apply focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-offset-2 focus-visible:outline-border-black;
+    @apply motion-reduce:transition-none;
+  }
+  .cn-alert-dialog-header {
+    @apply flex flex-col gap-modal-gap;
+  }
+  .cn-context-menu-trigger {
+    @apply rounded-sm outline-hidden select-none;
+    @apply focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-offset-2 focus-visible:outline-border-black;
+  }
+
+  /* ------------------------------------------------------------------------------------
    * Tabs. Horizontal: Text sm, Medium (Bold when selected), padding 12/16 (md), 8/12 (sm),
    * 16 (lg), radius-sm, a 3px neutral-300 divider and a 3px primary bar under the selected tab.
    * Vertical: padding 6/12 (md), 2/6 (sm), 8/12 (lg), a 3px bar on the start side.

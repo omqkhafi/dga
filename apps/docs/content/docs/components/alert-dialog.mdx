@@ -1,0 +1,119 @@
+---
+title: Alert Dialog
+description: "A dialog that interrupts to confirm an action that is hard to undo. The DGA Dialog with alert dialog behaviour: focus starts on Cancel and clicking outside does not close it."
+---
+
+<ExtensionNote
+  name="Alert Dialog"
+  primitive="Base UI AlertDialog"
+  from="the DGA Dialog (Modal) for the window and the DGA Button for the actions"
+  tokens={["background-white", "alpha-black-50", "text-display", "text-primary-paragraph", "shadow-3xl", "button-background-danger-primary-default"]}
+/>
+
+<Preview name="alert-dialog-basic" title="Alert Dialog" minHeight={300} />
+
+## Installation
+
+<ComponentInstall name="alert-dialog" />
+
+## Usage
+
+```tsx title="page.tsx"
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/dga/alert-dialog";
+import { Button } from "@/components/dga/button";
+
+export function WithdrawRequest() {
+  return (
+    <AlertDialog>
+      <AlertDialogTrigger render={<Button destructive variant="outline" />}>
+        Withdraw request
+      </AlertDialogTrigger>
+      <AlertDialogContent>
+        <AlertDialogHeader>
+          <AlertDialogTitle>Withdraw this request?</AlertDialogTitle>
+          <AlertDialogDescription>
+            Request 24810 will be withdrawn. This cannot be undone.
+          </AlertDialogDescription>
+        </AlertDialogHeader>
+        <AlertDialogFooter>
+          <AlertDialogCancel>Keep request</AlertDialogCancel>
+          <AlertDialogAction destructive onClick={withdraw}>
+            Withdraw
+          </AlertDialogAction>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
+  );
+}
+```
+
+Use an Alert Dialog when the next step is hard or impossible to undo and the person must choose before going on: withdrawing a request, deleting a file, signing out everywhere. It asks one question with two answers. For a form, a longer explanation or anything that is not a confirmation, use a [Dialog](/docs/components/dialog).
+
+### Why a separate component, not a Dialog variant
+
+It looks exactly like the Dialog (it uses the same classes), but it behaves differently in ways that matter for accessibility and cannot be a style: it has `role="alertdialog"`, so assistive technology announces it as an urgent question and reads its description straight away; focus starts on Cancel, the safe answer, not on the first control; and clicking the backdrop does not dismiss it, so people cannot lose the choice by accident. Keeping these in one small item means a Dialog never needs to guess which behaviour you want.
+
+## Anatomy
+
+- **Window**: the Dialog card: `background-white`, radius-md, `shadow-3xl`, 400px wide (`size="md"` is 600px), on an `alpha-black-50` backdrop.
+- **Title and description**: the question, and what will happen. Both are linked to the window for screen readers.
+- **Cancel**: the outline Button. Focus starts here.
+- **Action**: the primary Button, or the destructive one with `destructive`. Put it last.
+- There is no close button in the corner: the person answers with one of the two actions or presses Escape.
+
+## Examples
+
+### Not destructive
+
+A confirmation that is not destructive uses the primary action. `size="md"` gives a wider window for a longer explanation.
+
+<Preview compact name="alert-dialog-neutral" title="Not destructive" minHeight={300} />
+
+### Controlled
+
+Pass `open` and `onOpenChange` to open it from your own code. Clicking outside does not close it; Escape and the buttons do.
+
+<Preview compact name="alert-dialog-controlled" title="Controlled" minHeight={300} />
+
+## RTL
+
+The window is centred. The footer buttons follow the direction (the main action is on the left in Arabic) and the text reads right to left.
+
+<DirectionCompare name="alert-dialog-basic" title="Alert Dialog" minHeight={300} />
+
+## Accessibility
+
+| Key | Action |
+| --- | --- |
+| <kbd>Enter</kbd> or <kbd>Space</kbd> | On the trigger, opens the dialog. On a button, chooses it. |
+| <kbd>Tab</kbd> | Moves between the two actions. Focus stays inside the dialog. |
+| <kbd>Escape</kbd> | Cancels: closes the dialog and returns focus to the trigger. |
+
+- `role="alertdialog"` with the title as its name and the description as its description. Focus starts on Cancel and returns to the trigger when the dialog closes. The page behind is inert.
+- Clicking the backdrop does nothing. Escape is the keyboard way out, as in the WAI-ARIA pattern.
+- Text is 4.5:1 and focus rings 3:1 or better on the window, in light and dark. The destructive action is also labelled in words, so colour is not the only cue.
+- It fades and scales in; with reduced motion it appears without animation.
+
+## API Reference
+
+<ApiReference component="alert-dialog" />
+
+## Derivation from DGA
+
+DGA has a Modal but no alert dialog, so this is not a DGA component. Its window, title, description and footer are the DGA Dialog (same `cn-dialog` classes), and its actions are the DGA Button. No colour is new.
+
+<ComponentDeviations component="alert-dialog" />
+
+## Contrast
+
+<ComponentContrast component="alert-dialog" />
