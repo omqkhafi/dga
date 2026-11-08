@@ -2186,7 +2186,7 @@
     @apply mx-auto grid h-18 w-full max-w-[1280px] grid-cols-[1fr_auto_1fr] items-center gap-4 px-4 data-full:max-w-none lg:flex lg:px-8;
   }
   .cn-header-logo {
-    @apply col-start-2 flex shrink-0 items-center justify-self-center lg:col-auto;
+    @apply col-start-2 row-start-1 flex shrink-0 items-center justify-self-center lg:col-auto lg:row-auto;
   }
   .cn-header-nav {
     @apply hidden min-w-0 flex-1 lg:block;
@@ -2213,7 +2213,7 @@
   .cn-header-action {
     @apply relative inline-flex h-18 cursor-pointer items-center justify-center gap-1 overflow-hidden rounded-sm border-0 bg-transparent px-4 py-2 text-md font-medium whitespace-nowrap text-text-default no-underline;
     @apply after:pointer-events-none after:absolute after:inset-x-2 after:bottom-0 after:h-1.5 after:rounded-full after:bg-transparent after:content-[''];
-    @apply hover:bg-button-background-neutral-hovered hover:after:bg-background-neutral-400 active:bg-button-background-neutral-pressed active:after:bg-background-neutral-800 focus-visible:after:bg-background-neutral-800;
+    @apply hover:bg-button-background-neutral-hovered hover:after:bg-background-neutral-400 active:bg-button-background-neutral-pressed active:after:bg-background-neutral-800;
     @apply focus-visible:outline-2 focus-visible:outline-solid focus-visible:-outline-offset-2 focus-visible:outline-border-black;
     @apply data-current:bg-button-background-primary-default data-current:text-text-oncolor-primary data-current:after:bg-background-primary-400 data-current:[&_svg]:text-icon-oncolor data-current:hover:bg-button-background-primary-hovered data-current:hover:after:bg-background-primary-400 data-current:active:bg-button-background-primary-pressed data-current:active:after:bg-background-primary-400 data-current:focus-visible:after:bg-background-primary-400;
     @apply disabled:pointer-events-none disabled:cursor-not-allowed disabled:bg-transparent disabled:text-text-default-disabled disabled:[&_svg]:text-icon-default-disabled disabled:data-current:bg-transparent disabled:data-current:text-text-default-disabled disabled:data-current:[&_svg]:text-icon-default-disabled disabled:data-current:after:bg-background-neutral-100;
@@ -2236,10 +2236,10 @@
     @apply focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-offset-1 focus-visible:outline-border-black;
   }
   .cn-header-menu-button {
-    @apply col-start-1 justify-self-start;
+    @apply col-start-3 row-start-1 justify-self-end;
   }
   .cn-header-overflow-button {
-    @apply col-start-3 justify-self-end;
+    @apply col-start-1 row-start-1 justify-self-start;
   }
   .cn-header-overflow {
     @apply min-w-48 lg:hidden;

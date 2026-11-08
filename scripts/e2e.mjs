@@ -1803,6 +1803,27 @@ async function compositeChecks() {
       ),
       `${lang}: the header does not scroll sideways at 375px`,
     );
+    const phone = await page.evaluate(() => {
+      const box = (s) => document.querySelector(`[data-slot=${s}]`).getBoundingClientRect();
+      const [more, logo, menu] = [
+        box("header-overflow-button"),
+        box("header-logo"),
+        box("header-menu-button"),
+      ];
+      return {
+        more: more.x,
+        logo: logo.x,
+        menu: menu.x,
+        sameRow: Math.abs(more.y - logo.y) < 40 && Math.abs(menu.y - logo.y) < 40,
+      };
+    });
+    check(
+      phone.sameRow &&
+        (rtl
+          ? phone.menu < phone.logo && phone.logo < phone.more
+          : phone.more < phone.logo && phone.logo < phone.menu),
+      `${lang}: on a phone the overflow button is on the start side, the logo in the middle and the menu on the end (${JSON.stringify(phone)})`,
+    );
     await slot("header-menu-button").focus();
     await page.keyboard.press("Enter");
     await page.waitForTimeout(400);

@@ -4131,7 +4131,7 @@
     "area": "Components",
     "item": "Header: selected block, indicator bar and focus",
     "original": "Selected Header Menu Item and Header Action are a primary fill. Focused is a 2px border-black stroke; Disabled has no bar.",
-    "ours": "Selected is a full-height primary block with DGA's bottom bar: 6px high, inset 8px from each side, fully rounded, background-primary-400. An unselected item shows a bar on hover (background-neutral-400) and when pressed, open or focused (background-neutral-800). Selected and disabled drops the block, greys the label and shows a muted bar (background-neutral-100). Focus is a 2px outline inside the item (a stroke would shift the label) shown on keyboard focus only.",
+    "ours": "Selected is a full-height primary block with DGA's bottom bar: 6px high, inset 8px from each side, fully rounded, background-primary-400. An unselected item shows a bar on hover (background-neutral-400) and when pressed or open (background-neutral-800); focused shows only the outline, as in Figma. Selected and disabled drops the block, greys the label and shows a muted bar (background-neutral-100). Focus is a 2px outline inside the item (a stroke would shift the label) shown on keyboard focus only.",
     "reason": "The bar shape and colours follow the DGA header as published (measured on a live DGA-based site, not in the Figma dump). background-primary-400 on the selected block is 2.10:1 (2.92:1 hovered), below the 3:1 for a state indicator, and it is not corrected: the bar never carries the selected state alone (the brand block fill and aria-current do), so the pair is not in the Contrast audit. Disabled items are exempt from contrast.",
     "status": "fixed",
     "component": "header"
@@ -4140,8 +4140,8 @@
     "area": "Components",
     "item": "Header: phone layout and actions",
     "original": "The mobile Header shows the menu, the logo and an overflow control. Header Action is an icon and label in the bar.",
-    "ours": "Below lg: menu button (start), centred logo, overflow (…) button (end), mirrored in RTL. The overflow button opens a Menu of the actions; `language` and `user` move to the foot of the Nav Drawer. Action labels are always visible in the bar.",
-    "reason": "Actions do not fit a phone bar. The overflow position and its content are not described in the Figma dump (UNVERIFIED).",
+    "ours": "Below lg: overflow (…) button (start), centred logo, menu button (end), mirrored in RTL, as in the Figma Nav Header frames. The overflow button opens a Menu of the actions; `language` and `user` move to the foot of the Nav Drawer. Action labels are always visible in the bar.",
+    "reason": "Actions do not fit a phone bar. The sides follow the Figma Nav Header frames; the content of the overflow menu is not drawn there (our choice).",
     "status": "fixed",
     "component": "header"
   },

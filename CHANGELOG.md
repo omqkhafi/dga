@@ -11,12 +11,13 @@ Patch: two Header fixes found by looking at the published 0.7.3 previews.
 
 ### Fixed
 
-- **Header, indicator bar:** the bar under the selected item now matches the DGA header: 6px high, inset 8px from each side, fully rounded, `background-primary-400` (it was a 4px square full-width bar in `primary-200`). An unselected item shows the bar on hover (`neutral-400`) and when pressed, open or focused (`neutral-800`); a selected, disabled item shows a muted bar (`neutral-100`). The bar colour on the selected block is 2.10:1 (2.92:1 hovered); this is DGA's value, it is not corrected because the block fill and `aria-current` carry the state, and it is logged in Deviations and left out of the Contrast audit.
+- **Header, phone layout:** the overflow (…) button is on the start side and the menu button on the end side, mirrored in RTL, as in the Figma Nav Header frames (0.7.3 had them the other way round); the overflow menu opens aligned to its button.
+- **Header, indicator bar:** the bar under the selected item now matches the DGA header: 6px high, inset 8px from each side, fully rounded, `background-primary-400` (it was a 4px square full-width bar in `primary-200`). An unselected item shows the bar on hover (`neutral-400`) and when pressed or open (`neutral-800`), and only the outline when focused (Figma); a selected, disabled item shows a muted bar (`neutral-100`). The bar colour on the selected block is 2.10:1 (2.92:1 hovered); this is DGA's value, it is not corrected because the block fill and `aria-current` carry the state, and it is logged in Deviations and left out of the Contrast audit.
 - **Header:** a selected item that is also disabled (`aria-current="page"` with `disabled` or `aria-disabled`) drops the brand block but kept its white label, so the label was invisible on the white bar and only the muted bottom bar showed. It now uses the disabled text and icon colours, in `Header` items and `HeaderAction`. This showed in the "Selected, disabled" examples of Menu items and Action states.
 
 ### Tests
 
-- The composite browser group checks that a selected, disabled Header item has a label that is not white, and the bar's height, inset and radius.
+- The composite browser group checks that a selected, disabled Header item has a label that is not white, the bar's height, inset and radius, and the sides of the phone buttons.
 
 ## [0.7.3] - 2026-11-08
 
