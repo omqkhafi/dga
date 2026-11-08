@@ -88,7 +88,8 @@ describe("registry", () => {
     for (const dep of ["table", "pagination", "checkbox", "skeleton"]) {
       expect(item?.registryDependencies).toContain(`{{REGISTRY_URL}}/r/${dep}.json`);
     }
-    expect(item?.dependencies).toContain("@tanstack/react-table");
+    // Pinned to v8: the registry must not pull in TanStack Table v9, whose API is different.
+    expect(item?.dependencies).toContain("@tanstack/react-table@8.21.3");
     const source = readFileSync(join(ROOT, "registry/bases/base/ui/data-table.tsx"), "utf8");
     expect(source).toContain('"@/components/dga/pagination"');
   });

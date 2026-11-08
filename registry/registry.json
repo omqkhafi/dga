@@ -753,7 +753,11 @@
       "type": "registry:ui",
       "title": "Data Table",
       "description": "A Table with sorting, filtering, row selection, pagination, loading and empty states, built on TanStack Table, the DGA Table and the DGA Pagination.",
-      "dependencies": ["@hugeicons/react", "@hugeicons/core-free-icons", "@tanstack/react-table"],
+      "dependencies": [
+        "@hugeicons/react",
+        "@hugeicons/core-free-icons",
+        "@tanstack/react-table@8.21.3"
+      ],
       "registryDependencies": [
         "{{REGISTRY_URL}}/r/utils.json",
         "{{REGISTRY_URL}}/r/table.json",
