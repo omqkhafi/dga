@@ -1406,7 +1406,7 @@ async function navigationChecks() {
     const arrowTransform = await nav
       .locator("[data-slot=pagination-previous] svg")
       .first()
-      .evaluate((el) => getComputedStyle(el).transform);
+      .evaluate((el) => getComputedStyle(el).scale);
     check(
       rtl ? arrowTransform !== "none" : arrowTransform === "none",
       `${lang}: the previous arrow ${rtl ? "mirrors" : "does not mirror"} (${arrowTransform})`,
@@ -1456,12 +1456,18 @@ async function navigationChecks() {
       `${lang}: every step says its state in words`,
     );
     await page.locator("[data-slot=stepper-item] button").first().focus();
+    await page.keyboard.press("Enter");
+    check(
+      (await steps.nth(0).getAttribute("data-status")) === "current" &&
+        (await steps.nth(1).getAttribute("data-status")) === "upcoming",
+      `${lang}: Enter on the first step makes it current`,
+    );
     await page.keyboard.press("Tab");
     await page.keyboard.press("Enter");
     check(
-      (await steps.nth(1).getAttribute("data-status")) === "completed" ||
-        (await steps.nth(2).getAttribute("data-status")) === "current",
-      `${lang}: Tab then Enter on a step chooses it`,
+      (await steps.nth(1).getAttribute("data-status")) === "current" &&
+        (await steps.nth(0).getAttribute("data-status")) === "completed",
+      `${lang}: Tab then Enter on the next step chooses it`,
     );
     const firstStep = await steps.nth(0).boundingBox();
     const lastStep = await steps.nth(3).boundingBox();

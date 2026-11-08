@@ -455,7 +455,7 @@
     {
       "name": "CardExpandable",
       "description": "A card whose details open and close (DGA: Expandable). Built on Base UI Collapsible. Put a `CardExpandableTrigger` and a `CardExpandablePanel` inside, with the always-visible part first.",
-      "descriptionAr": "بطاقة تُفتح تفاصيلها وتُغلق (في DGA: Expandable). مبنية على Base UI Collapsible. ضع `CardExpandableTrigger` و`CardExpandablePanel` داخلها، والجزء الظاهر دائمًا أولًا.",
+      "descriptionAr": "بطاقة تُفتح تفاصيلها وتُغلق (في DGA: بطاقة قابلة للتوسيع). مبنية على Base UI Collapsible. ضع `CardExpandableTrigger` و`CardExpandablePanel` داخلها، والجزء الظاهر دائمًا أولًا.",
       "inherits": {
         "name": "Collapsible",
         "url": "https://base-ui.com/react/components/collapsible"
@@ -570,7 +570,7 @@
     {
       "name": "SelectableCard",
       "description": "A card you pick (DGA: Selectable), built on a checkbox: clicking anywhere on the card, or pressing Space on the focused checkbox, toggles it. The card's text names the checkbox. Do not put links or buttons inside; use a `Card` with a `CardLink` for something that navigates.",
-      "descriptionAr": "بطاقة تُختار (في DGA: Selectable)، مبنية على خانة اختيار: النقر في أي موضع منها، أو Space على الخانة المركَّزة، يبدّلها. ونص البطاقة يسمّي الخانة. لا تضع روابط أو أزرارًا داخلها؛ واستخدم `Card` مع `CardLink` لما ينقل إلى مكان.",
+      "descriptionAr": "بطاقة تُختار (في DGA: بطاقة قابلة للاختيار)، مبنية على خانة اختيار: النقر في أي موضع منها، أو Space على الخانة المركَّزة، يبدّلها. ونص البطاقة يسمّي الخانة. لا تضع روابط أو أزرارًا داخلها؛ واستخدم `Card` مع `CardLink` لما ينقل إلى مكان.",
       "inherits": {
         "name": "Collapsible",
         "url": "https://base-ui.com/react/components/collapsible"
@@ -1942,7 +1942,7 @@
           "default": "true",
           "required": false,
           "description": "A line between rows. Default true.",
-          "descriptionAr": "خط بين الصفوف. الافتراضي true."
+          "descriptionAr": "خط بين الصفوف. الافتراضي `true`."
         },
         {
           "name": "columnDivider",
@@ -2615,7 +2615,7 @@
     {
       "name": "Progress",
       "description": "A bar showing how far a task has got (DGA: Progress Bar), on Base UI Progress. `value` is 0 to `max` (100); pass `null` while the length is unknown and the bar animates. `status` is `success` or `error` for a finished task: it adds an icon and the matching colour, and the helper text should say what happened. Name it with `label` (or `aria-label`).",
-      "descriptionAr": "شريط يبيّن مدى تقدم مهمة (في DGA: Progress Bar)، على Base UI Progress. قيمة `value` من 0 إلى `max` (100)؛ ومرّر `null` حين لا يُعرف الطول فيتحرك الشريط. تضيف `status` ‏`success` أو `error` لمهمة منتهية أيقونة واللون المناسب، وينبغي أن يقول نص المساعدة ما حدث. سمِّه بـ `label` (أو `aria-label`).",
+      "descriptionAr": "شريط يبيّن مدى تقدم مهمة (في DGA: شريط التقدم)، على Base UI Progress. قيمة `value` من 0 إلى `max` (100)؛ ومرّر `null` حين لا يُعرف الطول فيتحرك الشريط. تضيف `status` ‏`success` أو `error` لمهمة منتهية أيقونة واللون المناسب، وينبغي أن يقول نص المساعدة ما حدث. سمِّه بـ `label` (أو `aria-label`).",
       "inherits": {
         "name": "Progress",
         "url": "https://base-ui.com/react/components/progress"
@@ -2659,7 +2659,7 @@
           "default": "true",
           "required": false,
           "description": "Shows the percentage at the end of the label row. Default true.",
-          "descriptionAr": "يعرض النسبة المئوية في نهاية صف التسمية. الافتراضي true."
+          "descriptionAr": "يعرض النسبة المئوية في نهاية صف التسمية. الافتراضي `true`."
         },
         {
           "name": "helperText",
@@ -2682,7 +2682,7 @@
     {
       "name": "ProgressCircle",
       "description": "A ring showing progress (DGA: Circular Progress Bar), on Base UI Progress. Sizes 64, 80, 120, 160 and 200px. `status` `success` shows a tick and `error` an alert in place of the percentage. With `value={null}` the ring turns (a still arc when the person prefers reduced motion).",
-      "descriptionAr": "حلقة تبيّن التقدم (في DGA: Circular Progress Bar)، على Base UI Progress. الأحجام 64 و80 و120 و160 و200px. تعرض `status` ‏`success` علامة صح و`error` تنبيهًا بدل النسبة. ومع `value={null}` تدور الحلقة (قوس ثابت حين يفضّل الشخص تقليل الحركة).",
+      "descriptionAr": "حلقة تبيّن التقدم (في DGA: حلقة التقدم)، على Base UI Progress. الأحجام 64 و80 و120 و160 و200px. تعرض `status` ‏`success` علامة صح و`error` تنبيهًا بدل النسبة. ومع `value={null}` تدور الحلقة (قوس ثابت حين يفضّل الشخص تقليل الحركة).",
       "inherits": {
         "name": "Progress",
         "url": "https://base-ui.com/react/components/progress"
@@ -2726,7 +2726,7 @@
           "default": "true",
           "required": false,
           "description": "Shows the percentage in the middle. Default true.",
-          "descriptionAr": "يعرض النسبة في الوسط. الافتراضي true."
+          "descriptionAr": "يعرض النسبة في الوسط. الافتراضي `true`."
         },
         {
           "name": "formatValue",
@@ -3523,7 +3523,7 @@
     {
       "name": "TableOfContents",
       "description": "An outline of the page with links to its sections (DGA: Table of Content). The section being read is highlighted and has `aria-current=\"location\"`. Tab moves through the links; the Up and Down arrows, Home and End move between them too. Pair each link with an element that has the matching `id`, and add `scroll-margin-top` to those elements for a sticky header.",
-      "descriptionAr": "مخطط للصفحة بروابط إلى أقسامها (في DGA: Table of Content). يُميَّز القسم المقروء ويحمل `aria-current=\"location\"`. ينقل Tab بين الروابط، وكذلك مفتاحا السهم لأعلى وأسفل وHome وEnd. اقرن كل رابط بعنصر له `id` مطابق، وأضف `scroll-margin-top` إلى تلك العناصر للترويسة الثابتة.",
+      "descriptionAr": "مخطط للصفحة بروابط إلى أقسامها (في DGA: جدول المحتويات). يُميَّز القسم المقروء ويحمل `aria-current=\"location\"`. ينقل Tab بين الروابط، وكذلك مفتاحا السهم لأعلى وأسفل وHome وEnd. اقرن كل رابط بعنصر له `id` مطابق، وأضف `scroll-margin-top` إلى تلك العناصر للترويسة الثابتة.",
       "inherits": null,
       "props": [
         {
@@ -3565,7 +3565,7 @@
     {
       "name": "Table",
       "description": "A plain semantic HTML table (DGA: Table). `compact` shrinks the rows, `striped` shades every other row (DGA: alternating rows), `contained` adds a border and rounded corners, and `rowDivider` (default) and `columnDivider` draw the lines. The table scrolls sideways inside its own wrapper when the screen is narrow, and columns follow the page direction. Give it a `TableCaption` or an `aria-label`.",
-      "descriptionAr": "جدول HTML دلالي بسيط (في DGA: Table). يصغّر `compact` الصفوف، ويظلل `striped` كل صف ثانٍ (في DGA: Alternating rows)، ويضيف `contained` حدًا وزوايا مدورة، وترسم `rowDivider` (الافتراضي) و`columnDivider` الخطوط. يتمرر الجدول أفقيًا داخل غلافه حين تضيق الشاشة، وتتبع الأعمدة اتجاه الصفحة. أعطه `TableCaption` أو `aria-label`.",
+      "descriptionAr": "جدول HTML دلالي بسيط (في DGA: Table). يصغّر `compact` الصفوف، ويظلل `striped` كل صف ثانٍ (في DGA: صفوف متبادلة)، ويضيف `contained` حدًا وزوايا مدورة، وترسم `rowDivider` (الافتراضي) و`columnDivider` الخطوط. يتمرر الجدول أفقيًا داخل غلافه حين تضيق الشاشة، وتتبع الأعمدة اتجاه الصفحة. أعطه `TableCaption` أو `aria-label`.",
       "inherits": null,
       "props": [
         {
@@ -3590,7 +3590,7 @@
           "default": "false",
           "required": false,
           "description": "Shades every other row (DGA: alternating rows).",
-          "descriptionAr": "يظلل كل صف ثانٍ (في DGA: Alternating rows)."
+          "descriptionAr": "يظلل كل صف ثانٍ (في DGA: صفوف متبادلة)."
         },
         {
           "name": "rowDivider",
@@ -3598,7 +3598,7 @@
           "default": "true",
           "required": false,
           "description": "A line between rows. Default true.",
-          "descriptionAr": "خط بين الصفوف. الافتراضي true."
+          "descriptionAr": "خط بين الصفوف. الافتراضي `true`."
         },
         {
           "name": "columnDivider",
@@ -3650,7 +3650,7 @@
     {
       "name": "TableFilterButton",
       "description": "The filter button in a column heading (DGA: Table Header Cell, Filter). `active` is true while a filter is applied; set `aria-pressed` or `aria-expanded` to match what the button does.",
-      "descriptionAr": "زر التصفية في عنوان عمود (في DGA: Table Header Cell، Filter). قيمة `active` صحيحة ما دام مرشح مطبقًا؛ واضبط `aria-pressed` أو `aria-expanded` بما يفعله الزر.",
+      "descriptionAr": "زر التصفية في عنوان عمود (في DGA: تصفية في عنوان عمود الجدول). قيمة `active` صحيحة ما دام مرشح مطبقًا؛ واضبط `aria-pressed` أو `aria-expanded` بما يفعله الزر.",
       "inherits": null,
       "props": [
         {
@@ -3703,7 +3703,7 @@
     {
       "name": "TableSortButton",
       "description": "The sort button in a column heading (DGA: Table Header Cell, Sort). `direction` is `false` (not sorted), `\"asc\"` or `\"desc\"`. Put it in the `TableHead` and set `aria-sort` on that heading. Name it, for example \"Sort by Name\".",
-      "descriptionAr": "زر الترتيب في عنوان عمود (في DGA: Table Header Cell، Sort). قيمة `direction` هي `false` (غير مرتب) أو `\"asc\"` أو `\"desc\"`. ضعه في `TableHead` وضع `aria-sort` على ذلك العنوان. وسمِّه، مثل «ترتيب حسب الاسم».",
+      "descriptionAr": "زر الترتيب في عنوان عمود (في DGA: ترتيب في عنوان عمود الجدول). قيمة `direction` هي `false` (غير مرتب) أو `\"asc\"` أو `\"desc\"`. ضعه في `TableHead` وضع `aria-sort` على ذلك العنوان. وسمِّه، مثل «ترتيب حسب الاسم».",
       "inherits": null,
       "props": [
         {

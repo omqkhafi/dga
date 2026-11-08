@@ -68,6 +68,40 @@ test("the Arabic dictionary has no English words", () => {
   expect(bad).toEqual([]);
 });
 
+test("the Arabic API descriptions have no English words", async () => {
+  const api = (await Bun.file("apps/docs/lib/generated/api.json").json()) as Record<
+    string,
+    { name: string; descriptionAr: string; props: { name: string; descriptionAr: string }[] }[]
+  >;
+  const bad: string[] = [];
+  // The Phase 5 components (0.5.0). Earlier ones are covered by the browser audit, which skips code.
+  const phase5 = [
+    "breadcrumb",
+    "pagination",
+    "table-of-contents",
+    "card",
+    "list",
+    "table",
+    "data-table",
+    "rating",
+    "progress",
+    "stepper",
+  ];
+  for (const [slug, parts] of Object.entries(api)) {
+    if (!phase5.includes(slug)) continue;
+    for (const part of parts) {
+      for (const [name, text] of [
+        [part.name, part.descriptionAr],
+        ...part.props.map((p) => [`${part.name}.${p.name}`, p.descriptionAr] as const),
+      ] as const) {
+        const words = latinWords(text);
+        if (words.length > 0) bad.push(`${slug}.${name}: ${[...new Set(words)].join(", ")}`);
+      }
+    }
+  }
+  expect(bad).toEqual([]);
+});
+
 const files = async () => {
   const out: string[] = [];
   for await (const file of new Glob("apps/docs/content/docs/**/*.mdx").scan()) out.push(file);

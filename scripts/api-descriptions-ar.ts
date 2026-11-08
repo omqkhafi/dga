@@ -503,12 +503,12 @@ export const API_DESCRIPTIONS_AR: Record<string, string> = {
   "card.CardLink":
     "الرابط الذي يجعل البطاقة كلها قابلة للنقر. ضعه حول نص العنوان. تمتد مساحة نقره على البطاقة، فتجد قارئة الشاشة رابطًا واحدًا باسم العنوان، ويرسم تركيز لوحة المفاتيح الحلقة حول البطاقة. مرّر `render` لاستخدام رابط موجّهك.",
   "card.CardExpandable":
-    "بطاقة تُفتح تفاصيلها وتُغلق (في DGA: Expandable). مبنية على Base UI Collapsible. ضع `CardExpandableTrigger` و`CardExpandablePanel` داخلها، والجزء الظاهر دائمًا أولًا.",
+    "بطاقة تُفتح تفاصيلها وتُغلق (في DGA: بطاقة قابلة للتوسيع). مبنية على Base UI Collapsible. ضع `CardExpandableTrigger` و`CardExpandablePanel` داخلها، والجزء الظاهر دائمًا أولًا.",
   "card.CardExpandableTrigger":
     "الزر الذي يفتح التفاصيل ويغلقها. يخبر `aria-expanded` قارئات الشاشة بحالته.",
   "card.CardExpandablePanel": "التفاصيل التي تُفتح وتُغلق.",
   "card.SelectableCard":
-    "بطاقة تُختار (في DGA: Selectable)، مبنية على خانة اختيار: النقر في أي موضع منها، أو Space على الخانة المركَّزة، يبدّلها. ونص البطاقة يسمّي الخانة. لا تضع روابط أو أزرارًا داخلها؛ واستخدم `Card` مع `CardLink` لما ينقل إلى مكان.",
+    "بطاقة تُختار (في DGA: بطاقة قابلة للاختيار)، مبنية على خانة اختيار: النقر في أي موضع منها، أو Space على الخانة المركَّزة، يبدّلها. ونص البطاقة يسمّي الخانة. لا تضع روابط أو أزرارًا داخلها؛ واستخدم `Card` مع `CardLink` لما ينقل إلى مكان.",
   "card.SelectableCard.checked": "هل البطاقة مختارة (بتحكم خارجي).",
   "card.SelectableCard.onCheckedChange": "تُستدعى بالحالة الجديدة.",
   "card.SelectableCard.disabled": "لا يمكن اختيار البطاقة.",
@@ -567,16 +567,16 @@ export const API_DESCRIPTIONS_AR: Record<string, string> = {
   "pagination.Pagination.formatNumber":
     "يحوّل الرقم إلى الأرقام المعروضة، مثل الأرقام الهندية في الصفحات العربية.",
   "progress.Progress":
-    "شريط يبيّن مدى تقدم مهمة (في DGA: Progress Bar)، على Base UI Progress. قيمة `value` من 0 إلى `max` (100)؛ ومرّر `null` حين لا يُعرف الطول فيتحرك الشريط. تضيف `status` ‏`success` أو `error` لمهمة منتهية أيقونة واللون المناسب، وينبغي أن يقول نص المساعدة ما حدث. سمِّه بـ `label` (أو `aria-label`).",
+    "شريط يبيّن مدى تقدم مهمة (في DGA: شريط التقدم)، على Base UI Progress. قيمة `value` من 0 إلى `max` (100)؛ ومرّر `null` حين لا يُعرف الطول فيتحرك الشريط. تضيف `status` ‏`success` أو `error` لمهمة منتهية أيقونة واللون المناسب، وينبغي أن يقول نص المساعدة ما حدث. سمِّه بـ `label` (أو `aria-label`).",
   "progress.Progress.label": "التسمية فوق الشريط. وهي اسم شريط التقدم لقارئات الشاشة.",
-  "progress.Progress.showValue": "يعرض النسبة المئوية في نهاية صف التسمية. الافتراضي true.",
+  "progress.Progress.showValue": "يعرض النسبة المئوية في نهاية صف التسمية. الافتراضي `true`.",
   "progress.Progress.helperText": "سطر مساعدة تحت الشريط.",
   "progress.Progress.formatValue":
     'يحوّل القيمة إلى النص المعروض، مثل الأرقام الهندية: `(v) => "٥٠٪"`.',
   "progress.ProgressCircle":
-    "حلقة تبيّن التقدم (في DGA: Circular Progress Bar)، على Base UI Progress. الأحجام 64 و80 و120 و160 و200px. تعرض `status` ‏`success` علامة صح و`error` تنبيهًا بدل النسبة. ومع `value={null}` تدور الحلقة (قوس ثابت حين يفضّل الشخص تقليل الحركة).",
+    "حلقة تبيّن التقدم (في DGA: حلقة التقدم)، على Base UI Progress. الأحجام 64 و80 و120 و160 و200px. تعرض `status` ‏`success` علامة صح و`error` تنبيهًا بدل النسبة. ومع `value={null}` تدور الحلقة (قوس ثابت حين يفضّل الشخص تقليل الحركة).",
   "progress.ProgressCircle.label": "عنوان قصير تحت النسبة، مثل «مستخدم نشط». يُخفى دون 120px.",
-  "progress.ProgressCircle.showValue": "يعرض النسبة في الوسط. الافتراضي true.",
+  "progress.ProgressCircle.showValue": "يعرض النسبة في الوسط. الافتراضي `true`.",
   "progress.ProgressCircle.formatValue": 'يحوّل القيمة إلى النص المعروض. الافتراضي `"50%"`.',
   "rating.Rating":
     "تقييم بالنجوم (في DGA: Rating). تفاعلي افتراضيًا: مجموعة أزرار اختيار، فتكون نجمة واحدة في ترتيب Tab وتغيّر مفاتيح الأسهم التقييم (يمين ويسار يتبادلان في الصفحات العربية)، والمرور على نجمة يعاينها. ومع `readOnly` يصير صورة ببديل نصي. نجوم كاملة فقط كما تعرّف DGA. تقع النجمة الأولى عند جهة البداية، فتمتلئ من اليمين إلى اليسار في الصفحات العربية. ويستخدم `brand` اللون الأساسي بدل الذهبي.",
@@ -612,7 +612,7 @@ export const API_DESCRIPTIONS_AR: Record<string, string> = {
   "stepper.StepperItem.disabled":
     "لا يمكن اختيار الخطوة حين يكون لـ Stepper الخاصية `onValueChange`.",
   "table-of-contents.TableOfContents":
-    'مخطط للصفحة بروابط إلى أقسامها (في DGA: Table of Content). يُميَّز القسم المقروء ويحمل `aria-current="location"`. ينقل Tab بين الروابط، وكذلك مفتاحا السهم لأعلى وأسفل وHome وEnd. اقرن كل رابط بعنصر له `id` مطابق، وأضف `scroll-margin-top` إلى تلك العناصر للترويسة الثابتة.',
+    'مخطط للصفحة بروابط إلى أقسامها (في DGA: جدول المحتويات). يُميَّز القسم المقروء ويحمل `aria-current="location"`. ينقل Tab بين الروابط، وكذلك مفتاحا السهم لأعلى وأسفل وHome وEnd. اقرن كل رابط بعنصر له `id` مطابق، وأضف `scroll-margin-top` إلى تلك العناصر للترويسة الثابتة.',
   "table-of-contents.TableOfContents.items": "الأقسام بترتيب الصفحة. تتداخل المستويات بالإزاحة.",
   "table-of-contents.TableOfContents.activeId":
     "القسم الحالي (بتحكم خارجي). اتركه ليتبع موضع التمرير.",
@@ -621,7 +621,7 @@ export const API_DESCRIPTIONS_AR: Record<string, string> = {
   "table-of-contents.TableOfContents.offset":
     "عدد البكسلات من أعلى نافذة العرض الذي يُعدّ عنده القسم قد بُلغ. الافتراضي 96.",
   "table.Table":
-    "جدول HTML دلالي بسيط (في DGA: Table). يصغّر `compact` الصفوف، ويظلل `striped` كل صف ثانٍ (في DGA: Alternating rows)، ويضيف `contained` حدًا وزوايا مدورة، وترسم `rowDivider` (الافتراضي) و`columnDivider` الخطوط. يتمرر الجدول أفقيًا داخل غلافه حين تضيق الشاشة، وتتبع الأعمدة اتجاه الصفحة. أعطه `TableCaption` أو `aria-label`.",
+    "جدول HTML دلالي بسيط (في DGA: Table). يصغّر `compact` الصفوف، ويظلل `striped` كل صف ثانٍ (في DGA: صفوف متبادلة)، ويضيف `contained` حدًا وزوايا مدورة، وترسم `rowDivider` (الافتراضي) و`columnDivider` الخطوط. يتمرر الجدول أفقيًا داخل غلافه حين تضيق الشاشة، وتتبع الأعمدة اتجاه الصفحة. أعطه `TableCaption` أو `aria-label`.",
   "table.Table.containerClassName": "أصناف الغلاف الذي يتمرر حول الجدول.",
   "table.Table.scrollLabel":
     "اسم منطقة التمرير الذي تقرؤه قارئات الشاشة حين يكون الجدول أعرض من حاويته. اتركه لجدول يتسع دائمًا.",
@@ -630,9 +630,9 @@ export const API_DESCRIPTIONS_AR: Record<string, string> = {
   "table.TableHead":
     'عنوان عمود أو صف. قيمة `scope` هي `col` افتراضيًا؛ ومرّر `scope="row"` لعنوان صف.',
   "table.TableSortButton":
-    'زر الترتيب في عنوان عمود (في DGA: Table Header Cell، Sort). قيمة `direction` هي `false` (غير مرتب) أو `"asc"` أو `"desc"`. ضعه في `TableHead` وضع `aria-sort` على ذلك العنوان. وسمِّه، مثل «ترتيب حسب الاسم».',
+    'زر الترتيب في عنوان عمود (في DGA: ترتيب في عنوان عمود الجدول). قيمة `direction` هي `false` (غير مرتب) أو `"asc"` أو `"desc"`. ضعه في `TableHead` وضع `aria-sort` على ذلك العنوان. وسمِّه، مثل «ترتيب حسب الاسم».',
   "table.TableFilterButton":
-    "زر التصفية في عنوان عمود (في DGA: Table Header Cell، Filter). قيمة `active` صحيحة ما دام مرشح مطبقًا؛ واضبط `aria-pressed` أو `aria-expanded` بما يفعله الزر.",
+    "زر التصفية في عنوان عمود (في DGA: تصفية في عنوان عمود الجدول). قيمة `active` صحيحة ما دام مرشح مطبقًا؛ واضبط `aria-pressed` أو `aria-expanded` بما يفعله الزر.",
   "pagination.Pagination.size": "حجم العنصر: `sm` ‏24px، و`md` ‏32px (الافتراضي)، و`lg` ‏40px.",
   "card.Card.effect":
     "`shadow` (الافتراضي) أو `stroke` (حد 1px) أو `none`. ولا ظل في الوضع الداكن.",
@@ -646,12 +646,12 @@ export const API_DESCRIPTIONS_AR: Record<string, string> = {
   "list.List.tone": "اللون: `primary` أو `neutral` (الافتراضي) أو `onColor` لخلفيات العلامة.",
   "list.StructuredList.compact": "صفوف أقصر (48px).",
   "list.StructuredList.contained": "حد وزوايا مدورة حول القائمة.",
-  "list.StructuredList.rowDivider": "خط بين الصفوف. الافتراضي true.",
+  "list.StructuredList.rowDivider": "خط بين الصفوف. الافتراضي `true`.",
   "list.StructuredList.columnDivider": "خط بين الأعمدة.",
   "table.Table.compact": "صفوف أقصر (48px) ورأس أقصر (40px).",
   "table.Table.contained": "حد وزوايا مدورة حول الجدول.",
-  "table.Table.striped": "يظلل كل صف ثانٍ (في DGA: Alternating rows).",
-  "table.Table.rowDivider": "خط بين الصفوف. الافتراضي true.",
+  "table.Table.striped": "يظلل كل صف ثانٍ (في DGA: صفوف متبادلة).",
+  "table.Table.rowDivider": "خط بين الصفوف. الافتراضي `true`.",
   "table.Table.columnDivider": "خط بين الأعمدة.",
   "rating.Rating.size": "حجم النجمة: `sm` ‏24px، و`md` ‏32px (الافتراضي)، و`lg` ‏48px.",
   "rating.Rating.brand": "اللون الأساسي بدل الذهبي.",

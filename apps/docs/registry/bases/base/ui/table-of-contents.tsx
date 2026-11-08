@@ -31,6 +31,11 @@ function useActiveSection(ids: string[], offset = 96) {
       for (const section of sections) {
         if (section.getBoundingClientRect().top <= offset) current = section.id;
       }
+      // At the bottom of the page the last sections can never reach the line: the last one counts.
+      const bottom =
+        window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2;
+      const scrolls = document.documentElement.scrollHeight > window.innerHeight + 2;
+      if (bottom && scrolls) current = sections.at(-1)?.id;
       setActive(current ?? sections[0]?.id);
     };
     update();
