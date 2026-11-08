@@ -169,7 +169,7 @@ function ServiceCombobox({
 
 export function ComboboxBasic() {
   return (
-    <div className="max-w-sm">
+    <div className="mx-auto w-full max-w-sm">
       <Labelled
         label={["Service", "الخدمة"]}
         helper={["Type to search, or open the list.", "اكتب للبحث أو افتح القائمة."]}
@@ -184,7 +184,7 @@ export function ComboboxStates() {
   const services = useServices();
   const chosen = services[0];
   return (
-    <div className="grid max-w-3xl gap-4 sm:grid-cols-2">
+    <div className="mx-auto w-full grid max-w-3xl gap-4 sm:grid-cols-2">
       <Labelled label={["Default", "افتراضي"]}>
         <ServiceCombobox />
       </Labelled>
@@ -210,7 +210,7 @@ export function ComboboxStates() {
 /** The list open from the start, so the item states are visible. */
 export function ComboboxOpen() {
   return (
-    <div className="min-h-80 max-w-sm">
+    <div className="mx-auto w-full min-h-80 max-w-sm">
       <Labelled label={["Service", "الخدمة"]}>
         <ServiceCombobox defaultOpen />
       </Labelled>
@@ -223,7 +223,7 @@ export function ComboboxMultiple() {
   const text = useComboText();
   const lang = useLanguage();
   return (
-    <div className="max-w-md">
+    <div className="mx-auto w-full max-w-md">
       <Labelled
         label={["Services", "الخدمات"]}
         helper={[
@@ -256,7 +256,7 @@ export function ComboboxGroups() {
   const cities = useCityGroups();
   const t = useBi();
   return (
-    <div className="max-w-sm">
+    <div className="mx-auto w-full max-w-sm">
       <Labelled label={["City", "المدينة"]}>
         <ServiceCombobox items={cities} placeholder={t("Choose a city", "اختر مدينة")} />
       </Labelled>
@@ -274,7 +274,7 @@ export function ComboboxCreatable() {
   // biome-ignore lint/correctness/useExhaustiveDependencies: reset on language only
   useEffect(() => setItems(services), [lang]);
   return (
-    <div className="max-w-md">
+    <div className="mx-auto w-full max-w-md">
       <Labelled
         label={["Tags", "الوسوم"]}
         helper={[
@@ -330,7 +330,7 @@ export function ComboboxAsync() {
   };
   useEffect(() => () => clearTimeout(timer.current), []);
   return (
-    <div className="max-w-sm">
+    <div className="mx-auto w-full max-w-sm">
       <Labelled
         label={["Service", "الخدمة"]}
         helper={[
@@ -415,7 +415,7 @@ export function CommandBasic() {
   const t = useBi();
   const [last, setLast] = useState<string | null>(null);
   return (
-    <div className="flex max-w-md flex-col gap-3">
+    <div className="mx-auto w-full flex max-w-md flex-col gap-3">
       <Command items={commands} {...text} onSelect={(option) => setLast(option.label)} />
       <p aria-live="polite" className="m-0 min-h-5 text-sm text-text-primary-paragraph">
         {last
@@ -431,7 +431,7 @@ export function CommandEmpty() {
   const text = useCommandText();
   const t = useBi();
   return (
-    <div className="max-w-md">
+    <div className="mx-auto w-full max-w-md">
       <Command items={commands} {...text} query={t("zzz", "ززز")} />
     </div>
   );

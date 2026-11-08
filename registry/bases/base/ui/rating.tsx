@@ -27,11 +27,17 @@ function Star({ fill }: { fill: number }) {
   const cut = `${Math.round((1 - Math.min(1, Math.max(0, fill))) * 1000) / 10}%`;
   return (
     <span aria-hidden className="cn-rating-star-wrap" style={{ ["--r-cut" as string]: cut }}>
-      <svg viewBox="0 0 24 24" focusable="false" className="cn-rating-star">
+      <svg viewBox="0 0 24 24" aria-hidden focusable="false" className="cn-rating-star">
         <path d={STAR_PATH} strokeLinejoin="round" />
       </svg>
       {fill > 0 ? (
-        <svg viewBox="0 0 24 24" focusable="false" data-filled="" className="cn-rating-star cn-rating-star-fill">
+        <svg
+          viewBox="0 0 24 24"
+          aria-hidden
+          focusable="false"
+          data-filled=""
+          className="cn-rating-star cn-rating-star-fill"
+        >
           <path d={STAR_PATH} strokeLinejoin="round" />
         </svg>
       ) : null}
@@ -140,7 +146,12 @@ function Rating({
         {...(props as Record<string, unknown>)}
       >
         {stars.map((n) => (
-          <span key={n} data-slot="rating-star" className="cn-rating-item" data-selected={value === n || value === n - 0.5 ? "" : undefined}>
+          <span
+            key={n}
+            data-slot="rating-star"
+            className="cn-rating-item"
+            data-selected={value === n || value === n - 0.5 ? "" : undefined}
+          >
             <Star fill={shown - (n - 1)} />
             {(allowHalf ? [n - 0.5, n] : [n]).map((v) => (
               <RadioPrimitive.Root

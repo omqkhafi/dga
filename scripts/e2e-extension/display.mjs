@@ -1,4 +1,4 @@
-// Browser checks for the Phase 7 part 2 work stream "display": Kbd, Empty, Item and Chart.
+// Browser checks for the Phase 7 part 2 work stream "display": Kbd, Empty, Item (extensions) and Chart (DGA Charts, no Extension label).
 // Called from scripts/e2e.mjs with the shared helpers.
 //   1. Every page fits at 375 and 1280 px in /en and /ar, shows the Extension badge and the
 //      extension note, and logs nothing to the console.
@@ -17,6 +17,8 @@ const allowlist = JSON.parse(
 const ARABIC = /[؀-ٟ٭-ۯۺ-ۿݐ-ݿﭐ-﷿ﹰ-﻿]/;
 
 const PAGES = ["kbd", "empty", "item", "chart"];
+// Chart is defined by DGA, so it has no Extension badge or note.
+const isExtension = (slug) => slug !== "chart";
 const BADGE = { en: "Extension", ar: "امتداد" };
 const NOTE = {
   en: "Platform Code extension, not part of DGA",
@@ -54,22 +56,27 @@ export async function extDisplayChecks({ browser, BASE, check }) {
           () => document.documentElement.scrollWidth - document.documentElement.clientWidth,
         );
         check(overflow <= 0, `${lang} ${width}px: ${slug} has no sideways scroll (${overflow}px)`);
+        const badges = await page
+          .locator("article header")
+          .getByText(BADGE[lang], { exact: true })
+          .count();
+        const notes = await page.getByText(NOTE[lang], { exact: true }).count();
         check(
-          (await page.locator("article header").getByText(BADGE[lang], { exact: true }).count()) ===
-            1,
-          `${lang} ${width}px: ${slug} shows the Extension badge in the page header`,
+          badges === (isExtension(slug) ? 1 : 0),
+          `${lang} ${width}px: ${slug} ${isExtension(slug) ? "shows" : "has no"} Extension badge in the page header`,
         );
         check(
-          (await page.getByText(NOTE[lang], { exact: true }).count()) >= 1,
-          `${lang} ${width}px: ${slug} says it is an extension, not part of DGA`,
+          isExtension(slug) ? notes >= 1 : notes === 0,
+          `${lang} ${width}px: ${slug} ${isExtension(slug) ? "says it is an extension, not part of DGA" : "has no extension note"}`,
         );
         if (width === 1280) {
+          const sidebar = await page
+            .locator(`nav a[href$="/docs/components/${slug}"]`)
+            .getByText(BADGE[lang], { exact: true })
+            .count();
           check(
-            (await page
-              .locator(`nav a[href$="/docs/components/${slug}"]`)
-              .getByText(BADGE[lang], { exact: true })
-              .count()) >= 1,
-            `${lang}: ${slug} has the Extension badge in the sidebar`,
+            isExtension(slug) ? sidebar >= 1 : sidebar === 0,
+            `${lang}: ${slug} ${isExtension(slug) ? "has" : "has no"} Extension badge in the sidebar`,
           );
         }
       }
@@ -332,6 +339,7 @@ export async function extDisplayChecks({ browser, BASE, check }) {
     "chart-line",
     "chart-area",
     "chart-pie",
+    "chart-donut",
     "chart-interactive",
     "chart-table",
     "chart-palette",

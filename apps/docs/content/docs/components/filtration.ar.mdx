@@ -56,13 +56,13 @@ export function Services({ services }: { services: Service[] }) {
 - **اللوحة**: بعرض 288px بجانب النتائج من عرض `lg`. مجموعات `checkbox` و`radio` و`select` و`input` و`range` و`date` و`rating` و`custom`، بينها 24px.
 - **خيارات قابلة للبحث**: `searchable` على مجموعة خانات أو أزرار اختيار يضيف [Search Box](/docs/components/search-box) يضيّق القائمة أثناء الكتابة، مع `noMatchLabel` عند عدم وجود تطابق.
 - **عرض المزيد**: يعرض `initialCount` هذا العدد من الخيارات وزر «عرض المزيد» (`showMoreLabel` و`showLessLabel`) لبقيتها.
-- **التاريخ**: [Date Picker](/docs/components/date-picker) مفرد أو `mode="range"`؛ ومرّر خصائصه (التسميات والأرقام وmin وmax) في `datePickerProps`.
+- **التاريخ**: [Date Picker](/docs/components/date-picker) مفرد أو `mode="range"`؛ ومرّر خصائصه (التسميات والأرقام و`min` و`max`) في `datePickerProps`.
 - **التقييم**: نجوم [Rating](/docs/components/rating)؛ القيمة عدد النجوم، ويقرأ الوسم «4 نجوم فأكثر».
 - **مخصص**: `type: "custom"` مع دالة `render` تستلم `value` و`onValueChange`، لأي عنصر تحكم ترسمه. ينضم إلى الوسوم وزر مسح الكل مثل غيره.
 - **المرشحات المطبّقة**: [Tag](/docs/components/tag) قابل للإزالة لكل خيار أو نص أو نطاق مختار، مع زر مسح الكل.
 - **عدد النتائج** (`resultCount`): فوق النتائج، ويُعلَن عند تغيّره.
 - **الشاشات الصغيرة**: تحت `lg` يفتح زر فيه عدد المرشحات اللوحة نفسها في [Drawer](/docs/components/drawer) من `drawerSide` (`start` أو `end`)، مع زر يعرض النتائج.
-- **الموضع** (`placement`، DGA: Placement): `inline` (الافتراضي) هو التخطيط أعلاه. يعرض `start` و`end` الزر دائمًا ويفتحان اللوحة مثبّتة على تلك الجهة في درج؛ ويفتحها `center` في [Dialog](/docs/components/dialog) في الوسط.
+- **الموضع** (`placement`، DGA: الموضع): `inline` (الافتراضي) هو التخطيط أعلاه. يعرض `start` و`end` الزر دائمًا ويفتحان اللوحة مثبّتة على تلك الجهة في درج؛ ويفتحها `center` في [Dialog](/docs/components/dialog) في الوسط.
 
 ## أمثلة [#examples]
 

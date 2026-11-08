@@ -794,10 +794,10 @@ export const INTERACTIVE_DEVIATIONS: Deviation[] = [
     item: "Tabs: selected, hover and More tab",
     original:
       "A 3px bar for hover, press and selected on vertical tabs; a Closed and Open More tab on horizontal tabs.",
-    ours: "A 3px bar under (or beside) the selected tab in border-primary; vertical tabs also show a neutral bar on hover and press. A list that does not fit scrolls sideways. The More tab (an overflow menu) is not built: compose a Menu in the last tab.",
+    ours: "A 3px bar under (or beside) the selected tab in border-primary; vertical tabs also show a neutral bar on hover and press. A list that does not fit scrolls sideways by default; with overflow set to menu the tabs that do not fit collapse into a More tab that opens a Menu (the More tab is selected while a hidden tab is). Its size, padding and 16px chevron are our choice.",
     reason:
-      "A scrolling list needs no extra control and keeps every tab reachable with Tab and the arrow keys. The overflow menu is on the roadmap.",
-    status: "pending",
+      "Scrolling stays the default because it keeps every tab reachable with Tab and the arrow keys. The More tab is opt-in and sits outside the tablist, so Tab reaches it after the visible tabs.",
+    status: "fixed",
     component: "tabs",
   },
   {

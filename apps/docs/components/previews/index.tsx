@@ -63,7 +63,10 @@ import {
 } from "./data-display";
 import {
   AvatarDemo,
+  AvatarGroupDemo,
   DividerDemo,
+  DividerOnColor,
+  DividerVertical,
   FeaturedIconDemo,
   SkeletonDemo,
   SkeletonLayouts,
@@ -110,6 +113,8 @@ import {
   SelectStates,
   SwitchStates,
   SwitchTrailing,
+  TextareaAppearance,
+  TextareaError,
   TextareaStates,
 } from "./forms";
 import {
@@ -173,7 +178,7 @@ import {
 } from "./navigation";
 import { ServiceCard } from "./service-card";
 import { ServiceRequestForm } from "./service-request";
-import { SpinnerSizes } from "./spinner";
+import { SpinnerOnColor, SpinnerSizes } from "./spinner";
 import { StatusColors } from "./status";
 import { StatusTags, TagDismiss, TagVariants } from "./tag";
 
@@ -270,6 +275,7 @@ export const previews = {
   "button-icons": ButtonIcons,
   "button-states": ButtonStates,
   "spinner-sizes": SpinnerSizes,
+  "spinner-on-color": SpinnerOnColor,
   "link-variants": LinkVariants,
   "link-inline": LinkInline,
   "badge-variants": BadgeVariants,
@@ -278,7 +284,10 @@ export const previews = {
   "tag-dismiss": TagDismiss,
   "status-tags": StatusTags,
   divider: DividerDemo,
+  "divider-vertical": DividerVertical,
+  "divider-on-color": DividerOnColor,
   avatar: AvatarDemo,
+  "avatar-group": AvatarGroupDemo,
   "featured-icon": FeaturedIconDemo,
   skeleton: SkeletonDemo,
   "skeleton-layouts": SkeletonLayouts,
@@ -288,6 +297,8 @@ export const previews = {
   "input-states": InputStates,
   "input-adornments": InputAdornments,
   "textarea-states": TextareaStates,
+  "textarea-error": TextareaError,
+  "textarea-appearance": TextareaAppearance,
   "select-basic": SelectBasic,
   "select-states": SelectStates,
   "select-groups": SelectGroups,

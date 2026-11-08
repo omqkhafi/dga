@@ -5,8 +5,6 @@ import { ArrowDown01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { cva, type VariantProps } from "class-variance-authority";
 import * as React from "react";
-import { AutoDirection } from "@/lib/dga/direction";
-import { cn } from "@/registry/bases/base/lib/utils";
 import {
   Menu,
   MenuContent,
@@ -14,6 +12,8 @@ import {
   MenuRadioItem,
   MenuTrigger,
 } from "@/components/dga/menu";
+import { AutoDirection } from "@/lib/dga/direction";
+import { cn } from "@/registry/bases/base/lib/utils";
 
 /** What a `TabsList` with `overflow="menu"` needs from its `Tabs`: the value and a way to set it. */
 const TabsValueContext = React.createContext<{

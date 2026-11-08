@@ -20,11 +20,17 @@ export function SpinnerSizes() {
           <Spinner key={size} size={size} variant="neutral" label={label} />
         ))}
       </Row>
-      <OnColorSurface>
-        {SIZES.map((size) => (
-          <Spinner key={size} size={size} variant="on-color" label={label} />
-        ))}
-      </OnColorSurface>
     </Stack>
+  );
+}
+
+export function SpinnerOnColor() {
+  const label = useUi()("ui.loading");
+  return (
+    <OnColorSurface>
+      {SIZES.map((size) => (
+        <Spinner key={size} size={size} variant="on-color" label={label} />
+      ))}
+    </OnColorSurface>
   );
 }

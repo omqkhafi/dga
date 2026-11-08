@@ -104,7 +104,7 @@ function Labelled({
 export function FieldAnatomy() {
   const t = useBi();
   return (
-    <Stack className="max-w-sm">
+    <Stack className="mx-auto w-full max-w-sm">
       <Labelled
         label={["Full name", "الاسم الكامل"]}
         helper={["As it appears on your national ID.", "كما يظهر في بطاقة الهوية الوطنية."]}
@@ -139,7 +139,7 @@ export function FieldAnatomy() {
 export function InputSizes() {
   const t = useBi();
   return (
-    <Stack className="max-w-sm">
+    <Stack className="mx-auto w-full max-w-sm">
       <Labelled label={["Large (40px)", "كبير (40px)"]}>
         <Input size="lg" placeholder={t("Placeholder", "نص تلميحي")} />
       </Labelled>
@@ -154,7 +154,7 @@ export function InputStates() {
   const rtl = useFormText().rtl;
   const name = rtl ? NAME.ar : NAME.en;
   return (
-    <div key={rtl ? "ar" : "en"} className="grid max-w-3xl gap-4 sm:grid-cols-2">
+    <div key={rtl ? "ar" : "en"} className="mx-auto w-full grid max-w-3xl gap-4 sm:grid-cols-2">
       <Labelled label={["Default", "افتراضي"]}>
         <Input placeholder={rtl ? "نص تلميحي" : "Placeholder"} />
       </Labelled>
@@ -187,7 +187,7 @@ export function InputStates() {
 export function InputAdornments() {
   const t = useBi();
   return (
-    <Stack className="max-w-sm">
+    <Stack className="mx-auto w-full max-w-sm">
       <Labelled label={["Mobile number", "رقم الجوال"]}>
         <Input
           type="tel"
@@ -214,15 +214,23 @@ export function InputAdornments() {
 
 /* ------------------------------------------------------------- Textarea */
 
-export function TextareaStates() {
+function useTextareaSample() {
   const text = useFormText();
-  const sample = text.rtl
-    ? "أحتاج إلى تجديد رخصة البناء الخاصة بالمبنى."
-    : "I need to renew the building permit for my property.";
+  return {
+    text,
+    placeholder: text.rtl ? "اكتب هنا" : "Write here",
+    sample: text.rtl
+      ? "أحتاج إلى تجديد رخصة البناء الخاصة بالمبنى."
+      : "I need to renew the building permit for my property.",
+  };
+}
+
+export function TextareaStates() {
+  const { text, placeholder, sample } = useTextareaSample();
   return (
-    <div key={text.rtl ? "ar" : "en"} className="grid max-w-3xl gap-4 sm:grid-cols-2">
+    <div key={text.rtl ? "ar" : "en"} className="grid w-full gap-4 sm:grid-cols-2">
       <Labelled label={["Default", "افتراضي"]} helper={["Up to 500 characters.", "حتى ٥٠٠ حرف."]}>
-        <Textarea placeholder={text.rtl ? "اكتب هنا" : "Write here"} />
+        <Textarea placeholder={placeholder} />
       </Labelled>
       <Labelled label={["Filled", "معبأ"]}>
         <Textarea defaultValue={sample} />
@@ -233,15 +241,30 @@ export function TextareaStates() {
       <Labelled label={["Disabled", "معطّل"]} disabled>
         <Textarea disabled defaultValue={sample} />
       </Labelled>
+    </div>
+  );
+}
+
+export function TextareaError() {
+  const { text } = useTextareaSample();
+  return (
+    <div key={text.rtl ? "ar" : "en"} className="mx-auto w-full max-w-md">
       <Labelled label={["Error", "خطأ"]} invalid error={["Describe your request.", "صف طلبك."]}>
         <Textarea />
       </Labelled>
-      <Labelled label={["Filled darker, no resize", "تعبئة أغمق، بلا تغيير حجم"]}>
-        <Textarea
-          appearance="darker"
-          resize="none"
-          placeholder={text.rtl ? "اكتب هنا" : "Write here"}
-        />
+    </div>
+  );
+}
+
+export function TextareaAppearance() {
+  const { text, placeholder } = useTextareaSample();
+  return (
+    <div key={text.rtl ? "ar" : "en"} className="grid w-full gap-4 sm:grid-cols-2">
+      <Labelled label={["Lighter fill", "تعبئة أفتح"]}>
+        <Textarea appearance="lighter" placeholder={placeholder} />
+      </Labelled>
+      <Labelled label={["Darker fill, no resize", "تعبئة أغمق، بلا تغيير حجم"]}>
+        <Textarea appearance="darker" resize="none" placeholder={placeholder} />
       </Labelled>
     </div>
   );
@@ -291,7 +314,7 @@ function ServiceSelect({
 
 export function SelectBasic() {
   return (
-    <div className="max-w-sm">
+    <div className="mx-auto w-full max-w-sm">
       <Labelled
         label={["Service", "الخدمة"]}
         helper={["Choose what you need.", "اختر ما تحتاج إليه."]}
@@ -304,7 +327,7 @@ export function SelectBasic() {
 
 export function SelectStates() {
   return (
-    <div className="grid max-w-3xl gap-4 sm:grid-cols-2">
+    <div className="mx-auto w-full grid max-w-3xl gap-4 sm:grid-cols-2">
       <Labelled label={["Default", "افتراضي"]}>
         <ServiceSelect />
       </Labelled>
@@ -348,7 +371,7 @@ export function SelectGroups() {
     },
   ];
   return (
-    <div className="max-w-sm">
+    <div className="mx-auto w-full max-w-sm">
       <Labelled label={["City", "المدينة"]}>
         <Select>
           <SelectTrigger>
@@ -378,7 +401,7 @@ export function SelectGroups() {
 export function NumberInputDemo() {
   const text = useFormText();
   return (
-    <Stack className="max-w-sm">
+    <Stack className="mx-auto w-full max-w-sm">
       <Labelled
         label={["Quantity", "الكمية"]}
         helper={[
@@ -405,7 +428,7 @@ export function NumberInputStates() {
   const text = useFormText();
   const labels = { decrementLabel: text.decrease, incrementLabel: text.increase };
   return (
-    <div className="grid max-w-3xl gap-4 sm:grid-cols-2">
+    <div className="mx-auto w-full grid max-w-3xl gap-4 sm:grid-cols-2">
       <Labelled label={["Default", "افتراضي"]}>
         <NumberInput placeholder="0" {...labels} />
       </Labelled>
@@ -434,7 +457,7 @@ export function SearchBoxDemo() {
   const text = useFormText();
   const [value, setValue] = useState("");
   return (
-    <Stack className="max-w-sm">
+    <Stack className="mx-auto w-full max-w-sm">
       <Labelled label={["Search services", "البحث في الخدمات"]}>
         <SearchBox
           value={value}
@@ -454,7 +477,10 @@ export function SearchBoxStates() {
   const text = useFormText();
   const placeholder = text.rtl ? "ابحث" : "Search";
   return (
-    <div key={text.rtl ? "ar" : "en"} className="grid max-w-3xl gap-4 sm:grid-cols-2">
+    <div
+      key={text.rtl ? "ar" : "en"}
+      className="mx-auto w-full grid max-w-3xl gap-4 sm:grid-cols-2"
+    >
       <Labelled label={["Default", "افتراضي"]}>
         <SearchBox placeholder={placeholder} clearLabel={text.clear} />
       </Labelled>
@@ -518,7 +544,7 @@ function CheckRow({
 
 export function CheckboxStates() {
   return (
-    <div className="grid max-w-3xl gap-x-6 gap-y-4 sm:grid-cols-2">
+    <div className="mx-auto w-full grid max-w-3xl gap-x-6 gap-y-4 sm:grid-cols-2">
       <CheckRow label={["Unchecked", "غير محدد"]}>
         <Checkbox />
       </CheckRow>
@@ -576,7 +602,7 @@ export function CheckboxGroupDemo() {
   const all = checked.length === options.length;
   const none = checked.length === 0;
   return (
-    <FieldSet className="max-w-sm">
+    <FieldSet className="mx-auto w-full max-w-sm">
       <FieldLegend>
         <Bi en="Notify me by" ar="أبلغني عبر" />
       </FieldLegend>
@@ -619,7 +645,7 @@ export function CheckboxGroupDemo() {
 
 export function RadioGroupDemo() {
   return (
-    <Field className="max-w-sm">
+    <Field className="mx-auto w-full max-w-sm">
       <FieldSet render={<RadioGroup defaultValue="email" />}>
         <FieldLegend>
           <Bi en="Preferred contact" ar="وسيلة التواصل المفضلة" />
@@ -668,7 +694,7 @@ function RadioItem({
 export function RadioStates() {
   const t = useBi();
   return (
-    <Field className="max-w-3xl">
+    <Field className="mx-auto w-full max-w-3xl">
       <div className="grid gap-6 sm:grid-cols-2">
         <RadioGroup defaultValue="on" aria-label={t("States", "الحالات")}>
           <RadioItem value="off" label={["Unselected", "غير محدد"]} />
@@ -699,7 +725,7 @@ export function RadioStates() {
 
 export function SwitchStates() {
   return (
-    <div className="grid max-w-3xl gap-x-6 gap-y-4 sm:grid-cols-2">
+    <div className="mx-auto w-full grid max-w-3xl gap-x-6 gap-y-4 sm:grid-cols-2">
       <CheckRow label={["Off", "متوقف"]}>
         <Switch />
       </CheckRow>
@@ -731,7 +757,7 @@ export function SwitchStates() {
 
 export function SwitchTrailing() {
   return (
-    <FieldSet className="max-w-sm gap-4">
+    <FieldSet className="mx-auto w-full max-w-sm gap-4">
       <FieldLegend>
         <Bi en="Notifications" ar="الإشعارات" />
       </FieldLegend>
@@ -769,7 +795,7 @@ function useUploadMessages() {
 export function FileUploadDemo() {
   const messages = useUploadMessages();
   return (
-    <div className="max-w-lg">
+    <div className="mx-auto w-full max-w-lg">
       <Labelled
         label={["Supporting documents", "المستندات الداعمة"]}
         helper={["PDF, JPG or PNG, up to 5 MB each.", "PDF أو JPG أو PNG، بحد أقصى 5 MB للملف."]}
@@ -812,7 +838,7 @@ export function FileUploadStates() {
     { id: "4", name: rtl ? "طلب.pdf" : "request.pdf", size: 120_000, status: "pending" },
   ];
   return (
-    <div className="grid max-w-3xl gap-6 sm:grid-cols-2">
+    <div className="mx-auto w-full grid max-w-3xl gap-6 sm:grid-cols-2">
       <div className="sm:col-span-2">
         <Labelled
           label={[

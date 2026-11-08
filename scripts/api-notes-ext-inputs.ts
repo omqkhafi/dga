@@ -12,8 +12,7 @@ export const API_NOTES_EXT_INPUTS: Record<string, ApiNote> = {
   "slider.showMinMax": {
     include: true,
     type: "boolean",
-    description:
-      "Shows the Min and Max labels under the ends of the track (DGA). Default false.",
+    description: "Shows the Min and Max labels under the ends of the track (DGA). Default false.",
   },
   "slider.minLabel": {
     include: true,

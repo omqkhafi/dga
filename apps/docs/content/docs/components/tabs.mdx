@@ -1,6 +1,6 @@
 ---
 title: Tabs
-description: "Switches between related panels of content on one page. Horizontal and vertical, three sizes, icons and a divider, with arrow keys that follow the page direction."
+description: "Switches between related panels of content on one page. Horizontal and vertical, three sizes, icons, a divider and a More menu for tabs that do not fit, with arrow keys that follow the page direction."
 ---
 
 <Preview name="tabs-horizontal" title="Tabs" />
@@ -36,8 +36,9 @@ The list starts on the right, and the Left and Right arrows swap: in Arabic, Lef
 
 ## Anatomy
 
-- **List** (`role="tablist"`): the row of tabs, with a 3px divider under it (`divider`). It scrolls sideways when the tabs do not fit.
+- **List** (`role="tablist"`): the row of tabs, with a 3px divider under it (`divider`). It scrolls sideways when the tabs do not fit, or with `overflow="menu"` the tabs that do not fit collapse into a More tab.
 - **Tab** (`role="tab"`): an optional icon and a label. The selected tab is bold with a 3px bar in `border-primary`.
+- **More tab** (`overflow="menu"`): a tab with a chevron at the end of the list that opens a menu of the tabs that do not fit. It is shown as selected while one of them is.
 - **Panel** (`role="tabpanel"`): the content of the selected tab.
 
 ## Examples
@@ -53,6 +54,12 @@ The list starts on the right, and the Left and Right arrows swap: in Arabic, Lef
 `orientation="vertical"` puts the list beside the panel, with the bar on the end side. Up and Down move between tabs.
 
 <Preview compact name="tabs-vertical" title="Vertical" />
+
+### More menu
+
+With `overflow="menu"` on TabsList, the tabs that do not fit the width collapse into a More tab (Base UI Menu), re-measured when the width changes. Give Tabs a `defaultValue` or `value`, and translate the label with `moreLabel`. The menu items are the hidden tabs, with the chosen one checked; <kbd>Tab</kbd> moves from the visible tabs to the More tab and <kbd>Enter</kbd>, <kbd>Space</kbd> or <kbd>ArrowDown</kbd> opens it.
+
+<Preview compact name="tabs-more" title="More menu" />
 
 ### Behaviour
 
@@ -80,7 +87,7 @@ By default an arrow key moves focus and selects the tab. Set `activateOnFocus={f
 
 ## Deviations from DGA
 
-- The More tab (an overflow menu on horizontal tabs) is not built. A list that does not fit scrolls sideways instead; for an overflow menu, put a [Menu](/docs/components/menu) in the last tab.
+- The More tab (DGA's overflow menu on horizontal tabs) is `overflow="menu"`. Scrolling sideways stays the default for lists that do not fit. Figma gives the Closed and Open More tab no sizes beyond a normal tab, so it uses the tab padding, a 16px chevron and the Menu component for the list.
 - Vertical tabs also show a neutral bar on hover and press (as in the DGA CSS); every tab shows the primary bar when selected.
 
 <ComponentDeviations component="tabs" />

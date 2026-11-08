@@ -18,34 +18,65 @@ import { OnColorSurface, Row, Stack } from "./kit";
 
 export function DividerDemo() {
   return (
-    <Stack>
-      <div className="flex flex-col gap-3 text-sm text-text-primary-paragraph">
-        <Bi en="Section one" ar="القسم الأول" />
-        <Divider />
-        <Bi en="Section two" ar="القسم الثاني" />
-        <Divider variant="primary" />
-        <Bi en="Section three" ar="القسم الثالث" />
+    <div className="flex flex-col gap-3 text-sm text-text-primary-paragraph">
+      <Bi en="Section one" ar="القسم الأول" />
+      <Divider />
+      <Bi en="Section two" ar="القسم الثاني" />
+      <Divider variant="primary" />
+      <Bi en="Section three" ar="القسم الثالث" />
+    </div>
+  );
+}
+
+export function DividerVertical() {
+  return (
+    <div className="flex h-6 items-center gap-3 text-sm text-text-primary-paragraph">
+      <Bi en="Services" ar="الخدمات" />
+      <Divider orientation="vertical" />
+      <Bi en="News" ar="الأخبار" />
+      <Divider orientation="vertical" />
+      <Bi en="Contact" ar="تواصل معنا" />
+    </div>
+  );
+}
+
+export function DividerOnColor() {
+  return (
+    <OnColorSurface>
+      <div className="flex w-full flex-col gap-3 text-sm text-text-oncolor-primary">
+        <Bi en="On colour: alpha-white" ar="على لون: أبيض شفاف" />
+        <Divider variant="alpha-white" />
+        <Bi en="On colour: white" ar="على لون: أبيض" />
+        <Divider variant="white" />
       </div>
-      <div className="flex h-6 items-center gap-3 text-sm text-text-primary-paragraph">
-        <Bi en="Services" ar="الخدمات" />
-        <Divider orientation="vertical" />
-        <Bi en="News" ar="الأخبار" />
-        <Divider orientation="vertical" />
-        <Bi en="Contact" ar="تواصل معنا" />
-      </div>
-      <OnColorSurface>
-        <div className="flex w-full flex-col gap-3 text-sm text-text-oncolor-primary">
-          <Bi en="On colour: alpha-white" ar="على لون: أبيض شفاف" />
-          <Divider variant="alpha-white" />
-          <Bi en="On colour: white" ar="على لون: أبيض" />
-          <Divider variant="white" />
-        </div>
-      </OnColorSurface>
-    </Stack>
+    </OnColorSurface>
   );
 }
 
 const SIZES = [24, 32, 40, 48, 64, 80, 120] as const;
+
+export function AvatarGroupDemo() {
+  const t = useBi();
+  return (
+    <Stack>
+      <Row label={<Bi en="Stacked (default) and spaced" ar="متراكبة (الافتراضي) ومتباعدة" />}>
+        <AvatarGroup>
+          <Avatar size={32} src="/avatar-sample.svg" alt={t("Noura", "نورة")} />
+          <Avatar size={32} initials={t("AK", "أ ك")} />
+          <Avatar size={32} initials={t("SM", "س م")} />
+          <Avatar size={32} initials={t("+3", "+٣")} aria-label={t("3 more", "٣ أخرى")} />
+        </AvatarGroup>
+        <AvatarGroup stacked={false}>
+          <Avatar size={32} src="/avatar-sample.svg" alt={t("Noura", "نورة")} />
+          <Avatar size={32} initials={t("AK", "أ ك")} />
+          <Avatar size={32}>
+            <HugeiconsIcon icon={UserIcon} className="size-6 text-icon-default" aria-hidden />
+          </Avatar>
+        </AvatarGroup>
+      </Row>
+    </Stack>
+  );
+}
 
 export function AvatarDemo() {
   const t = useBi();
@@ -75,21 +106,6 @@ export function AvatarDemo() {
         {SIZES.map((size) => (
           <Avatar key={size} size={size} square src="/missing.png" alt="" />
         ))}
-      </Row>
-      <Row label={<Bi en="Avatar group: stacked and spaced" ar="مجموعة صور: متراكبة ومتباعدة" />}>
-        <AvatarGroup>
-          <Avatar size={32} src="/avatar-sample.svg" alt={t("Noura", "نورة")} />
-          <Avatar size={32} initials={t("AK", "أ ك")} />
-          <Avatar size={32} initials={t("SM", "س م")} />
-          <Avatar size={32} initials={t("+3", "+٣")} aria-label={t("3 more", "٣ أخرى")} />
-        </AvatarGroup>
-        <AvatarGroup stacked={false}>
-          <Avatar size={32} src="/avatar-sample.svg" alt={t("Noura", "نورة")} />
-          <Avatar size={32} initials={t("AK", "أ ك")} />
-          <Avatar size={32}>
-            <HugeiconsIcon icon={UserIcon} className="size-6 text-icon-default" aria-hidden />
-          </Avatar>
-        </AvatarGroup>
       </Row>
     </Stack>
   );

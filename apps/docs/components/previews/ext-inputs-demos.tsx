@@ -466,7 +466,7 @@ export function InputGroupAddons() {
   const t = useBi();
   const rtl = useLanguage() === "ar";
   return (
-    <Stack className="max-w-md">
+    <Stack className="mx-auto w-full max-w-md">
       <Field>
         <FieldLabel>{t("Search", "بحث")}</FieldLabel>
         <InputGroup>
@@ -508,7 +508,7 @@ export function InputGroupAddons() {
 export function InputGroupButtons() {
   const t = useBi();
   return (
-    <Stack className="max-w-md">
+    <Stack className="mx-auto w-full max-w-md">
       <Field>
         <FieldLabel>{t("Request number", "رقم الطلب المرجعي")}</FieldLabel>
         <InputGroup>
@@ -541,7 +541,7 @@ export function InputGroupButtons() {
 export function InputGroupStates() {
   const t = useBi();
   return (
-    <Stack className="max-w-md">
+    <Stack className="mx-auto w-full max-w-md">
       <Field invalid>
         <FieldLabel>{t("Invalid", "غير صالح")}</FieldLabel>
         <InputGroup>

@@ -178,21 +178,23 @@ export const DISPLAY_DEVIATIONS: Deviation[] = [
   },
   {
     area: "Components",
-    item: "Chart (new component)",
-    original: "—",
-    ours: "Bar, line, area and pie on Recharts with a four-colour DGA palette, a tooltip on the Card surface, a legend with marker shapes, a data-table fallback and RTL axes.",
+    item: "Chart: built on Recharts, with extra parts",
+    original:
+      "Figma's Charts page draws a pie (series 1 to 6, Brand or Color style, with or without a hole), a line chart and a bar chart as pictures with a legend and X and Y axis labels. It gives no tooltip, keyboard or data-table behaviour.",
+    ours: "Bar, line, pie and donut on Recharts, with a legend with marker shapes, a tooltip on the Card surface, a data-table fallback, a keyboard mode and RTL axes. An area chart is added. Four series colours, not six, and no separate Brand style.",
     reason:
-      "New, no DGA source. DGA publishes no data-visualisation guidance. Axis text, tooltip and table use existing text tokens. The series colours are the four new tokens chart-series-1 to chart-series-4.",
+      "A chart must be readable without colour or a pointer (WCAG 1.4.1, 2.1.1), so markers, dashes, the table and the keyboard mode are added. Axis text, tooltip and table use existing text tokens. The area chart is ours; DGA does not draw it.",
     status: "fixed",
     component: "chart",
   },
   {
     area: "Components",
     item: "Chart series colours (chart-series-1 to 4)",
-    original: "—",
-    ours: "Four themed tokens built from existing primitives: green, gold, lavender and blue, alternating dark and light so neighbours differ in lightness.",
+    original:
+      "The charts-* colours (green, gold, blue, lavender, red, yellow) are 1.3:1 to 2.8:1 against white in light mode, and several are close in lightness.",
+    ours: "Four themed tokens built from existing primitives: green, gold, lavender and blue, alternating dark and light so neighbours differ in lightness. charts-* stay available as tokens.",
     reason:
-      "New, no DGA source. No pair of existing semantic colours is 3:1 from its neighbour, so colour tokens at the same lightness (the status and icon colours) fail the series-to-series check. Only the pairing is new, not the primitives. Every series is 3:1 or better on every surface and on its neighbours in light and dark; series two apart share a lightness band, so lines also use marker shapes.",
+      "A chart mark needs 3:1 against its surface (WCAG 1.4.11) and the next series. Colour tokens at the same lightness fail the series-to-series check. Only the pairing is new, not the primitives. Every series is 3:1 or better on every surface and on its neighbours in light and dark; series two apart share a lightness band, so lines also use marker shapes.",
     status: "fixed",
     component: "chart",
   },

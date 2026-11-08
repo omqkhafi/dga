@@ -409,6 +409,9 @@ export const API_DESCRIPTIONS_AR: Record<string, string> = {
   "tabs.TabsList.scrollable": "تُمرَّر جانبيًا بدل الالتفاف عندما لا تتسع التبويبات.",
   "tabs.TabsList.activateOnFocus":
     "يفتح التبويب لوحته بمجرد أن تركّزه مفاتيح الأسهم. الافتراضي `true`؛ واضبط `false` لفتحها بـ Enter أو Space.",
+  "tabs.TabsList.overflow":
+    "ما يحدث للتبويبات التي لا تتسع. `scroll` (الافتراضي) يمرّرها جانبيًا؛ و`menu` يطويها في تبويب «المزيد» (في DGA) يفتح قائمة.",
+  "tabs.TabsList.moreLabel": "نص تبويب «المزيد». ترجمه في الصفحات العربية.",
   "tabs.TabsTrigger": "تبويب واحد. ضع أيقونة أولًا ثم التسمية.",
   "tabs.TabsTrigger.value": "ما يعرّف التبويب. وتظهر اللوحة ذات القيمة نفسها.",
   "tabs.TabsTrigger.disabled":
