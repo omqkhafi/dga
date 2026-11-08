@@ -30,6 +30,7 @@ export const FORM_COMPONENTS = [
   "radio",
   "switch",
   "file-upload",
+  "slider",
 ];
 
 /** The interactive components, listed under "Interactive" in the sidebar, search and llms.txt. */
@@ -68,7 +69,10 @@ export const COMPOSITE_COMPONENTS = [
   "date-picker",
   "carousel",
   "filtration",
+  "digital-stamp",
 ];
+
+export * from "./extension-slugs";
 
 /** Components that are used together, for the "Related" row on each component page. */
 export const RELATED: Record<string, string[]> = {
@@ -117,6 +121,19 @@ export const RELATED: Record<string, string[]> = {
   "date-picker": ["input", "field", "select"],
   carousel: ["card", "tabs", "pagination"],
   filtration: ["checkbox", "tag", "drawer"],
+  slider: ["field", "number-input", "input"],
+  "digital-stamp": ["header", "second-nav", "footer"],
+  popover: ["tooltip", "menu", "hover-card"],
+  "hover-card": ["popover", "tooltip", "avatar"],
+  "alert-dialog": ["dialog", "button", "inline-alert"],
+  "context-menu": ["menu", "popover", "command"],
+  toggle: ["toggle-group", "button", "switch"],
+  "toggle-group": ["toggle", "button-group", "content-switcher"],
+  combobox: ["select", "command", "field"],
+  command: ["combobox", "menu", "dialog"],
+  "input-otp": ["input", "number-input", "field"],
+  "input-group": ["input", "button-group", "field"],
+  "button-group": ["button", "toggle-group", "input-group"],
 };
 
 export const FIGMA_URL =

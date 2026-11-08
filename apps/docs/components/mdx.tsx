@@ -10,6 +10,8 @@ import { Callout } from "./docs/callout";
 import { ComponentContrast } from "./docs/contrast";
 import { ContrastReport } from "./docs/contrast-report";
 import { ComponentDeviations } from "./docs/deviations";
+import { ExtensionNote } from "./docs/extension";
+import { ExtensionsTable } from "./docs/extensions-table";
 import { ComponentInstall } from "./docs/install";
 import { MdxPre } from "./docs/mdx-pre";
 import { DarkNeutrals } from "./foundations/dark-neutrals";
@@ -68,6 +70,8 @@ export function getMDXComponents(components?: MDXComponents, lang: Locale = "en"
     ApiReference: withLang(ApiReference, lang),
     Callout,
     ContrastReport,
+    ExtensionNote: withLang(ExtensionNote, lang),
+    ExtensionsTable: withLang(ExtensionsTable, lang),
     ComponentInstall: withLang(ComponentInstall, lang),
     ComponentContrast: withLang(ComponentContrast, lang),
     ComponentDeviations: withLang(ComponentDeviations, lang),

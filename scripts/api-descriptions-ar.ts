@@ -3,6 +3,10 @@
 // or prop with an English description has no entry here, so a new prop ships in both languages.
 // Prop names, values, token names and code stay in English.
 
+import { API_DESCRIPTIONS_AR_EXT_INPUTS } from "./api-descriptions-ar-ext-inputs";
+import { API_DESCRIPTIONS_AR_EXT_MISC } from "./api-descriptions-ar-ext-misc";
+import { API_DESCRIPTIONS_AR_EXT_OVERLAYS } from "./api-descriptions-ar-ext-overlays";
+
 const render =
   "يتيح لك استبدال عنصر HTML الخاص بالمكوّن بوسم آخر، أو تركيبه مع مكوّن آخر. يقبل `ReactElement` أو دالة تعيد العنصر المراد عرضه.";
 const iconOnly = "مربع بأيقونة فقط. يحتاج إلى `aria-label`.";
@@ -804,4 +808,7 @@ export const API_DESCRIPTIONS_AR: Record<string, string> = {
   "second-nav.SecondNav":
     "الشريط الثانوي فوق الترويسة (DGA: Second Nav Header): عناصر سياقية مثل التاريخ أو الطقس أو الصفحات الشقيقة، ثم الإجراءات، بارتفاع 40px، رمادي أو أساسي. الإدخال الذي له `href` رابط، والذي له `onClick` زر، وغيره نص عادي. على الشاشات الضيقة يتمرر أفقيًا بدل الالتفاف. سمِّه بـ `aria-label`.",
   "header.Header.defaultMenuOpen": "يفتح الدرج عند أول عرض. لعرضه في التوثيق.",
+  ...API_DESCRIPTIONS_AR_EXT_OVERLAYS,
+  ...API_DESCRIPTIONS_AR_EXT_INPUTS,
+  ...API_DESCRIPTIONS_AR_EXT_MISC,
 };

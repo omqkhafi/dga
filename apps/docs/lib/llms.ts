@@ -2,6 +2,8 @@ import { getT } from "./dictionary";
 import type { Locale } from "./i18n";
 import {
   COMPOSITE_COMPONENTS,
+  EXTENSION_INPUT_COMPONENTS,
+  EXTENSION_OVERLAY_COMPONENTS,
   FORM_COMPONENTS,
   INTERACTIVE_COMPONENTS,
   NAVIGATION_COMPONENTS,
@@ -24,17 +26,25 @@ export function llmsIndex(lang: Locale) {
       page.slugs[0] === "components" && NAVIGATION_COMPONENTS.includes(page.slugs[1] ?? "");
     const isComposite =
       page.slugs[0] === "components" && COMPOSITE_COMPONENTS.includes(page.slugs[1] ?? "");
-    const group = isForm
-      ? "forms"
-      : isInteractive
-        ? "interactive"
-        : isNavigation
-          ? "navigation"
-          : isComposite
-            ? "composite"
-            : page.slugs.length > 1
-              ? (page.slugs[0] as string)
-              : "";
+    const isExtOverlay =
+      page.slugs[0] === "components" && EXTENSION_OVERLAY_COMPONENTS.includes(page.slugs[1] ?? "");
+    const isExtInput =
+      page.slugs[0] === "components" && EXTENSION_INPUT_COMPONENTS.includes(page.slugs[1] ?? "");
+    const group = isExtOverlay
+      ? "extOverlays"
+      : isExtInput
+        ? "extInputs"
+        : isForm
+          ? "forms"
+          : isInteractive
+            ? "interactive"
+            : isNavigation
+              ? "navigation"
+              : isComposite
+                ? "composite"
+                : page.slugs.length > 1
+                  ? (page.slugs[0] as string)
+                  : "";
     const line = `- [${page.data.title}](${mdUrl(page.url, lang)})${page.data.description ? `: ${page.data.description}` : ""}`;
     groups.set(group, [...(groups.get(group) ?? []), line]);
   }
@@ -46,6 +56,8 @@ export function llmsIndex(lang: Locale) {
     interactive: t("search.crumb.interactive"),
     navigation: t("search.crumb.navigation"),
     composite: t("search.crumb.composite"),
+    extOverlays: t("search.crumb.extOverlays"),
+    extInputs: t("search.crumb.extInputs"),
     ai: t("search.crumb.ai"),
   };
   const body = [...groups]

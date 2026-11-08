@@ -2,6 +2,10 @@
 // inherited Base UI props are worth listing. Keyed `slug.Component.prop` or `slug.prop`.
 // Anything with a JSDoc comment in the component source wins over these.
 
+import { API_NOTES_EXT_INPUTS } from "./api-notes-ext-inputs";
+import { API_NOTES_EXT_MISC } from "./api-notes-ext-misc";
+import { API_NOTES_EXT_OVERLAYS } from "./api-notes-ext-overlays";
+
 export type ApiNote = { description?: string; type?: string; include?: boolean };
 
 const iconOnly = "Square, icon only. Needs an `aria-label`.";
@@ -723,4 +727,7 @@ export const API_NOTES: Record<string, ApiNote> = {
     description: "Diameter in pixels: 64, 80, 120 (default), 160 or 200.",
   },
   "stepper.orientation": { description: "`horizontal` (default) or `vertical`." },
+  ...API_NOTES_EXT_OVERLAYS,
+  ...API_NOTES_EXT_INPUTS,
+  ...API_NOTES_EXT_MISC,
 };
