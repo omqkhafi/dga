@@ -31,10 +31,11 @@ function useDigits() {
 /** The four ready-made items. Date and time follow the Figma samples: 3-September-2024, 2:30 PM. */
 function useStripItems() {
   const t = useBi();
+  const d = useDigits();
   return [
-    { kind: "weather" as const, label: t("Cloudy 24°", "غائم 24°") },
-    { kind: "date" as const, label: t("3-September-2024", "3-سبتمبر-2024") },
-    { kind: "time" as const, label: t("2:30 PM", "2:30 مساءً") },
+    { kind: "weather" as const, label: t("Cloudy 24°", `غائم ${d(24)}°`) },
+    { kind: "date" as const, label: t("3-September-2024", `${d(3)}-سبتمبر-${d(2024)}`) },
+    { kind: "time" as const, label: t("2:30 PM", `${d(2)}:${d(30)} مساءً`) },
     { kind: "location" as const, label: t("Riyadh", "الرياض") },
   ];
 }
@@ -179,6 +180,7 @@ function Logo({ onColor = false }: { onColor?: boolean }) {
 /** Stand-ins for the platform logos: two marks with a name. */
 function PlatformLogos() {
   const t = useBi();
+  const d = useDigits();
   return (
     <>
       <span className="inline-flex items-center gap-2 text-sm font-bold">
@@ -187,7 +189,7 @@ function PlatformLogos() {
       </span>
       <span className="inline-flex items-center gap-2 text-sm font-bold">
         <span aria-hidden className="size-6 rounded-sm bg-background-primary" />
-        {t("Vision 2030", "رؤية 2030")}
+        {t("Vision 2030", `رؤية ${d(2030)}`)}
       </span>
     </>
   );

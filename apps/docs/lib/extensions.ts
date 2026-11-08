@@ -324,22 +324,6 @@ export const EXTENSIONS: ExtensionEntry[] = [
       "border-neutral-primary",
     ],
   },
-  {
-    slug: "chart",
-    title: { en: "Chart", ar: "مخطط" },
-    builtOn: "Recharts",
-    from: {
-      en: "Card surface for the tooltip, DGA text colours, and four new series colours built from the DGA colour scales",
-      ar: "سطح البطاقة Card للتلميح، وألوان النص في DGA، وأربعة ألوان سلاسل جديدة مبنية من تدرجات DGA",
-    },
-    tokens: [
-      "chart-series-1",
-      "chart-series-2",
-      "chart-series-3",
-      "chart-series-4",
-      "text-primary-paragraph",
-    ],
-  },
 ];
 
 /**
@@ -353,6 +337,14 @@ export const DGA_DEFINED: { slug: string; title: Bilingual; source: Bilingual }[
     source: {
       en: "DGA Slider (Figma page Slider: label, helper text, sizes Small and Medium, single and range, RTL variants)",
       ar: "شريط التمرير في DGA (صفحة Slider في Figma: التسمية والنص المساعد وحجمان صغير ومتوسط، مفرد ونطاق، ونسخ RTL)",
+    },
+  },
+  {
+    slug: "chart",
+    title: { en: "Chart", ar: "مخطط" },
+    source: {
+      en: "DGA Charts (Figma page Charts: pie with and without a hole, line and bar, legend, axis labels, the charts-* colours)",
+      ar: "المخططات في DGA (صفحة Charts في Figma: دائري بثقب ودونه، وخطي وأعمدة، ووسيلة الإيضاح وتسميات المحاور وألوان charts-*)",
     },
   },
   {

@@ -619,7 +619,7 @@ export function ChartArea() {
   );
 }
 
-export function ChartPie() {
+function PieSample({ hole }: { hole: boolean }) {
   const t = useBi();
   const { pieProps } = useChartDirection();
   const animate = useChartAnimation();
@@ -662,7 +662,7 @@ export function ChartPie() {
           data={data}
           dataKey="requests"
           nameKey="channel"
-          innerRadius={48}
+          innerRadius={hole ? 48 : 0}
           strokeWidth={3}
           isAnimationActive={animate}
           {...pieProps}
@@ -675,6 +675,14 @@ export function ChartPie() {
       </PieChart>
     </ChartContainer>
   );
+}
+
+export function ChartPie() {
+  return <PieSample hole={false} />;
+}
+
+export function ChartDonut() {
+  return <PieSample hole />;
 }
 
 export function ChartInteractive() {

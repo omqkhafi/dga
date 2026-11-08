@@ -623,9 +623,9 @@ export const COMPOSITE_DEVIATIONS: Deviation[] = [
     item: "Second Nav: contextual strip, links and scrolling",
     original:
       "Second Nav Header is a 40px strip with fixed Show Item 2, 3 and 4 and Show Action 2, 3 and 4 switches, a divider and Gray or Primary. It is described as navigation, but the items are text with an icon (a date, the weather).",
-    ours: 'Items and actions are arrays. An entry is plain text, a link (`href`), or a button (`onClick`), and `current` sets aria-current="page" so it can also be a row of sibling-page links. The strip scrolls sideways on narrow screens instead of wrapping or clipping.',
+    ours: 'Items and actions are arrays. An entry is plain text, a link (`href`), or a button (`onClick`), has a ready-made `kind` (weather, date, time, location) with its icon, and can be `iconOnly`. `current` sets aria-current="page" for the optional links row, which is not a DGA example. The strip scrolls sideways on narrow screens instead of wrapping or clipping. Items are 24px high with a 16px gap between them (gap value not in Figma).',
     reason:
-      "A fixed number of switches cannot hold real content, and a 40px strip that wraps would grow. Links need a current state (WCAG 2.4.8).",
+      "A fixed number of switches cannot hold real content, and a 40px strip that wraps would grow. Icon-only actions need an accessible name. Links need a current state (WCAG 2.4.8).",
     status: "fixed",
     component: "second-nav",
   },
@@ -634,9 +634,9 @@ export const COMPOSITE_DEVIATIONS: Deviation[] = [
     item: "Footer: hard-coded colours, 72px heading and no mobile form",
     original:
       ".footer sets --colors-gray-neutral-100, --colors-brand-900 and hsla(var(--colors-alpha-white)/30%) directly, and .footer-title-description h3 is 72px / 90px with a 24px paragraph at every width. Figma has a <600 variant that only changes the weight to Semibold.",
-    ours: "Semantic tokens (background-neutral-100, background-sa-flag, alpha-white-30), no 72px heading (the description is Text md and you place any hero text yourself), and below the sm width the link columns fold into the DGA Accordion, one section per column.",
+    ours: "Semantic tokens (background-neutral-100, background-sa-flag, alpha-white-30), no 72px heading (the description is Text md, optional, and you place any hero text yourself). Below the sm width the link groups sit in two columns and the legal row is centred; folding them into the DGA Accordion is the optional `collapsible` prop. Platform logos sit on a white tile (12px padding, 4px radius, values not in Figma). The description, contact details and app badges are our additions, optional and off by default.",
     reason:
-      "Hard-coded values skip the dark theme. A 72px heading overflows a 375px screen. Four link columns at 375px are unreadable.",
+      "Hard-coded values skip the dark theme. A 72px heading overflows a 375px screen. Four link columns at 375px are unreadable, so they go to two.",
     status: "fixed",
     component: "footer",
   },
@@ -645,7 +645,7 @@ export const COMPOSITE_DEVIATIONS: Deviation[] = [
     item: "Footer: link semantics and on-colour states",
     original:
       "The footer has no states for its links, social icons or accordion, and the green variant has no hover, pressed or focus colour.",
-    ours: "Links underline on hover and press; social icons have the neutral hover and pressed fills (the transparent on-colour fills on green); focus is a 2px outline (black on gray, white on green). External links get an icon and a screen-reader note.",
+    ours: "Links underline on hover and press; social icons and accessibility tools are 40px bordered icon buttons (the border is 40% white on green, values not in Figma) with the neutral hover and pressed fills (the transparent on-colour fills on green); focus is a 2px outline (black on gray, white on green). External links get an icon and a screen-reader note.",
     reason:
       "Every interactive element needs a visible focus (WCAG 2.4.7) and a hover state to match the other links.",
     status: "fixed",

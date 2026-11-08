@@ -101,9 +101,10 @@ export function displayPairs(): ComponentPair[] {
 }
 
 /**
- * The chart series colours. New tokens with no DGA source: DGA publishes no data-visualisation
- * palette, and no pair of existing semantic colours is 3:1 from the next one. Each value is an
- * existing primitive of the DGA colour scales; only the pairing is new.
+ * The chart series colours. DGA's `charts-*` colours (green, gold, blue, lavender, red, yellow) are
+ * 1.3:1 to 2.8:1 against white, below the 3:1 a chart mark needs, and are not 3:1 from each other.
+ * These four tokens keep the green, gold, lavender and blue hues and pick the steps that pass. Each
+ * value is an existing primitive of the DGA colour scales; only the pairing is new.
  */
 export const DISPLAY_ADDITIONS: Addition[] = [
   {
@@ -111,8 +112,8 @@ export const DISPLAY_ADDITIONS: Addition[] = [
     light: "{colors-primary-sa-flag-950}",
     dark: "{colors-primary-sa-flag-200}",
     reason:
-      "New, no DGA source. First chart series: the deepest green of the brand scale in light, its pale step in dark. 3:1 or better on every surface and on series 2 and 4 in both themes.",
-    area: "Extensions",
+      "Contrast correction of the DGA charts-* colours. First chart series: the deepest green of the brand scale in light, its pale step in dark. 3:1 or better on every surface and on series 2 and 4 in both themes.",
+    area: "Components",
     component: "chart",
   },
   {
@@ -120,8 +121,8 @@ export const DISPLAY_ADDITIONS: Addition[] = [
     light: "{colors-secondary-gold-700}",
     dark: "{colors-secondary-gold-800}",
     reason:
-      "New, no DGA source. Second chart series: gold. The mid-lightness step on each theme, so it is 3:1 against the page and against the dark and light series beside it.",
-    area: "Extensions",
+      "Contrast correction of the DGA charts-* colours. Second chart series: gold. The mid-lightness step on each theme, so it is 3:1 against the page and against the dark and light series beside it.",
+    area: "Components",
     component: "chart",
   },
   {
@@ -129,8 +130,8 @@ export const DISPLAY_ADDITIONS: Addition[] = [
     light: "{colors-tertiary-lavender-900}",
     dark: "{colors-tertiary-lavender-200}",
     reason:
-      "New, no DGA source. Third chart series: lavender, the dark of the pair in light and the pale one in dark.",
-    area: "Extensions",
+      "Contrast correction of the DGA charts-* colours. Third chart series: lavender, the dark of the pair in light and the pale one in dark.",
+    area: "Components",
     component: "chart",
   },
   {
@@ -138,8 +139,8 @@ export const DISPLAY_ADDITIONS: Addition[] = [
     light: "{colors-blue-light-600}",
     dark: "{colors-blue-dark-600}",
     reason:
-      "New, no DGA source. Fourth chart series: blue. Blue-light 600 in light mode and blue-dark 600 in dark mode, the steps that are 3:1 against the page and the neighbouring series.",
-    area: "Extensions",
+      "Contrast correction of the DGA charts-* colours. Fourth chart series: blue. Blue-light 600 in light mode and blue-dark 600 in dark mode, the steps that are 3:1 against the page and the neighbouring series.",
+    area: "Components",
     component: "chart",
   },
 ];
@@ -176,7 +177,7 @@ export const DISPLAY_DEVIATIONS: Deviation[] = [
     component: "item",
   },
   {
-    area: "Extensions",
+    area: "Components",
     item: "Chart (new component)",
     original: "—",
     ours: "Bar, line, area and pie on Recharts with a four-colour DGA palette, a tooltip on the Card surface, a legend with marker shapes, a data-table fallback and RTL axes.",
@@ -186,7 +187,7 @@ export const DISPLAY_DEVIATIONS: Deviation[] = [
     component: "chart",
   },
   {
-    area: "Extensions",
+    area: "Components",
     item: "Chart series colours (chart-series-1 to 4)",
     original: "—",
     ours: "Four themed tokens built from existing primitives: green, gold, lavender and blue, alternating dark and light so neighbours differ in lightness.",

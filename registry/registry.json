@@ -1393,7 +1393,7 @@
       "name": "chart",
       "type": "registry:ui",
       "title": "Chart",
-      "description": "Platform Code extension (not DGA). Chart: bar, line, area and pie charts on Recharts with the DGA chart palette (four series, 3:1 against the page and the neighbouring series), tooltip, legend, a data-table fallback, and axes that follow RTL.",
+      "description": "DGA Charts on Recharts: bar, line, area, pie and donut with the DGA chart colours (four series corrected to 3:1 against the page and the neighbouring series), tooltip, legend, axis labels, a data-table fallback, and axes that follow RTL.",
       "dependencies": ["recharts@3.8.0", "react-is@19.3.1"],
       "registryDependencies": [
         "{{REGISTRY_URL}}/r/utils.json",
