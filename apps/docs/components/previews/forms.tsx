@@ -123,7 +123,7 @@ export function FieldAnatomy() {
         label={["National ID", "رقم الهوية الوطنية"]}
         error={[
           "The National ID must be 10 digits.",
-          "يجب أن يتكون رقم الهوية الوطنية من 10 أرقام.",
+          "يجب أن يتكون رقم الهوية الوطنية من ١٠ أرقام.",
         ]}
         invalid
         required
@@ -185,6 +185,7 @@ export function InputStates() {
 }
 
 export function InputAdornments() {
+  const t = useBi();
   return (
     <Stack className="max-w-sm">
       <Labelled label={["Mobile number", "رقم الجوال"]}>
@@ -192,8 +193,8 @@ export function InputAdornments() {
           type="tel"
           inputMode="tel"
           dir="ltr"
-          placeholder="5X XXX XXXX"
-          startAdornment={<bdi dir="ltr">+966</bdi>}
+          placeholder={t("50 123 4567", "٥٠ ١٢٣ ٤٥٦٧")}
+          startAdornment={<bdi dir="ltr">{t("+966", "+٩٦٦")}</bdi>}
         />
       </Labelled>
       <Labelled label={["Email", "البريد الإلكتروني"]}>
@@ -220,7 +221,7 @@ export function TextareaStates() {
     : "I need to renew the building permit for my property.";
   return (
     <div key={text.rtl ? "ar" : "en"} className="grid max-w-3xl gap-4 sm:grid-cols-2">
-      <Labelled label={["Default", "افتراضي"]} helper={["Up to 500 characters.", "حتى 500 حرف."]}>
+      <Labelled label={["Default", "افتراضي"]} helper={["Up to 500 characters.", "حتى ٥٠٠ حرف."]}>
         <Textarea placeholder={text.rtl ? "اكتب هنا" : "Write here"} />
       </Labelled>
       <Labelled label={["Filled", "معبأ"]}>

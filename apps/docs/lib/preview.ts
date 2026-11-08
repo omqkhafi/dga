@@ -6,9 +6,28 @@ export const VIEWPORTS = {
 
 export type Viewport = keyof typeof VIEWPORTS;
 export type Direction = "ltr" | "rtl";
-/** The language of the sample content: always the language of the docs page. */
+/**
+ * The language of the sample content inside a preview. It follows the preview's direction
+ * toggle (see `contentLang`), not the docs page: everything outside the frame keeps the page
+ * language.
+ */
 export type Lang = "en" | "ar";
 export type Theme = "light" | "dark";
+
+/**
+ * The one rule for preview content: RTL renders the Arabic sample content and LTR the English
+ * one, on /en and /ar pages alike. The default direction is still the page's, so the default
+ * view of every preview is in the page language.
+ */
+export function contentLang(dir: Direction): Lang {
+  return dir === "rtl" ? "ar" : "en";
+}
+
+/** The URL of a preview frame. The content language is derived from `dir`, never passed in. */
+export function previewSrc(name: string, dir: Direction, theme: Theme, reload = 0): string {
+  const query = `dir=${dir}&theme=${theme}&lang=${contentLang(dir)}`;
+  return `/preview/${name}?${query}${reload > 0 ? `&r=${reload}` : ""}`;
+}
 
 export type PreviewMessage =
   | { type: "dga-preview:set"; dir: Direction; theme: Theme; lang?: Lang }
@@ -24,10 +43,10 @@ export function isPreviewMessage(data: unknown): data is PreviewMessage {
   );
 }
 
-/** Sets direction and theme on a document root. Used inside the preview iframe. */
+/** Sets direction, content language and theme on a document root. Used inside the preview iframe. */
 export function applyPreviewState(root: HTMLElement, dir: Direction, theme: Theme, lang?: Lang) {
   root.dir = dir;
-  if (lang) root.lang = lang;
+  root.lang = lang ?? contentLang(dir);
   root.dataset.theme = theme;
   root.classList.toggle("dark", theme === "dark");
   root.style.colorScheme = theme;

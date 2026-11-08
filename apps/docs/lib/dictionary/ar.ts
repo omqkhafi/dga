@@ -455,7 +455,7 @@ export const ar: Dictionary = {
   "bento.privacy": "الخصوصية",
   "bento.accessibility": "بيان إمكانية الوصول",
 
-  // Component previews: default strings of the components, by page language
+  // Component previews: default strings of the components, in the preview content language (RTL is Arabic, LTR is English)
   "ui.optional": "اختياري",
   "ui.clearSearch": "مسح البحث",
   "ui.decrease": "إنقاص",

@@ -18,9 +18,11 @@ import { type ReactNode, useEffect, useLayoutEffect, useRef, useState } from "re
 import { Icon } from "@/components/shell/icon";
 import { useLocale, useT } from "@/lib/locale-context";
 import {
+  contentLang,
   type Direction,
   isPreviewMessage,
   type PreviewMessage,
+  previewSrc,
   type Theme,
   VIEWPORTS,
   type Viewport,
@@ -161,7 +163,9 @@ export function PreviewFrame({
 }) {
   const frame = useRef<HTMLIFrameElement>(null);
   const box = useRef<HTMLDivElement>(null);
-  const { dir: pageDir, lang } = useLocale();
+  const { dir: pageDir } = useLocale();
+  // The content inside the frame follows the direction toggle: RTL is Arabic, LTR is English.
+  const lang = contentLang(dir);
   const near = useNear(box);
   const [available, setAvailable] = useState(0);
   // A filled frame is laid out at the width it is given (never narrower than a small phone).
@@ -173,13 +177,13 @@ export function PreviewFrame({
   const [src, setSrc] = useState<string | null>(null);
   // biome-ignore lint/correctness/useExhaustiveDependencies: the first theme and direction are enough for src.
   useEffect(() => {
-    if (near && src === null) setSrc(`/preview/${name}?dir=${dir}&theme=${theme}&lang=${lang}`);
+    if (near && src === null) setSrc(previewSrc(name, dir, theme));
   }, [near, src]);
   // biome-ignore lint/correctness/useExhaustiveDependencies: reload on key change only.
   useEffect(() => {
     if (reloadKey > 0) {
       setLoaded(false);
-      setSrc(`/preview/${name}?dir=${dir}&theme=${theme}&lang=${lang}&r=${reloadKey}`);
+      setSrc(previewSrc(name, dir, theme, reloadKey));
     }
   }, [reloadKey]);
 
@@ -290,9 +294,10 @@ export function Preview({
 }) {
   const docsTheme = useDocsTheme();
   const t = useT();
-  const { dir: pageDir, lang } = useLocale();
+  const { dir: pageDir } = useLocale();
   const { directions, themes, viewports } = useOptions();
-  // The preview opens in the page's own direction: RTL on Arabic pages.
+  // The preview opens in the page's own direction (RTL on Arabic pages), so its default content
+  // is in the page language. Toggling the direction also switches the content language.
   const initialDir: Direction = defaultDir ?? pageDir;
   const [dir, setDir] = useState<Direction>(initialDir);
   const [theme, setTheme] = useState<Theme | null>(null);
@@ -331,7 +336,7 @@ export function Preview({
 
   const label = title ?? name;
   const other: Direction = dir === "ltr" ? "rtl" : "ltr";
-  const fullscreenHref = `/preview/${name}?dir=${dir}&theme=${activeTheme}&lang=${lang}`;
+  const fullscreenHref = previewSrc(name, dir, activeTheme);
 
   return (
     <figure

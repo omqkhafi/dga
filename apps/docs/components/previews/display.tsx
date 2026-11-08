@@ -80,8 +80,8 @@ export function AvatarDemo() {
         <AvatarGroup>
           <Avatar size={32} src="/avatar-sample.svg" alt={t("Noura", "نورة")} />
           <Avatar size={32} initials={t("AK", "أ ك")} />
-          <Avatar size={32} initials="SM" />
-          <Avatar size={32} initials="+3" aria-label={t("3 more", "3 أخرى")} />
+          <Avatar size={32} initials={t("SM", "س م")} />
+          <Avatar size={32} initials={t("+3", "+٣")} aria-label={t("3 more", "٣ أخرى")} />
         </AvatarGroup>
         <AvatarGroup stacked={false}>
           <Avatar size={32} src="/avatar-sample.svg" alt={t("Noura", "نورة")} />

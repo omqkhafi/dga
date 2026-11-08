@@ -5,6 +5,26 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
 
 ## [Unreleased]
 
+## [0.4.3] - 2026-11-08
+
+Patch: preview content follows the direction toggle, and the roadmap is updated. No registry component changes.
+
+### Changed
+
+- **Preview content follows the direction toggle.** On `/en/docs/components/field` with the preview set to RTL, the preview showed English sample text in an RTL layout ("Noura Al-Qahtani", and "As it appears on your national ID." with the period at the start of the line). Inside a preview, the content language now follows the LTR/RTL toggle: RTL renders the Arabic sample content (`lang="ar"`) and LTR the English one (`lang="en"`), on `/en` and `/ar` pages alike. This replaces the 0.4.1 rule that preview content follows the page language and the toggle only changes the layout.
+  - The default direction stays tied to the page (English pages open in LTR, Arabic pages in RTL), so the default view of every preview is unchanged.
+  - Everything outside the preview frame stays in the page language: prose, headings, code blocks, installation and usage text, the table of contents, the preview toolbar labels and the example titles. Code samples are unchanged.
+  - **One mechanism:** `contentLang(dir)` in `apps/docs/lib/preview.ts` sets the frame's `lang` from the direction (in the frame URL, the fullscreen link, the reset reload and the live toggle message), and every example reads it through `Bi`, `useBi` and `useUi`. The RTL comparison panels on English pages now show Arabic content too.
+  - **No mixed previews:** Arabic versions added for the Drawer navigation label, the avatar initials and overflow count, the mobile number prefix and placeholders (`+٩٦٦`, `٥٠ ١٢٣ ٤٥٦٧`), and two Arabic sentences that contained English code words (the controlled Dialog description and the Toast `timeout` note). Counts and the National ID length in Arabic sample content use Arabic-Indic digits.
+- **Locale purity per direction.** Preview content is exempt from the page-language check but must be pure in each direction, with the same allowlist: no English words in RTL, no Arabic in LTR. `scripts/locale-allowlist.json` is now an object (`words` plus a note on what it applies to), shared by both checks.
+  - `bun run test` checks the rule (both directions, from an English and an Arabic page), that the frame never takes the page locale, that the English side of every preview string pair has no Arabic, that every Arabic preview string has no English words, and that Arabic sample content uses one digit system.
+  - `bun run test:e2e` checks each preview frame against the language of its direction (the polish pass), toggles Field, Input, Select, Dialog, Toast and Tabs to RTL and LTR on `/en` and `/ar` (frame `lang` and `dir`, purity, and the page, headings and example title unchanged around it), and loads every preview in both directions.
+- **CONTRIBUTING.md:** the locale purity section states the new rule and replaces "previews follow the page language".
+
+### Docs
+
+- **ROADMAP.md:** records 0.4.3 as done and adds Patch 0.4.4 (OKLCH colour output, with a hex round-trip check in `tokens:check`), Phase 7 (shadcn extension: only the shadcn components with no DGA equivalent, derived from DGA tokens and marked as extensions), Phase 8 (Section blocks: reusable `registry:block` sections, replacing "Page templates as blocks") and Phase 9 (Mobile components, renumbered from Phase 8). The intro, the rules and the README point to the new numbering.
+
 ## [0.4.2] - 2026-11-06
 
 Patch: `@dga` components get their own install path so they never collide with stock shadcn, `/ar/*` 404s are in Arabic, and the Arabic exception is written down. No component API or visual changes. **Breaking: the install path moved.**

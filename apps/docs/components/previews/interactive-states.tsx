@@ -111,7 +111,7 @@ export function DialogControlled() {
             <DialogDescription>
               <Bi
                 en="The page set open to true. Closing it calls onOpenChange."
-                ar="ضبطت الصفحة open على true. وإغلاقها يستدعي onOpenChange."
+                ar="فتحت الصفحة هذه النافذة بنفسها. وإغلاقها يستدعي onOpenChange."
               />
             </DialogDescription>
           </DialogHeader>
@@ -186,7 +186,7 @@ export function TooltipStates() {
           <TooltipContent title={t("Drafts", "المسودات")} side="bottom">
             {t(
               "Requests you started and did not submit. They are kept for 30 days.",
-              "الطلبات التي بدأتها ولم ترسلها. تُحفظ لمدة 30 يومًا.",
+              "الطلبات التي بدأتها ولم ترسلها. تُحفظ لمدة ٣٠ يومًا.",
             )}
           </TooltipContent>
         </Tooltip>
@@ -413,7 +413,7 @@ export function ToastBehaviour() {
               type: "info",
               timeout: 0,
               title: t("Stays until you close it", "يبقى حتى تغلقه"),
-              description: t("timeout: 0 turns off the timer.", "القيمة timeout: 0 توقف المؤقت."),
+              description: t("timeout: 0 turns off the timer.", "ضبط المهلة على صفر يوقف المؤقت."),
             })
           }
         >

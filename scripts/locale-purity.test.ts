@@ -13,6 +13,8 @@ import { expect, test } from "bun:test";
 import { Glob } from "bun";
 import { ar } from "../apps/docs/lib/dictionary/ar";
 import { en } from "../apps/docs/lib/dictionary/en";
+import { dirOf } from "../apps/docs/lib/i18n";
+import { contentLang, previewSrc } from "../apps/docs/lib/preview";
 import allowlist from "./locale-allowlist.json";
 
 // Arabic letters and words. The Arabic-Indic digits (U+0660 to U+0669) and the decimal and
@@ -23,9 +25,9 @@ const ARABIC = /[\u0600-\u065F\u066D-\u06EF\u06FA-\u06FF\u0750-\u077F\uFB50-\uFD
 /**
  * Proper nouns, standards, key names, component names and Hugeicons names that stay in Latin
  * script inside Arabic text (scripts/locale-allowlist.json, shared with the browser audit in
- * scripts/e2e.mjs).
+ * scripts/e2e.mjs). The same list applies to Arabic pages and to RTL preview content.
  */
-const ALLOWED = new Set((allowlist as string[]).map((w) => w.toLowerCase()));
+const ALLOWED = new Set(allowlist.words.map((w) => w.toLowerCase()));
 
 /** Latin words left in a string once code-like parts are removed. */
 function latinWords(text: string): string[] {
@@ -93,5 +95,115 @@ test("Arabic docs pages have no English prose", async () => {
     const words = latinWords(text);
     if (words.length > 0) bad.push(`${file}: ${[...new Set(words)].slice(0, 8).join(", ")}`);
   }
+  expect(bad).toEqual([]);
+});
+
+// ------------------------------------------------------------- Preview content
+//
+// Preview content is exempt from the page-language check: inside a preview the content
+// language follows the direction toggle (RTL is Arabic, LTR is English), on /en and /ar pages
+// alike. Each direction must be pure, with the same allowlist. The browser audit in
+// scripts/e2e.mjs checks the rendered frames; these tests check the rule and the source strings.
+
+test("preview content follows the direction toggle, on an English and an Arabic page", () => {
+  for (const page of ["en", "ar"] as const) {
+    // The default direction is the page's, so the default view is in the page language.
+    expect(contentLang(dirOf(page))).toBe(page);
+    // Toggled, the content follows the direction, whatever the page language.
+    expect(contentLang("rtl")).toBe("ar");
+    expect(contentLang("ltr")).toBe("en");
+    expect(previewSrc("field-anatomy", "rtl", "light")).toBe(
+      "/preview/field-anatomy?dir=rtl&theme=light&lang=ar",
+    );
+    expect(previewSrc("field-anatomy", "ltr", "dark", 2)).toBe(
+      "/preview/field-anatomy?dir=ltr&theme=dark&lang=en&r=2",
+    );
+  }
+});
+
+test("the preview frame takes its content language from the direction, not the page", async () => {
+  const preview = await Bun.file("apps/docs/components/preview/preview.tsx").text();
+  // No frame URL or message is built from the page locale's lang.
+  expect(preview).not.toMatch(/\blang\b\s*\}\s*=\s*useLocale\(\)/);
+  expect(preview).toContain("contentLang(dir)");
+  expect(preview).not.toMatch(/`\/preview\/\$\{name\}\?/);
+  const bridge = await Bun.file("apps/docs/components/preview/frame-bridge.tsx").text();
+  expect(bridge).toContain('const lang = dir === "rtl" ? "ar" : "en";');
+});
+
+/** Every string literal and JSX text run in the preview sources, with its file and line. */
+async function previewStrings() {
+  const out: { file: string; line: number; text: string; source: string }[] = [];
+  for await (const file of new Glob("apps/docs/components/previews/*.tsx").scan()) {
+    const source = await Bun.file(file).text();
+    const at = (index: number) => source.slice(0, index).split("\n").length;
+    for (const m of source.matchAll(/"((?:[^"\\\n]|\\.)*)"/g))
+      out.push({ file, line: at(m.index), text: m[1] ?? "", source });
+    for (const m of source.matchAll(/>([^<>{}\n]*[؀-ۿ][^<>{}\n]*)</g))
+      out.push({ file, line: at(m.index), text: m[1] ?? "", source });
+  }
+  return out;
+}
+
+/** English–Arabic pairs: <Bi en ar>, t("en", "ar"), ["en", "ar"], { en, ar } and rtl ternaries. */
+async function previewPairs() {
+  const pairs: { file: string; en: string; ar: string }[] = [];
+  const s = String.raw`"((?:[^"\\]|\\.)*)"`;
+  const attr = String.raw`(?:${s}|\{${s}\})`;
+  // A tuple of two Arabic strings is one language's content (a question and its answer), not a pair.
+  const patterns: [RegExp, (m: RegExpMatchArray) => [string, string], boolean?][] = [
+    [
+      new RegExp(String.raw`\ben=${attr}\s+ar=${attr}`, "g"),
+      (m) => [m[1] ?? m[2] ?? "", m[3] ?? m[4] ?? ""],
+    ],
+    [
+      new RegExp(String.raw`\bar=${attr}\s+en=${attr}`, "g"),
+      (m) => [m[3] ?? m[4] ?? "", m[1] ?? m[2] ?? ""],
+    ],
+    [new RegExp(String.raw`\ben:\s*${s},\s*ar:\s*${s}`, "g"), (m) => [m[1] ?? "", m[2] ?? ""]],
+    [
+      new RegExp(String.raw`[(\[]\s*${s},\s*${s},?\s*[)\]]`, "g"),
+      (m) => [m[1] ?? "", m[2] ?? ""],
+      true,
+    ],
+    [
+      new RegExp(String.raw`(?:rtl|arabic)\s*\?\s*${s}\s*:\s*${s}`, "g"),
+      (m) => [m[2] ?? "", m[1] ?? ""],
+    ],
+  ];
+  for await (const file of new Glob("apps/docs/components/previews/*.tsx").scan()) {
+    const source = await Bun.file(file).text();
+    for (const [pattern, pick, tuple] of patterns)
+      for (const m of source.matchAll(pattern)) {
+        const [en, ar] = pick(m);
+        if (tuple && ARABIC.test(en) && ARABIC.test(ar)) continue;
+        if (ARABIC.test(ar) || ARABIC.test(en)) pairs.push({ file, en, ar });
+      }
+  }
+  return pairs;
+}
+
+test("LTR preview content (the English side of every pair) has no Arabic", async () => {
+  const pairs = await previewPairs();
+  expect(pairs.length).toBeGreaterThan(200);
+  const bad = pairs.filter((p) => ARABIC.test(p.en)).map((p) => `${p.file}: ${p.en}`);
+  expect(bad).toEqual([]);
+});
+
+test("RTL preview content (every Arabic string) has no English words", async () => {
+  const bad = (await previewStrings())
+    .filter((s) => ARABIC.test(s.text))
+    .map((s) => [`${s.file}:${s.line}`, latinWords(s.text)] as const)
+    .filter(([, words]) => words.length > 0);
+  expect(bad).toEqual([]);
+});
+
+test("RTL preview content uses one digit system: Arabic-Indic digits in sample content", async () => {
+  // Names, IDs, dates and counts use natural Arabic forms. Technical values (sizes in px, file
+  // sizes, the 1 to 10 range of a number input) keep Western digits, as CONTRIBUTING says.
+  const technical = /px|MB|KB|\d+\s*(إلى|و)\s*\d+|من \d+ إلى|بين \d/;
+  const bad = (await previewPairs())
+    .filter((p) => /[0-9]/.test(p.ar) && ARABIC.test(p.ar) && !technical.test(p.ar))
+    .map((p) => `${p.file}: ${p.ar}`);
   expect(bad).toEqual([]);
 });

@@ -179,7 +179,7 @@ export function DialogForm() {
                 type="tel"
                 inputMode="tel"
                 dir="ltr"
-                placeholder={t("5X XXX XXXX", "٥X XXX XXXX")}
+                placeholder={t("50 123 4567", "٥٠ ١٢٣ ٤٥٦٧")}
               />
             </Field>
             <Field name="email">
@@ -257,6 +257,7 @@ const NAV = [
 
 export function DrawerNav() {
   const close = useClose();
+  const t = useBi();
   return (
     <Center>
       <Drawer side="start">
@@ -269,7 +270,7 @@ export function DrawerNav() {
               <Bi en="Services" ar="الخدمات" />
             </DrawerTitle>
           </DrawerHeader>
-          <nav aria-label="Main" className="flex flex-col gap-1">
+          <nav aria-label={t("Main", "القائمة الرئيسية")} className="flex flex-col gap-1">
             {NAV.map((item) => (
               <Button
                 key={item.en}

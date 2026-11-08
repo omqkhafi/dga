@@ -1,6 +1,7 @@
 # Roadmap
 
-Phases 0, 1 and 2 are done (0.1.0), the Phase 2.5 docs polish is in 0.1.1 and 0.1.2, the Arabic locale (Phase 2.6) is in 0.2.0, the forms (Phase 3) are in 0.3.0, the interactive components (Phase 4) are in 0.4.0, the AI Resources docs and the docs polish are in 0.4.1, and 0.4.2 moves component installs to `components/dga` and fixes the Arabic 404; see [CHANGELOG.md](CHANGELOG.md).
+Phases 0, 1 and 2 are done (0.1.0), the Phase 2.5 docs polish is in 0.1.1 and 0.1.2, the Arabic locale (Phase 2.6) is in 0.2.0, the forms (Phase 3) are in 0.3.0, the interactive components (Phase 4) are in 0.4.0, the AI Resources docs and the docs polish are in 0.4.1, 0.4.2 moves component installs to `components/dga` and fixes the Arabic 404, and 0.4.3 makes preview content follow the direction toggle; see [CHANGELOG.md](CHANGELOG.md).
+Next: Patch 0.4.4 (OKLCH colour output), Phase 5 (Navigation and data display), Phase 6 (Composite), Phase 7 (shadcn extension: components DGA does not define), Phase 8 (Section blocks) and Phase 9 (Mobile components, as needed), then the Release.
 Component specs for each phase are in `docs/design-system/components/`.
 
 ## Rules for every phase
@@ -9,6 +10,7 @@ These apply to every component, so they are not repeated in each phase.
 
 - Built on Base UI. Stable `cn-*` classes in `registry/bases/base/ui`, mapped to DGA tokens in `registry/styles/style-dga.css`.
 - Logical properties only. RTL and LTR are both checked in the docs previews.
+- **Preview content follows the direction toggle** (0.4.3, replacing the 0.4.1 rule that previews follow the page language): RTL renders the Arabic sample content and LTR the English one, on `/en` and `/ar` pages alike. The default direction is the page's. Everything outside the preview frame (prose, headings, code, the toolbar and the example titles) stays in the page language. Every new example has both languages, and each direction is pure.
 - **Contrast check extended for each component as it lands.** Every state of the component (default, hover, pressed, selected, focused) is added to the audit in `scripts/tokens/model.ts`. Failures are fixed and logged in Deviations.
 - A docs page for each component: a preview (direction, theme and viewport toggles), usage, props and accessibility notes.
 - **English and Arabic ship together.** A component phase is not done until its docs page exists in both languages (`name.mdx` and `name.ar.mdx`, with the English `sourceHash` recorded by `bun run translations:stamp`), its `descriptionAr` entries exist for every prop (`scripts/api-descriptions-ar.ts`), and `bun run translations:check` passes. New UI strings go into both dictionaries.
@@ -85,6 +87,22 @@ Follow-ups, not blocking Phase 4:
 - [ ] **Tabs: the More tab** (an overflow menu on horizontal tabs). Tabs scroll sideways for now; the roadmap item is a built-in overflow menu composed from Menu.
 - [ ] **Known gaps from DGA** (Deviations, unresolved): the read-only border and the lighter and darker fills at rest are below 3:1 (WCAG 1.4.11), kept as DGA draws them.
 
+## Patch 0.4.3: Preview content follows the direction toggle (done, 0.4.3)
+
+- [x] Inside a preview, the content language follows the direction toggle: RTL renders the Arabic sample content (`lang="ar"`) and LTR the English one (`lang="en"`), on `/en` and `/ar` pages. This replaces the 0.4.1 rule that previews follow the page language, under which an English page in RTL showed English text in an RTL layout.
+- [x] The default direction stays tied to the page (English pages open in LTR, Arabic pages in RTL), so the default view does not change. Prose, headings, code, installation and usage text, the table of contents, the toolbar labels and the example titles stay in the page language.
+- [x] One mechanism for every preview and example: the preview sets the frame's language from its direction (`contentLang`), and every example reads it. Missing Arabic strings added, and names, IDs and dates use natural Arabic forms in RTL.
+- [x] Locale purity per direction: preview content is checked against its toggled language (no English words in RTL, no Arabic in LTR, same allowlist), in `bun run test` and `bun run test:e2e`, on an English and an Arabic page.
+
+## Patch 0.4.4: OKLCH colour output
+
+- [ ] The source of truth stays the DGA Figma hex values in `scripts/tokens`. The token build emits every colour in the CSS output as `oklch()`: primitives, semantic tokens and the shadcn variable mapping, in light and dark.
+- [ ] Round-trip check in `tokens:check`: every emitted `oklch()` value converts back to the exact source hex (8-bit sRGB). Any mismatch fails the build. Alpha values keep their exact opacity.
+- [ ] The contrast audit keeps working from the source values, so its results do not change.
+- [ ] The Colors, Deviations and Contrast pages show hex next to OKLCH, because designers and Figma work in hex.
+- [ ] This matches the `oklch()` format shadcn and Tailwind v4 use by default.
+- [ ] No visual change and no Deviations entries: the same colours in a different notation.
+
 ## Phase 5: Navigation and data display
 
 Breadcrumbs, Pagination, Table of Content, Card, List, Table, Data Table, Rating, Progress, Stepper.
@@ -93,11 +111,35 @@ Breadcrumbs, Pagination, Table of Content, Card, List, Table, Data Table, Rating
 
 Header with slide-out menu, Footer, Date Picker (Hijri and Gregorian), Carousel, Filtration.
 
-## Phase 7: Page templates as blocks
+## Phase 7: shadcn extension (components DGA does not define)
 
-`registry:block` items: Home, Service, Form, FAQ, Contact, 404, Cookies banner, Rating.
+Covers only the shadcn components that have no DGA equivalent. Depends on Phases 3 to 6.
 
-## Phase 8: Mobile components (as needed)
+- Each one is built like every other `@dga` item: Base UI where a primitive exists, the stable `cn-*` classes, DGA tokens only, RTL and LTR, light and dark, the contrast audit, docs in English and Arabic, the `components/dga` install path and the install test.
+- **No new colours.** Derive from the existing DGA semantic tokens, and log any new token in Deviations as "new, no DGA source".
+- **DGA wins where it has a component.** No shadcn duplicate ships for Dialog, Drawer (Sheet), Toast (Sonner), Tabs, Accordion, Tooltip, Menu (Dropdown Menu), Select, Checkbox, Radio, Switch, Input, Textarea, Field/Label, Badge, Avatar, Skeleton, Spinner, Divider (Separator), Inline Alert (Alert), Breadcrumbs, Pagination, Card, Table, Progress, Date Picker/Calendar and Carousel.
+- **Marked as an extension.** Each page states clearly that the component is a Platform Code extension and not part of DGA, and how its look is derived from DGA tokens.
+- **The look follows the nearest DGA component:** popovers follow Menu and Tooltip, inputs follow the Input field states, toggles follow Button.
+- **Candidates** (confirm against the current shadcn registry at the start of the phase, and drop anything Phases 5 and 6 already cover):
+  - Overlays: Popover, Hover Card, Alert Dialog, Context Menu.
+  - Inputs: Slider, Input OTP, Toggle, Toggle Group, Combobox, Command, Input Group, Button Group.
+  - Navigation: Menubar, Navigation Menu, Sidebar.
+  - Layout: Collapsible, Scroll Area, Resizable, Aspect Ratio.
+  - Display: Kbd, Empty, Item, Chart (using the DGA chart tokens).
+
+## Phase 8: Section blocks
+
+Reusable `registry:block` section items only. Users compose their own pages: no full-page templates and no example or composed pages. Depends on Phases 3 to 7. Header, Footer and Second nav stay in Phase 6.
+
+- **Overlays:** `cookies-banner`, `page-feedback`, `service-rating`, `chatbot-panel`, `announcement-banner`.
+- **Heroes and headers:** `hero` (image, colour, with search and chips, multi-slide, seasonal) and `page-header`.
+- **Content sections:** `cards-grid`, `stats-section`, `faq-section`, `content-section`, `sitemap-section`, `org-structure`, `policy-list`, `budget-table`.
+- **Service and life journey:** `service-header`, `service-steps`, `service-meta-card`, `journey-overview`, `journey-steps`.
+- **Forms and contact:** `multi-step-form`, `contact-form`, `contact-info`.
+- **Search and errors:** `search-results`, `error-state`.
+- **Out of scope:** full page templates, composed example pages, Header and Footer, login and auth (DGA has no template), and seasonal pages as separate products (use the `hero` and `cards-grid` variants instead).
+
+## Phase 9: Mobile components (as needed)
 
 Tab Bar, Navigation Bar, Banner, from the DGA Mobile Components Figma file.
 

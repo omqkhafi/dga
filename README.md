@@ -23,6 +23,12 @@ Components are installed to `components/dga/<name>.tsx`, never `components/ui`, 
 
 The documentation is published in English (`/en`) and Arabic (`/ar`). A URL without a language goes to the language the visitor chose with the switcher in the header (the `dga_locale` cookie: SameSite=Lax, path `/`, one year), then to the language in `Accept-Language`, then to English. Both are first-class: every page, every UI string and every Open Graph image exists in both, and a new component is not done until both are written (see [ROADMAP.md](ROADMAP.md)). Arabic follows its own typography rules (line height 1.8, no letter spacing, Western digits in technical values); they are documented under Foundations > Typography.
 
+Inside a component preview, the sample content follows the LTR/RTL toggle rather than the page: RTL shows the Arabic content and LTR the English one, on both `/en` and `/ar`. Previews open in the page's direction, so the default view is in the page language, and everything outside the preview stays in the page language.
+
+## Roadmap
+
+Next are Patch 0.4.4 (OKLCH colour output), Phase 5 (Navigation and data display), Phase 6 (Composite), Phase 7 (shadcn extension: components DGA does not define), Phase 8 (Section blocks) and Phase 9 (Mobile components, as needed). See [ROADMAP.md](ROADMAP.md).
+
 ## Repository
 
 | Path                         | What is in it                                                                                     |

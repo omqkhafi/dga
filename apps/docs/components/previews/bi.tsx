@@ -12,7 +12,10 @@ function subscribe(callback: () => void) {
   return () => observer.disconnect();
 }
 
-/** The language of the sample content. It is the docs page's language, not the direction. */
+/**
+ * The language of the sample content: the frame's lang, which the preview sets from its direction
+ * toggle (RTL is Arabic, LTR is English). Every example reads it here, so none needs its own rule.
+ */
 export function useLanguage() {
   return useSyncExternalStore(
     subscribe,
@@ -29,7 +32,7 @@ export function useDirection() {
   );
 }
 
-/** Text in the page language: Arabic on an Arabic page, English on an English one, in either direction. */
+/** Text in the preview's content language: Arabic in RTL, English in LTR, on any docs page. */
 export function Bi({ ar, en }: { ar: string; en: string }) {
   return <>{useLanguage() === "ar" ? ar : en}</>;
 }
