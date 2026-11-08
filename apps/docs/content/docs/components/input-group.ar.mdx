@@ -1,0 +1,101 @@
+---
+title: Input Group
+description: "صندوق Input من DGA مع إضافات في أي طرف: بادئة أو أيقونة أو وحدة أو تلميح لوحة مفاتيح أو زر. الخط السفلي للتركيز والخطأ يخصان المجموعة كلها."
+sourceHash: e4452a76e0e6
+---
+
+<ExtensionNote
+  name="Input Group"
+  primitive="Base UI Input"
+  from="الحقل Input"
+  tokens={["field-background-default", "field-border-default", "field-border-pressed", "field-border-error", "text-primary-paragraph"]}
+/>
+
+<Preview name="input-group-addons" title="Input Group" minHeight={420} />
+
+## التثبيت [#installation]
+
+<ComponentInstall name="input-group" />
+
+ويثبّت [Input](/docs/components/input) أيضًا.
+
+## الاستخدام [#usage]
+
+```tsx title="page.tsx"
+import { Field, FieldLabel } from "@/components/dga/field";
+import {
+  InputGroup,
+  InputGroupAddon,
+  InputGroupInput,
+  InputGroupText,
+} from "@/components/dga/input-group";
+
+export function AmountField() {
+  return (
+    <Field>
+      <FieldLabel>المبلغ</FieldLabel>
+      <InputGroup>
+        <InputGroupAddon>
+          <InputGroupText>ر.س</InputGroupText>
+        </InputGroupAddon>
+        <InputGroupInput inputMode="decimal" dir="ltr" />
+      </InputGroup>
+    </Field>
+  );
+}
+```
+
+لأيقونة واحدة أو بادئة قصيرة، لدى [Input](/docs/components/input) أصلًا `startAdornment` و`endAdornment`. استخدم Input Group حين تحتاج إلى عدة إضافات أو زر داخل الحقل أو تلميح لوحة مفاتيح. وضع [Button](/docs/components/button) (`size="sm"` و`variant="subtle"` أو `primary`) داخل `InputGroupAddon` لإجراء، وأعطِ الزر بأيقونة فقط `aria-label`.
+
+## البنية [#anatomy]
+
+- **المجموعة**: صندوق Input بارتفاع 32px (`md`) أو 40px (`lg`)، بالتعبئة الافتراضية أو الفاتحة أو الداكنة.
+- **InputGroupInput**: حقل النص الذي يسمّيه [Field](/docs/components/field) ويصفه ويتحقق منه.
+- **InputGroupAddon**: أيقونة أو نص أو `Kbd` أو Button، في بداية الحقل أو نهايته.
+
+## أمثلة [#examples]
+
+### الإضافات [#addons]
+
+أيقونة وتلميح لوحة مفاتيح، وبادئة نصية بأرقام من اليسار إلى اليمين، وبادئة هاتف.
+
+<Preview name="input-group-addons" title="الإضافات" minHeight={420} />
+
+### الأزرار [#buttons]
+
+قيمة للقراءة فقط مع زر نسخ، وحقل بزر تطبيق.
+
+<Preview compact name="input-group-buttons" title="الأزرار" minHeight={300} />
+
+### الحالات [#states]
+
+الخطأ والتعطيل والتعبئة الداكنة بالحجم المتوسط.
+
+<Preview name="input-group-states" title="الحالات" minHeight={420} />
+
+## RTL [#rtl]
+
+تقع الإضافات في الجهة التي يبدأ منها النص وينتهي: البادئة على اليمين في العربية، والزر الأخير على اليسار. وتُضبط الأرقام والمبالغ وأرقام الهواتف على `dir="ltr"` لتحتفظ بترتيبها، و`InputGroupKbd` من اليسار إلى اليمين دائمًا.
+
+<DirectionCompare name="input-group-addons" title="Input Group" minHeight={420} />
+
+## إمكانية الوصول [#accessibility]
+
+- التركيز هو تركيز Input: ينمو الخط السفلي من المنتصف ويغمق الحد ويلقي الصندوق ظل التركيز. لا حد إضافي؛ تضيء المجموعة كلها حين يكون التركيز على الحقل أو على زر داخلها.
+- الأيقونات الزخرفية `aria-hidden`؛ والنصوص في الإضافات تُقرأ جزءًا من المجموعة. أعطِ تسمية Field للحقل لا للإضافة.
+- للمجموعة `role="group"`. ويضبط الخطأ `aria-invalid` على الحقل والحد الأحمر على المجموعة.
+- الأرقام 4.5:1، والحد والخط السفلي 3:1، وأيقونات الإضافات 3:1 على التعبئة، فاتحًا وداكنًا.
+
+## مرجع API [#api-reference]
+
+<ApiReference component="input-group" />
+
+## الاشتقاق [#derivation]
+
+لا توجد في DGA مجموعة حقول. المجموعة هي صندوق Input من DGA بحالاته دون تغيير. وتستخدم الإضافات رموز نص البادئة واللاحقة والأيقونة في Input نفسها. لا ألوان جديدة.
+
+<ComponentDeviations component="input-group" />
+
+## التباين [#contrast]
+
+<ComponentContrast component="input-group" />

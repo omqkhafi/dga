@@ -19,8 +19,8 @@ type ToggleProps = Omit<TogglePrimitive.Props, "value"> &
 /**
  * A two-state button that stays pressed (Platform Code extension; looks like a DGA Button).
  * Use it for a setting that applies right away and can be turned off again, such as Bold or
- * Show filters. Space and Enter flip it. The pressed state is the Button selected fill, shown
- * with `aria-pressed`, so it is not colour alone. An icon-only toggle needs an `aria-label`.
+ * Show filters. Space and Enter flip it. The pressed state is the Button selected fill plus a
+ * dark border, and `aria-pressed`, so it is not colour alone. An icon-only toggle needs an `aria-label`.
  * Use a Switch for on and off settings in a form, and a Checkbox for choices sent with a form.
  */
 function Toggle({
@@ -36,7 +36,7 @@ function Toggle({
       data-slot="toggle"
       data-variant={variant}
       data-size={size}
-      className={cn(buttonVariants({ variant, size, iconOnly, onColor }), className)}
+      className={cn(buttonVariants({ variant, size, iconOnly, onColor }), "cn-toggle", className)}
       {...props}
     />
   );

@@ -1,7 +1,7 @@
 "use client";
 
 import { Input as InputPrimitive } from "@base-ui/react/input";
-import { type VariantProps } from "class-variance-authority";
+import type { VariantProps } from "class-variance-authority";
 import type * as React from "react";
 import { inputVariants } from "@/components/dga/input";
 import { cn } from "@/registry/bases/base/lib/utils";
@@ -17,6 +17,7 @@ type InputGroupProps = React.ComponentProps<"div"> & VariantProps<typeof inputVa
  */
 function InputGroup({ className, size, appearance, ...props }: InputGroupProps) {
   return (
+    // biome-ignore lint/a11y/useSemanticElements: a fieldset would add its own border and legend layout
     <div
       role="group"
       data-slot="input-group"

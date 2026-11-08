@@ -6,7 +6,10 @@ import { inputVariants } from "@/components/dga/input";
 import { normalizeDigits } from "@/components/dga/number-input";
 import { cn } from "@/registry/bases/base/lib/utils";
 
-type InputOTPProps = Omit<OTPFieldPrimitive.Root.Props, "length" | "children"> & {
+type InputOTPProps = Omit<
+  OTPFieldPrimitive.Root.Props,
+  "length" | "children" | "validationType" | "inputMode"
+> & {
   /** How many characters. Default 6. */
   length?: number;
   /** Height of the boxes: `md` 32px or `lg` 40px (the Input sizes). */
@@ -16,7 +19,10 @@ type InputOTPProps = Omit<OTPFieldPrimitive.Root.Props, "length" | "children"> &
    * 3 + 3. Default: none.
    */
   groups?: number[];
-  /** Accessible name of each box. `{index}` and `{length}` are replaced, for example "Digit 1 of 6". */
+  /**
+   * Accessible name of boxes 2 and up. `{index}` and `{length}` are replaced, for example
+   * "Digit 2 of 6". The first box is named by the Field label or the group's `aria-label`.
+   */
   slotLabel?: string;
   /** Marks the code as wrong: red border and underline on every box. */
   invalid?: boolean;
@@ -45,7 +51,13 @@ function InputOTP({
       data-slot="input-otp"
       length={length}
       dir="ltr"
-      normalizeValue={(value) => normalizeDigits(normalizeValue ? normalizeValue(value) : value)}
+      // Base UI filters by validationType before it normalizes, so "numeric" would drop ٣ before
+      // it could become 3. Filtering is done here instead: Western digits only.
+      validationType="none"
+      inputMode="numeric"
+      normalizeValue={(value) =>
+        normalizeDigits(normalizeValue ? normalizeValue(value) : value).replace(/\D/g, "")
+      }
       className={cn("cn-otp", className)}
       {...props}
     >
@@ -65,9 +77,15 @@ function InputOTP({
           >
             <OTPFieldPrimitive.Input
               data-slot="input-otp-input"
-              aria-label={slotLabel
-                .replace("{index}", String(index + 1))
-                .replace("{length}", String(length))}
+              // The first box is named by the Field label or the group name; Base UI ignores
+              // aria-label there.
+              aria-label={
+                index === 0
+                  ? undefined
+                  : slotLabel
+                      .replace("{index}", String(index + 1))
+                      .replace("{length}", String(length))
+              }
               aria-invalid={invalid ? true : undefined}
               className="cn-input-field cn-otp-input"
             />

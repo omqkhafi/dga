@@ -121,7 +121,7 @@ export function inputsPairs(): ComponentPair[] {
         add(component, `icon, solid or subtle, ${state}`, "icon-default", fill, 3, surface);
       }
       add(component, "label, outline", "text-default", surface, 4.5);
-      add(component, "border, outline", "border-neutral-primary", surface, 3);
+      add(component, "border, on (second cue besides the fill)", "border-black", surface, 3);
       add(component, "label, transparent", "text-default", surface, 4.5);
       add(
         component,
@@ -146,7 +146,6 @@ export function inputsPairs(): ComponentPair[] {
   for (const surface of SURFACES) {
     add("button-group", "text segment", "text-default", "background-neutral-100", 4.5, surface);
     add("button-group", "text segment icon", "icon-default", "background-neutral-100", 3, surface);
-    add("button-group", "text segment border", "border-neutral-primary", surface, 3);
   }
   return pairs;
 }
@@ -154,4 +153,26 @@ export function inputsPairs(): ComponentPair[] {
 /** New tokens: each is logged in Deviations as "new, no DGA source". */
 export const INPUTS_ADDITIONS: Addition[] = [];
 
-export const INPUTS_DEVIATIONS: Deviation[] = [];
+export const INPUTS_DEVIATIONS: Deviation[] = [
+  {
+    area: "Components",
+    item: "Slider track, fill and thumb colours",
+    original:
+      "The Figma Slider page lists only the label and helper text tokens (field-text-label)",
+    ours: "Track --control-border, fill and thumb --control-primary-checked (hovered and pressed variants), thumb ring --control-thumb",
+    reason:
+      "The spec gives no colours for the track and thumb. The Switch control tokens are reused, so the track and the fill are 3:1 or better on every surface (WCAG 1.4.11) in light and dark. No new token.",
+    status: "fixed",
+    component: "slider",
+  },
+  {
+    area: "Extensions",
+    item: "Toggle and Toggle Group pressed state",
+    original: "Not defined by DGA (the Button has aria-pressed fills in the spec)",
+    ours: "The Button selected fill plus a 1px --border-black border",
+    reason:
+      "The Button selected fill is background-neutral-selected, which is 1.2:1 against the page in light mode, so a pressed toggle would be told apart by colour alone. The dark border (3:1 or better) is a second cue. Uses an existing token: new behaviour, no new colour.",
+    status: "fixed",
+    component: "toggle",
+  },
+];

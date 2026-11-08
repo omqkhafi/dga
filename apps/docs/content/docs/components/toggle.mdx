@@ -1,0 +1,85 @@
+---
+title: Toggle
+description: "A two-state button that stays pressed, in the Button outline, subtle, transparent and secondary styles. For settings that apply at once and can be turned off again."
+---
+
+<ExtensionNote
+  name="Toggle"
+  primitive="Base UI Toggle"
+  from="Button"
+  tokens={["button-background-neutral-selected", "button-background-neutral-hovered", "button-label-transparent-selected", "border-black"]}
+/>
+
+<Preview name="toggle-variants" title="Toggle" minHeight={340} />
+
+## Installation
+
+<ComponentInstall name="toggle" />
+
+Installs [Button](/docs/components/button) too.
+
+## Usage
+
+```tsx title="page.tsx"
+import { Toggle } from "@/components/dga/toggle";
+
+export function BoldToggle() {
+  return (
+    <Toggle aria-label="Bold" defaultPressed>
+      Bold
+    </Toggle>
+  );
+}
+```
+
+Use a Toggle for a view or format option that applies the moment it is pressed and can be released: Bold, Show filters, Compact view. Use [Switch](/docs/components/switch) for a setting in a form, [Checkbox](/docs/components/checkbox) for a choice that is sent with the form, and [Button](/docs/components/button) for an action. For several related toggles use [Toggle Group](/docs/components/toggle-group).
+
+## Anatomy
+
+- It is a Button: same heights (24, 32 and 40px), radius, padding, icon sizes and text.
+- **Pressed**: the Button selected fill and a 1px dark border, so the state is not told by colour alone. `aria-pressed` carries it for assistive technology.
+
+## Examples
+
+### Variants and states
+
+`outline` (default), `subtle`, `transparent` and `secondary`, each off, pressed and disabled. Hover and press them to see the Button hover and pressed fills.
+
+<Preview name="toggle-variants" title="Variants" minHeight={340} />
+
+### Sizes and icon only
+
+An icon-only toggle is square and needs an `aria-label`.
+
+<Preview compact name="toggle-sizes" title="Sizes" minHeight={200} />
+
+## RTL
+
+A Toggle is symmetrical, so nothing flips except the order of an icon and its text. A directional icon (an alignment icon, for example) must be mirrored with `rtl:-scale-x-100`.
+
+<DirectionCompare name="toggle-sizes" title="Toggle" minHeight={200} />
+
+## Accessibility
+
+| Key | Action |
+| --- | --- |
+| <kbd>Tab</kbd> | Moves focus to the toggle. |
+| <kbd>Space</kbd> <kbd>Enter</kbd> | Presses or releases it. |
+
+- A native `button` with `aria-pressed="true"` or `"false"`. The accessible name must not change with the state: write "Bold", not "Bold on".
+- The pressed border is 3:1 or better against the page, the labels 4.5:1 on every fill, in light and dark.
+- Focus is the Button 2px black outline. Disabled toggles keep their pressed state visible but are not focusable by mouse.
+
+## API Reference
+
+<ApiReference component="toggle" />
+
+## Derivation
+
+DGA has no toggle button. This is the DGA Button with `aria-pressed` styles it already defines, plus a dark border for the pressed state because the selected fill alone is 1.2:1 against the page in light mode. No new colours.
+
+<ComponentDeviations component="toggle" />
+
+## Contrast
+
+<ComponentContrast component="toggle" />

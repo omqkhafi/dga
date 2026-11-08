@@ -1,0 +1,103 @@
+---
+title: Slider
+description: "Picks a value, or a range of two values, by dragging a handle along a track. Small and medium, with a label, helper text, value readout and error. The fill and the arrow keys follow the page direction."
+---
+
+<Preview name="slider-basic" title="Slider sizes" minHeight={420} />
+
+## Installation
+
+<ComponentInstall name="slider" />
+
+## Usage
+
+```tsx title="page.tsx"
+import { Slider } from "@/components/dga/slider";
+
+export function PriorityField() {
+  return (
+    <Slider
+      label="Processing priority"
+      helperText="Higher values are handled first."
+      showValue
+      defaultValue={50}
+    />
+  );
+}
+```
+
+Use a Slider when the exact number matters less than where it sits between two limits: a fee range, a priority, a volume. If people need to type an exact value, use [Number Input](/docs/components/number-input). In a form, leave out `label`, `helperText` and `error` and wrap the Slider in a [Field](/docs/components/field) instead, so it is labelled like every other control.
+
+```tsx title="range.tsx"
+<Slider
+  label="Fee range (SAR)"
+  showValue
+  defaultValue={[20, 70]}
+  thumbLabels={["Minimum fee", "Maximum fee"]}
+/>
+```
+
+## Anatomy
+
+- **Label** and **value**: Text sm. The value shows one number, or both numbers of a range, opposite the label.
+- **Track**: 4px (small) or 6px (medium), `control-border`.
+- **Fill**: the part between the start and the thumb (or between the two thumbs), `control-primary-checked`.
+- **Thumb**: 16px (small) or 20px (medium), the fill colour with a 2px ring in `control-thumb`.
+- **Helper text** and **error**: Text sm, the error with an icon.
+
+## Examples
+
+### Single value and sizes
+
+The values in the DGA specification are 0, 20, 50 and 100. Hover, drag or focus a thumb to see its states.
+
+<Preview name="slider-basic" title="Single value" minHeight={420} />
+
+### Range
+
+An array as `value` or `defaultValue` makes a range with two thumbs. Name each thumb with `thumbLabels`: a screen reader announces "Minimum fee, slider, 20".
+
+<Preview compact name="slider-range" title="Range" minHeight={260} />
+
+### Step, disabled, error and Field
+
+`step` and `largeStep` set how far the arrow keys and Page Up and Down move. An error turns the fill and thumbs red and adds a message with an icon.
+
+<Preview name="slider-states" title="States" minHeight={520} />
+
+## RTL
+
+The minimum is on the side the text starts: the right in Arabic. The fill grows from the right, dragging works the same way, and the arrow keys follow what you see: <kbd>Left</kbd> raises the value and <kbd>Right</kbd> lowers it. The value readout stays a left-to-right isolate, so digits keep their order.
+
+<DirectionCompare name="slider-range" title="Slider" minHeight={260} />
+
+## Accessibility
+
+| Key | Action |
+| --- | --- |
+| <kbd>Tab</kbd> | Moves focus to the thumb (to each thumb of a range). |
+| <kbd>→</kbd> <kbd>↑</kbd> | Raises the value by `step`. In RTL, <kbd>←</kbd> raises it. |
+| <kbd>←</kbd> <kbd>↓</kbd> | Lowers the value by `step`. In RTL, <kbd>→</kbd> lowers it. |
+| <kbd>Page Up</kbd> <kbd>Page Down</kbd> | Raises or lowers the value by `largeStep`. |
+| <kbd>Home</kbd> <kbd>End</kbd> | Jumps to the minimum or maximum. |
+
+- Each thumb is a native `input type="range"` with `role="slider"` semantics, `aria-valuenow`, `aria-valuemin`, `aria-valuemax` and a spoken value in the page language (`locale`).
+- The label names a single slider; a range needs `thumbLabels` for its two thumbs. Helper text and the error are linked with `aria-describedby`, and `aria-invalid` is set on an error.
+- The track, the fill and the thumb are 3:1 or better on every surface in light and dark (WCAG 1.4.11). Focus is a 2px outline 2px outside the thumb.
+- Touch targets: the whole control row is draggable, and the thumb is 20px in the medium size.
+- The thumb colour changes without animation under reduced motion.
+
+## API Reference
+
+<ApiReference component="slider" />
+
+## Deviations from DGA
+
+- The DGA specification gives the Slider no colours for the track and the thumb, only the label and helper text. They are derived from the Switch control tokens, which are 3:1 or better.
+- The error state and the value readout are not in the specification. The error follows [Field](/docs/components/field): red text with an icon.
+
+<ComponentDeviations component="slider" />
+
+## Contrast
+
+<ComponentContrast component="slider" />

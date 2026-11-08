@@ -23,6 +23,7 @@ type ButtonGroupProps = React.ComponentProps<"div"> & VariantProps<typeof button
  */
 function ButtonGroup({ className, orientation = "horizontal", ...props }: ButtonGroupProps) {
   return (
+    // biome-ignore lint/a11y/useSemanticElements: a fieldset would add its own border and legend layout
     <div
       role="group"
       data-slot="button-group"

@@ -975,6 +975,9 @@
    * (items overlap by 1px), only the outer corners rounded (radius-sm), hovered, focused and
    * pressed items on top. Spaced: 8px apart. Vertical stacks the items.
    * ---------------------------------------------------------------------------------- */
+  .cn-toggle {
+    @apply aria-pressed:border-border-black aria-pressed:hover:border-border-black aria-pressed:active:border-border-black aria-pressed:data-disabled:border-border-disabled aria-pressed:data-disabled:text-text-default-disabled;
+  }
   .cn-toggle-group {
     @apply flex w-fit max-w-full items-stretch data-[orientation=vertical]:flex-col;
   }
