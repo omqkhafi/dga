@@ -1,0 +1,159 @@
+---
+title: Combobox
+description: "قائمة اختيار يمكن الكتابة فيها. اختيار واحد أو متعدد برقائق قابلة للحذف، ومجموعات، وإنشاء خيار جديد، وتحميل غير متزامن، على Base UI Combobox. امتداد من كود المنصات وليس جزءًا من DGA."
+sourceHash: c0f7d2777aed
+---
+
+<ExtensionNote
+  name="صندوق الاختيار مع البحث"
+  primitive="مكوّن Base UI الخاص بصندوق الاختيار"
+  from="Select (الحقل والسهم والقائمة) وInput (الإطار وحالاته) وTag (الرقائق)"
+  tokens={["field-border-default", "field-background-default", "background-card", "border-neutral-primary", "tag-background-neutral-light", "button-background-neutral-default"]}
+/>
+
+<Preview name="combobox-states" title="حالات صندوق الاختيار" />
+
+## التثبيت [#installation]
+
+<ComponentInstall name="combobox" />
+
+ويثبّت [Input](/docs/components/input) و[Spinner](/docs/components/spinner) أيضًا. سمِّه بواسطة [Field](/docs/components/field). ولا يضيف أي اعتماد غير Base UI.
+
+## الاستخدام [#usage]
+
+```tsx title="page.tsx"
+import { Combobox, ComboboxContent, ComboboxControl } from "@/components/dga/combobox";
+import { Field, FieldLabel } from "@/components/dga/field";
+
+const services = [
+  { value: "renew", label: "تجديد جواز السفر" },
+  { value: "id", label: "إصدار هوية وطنية" },
+];
+
+export function ServiceField() {
+  return (
+    <Field name="service">
+      <FieldLabel>الخدمة</FieldLabel>
+      <Combobox items={services}>
+        <ComboboxControl placeholder="ابحث في الخدمات" />
+        <ComboboxContent emptyText="لا توجد خدمات مطابقة." />
+      </Combobox>
+    </Field>
+  );
+}
+```
+
+استخدم Combobox بدل [Select](/docs/components/select) حين تطول القائمة بحيث يحتاج الناس إلى الكتابة للعثور على خيار، أو حين يُسمح لهم باختيار أكثر من واحد. وإن كانت الخيارات أقل من عشرة تقريبًا فـSelect أبسط. العناصر `items` هي خيارات بصيغة `{ value, label }` أو مجموعات بصيغة `{ label, items }`. يتجاهل البحث حالة الأحرف، وفي العربية يتجاهل التشكيل وفروق كتابة الألف والياء والتاء المربوطة، فيجد `احمد` الاسم `أحمد`. مرّر `filter` خاصًّا بك لتغيير ذلك، أو `filter={null}` حين يكون الخادم قد صفّى القائمة.
+
+## البنية [#anatomy]
+
+- **الحقل**: إطار [Input](/docs/components/input) فيه خانة الكتابة وزر المسح والسهم في جهة النهاية. في الصندوق المتعدد تظهر الخيارات المختارة رقائق قبل الخانة، ويزداد ارتفاع الإطار كلما التفّت.
+- **الرقاقة**: [Tag](/docs/components/tag) المحايد مع زر حذف.
+- **المحتوى**: النافذة المنبثقة على سطح البطاقة، بعرض الحقل، وفيها القائمة ونص الفراغ ونص التحميل.
+- **العنصر**: خيار واحد، وعلامة صح في جهة النهاية عند اختياره. وصف الإنشاء عليه أيقونة زائد.
+- **المجموعة** و**العنوان** و**الفاصل** (اختيارية): لتجميع الخيارات المتقاربة.
+
+## أمثلة [#examples]
+
+### الأساسي [#basic]
+
+اكتب لتضييق القائمة، أو افتحها بالسهم أو بـ <kbd>ArrowDown</kbd>. ويختار <kbd>Enter</kbd> الخيار المظلَّل.
+
+<Preview compact name="combobox-basic" title="الأساسي" minHeight={200} />
+
+### الحالات [#states]
+
+الافتراضية والمعبأة وللقراءة فقط والمعطّلة والخطأ، والحجم المتوسط مع التعبئة الأغمق. وهي حالات Input نفسها.
+
+<Preview name="combobox-states" title="الحالات" />
+
+### القائمة المفتوحة [#open-list]
+
+القائمة مفتوحة من البداية لتظهر حالات العناصر: للخيار المظلَّل شريط وتظليل، وللمختار علامة صح.
+
+<Preview compact name="combobox-open" title="القائمة المفتوحة" minHeight={380} />
+
+### المتعدد [#multiple]
+
+أضف `multiple`. القيمة مصفوفة. كل خيار مختار رقاقة قابلة للحذف، ويحذف <kbd>Backspace</kbd> في الخانة الفارغة آخر رقاقة.
+
+<Preview compact name="combobox-multiple" title="المتعدد" minHeight={260} />
+
+### المجموعات [#groups]
+
+مرّر المجموعات في `items`.
+
+<Preview compact name="combobox-groups" title="المجموعات" minHeight={300} />
+
+### القابل للإنشاء [#creatable]
+
+أضف `creatable` لتظهر سطر إنشاء حين لا يطابق ما كُتب أي خيار. يستقبل `onCreate` النص ويعيد الخيار الجديد فيُختار؛ أضفه إلى `items` أيضًا. هذه إضافة منا: لا يوفر combobox في shadcn وضع الإنشاء، ويعرضه Base UI وصفةً فقط.
+
+<Preview compact name="combobox-creatable" title="القابل للإنشاء" minHeight={300} />
+
+```tsx title="page.tsx"
+const [items, setItems] = useState(services);
+
+<Combobox
+  multiple
+  creatable
+  items={items}
+  createLabel={(query) => `إضافة «${query}»`}
+  onCreate={(label) => {
+    const option = { value: label, label };
+    setItems((list) => [...list, option]);
+    return option;
+  }}
+>
+```
+
+### غير المتزامن [#async]
+
+حمّل الخيارات من خادم: احتفظ بنتائجك في الحالة، ومرّر `filter={null}` كي لا تُصفّى القائمة مرة ثانية، وفعّل `loading` في `ComboboxContent` أثناء الطلب.
+
+<Preview compact name="combobox-async" title="غير المتزامن" minHeight={300} />
+
+## الاتجاه من اليمين إلى اليسار [#rtl]
+
+يبدأ النص من اليمين ويقع السهم وزر المسح على اليسار. تتسع النافذة المنبثقة بعرض الحقل وتحاذي حافة بدايته، وتملأ الرقائق من اليمين، وعلامة الصح على اليسار.
+
+<DirectionCompare name="combobox-multiple" title="Combobox" minHeight={260} />
+
+## إمكانية الوصول [#accessibility]
+
+| المفتاح | الإجراء |
+| --- | --- |
+| <kbd>Tab</kbd> | ينقل التركيز إلى الحقل. ويُتخطى زر السهم. |
+| الكتابة | تضيّق القائمة وتفتحها. |
+| <kbd>ArrowDown</kbd> / <kbd>ArrowUp</kbd> | يفتحان القائمة، ثم ينتقلان بين الخيارات. |
+| <kbd>Enter</kbd> | يختار الخيار المظلَّل. وفي الصندوق القابل للإنشاء يضيف خيارًا جديدًا. |
+| <kbd>Esc</kbd> | يغلق القائمة. |
+| <kbd>Backspace</kbd> | في الصندوق المتعدد ذي الخانة الفارغة يحذف آخر رقاقة. |
+
+- للحقل الدور `combobox` مع `aria-expanded` و`aria-controls` و`aria-activedescendant`؛ ويبقى التركيز في الحقل بينما يتغير الخيار المظلَّل. والقائمة `listbox` من عناصر `option` مع `aria-selected`.
+- يُعلَن عدد النتائج بهدوء كلما تغيّر، وكذلك نص التحميل. ترجمهما بـ `statusLabel` و`loadingText`.
+- تُسمّى كل رقاقة بتسميتها ويصفها `removeHint`، ويُسمّى زر حذفها بـ `removeLabel`.
+- التسمية والنص المساعد والخطأ من [Field](/docs/components/field) ومرتبطة بـ `aria-describedby`.
+- للخيار المظلَّل شريط بعرض 2px إضافة إلى التظليل. النص بتباين 4.5:1 وكل حد 3:1، في الفاتح والداكن.
+
+## مرجع الواجهة البرمجية [#api-reference]
+
+<ApiReference component="combobox" />
+
+## الاشتقاق [#derivation]
+
+- غير موجود في DGA. الإطار والحالات والتعبئات من [Input](/docs/components/input)؛ والسهم وسطح النافذة والعناصر من [Select](/docs/components/select) (قائمة الإدخال المنسدلة في DGA)؛ والرقائق من [Tag](/docs/components/tag) المحايد.
+- لا ألوان جديدة ولا رموز جديدة.
+- مبني على `@base-ui/react/combobox`، بعناصرنا نحن كي تحمل أصناف `cn-*` المظهر.
+
+## الاختلافات عن DGA [#deviations-from-dga]
+
+- لا يوجد Combobox في DGA ليُختلف عنه. هذه قائمة بما خالفنا فيه المكوّنات المبني عليها.
+- زر السهم له `tabIndex={-1}`: فالحقل يفتح القائمة من لوحة المفاتيح أصلًا.
+- يزداد ارتفاع الصندوق المتعدد بدل تمرير الرقائق أفقيًا، لتبقى كل الاختيارات ظاهرة.
+
+<ComponentDeviations component="combobox" />
+
+## التباين [#contrast]
+
+<ComponentContrast component="combobox" />
