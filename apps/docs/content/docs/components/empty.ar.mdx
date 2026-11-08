@@ -1,0 +1,99 @@
+---
+title: Empty
+description: "حالة قائمة أو جدول أو صفحة لا شيء فيها للعرض: أيقونة وعنوان وشرح قصير والخطوة التالية."
+sourceHash: c2cbe9dc095c
+---
+
+<ExtensionNote
+  name="Empty"
+  primitive="عناصر HTML عادية"
+  from="الحالة الفارغة في Data Table من DGA (الأيقونة وألوان النص والتوسيط)"
+  tokens={["icon-default-500", "text-display", "text-primary-paragraph", "background-neutral-100", "border-neutral-primary"]}
+/>
+
+<Preview name="empty-basic" title="Empty" minHeight={420} />
+
+## التثبيت [#installation]
+
+<ComponentInstall name="empty" />
+
+## الاستخدام [#usage]
+
+```tsx title="page.tsx"
+import { Button } from "@/components/dga/button";
+import {
+  Empty,
+  EmptyContent,
+  EmptyDescription,
+  EmptyHeader,
+  EmptyMedia,
+  EmptyTitle,
+} from "@/components/dga/empty";
+
+export function NoRequests() {
+  return (
+    <Empty>
+      <EmptyHeader>
+        <EmptyMedia variant="icon">{/* أيقونة */}</EmptyMedia>
+        <EmptyTitle>لا توجد طلبات بعد</EmptyTitle>
+        <EmptyDescription>تظهر هنا الطلبات التي تقدمها.</EmptyDescription>
+      </EmptyHeader>
+      <EmptyContent>
+        <Button>طلب جديد</Button>
+      </EmptyContent>
+    </Empty>
+  );
+}
+```
+
+استخدم Empty حين لا يوجد ما يُعرض في منطقة كاملة: لا نتائج، أو لم يُنشأ شيء بعد، أو مجلد بلا ملفات، أو خطأ ترك المنطقة فارغة. اذكر السبب والخطوة التالية. يحتفظ [Data Table](/docs/components/data-table) بصفه الفارغ المدمج للجدول؛ واستخدم Empty للصفحة أو البطاقة المحيطة به.
+
+## البنية [#anatomy]
+
+- **الوسائط**: الأيقونة بلون `icon-default-500`، أو مع `variant="icon"` على تعبئة دائرية بقطر 48px بلون `background-neutral-100` ورمز `icon-default`.
+- **العنوان**: `text-lg` شبه عريض بلون `text-display`. وهو فقرة لا عنوان، فيناسب أي مستوى عناوين في الصفحة.
+- **الوصف**: `text-md` بلون `text-primary-paragraph`. والرابط داخله بلون الرابط في DGA.
+- **المحتوى**: أزرار أو حقل، موسّطة تحته.
+- **الحد** (اختياري): يرسم `bordered` خطًّا متقطعًا بلون `border-neutral-primary`، لمنطقة فارغة داخل صفحة.
+
+## أمثلة [#examples]
+
+### بحد [#with-a-border]
+
+<Preview compact name="empty-bordered" title="بحد" minHeight={380} />
+
+### بلا نتائج بحث [#no-search-results]
+
+<Preview compact name="empty-search" title="بلا نتائج بحث" minHeight={420} />
+
+### خطأ [#an-error]
+
+الخطأ الذي يترك المنطقة فارغة يستخدم التخطيط نفسه؛ صغ العنوان وإجراء إعادة المحاولة بحسب الخطأ.
+
+<Preview compact name="empty-error" title="خطأ" minHeight={380} />
+
+## RTL [#rtl]
+
+المحتوى كله موسّط فلا ينقلب شيء. وتتبع أزرار `EmptyContent` اتجاه الصفحة.
+
+<DirectionCompare name="empty-basic" title="Empty" minHeight={420} />
+
+## إمكانية الوصول [#accessibility]
+
+- Empty محتوى عادي بلا دور. إن حلّ محل نتائج كانت تُحمَّل فأعلن التغيير بمنطقة حية في صفحتك، مثل [Inline Alert](/docs/components/inline-alert) بالدور `role="status"`.
+- أخفِ الأيقونات الزخرفية عن قارئات الشاشة (`aria-hidden`).
+- النص 4.5:1 والأيقونات 3:1 أو أفضل على كل سطح، فاتحًا وداكنًا.
+
+## مرجع API [#api-reference]
+
+<ApiReference component="empty" />
+
+## الاشتقاق من DGA [#derivation-from-dga]
+
+لا تعرّف DGA حالة فارغة مستقلة؛ ففي Data Table صف فارغ واحد. يحتفظ هذا المكوّن بأيقونة ذلك الصف وألوان نصه وتوسيطه، ويضيف التخطيط والحد المتقطع وتعبئة الأيقونة الدائرية. ولا لون جديد فيه.
+
+<ComponentDeviations component="empty" />
+
+## التباين [#contrast]
+
+<ComponentContrast component="empty" />

@@ -266,6 +266,32 @@
       "props": []
     }
   ],
+  "aspect-ratio": [
+    {
+      "name": "AspectRatio",
+      "description": "A box that keeps a fixed width to height ratio (Platform Code extension, not part of DGA). It sets the CSS `aspect-ratio`, so it needs no script and has no layout shift. An `img`, `video` or `iframe` inside fills it. Base UI has no primitive for this, so it is a plain element. It does not replace anything in DGA: the Card has no ratio of its own.",
+      "descriptionAr": "صندوق بنسبة ثابتة بين العرض والارتفاع (امتداد من كود المنصات وليس جزءًا من DGA). يضبط خاصية CSS `aspect-ratio` فلا يحتاج إلى سكربت ولا يسبب قفزة في التخطيط.",
+      "inherits": null,
+      "props": [
+        {
+          "name": "ratio",
+          "type": "number",
+          "default": "16 / 9",
+          "required": false,
+          "description": "Width divided by height: `16 / 9`, `4 / 3` or `1`.",
+          "descriptionAr": "العرض مقسومًا على الارتفاع: `16 / 9` أو `4 / 3` أو `1`."
+        },
+        {
+          "name": "fit",
+          "type": "\"cover\" | \"contain\"",
+          "default": "\"cover\"",
+          "required": false,
+          "description": "How an image or video inside fills the box: `cover` crops it, `contain` shows all of it.",
+          "descriptionAr": "كيف تملأ الصورة أو الفيديو الصندوق: `cover` يقصّ ما زاد، و`contain` يعرضها كاملة."
+        }
+      ]
+    }
+  ],
   "avatar": [
     {
       "name": "Avatar",
@@ -637,7 +663,7 @@
     },
     {
       "name": "CardExpandable",
-      "description": "A card whose details open and close (DGA: Expandable). Built on Base UI Collapsible. Put a `CardExpandableTrigger` and a `CardExpandablePanel` inside, with the always-visible part first.",
+      "description": "A card whose details open and close (DGA: Expandable). Built on the Collapsible. Put a `CardExpandableTrigger` and a `CardExpandablePanel` inside, with the always-visible part first.",
       "descriptionAr": "بطاقة تُفتح تفاصيلها وتُغلق (في DGA: بطاقة قابلة للتوسيع). مبنية على Base UI Collapsible. ضع `CardExpandableTrigger` و`CardExpandablePanel` داخلها، والجزء الظاهر دائمًا أولًا.",
       "inherits": {
         "name": "Collapsible",
@@ -956,6 +982,214 @@
       ]
     }
   ],
+  "chart": [
+    {
+      "name": "ChartContainer",
+      "description": "A chart on Recharts (Platform Code extension, not part of DGA), with the DGA chart colours. Put one Recharts chart inside (`BarChart`, `LineChart`, `AreaChart` or `PieChart`). By default the chart is a picture for screen readers (`role=\"img\"`, named by `title`, described by `description`) and `table` gives the numbers.",
+      "descriptionAr": "يغلّف مخططًا واحدًا من Recharts (امتداد من كود المنصات وليس جزءًا من DGA) بألوان DGA. افتراضيًا هو صورة للتقنيات المساعدة (`role=\"img\"`) يسمّيها `title` ويصفها `description`، وبياناتها في `table`. لا يتحرك المخطط إن فضّل الشخص تقليل الحركة عند استخدام `useChartAnimation`.",
+      "inherits": null,
+      "props": [
+        {
+          "name": "config",
+          "type": "ChartConfig",
+          "default": null,
+          "required": true,
+          "description": "The series: their labels, colours and markers. Colours become `--color-<key>`.",
+          "descriptionAr": "السلاسل: تسميتها ولونها وشكل علامتها. يصير اللون متغيرًا باسم `--color-<key>`. استخدم `CHART_SERIES` للألوان الأربعة في DGA."
+        },
+        {
+          "name": "table",
+          "type": "ChartTable",
+          "default": null,
+          "required": false,
+          "description": "The same data as a table: the accessible alternative to the picture.",
+          "descriptionAr": "البيانات نفسها جدولًا: البديل المتاح للصورة."
+        },
+        {
+          "name": "title",
+          "type": "string",
+          "default": "\"Chart\"",
+          "required": false,
+          "description": "The accessible name of the chart, and the caption of its table.",
+          "descriptionAr": "الاسم المتاح للمخطط، وعنوان جدوله. ترجمه في الصفحات العربية."
+        },
+        {
+          "name": "initialDimension",
+          "type": "{ width: number; height: number; }",
+          "default": "INITIAL_DIMENSION",
+          "required": false,
+          "description": "",
+          "descriptionAr": ""
+        },
+        {
+          "name": "description",
+          "type": "string",
+          "default": null,
+          "required": false,
+          "description": "What the chart shows, in a sentence: the trend or the biggest value. Read after the name.",
+          "descriptionAr": "ما يعرضه المخطط في جملة: الاتجاه أو أكبر قيمة. تُقرأ بعد الاسم."
+        },
+        {
+          "name": "tableMode",
+          "type": "\"toggle\" | \"hidden\" | \"none\"",
+          "default": "\"toggle\"",
+          "required": false,
+          "description": "`toggle` adds a button that shows the table below the chart. `hidden` keeps the table only for screen readers. `none` leaves it out.",
+          "descriptionAr": "`toggle` يضيف زرًّا يُظهر الجدول تحت المخطط، و`hidden` يُبقيه لقارئات الشاشة فقط، و`none` يحذفه."
+        },
+        {
+          "name": "tableLabels",
+          "type": "ChartTableLabels",
+          "default": "{ show: \"View as table\", hide: \"Hide table\" }",
+          "required": false,
+          "description": "Text of the table button. Translate it on Arabic pages.",
+          "descriptionAr": "نصا زر الجدول: `show` و`hide`. ترجمهما في الصفحات العربية."
+        },
+        {
+          "name": "interactive",
+          "type": "boolean",
+          "default": "false",
+          "required": false,
+          "description": "Lets the keyboard move through the points (arrow keys) and show the tooltip. The chart then is a focusable group and not a picture, so the table is the only static alternative.",
+          "descriptionAr": "يتيح للوحة المفاتيح التنقل بين النقاط بالأسهم وإظهار التلميح. فيصير المخطط مجموعة تقبل التركيز بدل صورة."
+        }
+      ]
+    },
+    {
+      "name": "ChartDataTable",
+      "description": "The chart's data as a table. `ChartContainer` renders it from its `table` prop.",
+      "descriptionAr": "بيانات المخطط جدولًا. يعرضه `ChartContainer` من خاصية `table`.",
+      "inherits": null,
+      "props": [
+        {
+          "name": "config",
+          "type": "ChartConfig",
+          "default": null,
+          "required": true,
+          "description": "",
+          "descriptionAr": ""
+        },
+        {
+          "name": "table",
+          "type": "ChartTable",
+          "default": null,
+          "required": true,
+          "description": "",
+          "descriptionAr": ""
+        },
+        {
+          "name": "caption",
+          "type": "string",
+          "default": null,
+          "required": false,
+          "description": "",
+          "descriptionAr": ""
+        }
+      ]
+    },
+    {
+      "name": "ChartDot",
+      "description": "A dot for a line, in the shape of the series, so lines that cross are told apart without colour: `<Line dot={<ChartDot marker=\"square\" />} activeDot={…} />`.",
+      "descriptionAr": "نقطة لخط بشكل السلسلة، فتُميَّز الخطوط المتقاطعة دون لون: دائرة أو مربع أو مثلث أو معيّن.",
+      "inherits": null,
+      "props": [
+        {
+          "name": "marker",
+          "type": "\"circle\" | \"square\" | \"triangle\" | \"diamond\"",
+          "default": "\"circle\"",
+          "required": false,
+          "description": "",
+          "descriptionAr": ""
+        },
+        {
+          "name": "cx",
+          "type": "number",
+          "default": "0",
+          "required": false,
+          "description": "",
+          "descriptionAr": ""
+        },
+        {
+          "name": "cy",
+          "type": "number",
+          "default": "0",
+          "required": false,
+          "description": "",
+          "descriptionAr": ""
+        },
+        {
+          "name": "fill",
+          "type": "string",
+          "default": null,
+          "required": false,
+          "description": "",
+          "descriptionAr": ""
+        },
+        {
+          "name": "stroke",
+          "type": "string",
+          "default": null,
+          "required": false,
+          "description": "",
+          "descriptionAr": ""
+        },
+        {
+          "name": "size",
+          "type": "number",
+          "default": "5",
+          "required": false,
+          "description": "",
+          "descriptionAr": ""
+        }
+      ]
+    },
+    {
+      "name": "ChartLegendContent",
+      "description": "",
+      "descriptionAr": "",
+      "inherits": null,
+      "props": []
+    },
+    {
+      "name": "ChartSwatch",
+      "description": "A small shape that marks a series in the legend and the tooltip.",
+      "descriptionAr": "شكل صغير يعلّم السلسلة في وسيلة الإيضاح والتلميح.",
+      "inherits": null,
+      "props": [
+        {
+          "name": "marker",
+          "type": "\"circle\" | \"square\" | \"triangle\" | \"diamond\"",
+          "default": "\"square\"",
+          "required": false,
+          "description": "",
+          "descriptionAr": ""
+        },
+        {
+          "name": "color",
+          "type": "string",
+          "default": null,
+          "required": false,
+          "description": "",
+          "descriptionAr": ""
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "default": null,
+          "required": false,
+          "description": "",
+          "descriptionAr": ""
+        }
+      ]
+    },
+    {
+      "name": "ChartTooltipContent",
+      "description": "",
+      "descriptionAr": "",
+      "inherits": null,
+      "props": []
+    }
+  ],
   "checkbox": [
     {
       "name": "Checkbox",
@@ -1053,6 +1287,88 @@
           "required": false,
           "description": "The checkbox's value. Identifies it within a [Checkbox Group](https://base-ui.com/react/components/checkbox-group), falling back to `name` when omitted. When submitting a form, a checked box submits `value`; with no `value`, it submits the native \"on\".",
           "descriptionAr": "القيمة التي تُرسل عند التحديد."
+        }
+      ]
+    }
+  ],
+  "collapsible": [
+    {
+      "name": "Collapsible",
+      "description": "One panel that opens and closes (Platform Code extension, not part of DGA). Built on the Base UI Collapsible; the Card's Expandable uses it too. The trigger is a real button with `aria-expanded` and `aria-controls`, Enter and Space toggle it, and a closed panel is hidden from the keyboard and from screen readers. For a set of panels where only one is open, use an Accordion.",
+      "descriptionAr": "لوحة واحدة تُفتح وتُغلق من زر (امتداد من كود المنصات وليس جزءًا من DGA). مبنية على Base UI Collapsible، وهي أساس القسم القابل للتوسيع في البطاقة Card.",
+      "inherits": {
+        "name": "Collapsible",
+        "url": "https://base-ui.com/react/components/collapsible"
+      },
+      "props": [
+        {
+          "name": "open",
+          "type": "boolean",
+          "default": null,
+          "required": false,
+          "description": "Whether the collapsible panel is currently open. To render an uncontrolled collapsible, use the `defaultOpen` prop instead.",
+          "descriptionAr": "حالة الفتح عند التحكم بها من الخارج."
+        },
+        {
+          "name": "defaultOpen",
+          "type": "boolean",
+          "default": null,
+          "required": false,
+          "description": "Whether the collapsible panel is initially open. To render a controlled collapsible, use the `open` prop instead.",
+          "descriptionAr": "مفتوحة في البداية (غير متحكَّم بها)."
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "default": null,
+          "required": false,
+          "description": "Whether the component should ignore user interaction.",
+          "descriptionAr": "لا يستطيع الزر فتحها أو إغلاقها."
+        },
+        {
+          "name": "onOpenChange",
+          "type": "(open: boolean) => void",
+          "default": null,
+          "required": false,
+          "description": "Event handler called when the panel is opened or closed.",
+          "descriptionAr": "تُستدعى عند فتحها أو إغلاقها."
+        }
+      ]
+    },
+    {
+      "name": "CollapsibleContent",
+      "description": "The panel. Its height animates, unless the user prefers reduced motion.",
+      "descriptionAr": "اللوحة نفسها. يتحرك ارتفاعها عند الفتح والإغلاق إلا إن فضّل المستخدم تقليل الحركة، وتُخفى عن لوحة المفاتيح وقارئ الشاشة وهي مغلقة.",
+      "inherits": {
+        "name": "Collapsible",
+        "url": "https://base-ui.com/react/components/collapsible"
+      },
+      "props": []
+    },
+    {
+      "name": "CollapsibleTrigger",
+      "description": "The button that opens and closes the panel. Render your own with `render`.",
+      "descriptionAr": "الزر الذي يفتح اللوحة ويغلقها. له `aria-expanded` و`aria-controls`.",
+      "inherits": {
+        "name": "Collapsible",
+        "url": "https://base-ui.com/react/components/collapsible"
+      },
+      "props": [
+        {
+          "name": "showChevron",
+          "type": "boolean",
+          "default": "false",
+          "required": false,
+          "description": "Adds the chevron that turns when the panel is open. Off by default.",
+          "descriptionAr": "يضيف السهم الذي يدور عند فتح اللوحة. مغلق افتراضيًا."
+        },
+        {
+          "name": "render",
+          "type": "ReactElement | function",
+          "default": null,
+          "required": false,
+          "description": "Allows you to replace the component's HTML element with a different tag, or compose it with another component. Accepts a `ReactElement` or a function that returns the element to render.",
+          "descriptionAr": "يتيح لك استبدال عنصر HTML الخاص بالمكوّن بوسم آخر، أو تركيبه مع مكوّن آخر. يقبل `ReactElement` أو دالة تعيد العنصر المراد عرضه."
         }
       ]
     }
@@ -2762,6 +3078,68 @@
       "props": []
     }
   ],
+  "empty": [
+    {
+      "name": "Empty",
+      "description": "The state of a list, table or page with nothing to show (Platform Code extension, not part of DGA). It follows the empty state of the Data Table: a centred icon, a title, a short explanation and the next step. Use it for \"no results\", \"nothing here yet\" and for errors that leave the area empty. Every string is yours; translate them on Arabic pages.",
+      "descriptionAr": "حالة قائمة أو جدول أو صفحة لا شيء فيها للعرض (امتداد من كود المنصات وليس جزءًا من DGA). تتبع الحالة الفارغة في Data Table: أيقونة موسّطة وعنوان وشرح قصير والخطوة التالية. اكتب النصوص بنفسك وترجمها في الصفحات العربية.",
+      "inherits": null,
+      "props": [
+        {
+          "name": "bordered",
+          "type": "boolean",
+          "default": "false",
+          "required": false,
+          "description": "Draws a dashed border, for an empty area inside a page.",
+          "descriptionAr": "يرسم حدًّا متقطعًا، لمنطقة فارغة داخل صفحة."
+        }
+      ]
+    },
+    {
+      "name": "EmptyContent",
+      "description": "The next step: buttons or links.",
+      "descriptionAr": "الخطوة التالية: أزرار أو روابط.",
+      "inherits": null,
+      "props": []
+    },
+    {
+      "name": "EmptyDescription",
+      "description": "One or two sentences that say why it is empty and what to do.",
+      "descriptionAr": "جملة أو جملتان تذكران سبب الفراغ وما يُفعل.",
+      "inherits": null,
+      "props": []
+    },
+    {
+      "name": "EmptyHeader",
+      "description": "Groups the icon, title and description.",
+      "descriptionAr": "يجمع الأيقونة والعنوان والوصف.",
+      "inherits": null,
+      "props": []
+    },
+    {
+      "name": "EmptyMedia",
+      "description": "The icon or picture. `variant=\"icon\"` puts an icon on a round neutral fill.",
+      "descriptionAr": "الأيقونة أو الصورة.",
+      "inherits": null,
+      "props": [
+        {
+          "name": "variant",
+          "type": "\"default\" | \"icon\"",
+          "default": "\"default\"",
+          "required": false,
+          "description": "`default` shows the icon or picture as it is; `icon` puts an icon on a round fill.",
+          "descriptionAr": "`default` يعرض الأيقونة أو الصورة كما هي؛ و`icon` يضع أيقونة على تعبئة دائرية."
+        }
+      ]
+    },
+    {
+      "name": "EmptyTitle",
+      "description": "The title. A paragraph, not a heading, so it fits under any heading level on the page.",
+      "descriptionAr": "العنوان. فقرة لا عنوان، فيناسب أي مستوى عناوين في الصفحة.",
+      "inherits": null,
+      "props": []
+    }
+  ],
   "featured-icon": [
     {
       "name": "FeaturedIcon",
@@ -3835,7 +4213,7 @@
     },
     {
       "name": "InputGroupKbd",
-      "description": "A keyboard shortcut hint in an addon, such as ⌘K. Always left to right.",
+      "description": "A keyboard shortcut hint in an addon, such as ⌘K. Always left to right. This is the Kbd.",
       "descriptionAr": "تلميح لاختصار لوحة مفاتيح داخل إضافة. من اليسار إلى اليمين دائمًا.",
       "inherits": {
         "name": "Input",
@@ -4094,6 +4472,137 @@
           "descriptionAr": "قيمة متحكَّم بها."
         }
       ]
+    }
+  ],
+  "item": [
+    {
+      "name": "Item",
+      "description": "One row: a picture or icon, a title and description, and actions (Platform Code extension, not part of DGA). Its look is the DGA List and Card. Pass `render={<a href=\"…\" />}` to make the whole row a link: it then gets the hover tint and the focus outline. Put several in an ItemGroup.",
+      "descriptionAr": "صف واحد بصورة أو أيقونة وعنوان ووصف وإجراءات (امتداد من كود المنصات وليس جزءًا من DGA). مظهره من List وCard في DGA. مرّر `render={<a href=\"…\" />}` ليصير الصف كله رابطًا فيأخذ لون التمرير وإطار التركيز.",
+      "inherits": null,
+      "props": [
+        {
+          "name": "render",
+          "type": "ReactElement | function",
+          "default": null,
+          "required": false,
+          "description": "Allows you to replace the component's HTML element with a different tag, or compose it with another component. Accepts a `ReactElement` or a function that returns the element to render.",
+          "descriptionAr": "يتيح لك استبدال عنصر HTML الخاص بالمكوّن بوسم آخر، مثل `ul` أو `li` أو `<a>`. يقبل `ReactElement` أو دالة تعيد العنصر المراد عرضه."
+        },
+        {
+          "name": "variant",
+          "type": "\"default\" | \"outline\" | \"muted\"",
+          "default": "\"default\"",
+          "required": false,
+          "description": "`default` has no fill, `outline` a 1px border and `muted` a gray fill.",
+          "descriptionAr": "`default` بلا تعبئة، و`outline` بحد 1px، و`muted` بتعبئة رمادية."
+        },
+        {
+          "name": "size",
+          "type": "\"sm\" | \"default\"",
+          "default": "\"default\"",
+          "required": false,
+          "description": "`default` has 16px padding, `sm` is more compact.",
+          "descriptionAr": "`default` بحشوة 16px، و`sm` أكثر إحكامًا."
+        }
+      ]
+    },
+    {
+      "name": "ItemActions",
+      "description": "Buttons or a badge at the end.",
+      "descriptionAr": "أزرار أو شارة في جهة النهاية.",
+      "inherits": null,
+      "props": []
+    },
+    {
+      "name": "ItemContent",
+      "description": "Holds the title and description. It takes the free space.",
+      "descriptionAr": "يحمل العنوان والوصف، ويأخذ المساحة الفارغة.",
+      "inherits": null,
+      "props": []
+    },
+    {
+      "name": "ItemDescription",
+      "description": "Up to two lines, then it is cut off with an ellipsis.",
+      "descriptionAr": "وصف الصف. سطران على الأكثر ثم تُقطع بنقاط.",
+      "inherits": null,
+      "props": []
+    },
+    {
+      "name": "ItemFooter",
+      "description": "A full-width line below the row's content.",
+      "descriptionAr": "سطر بعرض كامل تحت محتوى الصف.",
+      "inherits": null,
+      "props": []
+    },
+    {
+      "name": "ItemGroup",
+      "description": "Wraps several Items in a column. It adds no role: for a real list, render the group as a `ul` and each Item as an `li` (`render={<ul />}`, `render={<li />}`), so screen readers announce the count. An Item that is a link keeps its link role.",
+      "descriptionAr": "يرصّ عدة صفوف في عمود. لا يضيف دورًا: لقائمة حقيقية اعرضه بوسم `ul` وكل صف بوسم `li`.",
+      "inherits": null,
+      "props": [
+        {
+          "name": "render",
+          "type": "ReactElement | function",
+          "default": null,
+          "required": false,
+          "description": "Allows you to replace the component's HTML element with a different tag, or compose it with another component. Accepts a `ReactElement` or a function that returns the element to render.",
+          "descriptionAr": "يتيح لك استبدال عنصر HTML الخاص بالمكوّن بوسم آخر، مثل `ul` أو `li` أو `<a>`. يقبل `ReactElement` أو دالة تعيد العنصر المراد عرضه."
+        }
+      ]
+    },
+    {
+      "name": "ItemHeader",
+      "description": "A full-width line above the row's content.",
+      "descriptionAr": "سطر بعرض كامل فوق محتوى الصف.",
+      "inherits": null,
+      "props": []
+    },
+    {
+      "name": "ItemMedia",
+      "description": "The icon or image at the start. `icon` draws a framed icon; `image` crops a picture.",
+      "descriptionAr": "الأيقونة أو الصورة في جهة البداية.",
+      "inherits": null,
+      "props": [
+        {
+          "name": "variant",
+          "type": "\"default\" | \"image\" | \"icon\"",
+          "default": "\"default\"",
+          "required": false,
+          "description": "`default` is any content, `icon` a 40px framed icon and `image` a cropped 40px picture.",
+          "descriptionAr": "`default` لأي محتوى، و`icon` لأيقونة داخل إطار بقياس 40px، و`image` لصورة مقصوصة بقياس 40px."
+        }
+      ]
+    },
+    {
+      "name": "ItemSeparator",
+      "description": "A line between two Items.",
+      "descriptionAr": "خط بين صفين. هو Divider من DGA.",
+      "inherits": null,
+      "props": []
+    },
+    {
+      "name": "ItemTitle",
+      "description": "",
+      "descriptionAr": "عنوان الصف.",
+      "inherits": null,
+      "props": []
+    }
+  ],
+  "kbd": [
+    {
+      "name": "Kbd",
+      "description": "A keyboard key or shortcut hint, such as Ctrl or ⌘K (Platform Code extension, not part of DGA). It is a real `<kbd>` element, drawn as a small cap in the DGA neutral fill. Key names read left to right even on Arabic pages; pass `dir=\"rtl\"` for a key named in Arabic. It is a hint, not a control: it takes no focus. Input Group's key addon is this component.",
+      "descriptionAr": "مفتاح لوحة مفاتيح أو تلميح اختصار، مثل Ctrl أو ⌘K (امتداد من كود المنصات وليس جزءًا من DGA). عنصر `kbd` حقيقي يُرسم قبعةً صغيرة بتعبئة DGA المحايدة. تُقرأ أسماء المفاتيح من اليسار إلى اليمين حتى في الصفحات العربية. هو تلميح ولا يأخذ التركيز.",
+      "inherits": null,
+      "props": []
+    },
+    {
+      "name": "KbdGroup",
+      "description": "Keys that are pressed together, in order: `<Kbd>Ctrl</Kbd><Kbd>K</Kbd>`.",
+      "descriptionAr": "مفاتيح تُضغط معًا، بترتيبها: Ctrl ثم K.",
+      "inherits": null,
+      "props": []
     }
   ],
   "link": [
@@ -4583,6 +5092,356 @@
       "inherits": {
         "name": "Menu",
         "url": "https://base-ui.com/react/components/menu"
+      },
+      "props": []
+    }
+  ],
+  "menubar": [
+    {
+      "name": "Menubar",
+      "description": "A horizontal bar of menus, like the File, Edit and View bar of an application (Platform Code extension, not part of DGA). Each trigger opens a DGA Menu. Left and Right move between the triggers (swapped on Arabic pages), Down opens a menu, and while one is open, moving to the next trigger opens its menu. For one menu behind one button, use a Menu; for links to pages, use a Navigation Menu.",
+      "descriptionAr": "شريط أفقي من القوائم، مثل شريط ملف وتحرير وعرض في التطبيقات (امتداد من كود المنصات وليس جزءًا من DGA). يفتح كل زر قائمة Menu من DGA. ينقل السهمان الأيمن والأيسر (يتبادلان في الصفحات العربية) بين الأزرار، ويفتح السهم لأسفل القائمة، وعند فتح قائمة يفتح الانتقال إلى الزر التالي قائمته. لقائمة واحدة خلف زر واحد استخدم Menu، ولروابط الصفحات استخدم Navigation Menu.",
+      "inherits": {
+        "name": "Menu",
+        "url": "https://base-ui.com/react/components/menu"
+      },
+      "props": [
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "default": null,
+          "required": false,
+          "description": "Whether the whole menubar is disabled.",
+          "descriptionAr": "يعطّل كل قوائم الشريط."
+        },
+        {
+          "name": "loopFocus",
+          "type": "boolean",
+          "default": null,
+          "required": false,
+          "description": "Whether to loop keyboard focus back to the first item when the end of the list is reached while using the arrow keys.",
+          "descriptionAr": "ينقل السهمان التركيز من الزر الأخير إلى الأول. الافتراضي `true`."
+        },
+        {
+          "name": "modal",
+          "type": "boolean",
+          "default": null,
+          "required": false,
+          "description": "Whether the menubar is modal.",
+          "descriptionAr": "يقفل تمرير الصفحة ويجعل بقية الصفحة غير تفاعلية أثناء فتح قائمة. الافتراضي `true`."
+        }
+      ]
+    },
+    {
+      "name": "MenubarCheckboxItem",
+      "description": "An item that can be turned on and off. It shows a check mark while it is on.",
+      "descriptionAr": "عنصر يمكن تشغيله وإيقافه. يعرض علامة صح وهو مشغّل.",
+      "inherits": {
+        "name": "Menu",
+        "url": "https://base-ui.com/react/components/menu"
+      },
+      "props": []
+    },
+    {
+      "name": "MenubarContent",
+      "description": "The menu list. It opens below its trigger, aligned to the start side.",
+      "descriptionAr": "قائمة العناصر. تفتح أسفل زرها وتحاذي جهة البداية.",
+      "inherits": {
+        "name": "Menu",
+        "url": "https://base-ui.com/react/components/menu"
+      },
+      "props": []
+    },
+    {
+      "name": "MenubarGroup",
+      "description": "Groups related items under a MenubarLabel.",
+      "descriptionAr": "يجمع عناصر متصلة تحت MenubarLabel.",
+      "inherits": {
+        "name": "Menu",
+        "url": "https://base-ui.com/react/components/menu"
+      },
+      "props": []
+    },
+    {
+      "name": "MenubarItem",
+      "description": "One action. Put an icon first, the label, then an optional MenubarShortcut.",
+      "descriptionAr": "إجراء واحد. ضع أيقونة أولًا ثم التسمية ثم MenubarShortcut اختياريًا.",
+      "inherits": {
+        "name": "Menu",
+        "url": "https://base-ui.com/react/components/menu"
+      },
+      "props": []
+    },
+    {
+      "name": "MenubarLabel",
+      "description": "The heading of a MenubarGroup.",
+      "descriptionAr": "عنوان MenubarGroup.",
+      "inherits": {
+        "name": "Menu",
+        "url": "https://base-ui.com/react/components/menu"
+      },
+      "props": []
+    },
+    {
+      "name": "MenubarMenu",
+      "description": "One menu of the bar. Put a MenubarTrigger and a MenubarContent inside.",
+      "descriptionAr": "قائمة واحدة من الشريط. ضع بداخلها MenubarTrigger وMenubarContent.",
+      "inherits": {
+        "name": "Menu",
+        "url": "https://base-ui.com/react/components/menu"
+      },
+      "props": []
+    },
+    {
+      "name": "MenubarRadioGroup",
+      "description": "Groups MenubarRadioItem options so only one is chosen.",
+      "descriptionAr": "يجمع خيارات MenubarRadioItem ليُختار واحد منها فقط.",
+      "inherits": {
+        "name": "Menu",
+        "url": "https://base-ui.com/react/components/menu"
+      },
+      "props": []
+    },
+    {
+      "name": "MenubarRadioItem",
+      "description": "One option of a MenubarRadioGroup. The chosen one shows a dot.",
+      "descriptionAr": "خيار واحد من MenubarRadioGroup. يعرض الخيار المختار نقطة.",
+      "inherits": {
+        "name": "Menu",
+        "url": "https://base-ui.com/react/components/menu"
+      },
+      "props": []
+    },
+    {
+      "name": "MenubarSeparator",
+      "description": "A line between groups of items.",
+      "descriptionAr": "خط بين مجموعات العناصر.",
+      "inherits": {
+        "name": "Menu",
+        "url": "https://base-ui.com/react/components/menu"
+      },
+      "props": []
+    },
+    {
+      "name": "MenubarShortcut",
+      "description": "Trailing text of an item, such as a shortcut. Digits and symbols stay left to right.",
+      "descriptionAr": "نص في نهاية العنصر مثل الاختصار. تبقى الأرقام والرموز من اليسار إلى اليمين.",
+      "inherits": {
+        "name": "Menu",
+        "url": "https://base-ui.com/react/components/menu"
+      },
+      "props": []
+    },
+    {
+      "name": "MenubarSub",
+      "description": "Groups a MenubarSubTrigger and its MenubarSubContent.",
+      "descriptionAr": "يجمع MenubarSubTrigger وMenubarSubContent.",
+      "inherits": {
+        "name": "Menu",
+        "url": "https://base-ui.com/react/components/menu"
+      },
+      "props": []
+    },
+    {
+      "name": "MenubarSubContent",
+      "description": "The submenu list. It opens beside its trigger on the end side.",
+      "descriptionAr": "القائمة الفرعية. تفتح بجوار عنصرها في جهة النهاية.",
+      "inherits": {
+        "name": "Menu",
+        "url": "https://base-ui.com/react/components/menu"
+      },
+      "props": []
+    },
+    {
+      "name": "MenubarSubTrigger",
+      "description": "An item that opens a submenu on the end side. Its chevron mirrors in RTL.",
+      "descriptionAr": "عنصر يفتح قائمة فرعية في جهة النهاية. ينعكس سهمه في RTL.",
+      "inherits": {
+        "name": "Menu",
+        "url": "https://base-ui.com/react/components/menu"
+      },
+      "props": []
+    },
+    {
+      "name": "MenubarTrigger",
+      "description": "The button in the bar that opens a menu.",
+      "descriptionAr": "الزر في الشريط الذي يفتح قائمة.",
+      "inherits": {
+        "name": "Menu",
+        "url": "https://base-ui.com/react/components/menu"
+      },
+      "props": []
+    }
+  ],
+  "navigation-menu": [
+    {
+      "name": "NavigationMenu",
+      "description": "The links of a site or an app, with panels that hold groups of links (Platform Code extension, not part of DGA). Items open on hover and on keyboard focus, Left and Right move between them (swapped on Arabic pages), Down opens the panel and Escape closes it. It is a `nav` landmark, so give it an `aria-label`. For the site header with a logo, search and a drawer on phones, use the Header; for a bar of actions, use a Menubar.",
+      "descriptionAr": "روابط موقع أو تطبيق مع لوحات تضم مجموعات من الروابط (امتداد من كود المنصات وليس جزءًا من DGA). تفتح العناصر بالتمرير وبتركيز لوحة المفاتيح، وينقل السهمان الأيمن والأيسر (يتبادلان في الصفحات العربية) بين العناصر، ويفتح السهم لأسفل اللوحة، ويغلقها Escape. هي معلم `nav` فأعطها `aria-label`. لرأس الموقع بشعاره وبحثه وقائمته الجانبية على الهاتف استخدم Header.",
+      "inherits": {
+        "name": "NavigationMenu",
+        "url": "https://base-ui.com/react/components/navigation-menu"
+      },
+      "props": [
+        {
+          "name": "viewport",
+          "type": "boolean",
+          "default": "true",
+          "required": false,
+          "description": "Shows the shared panel under the bar where the content of the open item appears. Turn it off only when you render `NavigationMenuViewport` yourself.",
+          "descriptionAr": "يعرض اللوحة المشتركة أسفل الشريط حيث يظهر محتوى العنصر المفتوح. أوقفه فقط إن عرضت اللوحة بنفسك."
+        },
+        {
+          "name": "sideOffset",
+          "type": "number",
+          "default": "8",
+          "required": false,
+          "description": "The gap between the bar and the panel in pixels.",
+          "descriptionAr": "الفجوة بين الشريط واللوحة بالبكسل. الافتراضي 8."
+        },
+        {
+          "name": "closeDelay",
+          "type": "number",
+          "default": null,
+          "required": false,
+          "description": "How long to wait before closing the navigation popup. Specified in milliseconds.",
+          "descriptionAr": "المللي ثانية التي تبقى فيها اللوحة بعد مغادرة المؤشر. الافتراضي 50."
+        },
+        {
+          "name": "defaultValue",
+          "type": "string | null",
+          "default": null,
+          "required": false,
+          "description": "The uncontrolled value of the item that should be initially selected. To render a controlled navigation menu, use the `value` prop instead.",
+          "descriptionAr": "قيمة `value` للعنصر المفتوح في البداية (دون تحكم)."
+        },
+        {
+          "name": "delay",
+          "type": "number",
+          "default": null,
+          "required": false,
+          "description": "How long to wait before opening the navigation popup. Specified in milliseconds.",
+          "descriptionAr": "المللي ثانية التي يستقر فيها المؤشر على الزر قبل فتح لوحته. الافتراضي 50."
+        },
+        {
+          "name": "onValueChange",
+          "type": "(value: string | null) => void",
+          "default": null,
+          "required": false,
+          "description": "Callback fired when the value changes.",
+          "descriptionAr": "تُستدعى عند فتح عنصر أو إغلاقه."
+        },
+        {
+          "name": "orientation",
+          "type": "\"horizontal\" | \"vertical\"",
+          "default": null,
+          "required": false,
+          "description": "The orientation of the navigation menu.",
+          "descriptionAr": "اتجاه القائمة. يستخدم العمودي السهمين لأعلى ولأسفل بدل الأيمن والأيسر."
+        },
+        {
+          "name": "value",
+          "type": "string | null",
+          "default": null,
+          "required": false,
+          "description": "The controlled value of the navigation menu item that should be currently open. When non-nullish, the menu will be open. When nullish, the menu will be closed. To render an uncontrolled navigation menu, use the `defaultValue` prop instead.",
+          "descriptionAr": "قيمة `value` للعنصر المفتوح (بتحكّم خارجي). و`null` تعني مغلقًا."
+        }
+      ]
+    },
+    {
+      "name": "NavigationMenuContent",
+      "description": "The panel of an item. It appears in the shared panel under the bar.",
+      "descriptionAr": "لوحة العنصر. تظهر في اللوحة المشتركة أسفل الشريط.",
+      "inherits": {
+        "name": "NavigationMenu",
+        "url": "https://base-ui.com/react/components/navigation-menu"
+      },
+      "props": []
+    },
+    {
+      "name": "NavigationMenuItem",
+      "description": "One entry of the list: a NavigationMenuLink, or a NavigationMenuTrigger with its content.",
+      "descriptionAr": "مدخل واحد في القائمة: رابط NavigationMenuLink أو زر NavigationMenuTrigger مع محتواه.",
+      "inherits": {
+        "name": "NavigationMenu",
+        "url": "https://base-ui.com/react/components/navigation-menu"
+      },
+      "props": [
+        {
+          "name": "value",
+          "type": "string",
+          "default": null,
+          "required": false,
+          "description": "A unique value that identifies this navigation menu item. If no value is provided, a unique ID will be generated automatically. Use when controlling the navigation menu programmatically.",
+          "descriptionAr": "يسمّي العنصر ليفتحه `value` و`defaultValue` في الجذر."
+        }
+      ]
+    },
+    {
+      "name": "NavigationMenuLink",
+      "description": "A link. Pass `active` for the current page: it sets `aria-current=\"page\"`. Use `variant=\"bar\"` for a link directly in the bar. Render your own link component with `render`.",
+      "descriptionAr": "رابط. مرّر `active` للصفحة الحالية فيضبط `aria-current=\"page\"`. استخدم `variant=\"bar\"` للرابط في الشريط مباشرة. اعرض مكوّن الرابط الخاص بك عبر `render`.",
+      "inherits": {
+        "name": "NavigationMenu",
+        "url": "https://base-ui.com/react/components/navigation-menu"
+      },
+      "props": [
+        {
+          "name": "variant",
+          "type": "\"item\" | \"bar\"",
+          "default": "\"item\"",
+          "required": false,
+          "description": "`item` is a link in a panel (default). `bar` is a link directly in the bar.",
+          "descriptionAr": "`item` رابط داخل لوحة (الافتراضي). و`bar` رابط في الشريط مباشرة."
+        },
+        {
+          "name": "active",
+          "type": "boolean",
+          "default": null,
+          "required": false,
+          "description": "Whether the link is the currently active page.",
+          "descriptionAr": "هذه هي الصفحة الحالية: يضبط `aria-current=\"page\"` والمظهر الحالي."
+        }
+      ]
+    },
+    {
+      "name": "NavigationMenuLinkDescription",
+      "description": "A line of help under the title of a link in a panel.",
+      "descriptionAr": "سطر مساعدة تحت عنوان الرابط في اللوحة.",
+      "inherits": {
+        "name": "NavigationMenu",
+        "url": "https://base-ui.com/react/components/navigation-menu"
+      },
+      "props": []
+    },
+    {
+      "name": "NavigationMenuLinkTitle",
+      "description": "The name of a link in a panel.",
+      "descriptionAr": "اسم الرابط في اللوحة.",
+      "inherits": {
+        "name": "NavigationMenu",
+        "url": "https://base-ui.com/react/components/navigation-menu"
+      },
+      "props": []
+    },
+    {
+      "name": "NavigationMenuList",
+      "description": "The row of items.",
+      "descriptionAr": "صف العناصر.",
+      "inherits": {
+        "name": "NavigationMenu",
+        "url": "https://base-ui.com/react/components/navigation-menu"
+      },
+      "props": []
+    },
+    {
+      "name": "NavigationMenuTrigger",
+      "description": "The button that opens the panel of its item. A chevron turns while the panel is open.",
+      "descriptionAr": "الزر الذي يفتح لوحة عنصره. يدور سهم صغير أثناء فتح اللوحة.",
+      "inherits": {
+        "name": "NavigationMenu",
+        "url": "https://base-ui.com/react/components/navigation-menu"
       },
       "props": []
     }
@@ -5429,6 +6288,110 @@
       ]
     }
   ],
+  "resizable": [
+    {
+      "name": "ResizableHandle",
+      "description": "The handle between two panels: a focusable separator with `aria-valuenow`, the size of the panel before it. Arrow keys move it 5%, Home and End send it to either end, and Enter collapses a collapsible panel. Pass `aria-label` to name it.",
+      "descriptionAr": "المقبض بين لوحتين: فاصل يأخذ التركيز وله `aria-valuenow` وهو حجم اللوحة التي قبله. الأسهم تحركه 5%، وHome وEnd يرسلانه إلى أحد الطرفين، وEnter يطوي اللوحة القابلة للطي.",
+      "inherits": null,
+      "props": []
+    },
+    {
+      "name": "ResizablePanel",
+      "description": "One panel. Give it `defaultSize`, `minSize` and `maxSize` as numbers (pixels) or strings (\"30%\").",
+      "descriptionAr": "لوحة واحدة. حدّد `defaultSize` و`minSize` و`maxSize` بأرقام (بكسل) أو نصوص مثل `\"30%\"`.",
+      "inherits": null,
+      "props": []
+    },
+    {
+      "name": "ResizablePanelGroup",
+      "description": "Panels that the user resizes by dragging a handle or with the arrow keys (Platform Code extension, not part of DGA). Built on react-resizable-panels. The first panel is the start panel: on the left in English and on the right in Arabic. The library works in physical left to right, so in Arabic the group lays itself out left to right and puts the panels in reverse order, which keeps dragging and the arrow keys true to what the eye sees.",
+      "descriptionAr": "لوحات يغيّر المستخدم حجمها بسحب مقبض أو بمفاتيح الأسهم (امتداد من كود المنصات وليس جزءًا من DGA). مبنية على react-resizable-panels. اللوحة الأولى هي لوحة البداية: على اليسار في الإنجليزية وعلى اليمين في العربية.",
+      "inherits": null,
+      "props": [
+        {
+          "name": "dir",
+          "type": "any",
+          "default": null,
+          "required": false,
+          "description": "Reading direction of the panels. Defaults to the page direction.",
+          "descriptionAr": "اتجاه القراءة للوحات. الافتراضي اتجاه الصفحة."
+        },
+        {
+          "name": "autoSaveId",
+          "type": "string",
+          "default": null,
+          "required": false,
+          "description": "Remembers the sizes in `localStorage` under this key, so a reload keeps the layout. Each group on a page needs its own key, and every panel needs an `id`.",
+          "descriptionAr": "يحفظ الأحجام في `localStorage` بهذا المفتاح فيبقى التخطيط بعد إعادة التحميل. لكل مجموعة في الصفحة مفتاحها، ولكل لوحة `id`."
+        }
+      ]
+    }
+  ],
+  "scroll-area": [
+    {
+      "name": "ScrollArea",
+      "description": "A region with custom scrollbars (Platform Code extension, not part of DGA). Built on the Base UI Scroll Area. The viewport can take focus, so keyboard users scroll it with the arrow keys, Page Up and Down, Home and End, and the vertical scrollbar sits on the end side in Arabic. Give it a height or a width: it scrolls whatever overflows.",
+      "descriptionAr": "منطقة بأشرطة تمرير مخصصة (امتداد من كود المنصات وليس جزءًا من DGA). مبنية على Base UI Scroll Area. يمكن أن تأخذ منطقة العرض التركيز فيمرّر بها مستخدم لوحة المفاتيح بالأسهم.",
+      "inherits": {
+        "name": "ScrollArea",
+        "url": "https://base-ui.com/react/components/scroll-area"
+      },
+      "props": [
+        {
+          "name": "orientation",
+          "type": "\"vertical\" | \"horizontal\" | \"both\"",
+          "default": "\"vertical\"",
+          "required": false,
+          "description": "Which scrollbars it has. `vertical` is the default.",
+          "descriptionAr": "أشرطة التمرير التي تظهر: `vertical` (الافتراضي) أو `horizontal` أو `both`."
+        },
+        {
+          "name": "visibility",
+          "type": "\"hover\" | \"always\"",
+          "default": "\"hover\"",
+          "required": false,
+          "description": "When the scrollbar shows. `hover` shows it while the pointer is over the area, while it scrolls and while the content has focus; `always` keeps it visible.",
+          "descriptionAr": "متى يظهر الشريط. `hover` يظهره عند مرور المؤشر وأثناء التمرير ووجود التركيز، و`always` يبقيه ظاهرًا."
+        },
+        {
+          "name": "label",
+          "type": "string",
+          "default": "\"Scrollable content\"",
+          "required": false,
+          "description": "Accessible name of the scrollable region. Without it a screen reader announces an unnamed region, so always pass one and translate it on Arabic pages.",
+          "descriptionAr": "الاسم الذي يقرؤه قارئ الشاشة للمنطقة القابلة للتمرير. مرّره دائمًا وترجمه في الصفحات العربية."
+        },
+        {
+          "name": "viewportClassName",
+          "type": "string",
+          "default": null,
+          "required": false,
+          "description": "Classes for the scrolling element (the viewport).",
+          "descriptionAr": "أصناف CSS لعنصر التمرير نفسه (منطقة العرض)."
+        }
+      ]
+    },
+    {
+      "name": "ScrollBar",
+      "description": "One scrollbar. `ScrollArea` adds the ones its `orientation` needs.",
+      "descriptionAr": "شريط تمرير واحد. يضيف `ScrollArea` الأشرطة التي يحتاجها بحسب `orientation`.",
+      "inherits": {
+        "name": "ScrollArea",
+        "url": "https://base-ui.com/react/components/scroll-area"
+      },
+      "props": [
+        {
+          "name": "orientation",
+          "type": "\"vertical\" | \"horizontal\"",
+          "default": "\"vertical\"",
+          "required": false,
+          "description": "Whether the scrollbar controls vertical or horizontal scroll.",
+          "descriptionAr": "المحور الذي يمرّره الشريط: `vertical` أو `horizontal`."
+        }
+      ]
+    }
+  ],
   "search-box": [
     {
       "name": "SearchBox",
@@ -5799,6 +6762,304 @@
           "required": false,
           "description": "The placeholder value to display when no value is selected. This is overridden by `children` if specified, or by a null item's label in `items`.",
           "descriptionAr": "يظهر ما دام لم يُختر شيء."
+        }
+      ]
+    }
+  ],
+  "sidebar": [
+    {
+      "name": "Sidebar",
+      "description": "The panel of navigation. On a desktop it sits beside the page and animates its width; below the mobile breakpoint it is a Drawer that slides in from its side. Give it an `aria-label`.",
+      "descriptionAr": "لوحة التنقل. على سطح المكتب تقع بجوار الصفحة ويتحرك عرضها، ودون نقطة الهاتف تصير Drawer ينزلق من جهتها. أعطها `aria-label`.",
+      "inherits": null,
+      "props": [
+        {
+          "name": "collapsible",
+          "type": "\"offcanvas\" | \"icon\" | \"none\"",
+          "default": "\"offcanvas\"",
+          "required": false,
+          "description": "What happens when it closes. `offcanvas` hides it, `icon` leaves a rail with only the icons, and `none` makes it always open.",
+          "descriptionAr": "ما يحدث عند إغلاقه. `offcanvas` يخفيه، و`icon` يترك عمودًا بالأيقونات فقط، و`none` يجعله مفتوحًا دائمًا."
+        },
+        {
+          "name": "side",
+          "type": "\"start\" | \"end\"",
+          "default": "\"start\"",
+          "required": false,
+          "description": "The edge it sits on. `start` and `end` follow the page direction, so `start` is on the right in Arabic.",
+          "descriptionAr": "الحافة التي يقع عليها. و`start` و`end` جهتان للنص، فتكون `start` على اليمين في الصفحات العربية."
+        },
+        {
+          "name": "mobileTitle",
+          "type": "string",
+          "default": "\"Navigation\"",
+          "required": false,
+          "description": "The name of the Drawer on a phone, read by screen readers.",
+          "descriptionAr": "اسم الـ Drawer على الهاتف، يقرؤه قارئ الشاشة."
+        },
+        {
+          "name": "mobileDescription",
+          "type": "string",
+          "default": "\"The main navigation of the site.\"",
+          "required": false,
+          "description": "A short description of the Drawer on a phone.",
+          "descriptionAr": "وصف قصير للـ Drawer على الهاتف."
+        },
+        {
+          "name": "closeLabel",
+          "type": "string",
+          "default": "\"Close\"",
+          "required": false,
+          "description": "Accessible name of the Drawer's close button.",
+          "descriptionAr": "الاسم المتاح لزر إغلاق الـ Drawer. ترجمه في الصفحات العربية."
+        }
+      ]
+    },
+    {
+      "name": "SidebarContent",
+      "description": "The scrolling middle of the sidebar. Put the groups inside.",
+      "descriptionAr": "وسط الشريط القابل للتمرير. ضع المجموعات بداخله.",
+      "inherits": null,
+      "props": []
+    },
+    {
+      "name": "SidebarFooter",
+      "description": "The bottom of the sidebar, for the signed-in user or help links.",
+      "descriptionAr": "أسفل الشريط، للمستخدم الحالي أو لروابط المساعدة.",
+      "inherits": null,
+      "props": []
+    },
+    {
+      "name": "SidebarGroup",
+      "description": "A set of related items with an optional SidebarGroupLabel that names it.",
+      "descriptionAr": "مجموعة عناصر متصلة مع SidebarGroupLabel اختياري يسمّيها.",
+      "inherits": null,
+      "props": []
+    },
+    {
+      "name": "SidebarGroupContent",
+      "description": "Holds the menu of a group.",
+      "descriptionAr": "يحمل قائمة المجموعة.",
+      "inherits": null,
+      "props": []
+    },
+    {
+      "name": "SidebarGroupLabel",
+      "description": "The heading of a group. It is hidden on the icon rail but still names the group.",
+      "descriptionAr": "عنوان المجموعة. يختفي في عمود الأيقونات لكنه يبقى اسمًا للمجموعة.",
+      "inherits": null,
+      "props": []
+    },
+    {
+      "name": "SidebarHeader",
+      "description": "The top of the sidebar, for a logo or a switcher.",
+      "descriptionAr": "أعلى الشريط، للشعار أو للمبدّل.",
+      "inherits": null,
+      "props": []
+    },
+    {
+      "name": "SidebarInset",
+      "description": "The page beside the sidebar. Put your `<main>` inside it.",
+      "descriptionAr": "الصفحة بجوار الشريط. ضع `<main>` بداخلها.",
+      "inherits": null,
+      "props": []
+    },
+    {
+      "name": "SidebarMenu",
+      "description": "A list of items.",
+      "descriptionAr": "قائمة عناصر.",
+      "inherits": null,
+      "props": []
+    },
+    {
+      "name": "SidebarMenuBadge",
+      "description": "A count or tag at the end of an item. Hidden on the icon rail.",
+      "descriptionAr": "عدّاد أو وسم في نهاية العنصر. ضعه داخل SidebarMenuButton.",
+      "inherits": null,
+      "props": []
+    },
+    {
+      "name": "SidebarMenuButton",
+      "description": "One link or button of the menu: an icon and a label. On the icon rail the label is hidden but still read by screen readers, and `tooltip` shows it on hover and focus.",
+      "descriptionAr": "رابط أو زر واحد في القائمة: أيقونة وتسمية. في عمود الأيقونات تختفي التسمية لكن قارئ الشاشة يقرؤها، ويعرضها `tooltip` عند التمرير والتركيز.",
+      "inherits": null,
+      "props": [
+        {
+          "name": "tooltip",
+          "type": "string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<AwaitedReactNode>",
+          "default": null,
+          "required": false,
+          "description": "The label shown beside the icon on the icon rail. Without it the rail shows no tooltip.",
+          "descriptionAr": "التسمية التي تظهر بجوار الأيقونة في عمود الأيقونات. دونه لا يظهر تلميح."
+        },
+        {
+          "name": "isActive",
+          "type": "boolean",
+          "default": "false",
+          "required": false,
+          "description": "This is the current page: it sets `aria-current=\"page\"` and the selected look.",
+          "descriptionAr": "هذه هي الصفحة الحالية: يضبط `aria-current=\"page\"` والمظهر المحدد."
+        },
+        {
+          "name": "render",
+          "type": "ReactElement<Record<string, unknown>, string | JSXElementConstructor<any>>",
+          "default": null,
+          "required": false,
+          "description": "Render your own link component, for example `<a href=\"/\" />` or a Next.js `Link`.",
+          "descriptionAr": "يتيح لك استبدال العنصر بمكوّن رابط خاص بك، مثل `<a href>` أو `Link` في Next.js."
+        }
+      ]
+    },
+    {
+      "name": "SidebarMenuCollapsible",
+      "description": "An item that opens a nested group. Put a SidebarMenuCollapsibleTrigger and a content inside.",
+      "descriptionAr": "عنصر يفتح مجموعة متداخلة. ضع بداخله زرًا ومحتوى.",
+      "inherits": null,
+      "props": []
+    },
+    {
+      "name": "SidebarMenuCollapsibleContent",
+      "description": "The nested group. Put a SidebarMenuSub inside.",
+      "descriptionAr": "المجموعة المتداخلة. ضع بداخلها SidebarMenuSub.",
+      "inherits": null,
+      "props": []
+    },
+    {
+      "name": "SidebarMenuCollapsibleTrigger",
+      "description": "The button that opens a nested group, with a chevron. On the icon rail, pressing it opens the sidebar so the group can be seen.",
+      "descriptionAr": "الزر الذي يفتح مجموعة متداخلة، مع سهم. في عمود الأيقونات يفتح الضغط عليه الشريط ليظهر المحتوى.",
+      "inherits": null,
+      "props": []
+    },
+    {
+      "name": "SidebarMenuItem",
+      "description": "One entry of a menu.",
+      "descriptionAr": "مدخل واحد في القائمة.",
+      "inherits": null,
+      "props": []
+    },
+    {
+      "name": "SidebarMenuSub",
+      "description": "The list of a nested group.",
+      "descriptionAr": "قائمة المجموعة المتداخلة.",
+      "inherits": null,
+      "props": []
+    },
+    {
+      "name": "SidebarMenuSubButton",
+      "description": "A link or button of a nested group.",
+      "descriptionAr": "رابط أو زر في المجموعة المتداخلة.",
+      "inherits": null,
+      "props": [
+        {
+          "name": "isActive",
+          "type": "boolean",
+          "default": "false",
+          "required": false,
+          "description": "This is the current page: it sets `aria-current=\"page\"` and the selected look.",
+          "descriptionAr": "هذه هي الصفحة الحالية: يضبط `aria-current=\"page\"` والمظهر المحدد."
+        },
+        {
+          "name": "render",
+          "type": "ReactElement<Record<string, unknown>, string | JSXElementConstructor<any>>",
+          "default": null,
+          "required": false,
+          "description": "Render your own link component, for example `<a href=\"/\" />` or a Next.js `Link`.",
+          "descriptionAr": "يتيح لك استبدال العنصر بمكوّن رابط خاص بك، مثل `<a href>` أو `Link` في Next.js."
+        }
+      ]
+    },
+    {
+      "name": "SidebarMenuSubItem",
+      "description": "One entry of a nested group.",
+      "descriptionAr": "مدخل واحد في المجموعة المتداخلة.",
+      "inherits": null,
+      "props": []
+    },
+    {
+      "name": "SidebarProvider",
+      "description": "Holds the state of a sidebar and lays out the sidebar and the page beside it (Platform Code extension, not part of DGA). Put one around the Sidebar and the SidebarInset. The sidebar can be an icon rail, hide completely, or become a Drawer on a phone; the open state is remembered in a cookie, and Ctrl or Command with B toggles it. Tooltips of the icon rail share one provider.",
+      "descriptionAr": "يحمل حالة الشريط الجانبي ويرتّبه والصفحة بجواره (امتداد من كود المنصات وليس جزءًا من DGA). يمكن أن يصير الشريط عمود أيقونات أو يختفي كليًا أو يصير Drawer على الهاتف. تُحفظ حالة الفتح في ملف تعريف ارتباط، ويبدّل Ctrl أو Command مع B حالته.",
+      "inherits": null,
+      "props": [
+        {
+          "name": "open",
+          "type": "boolean",
+          "default": null,
+          "required": false,
+          "description": "Whether the sidebar is open (controlled).",
+          "descriptionAr": "هل الشريط مفتوح (بتحكّم خارجي)."
+        },
+        {
+          "name": "cookieName",
+          "type": "string",
+          "default": "SIDEBAR_COOKIE_NAME",
+          "required": false,
+          "description": "The name of the cookie. Give each sidebar of your app its own.",
+          "descriptionAr": "اسم ملف تعريف الارتباط. أعطِ كل شريط في تطبيقك اسمه."
+        },
+        {
+          "name": "defaultOpen",
+          "type": "boolean",
+          "default": "true",
+          "required": false,
+          "description": "Whether the sidebar is open at first (uncontrolled).",
+          "descriptionAr": "هل الشريط مفتوح في البداية (دون تحكم)."
+        },
+        {
+          "name": "onOpenChange",
+          "type": "(open: boolean) => void",
+          "default": null,
+          "required": false,
+          "description": "Called with the new state.",
+          "descriptionAr": "تُستدعى بالحالة الجديدة."
+        },
+        {
+          "name": "persist",
+          "type": "boolean",
+          "default": "true",
+          "required": false,
+          "description": "Remembers the open state in a cookie and restores it on the next visit. Turn it off for a sidebar that should always start the same way.",
+          "descriptionAr": "يحفظ حالة الفتح في ملف تعريف ارتباط ويستعيدها في الزيارة التالية. أوقفه لشريط يبدأ دائمًا بالحالة نفسها."
+        },
+        {
+          "name": "shortcut",
+          "type": "string | false",
+          "default": "\"b\"",
+          "required": false,
+          "description": "The key that, with Ctrl or Command, opens and closes the sidebar. Pass `false` to turn the shortcut off.",
+          "descriptionAr": "المفتاح الذي يفتح الشريط ويغلقه مع Ctrl أو Command. مرّر `false` لإيقاف الاختصار."
+        },
+        {
+          "name": "mobileBreakpoint",
+          "type": "number",
+          "default": "768",
+          "required": false,
+          "description": "Below this width in pixels the sidebar is a Drawer.",
+          "descriptionAr": "دون هذا العرض بالبكسل يصير الشريط Drawer."
+        }
+      ]
+    },
+    {
+      "name": "SidebarSeparator",
+      "description": "A line between parts of the sidebar.",
+      "descriptionAr": "خط بين أجزاء الشريط.",
+      "inherits": null,
+      "props": []
+    },
+    {
+      "name": "SidebarTrigger",
+      "description": "The button that opens and closes the sidebar. Its `aria-expanded` follows the state.",
+      "descriptionAr": "الزر الذي يفتح الشريط ويغلقه. يتبع `aria-expanded` فيه الحالة.",
+      "inherits": null,
+      "props": [
+        {
+          "name": "label",
+          "type": "string",
+          "default": "\"Toggle sidebar\"",
+          "required": false,
+          "description": "Accessible name of the button. Translate it on Arabic pages.",
+          "descriptionAr": "الاسم المتاح للزر. ترجمه في الصفحات العربية."
         }
       ]
     }

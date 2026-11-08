@@ -957,6 +957,10 @@
   --control-thumb: var(--colors-base-white);
   --field-text-placeholder-tinted: var(--colors-neutral-600);
   --control-icon-neutral: var(--colors-base-white);
+  --chart-series-1: var(--colors-primary-sa-flag-950);
+  --chart-series-2: var(--colors-secondary-gold-700);
+  --chart-series-3: var(--colors-tertiary-lavender-900);
+  --chart-series-4: var(--colors-blue-light-600);
   --background: var(--background-body);
   --foreground: var(--text-default);
   --card: var(--background-card);
@@ -1539,6 +1543,10 @@
   --control-thumb: var(--colors-base-white);
   --field-text-placeholder-tinted: var(--colors-neutral-600);
   --control-icon-neutral: var(--colors-base-white);
+  --chart-series-1: var(--colors-primary-sa-flag-950);
+  --chart-series-2: var(--colors-secondary-gold-700);
+  --chart-series-3: var(--colors-tertiary-lavender-900);
+  --chart-series-4: var(--colors-blue-light-600);
   --background: var(--background-body);
   --foreground: var(--text-default);
   --card: var(--background-card);
@@ -2029,6 +2037,10 @@
   --control-thumb: var(--colors-base-white);
   --field-text-placeholder-tinted: var(--field-text-placeholder);
   --control-icon-neutral: var(--colors-neutral-dark-950);
+  --chart-series-1: var(--colors-primary-sa-flag-200);
+  --chart-series-2: var(--colors-secondary-gold-800);
+  --chart-series-3: var(--colors-tertiary-lavender-200);
+  --chart-series-4: var(--colors-blue-dark-600);
   --background: var(--background-body);
   --foreground: var(--text-default);
   --card: var(--background-card);

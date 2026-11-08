@@ -1,0 +1,19 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "aspect-ratio",
+  "title": "Aspect Ratio",
+  "description": "Platform Code extension (not DGA). Aspect Ratio: a box with a fixed width to height ratio from the CSS aspect-ratio property, with cover or contain fit for an image, video or iframe inside.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://dga.omqkhafi.dev/r/utils.json"
+  ],
+  "files": [
+    {
+      "path": "bases/base/ui/aspect-ratio.tsx",
+      "content": "import type * as React from \"react\";\nimport { cn } from \"@/registry/bases/base/lib/utils\";\n\ntype AspectRatioProps = React.ComponentProps<\"div\"> & {\n  /** Width divided by height: `16 / 9`, `4 / 3` or `1`. */\n  ratio?: number;\n  /** How an image or video inside fills the box: `cover` crops it, `contain` shows all of it. */\n  fit?: \"cover\" | \"contain\";\n};\n\n/**\n * A box that keeps a fixed width to height ratio (Platform Code extension, not part of DGA). It\n * sets the CSS `aspect-ratio`, so it needs no script and has no layout shift. An `img`, `video`\n * or `iframe` inside fills it. Base UI has no primitive for this, so it is a plain element. It\n * does not replace anything in DGA: the Card has no ratio of its own.\n */\nfunction AspectRatio({\n  ratio = 16 / 9,\n  fit = \"cover\",\n  className,\n  style,\n  ...props\n}: AspectRatioProps) {\n  return (\n    <div\n      data-slot=\"aspect-ratio\"\n      data-fit={fit}\n      style={{ \"--ratio\": ratio, ...style } as React.CSSProperties}\n      className={cn(\"relative aspect-(--ratio) overflow-hidden rounded-md [&>iframe]:size-full [&>img]:size-full [&>video]:size-full data-[fit=contain]:[&>img]:object-contain data-[fit=contain]:[&>video]:object-contain data-[fit=cover]:[&>img]:object-cover data-[fit=cover]:[&>video]:object-cover\", className)}\n      {...props}\n    />\n  );\n}\n\nexport { AspectRatio };\n",
+      "type": "registry:ui",
+      "target": "components/dga/aspect-ratio.tsx"
+    }
+  ],
+  "type": "registry:ui"
+}

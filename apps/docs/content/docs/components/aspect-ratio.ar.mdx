@@ -1,0 +1,77 @@
+---
+title: Aspect Ratio
+description: "صندوق بنسبة ثابتة بين العرض والارتفاع للصور والفيديو والمحتوى المضمّن. غلاف رقيق على خاصية CSS ‏aspect-ratio."
+sourceHash: 4cbc64b27629
+---
+
+<ExtensionNote
+  name="نسبة العرض إلى الارتفاع"
+  primitive="عنصر عادي (لا يوجد مكوّن أساسي لهذا في Base UI)"
+  from="انحناء radius-md في DGA؛ ولا يرسم أي لون بنفسه"
+  tokens={["radius-md"]}
+/>
+
+<Preview name="aspect-ratio-ratios" title="نسبة العرض إلى الارتفاع" minHeight={240} />
+
+## التثبيت [#installation]
+
+<ComponentInstall name="aspect-ratio" />
+
+## الاستخدام [#usage]
+
+```tsx title="page.tsx"
+import { AspectRatio } from "@/components/dga/aspect-ratio";
+
+export function Cover() {
+  return (
+    <AspectRatio ratio={16 / 9} className="w-80">
+      <img src="/cover.jpg" alt="مركز الخدمات الجديد" />
+    </AspectRatio>
+  );
+}
+```
+
+استخدمه حين يجب أن يحتفظ الصندوق بشكله قبل تحميل الوسائط، فلا تقفز الصفحة. يضبط خاصية CSS ‏`aspect-ratio` ولا يحتاج إلى سكربت. وأي `img` أو `video` أو `iframe` بداخله يملأ الصندوق. الصنف `aspect-video` في Tailwind يؤدي الغرض نفسه لحالة منفردة؛ وهذا المكوّن يضيف الخاصيتين `ratio` و`fit` والانحناء.
+
+لا يحلّ محل شيء في DGA: وسائط [Card](/docs/components/card) ليست لها نسبة خاصة، فضع Aspect Ratio بداخلها حين تحتاج إلى نسبة.
+
+## البنية [#anatomy]
+
+- **الصندوق**: `position: relative` و`aspect-ratio` من `ratio` (الافتراضي 16 / 9) و`overflow: hidden` وانحناء `radius-md`. أعطه عرضًا (أو دعه يملأ أصله) ويتبعه الارتفاع.
+- **الوسائط**: `img` أو `video` يملأ الصندوق، و`object-fit: cover` افتراضيًا.
+
+## أمثلة [#examples]
+
+### النسب
+
+`ratio` هو العرض مقسومًا على الارتفاع: `16 / 9` أو `4 / 3` أو `1`.
+
+<Preview compact name="aspect-ratio-ratios" title="النسب" minHeight={240} />
+
+### الملاءمة
+
+`fit="cover"` يقصّ الوسائط لتملأ الصندوق. و`fit="contain"` يعرضها كاملة ويترك فراغًا على الجانبين.
+
+<Preview compact name="aspect-ratio-fit" title="الملاءمة" minHeight={240} />
+
+## RTL [#rtl]
+
+ليس للصندوق اتجاه خاص به. النص بداخله يتبع اتجاه الصفحة.
+
+<DirectionCompare name="aspect-ratio-ratios" title="نسبة العرض إلى الارتفاع" minHeight={240} />
+
+## إمكانية الوصول [#accessibility]
+
+- هو `div` عادي بلا دور. أعطِ الصورة بداخله `alt`؛ والصورة الزخرفية تأخذ `alt=""`.
+- لا لون له، فلا يضيف شيئًا إلى تدقيق التباين. أبقِ النص فوق الوسائط بنسبة 4.5:1.
+- لا شيء يتحرك، فلا أثر لتقليل الحركة.
+
+## مرجع API [#api-reference]
+
+<ApiReference component="aspect-ratio" />
+
+## الاشتقاق من DGA [#derivation-from-dga]
+
+لا تعرّف DGA صندوق نسبة، فهذا ليس مكوّنًا من DGA وليس له مواصفة فيها. يستخدم انحناء `radius-md` من البطاقة ولا يرسم أي لون.
+
+<ComponentDeviations component="aspect-ratio" />

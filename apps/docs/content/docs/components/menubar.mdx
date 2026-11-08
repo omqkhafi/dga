@@ -1,0 +1,105 @@
+---
+title: Menubar
+description: "A horizontal bar of menus, like File, Edit and View in an application. Each trigger opens a DGA Menu."
+---
+
+<ExtensionNote
+  name="Menubar"
+  primitive="Base UI Menubar"
+  from="the DGA Menu for every list, and the Header navigation items for the triggers"
+  tokens={["background-menu", "border-neutral-primary", "button-background-neutral-hovered", "button-background-neutral-pressed", "text-default", "shadow-2xl"]}
+/>
+
+<Preview name="menubar-basic" title="Menubar" minHeight={300} />
+
+## Installation
+
+<ComponentInstall name="menubar" />
+
+## Usage
+
+```tsx title="page.tsx"
+import {
+  Menubar,
+  MenubarContent,
+  MenubarItem,
+  MenubarMenu,
+  MenubarShortcut,
+  MenubarTrigger,
+} from "@/components/dga/menubar";
+
+export function DocumentMenus() {
+  return (
+    <Menubar aria-label="Document">
+      <MenubarMenu>
+        <MenubarTrigger>File</MenubarTrigger>
+        <MenubarContent>
+          <MenubarItem>
+            New request <MenubarShortcut>⌘N</MenubarShortcut>
+          </MenubarItem>
+          <MenubarItem>Open</MenubarItem>
+        </MenubarContent>
+      </MenubarMenu>
+    </Menubar>
+  );
+}
+```
+
+Use a Menubar for the commands of an application or an editor, where people move across several menus. For one menu behind one button use a [Menu](/docs/components/menu); for links to pages use a [Navigation Menu](/docs/components/navigation-menu). The lists are the DGA Menu, so items, groups, checkbox and radio items and submenus work the same way. Every visible string, the shortcuts included, is yours to pass in.
+
+## Anatomy
+
+- **Bar** (`role="menubar"`): `background-menu`, a 1px border and radius-md, 40px high. Pass an `aria-label`.
+- **Trigger** (`role="menuitem"` with `aria-haspopup`): 32px high, the Header item states: hovered, pressed, open and a focus ring.
+- **Menu**: the DGA Menu, opened below its trigger on the start side.
+- **Items**: MenubarItem, MenubarCheckboxItem and MenubarRadioItem, with MenubarGroup, MenubarLabel, MenubarSeparator and MenubarShortcut.
+- **Submenu**: MenubarSub with a MenubarSubTrigger and a MenubarSubContent.
+
+## Examples
+
+### Checkbox and radio items
+
+A checked item shows a check mark or a dot on the end side.
+
+<Preview compact name="menubar-groups" title="Checkbox and radio items" minHeight={300} />
+
+### States
+
+An open menu, a closed one and a disabled trigger, with a disabled item inside the open menu.
+
+<Preview compact name="menubar-states" title="States" minHeight={300} />
+
+## RTL
+
+The bar reads from the start side, so File is on the right in Arabic. Left and Right swap, a menu opens aligned to the start edge of its trigger, a submenu opens on the end side (the left in Arabic) with a mirrored chevron, and shortcuts stay left to right.
+
+<DirectionCompare name="menubar-basic" title="Menubar" minHeight={300} />
+
+## Accessibility
+
+| Key | Action |
+| --- | --- |
+| <kbd>ArrowRight</kbd> / <kbd>ArrowLeft</kbd> | Moves to the next or previous trigger (swapped in Arabic). When a menu is open, it opens the neighbour's menu. |
+| <kbd>ArrowDown</kbd>, <kbd>Enter</kbd> or <kbd>Space</kbd> | Opens the menu of the focused trigger. |
+| <kbd>ArrowDown</kbd> / <kbd>ArrowUp</kbd> | Moves between items. |
+| <kbd>Home</kbd> / <kbd>End</kbd> | Moves to the first or last trigger, or item. |
+| <kbd>ArrowRight</kbd> | Opens a submenu (ArrowLeft in Arabic); the opposite arrow closes it. |
+| <kbd>Escape</kbd> | Closes the menu and returns focus to its trigger. |
+
+- Built on Base UI Menubar and Menu: `role="menubar"`, `menuitem`, `menuitemcheckbox` and `menuitemradio`, with `aria-expanded` on the triggers.
+- Only one trigger is in the Tab order. Tab leaves the bar.
+- Text is 4.5:1 and icons and rings 3:1 or better in every state, in light and dark.
+
+## API Reference
+
+<ApiReference component="menubar" />
+
+## Derivation from DGA
+
+DGA has no menubar, so this is not a DGA component. The lists are the DGA Menu and the triggers take the Header navigation item states (hover, pressed, open, focus ring) at a compact 32px height. No colour is new.
+
+<ComponentDeviations component="menubar" />
+
+## Contrast
+
+<ComponentContrast component="menubar" />

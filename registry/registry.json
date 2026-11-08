@@ -409,7 +409,11 @@
       "title": "Input Group",
       "description": "Platform Code extension: the DGA Input box with addons (prefix, icon, unit, Kbd, button) at either end.",
       "dependencies": ["@base-ui/react", "class-variance-authority"],
-      "registryDependencies": ["{{REGISTRY_URL}}/r/utils.json", "{{REGISTRY_URL}}/r/input.json"],
+      "registryDependencies": [
+        "{{REGISTRY_URL}}/r/utils.json",
+        "{{REGISTRY_URL}}/r/input.json",
+        "{{REGISTRY_URL}}/r/kbd.json"
+      ],
       "files": [
         {
           "path": "bases/base/ui/input-group.tsx",
@@ -698,6 +702,69 @@
       ]
     },
     {
+      "name": "menubar",
+      "type": "registry:ui",
+      "title": "Menubar",
+      "description": "Platform Code extension (not DGA). Menubar on Base UI Menubar: a bar of menus that use the DGA Menu list, with checkbox and radio items, shortcuts and submenus on the end side. Left and Right follow the page direction.",
+      "dependencies": ["@base-ui/react", "@hugeicons/react", "@hugeicons/core-free-icons"],
+      "registryDependencies": [
+        "{{REGISTRY_URL}}/r/utils.json",
+        "{{REGISTRY_URL}}/r/direction.json",
+        "{{REGISTRY_URL}}/r/menu.json"
+      ],
+      "files": [
+        {
+          "path": "bases/base/ui/menubar.tsx",
+          "type": "registry:ui",
+          "target": "components/dga/menubar.tsx"
+        }
+      ]
+    },
+    {
+      "name": "navigation-menu",
+      "type": "registry:ui",
+      "title": "Navigation Menu",
+      "description": "Platform Code extension (not DGA). Navigation Menu on Base UI Navigation Menu: links and triggers with a shared panel of links, the Header navigation look, an active page, and arrow keys that follow the direction.",
+      "dependencies": [
+        "@base-ui/react",
+        "@hugeicons/react",
+        "@hugeicons/core-free-icons",
+        "class-variance-authority"
+      ],
+      "registryDependencies": [
+        "{{REGISTRY_URL}}/r/utils.json",
+        "{{REGISTRY_URL}}/r/direction.json"
+      ],
+      "files": [
+        {
+          "path": "bases/base/ui/navigation-menu.tsx",
+          "type": "registry:ui",
+          "target": "components/dga/navigation-menu.tsx"
+        }
+      ]
+    },
+    {
+      "name": "sidebar",
+      "type": "registry:ui",
+      "title": "Sidebar",
+      "description": "Platform Code extension (not DGA). Sidebar built on the Collapsible, Drawer and Tooltip: collapsible to an icon rail or hidden, a Drawer on phones, nested groups, an active state, a start or end side that mirrors in RTL, a Ctrl or Command + B shortcut and an open state kept in a cookie.",
+      "dependencies": ["@base-ui/react", "@hugeicons/react", "@hugeicons/core-free-icons"],
+      "registryDependencies": [
+        "{{REGISTRY_URL}}/r/utils.json",
+        "{{REGISTRY_URL}}/r/button.json",
+        "{{REGISTRY_URL}}/r/collapsible.json",
+        "{{REGISTRY_URL}}/r/drawer.json",
+        "{{REGISTRY_URL}}/r/tooltip.json"
+      ],
+      "files": [
+        {
+          "path": "bases/base/ui/sidebar.tsx",
+          "type": "registry:ui",
+          "target": "components/dga/sidebar.tsx"
+        }
+      ]
+    },
+    {
       "name": "tabs",
       "type": "registry:ui",
       "title": "Tabs",
@@ -886,6 +953,61 @@
           "path": "bases/base/ui/collapsible.tsx",
           "type": "registry:ui",
           "target": "components/dga/collapsible.tsx"
+        }
+      ]
+    },
+    {
+      "name": "scroll-area",
+      "type": "registry:ui",
+      "title": "Scroll Area",
+      "description": "Platform Code extension (not DGA). Scroll Area on Base UI Scroll Area: vertical, horizontal or both scrollbars in DGA gray, shown on hover or always, a focusable named viewport for keyboard scrolling, and the vertical bar on the end side in RTL.",
+      "dependencies": ["@base-ui/react"],
+      "registryDependencies": [
+        "{{REGISTRY_URL}}/r/utils.json",
+        "{{REGISTRY_URL}}/r/direction.json"
+      ],
+      "files": [
+        {
+          "path": "bases/base/ui/scroll-area.tsx",
+          "type": "registry:ui",
+          "target": "components/dga/scroll-area.tsx"
+        }
+      ]
+    },
+    {
+      "name": "resizable",
+      "type": "registry:ui",
+      "title": "Resizable",
+      "description": "Platform Code extension (not DGA). Resizable panels on react-resizable-panels: horizontal or vertical, min, max and collapsible panels, a handle with an optional grip, arrow-key resizing, a layout that can be remembered, and the start panel on the right in RTL.",
+      "dependencies": [
+        "@hugeicons/react",
+        "@hugeicons/core-free-icons",
+        "react-resizable-panels@4.14.8"
+      ],
+      "registryDependencies": [
+        "{{REGISTRY_URL}}/r/utils.json",
+        "{{REGISTRY_URL}}/r/direction.json"
+      ],
+      "files": [
+        {
+          "path": "bases/base/ui/resizable.tsx",
+          "type": "registry:ui",
+          "target": "components/dga/resizable.tsx"
+        }
+      ]
+    },
+    {
+      "name": "aspect-ratio",
+      "type": "registry:ui",
+      "title": "Aspect Ratio",
+      "description": "Platform Code extension (not DGA). Aspect Ratio: a box with a fixed width to height ratio from the CSS aspect-ratio property, with cover or contain fit for an image, video or iframe inside.",
+      "dependencies": [],
+      "registryDependencies": ["{{REGISTRY_URL}}/r/utils.json"],
+      "files": [
+        {
+          "path": "bases/base/ui/aspect-ratio.tsx",
+          "type": "registry:ui",
+          "target": "components/dga/aspect-ratio.tsx"
         }
       ]
     },
@@ -1214,6 +1336,69 @@
           "path": "bases/base/ui/digital-stamp.tsx",
           "type": "registry:ui",
           "target": "components/dga/digital-stamp.tsx"
+        }
+      ]
+    },
+    {
+      "name": "kbd",
+      "type": "registry:ui",
+      "title": "Kbd",
+      "description": "Platform Code extension (not DGA). Kbd: a keyboard key or shortcut hint drawn as a small cap in the DGA neutral fill, with KbdGroup for combinations. Always left to right. Input Group's key addon is built on it.",
+      "dependencies": [],
+      "registryDependencies": ["{{REGISTRY_URL}}/r/utils.json"],
+      "files": [
+        {
+          "path": "bases/base/ui/kbd.tsx",
+          "type": "registry:ui",
+          "target": "components/dga/kbd.tsx"
+        }
+      ]
+    },
+    {
+      "name": "empty",
+      "type": "registry:ui",
+      "title": "Empty",
+      "description": "Platform Code extension (not DGA). Empty: the state of a list, table or page with nothing to show: media (or a round icon), title, description and next steps, on the look of the Data Table's empty state.",
+      "dependencies": ["class-variance-authority"],
+      "registryDependencies": ["{{REGISTRY_URL}}/r/utils.json"],
+      "files": [
+        {
+          "path": "bases/base/ui/empty.tsx",
+          "type": "registry:ui",
+          "target": "components/dga/empty.tsx"
+        }
+      ]
+    },
+    {
+      "name": "item",
+      "type": "registry:ui",
+      "title": "Item",
+      "description": "Platform Code extension (not DGA). Item: one row with media, title, description and actions, in three variants and two sizes, as a link with render. Its look is the DGA List and Card.",
+      "dependencies": ["@base-ui/react", "class-variance-authority"],
+      "registryDependencies": ["{{REGISTRY_URL}}/r/utils.json", "{{REGISTRY_URL}}/r/divider.json"],
+      "files": [
+        {
+          "path": "bases/base/ui/item.tsx",
+          "type": "registry:ui",
+          "target": "components/dga/item.tsx"
+        }
+      ]
+    },
+    {
+      "name": "chart",
+      "type": "registry:ui",
+      "title": "Chart",
+      "description": "Platform Code extension (not DGA). Chart: bar, line, area and pie charts on Recharts with the DGA chart palette (four series, 3:1 against the page and the neighbouring series), tooltip, legend, a data-table fallback, and axes that follow RTL.",
+      "dependencies": ["recharts@3.8.0", "react-is@19.3.1"],
+      "registryDependencies": [
+        "{{REGISTRY_URL}}/r/utils.json",
+        "{{REGISTRY_URL}}/r/direction.json"
+      ],
+      "files": [
+        {
+          "path": "bases/base/ui/chart.tsx",
+          "type": "registry:ui",
+          "target": "components/dga/chart.tsx"
         }
       ]
     }

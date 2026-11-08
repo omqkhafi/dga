@@ -1,0 +1,77 @@
+---
+title: Kbd
+description: "A keyboard key or shortcut hint, drawn as a small cap in the DGA neutral fill. Always left to right."
+---
+
+<ExtensionNote
+  name="Kbd"
+  primitive="the HTML kbd element"
+  from="the key addon of the Input Group, and the DGA neutral fill and border tokens"
+  tokens={["background-neutral-100", "border-neutral-primary", "text-default"]}
+/>
+
+<Preview name="kbd-basic" title="Kbd" minHeight={220} />
+
+## Installation
+
+<ComponentInstall name="kbd" />
+
+## Usage
+
+```tsx title="page.tsx"
+import { Kbd, KbdGroup } from "@/components/dga/kbd";
+
+export function Hint() {
+  return (
+    <p>
+      Press{" "}
+      <KbdGroup>
+        <Kbd>Ctrl</Kbd>
+        <Kbd>K</Kbd>
+      </KbdGroup>{" "}
+      to search.
+    </p>
+  );
+}
+```
+
+Use Kbd to show a key the person can press, in help text, menus, tooltips and buttons. It is a hint and takes no focus. It does not listen for keys: the shortcut itself is yours to bind. To show a shortcut at the end of a menu row, use the Menu's own shortcut text; to show one inside a field, use the Input Group's key addon, which is a Kbd.
+
+## Anatomy
+
+- **Key**: a 20px cap, at least 20px wide, `background-neutral-100`, a 1px `border-neutral-primary`, radius-xs, `text-xs` medium in `text-default`.
+- **Group**: KbdGroup puts keys of one combination 4px apart.
+
+## Examples
+
+### In context
+
+Next to text, inside an Input Group and inside a button.
+
+<Preview compact name="kbd-context" title="In context" minHeight={300} />
+
+## RTL
+
+Key names read left to right on Arabic pages, so `Ctrl+K` never turns into `K+Ctrl`. Both Kbd and KbdGroup set `dir="ltr"`. Pass `dir="rtl"` to a Kbd whose label is an Arabic word.
+
+<DirectionCompare name="kbd-context" title="Kbd" minHeight={300} />
+
+## Accessibility
+
+- It renders a real `<kbd>` element, which assistive technology reads as keyboard input.
+- It is not focusable and has no role of its own. Name the action in the text around it, not in the keys alone.
+- Text is `text-default` on `background-neutral-100`, better than 4.5:1 in light and dark.
+
+## API Reference
+
+<ApiReference component="kbd" />
+
+## Derivation from DGA
+
+DGA has no keyboard key element, so this is not a DGA component. The cap is the look the Input Group's key addon already had; that addon now uses Kbd instead of its own copy. No colour is new.
+
+<ComponentDeviations component="kbd" />
+
+## Contrast
+
+<ComponentContrast component="kbd" />

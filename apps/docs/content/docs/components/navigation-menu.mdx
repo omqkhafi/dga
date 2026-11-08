@@ -1,0 +1,111 @@
+---
+title: Navigation Menu
+description: "Links and panels of links for a site or an app. Items open on hover and keyboard focus and share one panel."
+---
+
+<ExtensionNote
+  name="Navigation Menu"
+  primitive="Base UI Navigation Menu"
+  from="the Header navigation items for the bar and the DGA Menu for the panel"
+  tokens={["background-menu", "border-neutral-primary", "button-background-neutral-hovered", "button-background-primary-default", "text-default", "text-primary-paragraph", "shadow-2xl"]}
+/>
+
+<Preview name="navigation-menu-basic" title="Navigation Menu" minHeight={320} />
+
+## Installation
+
+<ComponentInstall name="navigation-menu" />
+
+## Usage
+
+```tsx title="page.tsx"
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuLinkDescription,
+  NavigationMenuLinkTitle,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+} from "@/components/dga/navigation-menu";
+
+export function MainNavigation() {
+  return (
+    <NavigationMenu aria-label="Main">
+      <NavigationMenuList>
+        <NavigationMenuItem>
+          <NavigationMenuLink variant="bar" href="/" active>
+            Home
+          </NavigationMenuLink>
+        </NavigationMenuItem>
+        <NavigationMenuItem>
+          <NavigationMenuTrigger>Services</NavigationMenuTrigger>
+          <NavigationMenuContent>
+            <NavigationMenuLink href="/traffic">
+              <NavigationMenuLinkTitle>Traffic</NavigationMenuLinkTitle>
+              <NavigationMenuLinkDescription>Licences and fines.</NavigationMenuLinkDescription>
+            </NavigationMenuLink>
+          </NavigationMenuContent>
+        </NavigationMenuItem>
+      </NavigationMenuList>
+    </NavigationMenu>
+  );
+}
+```
+
+Use it for the main links of a site or an application where some links open a panel of related links. For a full site header with a logo, search and a drawer on phones, use the [Header](/docs/components/header). A trigger opens its panel on hover and on keyboard focus; touch and keyboard users open it with a tap or Enter. Pass `active` on the link of the current page. Every visible string is yours to pass in.
+
+## Anatomy
+
+- **Navigation** (`nav`): a landmark. Give it an `aria-label`.
+- **Bar links and triggers**: 40px high, the Header item states: hovered, pressed, open, current page (primary fill) and a focus ring.
+- **Panel**: the DGA Menu surface (`background-menu`, 1px border, radius-md, `shadow-2xl`). One panel is shared by all items, so it moves and resizes between them.
+- **Panel links**: an optional icon, a NavigationMenuLinkTitle and a NavigationMenuLinkDescription. The current page has a bold, underlined title.
+
+## Examples
+
+### Links only
+
+Bar links without a panel, with the current page and a disabled link.
+
+<Preview compact name="navigation-menu-links" title="Links only" />
+
+### Open panel
+
+The panel open at first with `defaultValue`.
+
+<Preview compact name="navigation-menu-open" title="Open panel" minHeight={400} />
+
+## RTL
+
+The bar and the panel read from the start side, so the first item is on the right in Arabic. Left and Right swap, and the panel aligns to the start edge of its trigger.
+
+<DirectionCompare name="navigation-menu-basic" title="Navigation Menu" minHeight={320} />
+
+## Accessibility
+
+| Key | Action |
+| --- | --- |
+| <kbd>ArrowRight</kbd> / <kbd>ArrowLeft</kbd> | Moves between the bar items (swapped in Arabic). |
+| <kbd>Enter</kbd> / <kbd>Space</kbd> / <kbd>ArrowDown</kbd> | Opens the panel of the focused trigger. |
+| <kbd>Tab</kbd> | Moves from the trigger into the links of its panel, then on. |
+| <kbd>Escape</kbd> | Closes the panel and returns focus to its trigger. |
+
+- Built on Base UI Navigation Menu: a `nav` landmark with a list, triggers with `aria-expanded`, and links. The current page has `aria-current="page"`.
+- Hovering is never required: every panel opens with the keyboard and with a tap.
+- Text is 4.5:1 and icons and rings 3:1 or better in every state, in light and dark.
+
+## API Reference
+
+<ApiReference component="navigation-menu" />
+
+## Derivation from DGA
+
+DGA has no navigation menu component. The bar items are the Header navigation items at 40px, and the panel is the DGA Menu surface with the Header sub-menu link layout. No colour is new.
+
+<ComponentDeviations component="navigation-menu" />
+
+## Contrast
+
+<ComponentContrast component="navigation-menu" />

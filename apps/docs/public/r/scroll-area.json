@@ -1,0 +1,22 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "scroll-area",
+  "title": "Scroll Area",
+  "description": "Platform Code extension (not DGA). Scroll Area on Base UI Scroll Area: vertical, horizontal or both scrollbars in DGA gray, shown on hover or always, a focusable named viewport for keyboard scrolling, and the vertical bar on the end side in RTL.",
+  "dependencies": [
+    "@base-ui/react"
+  ],
+  "registryDependencies": [
+    "https://dga.omqkhafi.dev/r/utils.json",
+    "https://dga.omqkhafi.dev/r/direction.json"
+  ],
+  "files": [
+    {
+      "path": "bases/base/ui/scroll-area.tsx",
+      "content": "\"use client\";\n\nimport { ScrollArea as ScrollAreaPrimitive } from \"@base-ui/react/scroll-area\";\nimport { AutoDirection } from \"@/lib/dga/direction\";\nimport { cn } from \"@/registry/bases/base/lib/utils\";\n\ntype ScrollAreaOrientation = \"vertical\" | \"horizontal\" | \"both\";\n\ntype ScrollAreaProps = ScrollAreaPrimitive.Root.Props & {\n  /** Which scrollbars it has. `vertical` is the default. */\n  orientation?: ScrollAreaOrientation;\n  /**\n   * When the scrollbar shows. `hover` shows it while the pointer is over the area, while it\n   * scrolls and while the content has focus; `always` keeps it visible.\n   */\n  visibility?: \"hover\" | \"always\";\n  /**\n   * Accessible name of the scrollable region. Without it a screen reader announces an unnamed\n   * region, so always pass one and translate it on Arabic pages.\n   */\n  label?: string;\n  /** Classes for the scrolling element (the viewport). */\n  viewportClassName?: string;\n};\n\n/**\n * A region with custom scrollbars (Platform Code extension, not part of DGA). Built on the Base UI\n * Scroll Area. The viewport can take focus, so keyboard users scroll it with the arrow keys, Page\n * Up and Down, Home and End, and the vertical scrollbar sits on the end side in Arabic. Give it a\n * height or a width: it scrolls whatever overflows.\n */\nfunction ScrollArea({\n  className,\n  viewportClassName,\n  children,\n  orientation = \"vertical\",\n  visibility = \"hover\",\n  label = \"Scrollable content\",\n  ...props\n}: ScrollAreaProps) {\n  return (\n    <AutoDirection>\n      <ScrollAreaPrimitive.Root\n        data-slot=\"scroll-area\"\n        data-visibility={visibility}\n        className={cn(\"relative overflow-hidden\", className)}\n        {...props}\n      >\n        <ScrollAreaPrimitive.Viewport\n          data-slot=\"scroll-area-viewport\"\n          role=\"region\"\n          aria-label={label}\n          tabIndex={0}\n          className={cn(\"size-full rounded-[inherit] outline-none focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-solid focus-visible:outline-border-black\", viewportClassName)}\n        >\n          <ScrollAreaPrimitive.Content data-slot=\"scroll-area-content\">\n            {children}\n          </ScrollAreaPrimitive.Content>\n        </ScrollAreaPrimitive.Viewport>\n        {orientation !== \"horizontal\" ? <ScrollBar orientation=\"vertical\" /> : null}\n        {orientation !== \"vertical\" ? <ScrollBar orientation=\"horizontal\" /> : null}\n        {orientation === \"both\" ? <ScrollAreaPrimitive.Corner /> : null}\n      </ScrollAreaPrimitive.Root>\n    </AutoDirection>\n  );\n}\n\n/** One scrollbar. `ScrollArea` adds the ones its `orientation` needs. */\nfunction ScrollBar({\n  className,\n  orientation = \"vertical\",\n  ...props\n}: ScrollAreaPrimitive.Scrollbar.Props) {\n  return (\n    <ScrollAreaPrimitive.Scrollbar\n      data-slot=\"scroll-area-scrollbar\"\n      orientation={orientation}\n      className={cn(\"flex touch-none p-0.5 select-none transition-opacity duration-150 motion-reduce:transition-none data-[orientation=horizontal]:h-3 data-[orientation=horizontal]:flex-col data-[orientation=vertical]:w-3 in-data-[visibility=hover]:opacity-0 in-data-[visibility=hover]:data-hovering:opacity-100 in-data-[visibility=hover]:data-scrolling:opacity-100 in-data-[visibility=hover]:in-focus-within:opacity-100\", className)}\n      {...props}\n    >\n      <ScrollAreaPrimitive.Thumb data-slot=\"scroll-area-thumb\" className=\"relative flex-1 rounded-full bg-text-secondary-paragraph hover:bg-text-primary-paragraph active:bg-icon-default\" />\n    </ScrollAreaPrimitive.Scrollbar>\n  );\n}\n\nexport { ScrollArea, ScrollBar };\n",
+      "type": "registry:ui",
+      "target": "components/dga/scroll-area.tsx"
+    }
+  ],
+  "type": "registry:ui"
+}

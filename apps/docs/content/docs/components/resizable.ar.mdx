@@ -1,0 +1,113 @@
+---
+title: Resizable
+description: "لوحات يغيّر المستخدم حجمها بسحب مقبض أو بمفاتيح الأسهم. أفقية أو عمودية، مع لوحات لها حد أدنى وأقصى ولوحات قابلة للطي."
+sourceHash: 411dab3261af
+---
+
+<ExtensionNote
+  name="اللوحات القابلة لتغيير الحجم"
+  primitive="react-resizable-panels (لا يوجد مكوّن أساسي لهذا في Base UI)"
+  from="الفاصل Divider في DGA للخط، وحلقة التركيز وانحناء البطاقة"
+  tokens={["text-secondary-paragraph", "icon-default", "border-black", "border-neutral-primary", "background-white"]}
+/>
+
+<Preview name="resizable-horizontal" title="اللوحات القابلة لتغيير الحجم" minHeight={300} />
+
+## التثبيت [#installation]
+
+<ComponentInstall name="resizable" />
+
+يثبّت هذا حزمة إضافية واحدة هي `react-resizable-panels` بالإصدار 4.14.8 بالضبط.
+
+## الاستخدام [#usage]
+
+```tsx title="page.tsx"
+import {
+  ResizableHandle,
+  ResizablePanel,
+  ResizablePanelGroup,
+} from "@/components/dga/resizable";
+
+export function Requests() {
+  return (
+    <ResizablePanelGroup className="h-56 rounded-md border">
+      <ResizablePanel id="list" defaultSize="35%" minSize="20%">
+        الطلبات
+      </ResizablePanel>
+      <ResizableHandle withHandle aria-label="تغيير حجم لوحة الطلبات" />
+      <ResizablePanel id="detail" defaultSize="65%">
+        تفاصيل الطلب
+      </ResizablePanel>
+    </ResizablePanelGroup>
+  );
+}
+```
+
+استخدمها لمساحة عمل يقرر الناس فيها حجم كل جزء: قائمة بجانب تفاصيلها أو محرر فوق وحدة تحكم. ولتخطيط ثابت استخدم شبكة عادية. الأحجام نسب مئوية (`"35%"`) أو بكسل (`240`). تملأ المجموعة أصلها، فأعطِ الأصل ارتفاعًا.
+
+## البنية [#anatomy]
+
+- **المجموعة**: ترتّب اللوحات في صف (`orientation="horizontal"` وهو الافتراضي) أو في عمود.
+- **اللوحة**: تحمل المحتوى. حدّد `defaultSize` و`minSize` و`maxSize`. واللوحة `collapsible` تنطوي إلى `collapsedSize` حين تُسحب إلى ما دون `minSize`.
+- **المقبض**: خط بسمك 1px بلون `text-secondary-paragraph` ومساحة لمس أوسع غير مرئية. عند المرور والسحب والتركيز يصير `icon-default`، ويضيف التركيز حلقة بسمك 2px بلون `border-black`.
+- **مقبض الإمساك** (اختياري): `withHandle` يضيف مقبضًا صغيرًا بأيقونة `icon-default` ليسهل العثور على المقبض.
+
+## أمثلة [#examples]
+
+### أفقي وعمودي
+
+<Preview compact name="resizable-horizontal" title="أفقي" minHeight={300} />
+
+<Preview compact name="resizable-vertical" title="عمودي" minHeight={360} />
+
+### ثلاث لوحات ومقابض إمساك
+
+<Preview compact name="resizable-handle" title="ثلاث لوحات بمقابض إمساك" minHeight={300} />
+
+### لوحة قابلة للطي
+
+اسحب المقبض إلى ما دون الحد الأدنى، أو اضغط <kbd>Enter</kbd> عليه، لتنطوي اللوحة. واضغطه ثانية لإعادتها.
+
+<Preview compact name="resizable-collapsible" title="لوحة قابلة للطي" minHeight={300} />
+
+### تذكّر التخطيط
+
+`autoSaveId` يحفظ الأحجام في `localStorage` بهذا المفتاح. لكل مجموعة مفتاحها ولكل لوحة `id`.
+
+<Preview compact name="resizable-saved" title="تخطيط محفوظ" minHeight={300} />
+
+## RTL [#rtl]
+
+اللوحة الأولى هي لوحة البداية: على اليسار في الإنجليزية وعلى اليمين في العربية. ولأن المكتبة تعمل من اليسار إلى اليمين فقط، تُرتَّب المجموعة في العربية من اليسار إلى اليمين مع عكس ترتيب اللوحات، فيفعل السحب ومفاتيح الأسهم ما تتوقعه العين: يحرّك <kbd>←</kbd> المقبض إلى اليسار في اللغتين. ويُعكس سلوك Home وEnd وEnter تلقائيًا فتعمل على لوحة البداية في اللغتين. وتحتفظ كل لوحة باتجاهها، فيُقرأ محتواها من اليمين إلى اليسار.
+
+ولأن الترتيب معكوس في بنية الصفحة، يصادف قارئ الشاشة لوحة النهاية أولًا في العربية، وتكون قيمة `aria-valuenow` للمقبض حجم اللوحة التي على يساره. سمِّ كل مقبض بـ `aria-label`.
+
+<DirectionCompare name="resizable-handle" title="اللوحات القابلة لتغيير الحجم" minHeight={300} />
+
+## إمكانية الوصول [#accessibility]
+
+| المفتاح | الإجراء |
+| --- | --- |
+| <kbd>Tab</kbd> | يركّز على المقبض. |
+| <kbd>←</kbd> <kbd>→</kbd> | يحرّكان مقبضًا عموديًا 5%. |
+| <kbd>↑</kbd> <kbd>↓</kbd> | يحرّكان مقبضًا أفقيًا 5%. |
+| <kbd>Home</kbd> <kbd>End</kbd> | يرسلان المقبض إلى بداية المجموعة أو نهايتها (اليمين أو اليسار في العربية). |
+| <kbd>Enter</kbd> | يطوي اللوحة التي قبل المقبض أو يفتحها إن كانت قابلة للطي. |
+
+- المقبض عنصر `separator` له `aria-orientation` و`aria-valuenow` و`aria-valuemin` و`aria-valuemax` و`aria-controls`، ويأخذ التركيز. مرّر `aria-label` لتسميته.
+- الخط بنسبة 3:1 أو أفضل مقابل الصفحة، وحلقة التركيز بنسبة 3:1، في الوضعين الفاتح والداكن.
+- يعمل المؤشر واللمس ولوحة المفاتيح. والمقبض المعطّل يُتخطى.
+
+## مرجع API [#api-reference]
+
+<ApiReference component="resizable" />
+
+## الاشتقاق من DGA [#derivation-from-dga]
+
+لا تعرّف DGA لوحات قابلة لتغيير الحجم، فهذا ليس مكوّنًا من DGA وليس له مواصفة فيها. الخط والمقبض وحلقة التركيز من رموز DGA القائمة؛ والخط أغمق من Divider لأن Divider بنسبة 1.5:1 مقابل الصفحة والمقبض عنصر تحكم. لا لون جديد.
+
+<ComponentDeviations component="resizable" />
+
+## التباين [#contrast]
+
+<ComponentContrast component="resizable" />

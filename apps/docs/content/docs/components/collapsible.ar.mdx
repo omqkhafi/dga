@@ -1,0 +1,97 @@
+---
+title: Collapsible
+description: "لوحة واحدة تُفتح وتُغلق من زر. القسم القابل للتوسيع في البطاقة Card مبني عليها."
+sourceHash: 17542235cfdc
+---
+
+<ExtensionNote
+  name="القسم القابل للطي"
+  primitive="Base UI Collapsible"
+  from="القسم القابل للتوسيع في بطاقة DGA (الزر والسهم واللوحة)، وهو الآن يستخدم هذا المكوّن"
+  tokens={["text-display", "text-primary-paragraph", "icon-default", "border-black"]}
+/>
+
+<Preview name="collapsible-basic" title="القسم القابل للطي" minHeight={240} />
+
+## التثبيت [#installation]
+
+<ComponentInstall name="collapsible" />
+
+## الاستخدام [#usage]
+
+```tsx title="page.tsx"
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/dga/collapsible";
+
+export function RequiredDocuments() {
+  return (
+    <Collapsible className="flex flex-col gap-3">
+      <CollapsibleTrigger showChevron>المستندات المطلوبة</CollapsibleTrigger>
+      <CollapsibleContent>الهوية الوطنية وصورة حديثة وجواز السفر السابق.</CollapsibleContent>
+    </Collapsible>
+  );
+}
+```
+
+استخدم Collapsible لكتلة واحدة من التفاصيل لا يحتاجها معظم الناس: وصف أطول أو خيارات إضافية أو قائمة «عرض المزيد». ولعدة لوحات يغلق فتحُ إحداها الأخرى استخدم [Accordion](/docs/components/accordion). ولبطاقة تُفتح تفاصيلها استخدم القسم القابل للتوسيع في [Card](/docs/components/card)، وهو هذا المكوّن داخل بطاقة.
+
+## البنية [#anatomy]
+
+- **الزر**: زر له `aria-expanded` و`aria-controls`. لونه `text-display` وخطه عريض بحجم 18px. فعّل السهم بـ `showChevron` أو اعرض زرك الخاص بـ `render`.
+- **السهم** (اختياري): سهم بعرض 20px بلون `icon-default` يدور عند فتح اللوحة.
+- **المحتوى**: اللوحة بلون `text-primary-paragraph`. يتحرك ارتفاعها خلال أقل من ربع ثانية.
+
+لا نمط للجذر، فأعطه التخطيط الذي تحتاجه (`flex flex-col gap-3` أعلاه).
+
+## أمثلة [#examples]
+
+### متحكَّم به ومفتوح في البداية ومعطّل
+
+مرّر `open` و`onOpenChange` لقراءة الحالة أو ضبطها، و`defaultOpen` للبدء مفتوحًا، و`disabled` لتعطيل الزر.
+
+<Preview compact name="collapsible-states" title="متحكَّم به ومفتوح في البداية ومعطّل" minHeight={420} />
+
+### قائمة «عرض المزيد»
+
+ضع الجزء الظاهر دائمًا قبل المحتوى، واعرض الزر على هيئة Button.
+
+<Preview compact name="collapsible-list" title="قائمة عرض المزيد" minHeight={360} />
+
+## القسم القابل للتوسيع في البطاقة [#card-expandable]
+
+المكوّنات `CardExpandable` و`CardExpandableTrigger` و`CardExpandablePanel` في البطاقة هي هذا المكوّن وحوله سطح البطاقة. تثبيت البطاقة يثبّت Collapsible معها، فيوجد تنفيذ واحد لسلوك الفتح والإغلاق. ولم يتغير شكل البطاقة.
+
+## RTL [#rtl]
+
+يتبع السهم والنص اتجاه الصفحة. يشير السهم إلى الأسفل في الاتجاهين، فلا شيء ينعكس.
+
+<DirectionCompare name="collapsible-basic" title="القسم القابل للطي" minHeight={240} />
+
+## إمكانية الوصول [#accessibility]
+
+| المفتاح | الإجراء |
+| --- | --- |
+| <kbd>Enter</kbd> أو <kbd>Space</kbd> | على الزر، يفتح اللوحة أو يغلقها. |
+| <kbd>Tab</kbd> | ينتقل إلى الزر ثم إلى عناصر التحكم داخل اللوحة المفتوحة. |
+
+- مبني على Base UI Collapsible: الزر عنصر `button` حقيقي له `aria-expanded` و`aria-controls` يشير إلى اللوحة.
+- اللوحة المغلقة مخفية، فلا يمكن الوصول إلى روابطها وأزرارها بلوحة المفاتيح ولا يقرؤها قارئ الشاشة.
+- للزر حلقة تركيز بسمك 2px بلون `border-black` بنسبة 3:1 أو أفضل، في الوضعين الفاتح والداكن.
+- عند تقليل الحركة تُفتح اللوحة وتُغلق بلا حركة.
+
+## مرجع API [#api-reference]
+
+<ApiReference component="collapsible" />
+
+## الاشتقاق من DGA [#derivation-from-dga]
+
+لا تعرّف DGA قسمًا قابلًا للطي مستقلًا. مظهره هو زر البطاقة القابلة للتوسيع ولوحتها، نُقلا إلى هنا لتشترك البطاقة وهذا المكوّن في تنفيذ واحد. لا لون جديد: كل لون من رمز DGA قائم.
+
+<ComponentDeviations component="collapsible" />
+
+## التباين [#contrast]
+
+<ComponentContrast component="collapsible" />

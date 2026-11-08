@@ -1,0 +1,141 @@
+---
+title: Chart
+description: "مخططات أعمدة وخطوط ومساحات ودائرية على Recharts، بلوحة ألوان DGA وتلميح أداة ووسيلة إيضاح وجدول لقارئات الشاشة ومحاور تتبع اتجاه الصفحة."
+sourceHash: 29ec6325d86b
+---
+
+<ExtensionNote
+  name="Chart"
+  primitive="Recharts"
+  from="سطح البطاقة Card في DGA للتلميح، وألوان النص في DGA للمحاور ووسيلة الإيضاح، وأربعة ألوان مخططات مبنية من تدرجات الألوان في DGA"
+  tokens={["chart-series-1", "chart-series-2", "chart-series-3", "chart-series-4", "text-primary-paragraph", "border-neutral-secondary"]}
+/>
+
+<Preview name="chart-bar" title="Chart" minHeight={420} />
+
+## التثبيت [#installation]
+
+<ComponentInstall name="chart" />
+
+هذا هو المكوّن الوحيد الذي يثبّت مكتبة رسوم. يثبّت `recharts@3.8.0` (إصدار مخطط shadcn الذي جُرّب مع React 19) و`react-is@19.3.1` الذي تحتاجه Recharts بجانب React.
+
+## الاستخدام [#usage]
+
+```tsx title="page.tsx"
+"use client";
+
+import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from "recharts";
+import {
+  CHART_SERIES,
+  type ChartConfig,
+  ChartContainer,
+  ChartLegend,
+  ChartLegendContent,
+  ChartTooltip,
+  ChartTooltipContent,
+  useChartDirection,
+} from "@/components/dga/chart";
+
+const data = [
+  { month: "يناير", applications: 186, renewals: 80 },
+  { month: "فبراير", applications: 305, renewals: 200 },
+];
+const config = {
+  applications: { label: "الطلبات", color: CHART_SERIES[0] },
+  renewals: { label: "التجديدات", color: CHART_SERIES[1] },
+} satisfies ChartConfig;
+
+export function Requests() {
+  const { xAxisProps, yAxisProps } = useChartDirection();
+  return (
+    <ChartContainer
+      config={config}
+      title="الطلبات والتجديدات حسب الشهر"
+      description="تبلغ الطلبات ذروتها في فبراير عند 305."
+      table={{ data, categoryKey: "month", categoryLabel: "الشهر" }}
+    >
+      <BarChart data={data}>
+        <CartesianGrid vertical={false} />
+        <XAxis dataKey="month" {...xAxisProps} />
+        <YAxis {...yAxisProps} />
+        <ChartTooltip content={<ChartTooltipContent />} />
+        <ChartLegend content={<ChartLegendContent />} />
+        <Bar dataKey="applications" fill="var(--color-applications)" />
+        <Bar dataKey="renewals" fill="var(--color-renewals)" />
+      </BarChart>
+    </ChartContainer>
+  );
+}
+```
+
+يغلّف ChartContainer مخططًا واحدًا من Recharts. يعطي `config` كل سلسلة تسمية ولونًا، ويكشف اللون باسم `--color-<key>`. وكل ما بداخله Recharts عادي، فيعمل أي مخطط أو مكوّن منها. استخدم المخطط لإظهار اتجاه أو مقارنة أو حصة. وأعطِ كل مخطط `title` و`description` وبياناته في `table`.
+
+## البنية [#anatomy]
+
+- **ChartContainer**: يسمّي المخطط ويطبّق الألوان ويعرض الجدول الاختياري وزره.
+- **ChartTooltip** مع **ChartTooltipContent**: سطح Card في DGA، وعنوان، وصف لكل سلسلة بعلامتها، والقيمة.
+- **ChartLegend** مع **ChartLegendContent**: علامة وتسمية لكل سلسلة.
+- **الجدول**: يعرض `table` الأرقام نفسها جدولًا. يضيف `tableMode="toggle"` (الافتراضي) زر «عرض كجدول»، ويبقيه `"hidden"` لقارئات الشاشة فقط، ويحذفه `"none"`.
+- **ChartDot** و**ChartSwatch**: أشكال العلامات (دائرة ومربع ومثلث ومعيّن) للخطوط ووسيلة الإيضاح والتلميح.
+
+## لوحة ألوان المخططات في DGA [#the-dga-chart-palette]
+
+لا تنشر DGA ألوانًا للبيانات، فيضيف كود المنصات أربعة رموز هي `chart-series-1` إلى `chart-series-4` (`CHART_SERIES`). كل منها مبني من تدرجات الألوان الموجودة وبنسبة 3:1 أو أفضل مع كل أسطح الصفحة ومع السلسلة المجاورة (1 و2، و2 و3، و3 و4، و4 و1)، فاتحًا وداكنًا. السلسلتان 1 و3 هما الزوج الداكن و2 و4 الزوج الفاتح، فيختلف الجاران في السطوع لا في الصبغة وحدها. أما السلسلتان المتباعدتان (1 و3، و2 و4) فهما في نطاق سطوع واحد: تختلف الخطوط أيضًا بشكل العلامة والتقطيع، ويُميَّز العمود أو المساحة أو شريحة الدائرة بموضعه وتسميته ووسيلة الإيضاح.
+
+<Preview compact name="chart-palette" title="لوحة الألوان" minHeight={200} />
+
+## أمثلة [#examples]
+
+### خطوط [#line]
+
+لكل خط علامته وتقطيعه، فلا يُميَّز الخطان المتقاطعان باللون وحده.
+
+<Preview compact name="chart-line" title="خطوط" minHeight={420} />
+
+### مساحة [#area]
+
+<Preview compact name="chart-area" title="مساحة" minHeight={420} />
+
+### دائرة [#pie]
+
+تبدأ الشريحة الأولى عند الساعة 12 وتتبعها الباقية في اتجاه القراءة: مع عقارب الساعة بالإنجليزية وعكسها بالعربية. وزّع `pieProps` من `useChartDirection` على Pie.
+
+<Preview compact name="chart-pie" title="دائرة" minHeight={440} />
+
+### البيانات جدولًا [#the-data-as-a-table]
+
+<Preview compact name="chart-table" title="البيانات جدولًا" minHeight={320} />
+
+### بلوحة المفاتيح [#with-the-keyboard]
+
+اضبط `interactive` فيصير المخطط مجموعة تقبل التركيز: تنتقل مفاتيح الأسهم بين النقاط وتُظهر التلميح. ويبقى الجدول البديل الثابت.
+
+<Preview compact name="chart-interactive" title="بلوحة المفاتيح" minHeight={460} />
+
+## RTL [#rtl]
+
+يعيد `useChartDirection` الخصائص التي ترتب المخطط بحسب اتجاه القراءة. بالعربية تقع الفئة الأولى إلى اليمين، ويقع المحور الرأسي إلى اليمين، وتدور الدائرة عكس عقارب الساعة. وزّع `xAxisProps` على XAxis و`yAxisProps` على YAxis و`pieProps` على Pie. ويتبع التلميح ووسيلة الإيضاح الاتجاه. وتبقى الأرقام غربية من اليسار إلى اليمين، فلا تُقرأ `1,200` على أنها `0021,`.
+
+<DirectionCompare name="chart-bar" title="Chart" minHeight={420} />
+
+## إمكانية الوصول [#accessibility]
+
+- افتراضيًا يكون المخطط صورة للتقنيات المساعدة: `role="img"` يسمّيه `title` ويصفه `description`. اذكر في الوصف الاتجاه أو أكبر قيمة، ويحمل الجدول الأرقام.
+- مع `interactive` يكون المخطط بالدور `role="group"` ووصف دور «مخطط»؛ تنتقل مفاتيح الأسهم بين النقاط ويظهر إطار تركيز بسمك 2px.
+- لزر «عرض كجدول» الخاصيتان `aria-expanded` و`aria-controls`.
+- السلاسل 3:1 مع الصفحة ومع بعضها، ونص المحاور ووسيلة الإيضاح والتلميح 4.5:1. ولا يكون اللون الإشارة الوحيدة: تكررها العلامات والتقطيع والتسميات والجدول.
+- يتوقف التحريك حين يفضّل الشخص تقليل الحركة (`useChartAnimation`).
+
+## مرجع API [#api-reference]
+
+<ApiReference component="chart" />
+
+## الاشتقاق من DGA [#derivation-from-dga]
+
+لا تعرّف DGA تمثيلًا مرئيًا للبيانات. الحاوية والتلميح ووسيلة الإيضاح تتبع مخطط shadcn؛ أما سطح التلميح وألوان النص وحلقة التركيز فمن DGA، وألوان السلاسل الأربعة رموز جديدة مبنية من أساسيات الألوان في DGA (انظر الإدخالات أدناه).
+
+<ComponentDeviations component="chart" />
+
+## التباين [#contrast]
+
+<ComponentContrast component="chart" />

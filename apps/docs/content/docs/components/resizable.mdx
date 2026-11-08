@@ -1,0 +1,112 @@
+---
+title: Resizable
+description: "Panels that the user resizes by dragging a handle or with the arrow keys. Horizontal or vertical, with minimum, maximum and collapsible panels."
+---
+
+<ExtensionNote
+  name="Resizable"
+  primitive="react-resizable-panels (Base UI has no primitive for it)"
+  from="the DGA Divider for the line, and the focus ring and radius of the Card"
+  tokens={["text-secondary-paragraph", "icon-default", "border-black", "border-neutral-primary", "background-white"]}
+/>
+
+<Preview name="resizable-horizontal" title="Resizable" minHeight={300} />
+
+## Installation
+
+<ComponentInstall name="resizable" />
+
+This installs one extra package, `react-resizable-panels`, pinned to 4.14.8.
+
+## Usage
+
+```tsx title="page.tsx"
+import {
+  ResizableHandle,
+  ResizablePanel,
+  ResizablePanelGroup,
+} from "@/components/dga/resizable";
+
+export function Requests() {
+  return (
+    <ResizablePanelGroup className="h-56 rounded-md border">
+      <ResizablePanel id="list" defaultSize="35%" minSize="20%">
+        Requests
+      </ResizablePanel>
+      <ResizableHandle withHandle aria-label="Resize the requests panel" />
+      <ResizablePanel id="detail" defaultSize="65%">
+        Request details
+      </ResizablePanel>
+    </ResizablePanelGroup>
+  );
+}
+```
+
+Use it for a work area where people decide how much room each part gets: a list beside a detail, a code editor above a console. For a fixed layout use a plain grid. Sizes are percentages (`"35%"`) or pixels (`240`). The group fills its parent, so give the parent a height.
+
+## Anatomy
+
+- **Group**: lays the panels out in a row (`orientation="horizontal"`, default) or a column.
+- **Panel**: holds the content. Set `defaultSize`, `minSize` and `maxSize`. A `collapsible` panel folds to `collapsedSize` when dragged past `minSize`.
+- **Handle**: a 1px line in `text-secondary-paragraph` with a wider invisible hit area. Hovered, dragged and focused it is `icon-default`, and focus adds a 2px `border-black` ring.
+- **Grip** (optional): `withHandle` adds a small grip with the `icon-default` icon, so the handle is easy to find.
+
+## Examples
+
+### Horizontal and vertical
+
+<Preview compact name="resizable-horizontal" title="Horizontal" minHeight={300} />
+
+<Preview compact name="resizable-vertical" title="Vertical" minHeight={360} />
+
+### Three panels and a grip
+
+<Preview compact name="resizable-handle" title="Three panels with grips" minHeight={300} />
+
+### A collapsible panel
+
+Drag the handle past the minimum, or press <kbd>Enter</kbd> on it, to fold the panel away. Press it again to bring it back.
+
+<Preview compact name="resizable-collapsible" title="Collapsible panel" minHeight={300} />
+
+### Remembering the layout
+
+`autoSaveId` keeps the sizes in `localStorage` under that key. Each group needs its own key and every panel an `id`.
+
+<Preview compact name="resizable-saved" title="Remembered layout" minHeight={300} />
+
+## RTL
+
+The first panel is the start panel: on the left in English and on the right in Arabic. The library only works left to right, so in Arabic the group is laid out left to right with the panels in reverse order. Dragging and the arrow keys then do what the eye expects: <kbd>←</kbd> moves the handle left in both languages. Home, End and Enter are mirrored for you, so they act on the start panel in both languages. Each panel keeps its own `dir`, so its content reads right to left.
+
+Because the order is reversed in the DOM, a screen reader meets the end panel first in Arabic, and `aria-valuenow` on the handle is the size of the panel on its left. Name each handle with `aria-label`.
+
+<DirectionCompare name="resizable-handle" title="Resizable" minHeight={300} />
+
+## Accessibility
+
+| Key | Action |
+| --- | --- |
+| <kbd>Tab</kbd> | Focuses the handle. |
+| <kbd>←</kbd> <kbd>→</kbd> | Move a vertical handle by 5%. |
+| <kbd>↑</kbd> <kbd>↓</kbd> | Move a horizontal handle by 5%. |
+| <kbd>Home</kbd> <kbd>End</kbd> | Send the handle to the start or the end of the group (the right or the left in Arabic). |
+| <kbd>Enter</kbd> | Collapse or expand the panel before the handle, if it is collapsible. |
+
+- The handle is a `separator` with `aria-orientation`, `aria-valuenow`, `aria-valuemin`, `aria-valuemax` and `aria-controls`. It is focusable. Pass `aria-label` to name it.
+- The line is 3:1 or better against the page, and the focus ring is 3:1, in light and dark.
+- Pointer, touch and keyboard all work. A disabled handle is skipped.
+
+## API Reference
+
+<ApiReference component="resizable" />
+
+## Derivation from DGA
+
+DGA has no resizable panels, so this is not a DGA component and has no DGA specification. The line, grip and focus ring use existing DGA tokens; the line is darker than the Divider because the Divider is 1.5:1 against the page and the handle is a control. No colour is new.
+
+<ComponentDeviations component="resizable" />
+
+## Contrast
+
+<ComponentContrast component="resizable" />

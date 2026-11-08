@@ -1,0 +1,102 @@
+---
+title: Item
+description: "One row with a picture or icon, a title, a description and actions. Use it for lists of people, files, settings and services."
+---
+
+<ExtensionNote
+  name="Item"
+  primitive="plain HTML elements, with the Base UI render prop"
+  from="the DGA List (text colours and spacing) and the DGA Card (surface, border and the link hover tint)"
+  tokens={["text-display", "text-primary-paragraph", "icon-default", "background-neutral-50", "background-neutral-100", "border-neutral-primary"]}
+/>
+
+<Preview name="item-variants" title="Item" minHeight={340} />
+
+## Installation
+
+<ComponentInstall name="item" />
+
+## Usage
+
+```tsx title="page.tsx"
+import { Item, ItemActions, ItemContent, ItemDescription, ItemMedia, ItemTitle } from "@/components/dga/item";
+import { Button } from "@/components/dga/button";
+
+export function Request() {
+  return (
+    <Item variant="outline">
+      <ItemMedia variant="icon">{/* an icon */}</ItemMedia>
+      <ItemContent>
+        <ItemTitle>Passport renewal</ItemTitle>
+        <ItemDescription>Submitted on 8 November.</ItemDescription>
+      </ItemContent>
+      <ItemActions>
+        <Button variant="outline" size="sm">View</Button>
+      </ItemActions>
+    </Item>
+  );
+}
+```
+
+Use Item for a row that is more than one line of text: it has room for media, two lines of text and actions. For a plain bulleted or numbered list use the [List](/docs/components/list); for a block of content use the [Card](/docs/components/card); for rows with columns use the [Table](/docs/components/table).
+
+## Anatomy
+
+- **Item**: the row. Variants `default` (no fill), `outline` (a 1px `border-neutral-primary`) and `muted` (`background-neutral-50`). Sizes `default` (16px padding) and `sm`.
+- **Media**: `default` for any content such as an Avatar, `icon` for a 40px framed icon, `image` for a cropped 40px picture.
+- **Content**: the title (`text-md`, semibold, `text-display`) and the description (`text-sm`, `text-primary-paragraph`, two lines at most).
+- **Actions**: buttons or a badge at the end. **Header** and **Footer** are full-width lines above and below.
+- **Group** and **Separator**: ItemGroup stacks rows; ItemSeparator is the DGA Divider between them.
+
+## Examples
+
+### Sizes
+
+<Preview compact name="item-sizes" title="Sizes" minHeight={260} />
+
+### Media
+
+<Preview compact name="item-media" title="Media" minHeight={420} />
+
+### As a link
+
+Pass `render` to make the whole row an element of your choice, such as a link or a Next.js `Link`. It then shows the Card link's hover tint, a pressed tint and the focus outline.
+
+<Preview compact name="item-link" title="As a link" minHeight={160} />
+
+### In a list
+
+Render the group as a `ul` and each row as an `li` so screen readers announce how many there are.
+
+<Preview compact name="item-group" title="In a list" minHeight={300} />
+
+### Header and footer
+
+<Preview compact name="item-header-footer" title="Header and footer" minHeight={220} />
+
+## RTL
+
+Media sits on the start side and actions on the end side, so the row mirrors. Text follows the page direction.
+
+<DirectionCompare name="item-variants" title="Item" minHeight={340} />
+
+## Accessibility
+
+- Item has no role. A row that is a link keeps its link semantics, and the whole row is one tab stop, so keep nested buttons out of a link row.
+- For a list, use `render={<ul />}` on ItemGroup and `render={<li />}` on each Item.
+- Focus shows a 2px `border-black` outline, 3:1 or better on every surface.
+- Text is 4.5:1 and icons 3:1 on the page, on the hover tint and on the muted fill, in light and dark.
+
+## API Reference
+
+<ApiReference component="item" />
+
+## Derivation from DGA
+
+DGA has no row with media and actions. The text and icon colours come from the List, and the border, radius and hover tint from the Card. No colour is new.
+
+<ComponentDeviations component="item" />
+
+## Contrast
+
+<ComponentContrast component="item" />

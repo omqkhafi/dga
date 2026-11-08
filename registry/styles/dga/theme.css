@@ -763,6 +763,10 @@
   --color-control-thumb: var(--control-thumb);
   --color-field-text-placeholder-tinted: var(--field-text-placeholder-tinted);
   --color-control-icon-neutral: var(--control-icon-neutral);
+  --color-chart-series-1: var(--chart-series-1);
+  --color-chart-series-2: var(--chart-series-2);
+  --color-chart-series-3: var(--chart-series-3);
+  --color-chart-series-4: var(--chart-series-4);
 
   /* aliases */
   --background-color-body: var(--background-body);

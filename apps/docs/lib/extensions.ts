@@ -190,6 +190,156 @@ export const EXTENSIONS: ExtensionEntry[] = [
       "text-default",
     ],
   },
+  {
+    slug: "menubar",
+    title: { en: "Menubar", ar: "شريط القوائم" },
+    builtOn: "Base UI Menubar",
+    from: {
+      en: "Menu for every list, and the Header navigation items for the triggers",
+      ar: "القائمة Menu لكل قائمة، وعناصر تنقل Header للأزرار",
+    },
+    tokens: [
+      "background-menu",
+      "border-neutral-primary",
+      "button-background-neutral-hovered",
+      "button-background-neutral-pressed",
+      "text-default",
+      "shadow-2xl",
+    ],
+  },
+  {
+    slug: "navigation-menu",
+    title: { en: "Navigation Menu", ar: "قائمة التنقل" },
+    builtOn: "Base UI Navigation Menu",
+    from: {
+      en: "Header navigation items for the bar and the Menu surface for the panel",
+      ar: "عناصر تنقل Header للشريط، وسطح القائمة Menu للوحة",
+    },
+    tokens: [
+      "background-menu",
+      "border-neutral-primary",
+      "button-background-neutral-hovered",
+      "button-background-primary-default",
+      "text-default",
+      "text-primary-paragraph",
+      "shadow-2xl",
+    ],
+  },
+  {
+    slug: "sidebar",
+    title: { en: "Sidebar", ar: "الشريط الجانبي" },
+    builtOn: "Collapsible, Drawer and Tooltip",
+    from: {
+      en: "Header Nav Drawer items and the Second Nav states",
+      ar: "عناصر قائمة Drawer في Header وحالات Second Nav",
+    },
+    tokens: [
+      "background-menu",
+      "border-neutral-primary",
+      "button-background-neutral-hovered",
+      "button-background-neutral-selected",
+      "link-primary-pressed",
+      "text-default",
+      "text-primary-paragraph",
+    ],
+  },
+  {
+    slug: "collapsible",
+    title: { en: "Collapsible", ar: "قسم قابل للطي" },
+    builtOn: "Base UI Collapsible",
+    from: {
+      en: "The Card's Expandable: its trigger, chevron and panel (the Card now uses this component)",
+      ar: "القسم القابل للتوسيع في البطاقة Card: زره وسهمه ولوحته (والبطاقة تستخدم هذا المكوّن الآن)",
+    },
+    tokens: ["text-display", "text-primary-paragraph", "icon-default", "border-black"],
+  },
+  {
+    slug: "scroll-area",
+    title: { en: "Scroll Area", ar: "منطقة التمرير" },
+    builtOn: "Base UI Scroll Area",
+    from: {
+      en: "The DGA gray text tokens for the thumb (DGA has no scrollbar), and the focus ring",
+      ar: "رموز النص الرمادية في DGA للمؤشر (لا شريط تمرير في DGA)، وحلقة التركيز",
+    },
+    tokens: ["text-secondary-paragraph", "text-primary-paragraph", "icon-default", "border-black"],
+  },
+  {
+    slug: "resizable",
+    title: { en: "Resizable", ar: "لوحات قابلة لتغيير الحجم" },
+    builtOn: "react-resizable-panels",
+    from: {
+      en: "The Divider for the line, made darker so the handle can be found, and the focus ring",
+      ar: "الفاصل Divider للخط، أغمق ليسهل العثور على المقبض، وحلقة التركيز",
+    },
+    tokens: ["text-secondary-paragraph", "icon-default", "border-black", "background-white"],
+  },
+  {
+    slug: "aspect-ratio",
+    title: { en: "Aspect Ratio", ar: "نسبة العرض إلى الارتفاع" },
+    builtOn: "CSS aspect-ratio (a plain element)",
+    from: {
+      en: "The Card's radius; it draws no colour of its own",
+      ar: "انحناء البطاقة Card؛ ولا يرسم أي لون بنفسه",
+    },
+    tokens: ["radius-md"],
+  },
+  {
+    slug: "kbd",
+    title: { en: "Kbd", ar: "مفتاح لوحة المفاتيح" },
+    builtOn: "HTML kbd",
+    from: {
+      en: "The key addon of Input Group, with the neutral fill and border",
+      ar: "إضافة المفتاح في Input Group، بالتعبئة والحد المحايدين",
+    },
+    tokens: ["background-neutral-100", "border-neutral-primary", "text-default"],
+  },
+  {
+    slug: "empty",
+    title: { en: "Empty", ar: "حالة فارغة" },
+    builtOn: "HTML",
+    from: {
+      en: "The empty state of Data Table: icon, text colours and centring",
+      ar: "الحالة الفارغة في Data Table: الأيقونة وألوان النص والتوسيط",
+    },
+    tokens: [
+      "icon-default-500",
+      "text-display",
+      "text-primary-paragraph",
+      "background-neutral-100",
+    ],
+  },
+  {
+    slug: "item",
+    title: { en: "Item", ar: "عنصر" },
+    builtOn: "HTML, Base UI render",
+    from: {
+      en: "List for the text and icons, Card for the border and the link hover tint",
+      ar: "القائمة List للنص والأيقونات، والبطاقة Card للحد ولون التمرير على الرابط",
+    },
+    tokens: [
+      "text-display",
+      "text-primary-paragraph",
+      "icon-default",
+      "background-neutral-50",
+      "border-neutral-primary",
+    ],
+  },
+  {
+    slug: "chart",
+    title: { en: "Chart", ar: "مخطط" },
+    builtOn: "Recharts",
+    from: {
+      en: "Card surface for the tooltip, DGA text colours, and four new series colours built from the DGA colour scales",
+      ar: "سطح البطاقة Card للتلميح، وألوان النص في DGA، وأربعة ألوان سلاسل جديدة مبنية من تدرجات DGA",
+    },
+    tokens: [
+      "chart-series-1",
+      "chart-series-2",
+      "chart-series-3",
+      "chart-series-4",
+      "text-primary-paragraph",
+    ],
+  },
 ];
 
 /**
