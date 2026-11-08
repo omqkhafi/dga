@@ -80,6 +80,26 @@ const NAVIGATION_ITEMS = [
  *  fixture installs both side by side. */
 const COMPOSITE_ITEMS = ["header", "second-nav", "footer", "date-picker", "carousel", "filtration"];
 
+/** The Phase 7 items (0.7.0): the Platform Code extensions, and the Slider and Digital Stamp that
+ *  DGA does define. Stock shadcn has its own version of every name here except digital-stamp, so
+ *  the collision fixture installs both side by side. */
+const EXTENSION_ITEMS = [
+  "popover",
+  "hover-card",
+  "alert-dialog",
+  "context-menu",
+  "toggle",
+  "toggle-group",
+  "combobox",
+  "command",
+  "input-otp",
+  "input-group",
+  "button-group",
+];
+const PHASE7_DGA_ITEMS = ["slider", "digital-stamp"];
+const PHASE7_ITEMS = [...EXTENSION_ITEMS, ...PHASE7_DGA_ITEMS];
+const STOCK_PHASE7 = EXTENSION_ITEMS.concat("slider");
+
 const work = mkdtempSync(join(tmpdir(), "dga-install-"));
 const registryDir = join(work, "serve");
 const failures: string[] = [];
@@ -229,6 +249,9 @@ try {
       }
       for (const item of COMPOSITE_ITEMS) {
         check(components.includes(item), `${label}: the registry has the composite item ${item}`);
+      }
+      for (const item of PHASE7_ITEMS) {
+        check(components.includes(item), `${label}: the registry has the Phase 7 item ${item}`);
       }
       if (add.exitCode !== 0) console.error(add.stderr.toString() || add.stdout.toString());
       for (const c of components) {
@@ -459,6 +482,41 @@ export default function Page() {
     await build(label, app);
   }
 
+  // 4e. Phase 7 items on their own: no cmdk or input-otp package comes with them, and the @dga
+  //     items they use (dialog, button, menu, field, input, select) come along
+  {
+    const label = "dga-extensions";
+    const app = await fresh(label);
+    await $`bunx ${shadcn} init ${url}/r/dga.json --yes --no-monorepo < /dev/null`.cwd(app).quiet();
+    const add =
+      await $`bunx ${shadcn} add ${PHASE7_ITEMS.map((n) => `@dga/${n}`)} --yes < /dev/null`
+        .cwd(app)
+        .nothrow()
+        .quiet();
+    check(add.exitCode === 0, `${label}: shadcn add @dga/{${PHASE7_ITEMS.join(",")}}`);
+    if (add.exitCode !== 0) console.error(add.stderr.toString() || add.stdout.toString());
+    const r = reader(app);
+    for (const n of [...PHASE7_ITEMS, "dialog", "button", "menu", "input", "field"]) {
+      check(
+        existsSync(join(app, `src/components/dga/${n}.tsx`)),
+        `${label}: components/dga/${n}.tsx`,
+      );
+    }
+    const pkg = r.json<Pkg>("package.json");
+    for (const lib of ["cmdk", "input-otp", "@radix-ui/react-popover", "radix-ui"]) {
+      check(!(lib in pkg.dependencies), `${label}: no extra package (${lib}) installed`);
+    }
+    for (const n of PHASE7_ITEMS) {
+      const source = r.text(`src/components/dga/${n}.tsx`);
+      check(
+        !/\bcn-[a-z]/.test(source.replace(/data-slot=|"cn"/g, "")),
+        `${label}: ${n} cn-* inlined`,
+      );
+      check(!source.includes("components/ui"), `${label}: ${n}.tsx never imports components/ui`);
+    }
+    await build(label, app);
+  }
+
   // 5. a project that already has stock shadcn button, input and dialog in components/ui:
   //    installing @dga items must not touch them, and must not import them.
   {
@@ -568,6 +626,55 @@ export default function Page() {
     const tsc = await $`bunx tsc --noEmit -p .`.cwd(app).nothrow().quiet();
     check(tsc.exitCode === 0, `${label}: the project typechecks`);
     if (tsc.exitCode !== 0) console.error(tsc.stdout.toString());
+    await build(label, app);
+  }
+
+  // 5b. the same for the Phase 7 names: stock shadcn popover, hover-card, alert-dialog,
+  //     context-menu, toggle, toggle-group, combobox, command, input-otp, input-group,
+  //     button-group and slider sit in components/ui and must come out byte-identical.
+  {
+    const label = "dga-collision-extensions";
+    const app = await fresh(label);
+    await $`bunx ${shadcn} init --defaults --yes --no-monorepo < /dev/null`.cwd(app).quiet();
+    const stock = await $`bunx ${shadcn} add ${STOCK_PHASE7} --yes < /dev/null`
+      .cwd(app)
+      .nothrow()
+      .quiet();
+    check(stock.exitCode === 0, `${label}: stock shadcn add ${STOCK_PHASE7.join(" ")}`);
+    if (stock.exitCode !== 0) console.error(stock.stderr.toString() || stock.stdout.toString());
+    const r = reader(app);
+    const stockFiles = STOCK_PHASE7.map((n) => `src/components/ui/${n}.tsx`);
+    for (const f of stockFiles) {
+      check(existsSync(join(app, f)), `${label}: stock ${f} exists before installing @dga`);
+    }
+    const before = stockFiles.map((f) => (existsSync(join(app, f)) ? r.text(f) : ""));
+    const config = r.json<{ registries: Record<string, string> }>("components.json");
+    config.registries["@dga"] = `${url}/r/{name}.json`;
+    writeFileSync(join(app, "components.json"), JSON.stringify(config, null, 2));
+    const add =
+      await $`bunx ${shadcn} add ${PHASE7_ITEMS.map((n) => `@dga/${n}`)} --yes --overwrite < /dev/null`
+        .cwd(app)
+        .nothrow()
+        .quiet();
+    check(add.exitCode === 0, `${label}: shadcn add @dga/{${PHASE7_ITEMS.join(",")}}`);
+    if (add.exitCode !== 0) console.error(add.stderr.toString() || add.stdout.toString());
+    stockFiles.forEach((f, i) => {
+      check(r.text(f) === before[i], `${label}: ${f} is byte-identical after installing @dga`);
+    });
+    for (const n of PHASE7_ITEMS) {
+      check(
+        existsSync(join(app, `src/components/dga/${n}.tsx`)),
+        `${label}: components/dga/${n}.tsx`,
+      );
+      check(
+        !r.text(`src/components/dga/${n}.tsx`).includes("components/ui"),
+        `${label}: ${n}.tsx never imports components/ui`,
+      );
+    }
+    check(
+      !existsSync(join(app, "src/components/ui/digital-stamp.tsx")),
+      `${label}: no @dga file in components/ui`,
+    );
     await build(label, app);
   }
 

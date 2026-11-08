@@ -566,10 +566,10 @@ export const COMPOSITE_DEVIATIONS: Deviation[] = [
   },
   {
     area: "Components",
-    item: "Header: no official site strip, Header Menu and Nav Drawer composed",
+    item: "Header: official site strip, Header Menu and Nav Drawer composed",
     original:
-      'The spec has no "official site" strip. The Second Nav Header is the strip above the primary navigation. Header Menu (a chevron button) and the Nav Drawer are separate components.',
-    ours: "Header takes a `top` slot for a Second Nav and renders no strip of its own. The chevron is part of the menu item and the sub-menu is the DGA Menu. On narrow screens the navigation is the DGA Drawer with expandable parents; Level 2 links are indented.",
+      "The official site strip is the separate Digital Stamp component, and the Second Nav Header is the strip above the primary navigation. Header Menu (a chevron button) and the Nav Drawer are separate components.",
+    ours: "Header takes a `stamp` slot for the Digital Stamp (0.7.0) and a `top` slot for a Second Nav, and renders no strip of its own. The chevron is part of the menu item and the sub-menu is the DGA Menu. On narrow screens the navigation is the DGA Drawer with expandable parents; Level 2 links are indented.",
     reason:
       "Reusing Menu and Drawer keeps the focus, dismissal and mirroring behaviour in one place instead of copying it into the header.",
     status: "fixed",

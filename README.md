@@ -27,7 +27,7 @@ Inside a component preview, the sample content follows the LTR/RTL toggle rather
 
 ## Roadmap
 
-OKLCH colour output and Phase 5 (Navigation and data display) are done in 0.5.0, and Phase 6 (Composite: Header, Second Nav, Footer, Date Picker, Carousel and Filtration) in 0.6.0. Next are Phase 7 (shadcn extension: components DGA does not define), Phase 8 (Section blocks) and Phase 9 (Mobile components, as needed). See [ROADMAP.md](ROADMAP.md).
+OKLCH colour output and Phase 5 (Navigation and data display) are done in 0.5.0, Phase 6 (Composite: Header, Second Nav, Footer, Date Picker, Carousel and Filtration) in 0.6.0, and the first half of Phase 7 (overlays, inputs and the Digital Stamp) in 0.7.0. Next are Phase 7 part 2 (0.7.1: navigation, layout and display), Phase 8 (Section blocks) and Phase 9 (Mobile components, as needed). See [ROADMAP.md](ROADMAP.md).
 
 ## Repository
 
