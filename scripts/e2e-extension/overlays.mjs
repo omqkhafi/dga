@@ -266,9 +266,16 @@ export async function overlaysChecks({ browser, BASE, check }) {
     await open("alert-dialog-controlled");
     await page.getByRole("button").first().click();
     await alert.waitFor({ state: "visible", timeout: 3000 });
+    // Wait for the initial focus (the Cancel action) before moving on: a slow runner is still
+    // animating the dialog open when it becomes visible.
+    await page.waitForFunction(
+      () => document.activeElement?.closest('[role="alertdialog"]') !== null,
+      undefined,
+      { timeout: 5000 },
+    );
     await page.keyboard.press("Tab");
     await page.keyboard.press("Enter");
-    await alert.waitFor({ state: "hidden", timeout: 3000 });
+    await alert.waitFor({ state: "hidden", timeout: 5000 });
     check(
       (await page.getByRole("status").count()) === 0 ||
         (await page.locator("[aria-live=polite]").first().textContent())?.length > 0,
