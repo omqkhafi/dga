@@ -22,8 +22,17 @@ const AREA_KEYS: Record<string, Key> = {
   Typography: "dev.area.typography",
 };
 
+const coloursOf = (d: Deviation) =>
+  "colors" in d ? (d.colors as Record<string, string | undefined>) : undefined;
+
 /** A deviation's original/ours text, with the OKLCH value next to every hex it mentions. */
-function WithOklch({ text, colors }: { text: string; colors?: Record<string, string> }) {
+function WithOklch({
+  text,
+  colors,
+}: {
+  text: string;
+  colors?: Record<string, string | undefined>;
+}) {
   if (!colors) return <>{text}</>;
   const parts = text.split(/(#(?:[0-9a-fA-F]{8}|[0-9a-fA-F]{6})\b)/);
   return (
@@ -163,7 +172,7 @@ export function DeviationsTable() {
                     lang="en"
                     className="inline-block text-xs break-words text-muted-foreground"
                   >
-                    <WithOklch text={d.original} colors={"colors" in d ? d.colors : undefined} />
+                    <WithOklch text={d.original} colors={coloursOf(d)} />
                   </span>
                 </td>
                 <td className="align-top lg:px-3 lg:py-2">
@@ -175,7 +184,7 @@ export function DeviationsTable() {
                     lang="en"
                     className="inline-block text-xs break-words text-foreground"
                   >
-                    <WithOklch text={d.ours} colors={"colors" in d ? d.colors : undefined} />
+                    <WithOklch text={d.ours} colors={coloursOf(d)} />
                   </span>
                 </td>
                 <td

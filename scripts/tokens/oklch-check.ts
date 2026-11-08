@@ -94,10 +94,11 @@ export function checkOklchRoundTrip(model: Model) {
   }
 
   // No hex or rgb() colour may be left anywhere in the generated CSS.
-  for (const [file, css] of [
-    ["tokens.css", tokensCss(model)],
-    ["theme.css", themeCss(model)],
-  ]) {
+  const files: Record<string, string> = {
+    "tokens.css": tokensCss(model),
+    "theme.css": themeCss(model),
+  };
+  for (const [file, css] of Object.entries(files)) {
     for (const match of css.matchAll(/(?<![\w&])#[0-9a-f]{3,8}\b|\brgba?\(/gi)) {
       mismatches.push({
         where: file,
