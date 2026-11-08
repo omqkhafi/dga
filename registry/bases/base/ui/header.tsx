@@ -378,8 +378,8 @@ type HeaderProps = Omit<React.ComponentProps<"header">, "children"> & {
  * search, a language switcher and a user area. A skip link comes first in the tab order. Left
  * and Right (swapped on Arabic pages), Home and End move between the items; Enter, Space or Down
  * opens a sub-menu, which is a DGA Menu. Below the `lg` width the navigation moves into a
- * Drawer: on a phone the menu button is on the start side, the logo is centred and an overflow
- * (…) button holding the actions is on the end side; the bar mirrors on Arabic pages. The page the
+ * Drawer: on a phone the overflow (…) button holding the actions is on the start side, the logo is
+ * centred and the menu button is on the end side (as in Figma); the bar mirrors on Arabic pages. The page the
  * person is on has `aria-current="page"`.
  */
 function Header({
@@ -501,7 +501,7 @@ function Header({
             >
               <HugeiconsIcon icon={MoreHorizontalIcon} aria-hidden />
             </MenuTrigger>
-            <MenuContent align="end" className="cn-header-overflow">
+            <MenuContent align="start" className="cn-header-overflow">
               {actions.map((action) => (
                 <OverflowAction key={action.label} action={action} />
               ))}

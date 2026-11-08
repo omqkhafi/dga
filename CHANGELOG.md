@@ -5,6 +5,20 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
 
 ## [Unreleased]
 
+## [0.7.4] - 2026-11-08
+
+Patch: two Header fixes found by looking at the published 0.7.3 previews.
+
+### Fixed
+
+- **Header, phone layout:** the overflow (…) button is on the start side and the menu button on the end side, mirrored in RTL, as in the Figma Nav Header frames (0.7.3 had them the other way round); the overflow menu opens aligned to its button.
+- **Header, indicator bar:** the bar under the selected item now matches the DGA header: 6px high, inset 8px from each side, fully rounded (it was a 4px square full-width bar). The selected bar stays `primary-sa-flag-200` (3:1 or more on the block in every state and mode; DGA's `primary-400` is 2.10:1, so the colour is a logged contrast correction). An unselected item shows the bar on hover (`icon-default-500`) and when pressed or open (`icon-default`), and only the outline when focused (Figma); DGA's `neutral-400` and `neutral-800` bars were 2.28:1 and 1.00:1 (dark pressed). A selected, disabled item shows a muted bar (`neutral-100`). All bar pairs are in the Contrast audit.
+- **Header:** a selected item that is also disabled (`aria-current="page"` with `disabled` or `aria-disabled`) drops the brand block but kept its white label, so the label was invisible on the white bar and only the muted bottom bar showed. It now uses the disabled text and icon colours, in `Header` items and `HeaderAction`. This showed in the "Selected, disabled" examples of Menu items and Action states.
+
+### Tests
+
+- The composite browser group checks that a selected, disabled Header item has a label that is not white, the bar's height, inset and radius, the sides of the phone buttons, and the Menu item behaviour in both directions (no bar at rest, a bar on hover, a darker one when pressed, outline only when focused, disabled items skipped by Tab). Contrast: the bar pairs are in the audit.
+
 ## [0.7.3] - 2026-11-08
 
 Patch: DGA conformance fixes from a side-by-side review of Figma, the DGA docs and the site. What was and was not checked against Figma is in [docs/conformance/0.7.3.md](docs/conformance/0.7.3.md); the Figma connector was unavailable, so the values listed there as unverified follow the findings and the earlier Figma dumps.

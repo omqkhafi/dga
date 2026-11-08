@@ -50,7 +50,8 @@ export function compositePairs(): ComponentPair[] {
       add("header", `${part}, selected, ${state}`, "text-oncolor-primary", bg, 4.5);
       add("header", `${part} icon, selected, ${state}`, "icon-oncolor", bg, 3);
     }
-    // The lighter bar along the bottom edge of the selected block (primary-200, in both modes).
+    // The bar along the bottom of the selected block, and the bar of an unselected item on hover
+    // and press, are state indicators: 3:1 against what they sit on (WCAG 1.4.11).
     add(
       "header",
       `${part}, selected, indicator bar`,
@@ -67,6 +68,15 @@ export function compositePairs(): ComponentPair[] {
         3,
       );
     }
+    add(
+      "header",
+      `${part}, hovered, indicator bar`,
+      "icon-default-500",
+      hover,
+      3,
+      "background-menu",
+    );
+    add("header", `${part}, pressed, indicator bar`, "icon-default", press, 3, "background-menu");
     add(
       "header",
       `${part}, selected, focus ring`,

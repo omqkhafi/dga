@@ -1753,6 +1753,91 @@ async function compositeChecks() {
       `${lang}: the dark green sub-menu opens`,
     );
 
+    // A selected item that is disabled drops the brand block, so its label must not stay white.
+    await open("header-menu-items", 1280);
+    const selectedDisabled = await page.evaluate(() => {
+      const el = [...document.querySelectorAll("[data-slot=header-item]")].find(
+        (e) =>
+          e.getAttribute("aria-current") === "page" && e.getAttribute("aria-disabled") === "true",
+      );
+      if (!el) return null;
+      const style = getComputedStyle(el);
+      return { color: style.color, background: style.backgroundColor };
+    });
+    check(
+      selectedDisabled !== null &&
+        selectedDisabled.background === "rgba(0, 0, 0, 0)" &&
+        selectedDisabled.color !== "lab(100 0 0)",
+      `${lang}: a selected, disabled item has a visible label (${selectedDisabled?.color})`,
+    );
+
+    // Menu item states: an unselected item shows a bar on hover and press, none when focused;
+    // a selected one keeps its bar; a disabled one is skipped by Tab.
+    const plain = page.locator(
+      "[data-slot=header-nav] [data-slot=header-item]:not([aria-current]):not([aria-disabled=true])",
+    );
+    const plainBar = () =>
+      plain.first().evaluate((el) => {
+        const style = getComputedStyle(el, "::after");
+        return { bar: style.backgroundColor, outline: getComputedStyle(el).outlineStyle };
+      });
+    const clear = "rgba(0, 0, 0, 0)";
+    check((await plainBar()).bar === clear, `${lang}: an unselected item has no bar at rest`);
+    await plain.first().hover();
+    await page.waitForTimeout(300);
+    const hoverBar = (await plainBar()).bar;
+    check(hoverBar !== clear, `${lang}: an unselected item shows a bar on hover`);
+    await page.mouse.down();
+    await page.waitForTimeout(300);
+    const pressBar = (await plainBar()).bar;
+    check(
+      pressBar !== clear && pressBar !== hoverBar,
+      `${lang}: the bar is darker when the item is pressed`,
+    );
+    await page.mouse.up();
+    await page.mouse.move(0, 400);
+    await plain.first().evaluate((el) => el.blur());
+    await page.keyboard.press("Tab");
+    await plain.first().focus();
+    await page.keyboard.press("Shift+Tab");
+    await page.keyboard.press("Tab");
+    await page.waitForTimeout(300);
+    const focused = await plainBar();
+    check(
+      focused.bar === clear && focused.outline === "solid",
+      `${lang}: a focused unselected item shows the outline and no bar`,
+    );
+    const stops = await page.evaluate(() => {
+      const nav = document.querySelector("[data-slot=header-nav]");
+      return [...nav.querySelectorAll("[data-slot=header-item]")]
+        .filter((el) => el.getAttribute("aria-disabled") === "true")
+        .map((el) => el.tabIndex < 0 || !el.hasAttribute("href"));
+    });
+    check(
+      stops.length >= 1 && stops.every(Boolean),
+      `${lang}: disabled items are not reachable with Tab`,
+    );
+
+    // The selected bar follows DGA: 6px high, inset 8px from each side, fully rounded.
+    const bar = await page.evaluate(() => {
+      const el = document.querySelector(
+        "[data-slot=header-item][aria-current=page]:not([aria-disabled=true])",
+      );
+      const style = getComputedStyle(el, "::after");
+      const box = el.getBoundingClientRect();
+      return {
+        height: style.height,
+        left: Math.round(Number.parseFloat(style.left)),
+        width: Math.round(Number.parseFloat(style.width)),
+        box: Math.round(box.width),
+        radius: Number.parseFloat(style.borderTopLeftRadius) >= 3,
+      };
+    });
+    check(
+      bar.height === "6px" && bar.left === 8 && bar.width === bar.box - 16 && bar.radius,
+      `${lang}: the selected bar is 6px, inset 8px and rounded (${JSON.stringify(bar)})`,
+    );
+
     // ---------------------------------------------------------------- Header, mobile Drawer
     await open("header-basic", 375);
     check(
@@ -1764,6 +1849,27 @@ async function compositeChecks() {
         () => document.documentElement.scrollWidth <= document.documentElement.clientWidth + 1,
       ),
       `${lang}: the header does not scroll sideways at 375px`,
+    );
+    const phone = await page.evaluate(() => {
+      const box = (s) => document.querySelector(`[data-slot=${s}]`).getBoundingClientRect();
+      const [more, logo, menu] = [
+        box("header-overflow-button"),
+        box("header-logo"),
+        box("header-menu-button"),
+      ];
+      return {
+        more: more.x,
+        logo: logo.x,
+        menu: menu.x,
+        sameRow: Math.abs(more.y - logo.y) < 40 && Math.abs(menu.y - logo.y) < 40,
+      };
+    });
+    check(
+      phone.sameRow &&
+        (rtl
+          ? phone.menu < phone.logo && phone.logo < phone.more
+          : phone.more < phone.logo && phone.logo < phone.menu),
+      `${lang}: on a phone the overflow button is on the start side, the logo in the middle and the menu on the end (${JSON.stringify(phone)})`,
     );
     await slot("header-menu-button").focus();
     await page.keyboard.press("Enter");
