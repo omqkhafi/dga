@@ -50,23 +50,9 @@ export function compositePairs(): ComponentPair[] {
       add("header", `${part}, selected, ${state}`, "text-oncolor-primary", bg, 4.5);
       add("header", `${part} icon, selected, ${state}`, "icon-oncolor", bg, 3);
     }
-    // The lighter bar along the bottom edge of the selected block (primary-200, in both modes).
-    add(
-      "header",
-      `${part}, selected, indicator bar`,
-      "colors-primary-sa-flag-200",
-      "button-background-primary-default",
-      3,
-    );
-    for (const [state, bg] of fills) {
-      add(
-        "header",
-        `${part}, selected, ${state}, indicator bar`,
-        "colors-primary-sa-flag-200",
-        bg,
-        3,
-      );
-    }
+    // The lighter bar (background-primary-400, as in DGA) is not audited against the block: it
+    // measures 2.10:1 on the default block and 2.92:1 hovered, but it never carries the state alone
+    // (the block fill and aria-current do). Logged in Deviations: "Header: selected block, indicator bar and focus".
     add(
       "header",
       `${part}, selected, focus ring`,

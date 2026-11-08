@@ -1771,6 +1771,26 @@ async function compositeChecks() {
       `${lang}: a selected, disabled item has a visible label (${selectedDisabled?.color})`,
     );
 
+    // The selected bar follows DGA: 6px high, inset 8px from each side, fully rounded.
+    const bar = await page.evaluate(() => {
+      const el = document.querySelector(
+        "[data-slot=header-item][aria-current=page]:not([aria-disabled=true])",
+      );
+      const style = getComputedStyle(el, "::after");
+      const box = el.getBoundingClientRect();
+      return {
+        height: style.height,
+        left: Math.round(Number.parseFloat(style.left)),
+        width: Math.round(Number.parseFloat(style.width)),
+        box: Math.round(box.width),
+        radius: Number.parseFloat(style.borderTopLeftRadius) >= 3,
+      };
+    });
+    check(
+      bar.height === "6px" && bar.left === 8 && bar.width === bar.box - 16 && bar.radius,
+      `${lang}: the selected bar is 6px, inset 8px and rounded (${JSON.stringify(bar)})`,
+    );
+
     // ---------------------------------------------------------------- Header, mobile Drawer
     await open("header-basic", 375);
     check(
