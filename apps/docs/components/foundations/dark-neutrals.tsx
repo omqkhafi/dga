@@ -57,7 +57,12 @@ export function DarkNeutrals({ lang = "en" }: { lang?: Locale }) {
                       className="size-6 rounded-xs border border-border-neutral-primary"
                       style={{ backgroundColor: s.value }}
                     />
-                    <code className="font-mono text-[0.8125rem] uppercase">{s.value}</code>
+                    <span className="flex flex-col">
+                      <code className="font-mono text-[0.8125rem] uppercase">{s.value}</code>
+                      <code dir="ltr" className="font-mono text-xs text-muted-foreground">
+                        {s.oklch}
+                      </code>
+                    </span>
                   </span>
                 </td>
                 <td className="px-3 py-1.5 text-[0.8125rem] text-text-primary-paragraph">

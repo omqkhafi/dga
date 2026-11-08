@@ -31,6 +31,17 @@
     "content-switcher",
     "toast",
     "notification",
-    "inline-alert"
+    "inline-alert",
+    "---التنقل وعرض البيانات---",
+    "breadcrumb",
+    "pagination",
+    "table-of-contents",
+    "card",
+    "list",
+    "table",
+    "data-table",
+    "rating",
+    "progress",
+    "stepper"
   ]
 }

@@ -37,6 +37,20 @@
   },
   {
     "area": "Naming",
+    "item": "--stepper-button-upcomming, --stepper-button-upcomming-hovered, --stepper-line-upcomming, --stepper-line-upcomming-hovered",
+    "original": "upcomming",
+    "ours": "upcoming",
+    "reason": "Typo: upcomming → upcoming (also in the Figma state name \"Upcomming\")."
+  },
+  {
+    "area": "Naming",
+    "item": "--table-boarder-row-selected-hovered",
+    "original": "boarder",
+    "ours": "border",
+    "reason": "Typo: boarder → border."
+  },
+  {
+    "area": "Naming",
     "item": "--dropdown-container-padding-left-right, --textarea-container-padding-left-right",
     "original": "padding-left-right",
     "ours": "padding-inline",
@@ -575,7 +589,10 @@
     "ours": "#b423184d",
     "reason": "Figma keeps the light red-50 fill in dark mode, so dark-mode error text (red-400) is 1.96–2.56:1. A translucent red tint (10/20/30%) matches the dark tag and status tints and gives 4.57:1 or better.",
     "status": "fixed",
-    "component": "button"
+    "component": "button",
+    "colors": {
+      "#b423184d": "oklch(0.50034 0.18205 29.513 / 0.302)"
+    }
   },
   {
     "area": "Contrast",
@@ -648,6 +665,24 @@
     "reason": "White label on white-20 over the brand fill is 3.34:1. A black-20 tint keeps the tag visible and gives 6.30:1.",
     "status": "fixed",
     "component": "tag"
+  },
+  {
+    "area": "Contrast",
+    "item": "--table-background-row (light)",
+    "original": "--colors-neutral-50",
+    "ours": "--colors-base-white",
+    "reason": "Figma gives the row and the alternate row the same fill (f9fafb), so alternating rows could not be seen. Rows are white and the alternate row keeps f9fafb.",
+    "status": "fixed",
+    "component": "table"
+  },
+  {
+    "area": "Contrast",
+    "item": "--table-background-row-hovered (light)",
+    "original": "--colors-neutral-100",
+    "ours": "--background-primary-25",
+    "reason": "The Figma hover fill (f3f4f6) puts the primary link at 4.32:1, below the 4.5:1 a link needs. A faint brand tint keeps the link at 4.61:1 and still tells the hovered row from the white and alternate ones.",
+    "status": "fixed",
+    "component": "table"
   },
   {
     "area": "Contrast",
@@ -1459,7 +1494,10 @@
     "original": "--colors-neutral-800",
     "ours": "#2f2600",
     "reason": "Soft tint of the colour's own 500 step (400 for amber and purple) at the opacity that gives every hue the same OKLab lightness over the surface, instead of a solid saturated fill or a 950 step. Reads as the light-mode soft tint, never brown.",
-    "status": "fixed"
+    "status": "fixed",
+    "colors": {
+      "#2f2600": "oklch(0.27083 0.05566 95.47)"
+    }
   },
   {
     "area": "Dark theme",
@@ -1467,7 +1505,10 @@
     "original": "--colors-neutral-800",
     "ours": "#311d3b",
     "reason": "Soft tint of the colour's own 500 step (400 for amber and purple) at the opacity that gives every hue the same OKLab lightness over the surface, instead of a solid saturated fill or a 950 step. Reads as the light-mode soft tint, never brown.",
-    "status": "fixed"
+    "status": "fixed",
+    "colors": {
+      "#311d3b": "oklch(0.27107 0.05961 313.652)"
+    }
   },
   {
     "area": "Dark theme",
@@ -1987,7 +2028,10 @@
     "original": "#4d5761",
     "ours": "--colors-neutral-dark-800",
     "reason": "Figma Dark keeps a light value (or hardcoded hex) on a dark surface here. Mapped to the tinted ramp.",
-    "status": "fixed"
+    "status": "fixed",
+    "colors": {
+      "#4d5761": "oklch(0.45174 0.0207 248.285)"
+    }
   },
   {
     "area": "Dark theme",
@@ -2079,7 +2123,39 @@
   },
   {
     "area": "Dark theme",
-    "item": "--stepper-button-upcomming (dark)",
+    "item": "--stepper-button-completed (dark)",
+    "original": "--colors-green-600",
+    "ours": "--colors-primary-sa-flag-500",
+    "reason": "Figma Dark keeps the completed step at 079455. Brand 500 is the lightest fill that still holds the white tick at 3:1.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--stepper-button-completed-hovered (dark)",
+    "original": "--colors-primary-sa-flag-700",
+    "ours": "--colors-primary-sa-flag-600-primary",
+    "reason": "Figma Dark hovers the completed step to 166a45, which is 2.65:1 on the page. Brand 600 is 3:1 or more and keeps the white tick above 4.5:1.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--stepper-button-current (dark)",
+    "original": "--colors-green-600",
+    "ours": "--colors-primary-sa-flag-400",
+    "reason": "Figma Dark keeps the current step at 079455, 4.48:1 for its number and title. Brand 400 is 7:1 on the page.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--stepper-button-current-hovered (dark)",
+    "original": "--colors-primary-sa-flag-700",
+    "ours": "--colors-primary-sa-flag-300",
+    "reason": "Figma Dark hovers the current step to 166a45, which is 2.65:1 on the page. Brand 300 is lighter on hover, as dark mode does elsewhere.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--stepper-button-upcoming (dark)",
     "original": "--colors-neutral-600",
     "ours": "--colors-neutral-dark-600",
     "reason": "Same step on the tinted neutral ramp (green-tinted) instead of the cool-blue grey.",
@@ -2087,7 +2163,7 @@
   },
   {
     "area": "Dark theme",
-    "item": "--stepper-button-upcomming-hovered (dark)",
+    "item": "--stepper-button-upcoming-hovered (dark)",
     "original": "--colors-neutral-600",
     "ours": "--colors-neutral-dark-600",
     "reason": "Same step on the tinted neutral ramp (green-tinted) instead of the cool-blue grey.",
@@ -2127,7 +2203,7 @@
   },
   {
     "area": "Dark theme",
-    "item": "--stepper-line-upcomming (dark)",
+    "item": "--stepper-line-upcoming (dark)",
     "original": "--colors-neutral-700",
     "ours": "--colors-neutral-dark-700",
     "reason": "Same step on the tinted neutral ramp (green-tinted) instead of the cool-blue grey.",
@@ -2135,7 +2211,7 @@
   },
   {
     "area": "Dark theme",
-    "item": "--stepper-line-upcomming-hovered (dark)",
+    "item": "--stepper-line-upcoming-hovered (dark)",
     "original": "--colors-neutral-700",
     "ours": "--colors-neutral-dark-700",
     "reason": "Same step on the tinted neutral ramp (green-tinted) instead of the cool-blue grey.",
@@ -2179,7 +2255,10 @@
     "original": "--colors-neutral-900",
     "ours": "#251f06",
     "reason": "Soft tint of the colour's own 500 step (400 for amber and purple) at the opacity that gives every hue the same OKLab lightness over the surface, instead of a solid saturated fill or a 950 step. Reads as the light-mode soft tint, never brown.",
-    "status": "fixed"
+    "status": "fixed",
+    "colors": {
+      "#251f06": "oklch(0.23992 0.04073 95.916)"
+    }
   },
   {
     "area": "Dark theme",
@@ -2187,7 +2266,10 @@
     "original": "--colors-neutral-900",
     "ours": "#26192d",
     "reason": "Soft tint of the colour's own 500 step (400 for amber and purple) at the opacity that gives every hue the same OKLab lightness over the surface, instead of a solid saturated fill or a 950 step. Reads as the light-mode soft tint, never brown.",
-    "status": "fixed"
+    "status": "fixed",
+    "colors": {
+      "#26192d": "oklch(0.23943 0.04136 313.228)"
+    }
   },
   {
     "area": "Dark theme",
@@ -2227,7 +2309,10 @@
     "original": "--colors-green-700",
     "ours": "#005730",
     "reason": "The strongest dark fill: the same tint at a higher opacity, never a solid saturated colour. White label on top.",
-    "status": "fixed"
+    "status": "fixed",
+    "colors": {
+      "#005730": "oklch(0.40143 0.0982 155.546)"
+    }
   },
   {
     "area": "Dark theme",
@@ -2235,7 +2320,10 @@
     "original": "--alpha-success-10",
     "ours": "#003b1f",
     "reason": "Soft tint of the colour's own 500 step (400 for amber and purple) at the opacity that gives every hue the same OKLab lightness over the surface, instead of a solid saturated fill or a 950 step. Reads as the light-mode soft tint, never brown.",
-    "status": "fixed"
+    "status": "fixed",
+    "colors": {
+      "#003b1f": "oklch(0.30967 0.07553 155.699)"
+    }
   },
   {
     "area": "Dark theme",
@@ -2243,7 +2331,10 @@
     "original": "--colors-blue-600",
     "ours": "#134881",
     "reason": "The strongest dark fill: the same tint at a higher opacity, never a solid saturated colour. White label on top.",
-    "status": "fixed"
+    "status": "fixed",
+    "colors": {
+      "#134881": "oklch(0.40029 0.11014 253.77)"
+    }
   },
   {
     "area": "Dark theme",
@@ -2251,7 +2342,10 @@
     "original": "--alpha-info-10",
     "ours": "#0b305a",
     "reason": "Soft tint of the colour's own 500 step (400 for amber and purple) at the opacity that gives every hue the same OKLab lightness over the surface, instead of a solid saturated fill or a 950 step. Reads as the light-mode soft tint, never brown.",
-    "status": "fixed"
+    "status": "fixed",
+    "colors": {
+      "#0b305a": "oklch(0.30916 0.08578 254.583)"
+    }
   },
   {
     "area": "Dark theme",
@@ -2259,7 +2353,10 @@
     "original": "--colors-yellow-700",
     "ours": "#624000",
     "reason": "The strongest dark fill: the same tint at a higher opacity, never a solid saturated colour. White label on top.",
-    "status": "fixed"
+    "status": "fixed",
+    "colors": {
+      "#624000": "oklch(0.4007 0.08453 75.012)"
+    }
   },
   {
     "area": "Dark theme",
@@ -2267,7 +2364,10 @@
     "original": "--alpha-warning-10",
     "ours": "#432b00",
     "reason": "Soft tint of the colour's own 500 step (400 for amber and purple) at the opacity that gives every hue the same OKLab lightness over the surface, instead of a solid saturated fill or a 950 step. Reads as the light-mode soft tint, never brown.",
-    "status": "fixed"
+    "status": "fixed",
+    "colors": {
+      "#432b00": "oklch(0.31058 0.06523 76.034)"
+    }
   },
   {
     "area": "Dark theme",
@@ -2275,7 +2375,10 @@
     "original": "--colors-red-600",
     "ours": "#782b23",
     "reason": "The strongest dark fill: the same tint at a higher opacity, never a solid saturated colour. White label on top.",
-    "status": "fixed"
+    "status": "fixed",
+    "colors": {
+      "#782b23": "oklch(0.40071 0.10965 28.798)"
+    }
   },
   {
     "area": "Dark theme",
@@ -2283,7 +2386,10 @@
     "original": "--alpha-error-10",
     "ours": "#531b16",
     "reason": "Soft tint of the colour's own 500 step (400 for amber and purple) at the opacity that gives every hue the same OKLab lightness over the surface, instead of a solid saturated fill or a 950 step. Reads as the light-mode soft tint, never brown.",
-    "status": "fixed"
+    "status": "fixed",
+    "colors": {
+      "#531b16": "oklch(0.30916 0.08487 28.105)"
+    }
   },
   {
     "area": "Dark theme",
@@ -2579,7 +2685,11 @@
     "original": "#166a451a",
     "ours": "#0d2518",
     "reason": "Soft tint of the colour's own 500 step (400 for amber and purple) at the opacity that gives every hue the same OKLab lightness over the surface, instead of a solid saturated fill or a 950 step. Reads as the light-mode soft tint, never brown.",
-    "status": "fixed"
+    "status": "fixed",
+    "colors": {
+      "#166a451a": "oklch(0.46613 0.09833 158.951 / 0.102)",
+      "#0d2518": "oklch(0.24053 0.03947 157.801)"
+    }
   },
   {
     "area": "Dark theme",
@@ -2595,7 +2705,10 @@
     "original": "#ffffff",
     "ours": "--colors-neutral-dark-900",
     "reason": "Figma Dark keeps a light value (or hardcoded hex) on a dark surface here. Mapped to the tinted ramp.",
-    "status": "fixed"
+    "status": "fixed",
+    "colors": {
+      "#ffffff": "oklch(1 0 0)"
+    }
   },
   {
     "area": "Dark theme",
@@ -2603,7 +2716,11 @@
     "original": "#166a4533",
     "ours": "#032f1b",
     "reason": "Soft tint of the colour's own 500 step (400 for amber and purple) at the opacity that gives every hue the same OKLab lightness over the surface, instead of a solid saturated fill or a 950 step. Reads as the light-mode soft tint, never brown.",
-    "status": "fixed"
+    "status": "fixed",
+    "colors": {
+      "#166a4533": "oklch(0.46613 0.09833 158.951 / 0.2)",
+      "#032f1b": "oklch(0.27021 0.05983 158.282)"
+    }
   },
   {
     "area": "Dark theme",
@@ -2611,7 +2728,11 @@
     "original": "#b547081a",
     "ours": "#2a1c07",
     "reason": "Soft tint of the colour's own 500 step (400 for amber and purple) at the opacity that gives every hue the same OKLab lightness over the surface, instead of a solid saturated fill or a 950 step. Reads as the light-mode soft tint, never brown.",
-    "status": "fixed"
+    "status": "fixed",
+    "colors": {
+      "#b547081a": "oklch(0.53942 0.15617 42.994 / 0.102)",
+      "#2a1c07": "oklch(0.23893 0.04 75.031)"
+    }
   },
   {
     "area": "Dark theme",
@@ -2619,7 +2740,11 @@
     "original": "#b5470833",
     "ours": "#372200",
     "reason": "Soft tint of the colour's own 500 step (400 for amber and purple) at the opacity that gives every hue the same OKLab lightness over the surface, instead of a solid saturated fill or a 950 step. Reads as the light-mode soft tint, never brown.",
-    "status": "fixed"
+    "status": "fixed",
+    "colors": {
+      "#b5470833": "oklch(0.53942 0.15617 42.994 / 0.2)",
+      "#372200": "oklch(0.27188 0.05738 74.909)"
+    }
   },
   {
     "area": "Dark theme",
@@ -2627,7 +2752,11 @@
     "original": "#b423181a",
     "ours": "#301714",
     "reason": "Soft tint of the colour's own 500 step (400 for amber and purple) at the opacity that gives every hue the same OKLab lightness over the surface, instead of a solid saturated fill or a 950 step. Reads as the light-mode soft tint, never brown.",
-    "status": "fixed"
+    "status": "fixed",
+    "colors": {
+      "#b423181a": "oklch(0.50034 0.18205 29.513 / 0.102)",
+      "#301714": "oklch(0.23927 0.04113 27.761)"
+    }
   },
   {
     "area": "Dark theme",
@@ -2635,7 +2764,11 @@
     "original": "#b4231833",
     "ours": "#3f1915",
     "reason": "Soft tint of the colour's own 500 step (400 for amber and purple) at the opacity that gives every hue the same OKLab lightness over the surface, instead of a solid saturated fill or a 950 step. Reads as the light-mode soft tint, never brown.",
-    "status": "fixed"
+    "status": "fixed",
+    "colors": {
+      "#b4231833": "oklch(0.50034 0.18205 29.513 / 0.2)",
+      "#3f1915": "oklch(0.26931 0.06046 27.888)"
+    }
   },
   {
     "area": "Dark theme",
@@ -2643,7 +2776,11 @@
     "original": "#175cd31a",
     "ours": "#112032",
     "reason": "Soft tint of the colour's own 500 step (400 for amber and purple) at the opacity that gives every hue the same OKLab lightness over the surface, instead of a solid saturated fill or a 950 step. Reads as the light-mode soft tint, never brown.",
-    "status": "fixed"
+    "status": "fixed",
+    "colors": {
+      "#175cd31a": "oklch(0.50931 0.19546 260.887 / 0.102)",
+      "#112032": "oklch(0.23987 0.04046 253.793)"
+    }
   },
   {
     "area": "Dark theme",
@@ -2651,7 +2788,11 @@
     "original": "#175cd333",
     "ours": "#0f2743",
     "reason": "Soft tint of the colour's own 500 step (400 for amber and purple) at the opacity that gives every hue the same OKLab lightness over the surface, instead of a solid saturated fill or a 950 step. Reads as the light-mode soft tint, never brown.",
-    "status": "fixed"
+    "status": "fixed",
+    "colors": {
+      "#175cd333": "oklch(0.50931 0.19546 260.887 / 0.2)",
+      "#0f2743": "oklch(0.26976 0.0604 253.902)"
+    }
   },
   {
     "area": "Dark theme",
@@ -2659,7 +2800,11 @@
     "original": "#0676471a",
     "ours": "#0e2517",
     "reason": "Soft tint of the colour's own 500 step (400 for amber and purple) at the opacity that gives every hue the same OKLab lightness over the surface, instead of a solid saturated fill or a 950 step. Reads as the light-mode soft tint, never brown.",
-    "status": "fixed"
+    "status": "fixed",
+    "colors": {
+      "#0676471a": "oklch(0.49874 0.11676 157.07 / 0.102)",
+      "#0e2517": "oklch(0.24078 0.03991 155.175)"
+    }
   },
   {
     "area": "Dark theme",
@@ -2667,7 +2812,11 @@
     "original": "#06764733",
     "ours": "#062f19",
     "reason": "Soft tint of the colour's own 500 step (400 for amber and purple) at the opacity that gives every hue the same OKLab lightness over the surface, instead of a solid saturated fill or a 950 step. Reads as the light-mode soft tint, never brown.",
-    "status": "fixed"
+    "status": "fixed",
+    "colors": {
+      "#06764733": "oklch(0.49874 0.11676 157.07 / 0.2)",
+      "#062f19": "oklch(0.27077 0.06046 155.007)"
+    }
   },
   {
     "area": "Dark theme",
@@ -2711,7 +2860,7 @@
   },
   {
     "area": "Dark theme",
-    "item": "--table-boarder-row-selected-hovered (dark)",
+    "item": "--table-border-row-selected-hovered (dark)",
     "original": "--colors-neutral-100",
     "ours": "--colors-neutral-dark-800",
     "reason": "Figma Dark keeps a light value (or hardcoded hex) on a dark surface here. Mapped to the tinted ramp.",
@@ -2729,17 +2878,20 @@
     "area": "Dark theme",
     "item": "--table-background-row-hovered (dark)",
     "original": "--colors-neutral-100",
-    "ours": "--colors-neutral-dark-850",
-    "reason": "Figma Dark keeps a light value (or hardcoded hex) on a dark surface here. Mapped to the tinted ramp.",
+    "ours": "--colors-neutral-dark-800",
+    "reason": "Figma Dark hovers a row to 850, the header fill and now the alternate row. A hovered row is one step lighter again (800).",
     "status": "fixed"
   },
   {
     "area": "Dark theme",
     "item": "--table-background-row-alt (dark)",
     "original": "#ffffff",
-    "ours": "--colors-neutral-dark-900",
-    "reason": "Figma Dark keeps a light value (or hardcoded hex) on a dark surface here. Mapped to the tinted ramp.",
-    "status": "fixed"
+    "ours": "--colors-neutral-dark-850",
+    "reason": "Figma Dark gives the alternate row the same fill as the row (900), so the stripes are invisible. One step lighter (850).",
+    "status": "fixed",
+    "colors": {
+      "#ffffff": "oklch(1 0 0)"
+    }
   },
   {
     "area": "Dark theme",
@@ -2785,8 +2937,8 @@
     "area": "Dark theme",
     "item": "--progress-bar-neutral (dark)",
     "original": "--colors-neutral-700",
-    "ours": "--colors-neutral-dark-700",
-    "reason": "Same step on the tinted neutral ramp (green-tinted) instead of the cool-blue grey.",
+    "ours": "--colors-neutral-dark-300",
+    "reason": "Figma Dark keeps the neutral progress fill at 37413d, the colour of the track: 1.00:1. Neutral 300 is 3:1 or more on the track.",
     "status": "fixed"
   },
   {
@@ -2875,7 +3027,10 @@
     "original": "--colors-primary-sa-flag-950",
     "ours": "#003b21",
     "reason": "Soft tint of the colour's own 500 step (400 for amber and purple) at the opacity that gives every hue the same OKLab lightness over the surface, instead of a solid saturated fill or a 950 step. Reads as the light-mode soft tint, never brown.",
-    "status": "fixed"
+    "status": "fixed",
+    "colors": {
+      "#003b21": "oklch(0.31015 0.07334 157.386)"
+    }
   },
   {
     "area": "Dark theme",
@@ -2899,7 +3054,10 @@
     "original": "--colors-red-950",
     "ours": "#531b16",
     "reason": "Soft tint of the colour's own 500 step (400 for amber and purple) at the opacity that gives every hue the same OKLab lightness over the surface, instead of a solid saturated fill or a 950 step. Reads as the light-mode soft tint, never brown.",
-    "status": "fixed"
+    "status": "fixed",
+    "colors": {
+      "#531b16": "oklch(0.30916 0.08487 28.105)"
+    }
   },
   {
     "area": "Dark theme",
@@ -2923,7 +3081,10 @@
     "original": "--colors-yellow-950",
     "ours": "#432b00",
     "reason": "Soft tint of the colour's own 500 step (400 for amber and purple) at the opacity that gives every hue the same OKLab lightness over the surface, instead of a solid saturated fill or a 950 step. Reads as the light-mode soft tint, never brown.",
-    "status": "fixed"
+    "status": "fixed",
+    "colors": {
+      "#432b00": "oklch(0.31058 0.06523 76.034)"
+    }
   },
   {
     "area": "Dark theme",
@@ -2947,7 +3108,10 @@
     "original": "--colors-blue-950",
     "ours": "#0b305a",
     "reason": "Soft tint of the colour's own 500 step (400 for amber and purple) at the opacity that gives every hue the same OKLab lightness over the surface, instead of a solid saturated fill or a 950 step. Reads as the light-mode soft tint, never brown.",
-    "status": "fixed"
+    "status": "fixed",
+    "colors": {
+      "#0b305a": "oklch(0.30916 0.08578 254.583)"
+    }
   },
   {
     "area": "Dark theme",
@@ -2971,7 +3135,10 @@
     "original": "--colors-tertiary-lavender-950",
     "ours": "#40214e",
     "reason": "Soft tint of the colour's own 500 step (400 for amber and purple) at the opacity that gives every hue the same OKLab lightness over the surface, instead of a solid saturated fill or a 950 step. Reads as the light-mode soft tint, never brown.",
-    "status": "fixed"
+    "status": "fixed",
+    "colors": {
+      "#40214e": "oklch(0.31102 0.08516 314.294)"
+    }
   },
   {
     "area": "Dark theme",
@@ -2995,7 +3162,10 @@
     "original": "--colors-orange-950",
     "ours": "#521e04",
     "reason": "Soft tint of the colour's own 500 step (400 for amber and purple) at the opacity that gives every hue the same OKLab lightness over the surface, instead of a solid saturated fill or a 950 step. Reads as the light-mode soft tint, never brown.",
-    "status": "fixed"
+    "status": "fixed",
+    "colors": {
+      "#521e04": "oklch(0.30975 0.08558 43.484)"
+    }
   },
   {
     "area": "Dark theme",
@@ -3019,7 +3189,10 @@
     "original": "--colors-primary-sa-flag-600-primary",
     "ours": "#005633",
     "reason": "The strongest dark fill: the same tint at a higher opacity, never a solid saturated colour. White label on top.",
-    "status": "fixed"
+    "status": "fixed",
+    "colors": {
+      "#005633": "oklch(0.39906 0.0937 157.784)"
+    }
   },
   {
     "area": "Dark theme",
@@ -3027,7 +3200,10 @@
     "original": "--colors-primary-sa-flag-950",
     "ours": "#003b21",
     "reason": "Soft tint of the colour's own 500 step (400 for amber and purple) at the opacity that gives every hue the same OKLab lightness over the surface, instead of a solid saturated fill or a 950 step. Reads as the light-mode soft tint, never brown.",
-    "status": "fixed"
+    "status": "fixed",
+    "colors": {
+      "#003b21": "oklch(0.31015 0.07334 157.386)"
+    }
   },
   {
     "area": "Dark theme",
@@ -3067,7 +3243,10 @@
     "original": "--colors-green-700",
     "ours": "#005730",
     "reason": "The strongest dark fill: the same tint at a higher opacity, never a solid saturated colour. White label on top.",
-    "status": "fixed"
+    "status": "fixed",
+    "colors": {
+      "#005730": "oklch(0.40143 0.0982 155.546)"
+    }
   },
   {
     "area": "Dark theme",
@@ -3075,7 +3254,10 @@
     "original": "--colors-green-950",
     "ours": "#003b1f",
     "reason": "Soft tint of the colour's own 500 step (400 for amber and purple) at the opacity that gives every hue the same OKLab lightness over the surface, instead of a solid saturated fill or a 950 step. Reads as the light-mode soft tint, never brown.",
-    "status": "fixed"
+    "status": "fixed",
+    "colors": {
+      "#003b1f": "oklch(0.30967 0.07553 155.699)"
+    }
   },
   {
     "area": "Dark theme",
@@ -3083,7 +3265,10 @@
     "original": "--colors-red-600",
     "ours": "#782b23",
     "reason": "The strongest dark fill: the same tint at a higher opacity, never a solid saturated colour. White label on top.",
-    "status": "fixed"
+    "status": "fixed",
+    "colors": {
+      "#782b23": "oklch(0.40071 0.10965 28.798)"
+    }
   },
   {
     "area": "Dark theme",
@@ -3091,7 +3276,10 @@
     "original": "--colors-red-950",
     "ours": "#531b16",
     "reason": "Soft tint of the colour's own 500 step (400 for amber and purple) at the opacity that gives every hue the same OKLab lightness over the surface, instead of a solid saturated fill or a 950 step. Reads as the light-mode soft tint, never brown.",
-    "status": "fixed"
+    "status": "fixed",
+    "colors": {
+      "#531b16": "oklch(0.30916 0.08487 28.105)"
+    }
   },
   {
     "area": "Dark theme",
@@ -3099,7 +3287,10 @@
     "original": "--colors-yellow-700",
     "ours": "#624000",
     "reason": "The strongest dark fill: the same tint at a higher opacity, never a solid saturated colour. White label on top.",
-    "status": "fixed"
+    "status": "fixed",
+    "colors": {
+      "#624000": "oklch(0.4007 0.08453 75.012)"
+    }
   },
   {
     "area": "Dark theme",
@@ -3107,7 +3298,10 @@
     "original": "--colors-yellow-950",
     "ours": "#432b00",
     "reason": "Soft tint of the colour's own 500 step (400 for amber and purple) at the opacity that gives every hue the same OKLab lightness over the surface, instead of a solid saturated fill or a 950 step. Reads as the light-mode soft tint, never brown.",
-    "status": "fixed"
+    "status": "fixed",
+    "colors": {
+      "#432b00": "oklch(0.31058 0.06523 76.034)"
+    }
   },
   {
     "area": "Dark theme",
@@ -3115,7 +3309,10 @@
     "original": "--colors-blue-600",
     "ours": "#134881",
     "reason": "The strongest dark fill: the same tint at a higher opacity, never a solid saturated colour. White label on top.",
-    "status": "fixed"
+    "status": "fixed",
+    "colors": {
+      "#134881": "oklch(0.40029 0.11014 253.77)"
+    }
   },
   {
     "area": "Dark theme",
@@ -3123,7 +3320,10 @@
     "original": "--colors-blue-950",
     "ours": "#0b305a",
     "reason": "Soft tint of the colour's own 500 step (400 for amber and purple) at the opacity that gives every hue the same OKLab lightness over the surface, instead of a solid saturated fill or a 950 step. Reads as the light-mode soft tint, never brown.",
-    "status": "fixed"
+    "status": "fixed",
+    "colors": {
+      "#0b305a": "oklch(0.30916 0.08578 254.583)"
+    }
   },
   {
     "area": "Dark theme",
@@ -3145,7 +3345,7 @@
     "area": "Dark theme",
     "item": "--shadow-* (dark)",
     "original": "Figma effect styles, same in both modes",
-    "ours": "none (0 0 #0000)",
+    "ours": "none (0 0 oklch(0 0 0 / 0))",
     "reason": "Shadows are invisible on near-black surfaces and only add haze. In dark mode elevation is a lighter surface (raised 850) plus a border."
   },
   {
@@ -3460,7 +3660,10 @@
     "ours": "The same, kept as DGA draws it. The value text is 4.5:1 or better.",
     "reason": "Not remapped: #d2d6db is 1.5:1 on white, below the 3:1 of WCAG 1.4.11 if the boundary is needed to find the control. A read-only field shows a value, is not edited, and is named by its label, so the boundary is not what identifies it. Teams that treat read-only fields as controls should use a plain text display instead.",
     "status": "unresolved",
-    "component": "input"
+    "component": "input",
+    "colors": {
+      "#d2d6db": "oklch(0.87446 0.00815 253.86)"
+    }
   },
   {
     "area": "Components",
@@ -3469,7 +3672,11 @@
     "ours": "The same, kept as DGA draws it. The border is transparent at rest (not removed), so the box does not shift when it appears.",
     "reason": "Not remapped: the fills are 1.0:1 and 1.1:1 against the page, below the 3:1 of WCAG 1.4.11 for the resting boundary. The label, the placeholder (4.5:1 or better) and the hover, focus and press border identify the field. Use the default fill where the field must be findable at rest.",
     "status": "unresolved",
-    "component": "input"
+    "component": "input",
+    "colors": {
+      "#fcfcfd": "oklch(0.99135 0.00132 286.376)",
+      "#f3f4f6": "oklch(0.96696 0.00287 264.542)"
+    }
   },
   {
     "area": "Components",
@@ -3679,5 +3886,141 @@
     "ours": "The icon is always the kind's icon colour, and the neutral bar is border-neutral-primary. A tinted alert takes the kind's text colour for the title and the text.",
     "reason": "The icon should not change when a close button is added, and a white bar on a white alert is not there.",
     "component": "inline-alert"
+  },
+  {
+    "area": "Naming",
+    "item": "Figma variant names: Meduim, Sahdow, Upcomming, Lable",
+    "original": "Pagination Size \"Meduim\"; Card Effect \"With Sahdow\"; Progress Indicator State \"Upcomming\"; Structured List \"Lable AR\".",
+    "ours": "md, shadow, upcoming, label. Sizes are sm, md and lg like every other component.",
+    "reason": "Typos in the Figma variant names. Prop values in code are spelled correctly.",
+    "status": "fixed"
+  },
+  {
+    "area": "Components",
+    "item": "Stepper: the upcoming step was 1.48:1",
+    "original": "Upcoming: ring, number and title in stepper-button-upcomming (gray-300, #d2d6db), and the Vertical upcoming title in stepper-line-upcomming. 1.48:1 on white.",
+    "ours": "Ring icon-default-500 (4.78:1), number text-primary-paragraph, title stepper-text-tertiary. The connector line keeps the DGA gray.",
+    "reason": "Text needs 4.5:1 and a state indicator 3:1 (WCAG 1.4.3, 1.4.11). The DGA gray is fine for the decorative line, not for the number, title or ring.",
+    "status": "fixed",
+    "component": "stepper",
+    "colors": {
+      "#d2d6db": "oklch(0.87446 0.00815 253.86)"
+    }
+  },
+  {
+    "area": "Components",
+    "item": "Stepper: error state, radial form and CSS",
+    "original": "Progress Indicator has Current, Completed and Upcomming; the Radial Stepper is a separate component. The CSS hard-codes --colors-brand-600 and a 62px vertical circle for the contribution stepper.",
+    "ours": "Stepper has completed, current, upcoming and error (a red circle with an alert icon and the title in text-error). Below the sm width a horizontal stepper folds into the Radial Stepper form: a ring with the step count, the step's name and the next one. The brand tokens are used, not the hex.",
+    "reason": "A process with a problem step needs a state (WCAG 3.3.1), and a nine-step horizontal stepper does not fit a phone. Each step also says its state in words for screen readers, not just by colour.",
+    "status": "fixed",
+    "component": "stepper"
+  },
+  {
+    "area": "Components",
+    "item": "Progress: bar height, status icon and indeterminate",
+    "original": "Progress Bar frames are 320x50, 56 and 68 for Small, Medium and Large; the bar's own height, the track colour and an indeterminate state are not given. Success and Error variants show an on-colour icon with no state in the CSS.",
+    "ours": "The bar is 8, 12 and 16px high on a border-neutral-secondary track. Success and Error add a round on-colour icon beside the helper text. value={null} is indeterminate (a pulsing bar, still when motion is reduced; a turning arc on the circle).",
+    "reason": "The frame heights fit these bars with the label and helper text. The fill colours come from the icon-* tokens, which flip in dark mode, because the DGA background-primary, -success and -error fills are 1.9 to 2.2:1 on the dark track (needs 3:1).",
+    "status": "fixed",
+    "component": "progress"
+  },
+  {
+    "area": "Components",
+    "item": "Rating: gold fill, hard-coded colour and interaction",
+    "original": ".rating colour #faaf00 (hard-coded); Figma background-secondary (#dba102) is 2.30:1 on white. Whole stars only, no hover, focus or read-only state.",
+    "ours": "The fill is background-secondary (or background-primary with brand); every star is outlined in icon-warning (5.43:1) or icon-primary, and an empty star in icon-default-500. Interactive ratings are a radio group with arrow keys, hover preview and a focus ring; read-only ones are an image with a text alternative. Whole stars only, as DGA defines (no half stars).",
+    "reason": "A graphical object that carries information needs 3:1 (WCAG 1.4.11): the outline gives the star its shape at 3:1 or more where the gold fill alone cannot. A rating also has to work by keyboard and be announced.",
+    "status": "fixed",
+    "component": "rating",
+    "colors": {
+      "#faaf00": "oklch(0.80496 0.16796 77.73)",
+      "#dba102": "oklch(0.74412 0.15283 82.522)"
+    }
+  },
+  {
+    "area": "Components",
+    "item": "List: physical margins and hard-coded colours",
+    "original": ".list { margin-left: 24px }, .list--unordered>ul { margin-left: 18px } and list colours #1b8354, #0d121c and #fff written as hex, with --Link-2-link-default_on-color as the on-colour.",
+    "ours": "Logical margins (ms-6), so a nested list indents from the start side in Arabic. Colours are text-primary, text-default and text-oncolor-primary with icon-primary, icon-default and icon-oncolor. Ordered markers are 1- then a-, with Arabic letters in Arabic.",
+    "reason": "A margin-left puts the indent on the wrong side in RTL, and hex values do not follow dark mode.",
+    "status": "fixed",
+    "component": "list",
+    "colors": {
+      "#1b8354": "oklch(0.54128 0.11736 158.017)",
+      "#0d121c": "oklch(0.18222 0.02214 263.788)"
+    }
+  },
+  {
+    "area": "Components",
+    "item": "Card: border fallback, disabled overlay and link pattern",
+    "original": ".card { border: 2px solid var(--Colors-Base-black, #fff) } (a white fallback for a black token); .card.disabled fades a gray overlay at .3 opacity over a transparent card; max-width 350px.",
+    "ours": "A transparent 1px border (a neutral stroke with the stroke effect) and a 2px outline for keyboard focus, so focus does not move the layout. Disabled uses the Figma tokens: background-disabled, text-default-disabled and border-disabled. No fixed width. The clickable card is a real link in the title whose click area is stretched over the card, with the actions raised above it.",
+    "reason": "The Figma tokens are the source of truth where the CSS disagrees. A card that is only an onclick div has no link semantics (WCAG 4.1.2); the stretched link keeps one link named by the title and a focus ring around the whole card.",
+    "status": "fixed",
+    "component": "card"
+  },
+  {
+    "area": "Components",
+    "item": "Card: selected state",
+    "original": "Selectable Selected = True differs from False only by the checkbox. Figma gives the focused fill as neutral-50 with a black border.",
+    "ours": "A selected card also gets a 1px border-primary (4.75:1) so the selection does not depend on a 20px checkbox alone.",
+    "reason": "WCAG 1.4.11: the selected state is a state indicator and needs a clear cue.",
+    "status": "fixed",
+    "component": "card"
+  },
+  {
+    "area": "Components",
+    "item": "Pagination: no states, selected style or small-screen form",
+    "original": "Only sizes (24, 32, 40px) and a gap of 8px; no hover, pressed, selected or disabled styles, no ellipsis or previous and next, and no behaviour on small screens.",
+    "ours": "Items are transparent with the button neutral hover and pressed fills; the current page is the primary fill with an on-colour label; previous and next are chevrons that mirror in RTL and disable at the ends; skipped pages are an ellipsis; below the sm width the numbers fold into a compact 'page of count'.",
+    "reason": "A pagination without a current-page style cannot be used. The states follow the Button, which DGA does define.",
+    "status": "fixed",
+    "component": "pagination"
+  },
+  {
+    "area": "Components",
+    "item": "Breadcrumb: separator, current page and collapse",
+    "original": "Only link-neutral text (Text sm), an icon-default-400 icon (2.5:1 on white), and 2, 3, 4, 5 and more-than-5 levels. No current-page style, no collapse behaviour.",
+    "ours": "The chevron separator stays icon-default-400: it is decorative and hidden from screen readers. The current page is Medium text-default with aria-current. Above five levels, and below the sm width, the levels between the first and the last two fold behind an ellipsis button that shows the full path.",
+    "reason": "A chain of five or more levels overflows a phone, and the Figma '>5' variant implies a fold. The ellipsis is a real button, reachable by keyboard.",
+    "status": "fixed",
+    "component": "breadcrumb"
+  },
+  {
+    "area": "Components",
+    "item": "Table of Content: width and height rule",
+    "original": ".table-of-content is 228px wide, and a second rule sets width: 100% and height: 100vh, which overrides it.",
+    "ours": "228px at most (max-w-57) and as tall as its items. The active section is Semibold text-default and aria-current='location'; Up, Down, Home and End move between links.",
+    "reason": "A 100vh column cannot sit beside content that scrolls, and Figma shows the 228px width.",
+    "status": "fixed",
+    "component": "table-of-contents"
+  },
+  {
+    "area": "Components",
+    "item": "Table: compact sizes, sort and filter buttons",
+    "original": "Compact is a boolean with no heights; the Sort and Filter header buttons are 20px with five states and no accessible name or aria-sort.",
+    "ours": "Rows 64px (48px compact), header 48px (40px compact). TableSortButton and TableFilterButton are real buttons with an accessible name; the heading carries aria-sort. The table scrolls sideways inside a region that takes keyboard focus.",
+    "reason": "A sortable column must say how it is sorted (WCAG 4.1.2), and scrolling content must be reachable without a mouse (WCAG 2.1.1).",
+    "status": "fixed",
+    "component": "table"
+  },
+  {
+    "area": "Components",
+    "item": "Structured List: selectable rows",
+    "original": "Selectable rows have Default, Hovered, Focused and Disabled states but no control or semantics; the focus border is table-cell-border-inverse.",
+    "ours": "A selectable list is a radio group: each row has a radio button (named by the row's label), the arrow keys move between rows, and the chosen row uses table-background-row-select. The focus ring is table-cell-border-inverse, inside the row.",
+    "reason": "A choice among rows needs a form control behind it for keyboard and screen reader users.",
+    "status": "fixed",
+    "component": "list"
+  },
+  {
+    "area": "Components",
+    "item": "Data Table: new, no DGA source",
+    "original": "DGA has a Table and a Pagination and no data table.",
+    "ours": "DataTable composes the DGA Table and Pagination with TanStack Table: sorting, a global filter, row selection, pagination, loading rows, an empty state and sideways scrolling. It uses only the Table tokens.",
+    "reason": "Listed here so nobody looks for it in Figma. It adds no colour: every token is one the Table already uses.",
+    "status": "fixed",
+    "component": "data-table"
   }
 ]

@@ -1,5 +1,6 @@
 // Turns the token model into CSS (docs) and shadcn registry fields (dga-style).
 
+import { hexToOklchCss, isHexColor } from "./color";
 import { BREAKPOINTS, MODE_MIN_WIDTH } from "./fixes";
 import type { Model } from "./model";
 import type { Mode, ThemeToken } from "./source";
@@ -11,10 +12,28 @@ const HEADER =
 
 export const FONT_STACK = 'var(--font-sans, "IBM Plex Sans Arabic"), system-ui, sans-serif';
 
-/** `{token}` → `var(--token)`. */
+/**
+ * `{token}` → `var(--token)`, and a hex literal → `oklch()`. The Figma hex values stay the
+ * source of truth; the CSS carries the same colours in OKLCH (see `checkOklchRoundTrip`).
+ */
 export function toCss(value: string) {
+  if (isHexColor(value)) return hexToOklchCss(value);
   return value.replace(/\{([^}]+)\}/g, "var(--$1)");
 }
+
+/** An `rgb(r g b / a)` shadow colour (from `hexToRgba`) as oklch(), keeping its opacity. */
+const RGB_COLOUR = /rgb\((\d+) (\d+) (\d+) \/ ([\d.]+)\)/g;
+export function shadowColour(layer: string) {
+  return layer.replace(RGB_COLOUR, (_, r: string, g: string, b: string, a: string) => {
+    const byte = (v: string) => Number(v).toString(16).padStart(2, "0");
+    const alpha = Number(a);
+    const css = hexToOklchCss(`#${byte(r)}${byte(g)}${byte(b)}`);
+    return alpha >= 1 ? css : css.replace(/\)$/, ` / ${alpha})`);
+  });
+}
+
+/** No shadow in dark mode: a transparent black layer. */
+export const NO_SHADOW = "0 0 oklch(0 0 0 / 0)";
 
 /** Font tokens that are Figma style names ("Medium Italic"), not CSS values. Dropped. */
 export const ITALIC_WEIGHTS = /^(primitive-)?font-weight-(.*-)?italic$/;
@@ -175,7 +194,9 @@ function responsiveVars(model: Model) {
 
 function effectVars(model: Model): Vars {
   return [
-    ...model.shadows.map((s) => [s.name, s.layers.join(", ")] as [string, string]),
+    ...model.shadows.map(
+      (s) => [s.name, s.layers.map(shadowColour).join(", ")] as [string, string],
+    ),
     ...model.blurs.map((b) => [b.name, b.value] as [string, string]),
   ];
 }
@@ -201,7 +222,7 @@ export const darkScopeVars = (model: Model): Vars => [
   ...themeVars(model, "dark"),
   ...shadcnVars(),
   // No shadows in dark mode: elevation is shown with borders and lighter surfaces.
-  ...model.shadows.map((s) => [s.name, "0 0 #0000"] as [string, string]),
+  ...model.shadows.map((s) => [s.name, NO_SHADOW] as [string, string]),
 ];
 
 export const viewportVars = (model: Model) => {

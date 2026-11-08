@@ -1,0 +1,97 @@
+---
+title: Breadcrumb
+description: "مسار الوصول إلى الصفحة الحالية. يُطوى خلف زر حذف فوق خمسة مستويات وعلى الشاشات الضيقة، وينعكس الفاصل في العربية."
+sourceHash: 6d5bcfc36b99
+---
+
+<Preview name="breadcrumb-basic" title="مسار التنقل" />
+
+## التثبيت [#installation]
+
+<ComponentInstall name="breadcrumb" />
+
+## الاستخدام [#usage]
+
+```tsx title="page.tsx"
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbPage,
+} from "@/components/dga/breadcrumb";
+
+export function Trail() {
+  return (
+    <Breadcrumb aria-label="مسار التنقل">
+      <BreadcrumbItem>
+        <BreadcrumbLink href="/">الرئيسية</BreadcrumbLink>
+      </BreadcrumbItem>
+      <BreadcrumbItem>
+        <BreadcrumbLink href="/services">الخدمات</BreadcrumbLink>
+      </BreadcrumbItem>
+      <BreadcrumbItem>
+        <BreadcrumbPage>التجديد</BreadcrumbPage>
+      </BreadcrumbItem>
+    </Breadcrumb>
+  );
+}
+```
+
+يبيّن مسار التنقل موضع الصفحة الحالية في الموقع، ويتيح الرجوع إلى صفحة أعم. ضعه فوق عنوان الصفحة، واذكر المستويات من الصفحة الرئيسية نزولًا، وانهِه بالصفحة الحالية نصًا عاديًا. وهو يعرض المسار لا السجل: وللرجوع إلى الشاشة السابقة استخدم [Link](/docs/components/link) أو [Button](/docs/components/button). وسمِّ التنقل بـ `aria-label`.
+
+## البنية [#anatomy]
+
+- **Breadcrumb** (عنصر `nav` مع `ol`): خط Text sm، ويلتف إلى سطر جديد عند الحاجة.
+- **الرابط** (`BreadcrumbLink`): بلون `link-neutral`، ويُسطَّر عند المرور، وارتفاعه 24px.
+- **الصفحة الحالية** (`BreadcrumbPage`): بوزن Medium ولون `text-default` مع `aria-current="page"`. وليست رابطًا.
+- **الفاصل**: سهم صغير بلون `icon-default-400` مخفي عن قارئات الشاشة.
+- **زر الحذف**: يظهر بدل المستويات المطوية.
+
+## أمثلة [#examples]
+
+### من مستويين إلى خمسة [#two-to-five-levels]
+
+تُعرض المستويات الاثنان والثلاثة والأربعة كاملة. ولمسار DGA متغيرات لـ 2 و3 و4 و5 وأكثر من 5 مستويات؛ ويغطيها المكوّن نفسه.
+
+<Preview compact name="breadcrumb-basic" title="من مستويين إلى أربعة" />
+
+### المستويات المطوية [#folded-levels]
+
+فوق `maxItems` مستوى (الافتراضي 5) تُطوى المستويات بين الأول والأخيرين خلف زر حذف. وتحت عرض `sm` يحدث الطي نفسه من أربعة مستويات فما فوق ليتسع المسار للهاتف. والضغط على زر الحذف يعرض المسار كاملًا.
+
+<Preview compact name="breadcrumb-collapsed" title="سبعة مستويات مطوية" />
+
+تُقطع التسميات الطويلة بنقاط عند 12rem؛ أعطِ كل رابط `title` إن كان النص الكامل مهمًا.
+
+## RTL [#rtl]
+
+الفاصل سهم ينعكس، فيشير إلى اليسار في العربية، ويقع المستوى الأول على اليمين.
+
+<DirectionCompare name="breadcrumb-basic" title="مسار التنقل" />
+
+## إمكانية الوصول [#accessibility]
+
+| المفتاح | الإجراء |
+| --- | --- |
+| <kbd>Tab</kbd> | ينتقل إلى الرابط التالي، وإلى زر الحذف حين يظهر. |
+| <kbd>Enter</kbd> | يتبع الرابط، أو يعرض المسار كاملًا من زر الحذف. |
+| <kbd>Space</kbd> | يعرض المسار كاملًا من زر الحذف. |
+
+- معلم `nav` مسمّى بـ `aria-label` مع قائمة مرتبة من المستويات. وللصفحة الحالية `aria-current="page"`.
+- الفواصل زخرفة (`aria-hidden`) فتقرأ قارئة الشاشة المستويات قائمةً. وليست لازمة للتمييز بين المستويات.
+- نص الرابط بنسبة 4.5:1 على الصفحة فاتحًا وداكنًا. وزر الحذف زر حقيقي اسمه من `expandLabel`؛ فترجمه في الصفحات العربية.
+
+## مرجع API [#api-reference]
+
+<ApiReference component="breadcrumb" />
+
+## الاختلافات عن DGA [#deviations-from-dga]
+
+- لا يحدد Figma إلا لون الرابط والأيقونة وأعداد المستويات. وصُمّم هنا نمط الصفحة الحالية والطي.
+- يبقى الفاصل بلون `icon-default-400` من DGA. ونسبته 2.5:1 على الأبيض، دون 3:1 المطلوبة للرسوم، لأنه زخرفي.
+
+<ComponentDeviations component="breadcrumb" />
+
+## التباين [#contrast]
+
+<ComponentContrast component="breadcrumb" />

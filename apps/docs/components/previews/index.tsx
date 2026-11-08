@@ -9,6 +9,28 @@ import {
   ButtonVariants,
 } from "./button";
 import {
+  CardEffects,
+  CardExpandableDemo,
+  CardLinkDemo,
+  CardMediaDemo,
+  CardSelectableDemo,
+  DataTableBasic,
+  DataTableStates,
+  ListBasic,
+  ListNested,
+  ProgressCircleDemo,
+  ProgressLinear,
+  ProgressStates,
+  RatingBasic,
+  RatingStates,
+  StructuredListDemo,
+  StructuredListSelectable,
+  TableBasic,
+  TableCells,
+  TableSortFilter,
+  TableVariants,
+} from "./data-display";
+import {
   AvatarDemo,
   DividerDemo,
   FeaturedIconDemo,
@@ -81,6 +103,16 @@ import {
   TooltipStates,
 } from "./interactive-states";
 import { LinkInline, LinkVariants } from "./link";
+import {
+  BreadcrumbBasic,
+  BreadcrumbCollapsed,
+  PaginationBasic,
+  PaginationStates,
+  StepperHorizontal,
+  StepperInteractive,
+  StepperVertical,
+  TableOfContentsBasic,
+} from "./navigation";
 import { ServiceCard } from "./service-card";
 import { ServiceRequestForm } from "./service-request";
 import { SpinnerSizes } from "./spinner";
@@ -88,6 +120,34 @@ import { StatusColors } from "./status";
 import { StatusTags, TagDismiss, TagVariants } from "./tag";
 
 export const previews = {
+  "breadcrumb-basic": BreadcrumbBasic,
+  "breadcrumb-collapsed": BreadcrumbCollapsed,
+  "pagination-basic": PaginationBasic,
+  "pagination-states": PaginationStates,
+  "table-of-contents-basic": TableOfContentsBasic,
+  "card-effects": CardEffects,
+  "card-media": CardMediaDemo,
+  "card-link": CardLinkDemo,
+  "card-expandable": CardExpandableDemo,
+  "card-selectable": CardSelectableDemo,
+  "list-basic": ListBasic,
+  "list-nested": ListNested,
+  "structured-list": StructuredListDemo,
+  "structured-list-selectable": StructuredListSelectable,
+  "table-basic": TableBasic,
+  "table-variants": TableVariants,
+  "table-cells": TableCells,
+  "table-sort-filter": TableSortFilter,
+  "data-table-basic": DataTableBasic,
+  "data-table-states": DataTableStates,
+  "rating-basic": RatingBasic,
+  "rating-states": RatingStates,
+  "progress-linear": ProgressLinear,
+  "progress-states": ProgressStates,
+  "progress-circle": ProgressCircleDemo,
+  "stepper-horizontal": StepperHorizontal,
+  "stepper-vertical": StepperVertical,
+  "stepper-interactive": StepperInteractive,
   "service-card": ServiceCard,
   "status-colors": StatusColors,
   typography: TypographyDemo,

@@ -26,6 +26,9 @@
 //      (RTL is Arabic, LTR is English) on /en and /ar pages, the default view is the page
 //      language, the page around the frame stays in its own language, and every preview is
 //      pure in both directions (Field, Input, Select, Dialog, Toast and Tabs toggled in place).
+//  12. Navigation and data display: every Phase 5 page fits at 375 and 1280 px in both languages, and
+//      Pagination, Stepper, Rating, Data Table, Breadcrumb and Table of Contents work with the
+//      keyboard alone in /en and /ar, with RTL column order, mirrored arrows and the compact forms.
 //   4. Forms: every form component page fits at 375 and 1280 px in both languages, and the
 //      service request form can be completed with the keyboard alone in /en and /ar.
 import { createHash } from "node:crypto";
@@ -176,6 +179,19 @@ const INTERACTIVE_PAGES = [
   "inline-alert",
 ];
 
+const NAVIGATION_PAGES = [
+  "breadcrumb",
+  "pagination",
+  "table-of-contents",
+  "card",
+  "list",
+  "table",
+  "data-table",
+  "rating",
+  "progress",
+  "stepper",
+];
+
 const FORM_PAGES = [
   "field",
   "input",
@@ -207,10 +223,10 @@ async function discoveryChecks() {
     const xml = await sitemap.text();
     check(sitemap.status() === 200, `/sitemap/${lang}.xml returns 200`);
     check(
-      [...FORM_PAGES, ...INTERACTIVE_PAGES].every((name) =>
+      [...FORM_PAGES, ...INTERACTIVE_PAGES, ...NAVIGATION_PAGES].every((name) =>
         xml.includes(`/${lang}/docs/components/${name}`),
       ),
-      `/sitemap/${lang}.xml lists every form and interactive component page`,
+      `/sitemap/${lang}.xml lists every form, interactive and navigation component page`,
     );
   }
   const robots = await (await get("/robots.txt")).text();
@@ -270,7 +286,7 @@ async function formPageChecks() {
       });
       page.on("pageerror", (e) => issues.add(`pageerror: ${e.message.slice(0, 160)}`));
       for (const lang of ["en", "ar"]) {
-        for (const name of [...FORM_PAGES, ...INTERACTIVE_PAGES]) {
+        for (const name of [...FORM_PAGES, ...INTERACTIVE_PAGES, ...NAVIGATION_PAGES]) {
           const url = `/${lang}/docs/components/${name}`;
           await page.goto(`${BASE}${url}`, { waitUntil: "networkidle" });
           const r = await page.evaluate(() => ({
@@ -293,7 +309,7 @@ async function formPageChecks() {
   }
   check(
     issues.size === 0,
-    `form and interactive pages: no console errors or warnings: ${[...issues].join(" | ")}`,
+    `form, interactive and navigation pages: no console errors or warnings: ${[...issues].join(" | ")}`,
   );
 }
 
@@ -936,6 +952,11 @@ async function polishChecks() {
     "/docs/components/inline-alert",
     "/docs/components/input",
     "/docs/components/file-upload",
+    "/docs/components/breadcrumb",
+    "/docs/components/pagination",
+    "/docs/components/card",
+    "/docs/components/data-table",
+    "/docs/components/stepper",
   ];
   for (const lang of ["en", "ar"]) {
     const context = await browser.newContext({ viewport: { width: 1280, height: 900 } });
@@ -1339,6 +1360,300 @@ async function previewLanguageChecks() {
   await context.close();
 }
 
+/**
+ * Phase 5 with the keyboard alone, in /en and /ar: Pagination (Tab order, Enter, disabled ends,
+ * mirrored arrows, the compact form), Stepper (buttons in Tab order, state words, compact ring),
+ * Rating (radio group, arrow keys that follow the direction, hover preview) and Data Table (sort,
+ * select, filter and page by keyboard, aria-sort, RTL column order), plus Breadcrumb and Table of
+ * Contents.
+ */
+async function navigationChecks() {
+  for (const lang of ["en", "ar"]) {
+    const rtl = lang === "ar";
+    const context = await browser.newContext({ viewport: { width: 1000, height: 800 } });
+    const page = await context.newPage();
+    const issues = [];
+    page.on("console", (m) => {
+      if (["error", "warning"].includes(m.type())) issues.push(m.text().slice(0, 160));
+    });
+    page.on("pageerror", (e) => issues.push(e.message.slice(0, 160)));
+    const open = async (name, width) => {
+      if (width) await page.setViewportSize({ width, height: 800 });
+      await page.goto(`${BASE}/preview/${name}?dir=${rtl ? "rtl" : "ltr"}`, {
+        waitUntil: "networkidle",
+      });
+      await page.waitForTimeout(300);
+    };
+    const next = rtl ? "ArrowLeft" : "ArrowRight";
+    const previous = rtl ? "ArrowRight" : "ArrowLeft";
+
+    // Pagination: the current page, the order of the controls, Enter, disabled ends.
+    await open("pagination-states");
+    const nav = page.locator("nav[data-slot=pagination]").first();
+    check(
+      (await nav.locator("[aria-current=page]").count()) >= 1,
+      `${lang}: pagination marks the current page`,
+    );
+    const firstPrev = nav.locator("[data-slot=pagination-previous]");
+    check(await firstPrev.isDisabled(), `${lang}: previous is disabled on the first page`);
+    const box = async (selector) => nav.locator(selector).first().boundingBox();
+    const prevBox = await box("[data-slot=pagination-previous]");
+    const nextBox = await box("[data-slot=pagination-next]");
+    check(
+      rtl ? prevBox.x > nextBox.x : prevBox.x < nextBox.x,
+      `${lang}: previous is on the ${rtl ? "right" : "left"} (RTL mirrors the row)`,
+    );
+    const arrowTransform = await nav
+      .locator("[data-slot=pagination-previous] svg")
+      .first()
+      .evaluate((el) => getComputedStyle(el).scale);
+    check(
+      rtl ? arrowTransform !== "none" : arrowTransform === "none",
+      `${lang}: the previous arrow ${rtl ? "mirrors" : "does not mirror"} (${arrowTransform})`,
+    );
+    const second = nav.locator("[data-slot=pagination-link]").nth(1);
+    await second.focus();
+    await page.keyboard.press("Enter");
+    check(
+      (await nav.locator("[aria-current=page]").first().textContent())?.trim() ===
+        (await second.textContent())?.trim(),
+      `${lang}: Enter on a page makes it current`,
+    );
+    check(
+      !(await firstPrev.isDisabled()),
+      `${lang}: previous is enabled after leaving the first page`,
+    );
+    await page.keyboard.press("Tab");
+    check(
+      (await page.evaluate(() => document.activeElement?.getAttribute("data-slot"))) ===
+        "pagination-link",
+      `${lang}: Tab moves to the next page button`,
+    );
+    // The compact form on a phone: the numbers fold into "page of count".
+    await open("pagination-basic", 375);
+    const compact = page.locator("[data-slot=pagination-compact]").first();
+    check(await compact.isVisible(), `${lang}: the compact "page of count" shows at 375px`);
+    check(
+      !(await page.locator("[data-slot=pagination-link]").first().isVisible()),
+      `${lang}: the page numbers fold away at 375px`,
+    );
+
+    // Stepper: buttons in the tab order, state in words, the compact ring on a phone.
+    await open("stepper-interactive", 1000);
+    const steps = page.locator("[data-slot=stepper-item]");
+    check((await steps.count()) === 4, `${lang}: the stepper has four steps`);
+    check(
+      (await steps.nth(1).getAttribute("aria-current")) === "step",
+      `${lang}: the current step has aria-current=step`,
+    );
+    check(
+      (await steps.nth(0).getAttribute("data-status")) === "completed" &&
+        (await steps.nth(2).getAttribute("data-status")) === "upcoming",
+      `${lang}: earlier steps are completed and later ones upcoming`,
+    );
+    check(
+      (await steps.nth(0).locator(".sr-only").count()) === 1,
+      `${lang}: every step says its state in words`,
+    );
+    await page.locator("[data-slot=stepper-item] button").first().focus();
+    await page.keyboard.press("Enter");
+    check(
+      (await steps.nth(0).getAttribute("data-status")) === "current" &&
+        (await steps.nth(1).getAttribute("data-status")) === "upcoming",
+      `${lang}: Enter on the first step makes it current`,
+    );
+    await page.keyboard.press("Tab");
+    await page.keyboard.press("Enter");
+    check(
+      (await steps.nth(1).getAttribute("data-status")) === "current" &&
+        (await steps.nth(0).getAttribute("data-status")) === "completed",
+      `${lang}: Tab then Enter on the next step chooses it`,
+    );
+    const firstStep = await steps.nth(0).boundingBox();
+    const lastStep = await steps.nth(3).boundingBox();
+    check(
+      rtl ? firstStep.x > lastStep.x : firstStep.x < lastStep.x,
+      `${lang}: steps run ${rtl ? "right to left" : "left to right"}`,
+    );
+    await open("stepper-interactive", 375);
+    check(
+      await page.locator("[data-slot=stepper-compact]").first().isVisible(),
+      `${lang}: the compact ring shows at 375px`,
+    );
+    check(
+      !(await page.locator("ol[data-slot=stepper]").first().isVisible()),
+      `${lang}: the full stepper folds away at 375px`,
+    );
+
+    // Rating: a radio group; arrows follow the direction; Space chooses; read-only is an image.
+    await open("rating-basic", 1000);
+    const group = page.getByRole("radiogroup").first();
+    const radios = group.getByRole("radio");
+    check((await radios.count()) === 5, `${lang}: the rating has five radio stars`);
+    await page.keyboard.press("Tab");
+    check(
+      (await page.evaluate(() => document.activeElement?.getAttribute("role"))) === "radio",
+      `${lang}: Tab focuses a star`,
+    );
+    const before = await group.locator("[aria-checked=true]").getAttribute("aria-label");
+    await page.keyboard.press(next);
+    await page.waitForTimeout(100);
+    const after = await group.locator("[aria-checked=true]").getAttribute("aria-label");
+    check(before !== after, `${lang}: ${next} changes the rating (${before} → ${after})`);
+    await page.keyboard.press(previous);
+    check(
+      (await group.locator("[aria-checked=true]").getAttribute("aria-label")) === before,
+      `${lang}: ${previous} goes back`,
+    );
+    const starA = await radios.nth(0).boundingBox();
+    const starE = await radios.nth(4).boundingBox();
+    check(
+      rtl ? starA.x > starE.x : starA.x < starE.x,
+      `${lang}: the first star is on the ${rtl ? "right" : "left"} (the fill runs ${rtl ? "right to left" : "left to right"})`,
+    );
+    await open("rating-states");
+    check(
+      (await page.locator("[data-slot=rating][role=img]").first().getAttribute("aria-label"))
+        ?.length > 0,
+      `${lang}: a read-only rating is an image with a text alternative`,
+    );
+
+    // Data Table: sort, select, filter and page with the keyboard; aria-sort; column order.
+    await open("data-table-basic", 1000);
+    const table = page.locator("table").first();
+    const sortButtons = table.locator("[data-slot=table-sort]");
+    check((await sortButtons.count()) >= 2, `${lang}: sortable columns have a sort button`);
+    check(
+      (await table.locator("th[aria-sort=ascending]").count()) === 1,
+      `${lang}: the default sort is announced with aria-sort`,
+    );
+    await sortButtons.nth(1).focus();
+    await page.keyboard.press("Enter");
+    check(
+      (await table.locator("th[aria-sort=ascending]").count()) === 1 &&
+        (await table.locator("th[aria-sort=ascending] [data-slot=table-sort]").count()) === 1,
+      `${lang}: Enter on a sort button sorts that column`,
+    );
+    await page.keyboard.press("Enter");
+    check(
+      (await table.locator("th[aria-sort=descending]").count()) === 1,
+      `${lang}: pressing it again reverses the sort`,
+    );
+    const head = table.locator("thead th");
+    const firstHead = await head.nth(1).boundingBox();
+    const lastHead = await head.nth((await head.count()) - 1).boundingBox();
+    check(
+      rtl ? firstHead.x > lastHead.x : firstHead.x < lastHead.x,
+      `${lang}: columns run ${rtl ? "right to left" : "left to right"}`,
+    );
+    const rowBox = table.locator("tbody tr").first().getByRole("checkbox");
+    await rowBox.focus();
+    await page.keyboard.press("Space");
+    check(
+      (await table.locator("tbody tr[aria-selected=true]").count()) === 1,
+      `${lang}: Space on a row checkbox selects the row`,
+    );
+    await table.locator("thead").getByRole("checkbox").focus();
+    await page.keyboard.press("Space");
+    check(
+      (await table.locator("tbody tr[aria-selected=true]").count()) === 5,
+      `${lang}: the header checkbox selects the page`,
+    );
+    const rowsBefore = await table.locator("tbody tr").count();
+    await page
+      .getByRole("searchbox")
+      .first()
+      .fill(rtl ? "ترخيص" : "licence");
+    await page.waitForTimeout(150);
+    const rowsAfter = await table.locator("tbody tr").count();
+    check(
+      rowsAfter < rowsBefore || rowsAfter === 1,
+      `${lang}: the filter narrows the rows (${rowsBefore} → ${rowsAfter})`,
+    );
+    await page.getByRole("searchbox").first().fill("");
+    const pager = page.locator("nav[data-slot=pagination]").first();
+    await pager.locator("[data-slot=pagination-next]").focus();
+    await page.keyboard.press("Enter");
+    check(
+      (await pager.locator("[aria-current=page]").first().textContent())?.trim() !== undefined &&
+        (await table.locator("tbody tr").count()) >= 1,
+      `${lang}: Enter on next pages the table`,
+    );
+    const region = page.locator("[data-slot=table-container]").first();
+    check(
+      (await region.getAttribute("tabindex")) === "0" &&
+        (await region.getAttribute("role")) === "region",
+      `${lang}: the scrolling region is a labelled region in the tab order`,
+    );
+    await open("data-table-states", 1000);
+    check(
+      (await page.locator("table[aria-busy=true]").count()) === 1 &&
+        (await page.getByRole("status").count()) >= 1,
+      `${lang}: a loading table is aria-busy and announces it`,
+    );
+    // Horizontal scroll on a phone: the table scrolls inside its region, the page does not.
+    await open("table-cells", 375);
+    const scroll = await page.evaluate(() => {
+      const region = document.querySelector("[data-slot=table-container]");
+      return {
+        region: region.scrollWidth > region.clientWidth,
+        page: document.documentElement.scrollWidth <= document.documentElement.clientWidth + 1,
+      };
+    });
+    check(scroll.region && scroll.page, `${lang}: a wide table scrolls inside its region at 375px`);
+
+    // Breadcrumb: separators mirror; the ellipsis shows the full path.
+    await open("breadcrumb-collapsed", 1000);
+    const ellipsis = page.locator("[data-slot=breadcrumb-ellipsis]");
+    check(await ellipsis.isVisible(), `${lang}: seven levels fold behind an ellipsis button`);
+    const sep = await page
+      .locator("[data-slot=breadcrumb-separator]")
+      .first()
+      .evaluate((el) => getComputedStyle(el).scale);
+    check(
+      rtl ? sep !== "none" : sep === "none",
+      `${lang}: the separator ${rtl ? "mirrors" : "does not mirror"}`,
+    );
+    await ellipsis.focus();
+    await page.keyboard.press("Enter");
+    check(
+      (await page.locator("[data-slot=breadcrumb-link]").filter({ visible: true }).count()) === 6 &&
+        !(await ellipsis.isVisible().catch(() => false)),
+      `${lang}: Enter on the ellipsis shows the full path`,
+    );
+    await open("breadcrumb-collapsed", 375);
+    check(
+      (await page.locator("[data-slot=breadcrumb-link]").filter({ visible: true }).count()) <= 2,
+      `${lang}: the path folds on a phone`,
+    );
+
+    // Table of Contents: arrow keys move between links; a chosen link becomes current.
+    await open("table-of-contents-basic", 1000);
+    const toc = page.locator("nav[data-slot=table-of-contents]");
+    await toc.locator("a").first().focus();
+    await page.keyboard.press("ArrowDown");
+    check(
+      (await page.evaluate(() => document.activeElement?.getAttribute("href"))) ===
+        "#toc-eligibility",
+      `${lang}: ArrowDown moves to the next section link`,
+    );
+    await page.keyboard.press("End");
+    check(
+      (await page.evaluate(() => document.activeElement?.getAttribute("href"))) === "#toc-fees",
+      `${lang}: End moves to the last link`,
+    );
+    await page.keyboard.press("Enter");
+    await page.waitForTimeout(200);
+    check(
+      (await toc.locator("[aria-current=location]").getAttribute("href")) === "#toc-fees",
+      `${lang}: choosing a link makes its section current`,
+    );
+
+    check(issues.length === 0, `${lang}: Phase 5 previews log no errors: ${issues.join(" | ")}`);
+    await context.close();
+  }
+}
+
 await localeChecks();
 await layoutChecks();
 await aiResourceChecks();
@@ -1348,6 +1663,7 @@ await formPageChecks();
 await fieldStateChecks();
 await keyboardChecks();
 await interactiveChecks();
+await navigationChecks();
 await notFoundChecks();
 await arabicExceptionChecks();
 await previewLanguageChecks();

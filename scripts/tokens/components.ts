@@ -7,6 +7,7 @@
 import { chromePairs } from "./chrome";
 import { formPairs } from "./forms";
 import { interactivePairs } from "./interactive";
+import { navigationPairs } from "./navigation";
 import type { Mode } from "./source";
 
 export type ComponentPair = {
@@ -517,5 +518,6 @@ export function componentPairs(): ComponentPair[] {
     ...avatarPairs(),
     ...formPairs(),
     ...interactivePairs(),
+    ...navigationPairs(),
   ];
 }

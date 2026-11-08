@@ -46,6 +46,20 @@ export const INTERACTIVE_COMPONENTS = [
   "inline-alert",
 ];
 
+/** The navigation and data display components, listed under "Navigation and data display". */
+export const NAVIGATION_COMPONENTS = [
+  "breadcrumb",
+  "pagination",
+  "table-of-contents",
+  "card",
+  "list",
+  "table",
+  "data-table",
+  "rating",
+  "progress",
+  "stepper",
+];
+
 /** Components that are used together, for the "Related" row on each component page. */
 export const RELATED: Record<string, string[]> = {
   button: ["link", "spinner", "badge"],
@@ -77,6 +91,16 @@ export const RELATED: Record<string, string[]> = {
   toast: ["notification", "inline-alert", "dialog"],
   notification: ["inline-alert", "toast"],
   "inline-alert": ["notification", "toast", "field"],
+  breadcrumb: ["pagination", "table-of-contents", "link"],
+  pagination: ["data-table", "table", "breadcrumb"],
+  "table-of-contents": ["breadcrumb", "tabs", "link"],
+  card: ["list", "rating", "button"],
+  list: ["table", "card", "link"],
+  table: ["data-table", "pagination", "list"],
+  "data-table": ["table", "pagination", "checkbox"],
+  rating: ["card", "progress", "inline-alert"],
+  progress: ["stepper", "spinner", "notification"],
+  stepper: ["progress", "tabs", "pagination"],
 };
 
 export const FIGMA_URL =

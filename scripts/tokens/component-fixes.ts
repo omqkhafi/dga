@@ -104,6 +104,27 @@ COMPONENT_OVERRIDES.push({
   component: "tag",
 });
 
+// Phase 5: Table rows. Figma gives the row and the alternate row the same light fill (f9fafb), and
+// hovers to f3f4f6, where the primary link is 4.32:1 (needs 4.5:1).
+COMPONENT_OVERRIDES.push(
+  {
+    token: "table-background-row",
+    mode: "light",
+    to: "{colors-base-white}",
+    reason:
+      "Figma gives the row and the alternate row the same fill (f9fafb), so alternating rows could not be seen. Rows are white and the alternate row keeps f9fafb.",
+    component: "table",
+  },
+  {
+    token: "table-background-row-hovered",
+    mode: "light",
+    to: "{background-primary-25}",
+    reason:
+      "The Figma hover fill (f3f4f6) puts the primary link at 4.32:1, below the 4.5:1 a link needs. A faint brand tint keeps the link at 4.61:1 and still tells the hovered row from the white and alternate ones.",
+    component: "table",
+  },
+);
+
 export const COMPONENT_ADDITIONS: Addition[] = [
   // Neutral buttons in dark mode: the fills are one or two steps above the page, so their
   // edge disappears. A border one step above the fill keeps it visible; none in light mode.

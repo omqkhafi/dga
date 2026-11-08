@@ -5,6 +5,8 @@ description: DGA primitives, semantic tokens for light and dark, and their WCAG 
 
 DGA colours come in two layers. **Primitives** are the raw palettes (SA Flag green, gold, lavender, neutral, status). **Semantic tokens** (`--text-primary`, `--background-body` …) point at primitives and switch between light and dark. Use semantic tokens in components so dark mode works on its own.
 
+**Hex in Figma, OKLCH in the CSS.** The Figma hex values are the source of truth. The token CSS writes every colour (primitives, semantic tokens, the shadcn variables and the shadow colours, in light and dark) as `oklch()`, which is the format shadcn and Tailwind v4 use. The build checks that every `oklch()` value converts back to its exact source hex (8-bit sRGB) and that translucent colours keep their opacity, so nothing looks different. The tables below show the hex next to the OKLCH value, and the contrast audit still runs on the hex values.
+
 <Preview name="service-card" title="Semantic tokens in context" />
 
 <Preview name="status-colors" title="Status colours and fills" />

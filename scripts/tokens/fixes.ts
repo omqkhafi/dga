@@ -63,6 +63,19 @@ export const RENAMES: { from: string; to: string; tokens: string; reason: string
     tokens: "--prefix-suffix-lable-icon",
     reason: "Typo: lable → label.",
   },
+  {
+    from: "upcomming",
+    to: "upcoming",
+    tokens:
+      "--stepper-button-upcomming, --stepper-button-upcomming-hovered, --stepper-line-upcomming, --stepper-line-upcomming-hovered",
+    reason: 'Typo: upcomming → upcoming (also in the Figma state name "Upcomming").',
+  },
+  {
+    from: "boarder",
+    to: "border",
+    tokens: "--table-boarder-row-selected-hovered",
+    reason: "Typo: boarder → border.",
+  },
   // Physical → logical. Figma's LTR variants call the start side "left".
   {
     from: "padding-left-right",
@@ -349,6 +362,167 @@ export const FIXED_TEXT_TOKENS = /^(typo-size|line-heights|paragraph-spacing)-te
 // Everything else that is not a token value change.
 // ---------------------------------------------------------------------------
 
+// ---------------------------------------------------------------------------
+// Phase 5 (0.5.0): Breadcrumb, Pagination, Table of Content, Card, List, Table, Data Table,
+// Rating, Progress and Stepper. Bugs and gaps found reading the Figma specs and the
+// design.dga.gov.sa CSS against the WCAG audit. Token overrides made for these components
+// (the Table row fills, the dark Stepper and Progress fills, the renamed tokens) are listed
+// automatically by the generator under Contrast, Dark theme and Naming.
+// ---------------------------------------------------------------------------
+
+export const NAVIGATION_DEVIATIONS: Deviation[] = [
+  {
+    area: "Naming",
+    item: "Figma variant names: Meduim, Sahdow, Upcomming, Lable",
+    original:
+      'Pagination Size "Meduim"; Card Effect "With Sahdow"; Progress Indicator State "Upcomming"; Structured List "Lable AR".',
+    ours: "md, shadow, upcoming, label. Sizes are sm, md and lg like every other component.",
+    reason: "Typos in the Figma variant names. Prop values in code are spelled correctly.",
+    status: "fixed",
+  },
+  {
+    area: "Components",
+    item: "Stepper: the upcoming step was 1.48:1",
+    original:
+      "Upcoming: ring, number and title in stepper-button-upcomming (gray-300, #d2d6db), and the Vertical upcoming title in stepper-line-upcomming. 1.48:1 on white.",
+    ours: "Ring icon-default-500 (4.78:1), number text-primary-paragraph, title stepper-text-tertiary. The connector line keeps the DGA gray.",
+    reason:
+      "Text needs 4.5:1 and a state indicator 3:1 (WCAG 1.4.3, 1.4.11). The DGA gray is fine for the decorative line, not for the number, title or ring.",
+    status: "fixed",
+    component: "stepper",
+  },
+  {
+    area: "Components",
+    item: "Stepper: error state, radial form and CSS",
+    original:
+      "Progress Indicator has Current, Completed and Upcomming; the Radial Stepper is a separate component. The CSS hard-codes --colors-brand-600 and a 62px vertical circle for the contribution stepper.",
+    ours: "Stepper has completed, current, upcoming and error (a red circle with an alert icon and the title in text-error). Below the sm width a horizontal stepper folds into the Radial Stepper form: a ring with the step count, the step's name and the next one. The brand tokens are used, not the hex.",
+    reason:
+      "A process with a problem step needs a state (WCAG 3.3.1), and a nine-step horizontal stepper does not fit a phone. Each step also says its state in words for screen readers, not just by colour.",
+    status: "fixed",
+    component: "stepper",
+  },
+  {
+    area: "Components",
+    item: "Progress: bar height, status icon and indeterminate",
+    original:
+      "Progress Bar frames are 320x50, 56 and 68 for Small, Medium and Large; the bar's own height, the track colour and an indeterminate state are not given. Success and Error variants show an on-colour icon with no state in the CSS.",
+    ours: "The bar is 8, 12 and 16px high on a border-neutral-secondary track. Success and Error add a round on-colour icon beside the helper text. value={null} is indeterminate (a pulsing bar, still when motion is reduced; a turning arc on the circle).",
+    reason:
+      "The frame heights fit these bars with the label and helper text. The fill colours come from the icon-* tokens, which flip in dark mode, because the DGA background-primary, -success and -error fills are 1.9 to 2.2:1 on the dark track (needs 3:1).",
+    status: "fixed",
+    component: "progress",
+  },
+  {
+    area: "Components",
+    item: "Rating: gold fill, hard-coded colour and interaction",
+    original:
+      ".rating colour #faaf00 (hard-coded); Figma background-secondary (#dba102) is 2.30:1 on white. Whole stars only, no hover, focus or read-only state.",
+    ours: "The fill is background-secondary (or background-primary with brand); every star is outlined in icon-warning (5.43:1) or icon-primary, and an empty star in icon-default-500. Interactive ratings are a radio group with arrow keys, hover preview and a focus ring; read-only ones are an image with a text alternative. Whole stars only, as DGA defines (no half stars).",
+    reason:
+      "A graphical object that carries information needs 3:1 (WCAG 1.4.11): the outline gives the star its shape at 3:1 or more where the gold fill alone cannot. A rating also has to work by keyboard and be announced.",
+    status: "fixed",
+    component: "rating",
+  },
+  {
+    area: "Components",
+    item: "List: physical margins and hard-coded colours",
+    original:
+      ".list { margin-left: 24px }, .list--unordered>ul { margin-left: 18px } and list colours #1b8354, #0d121c and #fff written as hex, with --Link-2-link-default_on-color as the on-colour.",
+    ours: "Logical margins (ms-6), so a nested list indents from the start side in Arabic. Colours are text-primary, text-default and text-oncolor-primary with icon-primary, icon-default and icon-oncolor. Ordered markers are 1- then a-, with Arabic letters in Arabic.",
+    reason:
+      "A margin-left puts the indent on the wrong side in RTL, and hex values do not follow dark mode.",
+    status: "fixed",
+    component: "list",
+  },
+  {
+    area: "Components",
+    item: "Card: border fallback, disabled overlay and link pattern",
+    original:
+      ".card { border: 2px solid var(--Colors-Base-black, #fff) } (a white fallback for a black token); .card.disabled fades a gray overlay at .3 opacity over a transparent card; max-width 350px.",
+    ours: "A transparent 1px border (a neutral stroke with the stroke effect) and a 2px outline for keyboard focus, so focus does not move the layout. Disabled uses the Figma tokens: background-disabled, text-default-disabled and border-disabled. No fixed width. The clickable card is a real link in the title whose click area is stretched over the card, with the actions raised above it.",
+    reason:
+      "The Figma tokens are the source of truth where the CSS disagrees. A card that is only an onclick div has no link semantics (WCAG 4.1.2); the stretched link keeps one link named by the title and a focus ring around the whole card.",
+    status: "fixed",
+    component: "card",
+  },
+  {
+    area: "Components",
+    item: "Card: selected state",
+    original:
+      "Selectable Selected = True differs from False only by the checkbox. Figma gives the focused fill as neutral-50 with a black border.",
+    ours: "A selected card also gets a 1px border-primary (4.75:1) so the selection does not depend on a 20px checkbox alone.",
+    reason: "WCAG 1.4.11: the selected state is a state indicator and needs a clear cue.",
+    status: "fixed",
+    component: "card",
+  },
+  {
+    area: "Components",
+    item: "Pagination: no states, selected style or small-screen form",
+    original:
+      "Only sizes (24, 32, 40px) and a gap of 8px; no hover, pressed, selected or disabled styles, no ellipsis or previous and next, and no behaviour on small screens.",
+    ours: "Items are transparent with the button neutral hover and pressed fills; the current page is the primary fill with an on-colour label; previous and next are chevrons that mirror in RTL and disable at the ends; skipped pages are an ellipsis; below the sm width the numbers fold into a compact 'page of count'.",
+    reason:
+      "A pagination without a current-page style cannot be used. The states follow the Button, which DGA does define.",
+    status: "fixed",
+    component: "pagination",
+  },
+  {
+    area: "Components",
+    item: "Breadcrumb: separator, current page and collapse",
+    original:
+      "Only link-neutral text (Text sm), an icon-default-400 icon (2.5:1 on white), and 2, 3, 4, 5 and more-than-5 levels. No current-page style, no collapse behaviour.",
+    ours: "The chevron separator stays icon-default-400: it is decorative and hidden from screen readers. The current page is Medium text-default with aria-current. Above five levels, and below the sm width, the levels between the first and the last two fold behind an ellipsis button that shows the full path.",
+    reason:
+      "A chain of five or more levels overflows a phone, and the Figma '>5' variant implies a fold. The ellipsis is a real button, reachable by keyboard.",
+    status: "fixed",
+    component: "breadcrumb",
+  },
+  {
+    area: "Components",
+    item: "Table of Content: width and height rule",
+    original:
+      ".table-of-content is 228px wide, and a second rule sets width: 100% and height: 100vh, which overrides it.",
+    ours: "228px at most (max-w-57) and as tall as its items. The active section is Semibold text-default and aria-current='location'; Up, Down, Home and End move between links.",
+    reason:
+      "A 100vh column cannot sit beside content that scrolls, and Figma shows the 228px width.",
+    status: "fixed",
+    component: "table-of-contents",
+  },
+  {
+    area: "Components",
+    item: "Table: compact sizes, sort and filter buttons",
+    original:
+      "Compact is a boolean with no heights; the Sort and Filter header buttons are 20px with five states and no accessible name or aria-sort.",
+    ours: "Rows 64px (48px compact), header 48px (40px compact). TableSortButton and TableFilterButton are real buttons with an accessible name; the heading carries aria-sort. The table scrolls sideways inside a region that takes keyboard focus.",
+    reason:
+      "A sortable column must say how it is sorted (WCAG 4.1.2), and scrolling content must be reachable without a mouse (WCAG 2.1.1).",
+    status: "fixed",
+    component: "table",
+  },
+  {
+    area: "Components",
+    item: "Structured List: selectable rows",
+    original:
+      "Selectable rows have Default, Hovered, Focused and Disabled states but no control or semantics; the focus border is table-cell-border-inverse.",
+    ours: "A selectable list is a radio group: each row has a radio button (named by the row's label), the arrow keys move between rows, and the chosen row uses table-background-row-select. The focus ring is table-cell-border-inverse, inside the row.",
+    reason:
+      "A choice among rows needs a form control behind it for keyboard and screen reader users.",
+    status: "fixed",
+    component: "list",
+  },
+  {
+    area: "Components",
+    item: "Data Table: new, no DGA source",
+    original: "DGA has a Table and a Pagination and no data table.",
+    ours: "DataTable composes the DGA Table and Pagination with TanStack Table: sorting, a global filter, row selection, pagination, loading rows, an empty state and sideways scrolling. It uses only the Table tokens.",
+    reason:
+      "Listed here so nobody looks for it in Figma. It adds no colour: every token is one the Table already uses.",
+    status: "fixed",
+    component: "data-table",
+  },
+];
+
 export const OTHER_DEVIATIONS: Deviation[] = [
   {
     area: "Contrast",
@@ -364,7 +538,7 @@ export const OTHER_DEVIATIONS: Deviation[] = [
     area: "Dark theme",
     item: "--shadow-* (dark)",
     original: "Figma effect styles, same in both modes",
-    ours: "none (0 0 #0000)",
+    ours: "none (0 0 oklch(0 0 0 / 0))",
     reason:
       "Shadows are invisible on near-black surfaces and only add haze. In dark mode elevation is a lighter surface (raised 850) plus a border.",
   },
@@ -505,4 +679,5 @@ export const OTHER_DEVIATIONS: Deviation[] = [
       "White itself is only 4.57–4.83:1 on the 600-level fills, so no lower opacity can pass there. On deep fills 80% and 70% white pass AA.",
   },
   ...COMPONENT_DEVIATIONS,
+  ...NAVIGATION_DEVIATIONS,
 ];

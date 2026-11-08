@@ -61,6 +61,21 @@ const INTERACTIVE_ITEMS = [
   "inline-alert",
 ];
 
+/** The Phase 5 navigation and data display items. Stock shadcn has its own breadcrumb, card,
+ *  pagination, progress and table, so the collision fixture installs both side by side. */
+const NAVIGATION_ITEMS = [
+  "breadcrumb",
+  "pagination",
+  "table-of-contents",
+  "card",
+  "list",
+  "table",
+  "data-table",
+  "rating",
+  "progress",
+  "stepper",
+];
+
 const work = mkdtempSync(join(tmpdir(), "dga-install-"));
 const registryDir = join(work, "serve");
 const failures: string[] = [];
@@ -205,6 +220,9 @@ try {
       for (const item of INTERACTIVE_ITEMS) {
         check(components.includes(item), `${label}: the registry has the interactive item ${item}`);
       }
+      for (const item of NAVIGATION_ITEMS) {
+        check(components.includes(item), `${label}: the registry has the navigation item ${item}`);
+      }
       if (add.exitCode !== 0) console.error(add.stderr.toString() || add.stdout.toString());
       for (const c of components) {
         const source = reader(app).text(`src/components/dga/${c}.tsx`);
@@ -304,19 +322,82 @@ export default function Page() {
     await build(label, app);
   }
 
+  // 4c. the Data Table on its own: Table, Pagination, Checkbox and Skeleton come with it, and so
+  //     does the @tanstack/react-table dependency
+  {
+    const label = "dga-data-table";
+    const app = await fresh(label);
+    await $`bunx ${shadcn} init ${url}/r/dga.json --yes --no-monorepo < /dev/null`.cwd(app).quiet();
+    const add = await $`bunx ${shadcn} add @dga/data-table --yes < /dev/null`
+      .cwd(app)
+      .nothrow()
+      .quiet();
+    check(add.exitCode === 0, `${label}: shadcn add @dga/data-table`);
+    if (add.exitCode !== 0) console.error(add.stderr.toString() || add.stdout.toString());
+    const r = reader(app);
+    for (const file of ["data-table", "table", "pagination", "checkbox", "skeleton"]) {
+      check(
+        existsSync(join(app, `src/components/dga/${file}.tsx`)),
+        `${label}: ${file}.tsx was installed with data-table`,
+      );
+    }
+    const pkg = r.json<Pkg>("package.json");
+    check("@tanstack/react-table" in pkg.dependencies, `${label}: @tanstack/react-table installed`);
+    const source = r.text("src/components/dga/data-table.tsx");
+    check(
+      source.includes('"@/components/dga/pagination"'),
+      `${label}: data-table imports @dga/pagination`,
+    );
+    check(!/\bcn-[a-z]/.test(source.replace(/data-slot=|"cn"/g, "")), `${label}: cn-* inlined`);
+    writeFileSync(
+      join(app, "src/app/page.tsx"),
+      `"use client";
+import type { ColumnDef } from "@tanstack/react-table";
+import { DataTable } from "@/components/dga/data-table";
+
+type Row = { id: string; name: string };
+const columns: ColumnDef<Row>[] = [
+  { accessorKey: "id", header: "ID" },
+  { accessorKey: "name", header: "Name" },
+];
+
+export default function Page() {
+  return <DataTable aria-label="Rows" columns={columns} data={[{ id: "1", name: "A" }]} selectable />;
+}
+`,
+    );
+    const tsc = await $`bunx tsc --noEmit -p .`.cwd(app).nothrow().quiet();
+    check(tsc.exitCode === 0, `${label}: the project typechecks`);
+    if (tsc.exitCode !== 0) console.error(tsc.stdout.toString());
+    await build(label, app);
+  }
+
   // 5. a project that already has stock shadcn button, input and dialog in components/ui:
   //    installing @dga items must not touch them, and must not import them.
   {
     const label = "dga-collision";
     const app = await fresh(label);
     await $`bunx ${shadcn} init --defaults --yes --no-monorepo < /dev/null`.cwd(app).quiet();
-    const stock = await $`bunx ${shadcn} add button input dialog --yes < /dev/null`
-      .cwd(app)
-      .nothrow()
-      .quiet();
-    check(stock.exitCode === 0, `${label}: stock shadcn add button input dialog`);
+    const stock =
+      await $`bunx ${shadcn} add button input dialog table card pagination breadcrumb progress --yes < /dev/null`
+        .cwd(app)
+        .nothrow()
+        .quiet();
+    check(
+      stock.exitCode === 0,
+      `${label}: stock shadcn add button input dialog table card pagination breadcrumb progress`,
+    );
     const r = reader(app);
-    const stockFiles = ["button", "input", "dialog"].map((n) => `src/components/ui/${n}.tsx`);
+    const stockFiles = [
+      "button",
+      "input",
+      "dialog",
+      "table",
+      "card",
+      "pagination",
+      "breadcrumb",
+      "progress",
+    ].map((n) => `src/components/ui/${n}.tsx`);
     const before = stockFiles.map((f) => r.text(f));
     // Register @dga by hand, as a user with an existing shadcn project would.
     const config = r.json<{ registries: Record<string, string> }>("components.json");
@@ -325,16 +406,31 @@ export default function Page() {
     // --overwrite answers the one prompt left: lib/utils.ts (both export cn). With the old
     // components/ui path it would also have replaced the stock files.
     const add =
-      await $`bunx ${shadcn} add @dga/button @dga/field @dga/dialog --yes --overwrite < /dev/null`
+      await $`bunx ${shadcn} add @dga/button @dga/field @dga/dialog @dga/table @dga/card @dga/pagination @dga/breadcrumb @dga/progress --yes --overwrite < /dev/null`
         .cwd(app)
         .nothrow()
         .quiet();
-    check(add.exitCode === 0, `${label}: shadcn add @dga/button @dga/field @dga/dialog`);
+    check(
+      add.exitCode === 0,
+      `${label}: shadcn add @dga/button @dga/field @dga/dialog @dga/table @dga/card @dga/pagination @dga/breadcrumb @dga/progress`,
+    );
     if (add.exitCode !== 0) console.error(add.stderr.toString() || add.stdout.toString());
     stockFiles.forEach((f, i) => {
       check(r.text(f) === before[i], `${label}: ${f} is byte-identical after installing @dga`);
     });
-    for (const n of ["button", "field", "dialog", "spinner"]) {
+    const dgaFiles = [
+      "button",
+      "field",
+      "dialog",
+      "spinner",
+      "table",
+      "card",
+      "pagination",
+      "breadcrumb",
+      "progress",
+      "checkbox",
+    ];
+    for (const n of dgaFiles) {
       check(
         existsSync(join(app, `src/components/dga/${n}.tsx`)),
         `${label}: components/dga/${n}.tsx`,
@@ -344,7 +440,7 @@ export default function Page() {
       !existsSync(join(app, "src/components/ui/field.tsx")),
       `${label}: no @dga file in components/ui`,
     );
-    for (const n of ["button", "field", "dialog", "spinner"]) {
+    for (const n of dgaFiles) {
       const source = r.text(`src/components/dga/${n}.tsx`);
       check(!source.includes("components/ui"), `${label}: ${n}.tsx never imports components/ui`);
     }

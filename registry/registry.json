@@ -641,6 +641,194 @@
           "target": "components/dga/inline-alert.tsx"
         }
       ]
+    },
+    {
+      "name": "breadcrumb",
+      "type": "registry:ui",
+      "title": "Breadcrumb",
+      "description": "DGA Breadcrumb: the path to the current page, folded behind an ellipsis button above five levels and on narrow screens. The separator mirrors in RTL.",
+      "dependencies": ["@hugeicons/react", "@hugeicons/core-free-icons"],
+      "registryDependencies": ["{{REGISTRY_URL}}/r/utils.json"],
+      "files": [
+        {
+          "path": "bases/base/ui/breadcrumb.tsx",
+          "type": "registry:ui",
+          "target": "components/dga/breadcrumb.tsx"
+        }
+      ]
+    },
+    {
+      "name": "pagination",
+      "type": "registry:ui",
+      "title": "Pagination",
+      "description": "DGA Pagination: previous, next, page numbers with ellipsis, sm, md and lg, buttons or links, and a compact form on narrow screens. Arrows mirror in RTL.",
+      "dependencies": [
+        "@hugeicons/react",
+        "@hugeicons/core-free-icons",
+        "class-variance-authority"
+      ],
+      "registryDependencies": ["{{REGISTRY_URL}}/r/utils.json"],
+      "files": [
+        {
+          "path": "bases/base/ui/pagination.tsx",
+          "type": "registry:ui",
+          "target": "components/dga/pagination.tsx"
+        }
+      ]
+    },
+    {
+      "name": "table-of-contents",
+      "type": "registry:ui",
+      "title": "Table of Contents",
+      "description": "DGA Table of Content: links to the sections of a page with three levels, the section being read highlighted, and arrow-key navigation.",
+      "registryDependencies": ["{{REGISTRY_URL}}/r/utils.json"],
+      "files": [
+        {
+          "path": "bases/base/ui/table-of-contents.tsx",
+          "type": "registry:ui",
+          "target": "components/dga/table-of-contents.tsx"
+        }
+      ]
+    },
+    {
+      "name": "card",
+      "type": "registry:ui",
+      "title": "Card",
+      "description": "DGA Card on Base UI Collapsible: shadow, stroke or none, three sizes, media, actions, a clickable-card link pattern, expandable and selectable cards.",
+      "dependencies": [
+        "@base-ui/react",
+        "@hugeicons/react",
+        "@hugeicons/core-free-icons",
+        "class-variance-authority"
+      ],
+      "registryDependencies": ["{{REGISTRY_URL}}/r/utils.json", "{{REGISTRY_URL}}/r/checkbox.json"],
+      "files": [
+        {
+          "path": "bases/base/ui/card.tsx",
+          "type": "registry:ui",
+          "target": "components/dga/card.tsx"
+        }
+      ]
+    },
+    {
+      "name": "list",
+      "type": "registry:ui",
+      "title": "List",
+      "description": "DGA List and Structured List: ordered, unordered and icon lists in primary, neutral and on-colour, two levels, and selectable structured rows.",
+      "dependencies": [
+        "@hugeicons/react",
+        "@hugeicons/core-free-icons",
+        "class-variance-authority"
+      ],
+      "registryDependencies": ["{{REGISTRY_URL}}/r/utils.json", "{{REGISTRY_URL}}/r/radio.json"],
+      "files": [
+        {
+          "path": "bases/base/ui/list.tsx",
+          "type": "registry:ui",
+          "target": "components/dga/list.tsx"
+        }
+      ]
+    },
+    {
+      "name": "table",
+      "type": "registry:ui",
+      "title": "Table",
+      "description": "DGA Table: a semantic table with header, striped rows, dividers, compact and contained, sortable and filter heading buttons, and sideways scrolling.",
+      "dependencies": [
+        "@hugeicons/react",
+        "@hugeicons/core-free-icons",
+        "class-variance-authority"
+      ],
+      "registryDependencies": ["{{REGISTRY_URL}}/r/utils.json"],
+      "files": [
+        {
+          "path": "bases/base/ui/table.tsx",
+          "type": "registry:ui",
+          "target": "components/dga/table.tsx"
+        }
+      ]
+    },
+    {
+      "name": "data-table",
+      "type": "registry:ui",
+      "title": "Data Table",
+      "description": "A Table with sorting, filtering, row selection, pagination, loading and empty states, built on TanStack Table, the DGA Table and the DGA Pagination.",
+      "dependencies": [
+        "@hugeicons/react",
+        "@hugeicons/core-free-icons",
+        "@tanstack/react-table@8.21.3"
+      ],
+      "registryDependencies": [
+        "{{REGISTRY_URL}}/r/utils.json",
+        "{{REGISTRY_URL}}/r/table.json",
+        "{{REGISTRY_URL}}/r/pagination.json",
+        "{{REGISTRY_URL}}/r/checkbox.json",
+        "{{REGISTRY_URL}}/r/skeleton.json"
+      ],
+      "files": [
+        {
+          "path": "bases/base/ui/data-table.tsx",
+          "type": "registry:ui",
+          "target": "components/dga/data-table.tsx"
+        }
+      ]
+    },
+    {
+      "name": "rating",
+      "type": "registry:ui",
+      "title": "Rating",
+      "description": "DGA Rating on Base UI Radio Group: five stars, sm, md and lg, gold or brand, interactive with arrow keys or read-only.",
+      "dependencies": ["@base-ui/react", "class-variance-authority"],
+      "registryDependencies": [
+        "{{REGISTRY_URL}}/r/utils.json",
+        "{{REGISTRY_URL}}/r/direction.json"
+      ],
+      "files": [
+        {
+          "path": "bases/base/ui/rating.tsx",
+          "type": "registry:ui",
+          "target": "components/dga/rating.tsx"
+        }
+      ]
+    },
+    {
+      "name": "progress",
+      "type": "registry:ui",
+      "title": "Progress",
+      "description": "DGA Progress Bar on Base UI Progress: linear and circular, determinate and indeterminate, primary and neutral, success and error.",
+      "dependencies": [
+        "@base-ui/react",
+        "@hugeicons/react",
+        "@hugeicons/core-free-icons",
+        "class-variance-authority"
+      ],
+      "registryDependencies": ["{{REGISTRY_URL}}/r/utils.json"],
+      "files": [
+        {
+          "path": "bases/base/ui/progress.tsx",
+          "type": "registry:ui",
+          "target": "components/dga/progress.tsx"
+        }
+      ]
+    },
+    {
+      "name": "stepper",
+      "type": "registry:ui",
+      "title": "Stepper",
+      "description": "DGA Progress Indicator and Radial Stepper: horizontal and vertical steps in completed, current, upcoming and error states, with a compact ring on narrow screens.",
+      "dependencies": [
+        "@hugeicons/react",
+        "@hugeicons/core-free-icons",
+        "class-variance-authority"
+      ],
+      "registryDependencies": ["{{REGISTRY_URL}}/r/utils.json"],
+      "files": [
+        {
+          "path": "bases/base/ui/stepper.tsx",
+          "type": "registry:ui",
+          "target": "components/dga/stepper.tsx"
+        }
+      ]
     }
   ]
 }

@@ -75,6 +75,9 @@ export function PrimitivePalettes({
                     <span className="font-mono text-xs text-muted-foreground uppercase">
                       {s.value}
                     </span>
+                    <span dir="ltr" className="font-mono text-xs break-all text-muted-foreground">
+                      {s.oklch}
+                    </span>
                     <div className="flex flex-wrap gap-1">
                       <ContrastBadge
                         ratio={s.onWhite}

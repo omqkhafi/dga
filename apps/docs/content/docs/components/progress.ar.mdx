@@ -1,0 +1,73 @@
+---
+title: Progress
+description: "شريط أو حلقة تبيّن مدى تقدم مهمة. محدد وغير محدد، وثلاثة أحجام للشريط وخمسة للحلقة، مع حالتي النجاح والخطأ."
+sourceHash: f8a4846ef7af
+---
+
+<Preview name="progress-linear" title="التقدم" />
+
+## التثبيت [#installation]
+
+<ComponentInstall name="progress" />
+
+## الاستخدام [#usage]
+
+```tsx title="page.tsx"
+import { Progress } from "@/components/dga/progress";
+
+export function Upload({ percent }: { percent: number }) {
+  return <Progress value={percent} label="جارٍ الرفع" helperText="أبقِ هذه الصفحة مفتوحة." />;
+}
+```
+
+استخدم التقدم لمهمة معلومة المدة، كالرفع أو نموذج من أجزاء عدة. وحين لا يُعرف المدى مرّر `value={null}`. وللانتظار ثانية أو ثانيتين استخدم [Spinner](/docs/components/spinner). ولبيان موضع الشخص في تسلسل صفحات استخدم [Stepper](/docs/components/stepper).
+
+## البنية [#anatomy]
+
+- **الشريط**: تسمية ونسبة مئوية، ومسار وتعبئة، وسطر مساعدة. ارتفاع الشريط 8 أو 12 أو 16px (قيمة `size` هي `sm` أو `md` أو `lg`). وقيمة `tone` إما `primary` أو `neutral`.
+- **الحلقة** (`ProgressCircle`): بحجم 64 أو 80 أو 120 أو 160 أو 200px، وفي وسطها النسبة وتسمية قصيرة (تُخفى تحت 120px).
+- **الحالة**: يضيف `success` و`error` أيقونة مدورة واللون المناسب؛ ويقول نص المساعدة ما حدث.
+
+## أمثلة [#examples]
+
+### الشريط [#linear]
+
+<Preview compact name="progress-linear" title="الأحجام والمحايد" />
+
+### الحالة وغير المحدد وبتحكم خارجي [#status-indeterminate-and-controlled]
+
+<Preview compact name="progress-states" title="النجاح والخطأ وغير المحدد" />
+
+### الحلقة [#circular]
+
+<Preview compact name="progress-circle" title="أحجام الحلقة وحالاتها" />
+
+يحوّل `formatValue` الرقم إلى النص، لتظهر الأرقام الهندية في الصفحات العربية.
+
+## RTL [#rtl]
+
+يمتلئ الشريط من اليمين وتدور الحلقة في الاتجاه المعاكس.
+
+<DirectionCompare name="progress-linear" title="التقدم" />
+
+## إمكانية الوصول [#accessibility]
+
+- مبني على Base UI Progress: `role="progressbar"` مع `aria-valuenow` و`aria-valuemin` و`aria-valuemax`، مسمّى بالتسمية. ولا يحمل الشريط غير المحدد `aria-valuenow`.
+- التقدم غير تفاعلي ولا يأخذ تركيز لوحة المفاتيح. وأعلن نهاية المهمة في منطقة حية أو في [Notification](/docs/components/notification)، فالشريط لا يعلنها.
+- التعبئة بنسبة 3:1 على المسار، والتسمية والقيمة ونص المساعدة 4.5:1، فاتحًا وداكنًا. والنجاح والخطأ ليسا بلون وحده: فيضيفان أيقونة ونص مساعدة.
+- تتوقف الحركة حين يفضّل الشخص تقليلها.
+
+## مرجع API [#api-reference]
+
+<ApiReference component="progress" />
+
+## الاختلافات عن DGA [#deviations-from-dga]
+
+- يعطي Figma ارتفاعات الإطارات لا سمك الشريط ولا حالة غير محددة؛ وكلاهما مصمم هنا.
+- في الوضع الداكن تستخدم التعبئات رموز `icon-*`، لأن تعبئات DGA الأساسية والنجاح والخطأ دون 3:1 على المسار الداكن.
+
+<ComponentDeviations component="progress" />
+
+## التباين [#contrast]
+
+<ComponentContrast component="progress" />

@@ -6,7 +6,9 @@
 
 import { createStyleMap } from "shadcn/utils";
 
-const STRING = /(["'`])((?:\\.|(?!\1)[^\\])*)\1/g;
+// Quotes pair within one line; only a template literal may span lines. An apostrophe in a comment
+// would otherwise open a "string" that runs across the code below it.
+const STRING = /(["'])((?:\\.|(?!\1)[^\\\n])*)\1|(`)((?:\\.|[^\\`])*)`/g;
 const CLASS = /(?<![\w/-])cn-[a-z0-9-]+(?![\w-])/g;
 
 export function loadStyleMap(css: string): Record<string, string> {
@@ -15,7 +17,9 @@ export function loadStyleMap(css: string): Record<string, string> {
 
 export function inlineStyles(source: string, map: Record<string, string>, file = "component") {
   const unknown = new Set<string>();
-  const out = source.replace(STRING, (literal, quote: string, body: string) => {
+  const out = source.replace(STRING, (literal, q1: string, b1: string, q2: string, b2: string) => {
+    const quote = q1 ?? q2;
+    const body = b1 ?? b2;
     if (!body.includes("cn-")) return literal;
     const replaced = body
       .replace(CLASS, (name) => {

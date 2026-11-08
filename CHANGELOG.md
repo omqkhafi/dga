@@ -5,6 +5,41 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
 
 ## [Unreleased]
 
+## [0.5.0] - 2026-11-08
+
+OKLCH colour output, the navigation and data display components (Phase 5), and roadmap fixes. No visual change to existing components. **Token names changed in two places** (see Changed).
+
+### Added
+
+- **OKLCH colour output.** The Figma hex values in `scripts/tokens` stay the source of truth. The generated CSS (`tokens.css`, the `dga-tokens` registry item and the docs) now writes every colour as `oklch()`: the primitives, the semantic tokens, the shadcn variable mapping and the shadow colours, in light and dark. The same colours in another notation, so nothing looks different and there are no Deviations entries for it.
+  - **Round-trip check in `bun run tokens:check`.** Every emitted `oklch()` value is converted back to 8-bit sRGB and compared with its source hex (270 values, 6 and 8 digit). Any mismatch, any hex or `rgb()` left in the CSS, or a changed opacity fails the build. Alpha keeps its exact opacity (`#ffffff1a` is `oklch(1 0 0 / 0.102)`, which reads back as `1a`). The conversion uses the CSS Color 4 matrices and is covered by unit tests, including a deliberately wrong value.
+  - **The contrast audit is unchanged.** It still runs on the hex source values, so its results do not move.
+  - **Hex next to OKLCH** on the Colors page (palettes, semantic tokens, the dark neutral ramp), the Deviations page (every hex in a row's original and ours) and the Contrast page (the foreground and background of each state, per mode).
+- **Navigation and data display (Phase 5):** ten components in `components/dga`, each with English and Arabic pages, previews of every variant and state, an API reference with Arabic descriptions, contrast tables, registry items and install tests.
+  - **Breadcrumb:** the path to the current page. The middle levels fold behind an ellipsis button above five levels (DGA's ">5" variant) and below the `sm` width; the separator mirrors in RTL.
+  - **Pagination:** page numbers with an ellipsis (a fixed number of slots, so the row does not jump), previous and next that mirror in RTL, sm, md and lg, buttons or links (`getHref`), and a compact "page of count" on narrow screens.
+  - **Table of Contents:** three levels, active-section tracking from the scroll position (or controlled), `aria-current="location"`, and Up, Down, Home and End between links.
+  - **Card:** shadow, stroke or no effect, three sizes, media, icon, tags, rating and actions; a clickable card as a real link in the title with a stretched hit area, so the card keeps link semantics; `CardExpandable` on Base UI Collapsible; `SelectableCard` on a checkbox; disabled.
+  - **List:** ordered (1-, then a-, or Arabic-Indic digits and letters with `markers="arabic"`), unordered and icon lists in primary, neutral and on-colour, two levels, and the Structured List with compact, contained, dividers and selectable rows (a radio group).
+  - **Table:** a plain semantic table with header, striped rows, row and column dividers, compact and contained, sort and filter heading buttons, and sideways scrolling in a keyboard-reachable region.
+  - **Data Table:** TanStack Table on the DGA Table and `@dga/pagination`: sorting, a global filter, row selection, pagination, loading rows, an empty state and sideways scrolling; columns run right to left in RTL; every string is a label. DGA has no spec for it; it adds no colour.
+  - **Rating:** five whole stars (DGA has no half stars), sm, md and lg, gold or brand; interactive as a radio group with arrow keys that follow the direction, or read-only as an image with a text alternative.
+  - **Progress:** linear (sm, md, lg; primary and neutral) and circular (64 to 200px), determinate and indeterminate, with a label, a value, helper text and success and error states.
+  - **Stepper:** DGA's Progress Indicator and Radial Stepper in one component: horizontal and vertical, completed, current, upcoming and error steps that also say their state in words, interactive steps, and a compact radial form on narrow screens.
+- **Docs:** a "Navigation and data display" group in the sidebar, search, `llms.txt` and the index page, in both languages; thumbnails are not added. The sitemap, the Open Graph images and `llms.json` include the new pages, and the `platform-code` agent skill describes the new components and OKLCH.
+- **Tests:** `bun run test` covers the pagination range, the registry items, the pages and previews, the audit and Deviations for every component, the OKLCH round trip and the renamed tokens. `bun run test:install` installs every item, installs `@dga/data-table` on its own (with Table, Pagination, Checkbox, Skeleton and `@tanstack/react-table`), and adds stock shadcn `table`, `card`, `pagination`, `breadcrumb` and `progress` beside the `@dga` ones in the collision fixture. `bun run test:e2e` checks, in `/en` and `/ar`, the keyboard behaviour and RTL of Pagination (Tab order, Enter, disabled ends, mirrored arrows, the compact form), Stepper (Tab and Enter, state words, order, the compact ring), Rating (arrow keys that follow the direction, the first star on the start side, read-only), Data Table (sort, select, filter and page by keyboard, `aria-sort`, column order, scrolling region, loading), Breadcrumb (fold, mirror) and Table of Contents (arrow keys, the current section), and that every new page fits at 375 and 1280px.
+
+### Changed
+
+- **Token names:** `--stepper-button-upcomming*` and `--stepper-line-upcomming*` are now `--stepper-button-upcoming*` and `--stepper-line-upcoming*`, and `--table-boarder-row-selected-hovered` is now `--table-border-row-selected-hovered` (Figma typos, listed under Naming in Deviations). No component used them before this release.
+- **Table and Progress tokens (light and dark):** the Table row is white in light mode and the hovered row a faint brand tint; in dark mode the alternate row, the hovered row, the neutral Progress fill and the Stepper completed and current fills are changed. All are listed in Deviations with their reasons.
+- **Style map:** quoted strings are matched within one line (only template literals may span lines), so an apostrophe in a comment can no longer swallow the code below it.
+- **ROADMAP.md:** "Second nav" is added to Phase 6 (Composite), matching the Phase 8 note that Header, Footer and Second nav stay in Phase 6. Patch 0.4.4 is removed as a separate entry; OKLCH colour output and Phase 5 are recorded as done in 0.5.0, and the intro, the README and the 0.4.3 entry point to them.
+
+### Deviations
+
+New entries (Deviations page, `scripts/tokens/fixes.ts`): Figma variant-name typos (Meduim, Sahdow, Upcomming, Lable); Stepper upcoming at 1.48:1, and its error state and radial form; Progress bar height, status icon and indeterminate state; Rating gold fill (2.30:1) and the hard-coded `#faaf00`; List physical margins and hex colours; Card border fallback, disabled overlay and link pattern, and the selected state; Pagination states and small-screen form; Breadcrumb separator, current page and fold; Table of Content width and `100vh` rule; Table compact sizes and the sort and filter buttons; Structured List selectable rows; and Data Table as a Platform Code component. Generated entries cover the Table row fills, the dark Table, Progress and Stepper values, and the two token renames.
+
 ## [0.4.3] - 2026-11-08
 
 Patch: preview content follows the direction toggle, and the roadmap is updated. No registry component changes.
@@ -23,7 +58,7 @@ Patch: preview content follows the direction toggle, and the roadmap is updated.
 
 ### Docs
 
-- **ROADMAP.md:** records 0.4.3 as done and adds Patch 0.4.4 (OKLCH colour output, with a hex round-trip check in `tokens:check`), Phase 7 (shadcn extension: only the shadcn components with no DGA equivalent, derived from DGA tokens and marked as extensions), Phase 8 (Section blocks: reusable `registry:block` sections, replacing "Page templates as blocks") and Phase 9 (Mobile components, renumbered from Phase 8). The intro, the rules and the README point to the new numbering.
+- **ROADMAP.md:** records 0.4.3 as done and adds the OKLCH colour output plan (with a hex round-trip check in `tokens:check`; done in 0.5.0), Phase 7 (shadcn extension: only the shadcn components with no DGA equivalent, derived from DGA tokens and marked as extensions), Phase 8 (Section blocks: reusable `registry:block` sections, replacing "Page templates as blocks") and Phase 9 (Mobile components, renumbered from Phase 8). The intro, the rules and the README point to the new numbering.
 
 ## [0.4.2] - 2026-11-06
 
