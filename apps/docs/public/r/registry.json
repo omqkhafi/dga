@@ -4127,10 +4127,31 @@
       ]
     },
     {
+      "name": "collapsible",
+      "type": "registry:ui",
+      "title": "Collapsible",
+      "description": "Platform Code extension (not DGA). Collapsible on Base UI Collapsible: one panel that opens and closes from a trigger, with an optional chevron and a height animation that respects reduced motion. Card's Expandable is built on it.",
+      "dependencies": [
+        "@base-ui/react",
+        "@hugeicons/react",
+        "@hugeicons/core-free-icons"
+      ],
+      "registryDependencies": [
+        "https://dga.omqkhafi.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "bases/base/ui/collapsible.tsx",
+          "type": "registry:ui",
+          "target": "components/dga/collapsible.tsx"
+        }
+      ]
+    },
+    {
       "name": "card",
       "type": "registry:ui",
       "title": "Card",
-      "description": "DGA Card on Base UI Collapsible: shadow, stroke or none, three sizes, media, actions, a clickable-card link pattern, expandable and selectable cards.",
+      "description": "DGA Card on the Collapsible: shadow, stroke or none, three sizes, media, actions, a clickable-card link pattern, expandable and selectable cards.",
       "dependencies": [
         "@base-ui/react",
         "@hugeicons/react",
@@ -4139,7 +4160,8 @@
       ],
       "registryDependencies": [
         "https://dga.omqkhafi.dev/r/utils.json",
-        "https://dga.omqkhafi.dev/r/checkbox.json"
+        "https://dga.omqkhafi.dev/r/checkbox.json",
+        "https://dga.omqkhafi.dev/r/collapsible.json"
       ],
       "files": [
         {

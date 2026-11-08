@@ -2,8 +2,11 @@
 // inherited Base UI props are worth listing. Keyed `slug.Component.prop` or `slug.prop`.
 // Anything with a JSDoc comment in the component source wins over these.
 
+import { API_NOTES_EXT_DISPLAY } from "./api-notes-ext-display";
 import { API_NOTES_EXT_INPUTS } from "./api-notes-ext-inputs";
+import { API_NOTES_EXT_LAYOUT } from "./api-notes-ext-layout";
 import { API_NOTES_EXT_MISC } from "./api-notes-ext-misc";
+import { API_NOTES_EXT_NAV } from "./api-notes-ext-nav";
 import { API_NOTES_EXT_OVERLAYS } from "./api-notes-ext-overlays";
 
 export type ApiNote = { description?: string; type?: string; include?: boolean };
@@ -730,4 +733,7 @@ export const API_NOTES: Record<string, ApiNote> = {
   ...API_NOTES_EXT_OVERLAYS,
   ...API_NOTES_EXT_INPUTS,
   ...API_NOTES_EXT_MISC,
+  ...API_NOTES_EXT_NAV,
+  ...API_NOTES_EXT_LAYOUT,
+  ...API_NOTES_EXT_DISPLAY,
 };

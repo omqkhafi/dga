@@ -40,8 +40,11 @@
 import { createHash } from "node:crypto";
 import { readFileSync, writeFileSync } from "node:fs";
 import { chromium } from "playwright";
+import { extDisplayChecks } from "./e2e-extension/display.mjs";
 import { inputsChecks } from "./e2e-extension/inputs.mjs";
+import { extLayoutChecks } from "./e2e-extension/layout.mjs";
 import { miscChecks } from "./e2e-extension/misc.mjs";
+import { extNavChecks } from "./e2e-extension/nav.mjs";
 import { overlaysChecks } from "./e2e-extension/overlays.mjs";
 
 // E2E_COMPONENTS=button,dialog narrows the page loops of `form-pages` and `polish` to those
@@ -2424,6 +2427,9 @@ const GROUPS = [
   ["ext-overlays", () => overlaysChecks({ browser, BASE, check })],
   ["ext-inputs", () => inputsChecks({ browser, BASE, check })],
   ["ext-misc", () => miscChecks({ browser, BASE, check })],
+  ["ext-nav", () => extNavChecks({ browser, BASE, check })],
+  ["ext-layout", () => extLayoutChecks({ browser, BASE, check })],
+  ["ext-display", () => extDisplayChecks({ browser, BASE, check })],
   ["not-found", notFoundChecks],
   ["arabic-exception", arabicExceptionChecks],
   ["preview-language", previewLanguageChecks],

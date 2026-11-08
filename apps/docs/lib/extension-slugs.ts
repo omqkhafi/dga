@@ -19,9 +19,20 @@ export const EXTENSION_INPUT_COMPONENTS = [
   "input-group",
   "button-group",
 ];
+export const EXTENSION_NAVIGATION_COMPONENTS = ["menubar", "navigation-menu", "sidebar"];
+export const EXTENSION_LAYOUT_COMPONENTS = [
+  "collapsible",
+  "scroll-area",
+  "resizable",
+  "aspect-ratio",
+];
+export const EXTENSION_DISPLAY_COMPONENTS = ["kbd", "empty", "item", "chart"];
 export const EXTENSION_COMPONENTS = [
   ...EXTENSION_OVERLAY_COMPONENTS,
   ...EXTENSION_INPUT_COMPONENTS,
+  ...EXTENSION_NAVIGATION_COMPONENTS,
+  ...EXTENSION_LAYOUT_COMPONENTS,
+  ...EXTENSION_DISPLAY_COMPONENTS,
 ];
 
 /** True for a docs URL or slug of an extension component, such as `/ar/docs/components/popover`. */

@@ -1,0 +1,23 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "collapsible",
+  "title": "Collapsible",
+  "description": "Platform Code extension (not DGA). Collapsible on Base UI Collapsible: one panel that opens and closes from a trigger, with an optional chevron and a height animation that respects reduced motion. Card's Expandable is built on it.",
+  "dependencies": [
+    "@base-ui/react",
+    "@hugeicons/react",
+    "@hugeicons/core-free-icons"
+  ],
+  "registryDependencies": [
+    "https://dga.omqkhafi.dev/r/utils.json"
+  ],
+  "files": [
+    {
+      "path": "bases/base/ui/collapsible.tsx",
+      "content": "\"use client\";\n\nimport { Collapsible as CollapsiblePrimitive } from \"@base-ui/react/collapsible\";\nimport { ArrowDown01Icon } from \"@hugeicons/core-free-icons\";\nimport { HugeiconsIcon } from \"@hugeicons/react\";\nimport { cn } from \"@/registry/bases/base/lib/utils\";\n\n/**\n * One panel that opens and closes (Platform Code extension, not part of DGA). Built on the Base UI\n * Collapsible; the Card's Expandable uses it too. The trigger is a real button with\n * `aria-expanded` and `aria-controls`, Enter and Space toggle it, and a closed panel is hidden\n * from the keyboard and from screen readers. For a set of panels where only one is open, use an\n * Accordion.\n */\nfunction Collapsible({ className, ...props }: CollapsiblePrimitive.Root.Props) {\n  return <CollapsiblePrimitive.Root data-slot=\"collapsible\" className={cn(className)} {...props} />;\n}\n\ntype CollapsibleTriggerProps = CollapsiblePrimitive.Trigger.Props & {\n  /** Adds the chevron that turns when the panel is open. Off by default. */\n  showChevron?: boolean;\n};\n\n/** The button that opens and closes the panel. Render your own with `render`. */\nfunction CollapsibleTrigger({\n  className,\n  children,\n  showChevron = false,\n  ...props\n}: CollapsibleTriggerProps) {\n  return (\n    <CollapsiblePrimitive.Trigger\n      data-slot=\"collapsible-trigger\"\n      className={cn(\"inline-flex cursor-pointer items-center justify-between gap-3 rounded-xs border-0 bg-transparent p-0 text-start text-lg font-bold text-text-display focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-offset-4 focus-visible:outline-border-black disabled:cursor-not-allowed disabled:text-text-default-disabled\", className)}\n      {...props}\n    >\n      {children}\n      {showChevron ? (\n        <HugeiconsIcon icon={ArrowDown01Icon} aria-hidden className=\"size-5 shrink-0 text-icon-default transition-transform in-data-panel-open:rotate-180 motion-reduce:transition-none\" />\n      ) : null}\n    </CollapsiblePrimitive.Trigger>\n  );\n}\n\n/** The panel. Its height animates, unless the user prefers reduced motion. */\nfunction CollapsibleContent({ className, ...props }: CollapsiblePrimitive.Panel.Props) {\n  return (\n    <CollapsiblePrimitive.Panel\n      data-slot=\"collapsible-content\"\n      className={cn(\"h-(--collapsible-panel-height) overflow-hidden text-md text-text-primary-paragraph transition-[height] duration-200 ease-out data-ending-style:h-0 data-starting-style:h-0 motion-reduce:transition-none\", className)}\n      {...props}\n    />\n  );\n}\n\nexport { Collapsible, CollapsibleContent, CollapsibleTrigger };\n",
+      "type": "registry:ui",
+      "target": "components/dga/collapsible.tsx"
+    }
+  ],
+  "type": "registry:ui"
+}

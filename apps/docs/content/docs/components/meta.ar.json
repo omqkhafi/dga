@@ -64,6 +64,20 @@
     "command",
     "input-otp",
     "input-group",
-    "button-group"
+    "button-group",
+    "---امتداد: التنقل---",
+    "menubar",
+    "navigation-menu",
+    "sidebar",
+    "---امتداد: التخطيط---",
+    "collapsible",
+    "scroll-area",
+    "resizable",
+    "aspect-ratio",
+    "---امتداد: العرض---",
+    "kbd",
+    "empty",
+    "item",
+    "chart"
   ]
 }

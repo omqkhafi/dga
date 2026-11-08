@@ -3,8 +3,11 @@
 // or prop with an English description has no entry here, so a new prop ships in both languages.
 // Prop names, values, token names and code stay in English.
 
+import { API_DESCRIPTIONS_AR_EXT_DISPLAY } from "./api-descriptions-ar-ext-display";
 import { API_DESCRIPTIONS_AR_EXT_INPUTS } from "./api-descriptions-ar-ext-inputs";
+import { API_DESCRIPTIONS_AR_EXT_LAYOUT } from "./api-descriptions-ar-ext-layout";
 import { API_DESCRIPTIONS_AR_EXT_MISC } from "./api-descriptions-ar-ext-misc";
+import { API_DESCRIPTIONS_AR_EXT_NAV } from "./api-descriptions-ar-ext-nav";
 import { API_DESCRIPTIONS_AR_EXT_OVERLAYS } from "./api-descriptions-ar-ext-overlays";
 
 const render =
@@ -811,4 +814,7 @@ export const API_DESCRIPTIONS_AR: Record<string, string> = {
   ...API_DESCRIPTIONS_AR_EXT_OVERLAYS,
   ...API_DESCRIPTIONS_AR_EXT_INPUTS,
   ...API_DESCRIPTIONS_AR_EXT_MISC,
+  ...API_DESCRIPTIONS_AR_EXT_NAV,
+  ...API_DESCRIPTIONS_AR_EXT_LAYOUT,
+  ...API_DESCRIPTIONS_AR_EXT_DISPLAY,
 };

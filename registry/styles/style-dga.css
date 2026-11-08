@@ -1755,17 +1755,6 @@
   .cn-card-expandable {
     @apply hover:bg-background-neutral-50 data-disabled:hover:bg-background-disabled;
   }
-  .cn-card-expand-trigger {
-    @apply flex w-full cursor-pointer items-center justify-between gap-3 rounded-xs border-0 bg-transparent p-0 text-start text-lg font-bold text-text-display;
-    @apply focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-offset-4 focus-visible:outline-border-black;
-    @apply disabled:cursor-not-allowed disabled:text-text-default-disabled;
-  }
-  .cn-card-expand-chevron {
-    @apply size-5 shrink-0 text-icon-default transition-transform in-data-panel-open:rotate-180 motion-reduce:transition-none;
-  }
-  .cn-card-expand-panel {
-    @apply h-(--collapsible-panel-height) overflow-hidden text-md text-text-primary-paragraph transition-[height] duration-200 ease-out data-ending-style:h-0 data-starting-style:h-0 motion-reduce:transition-none;
-  }
   .cn-card-selectable {
     @apply cursor-pointer hover:bg-background-neutral-50 has-[[data-checked]]:border-border-primary has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-solid has-[:focus-visible]:outline-border-black;
     @apply data-disabled:cursor-not-allowed data-disabled:hover:bg-background-disabled;
@@ -2757,4 +2746,27 @@
   .cn-digital-stamp-domain {
     @apply font-bold;
   }
+
+  /* ------------------------------------------------------------------------------------
+   * Phase 7 part 2 (0.7.1). Each work stream adds its classes above its END marker.
+   * ---------------------------------------------------------------------------------- */
+  /* STREAM nav: Menubar, Navigation Menu, Sidebar */
+  /* END nav */
+
+  /* STREAM layout: Collapsible, Scroll Area, Resizable, Aspect Ratio */
+  .cn-collapsible-trigger {
+    @apply inline-flex cursor-pointer items-center justify-between gap-3 rounded-xs border-0 bg-transparent p-0 text-start text-lg font-bold text-text-display;
+    @apply focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-offset-4 focus-visible:outline-border-black;
+    @apply disabled:cursor-not-allowed disabled:text-text-default-disabled;
+  }
+  .cn-collapsible-chevron {
+    @apply size-5 shrink-0 text-icon-default transition-transform in-data-panel-open:rotate-180 motion-reduce:transition-none;
+  }
+  .cn-collapsible-content {
+    @apply h-(--collapsible-panel-height) overflow-hidden text-md text-text-primary-paragraph transition-[height] duration-200 ease-out data-ending-style:h-0 data-starting-style:h-0 motion-reduce:transition-none;
+  }
+  /* END layout */
+
+  /* STREAM display: Kbd, Empty, Item, Chart */
+  /* END display */
 }
