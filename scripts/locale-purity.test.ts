@@ -74,7 +74,7 @@ test("the Arabic API descriptions have no English words", async () => {
     { name: string; descriptionAr: string; props: { name: string; descriptionAr: string }[] }[]
   >;
   const bad: string[] = [];
-  // The Phase 5 components (0.5.0). Earlier ones are covered by the browser audit, which skips code.
+  // The Phase 5 and 6 components (0.5.0, 0.6.0). Earlier ones are covered by the browser audit, which skips code.
   const phase5 = [
     "breadcrumb",
     "pagination",
@@ -86,6 +86,13 @@ test("the Arabic API descriptions have no English words", async () => {
     "rating",
     "progress",
     "stepper",
+    // The Phase 6 components (0.6.0).
+    "header",
+    "second-nav",
+    "footer",
+    "date-picker",
+    "carousel",
+    "filtration",
   ];
   for (const [slug, parts] of Object.entries(api)) {
     if (!phase5.includes(slug)) continue;

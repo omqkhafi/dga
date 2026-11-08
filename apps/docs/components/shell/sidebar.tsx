@@ -7,6 +7,7 @@ import {
   ArrowRight01Icon,
   BookOpen01Icon,
   Calculator01Icon,
+  Calendar03Icon,
   CheckmarkSquare02Icon,
   ContrastIcon,
   CursorPointer02Icon,
@@ -113,6 +114,12 @@ const ICONS: Record<string, IconSvgElement> = {
   "/docs/components/rating": StarIcon,
   "/docs/components/progress": Progress01Icon,
   "/docs/components/stepper": LeftToRightListNumberIcon,
+  "/docs/components/header": Layout01Icon,
+  "/docs/components/second-nav": ListViewIcon,
+  "/docs/components/footer": Layout01Icon,
+  "/docs/components/date-picker": Calendar03Icon,
+  "/docs/components/carousel": ArrowLeftRightIcon,
+  "/docs/components/filtration": FilterIcon,
 };
 
 type Group = { title: ReactNode; items: PageTree.Item[] };

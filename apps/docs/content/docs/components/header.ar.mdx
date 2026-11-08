@@ -1,0 +1,113 @@
+---
+title: Header
+description: "ترويسة الموقع (DGA: Nav Header): الشعار وقائمة التنقل الرئيسية مع قوائم فرعية، والإجراءات، وخانات البحث واللغة والمستخدم. رابط تخطٍّ، وتنقل بلوحة المفاتيح، ودرج على الشاشات الصغيرة."
+sourceHash: 0d5be5e47890
+---
+
+<Preview name="header-basic" title="الترويسة" minHeight={140} />
+
+## التثبيت [#installation]
+
+<ComponentInstall name="header" />
+
+يُثبَّت معه [Menu](/docs/components/menu) و[Drawer](/docs/components/drawer). ضع [Second Nav](/docs/components/second-nav) في خانة `top`، و[Footer](/docs/components/footer) في آخر الصفحة.
+
+## الاستخدام [#usage]
+
+```tsx title="layout.tsx"
+import { Header } from "@/components/dga/header";
+import { SecondNav } from "@/components/dga/second-nav";
+
+export function SiteHeader() {
+  return (
+    <Header
+      logo={<a href="/"><img src="/logo.svg" alt="الخدمات الرقمية" height={40} /></a>}
+      items={[
+        { label: "الرئيسية", href: "/", current: true },
+        {
+          label: "الخدمات",
+          sections: [
+            {
+              title: "الأفراد",
+              links: [
+                { label: "تجديد ترخيص", href: "/renew", description: "جدّد إلكترونيًا في دقائق" },
+                { label: "سداد رسم", href: "/pay" },
+              ],
+            },
+          ],
+        },
+        { label: "تواصل معنا", href: "/contact" },
+      ]}
+      actions={[{ label: "الإشعارات", href: "/notifications", iconOnly: true }]}
+      language={<LanguageSwitcher />}
+      user={<SignInButton />}
+      top={<SecondNav aria-label="معلومات الصفحة" items={[{ label: "الأحد ٨ نوفمبر" }]} />}
+    />
+  );
+}
+```
+
+أعطِ العنصر `main` المعرّف `main-content`، أو اضبط `skipHref`. مرّر كل نص ظاهر خاصية: ترجم `skipLabel` و`navLabel` و`menuLabel` و`drawerTitle` و`closeLabel` في الصفحات العربية.
+
+## البنية [#anatomy]
+
+- **الشريط**: ارتفاعه 72px على سطح القائمة، بحشوة 32px، في المنتصف وبعرض 1280px ما لم تستخدم `fullWidth`.
+- **الشعار** (`logo`): أي عنصر، وهو رابط إلى الصفحة الرئيسية.
+- **قائمة التنقل الرئيسية** (`items`): كل عنصر رابط، أو زر يفتح قائمة فرعية إن كان له `sections`. ارتفاعه 72px وزواياه `sm`. للعنصر المحدد (`current`) التعبئة الأساسية.
+- **القائمة الفرعية**: [Menu](/docs/components/menu) من DGA بعمود لكل قسم، حتى أربعة. قيمة `linkStyle` هي `text` أو `icon` أو `boxed-icon`، وقيمة `submenuTone` هي `default` أو `green` (الأخضر الداكن لعلم DGA).
+- **الإجراءات** (`actions`، [`HeaderAction`](#api-reference)): أيقونة ونص، في سطر واحد أو بالأيقونة فوق النص (`iconPosition="top"`)، أو أيقونة فقط. تحت `lg` يُخفى النص ويبقى اسمًا.
+- **الخانات**: `search` و`language` و`user`.
+- **الدرج**: تحت عرض `lg` يفتح زر القائمة التنقل في [Drawer](/docs/components/drawer) من DGA. تتوسع العناصر الأم في مكانها، وتُزاح روابط المستوى الثاني.
+
+## أمثلة [#examples]
+
+### القائمة الفرعية
+
+<Preview compact name="header-submenu" title="القائمة الفرعية" minHeight={380} />
+
+### قائمة فرعية خضراء داكنة بأيقونات في مربعات
+
+<Preview compact name="header-submenu-green" title="قائمة فرعية خضراء داكنة" minHeight={380} />
+
+### الدرج على الشاشات الصغيرة
+
+بدّل منفذ العرض إلى الجوال لترى الشريط ينطوي. يفتح هذا الإطار الدرج.
+
+<Preview compact name="header-drawer-open" title="الدرج" defaultViewport="mobile" minHeight={420} />
+
+## الاتجاه من اليمين إلى اليسار [#rtl]
+
+يقع الشعار على اليمين، وتجري العناصر من اليمين، وتكون الإجراءات على اليسار. تنعكس الأسهم والقوائم الفرعية والدرج (الذي يُفتح من جهة البداية)، ويتبادل اليمين واليسار.
+
+<DirectionCompare name="header-basic" title="الترويسة" minHeight={140} />
+
+## إمكانية الوصول [#accessibility]
+
+| المفتاح | الإجراء |
+| --- | --- |
+| <kbd>Tab</kbd> | يأتي رابط التخطي أولًا، ثم زر القائمة (الشاشات الصغيرة)، ثم العناصر والإجراءات. |
+| <kbd>Left</kbd> / <kbd>Right</kbd> | ينتقل بين عناصر التنقل الرئيسية. يتبادلان في الصفحات العربية. |
+| <kbd>Home</kbd> / <kbd>End</kbd> | أول عنصر وآخر عنصر. |
+| <kbd>Enter</kbd> أو <kbd>Space</kbd> أو <kbd>Down</kbd> | يفتح قائمة فرعية. تتحرك مفاتيح الأسهم داخلها. |
+| <kbd>Esc</kbd> | يغلق القائمة الفرعية أو الدرج ويعيد التركيز إلى الزر الذي فتحه. |
+
+- معلم `header` فيه `nav` اسمه `navLabel`. للصفحة الحالية `aria-current="page"`، والعنصر الأم الذي أحد أبنائه الحالي يظهر بتعبئة التحديد.
+- رابط التخطي أول ما يصله التركيز وينقله إلى `skipHref`.
+- الدرج مربع حوار معتم: يُحبس التركيز فيه ويعود إلى زر القائمة.
+- النص 4.5:1، والأيقونات وحلقات التركيز 3:1، في الفاتح والداكن، وعلى اللوحتين البيضاء والخضراء الداكنة.
+
+## مرجع الواجهة البرمجية [#api-reference]
+
+<ApiReference component="header" />
+
+## الاختلافات عن DGA [#deviations-from-dga]
+
+- لا يحتوي DGA في مواصفاته على شريط «الموقع الرسمي». الشريط الذي فوق التنقل هو [Second Nav](/docs/components/second-nav) في خانة `top`.
+- Header Menu وNav Drawer ليسا مكوّنين منفصلين: السهم جزء من العنصر، والقائمة الفرعية هي Menu، والتنقل في الشاشات الصغيرة هو Drawer.
+- يتولى الدرج الأمر تحت `lg` (1024px) لا عند 960px.
+
+<ComponentDeviations component="header" />
+
+## التباين [#contrast]
+
+<ComponentContrast component="header" />

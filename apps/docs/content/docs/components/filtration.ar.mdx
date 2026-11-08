@@ -1,0 +1,99 @@
+---
+title: Filtration
+description: "نمط التصفية (DGA: Filtration): لوحة من مجموعات خانات الاختيار وأزرار الاختيار والقائمة المنسدلة والحقول والنطاقات، والمرشحات المطبّقة وسومًا قابلة للإزالة، وإجراء مسح الكل، وعدد النتائج. ودرج على الشاشات الصغيرة."
+sourceHash: dc9fe2729206
+---
+
+<Preview name="filtration-basic" title="التصفية" minHeight={560} />
+
+## التثبيت [#installation]
+
+<ComponentInstall name="filtration" />
+
+يُثبَّت معه [Button](/docs/components/button) و[Checkbox](/docs/components/checkbox) و[Drawer](/docs/components/drawer) و[Input](/docs/components/input) و[Radio](/docs/components/radio) و[Select](/docs/components/select) و[Tag](/docs/components/tag).
+
+## الاستخدام [#usage]
+
+```tsx title="page.tsx"
+import { useState } from "react";
+import { Filtration, type FiltrationValue } from "@/components/dga/filtration";
+
+export function Services({ services }: { services: Service[] }) {
+  const [value, setValue] = useState<FiltrationValue>({});
+  const shown = applyFilters(services, value);
+  return (
+    <Filtration
+      groups={[
+        {
+          id: "city",
+          type: "checkbox",
+          label: "المدينة",
+          options: [
+            { value: "riyadh", label: "الرياض" },
+            { value: "jeddah", label: "جدة" },
+          ],
+        },
+        { id: "q", type: "input", label: "كلمة مفتاحية" },
+      ]}
+      value={value}
+      onValueChange={setValue}
+      resultCount={shown.length}
+    >
+      <ServiceList services={shown} />
+    </Filtration>
+  );
+}
+```
+
+لا يحمل `Filtration` سوى المرشحات: أنت تصفّي بياناتك بـ `value`. يعمل بتحكم خارجي عبر `value` و`onValueChange`، أو دون تحكم عبر `defaultValue`. للقيمة إدخال لكل `id` مجموعة: قائمة قيم لخانات الاختيار، وقيمة واحدة لأزرار الاختيار أو القائمة المنسدلة، ونص للحقل، و`[min, max]` للنطاق. تُترك الإدخالات الفارغة.
+
+كل نص ظاهر خاصية: `title` و`clearAllLabel` و`appliedLabel` و`removeLabel` و`triggerLabel` و`applyLabel` و`resultLabel` و`closeLabel`، وتسميات المجموعات والخيارات.
+
+## البنية [#anatomy]
+
+- **اللوحة**: بعرض 288px بجانب النتائج من عرض `lg`. مجموعات `checkbox` و`radio` و`select` و`input` و`range`، بينها 24px.
+- **المرشحات المطبّقة**: [Tag](/docs/components/tag) قابل للإزالة لكل خيار أو نص أو نطاق مختار، مع زر مسح الكل.
+- **عدد النتائج** (`resultCount`): فوق النتائج، ويُعلَن عند تغيّره.
+- **الشاشات الصغيرة**: تحت `lg` يفتح زر فيه عدد المرشحات اللوحة نفسها في [Drawer](/docs/components/drawer) من `drawerSide` (`start` أو `end`)، مع زر يعرض النتائج.
+
+## أمثلة [#examples]
+
+### دون تحكم، مع مرشحات أولية
+
+<Preview compact name="filtration-uncontrolled" title="دون تحكم" minHeight={420} />
+
+بدّل منفذ العرض إلى الجوال لترى الزر والدرج.
+
+## الاتجاه من اليمين إلى اليسار [#rtl]
+
+اللوحة على اليمين، ويُفتح الدرج من اليمين مع `drawerSide="start"`، وتجري الوسوم من اليمين.
+
+<DirectionCompare name="filtration-basic" title="التصفية" minHeight={560} />
+
+## إمكانية الوصول [#accessibility]
+
+| المفتاح | الإجراء |
+| --- | --- |
+| <kbd>Tab</kbd> | ينتقل بين المجموعات والوسوم والأزرار. |
+| <kbd>Space</kbd> | يبدّل خانة الاختيار أو يختار زر اختيار. |
+| <kbd>Up</kbd> / <kbd>Down</kbd> | يتحرك داخل مجموعة أزرار الاختيار أو القائمة المنسدلة. |
+| <kbd>Enter</kbd> / <kbd>Space</kbd> | على الوسم، يزيل زر الإزالة المرشح. |
+
+- اللوحة عنصر `aside` يسميه `title`. مجموعات خانات الاختيار وأزرار الاختيار والنطاق عناصر `fieldset` بـ `legend`؛ وللقائمة المنسدلة والحقل تسمية.
+- لكل زر إزالة اسم، مثل «إزالة الرياض» (`removeLabel`). عدد النتائج منطقة حالة، فيسمع قارئ الشاشة العدد الجديد.
+- يحبس الدرج التركيز ويعيده إلى الزر. النص 4.5:1 ولكل عنصر تحكم تباينه.
+
+## مرجع الواجهة البرمجية [#api-reference]
+
+<ApiReference component="filtration" />
+
+## الاختلافات عن DGA [#deviations-from-dga]
+
+- في Figma زر المشغّل فقط (`Open` و`Result` و`Show Results` ومواضع `Left` و`Center` و`Right`). اللوحة والوسوم والدرج مركّبة هنا من مكوّنات DGA.
+- الموضع هو جهة الدرج (`start` أو `end`)؛ ولا يوجد مربع حوار في المنتصف.
+
+<ComponentDeviations component="filtration" />
+
+## التباين [#contrast]
+
+<ComponentContrast component="filtration" />

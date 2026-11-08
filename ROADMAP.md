@@ -1,7 +1,7 @@
 # Roadmap
 
-Phases 0, 1 and 2 are done (0.1.0), the Phase 2.5 docs polish is in 0.1.1 and 0.1.2, the Arabic locale (Phase 2.6) is in 0.2.0, the forms (Phase 3) are in 0.3.0, the interactive components (Phase 4) are in 0.4.0, the AI Resources docs and the docs polish are in 0.4.1, 0.4.2 moves component installs to `components/dga` and fixes the Arabic 404, and 0.4.3 makes preview content follow the direction toggle, and 0.5.0 emits every colour as OKLCH and adds the navigation and data display components (Phase 5); see [CHANGELOG.md](CHANGELOG.md).
-Next: Phase 6 (Composite), Phase 7 (shadcn extension: components DGA does not define), Phase 8 (Section blocks) and Phase 9 (Mobile components, as needed), then the Release.
+Phases 0, 1 and 2 are done (0.1.0), the Phase 2.5 docs polish is in 0.1.1 and 0.1.2, the Arabic locale (Phase 2.6) is in 0.2.0, the forms (Phase 3) are in 0.3.0, the interactive components (Phase 4) are in 0.4.0, the AI Resources docs and the docs polish are in 0.4.1, 0.4.2 moves component installs to `components/dga` and fixes the Arabic 404, and 0.4.3 makes preview content follow the direction toggle, and 0.5.0 emits every colour as OKLCH and adds the navigation and data display components (Phase 5), and 0.6.0 adds the composite components (Phase 6); see [CHANGELOG.md](CHANGELOG.md).
+Next: Phase 7 (shadcn extension: components DGA does not define), Phase 8 (Section blocks) and Phase 9 (Mobile components, as needed), then the Release.
 Component specs for each phase are in `docs/design-system/components/`.
 
 ## Rules for every phase
@@ -110,9 +110,17 @@ Follow-ups, not blocking Phase 4:
 - [x] The contrast audit covers every state of every component. DGA's own bugs are fixed and logged in `scripts/tokens/fixes.ts` (the Deviations page): the upcoming step at 1.48:1, the gold Rating, the Table alternate row equal to the row, the Table hover that put the link below 4.5:1, a dark neutral Progress fill that was its own track, physical margins and hex colours in the List CSS, the Card border fallback, and the `upcomming` and `boarder` token typos.
 - [x] Docs pages in English and Arabic under "Navigation and data display", registry items on the `components/dga` path, the install and collision tests, keyboard and RTL browser tests for Pagination, Stepper, Rating, Data Table, Breadcrumb and Table of Contents.
 
-## Phase 6: Composite
+## Phase 6: Composite (done, 0.6.0)
 
-Header with slide-out menu, Second nav, Footer, Date Picker (Hijri and Gregorian), Carousel, Filtration.
+- [x] **Header** (DGA Nav Header, Header Menu Item, Header Action, Nav Drawer): logo, main navigation with sub-menus on the DGA Menu (white or dark green panel, text, icon or boxed-icon links, one to four columns), actions, and search, language and user slots. A skip link, arrow keys that follow the direction, `aria-current`, and the navigation in the DGA Drawer below `lg`.
+- [x] **Second Nav** (Second Nav Header): the 40px strip above the header with items, actions and a divider, gray or primary, with links and a current state added, and sideways scrolling on narrow screens.
+- [x] **Footer**: gray or dark green, logos, description, social links, link columns that fold into the DGA Accordion below `sm`, contact, app badges, and the legal and copyright row.
+- [x] **Date Picker**: a standalone Calendar and a field with a popup calendar. Gregorian and Hijri (Umm al-Qura, from `Intl`, with no date library), single date and range, min, max and disabled dates, dual-month view, quick options, a confirm step, typing, the secondary date, and a Field label, helper text and error. Grid semantics, arrow keys, Page Up and Down, Home and End, mirrored in RTL.
+- [x] **Carousel**: slides, previous and next, dots (8, 12, 16px), autoplay with a pause button that respects reduced motion, swipe, arrow keys, the slide order of the page direction and accessible names.
+- [x] **Filtration**: a panel of Checkbox, Radio, Select, Input and range groups, applied filters as removable Tags, clear all, a result count, controlled and uncontrolled, and the DGA Drawer below `lg`.
+- [x] Each one reuses the existing `@dga` components (Button, Link, Menu, Drawer, Input, Select, Checkbox, Radio, Tag, Accordion, Content Switcher) and declares them as `registryDependencies`; every visible string is a prop with an English default.
+- [x] The contrast audit covers every state in light and dark. DGA's own bugs are fixed and logged in `scripts/tokens/fixes.ts` (the Deviations page): the Nav Drawer selected label at 3.84:1, today's number in the Date Picker at 3.84 and 3.25:1, the dark range band at 1.53:1, two sets of conflicting date cell rules, opacity for disabled days, the Footer's hard-coded colours and 72px heading, and Carousel autoplay, dot size and left and right arrows.
+- [x] Docs pages in English and Arabic under "Composite", registry items on the `components/dga` path, the install and collision tests (beside stock shadcn `carousel` and `calendar`), and keyboard and RTL browser tests for the Header (skip link, arrows, Menu, Drawer), Footer, Second Nav, Date Picker (both calendars checked against `Intl`), Carousel and Filtration.
 
 ## Phase 7: shadcn extension (components DGA does not define)
 

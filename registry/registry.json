@@ -829,6 +829,134 @@
           "target": "components/dga/stepper.tsx"
         }
       ]
+    },
+    {
+      "name": "header",
+      "type": "registry:ui",
+      "title": "Header",
+      "description": "DGA Nav Header: logo, main navigation with sub-menus on the DGA Menu, actions, search, language and user slots, a skip link and aria-current. Below lg the navigation moves into the DGA Drawer.",
+      "dependencies": ["@base-ui/react", "@hugeicons/react", "@hugeicons/core-free-icons"],
+      "registryDependencies": [
+        "{{REGISTRY_URL}}/r/utils.json",
+        "{{REGISTRY_URL}}/r/direction.json",
+        "{{REGISTRY_URL}}/r/menu.json",
+        "{{REGISTRY_URL}}/r/drawer.json"
+      ],
+      "files": [
+        {
+          "path": "bases/base/ui/header.tsx",
+          "type": "registry:ui",
+          "target": "components/dga/header.tsx"
+        }
+      ]
+    },
+    {
+      "name": "footer",
+      "type": "registry:ui",
+      "title": "Footer",
+      "description": "DGA Footer: logos, description, social links, link columns that fold into the DGA Accordion on mobile, contact, app badges, and a legal and copyright row. Default or dark green.",
+      "dependencies": [
+        "@hugeicons/react",
+        "@hugeicons/core-free-icons",
+        "class-variance-authority"
+      ],
+      "registryDependencies": [
+        "{{REGISTRY_URL}}/r/utils.json",
+        "{{REGISTRY_URL}}/r/accordion.json"
+      ],
+      "files": [
+        {
+          "path": "bases/base/ui/footer.tsx",
+          "type": "registry:ui",
+          "target": "components/dga/footer.tsx"
+        }
+      ]
+    },
+    {
+      "name": "second-nav",
+      "type": "registry:ui",
+      "title": "Second Nav",
+      "description": "DGA Second Nav Header: a 40px strip above the header with contextual items and actions, gray or primary, that scrolls sideways on narrow screens.",
+      "dependencies": [
+        "@hugeicons/react",
+        "@hugeicons/core-free-icons",
+        "class-variance-authority"
+      ],
+      "registryDependencies": ["{{REGISTRY_URL}}/r/utils.json"],
+      "files": [
+        {
+          "path": "bases/base/ui/second-nav.tsx",
+          "type": "registry:ui",
+          "target": "components/dga/second-nav.tsx"
+        }
+      ]
+    },
+    {
+      "name": "date-picker",
+      "type": "registry:ui",
+      "title": "Date Picker",
+      "description": "DGA Date Picker: a standalone Calendar and a field with a popup calendar. Gregorian and Hijri (Umm al-Qura, from Intl), single date and range, min, max, disabled dates, dual-month view, quick options and a confirm step. Full keyboard support.",
+      "dependencies": ["@base-ui/react", "@hugeicons/react", "@hugeicons/core-free-icons"],
+      "registryDependencies": [
+        "{{REGISTRY_URL}}/r/utils.json",
+        "{{REGISTRY_URL}}/r/direction.json",
+        "{{REGISTRY_URL}}/r/button.json",
+        "{{REGISTRY_URL}}/r/content-switcher.json",
+        "{{REGISTRY_URL}}/r/input.json"
+      ],
+      "files": [
+        {
+          "path": "bases/base/ui/date-picker.tsx",
+          "type": "registry:ui",
+          "target": "components/dga/date-picker.tsx"
+        }
+      ]
+    },
+    {
+      "name": "carousel",
+      "type": "registry:ui",
+      "title": "Carousel",
+      "description": "DGA Carousel: slides with previous and next, dots, autoplay with a pause button that respects reduced motion, swipe, arrow keys, and the slide order of the page direction.",
+      "dependencies": [
+        "@hugeicons/react",
+        "@hugeicons/core-free-icons",
+        "class-variance-authority"
+      ],
+      "registryDependencies": [
+        "{{REGISTRY_URL}}/r/utils.json",
+        "{{REGISTRY_URL}}/r/direction.json"
+      ],
+      "files": [
+        {
+          "path": "bases/base/ui/carousel.tsx",
+          "type": "registry:ui",
+          "target": "components/dga/carousel.tsx"
+        }
+      ]
+    },
+    {
+      "name": "filtration",
+      "type": "registry:ui",
+      "title": "Filtration",
+      "description": "DGA Filtration: a filter panel of checkbox, radio, select, input and range groups, applied filters as removable Tags, clear all and a result count. Below lg the panel opens in the DGA Drawer.",
+      "dependencies": ["@hugeicons/react", "@hugeicons/core-free-icons"],
+      "registryDependencies": [
+        "{{REGISTRY_URL}}/r/utils.json",
+        "{{REGISTRY_URL}}/r/button.json",
+        "{{REGISTRY_URL}}/r/checkbox.json",
+        "{{REGISTRY_URL}}/r/drawer.json",
+        "{{REGISTRY_URL}}/r/input.json",
+        "{{REGISTRY_URL}}/r/radio.json",
+        "{{REGISTRY_URL}}/r/select.json",
+        "{{REGISTRY_URL}}/r/tag.json"
+      ],
+      "files": [
+        {
+          "path": "bases/base/ui/filtration.tsx",
+          "type": "registry:ui",
+          "target": "components/dga/filtration.tsx"
+        }
+      ]
     }
   ]
 }

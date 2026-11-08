@@ -663,4 +663,145 @@ export const API_DESCRIPTIONS_AR: Record<string, string> = {
   "progress.ProgressCircle.status":
     "`success` أو `error` لمهمة منتهية: يضيف أيقونة واللون المناسب.",
   "stepper.Stepper.orientation": "`horizontal` (الافتراضي) أو `vertical`.",
+  "carousel.Carousel.controls":
+    "ما يظهر مع الشرائح: `arrows` (السابق والتالي بجانب الشرائح)، أو `dots` (الأسهم وصف النقاط)، أو `dots-only`.",
+  "carousel.Carousel.index": "الشريحة الظاهرة، تبدأ من 0 (بتحكم خارجي).",
+  "carousel.Carousel.defaultIndex": "الشريحة المعروضة في البداية (دون تحكم). الافتراضي 0.",
+  "carousel.Carousel.onIndexChange": "تُستدعى برقم الشريحة الجديدة.",
+  "carousel.Carousel.autoPlay":
+    "ينتقل تلقائيًا كل هذا العدد من المللي ثانية. الافتراضي 0 ويعني إيقافه.",
+  "carousel.Carousel.loop": "ينتقل من الشريحة الأخيرة إلى الأولى والعكس. الافتراضي `false`.",
+  "carousel.Carousel.previousLabel": "اسم زر السابق. ترجمه في الصفحات العربية.",
+  "carousel.Carousel.nextLabel": "اسم زر التالي.",
+  "carousel.Carousel.pauseLabel": "اسم زر الإيقاف المؤقت (يظهر أثناء التشغيل).",
+  "carousel.Carousel.playLabel": "اسم زر التشغيل (يظهر أثناء الإيقاف المؤقت).",
+  "carousel.Carousel.slideLabel": "اسم كل شريحة، مثل «1 من 5».",
+  "carousel.Carousel.dotLabel": "اسم كل نقطة، مثل «انتقل إلى الشريحة 2».",
+  "carousel.Carousel.dotsLabel": "اسم صف النقاط.",
+  "carousel.Carousel.dotSize": "حجم النقاط: 8 أو 12 أو 16px. الافتراضي `md`.",
+  "carousel.Carousel":
+    "تصفّح مجموعة من الشرائح (DGA: Carousel). زرّا السابق والتالي، وصف من النقاط، وتشغيل تلقائي مع زر إيقاف مؤقت، والسحب على شاشات اللمس، ومفتاحا السهمين اليمين واليسار (يتبادلان في الصفحات العربية) أثناء وجود التركيز داخله. تتبع الشرائح اتجاه الصفحة: الأولى على اليمين في العربية. يتوقف التشغيل التلقائي ما دام المؤشر أو التركيز داخله، ولا يبدأ إذا فضّل الشخص تقليل الحركة. سمِّه بـ `aria-label`. كل عنصر ابن شريحة.",
+  "date-picker.Calendar.calendar": "التقويم المعروض (بتحكم خارجي).",
+  "date-picker.Calendar.value":
+    "التاريخ المختار بصيغة ISO، أو `null` (بتحكم خارجي). أو النطاق المختار؛ تكون `end` فارغة (`null`) ما دام الشخص يختار.",
+  "date-picker.Calendar.months": "شهر واحد، أو شهران جنبًا إلى جنب (DGA: عرض الشهرين).",
+  "date-picker.Calendar.min": "أبكر تاريخ يمكن اختياره، بصيغة ISO.",
+  "date-picker.Calendar.max": "أحدث تاريخ يمكن اختياره.",
+  "date-picker.Calendar.weekStartsOn": "أول أيام الأسبوع: 0 الأحد (الافتراضي)، و6 السبت.",
+  "date-picker.Calendar.defaultCalendar":
+    "التقويم المعروض في البداية (دون تحكم). الافتراضي `gregorian`.",
+  "date-picker.Calendar.calendars":
+    "التقاويم التي يمكن التبديل بينها. إدخال واحد يخفي المبدّل. الافتراضي الاثنان: الميلادي والهجري (أم القرى).",
+  "date-picker.Calendar.isDateDisabled":
+    "يجعل تواريخ أخرى غير متاحة، مثل عطلات نهاية الأسبوع أو الإجازات.",
+  "date-picker.Calendar.today":
+    "تاريخ اليوم بصيغة ISO. الافتراضي: تاريخ الجهاز. مفيد في الاختبارات.",
+  "date-picker.Calendar.defaultMonth":
+    "الشهر المعروض في البداية، بأي تاريخ ISO منه. الافتراضي: التاريخ المختار وإلا اليوم.",
+  "date-picker.Calendar.locale":
+    "لغة أسماء الأشهر والأيام. الافتراضي: العربية في الصفحات من اليمين إلى اليسار، والإنجليزية في غيرها.",
+  "date-picker.Calendar.numerals":
+    "الأرقام: `latn` (من 0 إلى 9، الافتراضي) أو `arab` (هندية عربية).",
+  "date-picker.Calendar.secondaryDate":
+    "يعرض يوم التقويم الآخر تحت كل رقم بصيغة «يوم/شهر» (DGA: التاريخ الثانوي)، مثل اليوم الهجري في التقويم الميلادي.",
+  "date-picker.Calendar":
+    "شبكة شهر لاختيار تاريخ أو نطاق (DGA: Date Picker، التقويم). الميلادي والهجري (أم القرى) مع مبدّل بينهما. مفاتيح الأسهم تتحرك باليوم والأسبوع (يتبادل اليمين واليسار في الصفحات العربية)، وHome وEnd إلى بداية الأسبوع ونهايته، وPage Up وPage Down لتغيير الشهر ومعهما Shift لتغيير السنة، وEnter أو Space للاختيار. التواريخ نصوص ISO فلا تتأثر القيمة بالمنطقة الزمنية.",
+  "date-picker.DatePicker.calendar": "التقويم المعروض (بتحكم خارجي).",
+  "date-picker.DatePicker.months": "تعرض النافذة شهرين جنبًا إلى جنب.",
+  "date-picker.DatePicker.min": "أبكر تاريخ يمكن اختياره، بصيغة ISO.",
+  "date-picker.DatePicker.max": "أحدث تاريخ يمكن اختياره.",
+  "date-picker.DatePicker.weekStartsOn": "أول أيام الأسبوع: 0 الأحد (الافتراضي)، و6 السبت.",
+  "date-picker.DatePicker.name": "اسم حقل النموذج لقيمة ISO.",
+  "date-picker.DatePicker.defaultCalendar":
+    "التقويم المعروض في البداية (دون تحكم). الافتراضي `gregorian`.",
+  "date-picker.DatePicker.calendars":
+    "التقاويم التي يمكن التبديل بينها. إدخال واحد يخفي المبدّل. الافتراضي الاثنان: الميلادي والهجري (أم القرى).",
+  "date-picker.DatePicker.isDateDisabled":
+    "يجعل تواريخ أخرى غير متاحة، مثل عطلات نهاية الأسبوع أو الإجازات.",
+  "date-picker.DatePicker.today":
+    "تاريخ اليوم بصيغة ISO. الافتراضي: تاريخ الجهاز. مفيد في الاختبارات.",
+  "date-picker.DatePicker.defaultMonth":
+    "الشهر المعروض في البداية، بأي تاريخ ISO منه. الافتراضي: التاريخ المختار وإلا اليوم.",
+  "date-picker.DatePicker.locale":
+    "لغة أسماء الأشهر والأيام. الافتراضي: العربية في الصفحات من اليمين إلى اليسار، والإنجليزية في غيرها.",
+  "date-picker.DatePicker.numerals":
+    "الأرقام: `latn` (من 0 إلى 9، الافتراضي) أو `arab` (هندية عربية).",
+  "date-picker.DatePicker.secondaryDate":
+    "يعرض يوم التقويم الآخر تحت كل رقم بصيغة «يوم/شهر» (DGA: التاريخ الثانوي)، مثل اليوم الهجري في التقويم الميلادي.",
+  "date-picker.DatePicker.invalid": "يحدد الحقل على أنه غير صالح (يفعل Field ذلك عبر `invalid`).",
+  "date-picker.DatePicker.confirm": "يعرض زرّي «إلغاء» و«تطبيق»: لا يُحتسب الاختيار إلا بعد التطبيق.",
+  "date-picker.DatePicker.quickOptions":
+    "اختصارات تظهر بجانب التقويم، مثل «اليوم» أو «آخر 7 أيام».",
+  "date-picker.DatePicker.quickOptionsLabel": "اسم قائمة الاختصارات.",
+  "date-picker.DatePicker.startName": "أسماء حقول النموذج للنطاق.",
+  "date-picker.DatePicker":
+    'حقل تاريخ مع تقويم منبثق (DGA: Date Picker). اكتب التاريخ بصيغة `YYYY-MM-DD` في التقويم المعروض أو اخترْه من النافذة، وتُفتح بزر التقويم وتُغلق بـ Escape. `mode="range"` يعرض حقل بداية وحقل نهاية. ضعه داخل Field ليحصل على تسمية ونص مساعد ورسالة خطأ. مرّر `min` و`max` و`isDateDisabled` لتقييد التواريخ.',
+  "filtration.Filtration.value": "المرشحات المختارة (بتحكم خارجي).",
+  "filtration.Filtration.defaultValue": "المرشحات المختارة في البداية (دون تحكم).",
+  "filtration.Filtration.groups": "مجموعات المرشحات بالترتيب.",
+  "filtration.Filtration.onValueChange": "تُستدعى بالمرشحات الجديدة.",
+  "filtration.Filtration.resultCount": "عدد النتائج، يظهر فوقها. احذفه لإخفاء العدد.",
+  "filtration.Filtration.resultLabel": "تكتب العدد، مثل «12 نتيجة». ترجمها في الصفحات العربية.",
+  "filtration.Filtration.clearAllLabel": "اسم زر مسح الكل.",
+  "filtration.Filtration.appliedLabel": "اسم قائمة المرشحات المطبّقة.",
+  "filtration.Filtration.removeLabel": "اسم زر إزالة الوسم، مثل «إزالة الرياض».",
+  "filtration.Filtration.triggerLabel": "نص الزر الذي يفتح اللوحة على الشاشات الصغيرة.",
+  "filtration.Filtration.applyLabel": "نص زر الدرج الذي يعرض النتائج.",
+  "filtration.Filtration.drawerDescription": "سطر تحت عنوان الدرج لقارئات الشاشة.",
+  "filtration.Filtration.drawerSide": "الجهة التي يُفتح منها الدرج على الشاشات الصغيرة.",
+  "filtration.Filtration.closeLabel": "اسم زر إغلاق الدرج.",
+  "filtration.Filtration":
+    "نمط التصفية (DGA: Filtration): لوحة من المجموعات (خانات اختيار، وأزرار اختيار، وقائمة منسدلة، وحقل نص، ونطاق)، والمرشحات المطبّقة وسومًا قابلة للإزالة مع زر مسح الكل، وعدد النتائج فوق نتائجك (`children`). من عرض `lg` تقع اللوحة بجانب النتائج؛ وتحته يفتح زر اللوحة نفسها في درج. استخدمه بتحكم خارجي عبر `value` و`onValueChange`، أو دون تحكم عبر `defaultValue`. صفِّ بياناتك بنفسك بالقيمة.",
+  "footer.Footer.logo": "شعار الجهة.",
+  "footer.Footer.partnerLogos": "شعارات أخرى (الشركاء، رؤية 2030) تظهر بعد الشعار الرئيسي.",
+  "footer.Footer.description": "نص قصير تحت الشعار.",
+  "footer.Footer.columns": "أعمدة روابط التنقل.",
+  "footer.Footer.columnsLabel": "اسم منطقة الروابط. ترجمه في الصفحات العربية.",
+  "footer.Footer.social": "روابط وسائل التواصل الاجتماعي.",
+  "footer.Footer.socialLabel": "اسم قائمة روابط التواصل الاجتماعي.",
+  "footer.Footer.contactTitle": "عنوان قسم التواصل.",
+  "footer.Footer.badges": "شارات المتاجر: مرّر الروابط مع صورها.",
+  "footer.Footer.badgesTitle": "عنوان قسم شارات التطبيق.",
+  "footer.Footer.legalLinks": "صف الروابط القانونية: الخصوصية والشروط وإمكانية الوصول.",
+  "footer.Footer.legalLabel": "اسم قائمة الروابط القانونية.",
+  "footer.Footer.copyright": "سطر حقوق النشر.",
+  "footer.Footer.collapsible":
+    "يطوي أعمدة الروابط في أكورديون على الشاشات الضيقة. الافتراضي `true`.",
+  "footer.Footer.fullWidth": "يمتد بكامل العرض. الافتراضي: في المنتصف بعرض أقصى 1280px.",
+  "footer.Footer.externalLabel": "نص لقارئات الشاشة يُضاف إلى الروابط الخارجية.",
+  "footer.Footer":
+    "تذييل الموقع (DGA: Footer): شعارات، ونص وصفي وروابط التواصل الاجتماعي، وأعمدة روابط التنقل، وبيانات التواصل، وشارات التطبيق، وصف للروابط القانونية وحقوق النشر. افتراضي (رمادي) أو أخضر داكن. تحت عرض `sm` تنطوي أعمدة الروابط في أكورديون بقسم لكل عمود. كل نص ظاهر خاصية، فترجمه في الصفحات العربية.",
+  "header.Header.linkStyle":
+    "شكل روابط القائمة الفرعية: نص فقط، أو مع أيقونة بسيطة، أو مع أيقونة داخل مربع.",
+  "header.Header.top": "شريط فوق الترويسة: ضع هنا Second Nav.",
+  "header.Header.submenuTone": "لوحة القائمة الفرعية: بيضاء، أو بالأخضر الداكن لعلم DGA.",
+  "header.Header.logo": "الشعار، وهو عادةً رابط إلى الصفحة الرئيسية. مرّر `img` أو SVG خاصًّا بك.",
+  "header.Header.items": "قائمة التنقل الرئيسية.",
+  "header.Header.actions": "إجراءات في نهاية الشريط.",
+  "header.Header.search": "حقل بحث أو زر يفتح البحث. يظهر في الشريط من `lg`، وفي أعلى الدرج تحته.",
+  "header.Header.language": "مبدّل اللغة (مثل Menu أو رابط).",
+  "header.Header.user": "منطقة المستخدم: زر تسجيل الدخول أو قائمة الحساب.",
+  "header.Header.fullWidth": "يمتد بكامل العرض. الافتراضي: في المنتصف بعرض أقصى 1280px.",
+  "header.Header.skipHref":
+    "وجهة رابط التخطي. الافتراضي `#main-content`. أعطِ العنصر `main` هذا المعرّف.",
+  "header.Header.skipLabel": "نص رابط التخطي. ترجمه في الصفحات العربية.",
+  "header.Header.navLabel": "اسم قائمة التنقل الرئيسية. ترجمه في الصفحات العربية.",
+  "header.Header.menuLabel": "اسم الزر الذي يفتح القائمة على الشاشات الصغيرة.",
+  "header.Header.drawerTitle": "عنوان الدرج.",
+  "header.Header.drawerDescription": "سطر تحت عنوان الدرج لقارئات الشاشة.",
+  "header.Header.closeLabel": "اسم زر إغلاق الدرج.",
+  "header.Header":
+    'ترويسة الموقع (DGA: Nav Header): شعار، وقائمة التنقل الرئيسية مع قوائم فرعية، وإجراءات وبحث ومبدّل لغة ومنطقة مستخدم. رابط التخطي أول ما يصله التركيز. مفتاحا اليمين واليسار (يتبادلان في الصفحات العربية) وHome وEnd ينقلان بين العناصر؛ وEnter أو Space أو السهم لأسفل يفتح القائمة الفرعية، وهي Menu من DGA. تحت عرض `lg` تنتقل القائمة إلى Drawer. للصفحة الحالية `aria-current="page"`.',
+  "header.HeaderAction.iconOnly": "يخفي النص (ويبقى اسمًا للوصول).",
+  "header.HeaderAction.iconPosition": "يضع الأيقونة فوق النص.",
+  "header.HeaderAction":
+    "إجراء واحد في شريط الترويسة (DGA: `Header Action`): أيقونة ونص، في سطر واحد أو بالأيقونة فوق النص. يصير رابطًا إن كان له `href` وإلا زرًّا. تحت عرض `lg` يُخفى النص ويبقى اسمًا للوصول.",
+  "second-nav.SecondNav.items":
+    "عناصر سياقية في البداية: تاريخ أو طقس أو موقع، أو روابط إلى صفحات شقيقة.",
+  "second-nav.SecondNav.actions": "إجراءات في النهاية: حجم الخط أو التباين أو رابط مساعدة.",
+  "second-nav.SecondNav.fullWidth": "يمتد بكامل العرض. الافتراضي: في المنتصف بعرض أقصى 1280px.",
+  "second-nav.SecondNav.divider": "يعرض الفاصل بين العناصر والإجراءات. الافتراضي `true`.",
+  "second-nav.SecondNav":
+    "الشريط الثانوي فوق الترويسة (DGA: Second Nav Header): عناصر سياقية مثل التاريخ أو الطقس أو الصفحات الشقيقة، ثم الإجراءات، بارتفاع 40px، رمادي أو أساسي. الإدخال الذي له `href` رابط، والذي له `onClick` زر، وغيره نص عادي. على الشاشات الضيقة يتمرر أفقيًا بدل الالتفاف. سمِّه بـ `aria-label`.",
+  "header.Header.defaultMenuOpen": "يفتح الدرج عند أول عرض. لعرضه في التوثيق.",
 };

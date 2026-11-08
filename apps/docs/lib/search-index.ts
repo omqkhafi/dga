@@ -1,6 +1,11 @@
 import { getT } from "@/lib/dictionary";
 import type { Locale } from "@/lib/i18n";
-import { FORM_COMPONENTS, INTERACTIVE_COMPONENTS, NAVIGATION_COMPONENTS } from "@/lib/nav";
+import {
+  COMPOSITE_COMPONENTS,
+  FORM_COMPONENTS,
+  INTERACTIVE_COMPONENTS,
+  NAVIGATION_COMPONENTS,
+} from "@/lib/nav";
 import { getPageMarkdown, source } from "@/lib/source";
 
 /** One searchable unit: a page, or one heading section of a page. */
@@ -43,13 +48,15 @@ export async function buildSearchIndex(lang: Locale): Promise<SearchEntry[]> {
           ? t("search.crumb.interactive")
           : segment === "components" && NAVIGATION_COMPONENTS.includes(page.slugs[1] ?? "")
             ? t("search.crumb.navigation")
-            : segment === "components"
-              ? t("search.crumb.components")
-              : segment === "foundations"
-                ? t("search.crumb.foundations")
-                : segment === "ai"
-                  ? t("search.crumb.ai")
-                  : t("search.crumb.docs");
+            : segment === "components" && COMPOSITE_COMPONENTS.includes(page.slugs[1] ?? "")
+              ? t("search.crumb.composite")
+              : segment === "components"
+                ? t("search.crumb.components")
+                : segment === "foundations"
+                  ? t("search.crumb.foundations")
+                  : segment === "ai"
+                    ? t("search.crumb.ai")
+                    : t("search.crumb.docs");
     const base = { page: page.data.title, pageUrl: page.url, crumb };
     const pageEntry: SearchEntry = {
       ...base,

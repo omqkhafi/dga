@@ -1,0 +1,84 @@
+---
+title: Carousel
+description: "Browse a set of slides (DGA: Carousel). Previous and next, dots, autoplay with a pause button that respects reduced motion, swipe, arrow keys, and the slide order of the page direction."
+---
+
+<Preview name="carousel-basic" title="Carousel" minHeight={300} />
+
+## Installation
+
+<ComponentInstall name="carousel" />
+
+## Usage
+
+```tsx title="page.tsx"
+import { Carousel } from "@/components/dga/carousel";
+
+export function Featured() {
+  return (
+    <Carousel aria-label="Featured services" controls="dots">
+      <Slide title="Renew your licence online" />
+      <Slide title="Track your request" />
+      <Slide title="Pay securely" />
+    </Carousel>
+  );
+}
+```
+
+Each child is one slide. Use a carousel to show a few equal items in the space of one. Do not hide content people need to compare or must read. Name it with `aria-label` and translate `previousLabel`, `nextLabel`, `pauseLabel`, `playLabel`, `slideLabel`, `dotLabel` and `dotsLabel` on Arabic pages.
+
+## Anatomy
+
+- **Slides**: one visible at a time, moved by the track. In a right-to-left page the first slide is on the right and the track moves the other way.
+- **Controls** (`controls`): `arrows` (previous and next beside the slides), `dots` (arrows and dots) or `dots-only`.
+- **Arrows**: 32, 40 or 48px (`size`), `primary` (brand fill, on-colour icon) or `subtle` (`arrowStyle`). They are disabled at the ends unless `loop`.
+- **Dots**: 8, 12 or 16px (`dotSize`) inside a 24px target. The chosen dot is filled and the others are rings.
+- **Pause button**: shown when `autoPlay` is on.
+
+## Examples
+
+### Arrows and dots only
+
+<Preview compact name="carousel-variants" title="Controls" minHeight={520} />
+
+### Autoplay
+
+`autoPlay` is a time in milliseconds. It stops while the pointer or focus is inside, can be paused, and never starts when the person prefers reduced motion.
+
+<Preview compact name="carousel-autoplay" title="Autoplay" minHeight={300} />
+
+## RTL
+
+The first slide is on the right, previous is on the right and its arrow points right, and a swipe to the right shows the next slide.
+
+<DirectionCompare name="carousel-basic" title="Carousel" minHeight={300} />
+
+## Accessibility
+
+| Key | Action |
+| --- | --- |
+| <kbd>Tab</kbd> | Moves through the pause button, previous, next and the dots. Slides that are not visible are skipped. |
+| <kbd>Left</kbd> / <kbd>Right</kbd> | Previous or next slide while focus is inside. They swap on Arabic pages. |
+| <kbd>Home</kbd> / <kbd>End</kbd> | First or last slide. |
+| <kbd>Enter</kbd> / <kbd>Space</kbd> | Presses the focused button. |
+
+- A `section` with `aria-roledescription="carousel"`. Each slide is a group named "1 of 4" (`slideLabel`); slides that are not visible are `aria-hidden` and `inert`.
+- Moving content can be paused (WCAG 2.2.2). While it plays the live region is off, so a screen reader is not interrupted; otherwise it is polite.
+- On touch screens a horizontal swipe moves one slide; vertical scrolling still works.
+- Arrows and dots are 3:1, and so is the focus ring, in light and dark.
+
+## API Reference
+
+<ApiReference component="carousel" />
+
+## Deviations from DGA
+
+- Figma has no behaviour. Autoplay is off by default, with a pause button, and respects reduced motion.
+- Arrows are previous and next, not left and right, and mirror in RTL.
+- The dots are drawn at 8 to 16px but are 24px targets, and the chosen one is filled while the others are rings.
+
+<ComponentDeviations component="carousel" />
+
+## Contrast
+
+<ComponentContrast component="carousel" />

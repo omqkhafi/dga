@@ -1,0 +1,93 @@
+---
+title: Footer
+description: "The site footer (DGA: Footer): logos, a description, social links, link columns, contact details, app badges and a legal row. Gray or dark green, and the columns fold into an Accordion on small screens."
+---
+
+<Preview name="footer-default" title="Footer" minHeight={420} />
+
+## Installation
+
+<ComponentInstall name="footer" />
+
+It installs the [Accordion](/docs/components/accordion) with it.
+
+## Usage
+
+```tsx title="layout.tsx"
+import { Footer } from "@/components/dga/footer";
+
+export function SiteFooter() {
+  return (
+    <Footer
+      logo={<img src="/logo.svg" alt="Digital Services" height={40} />}
+      description="The digital services of the government, in one place."
+      columns={[
+        {
+          title: "Services",
+          links: [
+            { label: "Renew a licence", href: "/renew" },
+            { label: "Pay a fee", href: "/pay" },
+          ],
+        },
+        { title: "Support", links: [{ label: "Help centre", href: "/help" }] },
+      ]}
+      contactTitle="Contact"
+      contact={[{ label: "Phone", value: "920000000", href: "tel:920000000" }]}
+      legalLinks={[{ label: "Privacy", href: "/privacy" }]}
+      copyright="© 2026 Digital Services. All rights reserved."
+    />
+  );
+}
+```
+
+Every text is a prop, so translate `columnsLabel`, `socialLabel`, `legalLabel` and `externalLabel` on Arabic pages. App store badges are your own links with their images (`badges`).
+
+## Anatomy
+
+- **Footer**: gray (neutral-100) or `tone="green"` (the DGA flag green with on-colour text). Padded 32px, content centred and 1280px wide unless `fullWidth`.
+- **Brand**: the logo and `partnerLogos`, the description and the social links (icon links named by `label`).
+- **Link columns** (`columns`): a heading with a line under it and a list of links; up to four columns across.
+- **Contact** and **app badges**: blocks with their own headings.
+- **Legal row**: the copyright and the legal links, under a line.
+- **Small screens**: below `sm` the columns become an Accordion, one section per column. `collapsible={false}` keeps them open.
+
+## Examples
+
+### Dark green
+
+<Preview compact name="footer-green" title="Dark green footer" minHeight={420} />
+
+Switch the viewport to mobile to see the Accordion.
+
+## RTL
+
+The brand block moves to the right, the columns run from the right, and the contact and legal rows follow the direction.
+
+<DirectionCompare name="footer-default" title="Footer" minHeight={420} />
+
+## Accessibility
+
+| Key | Action |
+| --- | --- |
+| <kbd>Tab</kbd> | Moves through the links in reading order. |
+| <kbd>Enter</kbd> / <kbd>Space</kbd> | Opens or closes an Accordion section on small screens. |
+
+- A `footer` landmark. The link columns are a `nav` named by `columnsLabel`, and the legal links are a second `nav` named by `legalLabel`. Contact details are a list; the kind of detail is read by screen readers.
+- External links open in a new tab, show an icon and have a screen-reader note (`externalLabel`).
+- Focus is a 2px outline: black on gray and white on green. Text is 4.5:1 and icons 3:1 in light and dark.
+
+## API Reference
+
+<ApiReference component="footer" />
+
+## Deviations from DGA
+
+- The 72px heading and its 24px paragraph of the DGA CSS are not shipped: the footer has a description in Text md, and you place any hero text yourself.
+- Colours are the semantic tokens, not hard-coded values, so the dark theme works.
+- Figma changes only the weight below 600px. Here the columns fold into an Accordion.
+
+<ComponentDeviations component="footer" />
+
+## Contrast
+
+<ComponentContrast component="footer" />

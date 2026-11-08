@@ -42,6 +42,13 @@
     "data-table",
     "rating",
     "progress",
-    "stepper"
+    "stepper",
+    "---Composite---",
+    "header",
+    "second-nav",
+    "footer",
+    "date-picker",
+    "carousel",
+    "filtration"
   ]
 }

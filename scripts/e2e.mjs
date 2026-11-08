@@ -29,6 +29,12 @@
 //  12. Navigation and data display: every Phase 5 page fits at 375 and 1280 px in both languages, and
 //      Pagination, Stepper, Rating, Data Table, Breadcrumb and Table of Contents work with the
 //      keyboard alone in /en and /ar, with RTL column order, mirrored arrows and the compact forms.
+//  13. Composite: every Phase 6 page fits at 375 and 1280 px in both languages, and Header (skip link,
+//      arrow keys that follow the direction, the Menu sub-menu, the Drawer at 375px, aria-current),
+//      Footer (the Accordion at 375px), Second Nav (sideways scroll), Date Picker (grid semantics,
+//      arrows, Page Up and Down, Home and End, the Hijri calendar checked against Intl, the popup,
+//      typing, ranges, limits), Carousel (slide order, arrow keys, swipe, autoplay and reduced
+//      motion) and Filtration (checkbox, tags, clear all, the Drawer at 375px) work in /en and /ar.
 //   4. Forms: every form component page fits at 375 and 1280 px in both languages, and the
 //      service request form can be completed with the keyboard alone in /en and /ar.
 import { createHash } from "node:crypto";
@@ -192,6 +198,8 @@ const NAVIGATION_PAGES = [
   "stepper",
 ];
 
+const COMPOSITE_PAGES = ["header", "second-nav", "footer", "date-picker", "carousel", "filtration"];
+
 const FORM_PAGES = [
   "field",
   "input",
@@ -223,10 +231,10 @@ async function discoveryChecks() {
     const xml = await sitemap.text();
     check(sitemap.status() === 200, `/sitemap/${lang}.xml returns 200`);
     check(
-      [...FORM_PAGES, ...INTERACTIVE_PAGES, ...NAVIGATION_PAGES].every((name) =>
+      [...FORM_PAGES, ...INTERACTIVE_PAGES, ...NAVIGATION_PAGES, ...COMPOSITE_PAGES].every((name) =>
         xml.includes(`/${lang}/docs/components/${name}`),
       ),
-      `/sitemap/${lang}.xml lists every form, interactive and navigation component page`,
+      `/sitemap/${lang}.xml lists every form, interactive, navigation and composite component page`,
     );
   }
   const robots = await (await get("/robots.txt")).text();
@@ -286,7 +294,12 @@ async function formPageChecks() {
       });
       page.on("pageerror", (e) => issues.add(`pageerror: ${e.message.slice(0, 160)}`));
       for (const lang of ["en", "ar"]) {
-        for (const name of [...FORM_PAGES, ...INTERACTIVE_PAGES, ...NAVIGATION_PAGES]) {
+        for (const name of [
+          ...FORM_PAGES,
+          ...INTERACTIVE_PAGES,
+          ...NAVIGATION_PAGES,
+          ...COMPOSITE_PAGES,
+        ]) {
           const url = `/${lang}/docs/components/${name}`;
           await page.goto(`${BASE}${url}`, { waitUntil: "networkidle" });
           const r = await page.evaluate(() => ({
@@ -309,7 +322,7 @@ async function formPageChecks() {
   }
   check(
     issues.size === 0,
-    `form, interactive and navigation pages: no console errors or warnings: ${[...issues].join(" | ")}`,
+    `form, interactive, navigation and composite pages: no console errors or warnings: ${[...issues].join(" | ")}`,
   );
 }
 
@@ -1654,6 +1667,733 @@ async function navigationChecks() {
   }
 }
 
+/**
+ * Phase 6 in /en and /ar: Header, Second Nav, Footer, Date Picker, Carousel and Filtration, with
+ * the keyboard, at 1280 and 375px, and the direction toggled to RTL for /ar.
+ */
+async function compositeChecks() {
+  for (const lang of ["en", "ar"]) {
+    const rtl = lang === "ar";
+    const context = await browser.newContext({ viewport: { width: 1280, height: 800 } });
+    const page = await context.newPage();
+    const issues = [];
+    page.on("console", (m) => {
+      if (["error", "warning"].includes(m.type())) issues.push(m.text().slice(0, 160));
+    });
+    page.on("pageerror", (e) => issues.push(e.message.slice(0, 160)));
+    const open = async (name, width = 1280, query = "") => {
+      await page.setViewportSize({ width, height: 800 });
+      await page.goto(`${BASE}/preview/${name}?dir=${rtl ? "rtl" : "ltr"}${query}`, {
+        waitUntil: "networkidle",
+      });
+      await page.waitForTimeout(300);
+    };
+    const next = rtl ? "ArrowLeft" : "ArrowRight";
+    const previous = rtl ? "ArrowRight" : "ArrowLeft";
+    const slot = (name) => page.locator(`[data-slot=${name}]`);
+    const active = () =>
+      page.evaluate(
+        () => document.activeElement?.getAttribute("data-slot") ?? document.activeElement?.tagName,
+      );
+    const arabic = /[\u0600-\u06FF]/;
+    // The Date Picker writes Arabic-Indic digits in RTL previews; compare with Western ones.
+    const latin = (text) =>
+      text.replace(/[\u0660-\u0669]/g, (d) => String(d.charCodeAt(0) - 0x660));
+
+    // ---------------------------------------------------------------- Header, desktop
+    await open("header-basic");
+    await page.keyboard.press("Tab");
+    check((await active()) === "header-skip", `${lang}: the skip link is the first tab stop`);
+    check(
+      (await slot("header-skip").getAttribute("href")) === "#main-content",
+      `${lang}: the skip link goes to #main-content`,
+    );
+    const items = page.locator("[data-header-item]");
+    check((await items.count()) === 4, `${lang}: the header has four main items`);
+    check(
+      (await items.first().getAttribute("aria-current")) === "page",
+      `${lang}: the current page has aria-current=page`,
+    );
+    check(
+      (await items.nth(1).getAttribute("aria-current")) === null,
+      `${lang}: only the current page has aria-current`,
+    );
+    await items.first().focus();
+    await page.keyboard.press(next);
+    check(
+      (await items.nth(1).evaluate((el) => el === document.activeElement)) === true,
+      `${lang}: ${next} moves to the next item (arrows follow the direction)`,
+    );
+    await page.keyboard.press(previous);
+    check(
+      (await items.first().evaluate((el) => el === document.activeElement)) === true,
+      `${lang}: ${previous} moves back`,
+    );
+    await page.keyboard.press("End");
+    check(
+      (await items.last().evaluate((el) => el === document.activeElement)) === true,
+      `${lang}: End moves to the last item`,
+    );
+    await page.keyboard.press("Home");
+    check(
+      (await items.first().evaluate((el) => el === document.activeElement)) === true,
+      `${lang}: Home moves to the first item`,
+    );
+    // The Services sub-menu is a Menu: Enter opens it, Escape closes it and returns focus.
+    const services = items.nth(1);
+    await services.focus();
+    await page.keyboard.press("Enter");
+    await page.waitForTimeout(250);
+    const menu = page.locator("[data-slot=menu-content]");
+    check(await menu.isVisible(), `${lang}: Enter opens the sub-menu`);
+    check(
+      (await menu.locator("[role=menuitem]").count()) === 4,
+      `${lang}: the sub-menu has four links in two columns`,
+    );
+    await page.keyboard.press("ArrowDown");
+    check(
+      (await active()) === "header-submenu-item",
+      `${lang}: ArrowDown moves into the sub-menu links`,
+    );
+    await page.keyboard.press("Escape");
+    await page.waitForTimeout(250);
+    check(!(await menu.isVisible().catch(() => false)), `${lang}: Escape closes the sub-menu`);
+    check(
+      (await services.evaluate((el) => el === document.activeElement)) === true,
+      `${lang}: focus returns to the Services button`,
+    );
+    // RTL: the logo is on the right and the actions on the left.
+    const logo = await slot("header-logo").boundingBox();
+    const nav = await slot("header-nav").boundingBox();
+    const end = await slot("header-end").boundingBox();
+    check(
+      rtl ? logo.x > nav.x && end.x < nav.x : logo.x < nav.x && end.x > nav.x,
+      `${lang}: the logo is on the ${rtl ? "right" : "left"} and the actions on the ${rtl ? "left" : "right"}`,
+    );
+    check(
+      (await slot("header-menu-button").isVisible()) === false,
+      `${lang}: no menu button at 1280px`,
+    );
+    // Second Nav strip above the bar, with a divider before the actions.
+    check(
+      (await slot("second-nav").count()) === 1,
+      `${lang}: the Second Nav sits above the header`,
+    );
+
+    await open("header-submenu-green");
+    await page.waitForTimeout(300);
+    check(
+      (await page.locator("[data-slot=menu-content][data-tone=green]").count()) === 1,
+      `${lang}: the dark green sub-menu opens`,
+    );
+
+    // ---------------------------------------------------------------- Header, mobile Drawer
+    await open("header-basic", 375);
+    check(
+      !(await slot("header-nav").isVisible()) && (await slot("header-menu-button").isVisible()),
+      `${lang}: at 375px the navigation is replaced by the menu button`,
+    );
+    check(
+      await page.evaluate(
+        () => document.documentElement.scrollWidth <= document.documentElement.clientWidth + 1,
+      ),
+      `${lang}: the header does not scroll sideways at 375px`,
+    );
+    await slot("header-menu-button").focus();
+    await page.keyboard.press("Enter");
+    await page.waitForTimeout(400);
+    const drawer = page.getByRole("dialog");
+    check(await drawer.isVisible(), `${lang}: the menu button opens the Drawer`);
+    const popup = await slot("drawer-content").boundingBox();
+    check(
+      rtl ? popup.x + popup.width > 370 : popup.x < 5,
+      `${lang}: the Drawer opens from the ${rtl ? "right" : "left"} (start)`,
+    );
+    check(
+      (await page.evaluate(() => Boolean(document.activeElement?.closest("[role=dialog]")))) ===
+        true,
+      `${lang}: focus moves into the Drawer`,
+    );
+    const parent = slot("header-drawer-item")
+      .filter({ hasText: /./ })
+      .locator("xpath=self::button")
+      .first();
+    check(
+      (await parent.getAttribute("aria-expanded")) === "false",
+      `${lang}: a parent starts collapsed`,
+    );
+    await parent.focus();
+    await page.keyboard.press("Enter");
+    check(
+      (await parent.getAttribute("aria-expanded")) === "true",
+      `${lang}: Enter expands a parent`,
+    );
+    check(
+      (await page
+        .locator("[data-slot=header-drawer-item][data-level='2']")
+        .filter({ visible: true })
+        .count()) === 4,
+      `${lang}: the parent shows its four Level 2 links`,
+    );
+    check(
+      (await page.locator("[data-slot=header-drawer-item][aria-current=page]").count()) === 1,
+      `${lang}: the Drawer marks the current page`,
+    );
+    await page.keyboard.press("Escape");
+    await page.waitForTimeout(400);
+    check(!(await drawer.isVisible().catch(() => false)), `${lang}: Escape closes the Drawer`);
+    check((await active()) === "header-menu-button", `${lang}: focus returns to the menu button`);
+
+    // ---------------------------------------------------------------- Second Nav
+    await open("second-nav-overflow", 375);
+    const overflow = await page.evaluate(() => {
+      const inner = document.querySelector(".overflow-x-auto");
+      return {
+        scrolls: inner.scrollWidth > inner.clientWidth,
+        page: document.documentElement.scrollWidth <= document.documentElement.clientWidth + 1,
+        height: inner.getBoundingClientRect().height,
+      };
+    });
+    check(overflow.scrolls && overflow.page, `${lang}: the Second Nav scrolls inside itself`);
+    check(overflow.height === 40, `${lang}: the Second Nav stays 40px high (${overflow.height})`);
+    const links = page.locator("[data-slot=second-nav-item]");
+    check(
+      (await links.first().getAttribute("aria-current")) === "page",
+      `${lang}: the current entry has aria-current=page`,
+    );
+    await links.last().focus();
+    const visibleLast = await links.last().evaluate((el) => {
+      const box = el.getBoundingClientRect();
+      const parent = el.closest(".overflow-x-auto").getBoundingClientRect();
+      return box.left >= parent.left - 1 && box.right <= parent.right + 1;
+    });
+    check(visibleLast, `${lang}: a focused entry scrolls into view`);
+
+    // ---------------------------------------------------------------- Footer
+    await open("footer-default", 1280);
+    check(
+      (await page.locator("h2").filter({ visible: true }).count()) >= 4,
+      `${lang}: the columns show at 1280px`,
+    );
+    check(
+      (await page.locator("[data-slot=accordion-trigger]").filter({ visible: true }).count()) === 0,
+      `${lang}: no Accordion at 1280px`,
+    );
+    const brand = await slot("footer-brand").boundingBox();
+    const columns = await slot("footer-columns").boundingBox();
+    check(
+      rtl ? brand.x > columns.x : brand.x < columns.x,
+      `${lang}: the brand is on the ${rtl ? "right" : "left"} of the columns`,
+    );
+    await open("footer-green", 375);
+    const triggers = page.locator("[data-slot=accordion-trigger]").filter({ visible: true });
+    check((await triggers.count()) === 3, `${lang}: three Accordion sections at 375px`);
+    check(
+      await page.evaluate(
+        () => document.documentElement.scrollWidth <= document.documentElement.clientWidth + 1,
+      ),
+      `${lang}: the footer does not scroll sideways at 375px`,
+    );
+    await triggers.first().focus();
+    await page.keyboard.press("Enter");
+    check(
+      (await triggers.first().getAttribute("aria-expanded")) === "true",
+      `${lang}: Enter opens a footer section`,
+    );
+
+    // ---------------------------------------------------------------- Calendar
+    await open("calendar-standalone");
+    const grid = page.locator("table[role=grid]");
+    check(
+      (await grid.getAttribute("aria-labelledby")) !== null &&
+        (await grid.locator("th[scope=col]").count()) === 7,
+      `${lang}: the month is a grid with a heading and seven column headers`,
+    );
+    const heading = (await slot("calendar-heading").first().textContent()) ?? "";
+    check(
+      rtl ? arabic.test(heading) : /^[A-Za-z]/.test(heading),
+      `${lang}: month names are in ${rtl ? "Arabic" : "English"} (${heading})`,
+    );
+    const tabbable = page.locator("[data-slot=calendar-day][tabindex='0']");
+    check((await tabbable.count()) === 1, `${lang}: one day is in the tab order`);
+    const day = async () => page.evaluate(() => document.activeElement?.getAttribute("data-iso"));
+    const add = (isoDate, days) => {
+      const d = new Date(`${isoDate}T12:00:00Z`);
+      d.setUTCDate(d.getUTCDate() + days);
+      return d.toISOString().slice(0, 10);
+    };
+    await tabbable.focus();
+    const start = await day();
+    await page.keyboard.press(next);
+    check((await day()) === add(start, 1), `${lang}: ${next} moves to the next day`);
+    await page.keyboard.press(previous);
+    check((await day()) === start, `${lang}: ${previous} moves to the previous day`);
+    await page.keyboard.press("ArrowDown");
+    check((await day()) === add(start, 7), `${lang}: ArrowDown moves a week forward`);
+    await page.keyboard.press("ArrowUp");
+    check((await day()) === start, `${lang}: ArrowUp moves a week back`);
+    await page.keyboard.press("Home");
+    const weekStart = await day();
+    check(
+      new Date(`${weekStart}T12:00:00Z`).getUTCDay() === 0,
+      `${lang}: Home goes to the first day of the week (Sunday)`,
+    );
+    await page.keyboard.press("End");
+    check(
+      new Date(`${await day()}T12:00:00Z`).getUTCDay() === 6,
+      `${lang}: End goes to the last day of the week`,
+    );
+    const month = async () => (await slot("calendar-heading").first().textContent()) ?? "";
+    const before = await month();
+    await page.keyboard.press("PageDown");
+    check((await month()) !== before, `${lang}: Page Down shows the next month`);
+    await page.keyboard.press("PageUp");
+    check((await month()) === before, `${lang}: Page Up shows the previous month`);
+    await page.keyboard.press("Shift+PageDown");
+    check(
+      (await page.evaluate(() => document.activeElement?.getAttribute("data-iso")?.slice(0, 4))) ===
+        String(Number(start.slice(0, 4)) + 1),
+      `${lang}: Shift+Page Down moves a year forward`,
+    );
+    await page.keyboard.press("Shift+PageUp");
+    await page.keyboard.press("Enter");
+    check(
+      (await page
+        .locator(`[data-iso="${await day()}"]:not([data-outside])`)
+        .first()
+        .evaluate((el) => el.parentElement.getAttribute("aria-selected"))) === "true",
+      `${lang}: Enter chooses the focused day (aria-selected)`,
+    );
+    // The month arrows mirror.
+    const arrow = await slot("calendar-previous")
+      .first()
+      .locator("svg")
+      .evaluate((el) => getComputedStyle(el).scale);
+    check(
+      rtl ? arrow !== "none" : arrow === "none",
+      `${lang}: the month arrows ${rtl ? "mirror" : "do not mirror"} (${arrow})`,
+    );
+    // The first day of the week is on the start side.
+    const headers = await grid
+      .locator("th")
+      .evaluateAll((els) => els.map((el) => el.getBoundingClientRect().x));
+    check(
+      rtl ? headers[0] > headers[6] : headers[0] < headers[6],
+      `${lang}: the week starts on the ${rtl ? "right" : "left"}`,
+    );
+    // Hijri: the switch changes the grid, and every number matches Intl (Umm al-Qura).
+    await page
+      .getByRole("radio", { name: rtl ? "هجري" : "Hijri" })
+      .or(page.getByRole("button", { name: rtl ? "هجري" : "Hijri" }))
+      .first()
+      .click();
+    await page.waitForTimeout(200);
+    check(
+      (await slot("calendar").getAttribute("data-calendar")) === "hijri",
+      `${lang}: the switch shows the Hijri calendar`,
+    );
+    const hijriOk = await page.evaluate(() => {
+      const format = new Intl.DateTimeFormat("en-u-ca-islamic-umalqura-nu-latn", {
+        day: "numeric",
+        timeZone: "UTC",
+      });
+      const buttons = [
+        ...document.querySelectorAll("[data-slot=calendar-day]:not([data-outside])"),
+      ];
+      const days = buttons.map((b) =>
+        Number(format.format(new Date(`${b.dataset.iso}T12:00:00Z`))),
+      );
+      return {
+        count: buttons.length,
+        sequential: days.every((d, i) => d === i + 1),
+        length: days.length,
+      };
+    });
+    check(
+      hijriOk.sequential && (hijriOk.length === 29 || hijriOk.length === 30),
+      `${lang}: the Hijri month has ${hijriOk.length} days numbered 1 to ${hijriOk.length}, as Intl says`,
+    );
+    const hijriHeading = await month();
+    check(
+      hijriHeading !== heading &&
+        (rtl ? arabic.test(hijriHeading) : /^[A-Za-z]/.test(hijriHeading)),
+      `${lang}: the Hijri heading is in ${rtl ? "Arabic" : "English"} (${hijriHeading})`,
+    );
+    check(
+      (await page.locator("[data-slot=calendar-day] span").filter({ hasText: "/" }).count()) > 20,
+      `${lang}: the secondary date shows the Gregorian day and month`,
+    );
+
+    // ---------------------------------------------------------------- Date Picker
+    await open("date-picker-basic");
+    const input = page.locator("[data-slot=input-field]").first();
+    const trigger = slot("date-picker-trigger");
+    check(
+      (await page.getByLabel(rtl ? "تاريخ الموعد" : "Appointment date").count()) >= 1,
+      `${lang}: the Field label names the date input`,
+    );
+    await trigger.focus();
+    await page.keyboard.press("Enter");
+    await page.waitForTimeout(300);
+    const dialog = slot("date-picker-popup");
+    check(await dialog.isVisible(), `${lang}: Enter on the button opens the calendar`);
+    check(
+      (await page.evaluate(() => document.activeElement?.getAttribute("data-slot"))) ===
+        "calendar-day",
+      `${lang}: focus moves to a day`,
+    );
+    await page.keyboard.press("Escape");
+    await page.waitForTimeout(300);
+    check(!(await dialog.isVisible().catch(() => false)), `${lang}: Escape closes the calendar`);
+    check(
+      (await active()) === "date-picker-trigger",
+      `${lang}: focus returns to the calendar button`,
+    );
+    await trigger.click();
+    await page.waitForTimeout(300);
+    await page
+      .locator("[data-slot=calendar-day]:not([data-outside]):not([data-disabled])")
+      .nth(9)
+      .click();
+    await page.waitForTimeout(300);
+    check(
+      !(await dialog.isVisible().catch(() => false)),
+      `${lang}: choosing a day closes the popup`,
+    );
+    check(
+      /^\d{4}-\d{2}-\d{2}$/.test(latin(await input.inputValue())),
+      `${lang}: the chosen date is in the input (${await input.inputValue()})`,
+    );
+    await input.fill("2026-12-25");
+    await input.press("Enter");
+    check(latin(await input.inputValue()) === "2026-12-25", `${lang}: a typed date is kept`);
+    await trigger.click();
+    await page.waitForTimeout(300);
+    check(
+      (await page.locator("[data-iso='2026-12-25'][data-chosen]").count()) === 1,
+      `${lang}: the typed date is the chosen day when the calendar opens`,
+    );
+    await page.keyboard.press("Escape");
+    await page.waitForTimeout(200);
+    await input.fill("2026-02-30");
+    await input.press("Enter");
+    check(
+      (await input.getAttribute("aria-invalid")) === "true",
+      `${lang}: an impossible date marks the field invalid`,
+    );
+
+    // Range: two clicks fill both fields and shade the days between.
+    await open("date-picker-range");
+    await page.locator("[data-slot=date-picker-trigger]").click();
+    await page.waitForTimeout(300);
+    const cells = page.locator("[data-slot=calendar-day]:not([data-outside]):not([data-disabled])");
+    await cells.nth(3).click();
+    check(
+      await slot("date-picker-popup").isVisible(),
+      `${lang}: the range popup stays open after the first day`,
+    );
+    await cells.nth(8).click();
+    await page.waitForTimeout(300);
+    const [startValue, endValue] = (
+      await page.locator("[data-slot=input-field]").evaluateAll((els) => els.map((el) => el.value))
+    ).map(latin);
+    check(
+      /^\d{4}-\d{2}-\d{2}$/.test(startValue) && endValue > startValue,
+      `${lang}: a range fills the start and the end (${startValue} to ${endValue})`,
+    );
+    await page.locator("[data-slot=date-picker-trigger]").click();
+    await page.waitForTimeout(300);
+    check(
+      (await page.locator("td[data-range=mid]").count()) === 4,
+      `${lang}: the days between the ends are shaded`,
+    );
+    await page.keyboard.press("Escape");
+
+    // Limits: no weekend, nothing before today.
+    await open("date-picker-options");
+    await page.locator("[data-slot=date-picker-trigger]").click();
+    await page.waitForTimeout(300);
+    const limits = await page.evaluate(() => {
+      const days = [...document.querySelectorAll("[data-slot=calendar-day]")];
+      const weekend = days.filter((d) =>
+        [5, 6].includes(new Date(`${d.dataset.iso}T12:00:00Z`).getUTCDay()),
+      );
+      return {
+        weekendDisabled: weekend.every((d) => d.getAttribute("aria-disabled") === "true"),
+        someEnabled: days.some((d) => d.getAttribute("aria-disabled") !== "true"),
+      };
+    });
+    check(
+      limits.weekendDisabled && limits.someEnabled,
+      `${lang}: weekends are aria-disabled, other days are not`,
+    );
+    await page
+      .locator("[data-slot=calendar-day][aria-disabled=true]")
+      .first()
+      .click({ force: true });
+    check(
+      (await page.locator("[data-slot=date-picker-popup]").isVisible()) &&
+        (await page.locator("[data-slot=input-field]").inputValue()) === "",
+      `${lang}: a disabled day cannot be chosen`,
+    );
+    check(
+      (await page.getByRole("button", { name: rtl ? "تطبيق" : "Apply" }).count()) === 1,
+      `${lang}: confirm mode shows Apply`,
+    );
+    await page.locator("[data-slot=calendar-day]:not([aria-disabled=true])").first().click();
+    check(
+      (await page.locator("[data-slot=input-field]").inputValue()) === "",
+      `${lang}: nothing is set before Apply`,
+    );
+    await page.getByRole("button", { name: rtl ? "تطبيق" : "Apply" }).click();
+    await page.waitForTimeout(300);
+    check(
+      /^\d{4}-\d{2}-\d{2}$/.test(latin(await page.locator("[data-slot=input-field]").inputValue())),
+      `${lang}: Apply sets the date`,
+    );
+
+    // ---------------------------------------------------------------- Carousel
+    await open("carousel-basic");
+    const region = page.locator("[data-slot=carousel]");
+    check(
+      (await region.getAttribute("aria-roledescription")) === "carousel",
+      `${lang}: the carousel has a role description`,
+    );
+    const slides = page.locator("[data-slot=carousel-slide]");
+    check((await slides.count()) === 4, `${lang}: four slides`);
+    const visibleSlides = () => page.locator("[data-slot=carousel-slide]:not([aria-hidden=true])");
+    check(
+      (await visibleSlides().count()) === 1,
+      `${lang}: one slide is exposed to assistive technology`,
+    );
+    check(
+      (await slides.nth(1).evaluate((el) => el.inert)) === true,
+      `${lang}: slides that are not visible are inert`,
+    );
+    const first = await slides.nth(0).boundingBox();
+    const second = await slides.nth(1).boundingBox();
+    check(
+      rtl ? first.x > second.x : first.x < second.x,
+      `${lang}: the first slide is on the ${rtl ? "right" : "left"}`,
+    );
+    const dots = page.locator("[data-slot=carousel-dot]");
+    check(
+      (await dots.count()) === 4 && (await dots.first().getAttribute("aria-current")) === "true",
+      `${lang}: four dots, the first is current`,
+    );
+    check(
+      await slot("carousel-previous").isDisabled(),
+      `${lang}: previous is disabled on the first slide`,
+    );
+    await slot("carousel-next").focus();
+    await page.keyboard.press("Enter");
+    await page.waitForTimeout(450);
+    check(
+      (await dots.nth(1).getAttribute("aria-current")) === "true",
+      `${lang}: Enter on next shows the second slide`,
+    );
+    check(
+      (await slides.nth(1).getAttribute("aria-hidden")) === null,
+      `${lang}: the second slide is exposed`,
+    );
+    await page.keyboard.press(next);
+    check(
+      (await dots.nth(2).getAttribute("aria-current")) === "true",
+      `${lang}: ${next} shows the next slide`,
+    );
+    await page.keyboard.press(previous);
+    check(
+      (await dots.nth(1).getAttribute("aria-current")) === "true",
+      `${lang}: ${previous} shows the previous slide`,
+    );
+    await page.keyboard.press("End");
+    check(
+      (await dots.nth(3).getAttribute("aria-current")) === "true" &&
+        (await slot("carousel-next").isDisabled()),
+      `${lang}: End shows the last slide and disables next`,
+    );
+    await dots.first().click();
+    // The arrows mirror and previous is on the start side.
+    const pb = await slot("carousel-previous").boundingBox();
+    const nb = await slot("carousel-next").boundingBox();
+    check(rtl ? pb.x > nb.x : pb.x < nb.x, `${lang}: previous is on the ${rtl ? "right" : "left"}`);
+    const carrow = await slot("carousel-previous")
+      .locator("svg")
+      .evaluate((el) => getComputedStyle(el).scale);
+    check(
+      rtl ? carrow !== "none" : carrow === "none",
+      `${lang}: the carousel arrows ${rtl ? "mirror" : "do not mirror"} (${carrow})`,
+    );
+    // Swipe: content follows the finger, so the next slide needs a swipe towards the start.
+    const swipe = (dx) =>
+      page.evaluate((delta) => {
+        const target = document.querySelector("[data-slot=carousel-viewport]");
+        const fire = (type, x) =>
+          target.dispatchEvent(
+            new PointerEvent(type, {
+              bubbles: true,
+              pointerType: "touch",
+              pointerId: 7,
+              clientX: x,
+              clientY: 100,
+            }),
+          );
+        fire("pointerdown", 400);
+        fire("pointerup", 400 + delta);
+      }, dx);
+    await swipe(rtl ? 120 : -120);
+    await page.waitForTimeout(450);
+    check(
+      (await dots.nth(1).getAttribute("aria-current")) === "true",
+      `${lang}: a swipe towards the start shows the next slide`,
+    );
+    await swipe(rtl ? -120 : 120);
+    await page.waitForTimeout(450);
+    check(
+      (await dots.nth(0).getAttribute("aria-current")) === "true",
+      `${lang}: a swipe the other way shows the previous slide`,
+    );
+    await swipe(10);
+    check(
+      (await dots.nth(0).getAttribute("aria-current")) === "true",
+      `${lang}: a short swipe does nothing`,
+    );
+
+    // Autoplay: moves on by itself, can be paused; never starts under reduced motion.
+    await open("carousel-autoplay");
+    const toggle = slot("carousel-toggle");
+    const autoDots = page.locator("[data-slot=carousel-dot]");
+    check(
+      (await toggle.getAttribute("aria-label")) !== null &&
+        (await autoDots.first().getAttribute("aria-current")) === "true",
+      `${lang}: autoplay shows a pause button`,
+    );
+    await page.mouse.move(0, 0);
+    await page.waitForTimeout(4700);
+    check(
+      (await autoDots.nth(1).getAttribute("aria-current")) === "true",
+      `${lang}: autoplay moves to the next slide`,
+    );
+    await toggle.click();
+    await page.mouse.move(0, 0);
+    await page.keyboard.press("Tab");
+    await page.waitForTimeout(4700);
+    check(
+      (await autoDots.nth(1).getAttribute("aria-current")) === "true",
+      `${lang}: pause stops autoplay`,
+    );
+    const reduced = await browser.newContext({
+      viewport: { width: 1280, height: 800 },
+      reducedMotion: "reduce",
+    });
+    const quiet = await reduced.newPage();
+    await quiet.goto(`${BASE}/preview/carousel-autoplay?dir=${rtl ? "rtl" : "ltr"}`, {
+      waitUntil: "networkidle",
+    });
+    await quiet.mouse.move(0, 0);
+    await quiet.waitForTimeout(4700);
+    check(
+      (await quiet.locator("[data-slot=carousel-dot]").first().getAttribute("aria-current")) ===
+        "true",
+      `${lang}: autoplay does not start under prefers-reduced-motion`,
+    );
+    await reduced.close();
+
+    // ---------------------------------------------------------------- Filtration
+    await open("filtration-basic");
+    const panel = slot("filtration-panel");
+    check(await panel.isVisible(), `${lang}: the panel shows at 1280px`);
+    const side = await panel.boundingBox();
+    const main = await slot("filtration-main").boundingBox();
+    check(
+      rtl ? side.x > main.x : side.x < main.x,
+      `${lang}: the panel is on the ${rtl ? "right" : "left"} of the results`,
+    );
+    const count = async () => (await slot("filtration-result-count").textContent())?.trim() ?? "";
+    const total = await count();
+    const firstBox = panel.getByRole("checkbox").first();
+    await firstBox.focus();
+    await page.keyboard.press("Space");
+    await page.waitForTimeout(200);
+    check(
+      (await firstBox.getAttribute("aria-checked")) === "true",
+      `${lang}: Space checks a checkbox`,
+    );
+    const tags = page.locator("[data-slot=filtration-tag]");
+    check((await tags.count()) === 1, `${lang}: an applied filter shows as a tag`);
+    check(
+      (await count()) !== total,
+      `${lang}: the result count changes (${total} to ${await count()})`,
+    );
+    const dismiss = tags.first().locator("button");
+    check(
+      ((await dismiss.getAttribute("aria-label")) ?? "").length > 3,
+      `${lang}: the tag's remove button is named`,
+    );
+    await dismiss.focus();
+    await page.keyboard.press("Enter");
+    await page.waitForTimeout(200);
+    check(
+      (await tags.count()) === 0 &&
+        (await firstBox.getAttribute("aria-checked")) === "false" &&
+        (await count()) === total,
+      `${lang}: removing the tag unchecks the box and restores the count`,
+    );
+    await firstBox.focus();
+    await page.keyboard.press("Space");
+    await panel.getByRole("radio").first().focus();
+    await page.keyboard.press("Space");
+    check((await tags.count()) === 2, `${lang}: a radio adds a second tag`);
+    await page
+      .getByRole("button", { name: rtl ? "مسح الكل" : "Clear all" })
+      .last()
+      .click();
+    await page.waitForTimeout(200);
+    check(
+      (await tags.count()) === 0 && (await count()) === total,
+      `${lang}: Clear all removes every filter`,
+    );
+
+    await open("filtration-basic", 375);
+    check(
+      !(await panel.isVisible()) &&
+        (await page
+          .locator("button", { hasText: rtl ? "المرشحات" : "Filters" })
+          .first()
+          .isVisible()),
+      `${lang}: at 375px the panel is replaced by a button`,
+    );
+    const filterButton = page.locator("button", { hasText: rtl ? "المرشحات" : "Filters" }).first();
+    await filterButton.focus();
+    await page.keyboard.press("Enter");
+    await page.waitForTimeout(450);
+    const fdrawer = page.getByRole("dialog");
+    check(await fdrawer.isVisible(), `${lang}: the button opens the panel in a Drawer`);
+    const fpopup = await slot("drawer-content").boundingBox();
+    check(
+      rtl ? fpopup.x + fpopup.width > 370 : fpopup.x < 5,
+      `${lang}: the filter Drawer opens from the ${rtl ? "right" : "left"}`,
+    );
+    await fdrawer.getByRole("checkbox").first().focus();
+    await page.keyboard.press("Space");
+    await page.waitForTimeout(200);
+    await page.keyboard.press("Escape");
+    await page.waitForTimeout(450);
+    check(
+      !(await fdrawer.isVisible().catch(() => false)),
+      `${lang}: Escape closes the filter Drawer`,
+    );
+    check(
+      (await filterButton.evaluate((el) => el === document.activeElement)) === true,
+      `${lang}: focus returns to the filter button`,
+    );
+    check((await tags.count()) === 1, `${lang}: the filter chosen in the Drawer shows as a tag`);
+
+    check(issues.length === 0, `${lang}: Phase 6 previews log no errors: ${issues.join(" | ")}`);
+    await context.close();
+  }
+}
+
 await localeChecks();
 await layoutChecks();
 await aiResourceChecks();
@@ -1664,6 +2404,7 @@ await fieldStateChecks();
 await keyboardChecks();
 await interactiveChecks();
 await navigationChecks();
+await compositeChecks();
 await notFoundChecks();
 await arabicExceptionChecks();
 await previewLanguageChecks();

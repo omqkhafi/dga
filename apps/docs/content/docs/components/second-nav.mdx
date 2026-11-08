@@ -1,0 +1,87 @@
+---
+title: Second Nav
+description: "The secondary strip above the header (DGA: Second Nav Header): contextual items such as the date or the weather, actions, and links to sibling pages. Gray or primary, scrolls sideways on narrow screens."
+---
+
+<Preview name="second-nav-tones" title="Second Nav" minHeight={160} />
+
+## Installation
+
+<ComponentInstall name="second-nav" />
+
+## Usage
+
+```tsx title="layout.tsx"
+import { SecondNav } from "@/components/dga/second-nav";
+
+export function PageInfo() {
+  return (
+    <SecondNav
+      aria-label="Page information"
+      items={[
+        { label: "Sunday 8 November" },
+        { label: "24° Cloudy" },
+      ]}
+      actions={[
+        { label: "Text size", onClick: () => {} },
+        { label: "Help", href: "/help" },
+      ]}
+    />
+  );
+}
+```
+
+Use it for context that belongs to the whole site, or as a row of links to the sibling pages of a section. Put it in the `top` slot of a [Header](/docs/components/header). Pass icons with `icon`.
+
+## Anatomy
+
+- **Strip**: 40px high, padded 32px, centred and 1280px wide unless `fullWidth`. Text md Regular. **Gray** is neutral-100, **primary** is the brand fill with on-colour text.
+- **Items** (`items`): an icon and text, 4px apart. An entry is plain text, a link when it has `href`, or a button when it has `onClick`.
+- **Divider**: between the items and the actions (`divider`).
+- **Actions** (`actions`): at the end of the strip.
+- **Current entry** (`current`): bold, underlined, `aria-current="page"`.
+
+## Examples
+
+### Tones, links and the current page
+
+<Preview compact name="second-nav-tones" title="Tones" minHeight={160} />
+
+### Narrow screens
+
+When the entries do not fit, the strip scrolls sideways. It never wraps, so it stays 40px high.
+
+<Preview compact name="second-nav-overflow" title="Overflow" minHeight={80} />
+
+## RTL
+
+Items start on the right, the actions are on the left, and the strip scrolls from the right.
+
+<DirectionCompare name="second-nav-tones" title="Second Nav" minHeight={160} />
+
+## Accessibility
+
+| Key | Action |
+| --- | --- |
+| <kbd>Tab</kbd> | Moves to the next link or button. Plain text is not focusable. |
+| <kbd>Enter</kbd> | Follows a link or presses a button. |
+
+- A `nav` landmark: name it with `aria-label`. Use a list of links, not tabs, so no arrow-key model is needed.
+- The current page has `aria-current="page"` and is also bold and underlined, so it does not rely on colour.
+- A focused entry has a 2px outline: black on gray, white on primary. Text is 4.5:1 and icons 3:1 in light and dark.
+- A strip that scrolls is reached with Tab: each entry scrolls into view when it takes focus.
+
+## API Reference
+
+<ApiReference component="second-nav" />
+
+## Deviations from DGA
+
+- Figma draws fixed switches (Show Item 2, 3 and 4, Show Action 2, 3 and 4). Here `items` and `actions` are arrays.
+- Links, buttons and a current state are added, and the strip scrolls instead of wrapping.
+
+<ComponentDeviations component="second-nav" />
+
+## Contrast
+
+<ComponentContrast component="second-nav" />
