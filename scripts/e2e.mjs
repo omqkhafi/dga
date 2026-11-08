@@ -1857,7 +1857,16 @@ async function compositeChecks() {
       rtl ? brand.x > columns.x : brand.x < columns.x,
       `${lang}: the brand is on the ${rtl ? "right" : "left"} of the columns`,
     );
+    check(
+      (await slot("footer-partner-logos").count()) === 1,
+      `${lang}: the platform logos sit in their own white tile`,
+    );
     await open("footer-green", 375);
+    check(
+      (await page.locator("[data-slot=accordion-trigger]").filter({ visible: true }).count()) === 0,
+      `${lang}: the groups stay open in two columns at 375px by default`,
+    );
+    await open("footer-accordion", 375);
     const triggers = page.locator("[data-slot=accordion-trigger]").filter({ visible: true });
     check((await triggers.count()) === 3, `${lang}: three Accordion sections at 375px`);
     check(

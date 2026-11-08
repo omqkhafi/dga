@@ -3,7 +3,7 @@ title: Header
 description: "The site header (DGA: Nav Header): logo, main navigation with sub-menus, actions, search, language and user slots. A skip link, keyboard navigation, and a Drawer on small screens."
 ---
 
-<Preview name="header-basic" title="Header" minHeight={140} />
+<Preview compact name="header-basic" title="Header" minHeight={110} />
 
 ## Installation
 
@@ -15,7 +15,7 @@ It installs the [Menu](/docs/components/menu) and the [Drawer](/docs/components/
 
 ```tsx title="layout.tsx"
 import { Header } from "@/components/dga/header";
-import { SecondNav } from "@/components/dga/second-nav";
+import { Globe02Icon, UserIcon } from "@hugeicons/core-free-icons";
 
 export function SiteHeader() {
   return (
@@ -37,60 +37,86 @@ export function SiteHeader() {
         },
         { label: "Contact", href: "/contact" },
       ]}
-      actions={[{ label: "Notifications", href: "/notifications", iconOnly: true }]}
-      language={<LanguageSwitcher />}
-      user={<SignInButton />}
-      top={<SecondNav aria-label="Page information" items={[{ label: "Sunday 8 November" }]} />}
+      actions={[
+        { label: "Language", href: "/ar", icon: Globe02Icon },
+        { label: "Sign in", href: "/sign-in", icon: UserIcon },
+      ]}
     />
   );
 }
 ```
 
-Give your `main` element the id `main-content`, or set `skipHref`. Pass every visible string as a prop: `skipLabel`, `navLabel`, `menuLabel`, `drawerTitle` and `closeLabel` are translated on Arabic pages.
+Give your `main` element the id `main-content`, or set `skipHref`. Pass every visible string as a prop: `skipLabel`, `navLabel`, `menuLabel`, `moreLabel`, `drawerTitle` and `closeLabel` are translated on Arabic pages.
 
-The logo sits on the right, the items run from the right, and the actions are on the left. The chevrons, sub-menus and the Drawer (which opens from the start side) mirror, and Left and Right swap.
+On Arabic pages the logo sits on the right, the items run from the right and the actions are on the left. The chevrons, sub-menus, the phone layout and the Drawer (which opens from the start side) mirror, and Left and Right swap.
 
 ## Anatomy
 
 - **Bar**: 72px high on the menu surface, padded 32px, centred and 1280px wide unless `fullWidth`.
-- **Logo** (`logo`): any element, a link to the home page.
-- **Main navigation** (`items`): each item is a link, or a button that opens a sub-menu when it has `sections`. 72px high, radius `sm`. The selected item (`current`) has the primary fill.
+- **Logo** (`logo`): the brand logo, any element, a link to the home page.
+- **Menu item** (`items`): a link, or a button that opens a sub-menu when it has `sections`. 72px high, radius `sm`, with an optional leading icon and, for a sub-menu, a chevron. States: default, hovered, pressed, focused and disabled. The selected item (`current`) is a full-height brand block with a lighter bar along its bottom edge; when it is disabled the block goes and the bar is muted.
 - **Sub-menu**: the DGA [Menu](/docs/components/menu) with one column per section, up to four. `linkStyle` is `text`, `icon` or `boxed-icon`, and `submenuTone` is `default` or `green` (the dark green of the DGA flag).
-- **Actions** (`actions`, [`HeaderAction`](#api-reference)): an icon and a label, inline or with the icon above (`iconPosition="top"`), or icon-only. Below `lg` the label is hidden and stays as the name.
-- **Slots**: `search`, `language` and `user`.
-- **Drawer**: below the `lg` width a menu button opens the navigation in the DGA [Drawer](/docs/components/drawer). Parents expand in place and Level 2 links are indented.
+- **Actions** (`actions`, [`HeaderAction`](#api-reference)): Inline (icon beside the label), Top (`iconPosition="top"`, icon above the label), Text only (no icon) or Icon only (`iconOnly`), with the same five states and selected block and bar as a menu item.
+- **Phone layout**: below `lg` the bar is the menu button on the start side, the logo centred and an overflow (…) button on the end side that opens the actions. The menu button opens the navigation in the Nav Drawer: the DGA [Drawer](/docs/components/drawer), where parents expand in place and Level 2 links are indented.
+- **Optional slots**: `search`, `language` and `user`. They are not part of DGA's anatomy and appear only in the extras example.
 
 ## Examples
 
+### Menu item
+
+Default, selected with its bar, a sub-menu parent with a chevron, no icon, and disabled. Hover, press and Tab to see the other states.
+
+<Preview compact name="header-menu-items" title="Menu item" minHeight={110} />
+
+### Action layouts
+
+<Preview compact name="header-action-layouts" title="Action layouts" minHeight={110} />
+
+### Action states
+
+<Preview compact name="header-action-states" title="Action states" minHeight={110} />
+
 ### Sub-menu
 
-<Preview compact name="header-submenu" title="Sub-menu" minHeight={380} />
+<Preview compact name="header-submenu" title="Sub-menu" minHeight={330} />
 
 ### Dark green sub-menu with boxed icons
 
-<Preview compact name="header-submenu-green" title="Dark green sub-menu" minHeight={380} />
+<Preview compact name="header-submenu-green" title="Dark green sub-menu" minHeight={330} />
 
-### Drawer on small screens
+### Phone layout
 
-Switch the viewport to mobile to see the bar collapse. This frame opens the Drawer.
+The menu button on the start side, the logo centred and the overflow (…) button on the end side.
 
-<Preview compact name="header-drawer-open" title="Drawer" defaultViewport="mobile" minHeight={420} />
+<Preview compact name="header-mobile" title="Phone layout" defaultViewport="mobile" minHeight={110} />
+
+### Nav Drawer
+
+The Drawer opened from the menu button.
+
+<Preview compact name="header-drawer-open" title="Nav Drawer" defaultViewport="mobile" minHeight={380} />
 
 ### Official-site strip
 
 Pass a [Digital Stamp](/docs/components/digital-stamp) in the `stamp` slot. It renders above `top`, so the order from the top of the page is the stamp, the Second Nav, then the bar.
 
-<Preview compact name="header-stamp" title="Official-site strip" minHeight={260} />
+<Preview compact name="header-stamp" title="Official-site strip" minHeight={200} />
 
 ```tsx title="layout.tsx"
 <Header stamp={<DigitalStamp domain="gov.sa" />} top={<SecondNav items={[]} />} logo={<Logo />} items={items} />
 ```
 
+### Optional extras
+
+Search, a notifications bell, help, a language button and a sign-in button are not part of DGA's Header. Add them with `search`, `actions`, `language` and `user` when your site needs them.
+
+<Preview compact name="header-extras" title="Search, bell, help, language and sign-in" minHeight={110} />
+
 ## Accessibility
 
 | Key | Action |
 | --- | --- |
-| <kbd>Tab</kbd> | The skip link comes first, then the menu button (small screens), the items and the actions. |
+| <kbd>Tab</kbd> | The skip link comes first, then the menu button (small screens), the items and the actions, or the overflow button on small screens. |
 | <kbd>Left</kbd> / <kbd>Right</kbd> | Moves between the main items. They swap on Arabic pages. |
 | <kbd>Home</kbd> / <kbd>End</kbd> | First and last item. |
 | <kbd>Enter</kbd>, <kbd>Space</kbd> or <kbd>Down</kbd> | Opens a sub-menu. Arrow keys move inside it. |
@@ -110,6 +136,9 @@ Pass a [Digital Stamp](/docs/components/digital-stamp) in the `stamp` slot. It r
 - The official-site strip is the [Digital Stamp](/docs/components/digital-stamp), passed in the `stamp` slot, which sits above `top`. The [Second Nav](/docs/components/second-nav) goes in `top`, below it.
 - Header Menu and Nav Drawer are not separate components: the chevron is part of the item, the sub-menu is the Menu and the small-screen navigation is the Drawer.
 - The Drawer takes over below `lg` (1024px), not at 960px.
+- Menu item and Action selected state is a block with a bar, as in DGA; hovered, pressed and the focus ring use the neutral hover and pressed fills and a 2px outline inside the item, not a Figma stroke.
+- Nav Drawer: the white panel only. DGA's Green and Gray panel colours, the item badge, the external-link icon and the divider item are not built.
+- Actions are not shown in the bar below `lg`; they move into the overflow (…) menu, and `language` and `user` move to the foot of the Nav Drawer.
 
 <ComponentDeviations component="header" />
 

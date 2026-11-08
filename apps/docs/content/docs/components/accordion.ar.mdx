@@ -4,7 +4,7 @@ description: "يعرض أقسام المحتوى ويخفيها تحت عناو�
 sourceHash: 990243ba15db
 ---
 
-<Preview name="accordion-basic" title="الأكورديون" />
+<Preview compact name="accordion-basic" title="الأكورديون" />
 
 ## التثبيت [#installation]
 
@@ -38,21 +38,46 @@ export function ServiceFaq() {
 
 استخدم Accordion لمحتوى يتصفحه الناس بعناوينه ولا يفتحون منه إلا جزءًا: أسئلة وأجوبة أو أقسام نموذج طويل. ولا تخفِ ما يجب أن يقرأه الجميع. يُفتح قسم واحد في كل مرة افتراضيًا؛ وضبط `multiple` يتيح فتح عدة أقسام.
 
-يقع السهم في جهة النهاية (اليسار بالعربية)، أو في جهة البداية مع `iconPosition="leading"`. وتُزاح نصوص اللوحة بحشوة منطقية لتحاذي نص العنوان. ولا حاجة إلى أي تجاوزات لـ `[dir=rtl]`.
+يقع السهم في جهة النهاية (اليسار بالعربية)، أو في جهة البداية مع `iconPosition="leading"`. وتُزاح نصوص اللوحة بحشوة منطقية لتحاذي نص العنوان. ولا حاجة إلى أي تجاوزات لـ `[dir=rtl]`. والجذر `Accordion` هو قائمة الأكورديون في DGA: يرصّ عناصره بعرض الحاوية كاملًا.
 
 ## البنية [#anatomy]
 
+- **Accordion** (القائمة): الجذر. يضبط `size` و`variant` و`iconPosition` و`flush` و`multiple` لكل عناصره.
 - **العنصر**: قسم واحد، وفوقه خط بسمك 1px. وتعرّفه `value`.
-- **الزر** (`<button>` في عنوان): نص `md` بخط شبه عريض، وسهم يدور عند فتح القسم.
-- **اللوحة** (`role="region"`): المحتوى. وتحرّك ارتفاعها.
+- **الزر** (`<button>` في عنوان): نص `md` بخط شبه عريض، وسهم يدور عند فتح القسم. الارتفاع وهو مغلق: 56px (`lg`) و48px (`md`) و40px (`sm`). الحالات: افتراضي، تحويم (عنوان رمادي)، ضغط، تركيز (حد 2px داخل العنوان)، وتعطيل.
+- **اللوحة** (`role="region"`): المحتوى، بالحالات نفسها (نص رمادي عند التعطيل). وتحرّك ارتفاعها.
 
 ## أمثلة [#examples]
 
-### الأحجام والسهم في البداية وبلا إطار [#sizes-leading-and-flush]
+### الأحجام [#sizes]
 
-يحدد `size` حشوة العنوان: `sm` ‏8px و`md` ‏12px و`lg` ‏16px. ويضع `iconPosition="leading"` السهم أولًا. ويُبقي `flush` الخطوط على بعد 16px من الحواف. ويتيح `multiple` بقاء عدة أقسام مفتوحة.
+يحدد `size` حشوة العنوان وارتفاعه مغلقًا: `lg` ‏56px (حشوة 16px) و`md` ‏48px (12px) و`sm` ‏40px (8px).
 
-<Preview compact name="accordion-variants" title="الأحجام والسهم في البداية وبلا إطار" />
+<Preview compact name="accordion-sizes" title="الأحجام" />
+
+### أبيض ومعبأ [#white-and-filled]
+
+`variant="white"` (الافتراضي) بلا تعبئة؛ و`variant="filled"` يعطي كل عنصر تعبئة `background-neutral-50`.
+
+<Preview compact name="accordion-filled" title="أبيض ومعبأ" />
+
+### بلا إطار [#flush]
+
+يُبقي `flush` الخطوط على بعد 16px من الحافتين. وتحتفظ العناوين والمحتوى بعرضها الكامل ومحاذاتها.
+
+<Preview compact name="accordion-flush" title="بلا إطار" />
+
+### الأيقونة في البداية [#leading-icon]
+
+يضع `iconPosition="leading"` السهم أولًا ويزيح المحتوى ليحاذي نص العنوان. وينعكس في العربية.
+
+<Preview compact name="accordion-leading" title="الأيقونة في البداية" />
+
+### عدة أقسام مفتوحة [#multiple-open]
+
+يتيح `multiple` بقاء عدة أقسام مفتوحة.
+
+<Preview compact name="accordion-multiple" title="عدة أقسام مفتوحة" />
 
 ## إمكانية الوصول [#accessibility]
 
@@ -74,7 +99,8 @@ export function ServiceFaq() {
 ## الاختلافات عن DGA [#deviations-from-dga]
 
 - يكرر CSS في DGA كل قاعدة حشوة للجسم لـ `[dir=rtl]` و`html[lang=ar]` (اثنتا عشرة قاعدة). أما الحشوة المنطقية (`ps` و`pe`) فلا تحتاج إلى أي منها.
-- الخط بلا إطار هامش 16px على كل جانب؛ بينما ترسمه DGA بتدرج `border-image` عند 16px و382px، ولا يلائم إلا عرضًا واحدًا.
+- يُرسم الخط في `flush` بعنصر زائف على بعد 16px من كل حافة؛ بينما تستخدم DGA تدرج `border-image` عند 16px و382px، ولا يلائم إلا عرضًا واحدًا.
+- النسخة المعبأة (`background-neutral-50`) ونص اللوحة الرمادي عند التعطيل من اختيارنا؛ ولا يُظهر CSS في DGA إلا العنصر الأبيض.
 - يستخدم القسم المعطّل `text-default-disabled` بدل `neutral-300` مع `!important`.
 
 <ComponentDeviations component="accordion" />

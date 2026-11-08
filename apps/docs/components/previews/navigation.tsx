@@ -89,6 +89,25 @@ export function BreadcrumbCollapsed() {
   );
 }
 
+export function BreadcrumbCompact() {
+  const t = useBi();
+  return (
+    <Breadcrumb compact aria-label={t("Breadcrumb", "مسار التنقل")}>
+      {[t("Home", "الرئيسية"), t("Services", "الخدمات"), t("Renewal", "التجديد")].map(
+        (name, index, all) => (
+          <BreadcrumbItem key={name}>
+            {index === all.length - 1 ? (
+              <BreadcrumbPage>{name}</BreadcrumbPage>
+            ) : (
+              <BreadcrumbLink href="#">{name}</BreadcrumbLink>
+            )}
+          </BreadcrumbItem>
+        ),
+      )}
+    </Breadcrumb>
+  );
+}
+
 // ------------------------------------------------------------------------------- Pagination
 
 function usePaginationLabels() {

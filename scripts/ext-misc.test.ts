@@ -229,8 +229,8 @@ describe("audit and deviations", () => {
       expect(entries.every((d) => d.area === "Extensions")).toBe(true);
       expect(entries.some((d) => /new, no DGA source/i.test(d.reason))).toBe(true);
     }
-    const stamp = model.deviations.filter((d) => d.component === "digital-stamp");
-    expect(stamp.some((d) => /new, no DGA source/i.test(d.reason))).toBe(true);
+    // The Digital Stamp is a DGA component (its wording and artwork follow DGA), not an extension.
+    expect(model.deviations.some((d) => d.component === "digital-stamp")).toBe(true);
   });
   test("no colour token was added for these components", () => {
     const added = model.deviations.filter(

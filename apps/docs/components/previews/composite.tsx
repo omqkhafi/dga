@@ -3,7 +3,6 @@
 import {
   Building03Icon,
   Calendar03Icon,
-  Call02Icon,
   CloudIcon,
   ContrastIcon,
   CreditCardIcon,
@@ -11,15 +10,11 @@ import {
   Globe02Icon,
   HelpCircleIcon,
   Home01Icon,
-  InstagramIcon,
-  Linkedin01Icon,
-  Location01Icon,
   Mail01Icon,
   Notification01Icon,
   Search01Icon,
   TextFontIcon,
   UserIcon,
-  YoutubeIcon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useState } from "react";
@@ -40,11 +35,15 @@ import {
   todayIso,
 } from "@/registry/bases/base/ui/date-picker";
 import { Field, FieldDescription, FieldError, FieldLabel } from "@/registry/bases/base/ui/field";
-import { Filtration, type FiltrationValue } from "@/registry/bases/base/ui/filtration";
-import { Footer } from "@/registry/bases/base/ui/footer";
-import { Header, type HeaderNavItem } from "@/registry/bases/base/ui/header";
+import {
+  Filtration,
+  type FiltrationGroup,
+  type FiltrationValue,
+} from "@/registry/bases/base/ui/filtration";
+import { Header, HeaderAction, type HeaderNavItem } from "@/registry/bases/base/ui/header";
 import { Input } from "@/registry/bases/base/ui/input";
 import { SecondNav } from "@/registry/bases/base/ui/second-nav";
+import { Switch } from "@/registry/bases/base/ui/switch";
 import { useBi, useLanguage } from "./bi";
 import { Row, Stack } from "./kit";
 
@@ -121,7 +120,13 @@ function useHeaderSlots() {
   const t = useBi();
   return {
     logo: <Logo />,
+    // The actions DGA's Header draws: icon and label.
     actions: [
+      { label: t("Language", "اللغة"), icon: Globe02Icon, href: "#language" },
+      { label: t("Sign in", "تسجيل الدخول"), icon: UserIcon, href: "#sign-in" },
+    ],
+    // The optional extras: an icon-only bell and a help action.
+    extraActions: [
       {
         label: t("Notifications", "الإشعارات"),
         icon: Notification01Icon,
@@ -154,6 +159,7 @@ function useHeaderSlots() {
       skipLabel: t("Skip to main content", "تخطَّ إلى المحتوى الرئيسي"),
       navLabel: t("Main", "الرئيسية"),
       menuLabel: t("Menu", "القائمة"),
+      moreLabel: t("More", "المزيد"),
       drawerTitle: t("Menu", "القائمة"),
       closeLabel: t("Close", "إغلاق"),
     },
@@ -181,22 +187,110 @@ function useSecondNavEntries() {
 
 // ----------------------------------------------------------------------------- Header
 
-/** The header at the width of the frame: use the viewport toggle for the drawer. */
+/** The header at the width of the frame: brand logo, navigation links and actions only. */
 export function HeaderBasic() {
   const slots = useHeaderSlots();
   const items = useHeaderItems();
-  const strip = useSecondNavEntries();
+  return (
+    <div className="-m-4">
+      <Header {...slots.labels} logo={slots.logo} items={items} actions={slots.actions} />
+    </div>
+  );
+}
+
+/** Menu items: selected (with its bar), a sub-menu parent with a chevron, no icon, disabled. */
+export function HeaderMenuItems() {
+  const slots = useHeaderSlots();
+  const t = useBi();
+  const items: HeaderNavItem[] = [
+    { label: t("Selected", "محدد"), href: "#selected", icon: Home01Icon, current: true },
+    { label: t("Default", "افتراضي"), href: "#default", icon: File01Icon },
+    {
+      label: t("Sub-menu", "قائمة فرعية"),
+      icon: Building03Icon,
+      sections: [{ links: [{ label: t("Link", "رابط"), href: "#link" }] }],
+    },
+    { label: t("No icon", "بلا أيقونة"), href: "#plain" },
+    { label: t("Disabled", "معطل"), href: "#disabled", icon: Mail01Icon, disabled: true },
+    {
+      label: t("Selected, disabled", "محدد ومعطل"),
+      href: "#sd",
+      icon: Mail01Icon,
+      current: true,
+      disabled: true,
+    },
+  ];
+  return (
+    <div className="-m-4">
+      <Header {...slots.labels} logo={slots.logo} items={items} />
+    </div>
+  );
+}
+
+function ActionBar({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="-m-4 flex flex-wrap items-center justify-center gap-2 bg-background-menu px-4">
+      {children}
+    </div>
+  );
+}
+
+/** Header Action layouts: Inline, Top, Text only and Icon only. */
+export function HeaderActionLayouts() {
+  const t = useBi();
+  return (
+    <ActionBar>
+      <HeaderAction label={t("Inline", "مضمّن")} icon={UserIcon} href="#a" />
+      <HeaderAction label={t("Top", "علوي")} icon={UserIcon} iconPosition="top" href="#b" />
+      <HeaderAction label={t("Text only", "نص فقط")} href="#c" />
+      <HeaderAction label={t("Icon only", "أيقونة فقط")} icon={UserIcon} iconOnly href="#d" />
+    </ActionBar>
+  );
+}
+
+/** Header Action states you can see without interacting: default, selected, disabled. */
+export function HeaderActionStates() {
+  const t = useBi();
+  return (
+    <ActionBar>
+      <HeaderAction label={t("Default", "افتراضي")} icon={Globe02Icon} href="#a" />
+      <HeaderAction label={t("Selected", "محدد")} icon={Globe02Icon} selected href="#b" />
+      <HeaderAction label={t("Disabled", "معطل")} icon={Globe02Icon} disabled />
+      <HeaderAction
+        label={t("Selected, disabled", "محدد ومعطل")}
+        icon={Globe02Icon}
+        selected
+        disabled
+      />
+    </ActionBar>
+  );
+}
+
+/** On a phone: menu button, centred logo and overflow (…) button. Mirrors on Arabic pages. */
+export function HeaderMobile() {
+  const slots = useHeaderSlots();
+  const items = useHeaderItems();
+  return (
+    <div className="-m-4">
+      <Header {...slots.labels} logo={slots.logo} items={items} actions={slots.actions} />
+    </div>
+  );
+}
+
+/** The optional extras: a search field, a notifications bell, help, a language button and sign-in. */
+export function HeaderExtras() {
+  const slots = useHeaderSlots();
+  const items = useHeaderItems();
   return (
     <div className="-m-4">
       <Header
         {...slots.labels}
         logo={slots.logo}
         items={items}
-        actions={slots.actions}
+        actions={slots.extraActions}
         search={slots.search}
         language={slots.language}
         user={slots.user}
-        top={<SecondNav aria-label={strip.label} items={strip.items} actions={strip.actions} />}
       />
     </div>
   );
@@ -215,8 +309,7 @@ export function HeaderSubmenu() {
         logo={slots.logo}
         items={items}
         linkStyle="icon"
-        language={slots.language}
-        user={slots.user}
+        actions={slots.actions}
       />
     </div>
   );
@@ -236,8 +329,7 @@ export function HeaderSubmenuGreen() {
         items={items}
         linkStyle="boxed-icon"
         submenuTone="green"
-        language={slots.language}
-        user={slots.user}
+        actions={slots.actions}
       />
     </div>
   );
@@ -253,170 +345,9 @@ export function HeaderDrawerOpen() {
         {...slots.labels}
         logo={slots.logo}
         items={items}
-        search={slots.search}
-        language={slots.language}
+        actions={slots.actions}
         defaultMenuOpen
       />
-    </div>
-  );
-}
-
-// ----------------------------------------------------------------------------- Second nav
-
-export function SecondNavTones() {
-  const strip = useSecondNavEntries();
-  const t = useBi();
-  return (
-    <Stack className="-m-4">
-      <SecondNav aria-label={strip.label} items={strip.items} actions={strip.actions} />
-      <SecondNav
-        aria-label={strip.label}
-        tone="primary"
-        items={strip.items}
-        actions={strip.actions}
-      />
-      <SecondNav
-        aria-label={t("Related pages", "صفحات ذات صلة")}
-        items={[
-          { label: t("Overview", "نظرة عامة"), href: "#overview", current: true },
-          { label: t("Requirements", "المتطلبات"), href: "#requirements" },
-          { label: t("Fees", "الرسوم"), href: "#fees" },
-          { label: t("Support", "الدعم"), href: "#support" },
-          { label: t("Frequently asked questions", "الأسئلة الشائعة"), href: "#faq" },
-        ]}
-        actions={[{ label: t("Print", "طباعة"), onClick: () => {} }]}
-      />
-    </Stack>
-  );
-}
-
-/** A narrow strip: more entries than fit, so it scrolls sideways. */
-export function SecondNavOverflow() {
-  const t = useBi();
-  const names = [
-    t("Overview", "نظرة عامة"),
-    t("Requirements", "المتطلبات"),
-    t("Fees", "الرسوم"),
-    t("Support", "الدعم"),
-    t("Frequently asked questions", "الأسئلة الشائعة"),
-    t("Terms of use", "شروط الاستخدام"),
-    t("Contact us", "تواصل معنا"),
-  ];
-  return (
-    <div className="-m-4 w-72 max-w-full">
-      <SecondNav
-        aria-label={t("Related pages", "صفحات ذات صلة")}
-        items={names.map((label, i) => ({ label, href: `#page-${i}`, current: i === 0 }))}
-      />
-    </div>
-  );
-}
-
-// ----------------------------------------------------------------------------- Footer
-
-function useFooter(tone: "default" | "green" = "default") {
-  const t = useBi();
-  const digits = useDigits();
-  const arabic = useLanguage() === "ar";
-  return {
-    logo: <Logo onColor={tone === "green"} />,
-    description: t(
-      "The digital services of the government, in one place.",
-      "الخدمات الرقمية للجهات الحكومية في مكان واحد.",
-    ),
-    columns: [
-      {
-        title: t("Services", "الخدمات"),
-        links: [
-          { label: t("Renew a licence", "تجديد ترخيص"), href: "#renew" },
-          { label: t("Pay a fee", "سداد رسم"), href: "#pay" },
-          { label: t("Request a permit", "طلب تصريح"), href: "#permit" },
-        ],
-      },
-      {
-        title: t("About", "عن الجهة"),
-        links: [
-          { label: t("Who we are", "من نحن"), href: "#who" },
-          { label: t("News", "الأخبار"), href: "#news" },
-          { label: t("Careers", "الوظائف"), href: "#careers" },
-        ],
-      },
-      {
-        title: t("Support", "الدعم"),
-        links: [
-          { label: t("Help centre", "مركز المساعدة"), href: "#help" },
-          { label: t("Contact us", "تواصل معنا"), href: "#contact" },
-          {
-            label: t("Open data portal", "بوابة البيانات المفتوحة"),
-            href: "#data",
-            external: true,
-          },
-        ],
-      },
-    ],
-    columnsLabel: t("Footer links", "روابط التذييل"),
-    social: [
-      { label: t("YouTube", "يوتيوب"), href: "#youtube", icon: YoutubeIcon },
-      { label: t("LinkedIn", "لينكدإن"), href: "#linkedin", icon: Linkedin01Icon },
-      { label: t("Instagram", "إنستغرام"), href: "#instagram", icon: InstagramIcon },
-    ],
-    socialLabel: t("Social media", "وسائل التواصل الاجتماعي"),
-    contactTitle: t("Contact", "التواصل"),
-    contact: [
-      {
-        label: t("Phone", "الهاتف"),
-        value: arabic ? "٩٢٠٠٠٠٠٠٠" : "920000000",
-        href: "#call",
-        icon: Call02Icon,
-      },
-      {
-        label: t("Address", "العنوان"),
-        value: t("Riyadh, Saudi Arabia", "الرياض، المملكة العربية السعودية"),
-        icon: Location01Icon,
-      },
-    ],
-    badgesTitle: t("Get the app", "حمّل التطبيق"),
-    badges: (
-      <>
-        <a href="#ios" className="rounded-sm border border-current px-3 py-2 text-sm no-underline">
-          {t("Download for iPhone", "حمّل لهواتف آيفون")}
-        </a>
-        <a
-          href="#android"
-          className="rounded-sm border border-current px-3 py-2 text-sm no-underline"
-        >
-          {t("Download for Android", "حمّل لهواتف أندرويد")}
-        </a>
-      </>
-    ),
-    legalLinks: [
-      { label: t("Privacy", "الخصوصية"), href: "#privacy" },
-      { label: t("Terms of use", "شروط الاستخدام"), href: "#terms" },
-      { label: t("Accessibility", "إمكانية الوصول"), href: "#accessibility" },
-    ],
-    legalLabel: t("Legal", "قانوني"),
-    copyright: t(
-      `© ${digits(2026)} Digital Services. All rights reserved.`,
-      `© ${digits(2026)} الخدمات الرقمية. جميع الحقوق محفوظة.`,
-    ),
-    externalLabel: t("(opens in a new tab)", "(يفتح في تبويب جديد)"),
-  };
-}
-
-export function FooterDefault() {
-  const footer = useFooter();
-  return (
-    <div className="-m-4">
-      <Footer {...footer} />
-    </div>
-  );
-}
-
-export function FooterGreen() {
-  const footer = useFooter("green");
-  return (
-    <div className="-m-4">
-      <Footer {...footer} tone="green" />
     </div>
   );
 }
@@ -439,6 +370,7 @@ function useDateText() {
       previousMonth: t("Previous month", "الشهر السابق"),
       nextMonth: t("Next month", "الشهر التالي"),
       calendarSwitch: t("Calendar type", "نوع التقويم"),
+      year: t("Year", "السنة"),
       gregorian: t("Gregorian", "ميلادي"),
       hijri: t("Hijri", "هجري"),
     },
@@ -450,7 +382,7 @@ export function DatePickerBasic() {
   const t = useBi();
   const [value, setValue] = useState<string | null>(null);
   return (
-    <Stack className="max-w-sm">
+    <Stack className="mx-auto w-full max-w-sm">
       <Field>
         <FieldLabel>{t("Appointment date", "تاريخ الموعد")}</FieldLabel>
         <DatePicker
@@ -473,7 +405,7 @@ export function DatePickerRange() {
   const t = useBi();
   const [value, setValue] = useState<DateRange>({ start: null, end: null });
   return (
-    <Stack className="max-w-lg">
+    <Stack className="mx-auto w-full max-w-lg">
       <Field>
         <FieldLabel>{t("Stay dates", "فترة الإقامة")}</FieldLabel>
         <DatePicker
@@ -493,7 +425,7 @@ export function DatePickerError() {
   const text = useDateText();
   const t = useBi();
   return (
-    <Stack className="max-w-sm">
+    <Stack className="mx-auto w-full max-w-sm">
       <Field invalid>
         <FieldLabel required>{t("Date of birth", "تاريخ الميلاد")}</FieldLabel>
         <DatePicker
@@ -513,7 +445,7 @@ export function CalendarStandalone() {
   const text = useDateText();
   const [value, setValue] = useState<string | null>(null);
   return (
-    <Row>
+    <div className="mx-auto w-fit">
       <Calendar
         value={value}
         onValueChange={setValue}
@@ -521,7 +453,26 @@ export function CalendarStandalone() {
         labels={text.labels}
         secondaryDate
       />
-    </Row>
+    </div>
+  );
+}
+
+/** The year dropdown with limits: only 2020 to 2030 is listed, and a year outside them is not offered. */
+export function CalendarYear() {
+  const text = useDateText();
+  const [value, setValue] = useState<string | null>(null);
+  return (
+    <div className="mx-auto w-fit">
+      <Calendar
+        value={value}
+        onValueChange={setValue}
+        defaultMonth="2026-11-08"
+        min="2020-01-01"
+        max="2030-12-31"
+        numerals={text.numerals}
+        labels={text.labels}
+      />
+    </div>
   );
 }
 
@@ -529,15 +480,17 @@ export function CalendarRange() {
   const text = useDateText();
   const [value, setValue] = useState<DateRange>({ start: null, end: null });
   return (
-    <Calendar
-      mode="range"
-      months={2}
-      defaultCalendar="hijri"
-      value={value}
-      onValueChange={setValue}
-      numerals={text.numerals}
-      labels={text.labels}
-    />
+    <div className="mx-auto w-fit max-w-full overflow-x-auto">
+      <Calendar
+        mode="range"
+        months={2}
+        defaultCalendar="hijri"
+        value={value}
+        onValueChange={setValue}
+        numerals={text.numerals}
+        labels={text.labels}
+      />
+    </div>
   );
 }
 
@@ -551,7 +504,7 @@ export function DatePickerOptions() {
     return day === 5 || day === 6;
   };
   return (
-    <Stack className="max-w-sm">
+    <Stack className="mx-auto w-full max-w-sm">
       <Field>
         <FieldLabel>{t("Booking date", "تاريخ الحجز")}</FieldLabel>
         <DatePicker
@@ -883,4 +836,135 @@ export function FiltrationUncontrolled() {
       </p>
     </Filtration>
   );
+}
+
+/** Groups that need the Date Picker's own texts, in the language of the preview. */
+function useDateGroupProps() {
+  const text = useDateText();
+  return { placeholder: text.placeholder, numerals: text.numerals, labels: text.labels };
+}
+
+export function FiltrationSearch() {
+  const f = useFiltration();
+  const t = f.t;
+  const digits = f.digits;
+  const cities: [string, string, string][] = [
+    ["riyadh", "Riyadh", "الرياض"],
+    ["jeddah", "Jeddah", "جدة"],
+    ["dammam", "Dammam", "الدمام"],
+    ["makkah", "Makkah", "مكة المكرمة"],
+    ["madinah", "Madinah", "المدينة المنورة"],
+    ["abha", "Abha", "أبها"],
+    ["tabuk", "Tabuk", "تبوك"],
+    ["hail", "Hail", "حائل"],
+  ];
+  const groups: FiltrationGroup[] = [
+    {
+      id: "city",
+      type: "checkbox",
+      label: t("City", "المدينة"),
+      searchable: true,
+      searchPlaceholder: t("Search cities", "ابحث في المدن"),
+      searchLabel: t("Search cities", "ابحث في المدن"),
+      searchClearLabel: t("Clear search", "مسح البحث"),
+      noMatchLabel: t("No matching city", "لا توجد مدينة مطابقة"),
+      initialCount: 4,
+      showMoreLabel: t("Show more", "عرض المزيد"),
+      showLessLabel: t("Show less", "عرض أقل"),
+      options: cities.map(([value, en, ar], i) => ({
+        value,
+        label: t(en, ar),
+        count: digits(i + 2),
+      })),
+    },
+  ];
+  return (
+    <Filtration {...f.labels} groups={groups} defaultValue={{ city: ["jeddah"] }} resultCount={3}>
+      <p className="m-0 text-text-primary-paragraph">
+        {t("Your results appear here.", "تظهر نتائجك هنا.")}
+      </p>
+    </Filtration>
+  );
+}
+
+/** Date, rating and a control you draw yourself (a Switch) in the same panel. */
+export function FiltrationControls() {
+  const f = useFiltration();
+  const t = f.t;
+  const digits = f.digits;
+  const date = useDateGroupProps();
+  const groups: FiltrationGroup[] = [
+    {
+      id: "date",
+      type: "date",
+      mode: "range",
+      label: t("Issued between", "تاريخ الإصدار بين"),
+      datePickerProps: date,
+    },
+    {
+      id: "rating",
+      type: "rating",
+      label: t("Rating", "التقييم"),
+      starLabel: (n) => `${digits(n)} ${t(n === 1 ? "star" : "stars", n <= 2 ? "نجمة" : "نجوم")}`,
+      formatApplied: (n) => `${digits(n)} ${t("stars and up", "نجوم فأكثر")}`,
+    },
+    {
+      id: "online",
+      type: "custom",
+      label: t("Availability", "التوفر"),
+      formatApplied: () => t("Online only", "عبر الإنترنت فقط"),
+      render: ({ labelId, value, onValueChange }) => (
+        // biome-ignore lint/a11y/noLabelWithoutControl: the Switch inside is the control
+        <label className="flex items-center gap-2 text-md text-text-default">
+          <Switch
+            aria-labelledby={labelId}
+            checked={value === "yes"}
+            onCheckedChange={(checked) => onValueChange(checked ? "yes" : undefined)}
+          />
+          {t("Online only", "عبر الإنترنت فقط")}
+        </label>
+      ),
+    },
+  ];
+  return (
+    <Filtration
+      {...f.labels}
+      groups={groups}
+      defaultValue={{ rating: "4", online: "yes" }}
+      resultCount={4}
+    >
+      <p className="m-0 text-text-primary-paragraph">
+        {t("Your results appear here.", "تظهر نتائجك هنا.")}
+      </p>
+    </Filtration>
+  );
+}
+
+function FiltrationPlaced({ placement }: { placement: "start" | "end" | "center" }) {
+  const f = useFiltration();
+  return (
+    <Filtration
+      {...f.labels}
+      placement={placement}
+      groups={f.groups.slice(0, 3)}
+      defaultValue={{ city: ["riyadh"] }}
+      resultCount={3}
+    >
+      <p className="m-0 text-text-primary-paragraph">
+        {f.t("Your results appear here.", "تظهر نتائجك هنا.")}
+      </p>
+    </Filtration>
+  );
+}
+
+export function FiltrationStart() {
+  return <FiltrationPlaced placement="start" />;
+}
+
+export function FiltrationEnd() {
+  return <FiltrationPlaced placement="end" />;
+}
+
+export function FiltrationCenter() {
+  return <FiltrationPlaced placement="center" />;
 }

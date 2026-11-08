@@ -3,7 +3,7 @@ title: Accordion
 description: "Shows and hides sections of content under their headings. Three sizes, a leading or trailing chevron, flush, and single or multiple open."
 ---
 
-<Preview name="accordion-basic" title="Accordion" />
+<Preview compact name="accordion-basic" title="Accordion" />
 
 ## Installation
 
@@ -37,21 +37,46 @@ export function ServiceFaq() {
 
 Use an Accordion for content people scan by heading and open only in part: questions and answers, the sections of a long form. Do not hide what everyone must read. By default one section is open at a time; set `multiple` to let people open several.
 
-The chevron sits on the end side (the left in Arabic), or the start side with `iconPosition="leading"`. The panel text is indented with logical padding so it lines up with the heading text. No `[dir=rtl]` overrides are needed.
+The chevron sits on the end side (the left in Arabic), or the start side with `iconPosition="leading"`. The panel text is indented with logical padding so it lines up with the heading text. No `[dir=rtl]` overrides are needed. The `Accordion` root is the DGA Accordion list: it stacks its items at the full width of the container.
 
 ## Anatomy
 
+- **Accordion** (the list): the root. Sets `size`, `variant`, `iconPosition`, `flush` and `multiple` for all its items.
 - **Item**: one section, with a 1px line above it. The `value` identifies it.
-- **Trigger** (a `<button>` in a heading): Text md, Semibold, with a chevron that turns when the section is open.
-- **Panel** (`role="region"`): the content. It animates its height.
+- **Trigger** (a `<button>` in a heading): Text md, Semibold, with a chevron that turns when the section is open. Closed heights: 56px (`lg`), 48px (`md`), 40px (`sm`). States: default, hover (grey header), pressed, focus (2px outline inside the heading) and disabled.
+- **Panel** (`role="region"`): the content, with the same states (disabled text is grey). It animates its height.
 
 ## Examples
 
-### Sizes, leading and flush
+### Sizes
 
-`size` sets the header padding: `sm` 8px, `md` 12px, `lg` 16px. `iconPosition="leading"` puts the chevron first. `flush` keeps the lines 16px from the edges. `multiple` lets several sections stay open.
+`size` sets the header padding and the closed height: `lg` 56px (16px padding), `md` 48px (12px), `sm` 40px (8px).
 
-<Preview compact name="accordion-variants" title="Sizes, leading and flush" />
+<Preview compact name="accordion-sizes" title="Sizes" />
+
+### White and filled
+
+`variant="white"` (default) has no fill; `variant="filled"` gives each item a `background-neutral-50` fill.
+
+<Preview compact name="accordion-filled" title="White and filled" />
+
+### Flush
+
+`flush` keeps the lines 16px from both edges. The headings and content keep their full width and alignment.
+
+<Preview compact name="accordion-flush" title="Flush" />
+
+### Leading icon
+
+`iconPosition="leading"` puts the chevron first and indents the content to line up with the heading text. It mirrors in Arabic.
+
+<Preview compact name="accordion-leading" title="Leading icon" />
+
+### Multiple open
+
+`multiple` lets several sections stay open.
+
+<Preview compact name="accordion-multiple" title="Multiple open" />
 
 ## Accessibility
 
@@ -73,7 +98,8 @@ The chevron sits on the end side (the left in Arabic), or the start side with `i
 ## Deviations from DGA
 
 - The DGA CSS repeats every body-padding rule for `[dir=rtl]` and `html[lang=ar]` (twelve rules). Logical padding (`ps` and `pe`) needs none.
-- Flush is a 16px margin on each side of the line; DGA draws it with a `border-image` gradient at 16px and 382px, which only fits one width.
+- Flush draws the line with a pseudo-element 16px from each edge; DGA uses a `border-image` gradient at 16px and 382px, which only fits one width.
+- The filled variant (`background-neutral-50`) and the lighter disabled panel text are our choices; the DGA CSS only shows the white item.
 - A disabled section uses `text-default-disabled` instead of `neutral-300` with `!important`.
 
 <ComponentDeviations component="accordion" />

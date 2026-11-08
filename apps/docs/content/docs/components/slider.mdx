@@ -1,9 +1,9 @@
 ---
 title: Slider
-description: "Picks a value, or a range of two values, by dragging a handle along a track. Small and medium, with a label, helper text, value readout and error. The fill and the arrow keys follow the page direction."
+description: "Picks a value, or a range of two values, by dragging a handle along a track. Small and medium, with a label, helper text, Value and Min/Max labels, and an error. The fill and the arrow keys follow the page direction."
 ---
 
-<Preview name="slider-basic" title="Slider sizes" minHeight={420} />
+<Preview compact name="slider-basic" title="Slider sizes" />
 
 ## Installation
 
@@ -41,31 +41,48 @@ The minimum is on the side the text starts: the right in Arabic. The fill grows 
 
 ## Anatomy
 
-- **Label** and **value**: Text sm. The value shows one number, or both numbers of a range, opposite the label.
+- **Label** and **Value**: Text sm. The value shows one number, or both numbers of a range, opposite the label (`showValue`).
 - **Track**: 4px (small) or 6px (medium), `control-border`.
 - **Fill**: the part between the start and the thumb (or between the two thumbs), `control-primary-checked`.
 - **Thumb**: 16px (small) or 20px (medium), the fill colour with a 2px ring in `control-thumb`.
+- **Min/Max labels**: Text sm under the two ends of the track, `min` on the start side and `max` on the end side (`showMinMax`, or your own text with `minLabel` and `maxLabel`).
 - **Helper text** and **error**: Text sm, the error with an icon.
 
 ## Examples
 
-### Single value and sizes
+### Sizes
+
+Medium and small, with a label, helper text and the Value readout.
+
+<Preview compact name="slider-basic" title="Sizes" />
+
+### Values from the specification
 
 The values in the DGA specification are 0, 20, 50 and 100. Hover, drag or focus a thumb to see its states.
 
-<Preview name="slider-basic" title="Single value" minHeight={420} />
+<Preview compact name="slider-values" title="Values 0, 20, 50 and 100" />
+
+### Min/Max labels
+
+`showMinMax` adds the Min and Max labels under the ends of the track.
+
+<Preview compact name="slider-minmax" title="Min and Max labels" />
 
 ### Range
 
 An array as `value` or `defaultValue` makes a range with two thumbs. Name each thumb with `thumbLabels`: a screen reader announces "Minimum fee, slider, 20".
 
-<Preview compact name="slider-range" title="Range" minHeight={260} />
+<Preview compact name="slider-range" title="Range" />
 
-### Step, disabled, error and Field
+### Step, disabled and error
 
 `step` and `largeStep` set how far the arrow keys and Page Up and Down move. An error turns the fill and thumbs red and adds a message with an icon.
 
-<Preview name="slider-states" title="States" minHeight={520} />
+<Preview compact name="slider-states" title="Step, disabled and error" />
+
+### Inside a Field
+
+<Preview compact name="slider-field" title="Inside a Field" />
 
 ## Accessibility
 
@@ -90,7 +107,7 @@ An array as `value` or `defaultValue` makes a range with two thumbs. Name each t
 ## Deviations from DGA
 
 - The DGA specification gives the Slider no colours for the track and the thumb, only the label and helper text. They are derived from the Switch control tokens, which are 3:1 or better.
-- The error state and the value readout are not in the specification. The error follows [Field](/docs/components/field): red text with an icon.
+- The Value and the Min/Max labels are DGA parts and are built; their size and colour (Text sm, `field-text-helper`) are our choice because the Figma page gives no tokens for them. The error state is not in the specification and follows [Field](/docs/components/field): red text with an icon.
 
 <ComponentDeviations component="slider" />
 

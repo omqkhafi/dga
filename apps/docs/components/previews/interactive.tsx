@@ -570,6 +570,38 @@ export function TabsVertical() {
   );
 }
 
+export function TabsMore() {
+  const t = useBi();
+  const tabs = [
+    ["details", t("Details", "التفاصيل")],
+    ["documents", t("Documents", "المستندات")],
+    ["history", t("History", "السجل")],
+    ["payments", t("Payments", "المدفوعات")],
+    ["comments", t("Comments", "التعليقات")],
+    ["audit", t("Audit log", "سجل التدقيق")],
+  ] as const;
+  return (
+    <Tabs defaultValue="details" className="mx-auto max-w-sm">
+      <TabsList
+        overflow="menu"
+        moreLabel={t("More", "المزيد")}
+        aria-label={t("Request sections", "أقسام الطلب")}
+      >
+        {tabs.map(([value, label]) => (
+          <TabsTrigger key={value} value={value}>
+            {label}
+          </TabsTrigger>
+        ))}
+      </TabsList>
+      {tabs.map(([value, label]) => (
+        <TabsContent key={value} value={value} className="text-sm text-text-primary-paragraph">
+          {label}
+        </TabsContent>
+      ))}
+    </Tabs>
+  );
+}
+
 /* ------------------------------------------------------------ Accordion */
 
 const FAQ = [
@@ -590,10 +622,10 @@ const FAQ = [
   },
 ];
 
-export function AccordionBasic() {
+function FaqItems({ count = 3, disabled = false }: { count?: number; disabled?: boolean }) {
   return (
-    <Accordion defaultValue={["a"]} className="max-w-xl">
-      {FAQ.map((item) => (
+    <>
+      {FAQ.slice(0, count).map((item) => (
         <AccordionItem key={item.value} value={item.value}>
           <AccordionTrigger>
             <Bi en={item.en[0] as string} ar={item.ar[0] as string} />
@@ -603,54 +635,92 @@ export function AccordionBasic() {
           </AccordionContent>
         </AccordionItem>
       ))}
-      <AccordionItem value="d" disabled>
-        <AccordionTrigger>
-          <Bi en="Disabled section" ar="قسم معطّل" />
-        </AccordionTrigger>
-        <AccordionContent>
-          <Bi en="Hidden." ar="مخفي." />
-        </AccordionContent>
-      </AccordionItem>
+      {disabled ? (
+        <AccordionItem value="d" disabled>
+          <AccordionTrigger>
+            <Bi en="Disabled section" ar="قسم معطّل" />
+          </AccordionTrigger>
+          <AccordionContent>
+            <Bi en="Hidden." ar="مخفي." />
+          </AccordionContent>
+        </AccordionItem>
+      ) : null}
+    </>
+  );
+}
+
+export function AccordionBasic() {
+  return (
+    <Accordion defaultValue={["a"]}>
+      <FaqItems disabled />
     </Accordion>
   );
 }
 
-export function AccordionVariants() {
+export function AccordionSizes() {
   const t = useBi();
   return (
-    <Stack className="max-w-xl">
-      {(["sm", "md"] as const).map((size) => (
-        <Accordion key={size} size={size} multiple aria-label={t(`Size ${size}`, `الحجم ${size}`)}>
-          {FAQ.slice(0, 2).map((item) => (
-            <AccordionItem key={item.value} value={item.value}>
-              <AccordionTrigger>
-                <Bi en={item.en[0] as string} ar={item.ar[0] as string} />
-              </AccordionTrigger>
-              <AccordionContent>
-                <Bi en={item.en[1] as string} ar={item.ar[1] as string} />
-              </AccordionContent>
-            </AccordionItem>
-          ))}
+    <Stack>
+      {(["lg", "md", "sm"] as const).map((size) => (
+        <Accordion
+          key={size}
+          size={size}
+          aria-label={t(`Size ${size}`, `الحجم ${size}`)}
+          defaultValue={size === "lg" ? ["a"] : []}
+        >
+          <FaqItems count={2} />
         </Accordion>
       ))}
-      <Accordion
-        iconPosition="leading"
-        flush
-        defaultValue={["a"]}
-        aria-label={t("Leading, flush", "أيقونة في البداية، بلا إطار")}
-      >
-        {FAQ.slice(0, 2).map((item) => (
-          <AccordionItem key={item.value} value={item.value}>
-            <AccordionTrigger>
-              <Bi en={item.en[0] as string} ar={item.ar[0] as string} />
-            </AccordionTrigger>
-            <AccordionContent>
-              <Bi en={item.en[1] as string} ar={item.ar[1] as string} />
-            </AccordionContent>
-          </AccordionItem>
-        ))}
+    </Stack>
+  );
+}
+
+export function AccordionFilled() {
+  const t = useBi();
+  return (
+    <Stack>
+      <Accordion variant="white" defaultValue={["a"]} aria-label={t("White", "أبيض")}>
+        <FaqItems count={2} />
+      </Accordion>
+      <Accordion variant="filled" defaultValue={["a"]} aria-label={t("Filled", "معبأ")}>
+        <FaqItems count={2} disabled />
       </Accordion>
     </Stack>
+  );
+}
+
+export function AccordionFlush() {
+  const t = useBi();
+  return (
+    <Accordion flush defaultValue={["a"]} aria-label={t("Flush", "بلا إطار")}>
+      <FaqItems />
+    </Accordion>
+  );
+}
+
+export function AccordionLeading() {
+  const t = useBi();
+  return (
+    <Accordion
+      iconPosition="leading"
+      defaultValue={["a"]}
+      aria-label={t("Leading icon", "الأيقونة في البداية")}
+    >
+      <FaqItems />
+    </Accordion>
+  );
+}
+
+export function AccordionMultiple() {
+  const t = useBi();
+  return (
+    <Accordion
+      multiple
+      defaultValue={["a", "b"]}
+      aria-label={t("Several open", "عدة أقسام مفتوحة")}
+    >
+      <FaqItems />
+    </Accordion>
   );
 }
 

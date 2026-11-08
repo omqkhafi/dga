@@ -50,6 +50,23 @@ export function compositePairs(): ComponentPair[] {
       add("header", `${part}, selected, ${state}`, "text-oncolor-primary", bg, 4.5);
       add("header", `${part} icon, selected, ${state}`, "icon-oncolor", bg, 3);
     }
+    // The lighter bar along the bottom edge of the selected block (primary-200, in both modes).
+    add(
+      "header",
+      `${part}, selected, indicator bar`,
+      "colors-primary-sa-flag-200",
+      "button-background-primary-default",
+      3,
+    );
+    for (const [state, bg] of fills) {
+      add(
+        "header",
+        `${part}, selected, ${state}, indicator bar`,
+        "colors-primary-sa-flag-200",
+        bg,
+        3,
+      );
+    }
     add(
       "header",
       `${part}, selected, focus ring`,
@@ -318,6 +335,10 @@ export function compositePairs(): ComponentPair[] {
   add("filtration", "option label", "text-default", panel, 4.5);
   add("filtration", "option count", "text-primary-paragraph", panel, 4.5);
   add("filtration", "range field label", "text-primary-paragraph", panel, 4.5);
+  add("filtration", "no matches", "text-primary-paragraph", panel, 4.5);
+  add("filtration", "show more", "link-primary", panel, 4.5);
+  add("filtration", "show more, hovered", "link-primary-hovered", panel, 4.5);
+  add("filtration", "show more, pressed", "link-primary-pressed", panel, 4.5);
   add("filtration", "result count", "text-default", "background-body", 4.5);
   add("filtration", "result count, on white", "text-default", "background-white", 4.5);
 

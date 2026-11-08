@@ -1,9 +1,9 @@
 ---
 title: Second Nav
-description: "The secondary strip above the header (DGA: Second Nav Header): contextual items such as the date or the weather, actions, and links to sibling pages. Gray or primary, scrolls sideways on narrow screens."
+description: "The secondary strip above the header (DGA: Second Nav Header): the weather, date, time and location, then icon or text actions. Gray or primary (green), scrolls sideways on narrow screens."
 ---
 
-<Preview name="second-nav-tones" title="Second Nav" minHeight={160} />
+<Preview name="second-nav-gray" title="Second Nav" minHeight={80} />
 
 ## Installation
 
@@ -12,6 +12,7 @@ description: "The secondary strip above the header (DGA: Second Nav Header): con
 ## Usage
 
 ```tsx title="layout.tsx"
+import { ZoomInAreaIcon, TextFontIcon } from "@hugeicons/core-free-icons";
 import { SecondNav } from "@/components/dga/second-nav";
 
 export function PageInfo() {
@@ -19,35 +20,59 @@ export function PageInfo() {
     <SecondNav
       aria-label="Page information"
       items={[
-        { label: "Sunday 8 November" },
-        { label: "24° Cloudy" },
+        { kind: "weather", label: "Cloudy 24°" },
+        { kind: "date", label: "3-September-2024" },
+        { kind: "time", label: "2:30 PM" },
+        { kind: "location", label: "Riyadh" },
       ]}
       actions={[
-        { label: "Text size", onClick: () => {} },
-        { label: "Help", href: "/help" },
+        { label: "Zoom in", icon: ZoomInAreaIcon, iconOnly: true, onClick: () => {} },
+        { label: "Text size", icon: TextFontIcon, onClick: () => {} },
       ]}
     />
   );
 }
 ```
 
-Use it for context that belongs to the whole site, or as a row of links to the sibling pages of a section. Put it in the `top` slot of a [Header](/docs/components/header). Pass icons with `icon`.
-
-Items start on the right, the actions are on the left, and the strip scrolls from the right.
+Use it for context that belongs to the whole site: the weather, the date, the time and the location, and tools such as zoom. Put it in the `top` slot of a [Header](/docs/components/header). Each entry has a `kind` (`weather`, `date`, `time` or `location`) that brings its icon, or an `icon` of your own; `iconOnly` shows just the icon and keeps the `label` as its accessible name. The items start at the start edge, the actions sit at the end, and the strip scrolls from the start edge.
 
 ## Anatomy
 
-- **Strip**: 40px high, padded 32px, centred and 1280px wide unless `fullWidth`. Text md Regular. **Gray** is neutral-100, **primary** is the brand fill with on-colour text.
-- **Items** (`items`): an icon and text, 4px apart. An entry is plain text, a link when it has `href`, or a button when it has `onClick`.
+- **Strip**: 40px high, padded 32px, centred and 1280px wide unless `fullWidth`. **Gray** is neutral-100, **primary** is the brand fill with on-colour text.
+- **Item** (`items`, part `SecondNavItem`, DGA: sub-header-Item): an optional icon and text md Regular, 4px apart, 24px high. It has a default state and an on-colour state (on the primary strip, or with `tone="on-color"` when used alone). An entry is plain text, a link when it has `href`, or a button when it has `onClick`.
 - **Divider**: between the items and the actions (`divider`).
-- **Actions** (`actions`): at the end of the strip.
-- **Current entry** (`current`): bold, underlined, `aria-current="page"`.
+- **Actions** (`actions`): the same item at the end of the strip, icon and text or icon only.
+- **Current entry** (`current`): bold, underlined, `aria-current="page"`. Used by the optional links row.
 
 ## Examples
 
-### Tones, links and the current page
+### Primary
 
-<Preview compact name="second-nav-tones" title="Tones" minHeight={160} />
+<Preview compact name="second-nav-primary" title="Primary strip" minHeight={80} />
+
+### Item types
+
+The four ready-made items. Date and time formats follow Figma: day, month name and year joined by hyphens (`3-September-2024`), and the time with its period (`2:30 PM`). Arabic uses the same shapes with Arabic month names and periods.
+
+<Preview compact name="second-nav-kinds" title="Weather, date, time and location" minHeight={80} />
+
+### Icon-only actions
+
+<Preview compact name="second-nav-actions" title="Icon-only and icon with text" minHeight={80} />
+
+### Item, default
+
+<Preview compact name="second-nav-item-default" title="Item, default" minHeight={80} />
+
+### Item, on colour
+
+<Preview compact name="second-nav-item-on-color" title="Item, on colour" minHeight={80} />
+
+### Optional: links to sibling pages
+
+This is not a DGA example. The Second Nav can also hold a row of links to the pages of a section, with the current one marked.
+
+<Preview compact name="second-nav-links" title="Optional links row (not DGA)" minHeight={80} />
 
 ### Narrow screens
 
@@ -74,7 +99,9 @@ When the entries do not fit, the strip scrolls sideways. It never wraps, so it s
 ## Deviations from DGA
 
 - Figma draws fixed switches (Show Item 2, 3 and 4, Show Action 2, 3 and 4). Here `items` and `actions` are arrays.
-- Links, buttons and a current state are added, and the strip scrolls instead of wrapping.
+- Ready-made item `kind`s (weather, date, time, location) and `iconOnly` actions are added, so the icons and the accessible names come with the item.
+- Links, buttons and a current state are added for the optional links row. DGA draws no links here.
+- The strip scrolls instead of wrapping.
 
 <ComponentDeviations component="second-nav" />
 

@@ -9,7 +9,7 @@ description: "The filter pattern (DGA: Filtration): a panel of checkbox, radio, 
 
 <ComponentInstall name="filtration" />
 
-It installs the [Button](/docs/components/button), [Checkbox](/docs/components/checkbox), [Drawer](/docs/components/drawer), [Input](/docs/components/input), [Radio](/docs/components/radio), [Select](/docs/components/select) and [Tag](/docs/components/tag) with it.
+It installs the [Button](/docs/components/button), [Checkbox](/docs/components/checkbox), [Date Picker](/docs/components/date-picker), [Dialog](/docs/components/dialog), [Drawer](/docs/components/drawer), [Input](/docs/components/input), [Radio](/docs/components/radio), [Rating](/docs/components/rating), [Search Box](/docs/components/search-box), [Select](/docs/components/select) and [Tag](/docs/components/tag) with it. Each group type is built from one of them, so you use only what your groups need.
 
 ## Usage
 
@@ -44,18 +44,24 @@ export function Services({ services }: { services: Service[] }) {
 }
 ```
 
-`Filtration` only holds the filters: you filter your own data with `value`. It is controlled with `value` and `onValueChange`, or uncontrolled with `defaultValue`. The value has one entry per group `id`: a list of values for checkboxes, one value for a radio group or a select, text for an input and `[min, max]` for a range. Empty entries are left out.
+`Filtration` only holds the filters: you filter your own data with `value`. It is controlled with `value` and `onValueChange`, or uncontrolled with `defaultValue`. The value has one entry per group `id`: a list of values for checkboxes, one value for a radio group, a select, a rating (the stars, such as `"4"`) or a date, text for an input, and `[min, max]` for a range or a date range (`[start, end]`). Empty entries are left out.
 
 Every visible text is a prop: `title`, `clearAllLabel`, `appliedLabel`, `removeLabel`, `triggerLabel`, `applyLabel`, `resultLabel` and `closeLabel`, and the labels of the groups and options.
 
-The panel is on the right, the Drawer opens from the right with `drawerSide="start"`, and the Tags run from the right.
+The panel sits at the start side of the results, the Drawer opens from the start with `drawerSide="start"`, and the Tags run from the start.
 
 ## Anatomy
 
-- **Panel**: 288px beside the results from the `lg` width. Groups of `checkbox`, `radio`, `select`, `input` and `range`, 24px apart.
+- **Panel**: 288px beside the results from the `lg` width. Groups of `checkbox`, `radio`, `select`, `input`, `range`, `date`, `rating` and `custom`, 24px apart.
+- **Searchable options**: `searchable` on a checkbox or radio group adds a [Search Box](/docs/components/search-box) that narrows the list as you type, with `noMatchLabel` when nothing matches.
+- **Show more**: `initialCount` shows that many options and a "Show more" button (`showMoreLabel`, `showLessLabel`) for the rest.
+- **Date**: a [Date Picker](/docs/components/date-picker), single or `mode="range"`; pass its own props (labels, numerals, min, max) in `datePickerProps`.
+- **Rating**: [Rating](/docs/components/rating) stars; the value is the number of stars and the tag reads "4 stars and up".
+- **Custom**: `type: "custom"` with a `render` function that gets `value` and `onValueChange`, for any control you draw. It joins the tags and the clear-all button like the others.
 - **Applied filters**: a removable [Tag](/docs/components/tag) for each chosen option, text or range, with a clear-all button.
 - **Result count** (`resultCount`): above the results, announced when it changes.
 - **Small screens**: below `lg` a button with the number of filters opens the same panel in a [Drawer](/docs/components/drawer) from `drawerSide` (`start` or `end`), with a button that shows the results.
+- **Placement** (`placement`, DGA: Placement): `inline` (default) is the layout above. `start` and `end` always show the button and open the panel anchored to that side in a Drawer; `center` opens it in a centred [Dialog](/docs/components/dialog).
 
 ## Examples
 
@@ -64,6 +70,28 @@ The panel is on the right, the Drawer opens from the right with `drawerSide="sta
 <Preview compact name="filtration-uncontrolled" title="Uncontrolled" minHeight={420} />
 
 Switch the viewport to mobile to see the button and the Drawer.
+
+### Search and Show more
+
+A long list of options gets a search field and shows the first few, with a button for the rest.
+
+<Preview compact name="filtration-search" title="Search and Show more" minHeight={420} />
+
+### Date, rating and your own control
+
+<Preview compact name="filtration-controls" title="Date, rating and custom" minHeight={560} />
+
+### Anchored to the start
+
+<Preview compact name="filtration-start" title="placement=start" minHeight={120} />
+
+### Anchored to the end
+
+<Preview compact name="filtration-end" title="placement=end" minHeight={120} />
+
+### Centred
+
+<Preview compact name="filtration-center" title="placement=center" minHeight={120} />
 
 ## Accessibility
 
@@ -76,7 +104,7 @@ Switch the viewport to mobile to see the button and the Drawer.
 
 - The panel is an `aside` named by `title`. Checkbox, radio and range groups are `fieldset` elements with a `legend`; the select and the input have a label.
 - Each remove button is named, for example "Remove Riyadh" (`removeLabel`). The result count is a status region, so a screen reader hears the new count.
-- The Drawer traps focus and returns it to the button. Text is 4.5:1 and every control keeps its own contrast.
+- The search field and the "Show more" button (`aria-expanded`) are reachable with <kbd>Tab</kbd>. The Drawer and the Dialog trap focus and return it to the button. Text is 4.5:1 and every control keeps its own contrast.
 
 ## API Reference
 
@@ -84,8 +112,8 @@ Switch the viewport to mobile to see the button and the Drawer.
 
 ## Deviations from DGA
 
-- Figma has the trigger button only (Open, Result, Show Results and the Left, Center and Right placement). The panel, the Tags and the Drawer are composed here from the DGA components.
-- Placement is the Drawer side (`start` or `end`); there is no centred dialog.
+- Figma has the trigger button only (Open, Result, Show Results and the Left, Center and Right placement). The panel, the Tags, the Drawer and the Dialog are composed here from the DGA components, and the Left and Right placements are the logical `start` and `end` so they mirror in RTL.
+- Search, Show more, date, rating and custom groups come from the Figma sub-parts (`_Filtration list`, `_Multi Select Checkbox Filter`, `_Text Range`) and the DGA Search Box, Date Picker and Rating; they are all optional.
 
 <ComponentDeviations component="filtration" />
 

@@ -88,6 +88,9 @@ export function miscPairs(): ComponentPair[] {
   add("digital-stamp", "row heading and domain", "text-default", strip, 4.5);
   add("digital-stamp", "row description", "text-primary-paragraph", strip, 4.5);
   add("digital-stamp", "row icon", "icon-success", strip, 3);
+  add("digital-stamp", "domain suffix", "text-success", strip, 4.5);
+  add("digital-stamp", "registration card text", "text-primary-paragraph", "background-white", 4.5);
+  add("digital-stamp", "registration number link", "link-primary", "background-white", 4.5);
   return pairs;
 }
 
@@ -127,11 +130,12 @@ export const MISC_DEVIATIONS: Deviation[] = [
   },
   {
     area: "Components",
-    item: "Digital Stamp: wording, flag icon and the https and registration rows",
-    original: "Figma draws the 32px strip, its opened state and the domain Extension part; no text",
-    ours: "English defaults for every string (all props), a Hugeicons flag, lock and security-check icon, and three rows in the opened panel.",
+    item: "Digital Stamp: artwork and registration card",
+    original:
+      "Figma draws the 32px banner, its opened state and the domain Extension part; DGA shows the Saudi flag, circular icons and a registration card with the DGA logo.",
+    ours: "The flag and the DGA mark are inline SVG redrawn by us (the DGA logo can be replaced through registrationLogo); the item icons are Hugeicons globe and lock in circles outlined in icon-success; the domain suffix is text-success.",
     reason:
-      "New, no DGA source. The spec gives the layout and tokens, not the wording or artwork. The wording is ours; DGA's registration and domain purposes are taken from the spec's description.",
+      "The official artwork is not in the registry. Every colour is an existing DGA token; the domain suffix in text-success is 4.5:1 or better on the strip in both modes, so no token was added.",
     status: "fixed",
     component: "digital-stamp",
   },
@@ -139,7 +143,7 @@ export const MISC_DEVIATIONS: Deviation[] = [
     area: "Components",
     item: "Digital Stamp: opened state and mobile layout",
     original: "A separate Opened frame, a Mobile frame, and the Extension part as an 88px bar",
-    ours: "One component: the strip wraps on narrow screens and the Extension part is the first row of the panel.",
+    ours: "One component: on mobile the banner and the panel stack vertically, and the Extension part is the first item of the panel.",
     reason:
       "One responsive component instead of four frames. The tokens (background-neutral-100, text-default, section-padding, icon-success) are DGA's.",
     status: "fixed",

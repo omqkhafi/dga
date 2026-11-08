@@ -86,18 +86,24 @@ export const API_DESCRIPTIONS_AR_EXT_MISC: Record<string, string> = {
   "command.CommandShortcut": "مفاتيح في نهاية الإجراء. تبقى من اليسار إلى اليمين في العربية.",
   // Digital Stamp
   "digital-stamp.DigitalStamp":
-    "شريط الموقع الرسمي (DGA: Digital Stamp): شريط بارتفاع 32px في أعلى موقع حكومي يعلن أن الموقع رسمي، وزر يفتح لوحة تشرح كيف يُتحقق منه: العنوان ينتهي بنطاق سعودي، والاتصال https، والموقع مسجّل لدى هيئة الحكومة الرقمية. ضعه في خانة `stamp` من Header. الزر مبدّل حقيقي بـ `aria-expanded`، ويغلق Esc اللوحة ويعيد التركيز إليه.",
+    "شريط الموقع الرسمي (DGA: Digital Stamp): شريط بارتفاع 32px في أعلى موقع حكومي يعلن أن الموقع رسمي، وزر يفتح لوحة تشرح كيف يُتحقق منه: العنوان ينتهي بنطاق سعودي، والاتصال https، والموقع مسجّل لدى هيئة الحكومة الرقمية، مع بطاقة تسجيل برقم الموقع. ضعه في خانة `stamp` من Header. الزر مبدّل حقيقي بـ `aria-expanded`، ويغلق Esc اللوحة ويعيد التركيز إليه.",
   "digital-stamp.DigitalStamp.domain":
-    "لاحقة عنوان الموقع، وتظهر في اللوحة. تُقرأ من اليسار إلى اليمين.",
+    "لاحقة عنوان الموقع. تظهر باللون الأخضر في اللوحة ولكل لاحقة نصها الافتراضي. تُقرأ من اليسار إلى اليمين.",
   "digital-stamp.DigitalStamp.label": "السطر في الشريط. ترجمه في الصفحات العربية.",
   "digital-stamp.DigitalStamp.toggleLabel": "نص الزر الذي يفتح اللوحة. ترجمه في الصفحات العربية.",
-  "digital-stamp.DigitalStamp.domainTitle": "عنوان بند النطاق في اللوحة.",
-  "digital-stamp.DigitalStamp.domainText":
-    "يشرح النطاق. الافتراضي: عنوان الموقع ينتهي باللاحقة `domain`.",
+  "digital-stamp.DigitalStamp.domainTitle":
+    "عنوان بند النطاق في اللوحة (تتبعه اللاحقة). الافتراضي بحسب `domain`.",
+  "digital-stamp.DigitalStamp.domainText": "يشرح النطاق. الافتراضي بحسب `domain`.",
   "digital-stamp.DigitalStamp.httpsTitle": "عنوان بند الاتصال الآمن.",
   "digital-stamp.DigitalStamp.httpsText": "يشرح القفل وhttps.",
-  "digital-stamp.DigitalStamp.registrationTitle": "عنوان بند التسجيل. مرّر `null` لحذف البند.",
-  "digital-stamp.DigitalStamp.registrationText": "يشرح التسجيل لدى هيئة الحكومة الرقمية.",
+  "digital-stamp.DigitalStamp.registrationLabel":
+    "السطر قبل رقم التسجيل في بطاقة التسجيل. مرّر `null` لحذف البطاقة.",
+  "digital-stamp.DigitalStamp.registrationNumber":
+    "رقم تسجيل الموقع لدى هيئة الحكومة الرقمية. يظهر رابطًا.",
+  "digital-stamp.DigitalStamp.registrationHref": "وجهة رابط رقم التسجيل (سجل الموقع لدى الهيئة).",
+  "digital-stamp.DigitalStamp.registrationLogo": "الشعار في بطاقة التسجيل. الافتراضي: شعار DGA.",
+  "digital-stamp.DigitalStamp.logoLabel":
+    "الاسم المتاح للشعار الافتراضي. ترجمه في الصفحات العربية.",
   "digital-stamp.DigitalStamp.open": "يفتح اللوحة أو يغلقها. استخدمه للتحكم في الختم.",
   "digital-stamp.DigitalStamp.defaultOpen": "هل تبدأ اللوحة مفتوحة.",
   "digital-stamp.DigitalStamp.hideIcon": "يخفي أيقونة العلم في بداية الشريط.",

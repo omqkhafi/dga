@@ -11,9 +11,10 @@ const accordionVariants = cva("cn-accordion", {
   variants: {
     size: { sm: "cn-accordion-size-sm", md: "cn-accordion-size-md", lg: "cn-accordion-size-lg" },
     iconPosition: { trailing: "cn-accordion-trailing", leading: "cn-accordion-leading" },
+    variant: { white: "cn-accordion-white", filled: "cn-accordion-filled" },
     flush: { true: "cn-accordion-flush", false: "" },
   },
-  defaultVariants: { size: "lg", iconPosition: "trailing", flush: false },
+  defaultVariants: { size: "lg", iconPosition: "trailing", variant: "white", flush: false },
 });
 
 type AccordionProps = AccordionPrimitive.Root.Props & VariantProps<typeof accordionVariants>;
@@ -21,14 +22,15 @@ type AccordionProps = AccordionPrimitive.Root.Props & VariantProps<typeof accord
 /**
  * Shows and hides sections of content under their headings (DGA: Accordion). Each heading is a
  * button: Tab moves between headings and Enter or Space opens or closes the section. One section
- * is open at a time unless you set `multiple`.
+ * is open at a time unless you set `multiple`. `variant` is `white` (no fill) or `filled`; `flush`
+ * keeps the lines short of the edges. Sizes are 56, 48 and 40px tall when closed.
  */
-function Accordion({ className, size, iconPosition, flush, ...props }: AccordionProps) {
+function Accordion({ className, size, iconPosition, variant, flush, ...props }: AccordionProps) {
   return (
     <AccordionPrimitive.Root
       data-slot="accordion"
       data-size={size ?? "lg"}
-      className={cn(accordionVariants({ size, iconPosition, flush }), className)}
+      className={cn(accordionVariants({ size, iconPosition, variant, flush }), className)}
       {...props}
     />
   );

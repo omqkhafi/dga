@@ -46,11 +46,13 @@ function useLocale() {
 
 /* --------------------------------------------------------------- Slider */
 
+const sliderWidth = "mx-auto w-full max-w-md";
+
 export function SliderBasic() {
   const t = useBi();
   const locale = useLocale();
   return (
-    <Stack className="max-w-md">
+    <Stack className={sliderWidth}>
       <Slider
         size="md"
         label={t("Processing priority", "أولوية المعالجة")}
@@ -66,20 +68,53 @@ export function SliderBasic() {
         locale={locale}
         defaultValue={20}
       />
-      <Row
-        label={t("Values from the DGA spec: 0, 20, 50, 100", "قيم من مواصفة DGA: 0 و20 و50 و100")}
-      >
-        <div className="flex w-full flex-col gap-4">
-          {[0, 20, 50, 100].map((value) => (
-            <Slider
-              key={value}
-              aria-label={t(`Value ${value}`, `القيمة ${value.toLocaleString("ar-EG")}`)}
-              locale={locale}
-              defaultValue={value}
-            />
-          ))}
-        </div>
-      </Row>
+    </Stack>
+  );
+}
+
+export function SliderValues() {
+  const t = useBi();
+  const locale = useLocale();
+  return (
+    <Stack className={sliderWidth}>
+      {[0, 20, 50, 100].map((value) => (
+        <Slider
+          key={value}
+          aria-label={t(`Value ${value}`, `القيمة ${value.toLocaleString("ar-EG")}`)}
+          locale={locale}
+          defaultValue={value}
+        />
+      ))}
+    </Stack>
+  );
+}
+
+export function SliderMinMax() {
+  const t = useBi();
+  const locale = useLocale();
+  return (
+    <Stack className={sliderWidth}>
+      <Slider
+        label={t("Budget", "الميزانية")}
+        showValue
+        showMinMax
+        locale={locale}
+        defaultValue={250}
+        min={0}
+        max={500}
+        step={10}
+      />
+      <Slider
+        size="sm"
+        label={t("Processing time", "مدة المعالجة")}
+        showMinMax
+        minLabel={t("1 day", "يوم واحد")}
+        maxLabel={t("30 days", "٣٠ يومًا")}
+        locale={locale}
+        defaultValue={10}
+        min={1}
+        max={30}
+      />
     </Stack>
   );
 }
@@ -88,7 +123,7 @@ export function SliderRange() {
   const t = useBi();
   const locale = useLocale();
   return (
-    <Stack className="max-w-md">
+    <Stack className={sliderWidth}>
       <Slider
         label={t("Fee range (SAR)", "نطاق الرسوم (ريال)")}
         helperText={t(
@@ -96,6 +131,7 @@ export function SliderRange() {
           "اسحب أي مقبض أو استخدم مفاتيح الأسهم.",
         )}
         showValue
+        showMinMax
         locale={locale}
         defaultValue={[20, 70]}
         thumbLabels={[
@@ -122,7 +158,7 @@ export function SliderStates() {
   const locale = useLocale();
   const [value, setValue] = useState(30);
   return (
-    <Stack className="max-w-md">
+    <Stack className={sliderWidth}>
       <Slider
         label={t("Controlled", "متحكَّم به")}
         showValue
@@ -151,14 +187,21 @@ export function SliderStates() {
         defaultValue={90}
         error={t("Choose 80 or less for this service.", "اختر ٨٠ أو أقل لهذه الخدمة.")}
       />
-      <Field>
-        <FieldLabel>{t("Inside a Field", "داخل حقل")}</FieldLabel>
-        <Slider locale={locale} defaultValue={40} />
-        <FieldDescription>
-          {t("The label and helper text come from the Field.", "التسمية والنص المساعد من الحقل.")}
-        </FieldDescription>
-      </Field>
     </Stack>
+  );
+}
+
+export function SliderInField() {
+  const t = useBi();
+  const locale = useLocale();
+  return (
+    <Field className={sliderWidth}>
+      <FieldLabel>{t("Inside a Field", "داخل حقل")}</FieldLabel>
+      <Slider locale={locale} defaultValue={40} />
+      <FieldDescription>
+        {t("The label and helper text come from the Field.", "التسمية والنص المساعد من الحقل.")}
+      </FieldDescription>
+    </Field>
   );
 }
 

@@ -1,9 +1,9 @@
 ---
 title: Footer
-description: "The site footer (DGA: Footer): logos, a description, social links, link columns, contact details, app badges and a legal row. Gray or dark green, and the columns fold into an Accordion on small screens."
+description: "The site footer (DGA: Footer): platform logos, link groups, Social Media and Accessibility Tools blocks, a row of links and the legal row. Gray or dark green; the description, contact details and app badges are optional."
 ---
 
-<Preview name="footer-default" title="Footer" minHeight={420} />
+<Preview name="footer-default" title="Footer" minHeight={360} />
 
 ## Installation
 
@@ -14,13 +14,14 @@ It installs the [Accordion](/docs/components/accordion) with it.
 ## Usage
 
 ```tsx title="layout.tsx"
+import { YoutubeIcon, ZoomInAreaIcon } from "@hugeicons/core-free-icons";
 import { Footer } from "@/components/dga/footer";
 
 export function SiteFooter() {
   return (
     <Footer
       logo={<img src="/logo.svg" alt="Digital Services" height={40} />}
-      description="The digital services of the government, in one place."
+      partnerLogos={<img src="/platforms.svg" alt="National platforms" height={32} />}
       columns={[
         {
           title: "Services",
@@ -31,44 +32,61 @@ export function SiteFooter() {
         },
         { title: "Support", links: [{ label: "Help centre", href: "/help" }] },
       ]}
-      contactTitle="Contact"
-      contact={[{ label: "Phone", value: "920000000", href: "tel:920000000" }]}
-      legalLinks={[{ label: "Privacy", href: "/privacy" }]}
+      socialTitle="Social media"
+      social={[{ label: "YouTube", href: "https://youtube.com", icon: YoutubeIcon }]}
+      accessibilityTitle="Accessibility tools"
+      accessibilityTools={[{ label: "Zoom in", icon: ZoomInAreaIcon, onClick: () => {} }]}
+      bottomLinks={[{ label: "Sitemap", href: "/sitemap" }]}
+      legalLinks={[
+        { label: "Terms and conditions", href: "/terms" },
+        { label: "Privacy policy", href: "/privacy" },
+      ]}
       copyright="© 2026 Digital Services. All rights reserved."
     />
   );
 }
 ```
 
-Every text is a prop, so translate `columnsLabel`, `socialLabel`, `legalLabel` and `externalLabel` on Arabic pages. App store badges are your own links with their images (`badges`).
-
-The brand block moves to the right, the columns run from the right, and the contact and legal rows follow the direction.
+Every text is a prop, so translate the titles and `columnsLabel`, `socialLabel`, `bottomLabel`, `legalLabel` and `externalLabel` on Arabic pages. Everything follows the direction: the brand block sits at the start edge and the groups run from it.
 
 ## Anatomy
 
 - **Footer**: gray (neutral-100) or `tone="green"` (the DGA flag green with on-colour text). Padded 32px, content centred and 1280px wide unless `fullWidth`.
-- **Brand**: the logo and `partnerLogos`, the description and the social links (icon links named by `label`).
-- **Link columns** (`columns`): a heading with a line under it and a list of links; up to four columns across.
-- **Contact** and **app badges**: blocks with their own headings.
-- **Legal row**: the copyright and the legal links, under a line.
-- **Small screens**: below `sm` the columns become an Accordion, one section per column. `collapsible={false}` keeps them open.
+- **Logos**: `logo`, and `partnerLogos` for the platform logos, which always sit on a white tile so they read on both tones.
+- **Link groups** (`columns`): a heading with a divider under it and a list of links; up to four across, two across below `sm`.
+- **Social Media** (`social`, `socialTitle`): a titled block of bordered icon links.
+- **Accessibility Tools** (`accessibilityTools`, `accessibilityTitle`): a titled block of bordered icon buttons, for example zoom and contrast. A tool is a button, a link with `href`, or a toggle with `pressed`.
+- **Bottom links** (`bottomLinks`): a row of underlined links.
+- **Legal row** (`copyright`, `legalLinks`): the copyright, the terms and the privacy policy, under a line. Centred below `sm`.
+- **Optional**: `description`, `contact` and `badges` (app store badges) are not DGA parts and are off by default.
+- **Small screens**: the groups stay open in two columns. `collapsible` folds them into an Accordion, one section per group.
 
 ## Examples
 
 ### Dark green
 
-<Preview compact name="footer-green" title="Dark green footer" minHeight={420} />
+<Preview compact name="footer-green" title="Dark green footer" minHeight={360} />
 
-Switch the viewport to mobile to see the Accordion.
+### Optional: description, contact and app badges
+
+These parts are not in DGA's footer. Add them when your site needs them.
+
+<Preview compact name="footer-optional" title="With description, contact and badges" minHeight={420} />
+
+### Optional: Accordion on small screens
+
+Switch the viewport to mobile to see the groups fold.
+
+<Preview compact name="footer-accordion" title="Collapsible groups" minHeight={360} />
 
 ## Accessibility
 
 | Key | Action |
 | --- | --- |
 | <kbd>Tab</kbd> | Moves through the links in reading order. |
-| <kbd>Enter</kbd> / <kbd>Space</kbd> | Opens or closes an Accordion section on small screens. |
+| <kbd>Enter</kbd> / <kbd>Space</kbd> | Presses a tool button, or opens or closes an Accordion section when `collapsible` is on. |
 
-- A `footer` landmark. The link columns are a `nav` named by `columnsLabel`, and the legal links are a second `nav` named by `legalLabel`. Contact details are a list; the kind of detail is read by screen readers.
+- A `footer` landmark. The link columns are a `nav` named by `columnsLabel`, the bottom links are a `nav` named by `bottomLabel`, and the legal links are another named by `legalLabel`. Each tool has an accessible name from its `label`. Contact details are a list; the kind of detail is read by screen readers.
 - External links open in a new tab, show an icon and have a screen-reader note (`externalLabel`).
 - Focus is a 2px outline: black on gray and white on green. Text is 4.5:1 and icons 3:1 in light and dark.
 
@@ -80,7 +98,8 @@ Switch the viewport to mobile to see the Accordion.
 
 - The 72px heading and its 24px paragraph of the DGA CSS are not shipped: the footer has a description in Text md, and you place any hero text yourself.
 - Colours are the semantic tokens, not hard-coded values, so the dark theme works.
-- Figma changes only the weight below 600px. Here the columns fold into an Accordion.
+- Figma changes only the weight below 600px. Here the groups go to two columns and the legal row is centred; the Accordion is an option (`collapsible`).
+- The description, contact details and app badges are added and optional.
 
 <ComponentDeviations component="footer" />
 

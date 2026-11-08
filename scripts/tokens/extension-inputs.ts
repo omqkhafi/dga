@@ -29,6 +29,7 @@ export function inputsPairs(): ComponentPair[] {
   for (const surface of SURFACES) {
     add("slider", "label", "field-text-label", surface, 4.5);
     add("slider", "value", "field-text-helper", surface, 4.5);
+    add("slider", "min and max labels", "field-text-helper", surface, 4.5);
     add("slider", "helper text", "field-text-helper", surface, 4.5);
     add("slider", "error text", "text-error", surface, 4.5);
     add("slider", "error icon", "icon-error", surface, 3);

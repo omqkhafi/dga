@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowRight01Icon, MoreHorizontalIcon } from "@hugeicons/core-free-icons";
+import { ArrowLeft01Icon, ArrowRight01Icon, MoreHorizontalIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import * as React from "react";
 import { cn } from "@/registry/bases/base/lib/utils";
@@ -11,6 +11,12 @@ type BreadcrumbProps = React.ComponentProps<"nav"> & {
    * levels. The first level and the last two are always kept. Default 5.
    */
   maxItems?: number;
+  /**
+   * The compact form (DGA): instead of the whole path, one back link to the previous level (the
+   * link in the second to last item). Use it on small screens or where space is tight; the
+   * arrow mirrors on Arabic pages. Default false.
+   */
+  compact?: boolean;
   /** The name of the ellipsis button that shows the folded levels. Translate it on Arabic pages. */
   expandLabel?: string;
 };
@@ -19,13 +25,15 @@ type BreadcrumbProps = React.ComponentProps<"nav"> & {
  * The path to the current page (DGA: Breadcrumb). Put `BreadcrumbItem`s in order, the last one
  * holding a `BreadcrumbPage`. Name it with `aria-label` ("Breadcrumb"). Above `maxItems` levels
  * the middle ones fold behind an ellipsis button, and below the `sm` width everything between
- * the first level and the last two folds the same way. The separators mirror on Arabic pages.
+ * the first level and the last two folds the same way. `compact` shows only a back link to
+ * the previous level. The separators mirror on Arabic pages.
  */
 function Breadcrumb({
   className,
   children,
   maxItems = 5,
   expandLabel = "Show full path",
+  compact = false,
   ...props
 }: BreadcrumbProps) {
   const [expanded, setExpanded] = React.useState(false);
@@ -35,6 +43,41 @@ function Breadcrumb({
   const foldable = Math.max(0, total - 3);
   const foldedOnDesktop = total > maxItems && foldable > 0;
   const foldedOnMobile = foldable > 0;
+
+  if (compact) {
+    const previous = items[total - 2] as
+      | React.ReactElement<{ children?: React.ReactNode }>
+      | undefined;
+    const link = previous
+      ? (React.Children.toArray(previous.props.children).find(
+          (child) => React.isValidElement(child) && child.type === BreadcrumbLink,
+        ) as React.ReactElement<{ children?: React.ReactNode; className?: string }> | undefined)
+      : undefined;
+    return (
+      <nav
+        data-slot="breadcrumb"
+        data-compact=""
+        className={cn("cn-breadcrumb", className)}
+        {...props}
+      >
+        {link
+          ? React.cloneElement(
+              link,
+              { className: cn(link.props.className, "cn-breadcrumb-back") },
+              <HugeiconsIcon
+                key="icon"
+                icon={ArrowLeft01Icon}
+                aria-hidden
+                className="cn-breadcrumb-back-icon"
+              />,
+              <span key="text" className="truncate">
+                {link.props.children}
+              </span>,
+            )
+          : null}
+      </nav>
+    );
+  }
 
   const content: React.ReactNode[] = [];
   items.forEach((item, index) => {

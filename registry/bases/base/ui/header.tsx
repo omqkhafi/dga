@@ -1,7 +1,7 @@
 "use client";
 
 import { Menu as MenuPrimitive } from "@base-ui/react/menu";
-import { ArrowDown01Icon, Menu01Icon } from "@hugeicons/core-free-icons";
+import { ArrowDown01Icon, Menu01Icon, MoreHorizontalIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import * as React from "react";
 import {
@@ -12,7 +12,7 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/dga/drawer";
-import { Menu, MenuContent, MenuTrigger } from "@/components/dga/menu";
+import { Menu, MenuContent, MenuItem, MenuTrigger } from "@/components/dga/menu";
 import { useDocumentDirection } from "@/lib/dga/direction";
 import { cn } from "@/registry/bases/base/lib/utils";
 
@@ -79,9 +79,10 @@ type HeaderActionProps = Omit<React.ComponentProps<"a">, "children"> &
   HeaderActionItem & { children?: React.ReactNode };
 
 /**
- * One action in the header bar (DGA: Header Action): an icon and a label, inline or with the icon
- * above. It renders a link when it has an `href`, a button otherwise. Below the `lg` width the
- * label is hidden and stays as the accessible name.
+ * One action in the header bar (DGA: Header Action): Inline (icon beside the label), Top (icon
+ * above the label), Text only (no icon) or Icon only, with default, hovered, pressed, focused and
+ * disabled states and the selected block with its bottom bar. It renders a link when it has an
+ * `href`, a button otherwise. Below the `lg` width the actions move into the overflow menu.
  */
 function HeaderAction({
   label,
@@ -95,16 +96,18 @@ function HeaderAction({
   className,
   ...props
 }: HeaderActionProps) {
+  const hideLabel = Boolean(iconOnly && icon);
   const content = (
     <>
       {icon ? <HugeiconsIcon icon={icon} aria-hidden className="cn-header-icon" /> : null}
-      <span className={cn("cn-header-action-label", iconOnly && "sr-only")}>{label}</span>
+      <span className={cn("cn-header-action-label", hideLabel && "sr-only")}>{label}</span>
     </>
   );
   const shared = {
     "data-slot": "header-action",
     "data-current": selected ? "" : undefined,
-    "data-icon-position": iconPosition,
+    "data-icon-position": icon && !hideLabel ? iconPosition : "inline",
+    "data-icon-only": hideLabel ? "" : undefined,
     className: cn("cn-header-action", className),
   };
   if (href && !disabled) {
@@ -121,9 +124,33 @@ function HeaderAction({
       disabled={disabled}
       aria-pressed={selected && !href ? true : undefined}
       onClick={onClick}
+      {...(props as React.ComponentProps<"button">)}
     >
       {content}
     </button>
+  );
+}
+
+/** One action inside the overflow menu on small screens. */
+function OverflowAction({ action }: { action: HeaderActionItem }) {
+  const { label, icon, href, onClick, selected, disabled } = action;
+  return (
+    <MenuItem
+      data-slot="header-overflow-item"
+      className="cn-header-overflow-item"
+      disabled={disabled}
+      onClick={onClick}
+      data-current={selected ? "" : undefined}
+      render={
+        href && !disabled ? (
+          // biome-ignore lint/a11y/useAnchorContent: Base UI renders the item's children inside it.
+          <a href={href} aria-current={selected ? "page" : undefined} />
+        ) : undefined
+      }
+    >
+      {icon ? <HugeiconsIcon icon={icon} aria-hidden className="cn-header-icon" /> : null}
+      {label}
+    </MenuItem>
   );
 }
 
@@ -334,6 +361,8 @@ type HeaderProps = Omit<React.ComponentProps<"header">, "children"> & {
   navLabel?: string;
   /** The name of the button that opens the menu on small screens. */
   menuLabel?: string;
+  /** The name of the overflow (…) button on small screens, which opens the actions. */
+  moreLabel?: string;
   /** The title of the drawer. */
   drawerTitle?: string;
   /** A line under the drawer title for screen readers. */
@@ -349,7 +378,9 @@ type HeaderProps = Omit<React.ComponentProps<"header">, "children"> & {
  * search, a language switcher and a user area. A skip link comes first in the tab order. Left
  * and Right (swapped on Arabic pages), Home and End move between the items; Enter, Space or Down
  * opens a sub-menu, which is a DGA Menu. Below the `lg` width the navigation moves into a
- * Drawer. The page the person is on has `aria-current="page"`.
+ * Drawer: on a phone the menu button is on the start side, the logo is centred and an overflow
+ * (…) button holding the actions is on the end side; the bar mirrors on Arabic pages. The page the
+ * person is on has `aria-current="page"`.
  */
 function Header({
   className,
@@ -368,6 +399,7 @@ function Header({
   skipLabel = "Skip to main content",
   navLabel = "Main",
   menuLabel = "Menu",
+  moreLabel = "More",
   drawerTitle = "Menu",
   drawerDescription,
   closeLabel = "Close",
@@ -432,6 +464,12 @@ function Header({
                 ))}
               </ul>
             </nav>
+            {language || user ? (
+              <div className="cn-header-drawer-end">
+                {language}
+                {user}
+              </div>
+            ) : null}
           </DrawerContent>
         </Drawer>
 
@@ -453,6 +491,23 @@ function Header({
             ))}
           </ul>
         </nav>
+
+        {actions.length ? (
+          <Menu>
+            <MenuTrigger
+              data-slot="header-overflow-button"
+              aria-label={moreLabel}
+              className="cn-header-overflow-button"
+            >
+              <HugeiconsIcon icon={MoreHorizontalIcon} aria-hidden />
+            </MenuTrigger>
+            <MenuContent align="end" className="cn-header-overflow">
+              {actions.map((action) => (
+                <OverflowAction key={action.label} action={action} />
+              ))}
+            </MenuContent>
+          </Menu>
+        ) : null}
 
         <div data-slot="header-end" className="cn-header-end">
           {search ? <div className="cn-header-search">{search}</div> : null}

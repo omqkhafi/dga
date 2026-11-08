@@ -10,7 +10,7 @@ sourceHash: dc9fe2729206
 
 <ComponentInstall name="filtration" />
 
-يُثبَّت معه [Button](/docs/components/button) و[Checkbox](/docs/components/checkbox) و[Drawer](/docs/components/drawer) و[Input](/docs/components/input) و[Radio](/docs/components/radio) و[Select](/docs/components/select) و[Tag](/docs/components/tag).
+يُثبَّت معه [Button](/docs/components/button) و[Checkbox](/docs/components/checkbox) و[Date Picker](/docs/components/date-picker) و[Dialog](/docs/components/dialog) و[Drawer](/docs/components/drawer) و[Input](/docs/components/input) و[Radio](/docs/components/radio) و[Rating](/docs/components/rating) و[Search Box](/docs/components/search-box) و[Select](/docs/components/select) و[Tag](/docs/components/tag). كل نوع مجموعة مبني على أحدها، فتستعمل ما تحتاجه مجموعاتك فقط.
 
 ## الاستخدام [#usage]
 
@@ -45,18 +45,24 @@ export function Services({ services }: { services: Service[] }) {
 }
 ```
 
-لا يحمل `Filtration` سوى المرشحات: أنت تصفّي بياناتك بـ `value`. يعمل بتحكم خارجي عبر `value` و`onValueChange`، أو دون تحكم عبر `defaultValue`. للقيمة إدخال لكل `id` مجموعة: قائمة قيم لخانات الاختيار، وقيمة واحدة لأزرار الاختيار أو القائمة المنسدلة، ونص للحقل، و`[min, max]` للنطاق. تُترك الإدخالات الفارغة.
+لا يحمل `Filtration` سوى المرشحات: أنت تصفّي بياناتك بـ `value`. يعمل بتحكم خارجي عبر `value` و`onValueChange`، أو دون تحكم عبر `defaultValue`. للقيمة إدخال لكل `id` مجموعة: قائمة قيم لخانات الاختيار، وقيمة واحدة لأزرار الاختيار أو القائمة المنسدلة أو التقييم (عدد النجوم، مثل `"4"`) أو التاريخ، ونص للحقل، و`[min, max]` للنطاق أو لنطاق التاريخ (`[start, end]`). تُترك الإدخالات الفارغة.
 
 كل نص ظاهر خاصية: `title` و`clearAllLabel` و`appliedLabel` و`removeLabel` و`triggerLabel` و`applyLabel` و`resultLabel` و`closeLabel`، وتسميات المجموعات والخيارات.
 
-اللوحة على اليمين، ويُفتح الدرج من اليمين مع `drawerSide="start"`، وتجري الوسوم من اليمين.
+اللوحة عند بداية النتائج، ويُفتح الدرج من البداية مع `drawerSide="start"`، وتجري الوسوم من البداية.
 
 ## البنية [#anatomy]
 
-- **اللوحة**: بعرض 288px بجانب النتائج من عرض `lg`. مجموعات `checkbox` و`radio` و`select` و`input` و`range`، بينها 24px.
+- **اللوحة**: بعرض 288px بجانب النتائج من عرض `lg`. مجموعات `checkbox` و`radio` و`select` و`input` و`range` و`date` و`rating` و`custom`، بينها 24px.
+- **خيارات قابلة للبحث**: `searchable` على مجموعة خانات أو أزرار اختيار يضيف [Search Box](/docs/components/search-box) يضيّق القائمة أثناء الكتابة، مع `noMatchLabel` عند عدم وجود تطابق.
+- **عرض المزيد**: يعرض `initialCount` هذا العدد من الخيارات وزر «عرض المزيد» (`showMoreLabel` و`showLessLabel`) لبقيتها.
+- **التاريخ**: [Date Picker](/docs/components/date-picker) مفرد أو `mode="range"`؛ ومرّر خصائصه (التسميات والأرقام وmin وmax) في `datePickerProps`.
+- **التقييم**: نجوم [Rating](/docs/components/rating)؛ القيمة عدد النجوم، ويقرأ الوسم «4 نجوم فأكثر».
+- **مخصص**: `type: "custom"` مع دالة `render` تستلم `value` و`onValueChange`، لأي عنصر تحكم ترسمه. ينضم إلى الوسوم وزر مسح الكل مثل غيره.
 - **المرشحات المطبّقة**: [Tag](/docs/components/tag) قابل للإزالة لكل خيار أو نص أو نطاق مختار، مع زر مسح الكل.
 - **عدد النتائج** (`resultCount`): فوق النتائج، ويُعلَن عند تغيّره.
 - **الشاشات الصغيرة**: تحت `lg` يفتح زر فيه عدد المرشحات اللوحة نفسها في [Drawer](/docs/components/drawer) من `drawerSide` (`start` أو `end`)، مع زر يعرض النتائج.
+- **الموضع** (`placement`، DGA: Placement): `inline` (الافتراضي) هو التخطيط أعلاه. يعرض `start` و`end` الزر دائمًا ويفتحان اللوحة مثبّتة على تلك الجهة في درج؛ ويفتحها `center` في [Dialog](/docs/components/dialog) في الوسط.
 
 ## أمثلة [#examples]
 
@@ -65,6 +71,28 @@ export function Services({ services }: { services: Service[] }) {
 <Preview compact name="filtration-uncontrolled" title="دون تحكم" minHeight={420} />
 
 بدّل منفذ العرض إلى الجوال لترى الزر والدرج.
+
+### البحث وعرض المزيد
+
+تحصل قائمة الخيارات الطويلة على حقل بحث وتعرض الأولى منها فقط، مع زر لبقيتها.
+
+<Preview compact name="filtration-search" title="البحث وعرض المزيد" minHeight={420} />
+
+### التاريخ والتقييم وعنصر تحكم خاص
+
+<Preview compact name="filtration-controls" title="التاريخ والتقييم والمخصص" minHeight={560} />
+
+### مثبّتة عند البداية
+
+<Preview compact name="filtration-start" title="placement=start" minHeight={120} />
+
+### مثبّتة عند النهاية
+
+<Preview compact name="filtration-end" title="placement=end" minHeight={120} />
+
+### في الوسط
+
+<Preview compact name="filtration-center" title="placement=center" minHeight={120} />
 
 ## إمكانية الوصول [#accessibility]
 
@@ -77,7 +105,7 @@ export function Services({ services }: { services: Service[] }) {
 
 - اللوحة عنصر `aside` يسميه `title`. مجموعات خانات الاختيار وأزرار الاختيار والنطاق عناصر `fieldset` بـ `legend`؛ وللقائمة المنسدلة والحقل تسمية.
 - لكل زر إزالة اسم، مثل «إزالة الرياض» (`removeLabel`). عدد النتائج منطقة حالة، فيسمع قارئ الشاشة العدد الجديد.
-- يحبس الدرج التركيز ويعيده إلى الزر. النص 4.5:1 ولكل عنصر تحكم تباينه.
+- يمكن الوصول إلى حقل البحث وزر «عرض المزيد» (`aria-expanded`) بمفتاح <kbd>Tab</kbd>. يحبس الدرج ومربع الحوار التركيز ويعيدانه إلى الزر. النص 4.5:1 ولكل عنصر تحكم تباينه.
 
 ## مرجع الواجهة البرمجية [#api-reference]
 
@@ -85,8 +113,8 @@ export function Services({ services }: { services: Service[] }) {
 
 ## الاختلافات عن DGA [#deviations-from-dga]
 
-- في Figma زر المشغّل فقط (`Open` و`Result` و`Show Results` ومواضع `Left` و`Center` و`Right`). اللوحة والوسوم والدرج مركّبة هنا من مكوّنات DGA.
-- الموضع هو جهة الدرج (`start` أو `end`)؛ ولا يوجد مربع حوار في المنتصف.
+- في Figma زر المشغّل فقط (`Open` و`Result` و`Show Results` ومواضع `Left` و`Center` و`Right`). اللوحة والوسوم والدرج ومربع الحوار مركّبة هنا من مكوّنات DGA، ومواضع اليسار واليمين هي `start` و`end` المنطقيان فتنعكس في RTL.
+- مجموعات البحث وعرض المزيد والتاريخ والتقييم والمخصص مأخوذة من الأجزاء الفرعية في Figma (`_Filtration list` و`_Multi Select Checkbox Filter` و`_Text Range`) ومن Search Box وDate Picker وRating في DGA؛ وكلها اختيارية.
 
 <ComponentDeviations component="filtration" />
 

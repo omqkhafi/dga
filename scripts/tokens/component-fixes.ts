@@ -821,6 +821,16 @@ export const INTERACTIVE_DEVIATIONS: Deviation[] = [
   },
   {
     area: "Components",
+    item: "Accordion: filled variant and flush line",
+    original:
+      "The DGA CSS shows only the white item; flush is a border-image gradient at 16px and 382px.",
+    ours: 'variant="filled" fills each item with background-neutral-50 (our choice); flush draws the line 16px from both edges with a pseudo-element, so the heading and content keep their full width; the content text is grey in a disabled item.',
+    reason:
+      "A gradient at fixed pixels breaks at any other width and made the flush heading look indented. The filled colour has no source in the dump or the CSS and is contrast-checked at 4.5:1 and 3:1.",
+    component: "accordion",
+  },
+  {
+    area: "Components",
     item: "Content Switcher: design and on-colour",
     original:
       "Figma has two to three items with a white label (text-oncolor-primary) and an OnColor variant. The CSS only sets margin: 10px.",

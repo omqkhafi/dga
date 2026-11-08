@@ -420,8 +420,8 @@ export const NAVIGATION_DEVIATIONS: Deviation[] = [
     area: "Components",
     item: "Rating: gold fill, hard-coded colour and interaction",
     original:
-      ".rating colour #faaf00 (hard-coded); Figma background-secondary (#dba102) is 2.30:1 on white. Whole stars only, no hover, focus or read-only state.",
-    ours: "The fill is background-secondary (or background-primary with brand); every star is outlined in icon-warning (5.43:1) or icon-primary, and an empty star in icon-default-500. Interactive ratings are a radio group with arrow keys, hover preview and a focus ring; read-only ones are an image with a text alternative. Whole stars only, as DGA defines (no half stars).",
+      ".rating colour #faaf00 (hard-coded); Figma background-secondary (#dba102) is 2.30:1 on white. DGA also defines half stars and pressed and selected states.",
+    ours: "The fill is background-secondary (or background-primary with brand); every star is outlined in icon-warning (5.43:1) or icon-primary, and an empty star in icon-default-500. Half stars are built (allowHalf): two radios per star, arrow keys move by half, the start half fills first in LTR and RTL. Pressed (scale 90%) and selected (2px outline) are our reading of the DGA states. Interactive ratings are a radio group with hover preview and a focus ring; read-only ones are an image with a text alternative and draw fractional values.",
     reason:
       "A graphical object that carries information needs 3:1 (WCAG 1.4.11): the outline gives the star its shape at 3:1 or more where the gold fill alone cannot. A rating also has to work by keyboard and be announced.",
     status: "fixed",
@@ -474,8 +474,8 @@ export const NAVIGATION_DEVIATIONS: Deviation[] = [
     area: "Components",
     item: "Breadcrumb: separator, current page and collapse",
     original:
-      "Only link-neutral text (Text sm), an icon-default-400 icon (2.5:1 on white), and 2, 3, 4, 5 and more-than-5 levels. No current-page style, no collapse behaviour.",
-    ours: "The chevron separator stays icon-default-400: it is decorative and hidden from screen readers. The current page is Medium text-default with aria-current. Above five levels, and below the sm width, the levels between the first and the last two fold behind an ellipsis button that shows the full path.",
+      "Only link-neutral text (Text sm), an icon-default-400 icon (2.5:1 on white), and 2, 3, 4, 5 and more-than-5 levels. No current-page style, no collapse behaviour. DGA's compact form is a back link to the previous level.",
+    ours: "The chevron separator stays icon-default-400: it is decorative and hidden from screen readers. The current page is Medium text-default with aria-current. Above five levels, and below the sm width, the levels between the first and the last two fold behind an ellipsis button that shows the full path (optional). The compact form (compact) is a back link to the previous level, with a back arrow that mirrors in RTL.",
     reason:
       "A chain of five or more levels overflows a phone, and the Figma '>5' variant implies a fold. The ellipsis is a real button, reachable by keyboard.",
     status: "fixed",
@@ -576,6 +576,39 @@ export const COMPOSITE_DEVIATIONS: Deviation[] = [
     component: "header",
   },
   {
+    area: "Components",
+    item: "Header: selected block, indicator bar and focus",
+    original:
+      "Selected Header Menu Item and Header Action are a primary fill. Focused is a 2px border-black stroke; Disabled has no bar.",
+    ours: "Selected is a full-height primary block with a lighter bar (primary-200) along the bottom edge; selected and disabled drops the block and shows a muted bar (border-disabled). Focus is a 2px outline inside the item (a stroke would shift the label) shown on keyboard focus only.",
+    reason:
+      "The bar is the DGA selected indicator; it is checked at 3:1 against the block in every state (see Contrast). Disabled items are exempt from contrast. The muted bar colour for a disabled item is not specified in the Figma dump.",
+    status: "fixed",
+    component: "header",
+  },
+  {
+    area: "Components",
+    item: "Header: phone layout and actions",
+    original:
+      "The mobile Header shows the menu, the logo and an overflow control. Header Action is an icon and label in the bar.",
+    ours: "Below lg: menu button (start), centred logo, overflow (…) button (end), mirrored in RTL. The overflow button opens a Menu of the actions; `language` and `user` move to the foot of the Nav Drawer. Action labels are always visible in the bar.",
+    reason:
+      "Actions do not fit a phone bar. The overflow position and its content are not described in the Figma dump (UNVERIFIED).",
+    status: "fixed",
+    component: "header",
+  },
+  {
+    area: "Components",
+    item: "Nav Drawer: panel colours, badge, external link and divider",
+    original:
+      "Nav Drawer has Green, White and Gray backgrounds, an item Badge, an External Link icon, a Divider item type, on-colour item states and an optional scroll bar, border and overlay.",
+    ours: "The Header's Drawer is the white panel (the Drawer component has white and gray tones). Item states, Level 1 and 2, Parent and Link with an expanded chevron, selected and disabled are built. Badge, external-link icon, divider items and the green on-colour panel are not.",
+    reason:
+      "The Header composes the shared Drawer instead of a second panel component. The missing parts are not needed to navigate and can be added to the Drawer later.",
+    status: "fixed",
+    component: "header",
+  },
+  {
     area: "Contrast",
     item: "Header, Nav Drawer: selected item text is a background token",
     original:
@@ -653,6 +686,17 @@ export const COMPOSITE_DEVIATIONS: Deviation[] = [
   },
   {
     area: "Components",
+    item: "Date Picker: year dropdown",
+    original:
+      "Figma's header has a Year Dropdown part (the year is chosen from a list) and gives no behaviour.",
+    ours: 'The year in the header is a native select (yearDropdown, on by default) listing min to max, or a hundred years either side of today. It is named "Year", opens with the keyboard and a pointer, shows the year in the calendar\'s own digits and calendar, and keeps the month when the year changes (limited by min and max). Shift with Page Up and Page Down still changes the year.',
+    reason:
+      "A native select is keyboard accessible, mirrors in RTL, and gives the platform list on touch. The list is not DGA's drawn menu; the closed control matches the header text.",
+    status: "fixed",
+    component: "date-picker",
+  },
+  {
+    area: "Components",
     item: "Date Picker: days in the next and previous month",
     original: "Date cell has a Nex/Prev switch and a Null state.",
     ours: "In one month the days of the neighbouring months are shown in text-secondary-paragraph and can be chosen. In the dual-month view they are left empty, so no date appears twice.",
@@ -697,9 +741,9 @@ export const COMPOSITE_DEVIATIONS: Deviation[] = [
     item: "Filtration: the panel and the mobile form are designed here",
     original:
       "Filtration is a 123x40 trigger with Open, Result and Show Results flags and Placement Center, Right and Left. The internal parts (_Filtration list, _Multi Select Checkbox Filter, _Text Range) are not drawn.",
-    ours: "A panel of checkbox, radio, select, input and range groups beside the results from lg, applied filters as removable Tags with clear all, a result count, and below lg the same panel in the DGA Drawer from a button. Placement is the drawer side (start or end), with no centred dialog.",
+    ours: "A panel of checkbox and radio groups (optional search and Show more), select, input, range, date, rating and custom groups beside the results from lg, applied filters as removable Tags with clear all, a result count, and below lg the same panel in the DGA Drawer from a button. placement=start or end always uses the button and opens the Drawer from that side (Figma's Left and Right, mirrored in RTL); placement=center opens a centred Dialog. The default stays the inline panel.",
     reason:
-      "The spec has the button only. The panel is composed from the DGA Checkbox, Radio, Select, Input, Tag and Drawer so it needs no new colour.",
+      "The spec has the button only. The panel is composed from the DGA Checkbox, Radio, Select, Input, Search Box, Date Picker, Rating, Tag, Drawer and Dialog so it needs no new colour. The Show more link uses the link colours.",
     status: "fixed",
     component: "filtration",
   },
