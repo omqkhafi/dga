@@ -5,6 +5,7 @@
 // Disabled states are exempt (WCAG 1.4.3 / 1.4.11), so they are not listed.
 
 import { chromePairs } from "./chrome";
+import { compositePairs } from "./composite";
 import { formPairs } from "./forms";
 import { interactivePairs } from "./interactive";
 import { navigationPairs } from "./navigation";
@@ -519,5 +520,6 @@ export function componentPairs(): ComponentPair[] {
     ...formPairs(),
     ...interactivePairs(),
     ...navigationPairs(),
+    ...compositePairs(),
   ];
 }

@@ -771,7 +771,7 @@
   --datecell-today-background-pressed: var(--colors-neutral-300);
   --datecell-today-background-focused: var(--alpha-white-0);
   --datecell-background-300: var(--colors-primary-sa-flag-300);
-  --datecell-background-600: var(--colors-primary-sa-flag-600-primary);
+  --datecell-background-600: var(--colors-primary-sa-flag-800);
   --datecell-background-100: var(--colors-primary-sa-flag-100);
   --text-primary-sa-flag: var(--colors-primary-sa-flag-800);
   --datecell-background-200: var(--colors-primary-sa-flag-200);
@@ -1353,7 +1353,7 @@
   --datecell-today-background-pressed: var(--colors-neutral-300);
   --datecell-today-background-focused: var(--alpha-white-0);
   --datecell-background-300: var(--colors-primary-sa-flag-300);
-  --datecell-background-600: var(--colors-primary-sa-flag-600-primary);
+  --datecell-background-600: var(--colors-primary-sa-flag-800);
   --datecell-background-100: var(--colors-primary-sa-flag-100);
   --text-primary-sa-flag: var(--colors-primary-sa-flag-800);
   --datecell-background-200: var(--colors-primary-sa-flag-200);
@@ -1843,8 +1843,8 @@
   --datecell-today-background-pressed: var(--colors-neutral-dark-600);
   --datecell-today-background-focused: var(--alpha-white-0);
   --datecell-background-300: var(--colors-primary-sa-flag-300);
-  --datecell-background-600: var(--colors-primary-sa-flag-600-primary);
-  --datecell-background-100: var(--colors-primary-sa-flag-300);
+  --datecell-background-600: var(--colors-primary-sa-flag-300);
+  --datecell-background-100: var(--colors-primary-sa-flag-950);
   --text-primary-sa-flag: var(--colors-primary-sa-flag-100);
   --datecell-background-200: var(--colors-primary-sa-flag-400);
   --background-card: var(--colors-neutral-dark-900);

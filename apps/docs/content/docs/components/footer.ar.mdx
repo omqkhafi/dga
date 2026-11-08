@@ -1,0 +1,94 @@
+---
+title: Footer
+description: "تذييل الموقع (DGA: Footer): الشعارات، ونص وصفي، وروابط التواصل الاجتماعي، وأعمدة الروابط، وبيانات التواصل، وشارات التطبيق، وصف قانوني. رمادي أو أخضر داكن، وتنطوي الأعمدة في أكورديون على الشاشات الصغيرة."
+sourceHash: 451f5d451a4f
+---
+
+<Preview name="footer-default" title="التذييل" minHeight={420} />
+
+## التثبيت [#installation]
+
+<ComponentInstall name="footer" />
+
+يُثبَّت معه [Accordion](/docs/components/accordion).
+
+## الاستخدام [#usage]
+
+```tsx title="layout.tsx"
+import { Footer } from "@/components/dga/footer";
+
+export function SiteFooter() {
+  return (
+    <Footer
+      logo={<img src="/logo.svg" alt="الخدمات الرقمية" height={40} />}
+      description="الخدمات الرقمية للجهات الحكومية في مكان واحد."
+      columns={[
+        {
+          title: "الخدمات",
+          links: [
+            { label: "تجديد ترخيص", href: "/renew" },
+            { label: "سداد رسم", href: "/pay" },
+          ],
+        },
+        { title: "الدعم", links: [{ label: "مركز المساعدة", href: "/help" }] },
+      ]}
+      contactTitle="التواصل"
+      contact={[{ label: "الهاتف", value: "٩٢٠٠٠٠٠٠٠", href: "tel:920000000" }]}
+      legalLinks={[{ label: "الخصوصية", href: "/privacy" }]}
+      copyright="© ٢٠٢٦ الخدمات الرقمية. جميع الحقوق محفوظة."
+    />
+  );
+}
+```
+
+كل نص خاصية، فترجم `columnsLabel` و`socialLabel` و`legalLabel` و`externalLabel` في الصفحات العربية. شارات المتاجر روابطك الخاصة مع صورها (`badges`).
+
+## البنية [#anatomy]
+
+- **التذييل**: رمادي (neutral-100) أو `tone="green"` (أخضر علم DGA مع نص على اللون). بحشوة 32px، والمحتوى في المنتصف بعرض 1280px ما لم تستخدم `fullWidth`.
+- **الهوية**: الشعار و`partnerLogos` والنص الوصفي وروابط التواصل الاجتماعي (روابط أيقونات تسمّيها `label`).
+- **أعمدة الروابط** (`columns`): عنوان يعلوه خط وقائمة روابط؛ حتى أربعة أعمدة بالعرض.
+- **التواصل** و**شارات التطبيق**: قسمان لكل منهما عنوانه.
+- **الصف القانوني**: حقوق النشر والروابط القانونية، تحت خط.
+- **الشاشات الصغيرة**: تحت `sm` تصير الأعمدة أكورديون بقسم لكل عمود. يُبقيها `collapsible={false}` مفتوحة.
+
+## أمثلة [#examples]
+
+### أخضر داكن
+
+<Preview compact name="footer-green" title="تذييل أخضر داكن" minHeight={420} />
+
+بدّل منفذ العرض إلى الجوال لترى الأكورديون.
+
+## الاتجاه من اليمين إلى اليسار [#rtl]
+
+تنتقل الهوية إلى اليمين، وتجري الأعمدة من اليمين، ويتبع صفا التواصل والروابط القانونية الاتجاه.
+
+<DirectionCompare name="footer-default" title="التذييل" minHeight={420} />
+
+## إمكانية الوصول [#accessibility]
+
+| المفتاح | الإجراء |
+| --- | --- |
+| <kbd>Tab</kbd> | ينتقل بين الروابط بترتيب القراءة. |
+| <kbd>Enter</kbd> / <kbd>Space</kbd> | يفتح قسم الأكورديون أو يغلقه على الشاشات الصغيرة. |
+
+- معلم `footer`. أعمدة الروابط `nav` اسمه `columnsLabel`، والروابط القانونية `nav` ثانٍ اسمه `legalLabel`. بيانات التواصل قائمة، وتقرأ قارئات الشاشة نوع كل بيان.
+- تفتح الروابط الخارجية في تبويب جديد وتعرض أيقونة وفيها ملاحظة لقارئ الشاشة (`externalLabel`).
+- التركيز حدّ بسمك 2px: أسود على الرمادي وأبيض على الأخضر. النص 4.5:1 والأيقونات 3:1 في الفاتح والداكن.
+
+## مرجع الواجهة البرمجية [#api-reference]
+
+<ApiReference component="footer" />
+
+## الاختلافات عن DGA [#deviations-from-dga]
+
+- لا يُشحن العنوان بحجم 72px وفقرته بحجم 24px من CSS الخاص بـ DGA: للتذييل نص وصفي بخط Text md، وأنت تضع أي نص بارز بنفسك.
+- الألوان رموز دلالية لا قيم مكتوبة يدويًا، فيعمل السمة الداكنة.
+- يغيّر Figma الوزن فقط تحت 600px. هنا تنطوي الأعمدة في أكورديون.
+
+<ComponentDeviations component="footer" />
+
+## التباين [#contrast]
+
+<ComponentContrast component="footer" />

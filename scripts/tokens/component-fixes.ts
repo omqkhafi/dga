@@ -125,6 +125,17 @@ COMPONENT_OVERRIDES.push(
   },
 );
 
+// Phase 6: Date Picker. The today ring and number use datecell-background-600 (green 600), which is
+// 3.84:1 on the hovered cell and 3.25:1 on the pressed one.
+COMPONENT_OVERRIDES.push({
+  token: "datecell-background-600",
+  mode: "light",
+  to: "{colors-primary-sa-flag-800}",
+  reason:
+    "Today's number in the DGA green 600 is 3.84:1 on the hovered cell and 3.25:1 on the pressed one (needs 4.5:1). Green 800 is 4.5:1 or better on the cell in every state.",
+  component: "date-picker",
+});
+
 export const COMPONENT_ADDITIONS: Addition[] = [
   // Neutral buttons in dark mode: the fills are one or two steps above the page, so their
   // edge disappears. A border one step above the fill keeps it visible; none in light mode.

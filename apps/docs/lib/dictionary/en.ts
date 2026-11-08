@@ -57,6 +57,7 @@ export const en = {
   "search.crumb.forms": "Forms",
   "search.crumb.interactive": "Interactive",
   "search.crumb.navigation": "Navigation and data display",
+  "search.crumb.composite": "Composite",
   "search.crumb.foundations": "Foundations",
   "search.crumb.docs": "Docs",
   "search.crumb.ai": "AI Resources",

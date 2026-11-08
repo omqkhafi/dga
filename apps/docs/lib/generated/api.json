@@ -635,6 +635,144 @@
       ]
     }
   ],
+  "carousel": [
+    {
+      "name": "Carousel",
+      "description": "Browse a set of slides (DGA: Carousel). Previous and next buttons, a row of dots, autoplay with a pause button, swipe on touch screens, and Left and Right arrow keys (swapped on Arabic pages) while focus is inside. Slides follow the page direction: the first one is on the right in Arabic. Autoplay stops while the pointer or focus is inside, and does not start when the person prefers reduced motion. Name it with `aria-label`. Each child is one slide.",
+      "descriptionAr": "تصفّح مجموعة من الشرائح (DGA: Carousel). زرّا السابق والتالي، وصف من النقاط، وتشغيل تلقائي مع زر إيقاف مؤقت، والسحب على شاشات اللمس، ومفتاحا السهمين اليمين واليسار (يتبادلان في الصفحات العربية) أثناء وجود التركيز داخله. تتبع الشرائح اتجاه الصفحة: الأولى على اليمين في العربية. يتوقف التشغيل التلقائي ما دام المؤشر أو التركيز داخله، ولا يبدأ إذا فضّل الشخص تقليل الحركة. سمِّه بـ `aria-label`. كل عنصر ابن شريحة.",
+      "inherits": null,
+      "props": [
+        {
+          "name": "arrowStyle",
+          "type": "\"primary\" | \"subtle\"",
+          "default": "\"primary\"",
+          "required": false,
+          "description": "",
+          "descriptionAr": ""
+        },
+        {
+          "name": "size",
+          "type": "\"sm\" | \"md\" | \"lg\"",
+          "default": "\"md\"",
+          "required": false,
+          "description": "",
+          "descriptionAr": ""
+        },
+        {
+          "name": "controls",
+          "type": "\"arrows\" | \"dots\" | \"dots-only\"",
+          "default": "\"dots\"",
+          "required": false,
+          "description": "What to show under (and beside) the slides: `arrows` (previous and next beside the slides), `dots` (arrows and the dot row) or `dots-only`.",
+          "descriptionAr": "ما يظهر مع الشرائح: `arrows` (السابق والتالي بجانب الشرائح)، أو `dots` (الأسهم وصف النقاط)، أو `dots-only`."
+        },
+        {
+          "name": "index",
+          "type": "number",
+          "default": null,
+          "required": false,
+          "description": "The visible slide, from 0 (controlled).",
+          "descriptionAr": "الشريحة الظاهرة، تبدأ من 0 (بتحكم خارجي)."
+        },
+        {
+          "name": "defaultIndex",
+          "type": "number",
+          "default": "0",
+          "required": false,
+          "description": "The slide shown at first (uncontrolled). Default 0.",
+          "descriptionAr": "الشريحة المعروضة في البداية (دون تحكم). الافتراضي 0."
+        },
+        {
+          "name": "onIndexChange",
+          "type": "(index: number) => void",
+          "default": null,
+          "required": false,
+          "description": "Called with the new slide index.",
+          "descriptionAr": "تُستدعى برقم الشريحة الجديدة."
+        },
+        {
+          "name": "autoPlay",
+          "type": "number",
+          "default": "0",
+          "required": false,
+          "description": "Moves on by itself every this many milliseconds. 0 (default) turns it off.",
+          "descriptionAr": "ينتقل تلقائيًا كل هذا العدد من المللي ثانية. الافتراضي 0 ويعني إيقافه."
+        },
+        {
+          "name": "loop",
+          "type": "boolean",
+          "default": "false",
+          "required": false,
+          "description": "Wraps from the last slide to the first, and back. Default false.",
+          "descriptionAr": "ينتقل من الشريحة الأخيرة إلى الأولى والعكس. الافتراضي `false`."
+        },
+        {
+          "name": "previousLabel",
+          "type": "string",
+          "default": "\"Previous slide\"",
+          "required": false,
+          "description": "Name of the previous button. Translate it on Arabic pages.",
+          "descriptionAr": "اسم زر السابق. ترجمه في الصفحات العربية."
+        },
+        {
+          "name": "nextLabel",
+          "type": "string",
+          "default": "\"Next slide\"",
+          "required": false,
+          "description": "Name of the next button.",
+          "descriptionAr": "اسم زر التالي."
+        },
+        {
+          "name": "pauseLabel",
+          "type": "string",
+          "default": "\"Pause slideshow\"",
+          "required": false,
+          "description": "Name of the pause button (shown while it plays).",
+          "descriptionAr": "اسم زر الإيقاف المؤقت (يظهر أثناء التشغيل)."
+        },
+        {
+          "name": "playLabel",
+          "type": "string",
+          "default": "\"Start slideshow\"",
+          "required": false,
+          "description": "Name of the play button (shown while it is paused).",
+          "descriptionAr": "اسم زر التشغيل (يظهر أثناء الإيقاف المؤقت)."
+        },
+        {
+          "name": "slideLabel",
+          "type": "(index: number, count: number) => string",
+          "default": "(i, n) => `${i + 1} of ${n}`",
+          "required": false,
+          "description": "Name of each slide, for example \"1 of 5\".",
+          "descriptionAr": "اسم كل شريحة، مثل «1 من 5»."
+        },
+        {
+          "name": "dotLabel",
+          "type": "(index: number, count: number) => string",
+          "default": "(i) => `Go to slide ${i + 1}`",
+          "required": false,
+          "description": "Name of each dot, for example \"Go to slide 2\".",
+          "descriptionAr": "اسم كل نقطة، مثل «انتقل إلى الشريحة 2»."
+        },
+        {
+          "name": "dotsLabel",
+          "type": "string",
+          "default": "\"Slides\"",
+          "required": false,
+          "description": "The name of the row of dots.",
+          "descriptionAr": "اسم صف النقاط."
+        },
+        {
+          "name": "dotSize",
+          "type": "\"sm\" | \"md\" | \"lg\"",
+          "default": "\"md\"",
+          "required": false,
+          "description": "The size of the dots: 8, 12 or 16px. Default `md`.",
+          "descriptionAr": "حجم النقاط: 8 أو 12 أو 16px. الافتراضي `md`."
+        }
+      ]
+    }
+  ],
   "checkbox": [
     {
       "name": "Checkbox",
@@ -918,6 +1056,422 @@
           "required": false,
           "description": "A visible title for the table, also its accessible name.",
           "descriptionAr": "عنوان مرئي للجدول وهو اسمه المقروء."
+        }
+      ]
+    }
+  ],
+  "date-picker": [
+    {
+      "name": "Calendar",
+      "description": "A month grid for choosing a date or a range (DGA: Date Picker, calendar). Gregorian and Hijri (Umm al-Qura) with a switch between them. Arrow keys move by day and week (Left and Right swap on Arabic pages), Home and End go to the start and end of the week, Page Up and Page Down change the month, Shift with them the year, Enter or Space chooses. Dates are ISO strings, so a value does not depend on the time zone.",
+      "descriptionAr": "شبكة شهر لاختيار تاريخ أو نطاق (DGA: Date Picker، التقويم). الميلادي والهجري (أم القرى) مع مبدّل بينهما. مفاتيح الأسهم تتحرك باليوم والأسبوع (يتبادل اليمين واليسار في الصفحات العربية)، وHome وEnd إلى بداية الأسبوع ونهايته، وPage Up وPage Down لتغيير الشهر ومعهما Shift لتغيير السنة، وEnter أو Space للاختيار. التواريخ نصوص ISO فلا تتأثر القيمة بالمنطقة الزمنية.",
+      "inherits": {
+        "name": "Popover",
+        "url": "https://base-ui.com/react/components/popover"
+      },
+      "props": [
+        {
+          "name": "calendar",
+          "type": "\"gregorian\" | \"hijri\"",
+          "default": null,
+          "required": false,
+          "description": "The calendar shown (controlled).",
+          "descriptionAr": "التقويم المعروض (بتحكم خارجي)."
+        },
+        {
+          "name": "value",
+          "type": "string | DateRange",
+          "default": null,
+          "required": false,
+          "description": "The chosen date as an ISO date, or null (controlled). The chosen range (controlled). `end` is null while the person is still choosing.",
+          "descriptionAr": "التاريخ المختار بصيغة ISO، أو `null` (بتحكم خارجي). أو النطاق المختار؛ تكون `end` فارغة (`null`) ما دام الشخص يختار."
+        },
+        {
+          "name": "months",
+          "type": "1 | 2",
+          "default": null,
+          "required": false,
+          "description": "One month, or two side by side (DGA: dual-month view).",
+          "descriptionAr": "شهر واحد، أو شهران جنبًا إلى جنب (DGA: عرض الشهرين)."
+        },
+        {
+          "name": "min",
+          "type": "string",
+          "default": null,
+          "required": false,
+          "description": "The earliest date that can be chosen, as an ISO date.",
+          "descriptionAr": "أبكر تاريخ يمكن اختياره، بصيغة ISO."
+        },
+        {
+          "name": "max",
+          "type": "string",
+          "default": null,
+          "required": false,
+          "description": "The latest date that can be chosen.",
+          "descriptionAr": "أحدث تاريخ يمكن اختياره."
+        },
+        {
+          "name": "weekStartsOn",
+          "type": "0 | 1 | 3 | 2 | 6 | 4 | 5",
+          "default": null,
+          "required": false,
+          "description": "The first day of the week: 0 is Sunday (default), 6 is Saturday.",
+          "descriptionAr": "أول أيام الأسبوع: 0 الأحد (الافتراضي)، و6 السبت."
+        },
+        {
+          "name": "defaultValue",
+          "type": "string | DateRange",
+          "default": null,
+          "required": false,
+          "description": "",
+          "descriptionAr": ""
+        },
+        {
+          "name": "defaultCalendar",
+          "type": "\"gregorian\" | \"hijri\"",
+          "default": null,
+          "required": false,
+          "description": "The calendar shown at first (uncontrolled). Default `gregorian`.",
+          "descriptionAr": "التقويم المعروض في البداية (دون تحكم). الافتراضي `gregorian`."
+        },
+        {
+          "name": "onCalendarChange",
+          "type": "(calendar: CalendarSystem) => void",
+          "default": null,
+          "required": false,
+          "description": "",
+          "descriptionAr": ""
+        },
+        {
+          "name": "calendars",
+          "type": "CalendarSystem[]",
+          "default": null,
+          "required": false,
+          "description": "The calendars the person can switch between. One entry hides the switch. Default both: Gregorian and Hijri (Umm al-Qura).",
+          "descriptionAr": "التقاويم التي يمكن التبديل بينها. إدخال واحد يخفي المبدّل. الافتراضي الاثنان: الميلادي والهجري (أم القرى)."
+        },
+        {
+          "name": "isDateDisabled",
+          "type": "(iso: string) => boolean",
+          "default": null,
+          "required": false,
+          "description": "Marks other dates as unavailable, for example weekends or holidays.",
+          "descriptionAr": "يجعل تواريخ أخرى غير متاحة، مثل عطلات نهاية الأسبوع أو الإجازات."
+        },
+        {
+          "name": "today",
+          "type": "string",
+          "default": null,
+          "required": false,
+          "description": "Today's date, as an ISO date. Default: the date on the device. Useful in tests.",
+          "descriptionAr": "تاريخ اليوم بصيغة ISO. الافتراضي: تاريخ الجهاز. مفيد في الاختبارات."
+        },
+        {
+          "name": "defaultMonth",
+          "type": "string",
+          "default": null,
+          "required": false,
+          "description": "The month shown at first, as any ISO date in it. Default: the chosen date, else today.",
+          "descriptionAr": "الشهر المعروض في البداية، بأي تاريخ ISO منه. الافتراضي: التاريخ المختار وإلا اليوم."
+        },
+        {
+          "name": "locale",
+          "type": "string",
+          "default": null,
+          "required": false,
+          "description": "The language of month and day names. Default: Arabic when the page direction is RTL, English otherwise.",
+          "descriptionAr": "لغة أسماء الأشهر والأيام. الافتراضي: العربية في الصفحات من اليمين إلى اليسار، والإنجليزية في غيرها."
+        },
+        {
+          "name": "numerals",
+          "type": "\"latn\" | \"arab\"",
+          "default": null,
+          "required": false,
+          "description": "The digits: `latn` (0 to 9, default) or `arab` (Arabic-Indic).",
+          "descriptionAr": "الأرقام: `latn` (من 0 إلى 9، الافتراضي) أو `arab` (هندية عربية)."
+        },
+        {
+          "name": "secondaryDate",
+          "type": "boolean",
+          "default": null,
+          "required": false,
+          "description": "Shows the day of the other calendar under each number, as \"day/month\" (DGA: Secondary Date), for example the Hijri day on a Gregorian calendar.",
+          "descriptionAr": "يعرض يوم التقويم الآخر تحت كل رقم بصيغة «يوم/شهر» (DGA: التاريخ الثانوي)، مثل اليوم الهجري في التقويم الميلادي."
+        },
+        {
+          "name": "labels",
+          "type": "CalendarLabels",
+          "default": null,
+          "required": false,
+          "description": "",
+          "descriptionAr": ""
+        },
+        {
+          "name": "mode",
+          "type": "\"single\" | \"range\"",
+          "default": null,
+          "required": false,
+          "description": "",
+          "descriptionAr": ""
+        },
+        {
+          "name": "onValueChange",
+          "type": "((value: string | null) => void) | ((value: DateRange) => void)",
+          "default": null,
+          "required": false,
+          "description": "",
+          "descriptionAr": ""
+        }
+      ]
+    },
+    {
+      "name": "DatePicker",
+      "description": "A date field with a popup calendar (DGA: Date Picker). Type a date as `YYYY-MM-DD` in the shown calendar or choose it in the popup, which opens with the button or Alt + Down and closes with Escape. `mode=\"range\"` has a start and an end field. Put it in a Field to get a label, helper text and an error. Pass `min`, `max` and `isDateDisabled` to limit the dates.",
+      "descriptionAr": "حقل تاريخ مع تقويم منبثق (DGA: Date Picker). اكتب التاريخ بصيغة `YYYY-MM-DD` في التقويم المعروض أو اخترْه من النافذة، وتُفتح بزر التقويم وتُغلق بـ Escape. `mode=\"range\"` يعرض حقل بداية وحقل نهاية. ضعه داخل Field ليحصل على تسمية ونص مساعد ورسالة خطأ. مرّر `min` و`max` و`isDateDisabled` لتقييد التواريخ.",
+      "inherits": {
+        "name": "Popover",
+        "url": "https://base-ui.com/react/components/popover"
+      },
+      "props": [
+        {
+          "name": "calendar",
+          "type": "\"gregorian\" | \"hijri\"",
+          "default": null,
+          "required": false,
+          "description": "The calendar shown (controlled).",
+          "descriptionAr": "التقويم المعروض (بتحكم خارجي)."
+        },
+        {
+          "name": "value",
+          "type": "string | DateRange",
+          "default": null,
+          "required": false,
+          "description": "",
+          "descriptionAr": ""
+        },
+        {
+          "name": "months",
+          "type": "1 | 2",
+          "default": null,
+          "required": false,
+          "description": "The popup shows two months side by side.",
+          "descriptionAr": "تعرض النافذة شهرين جنبًا إلى جنب."
+        },
+        {
+          "name": "min",
+          "type": "string",
+          "default": null,
+          "required": false,
+          "description": "The earliest date that can be chosen, as an ISO date.",
+          "descriptionAr": "أبكر تاريخ يمكن اختياره، بصيغة ISO."
+        },
+        {
+          "name": "max",
+          "type": "string",
+          "default": null,
+          "required": false,
+          "description": "The latest date that can be chosen.",
+          "descriptionAr": "أحدث تاريخ يمكن اختياره."
+        },
+        {
+          "name": "weekStartsOn",
+          "type": "0 | 1 | 3 | 2 | 6 | 4 | 5",
+          "default": null,
+          "required": false,
+          "description": "The first day of the week: 0 is Sunday (default), 6 is Saturday.",
+          "descriptionAr": "أول أيام الأسبوع: 0 الأحد (الافتراضي)، و6 السبت."
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "default": null,
+          "required": false,
+          "description": "Form field name for the ISO value.",
+          "descriptionAr": "اسم حقل النموذج لقيمة ISO."
+        },
+        {
+          "name": "defaultValue",
+          "type": "string | DateRange",
+          "default": null,
+          "required": false,
+          "description": "",
+          "descriptionAr": ""
+        },
+        {
+          "name": "defaultCalendar",
+          "type": "\"gregorian\" | \"hijri\"",
+          "default": null,
+          "required": false,
+          "description": "The calendar shown at first (uncontrolled). Default `gregorian`.",
+          "descriptionAr": "التقويم المعروض في البداية (دون تحكم). الافتراضي `gregorian`."
+        },
+        {
+          "name": "onCalendarChange",
+          "type": "(calendar: CalendarSystem) => void",
+          "default": null,
+          "required": false,
+          "description": "",
+          "descriptionAr": ""
+        },
+        {
+          "name": "calendars",
+          "type": "CalendarSystem[]",
+          "default": null,
+          "required": false,
+          "description": "The calendars the person can switch between. One entry hides the switch. Default both: Gregorian and Hijri (Umm al-Qura).",
+          "descriptionAr": "التقاويم التي يمكن التبديل بينها. إدخال واحد يخفي المبدّل. الافتراضي الاثنان: الميلادي والهجري (أم القرى)."
+        },
+        {
+          "name": "isDateDisabled",
+          "type": "(iso: string) => boolean",
+          "default": null,
+          "required": false,
+          "description": "Marks other dates as unavailable, for example weekends or holidays.",
+          "descriptionAr": "يجعل تواريخ أخرى غير متاحة، مثل عطلات نهاية الأسبوع أو الإجازات."
+        },
+        {
+          "name": "today",
+          "type": "string",
+          "default": null,
+          "required": false,
+          "description": "Today's date, as an ISO date. Default: the date on the device. Useful in tests.",
+          "descriptionAr": "تاريخ اليوم بصيغة ISO. الافتراضي: تاريخ الجهاز. مفيد في الاختبارات."
+        },
+        {
+          "name": "defaultMonth",
+          "type": "string",
+          "default": null,
+          "required": false,
+          "description": "The month shown at first, as any ISO date in it. Default: the chosen date, else today.",
+          "descriptionAr": "الشهر المعروض في البداية، بأي تاريخ ISO منه. الافتراضي: التاريخ المختار وإلا اليوم."
+        },
+        {
+          "name": "locale",
+          "type": "string",
+          "default": null,
+          "required": false,
+          "description": "The language of month and day names. Default: Arabic when the page direction is RTL, English otherwise.",
+          "descriptionAr": "لغة أسماء الأشهر والأيام. الافتراضي: العربية في الصفحات من اليمين إلى اليسار، والإنجليزية في غيرها."
+        },
+        {
+          "name": "numerals",
+          "type": "\"latn\" | \"arab\"",
+          "default": null,
+          "required": false,
+          "description": "The digits: `latn` (0 to 9, default) or `arab` (Arabic-Indic).",
+          "descriptionAr": "الأرقام: `latn` (من 0 إلى 9، الافتراضي) أو `arab` (هندية عربية)."
+        },
+        {
+          "name": "secondaryDate",
+          "type": "boolean",
+          "default": null,
+          "required": false,
+          "description": "Shows the day of the other calendar under each number, as \"day/month\" (DGA: Secondary Date), for example the Hijri day on a Gregorian calendar.",
+          "descriptionAr": "يعرض يوم التقويم الآخر تحت كل رقم بصيغة «يوم/شهر» (DGA: التاريخ الثانوي)، مثل اليوم الهجري في التقويم الميلادي."
+        },
+        {
+          "name": "labels",
+          "type": "CalendarLabels & { open?: string | undefined; start?: string | undefined; end?: string | undefined; dialog?: string | undefined; apply?: string | undefined; cancel?: string | undefined; }",
+          "default": null,
+          "required": false,
+          "description": "",
+          "descriptionAr": ""
+        },
+        {
+          "name": "mode",
+          "type": "\"single\" | \"range\"",
+          "default": null,
+          "required": false,
+          "description": "",
+          "descriptionAr": ""
+        },
+        {
+          "name": "onValueChange",
+          "type": "((value: string | null) => void) | ((value: DateRange) => void)",
+          "default": null,
+          "required": false,
+          "description": "",
+          "descriptionAr": ""
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "default": null,
+          "required": false,
+          "description": "",
+          "descriptionAr": ""
+        },
+        {
+          "name": "size",
+          "type": "\"md\" | \"lg\"",
+          "default": null,
+          "required": false,
+          "description": "",
+          "descriptionAr": ""
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "default": null,
+          "required": false,
+          "description": "",
+          "descriptionAr": ""
+        },
+        {
+          "name": "placeholder",
+          "type": "string",
+          "default": null,
+          "required": false,
+          "description": "",
+          "descriptionAr": ""
+        },
+        {
+          "name": "invalid",
+          "type": "boolean",
+          "default": null,
+          "required": false,
+          "description": "Marks the field as invalid (Field does this for you with `invalid`).",
+          "descriptionAr": "يحدد الحقل على أنه غير صالح (يفعل Field ذلك عبر `invalid`)."
+        },
+        {
+          "name": "confirm",
+          "type": "boolean",
+          "default": null,
+          "required": false,
+          "description": "Shows Cancel and Apply buttons: the choice only counts after Apply.",
+          "descriptionAr": "يعرض زرّي «إلغاء» و«تطبيق»: لا يُحتسب الاختيار إلا بعد التطبيق."
+        },
+        {
+          "name": "quickOptions",
+          "type": "QuickOption[]",
+          "default": null,
+          "required": false,
+          "description": "Shortcuts shown beside the calendar, for example \"Today\" or \"Last 7 days\".",
+          "descriptionAr": "اختصارات تظهر بجانب التقويم، مثل «اليوم» أو «آخر 7 أيام»."
+        },
+        {
+          "name": "quickOptionsLabel",
+          "type": "string",
+          "default": null,
+          "required": false,
+          "description": "The name of the list of shortcuts.",
+          "descriptionAr": "اسم قائمة الاختصارات."
+        },
+        {
+          "name": "startName",
+          "type": "string",
+          "default": null,
+          "required": false,
+          "description": "Form field names for a range.",
+          "descriptionAr": "أسماء حقول النموذج للنطاق."
+        },
+        {
+          "name": "endName",
+          "type": "string",
+          "default": null,
+          "required": false,
+          "description": "",
+          "descriptionAr": ""
         }
       ]
     }
@@ -1588,6 +2142,506 @@
           "required": false,
           "description": "The form cannot be submitted without a file.",
           "descriptionAr": "لا يمكن إرسال النموذج دون ملف."
+        }
+      ]
+    }
+  ],
+  "filtration": [
+    {
+      "name": "Filtration",
+      "description": "The filter pattern (DGA: Filtration): a panel of groups (checkboxes, radios, a select, a text input or a range), the applied filters as removable Tags with a clear-all button, and a result count above your results (`children`). From the `lg` width the panel sits beside the results; below it a button opens the same panel in a Drawer. Use it controlled with `value` and `onValueChange`, or uncontrolled with `defaultValue`. Filter your data yourself with the value.",
+      "descriptionAr": "نمط التصفية (DGA: Filtration): لوحة من المجموعات (خانات اختيار، وأزرار اختيار، وقائمة منسدلة، وحقل نص، ونطاق)، والمرشحات المطبّقة وسومًا قابلة للإزالة مع زر مسح الكل، وعدد النتائج فوق نتائجك (`children`). من عرض `lg` تقع اللوحة بجانب النتائج؛ وتحته يفتح زر اللوحة نفسها في درج. استخدمه بتحكم خارجي عبر `value` و`onValueChange`، أو دون تحكم عبر `defaultValue`. صفِّ بياناتك بنفسك بالقيمة.",
+      "inherits": null,
+      "props": [
+        {
+          "name": "value",
+          "type": "FiltrationValue",
+          "default": null,
+          "required": false,
+          "description": "The chosen filters (controlled).",
+          "descriptionAr": "المرشحات المختارة (بتحكم خارجي)."
+        },
+        {
+          "name": "defaultValue",
+          "type": "FiltrationValue",
+          "default": null,
+          "required": false,
+          "description": "The filters chosen at first (uncontrolled).",
+          "descriptionAr": "المرشحات المختارة في البداية (دون تحكم)."
+        },
+        {
+          "name": "groups",
+          "type": "FiltrationGroup[]",
+          "default": null,
+          "required": true,
+          "description": "The filter groups, in order.",
+          "descriptionAr": "مجموعات المرشحات بالترتيب."
+        },
+        {
+          "name": "onValueChange",
+          "type": "(value: FiltrationValue) => void",
+          "default": null,
+          "required": false,
+          "description": "Called with the new filters.",
+          "descriptionAr": "تُستدعى بالمرشحات الجديدة."
+        },
+        {
+          "name": "resultCount",
+          "type": "number",
+          "default": null,
+          "required": false,
+          "description": "The number of results, shown above them. Leave it out to hide the count.",
+          "descriptionAr": "عدد النتائج، يظهر فوقها. احذفه لإخفاء العدد."
+        },
+        {
+          "name": "resultLabel",
+          "type": "(count: number) => string",
+          "default": "(n) => `${n} results`",
+          "required": false,
+          "description": "Writes the count, for example \"12 results\". Translate it on Arabic pages.",
+          "descriptionAr": "تكتب العدد، مثل «12 نتيجة». ترجمها في الصفحات العربية."
+        },
+        {
+          "name": "clearAllLabel",
+          "type": "string",
+          "default": "\"Clear all\"",
+          "required": false,
+          "description": "The name of the clear-all button.",
+          "descriptionAr": "اسم زر مسح الكل."
+        },
+        {
+          "name": "appliedLabel",
+          "type": "string",
+          "default": "\"Applied filters\"",
+          "required": false,
+          "description": "The name of the list of applied filters.",
+          "descriptionAr": "اسم قائمة المرشحات المطبّقة."
+        },
+        {
+          "name": "removeLabel",
+          "type": "(filter: string) => string",
+          "default": "(filter) => `Remove ${filter}`",
+          "required": false,
+          "description": "The name of a tag's remove button, for example \"Remove Riyadh\".",
+          "descriptionAr": "اسم زر إزالة الوسم، مثل «إزالة الرياض»."
+        },
+        {
+          "name": "triggerLabel",
+          "type": "string",
+          "default": "\"Filters\"",
+          "required": false,
+          "description": "The text of the button that opens the panel on small screens.",
+          "descriptionAr": "نص الزر الذي يفتح اللوحة على الشاشات الصغيرة."
+        },
+        {
+          "name": "applyLabel",
+          "type": "(count?: number | undefined) => string",
+          "default": "(n) => (n === undefined ? \"Show results\" : `Show ${n} results`)",
+          "required": false,
+          "description": "The text of the drawer's button that shows the results.",
+          "descriptionAr": "نص زر الدرج الذي يعرض النتائج."
+        },
+        {
+          "name": "drawerDescription",
+          "type": "string",
+          "default": null,
+          "required": false,
+          "description": "A line under the drawer title for screen readers.",
+          "descriptionAr": "سطر تحت عنوان الدرج لقارئات الشاشة."
+        },
+        {
+          "name": "drawerSide",
+          "type": "\"start\" | \"end\"",
+          "default": "\"start\"",
+          "required": false,
+          "description": "The side the drawer opens from on small screens.",
+          "descriptionAr": "الجهة التي يُفتح منها الدرج على الشاشات الصغيرة."
+        },
+        {
+          "name": "closeLabel",
+          "type": "string",
+          "default": "\"Close\"",
+          "required": false,
+          "description": "Name of the drawer's close button.",
+          "descriptionAr": "اسم زر إغلاق الدرج."
+        }
+      ]
+    }
+  ],
+  "footer": [
+    {
+      "name": "Footer",
+      "description": "The site footer (DGA: Footer): logos, a description and social links, columns of navigation links, contact details, app badges, and a row with the legal links and the copyright. Default (gray) or dark green. Below the `sm` width the link columns fold into an Accordion, one section per column. Every visible text is a prop, so translate it on Arabic pages.",
+      "descriptionAr": "تذييل الموقع (DGA: Footer): شعارات، ونص وصفي وروابط التواصل الاجتماعي، وأعمدة روابط التنقل، وبيانات التواصل، وشارات التطبيق، وصف للروابط القانونية وحقوق النشر. افتراضي (رمادي) أو أخضر داكن. تحت عرض `sm` تنطوي أعمدة الروابط في أكورديون بقسم لكل عمود. كل نص ظاهر خاصية، فترجمه في الصفحات العربية.",
+      "inherits": null,
+      "props": [
+        {
+          "name": "tone",
+          "type": "\"default\" | \"green\"",
+          "default": "\"default\"",
+          "required": false,
+          "description": "",
+          "descriptionAr": ""
+        },
+        {
+          "name": "logo",
+          "type": "string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<AwaitedReactNode>",
+          "default": null,
+          "required": false,
+          "description": "The entity's logo.",
+          "descriptionAr": "شعار الجهة."
+        },
+        {
+          "name": "partnerLogos",
+          "type": "string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<AwaitedReactNode>",
+          "default": null,
+          "required": false,
+          "description": "More logos (partners, Vision 2030) shown after the main one.",
+          "descriptionAr": "شعارات أخرى (الشركاء، رؤية 2030) تظهر بعد الشعار الرئيسي."
+        },
+        {
+          "name": "description",
+          "type": "string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<AwaitedReactNode>",
+          "default": null,
+          "required": false,
+          "description": "A short text under the logo.",
+          "descriptionAr": "نص قصير تحت الشعار."
+        },
+        {
+          "name": "columns",
+          "type": "FooterColumn[]",
+          "default": "[]",
+          "required": false,
+          "description": "Navigation link columns.",
+          "descriptionAr": "أعمدة روابط التنقل."
+        },
+        {
+          "name": "columnsLabel",
+          "type": "string",
+          "default": "\"Footer links\"",
+          "required": false,
+          "description": "The name of the links area. Translate it on Arabic pages.",
+          "descriptionAr": "اسم منطقة الروابط. ترجمه في الصفحات العربية."
+        },
+        {
+          "name": "social",
+          "type": "FooterSocialLink[]",
+          "default": "[]",
+          "required": false,
+          "description": "Social media links.",
+          "descriptionAr": "روابط وسائل التواصل الاجتماعي."
+        },
+        {
+          "name": "socialLabel",
+          "type": "string",
+          "default": "\"Social media\"",
+          "required": false,
+          "description": "The name of the social links list.",
+          "descriptionAr": "اسم قائمة روابط التواصل الاجتماعي."
+        },
+        {
+          "name": "contact",
+          "type": "FooterContactItem[]",
+          "default": "[]",
+          "required": false,
+          "description": "",
+          "descriptionAr": ""
+        },
+        {
+          "name": "contactTitle",
+          "type": "string",
+          "default": null,
+          "required": false,
+          "description": "The heading of the contact block.",
+          "descriptionAr": "عنوان قسم التواصل."
+        },
+        {
+          "name": "badges",
+          "type": "string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<AwaitedReactNode>",
+          "default": null,
+          "required": false,
+          "description": "App store badges: pass links with their images.",
+          "descriptionAr": "شارات المتاجر: مرّر الروابط مع صورها."
+        },
+        {
+          "name": "badgesTitle",
+          "type": "string",
+          "default": null,
+          "required": false,
+          "description": "The heading of the app badges block.",
+          "descriptionAr": "عنوان قسم شارات التطبيق."
+        },
+        {
+          "name": "legalLinks",
+          "type": "FooterLink[]",
+          "default": "[]",
+          "required": false,
+          "description": "The legal links row: privacy, terms, accessibility.",
+          "descriptionAr": "صف الروابط القانونية: الخصوصية والشروط وإمكانية الوصول."
+        },
+        {
+          "name": "legalLabel",
+          "type": "string",
+          "default": "\"Legal\"",
+          "required": false,
+          "description": "The name of the legal links list.",
+          "descriptionAr": "اسم قائمة الروابط القانونية."
+        },
+        {
+          "name": "copyright",
+          "type": "string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<AwaitedReactNode>",
+          "default": null,
+          "required": false,
+          "description": "The copyright line.",
+          "descriptionAr": "سطر حقوق النشر."
+        },
+        {
+          "name": "collapsible",
+          "type": "boolean",
+          "default": "true",
+          "required": false,
+          "description": "Folds the link columns into an Accordion on narrow screens. Default true.",
+          "descriptionAr": "يطوي أعمدة الروابط في أكورديون على الشاشات الضيقة. الافتراضي `true`."
+        },
+        {
+          "name": "fullWidth",
+          "type": "boolean",
+          "default": "false",
+          "required": false,
+          "description": "Spans the whole width. Default: centred, 1280px at most.",
+          "descriptionAr": "يمتد بكامل العرض. الافتراضي: في المنتصف بعرض أقصى 1280px."
+        },
+        {
+          "name": "externalLabel",
+          "type": "string",
+          "default": "\"(opens in a new tab)\"",
+          "required": false,
+          "description": "Screen-reader text added to external links.",
+          "descriptionAr": "نص لقارئات الشاشة يُضاف إلى الروابط الخارجية."
+        }
+      ]
+    }
+  ],
+  "header": [
+    {
+      "name": "Header",
+      "description": "The site header (DGA: Nav Header): a logo, the main navigation with sub-menus, and actions, search, a language switcher and a user area. A skip link comes first in the tab order. Left and Right (swapped on Arabic pages), Home and End move between the items; Enter, Space or Down opens a sub-menu, which is a DGA Menu. Below the `lg` width the navigation moves into a Drawer. The page the person is on has `aria-current=\"page\"`.",
+      "descriptionAr": "ترويسة الموقع (DGA: Nav Header): شعار، وقائمة التنقل الرئيسية مع قوائم فرعية، وإجراءات وبحث ومبدّل لغة ومنطقة مستخدم. رابط التخطي أول ما يصله التركيز. مفتاحا اليمين واليسار (يتبادلان في الصفحات العربية) وHome وEnd ينقلان بين العناصر؛ وEnter أو Space أو السهم لأسفل يفتح القائمة الفرعية، وهي Menu من DGA. تحت عرض `lg` تنتقل القائمة إلى Drawer. للصفحة الحالية `aria-current=\"page\"`.",
+      "inherits": {
+        "name": "Menu",
+        "url": "https://base-ui.com/react/components/menu"
+      },
+      "props": [
+        {
+          "name": "linkStyle",
+          "type": "\"icon\" | \"boxed-icon\" | \"text\"",
+          "default": "\"text\"",
+          "required": false,
+          "description": "How sub-menu links look: text only, with a simple icon, or with an icon in a box.",
+          "descriptionAr": "شكل روابط القائمة الفرعية: نص فقط، أو مع أيقونة بسيطة، أو مع أيقونة داخل مربع."
+        },
+        {
+          "name": "top",
+          "type": "string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<AwaitedReactNode>",
+          "default": null,
+          "required": false,
+          "description": "A strip above the bar: put a Second Nav here.",
+          "descriptionAr": "شريط فوق الترويسة: ضع هنا Second Nav."
+        },
+        {
+          "name": "submenuTone",
+          "type": "\"default\" | \"green\"",
+          "default": "\"default\"",
+          "required": false,
+          "description": "The sub-menu panel: white, or the dark green of the DGA flag.",
+          "descriptionAr": "لوحة القائمة الفرعية: بيضاء، أو بالأخضر الداكن لعلم DGA."
+        },
+        {
+          "name": "logo",
+          "type": "string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<AwaitedReactNode>",
+          "default": null,
+          "required": false,
+          "description": "The logo, usually a link to the home page. Pass your own `img` or SVG.",
+          "descriptionAr": "الشعار، وهو عادةً رابط إلى الصفحة الرئيسية. مرّر `img` أو SVG خاصًّا بك."
+        },
+        {
+          "name": "items",
+          "type": "HeaderNavItem[]",
+          "default": "[]",
+          "required": false,
+          "description": "The main navigation.",
+          "descriptionAr": "قائمة التنقل الرئيسية."
+        },
+        {
+          "name": "actions",
+          "type": "HeaderActionItem[]",
+          "default": "[]",
+          "required": false,
+          "description": "Actions at the end of the bar.",
+          "descriptionAr": "إجراءات في نهاية الشريط."
+        },
+        {
+          "name": "search",
+          "type": "string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<AwaitedReactNode>",
+          "default": null,
+          "required": false,
+          "description": "A search field or a button that opens search. Shown in the bar from `lg`, and at the top of the drawer below it.",
+          "descriptionAr": "حقل بحث أو زر يفتح البحث. يظهر في الشريط من `lg`، وفي أعلى الدرج تحته."
+        },
+        {
+          "name": "language",
+          "type": "string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<AwaitedReactNode>",
+          "default": null,
+          "required": false,
+          "description": "The language switcher (for example a Menu or a link).",
+          "descriptionAr": "مبدّل اللغة (مثل Menu أو رابط)."
+        },
+        {
+          "name": "user",
+          "type": "string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<AwaitedReactNode>",
+          "default": null,
+          "required": false,
+          "description": "The user area: a sign-in button or an account menu.",
+          "descriptionAr": "منطقة المستخدم: زر تسجيل الدخول أو قائمة الحساب."
+        },
+        {
+          "name": "fullWidth",
+          "type": "boolean",
+          "default": "false",
+          "required": false,
+          "description": "Spans the whole width. Default: centred, 1280px at most.",
+          "descriptionAr": "يمتد بكامل العرض. الافتراضي: في المنتصف بعرض أقصى 1280px."
+        },
+        {
+          "name": "skipHref",
+          "type": "string",
+          "default": "\"#main-content\"",
+          "required": false,
+          "description": "Where the skip link goes. Default `#main-content`. Give your main element that id.",
+          "descriptionAr": "وجهة رابط التخطي. الافتراضي `#main-content`. أعطِ العنصر `main` هذا المعرّف."
+        },
+        {
+          "name": "skipLabel",
+          "type": "string",
+          "default": "\"Skip to main content\"",
+          "required": false,
+          "description": "Text of the skip link. Translate it on Arabic pages.",
+          "descriptionAr": "نص رابط التخطي. ترجمه في الصفحات العربية."
+        },
+        {
+          "name": "navLabel",
+          "type": "string",
+          "default": "\"Main\"",
+          "required": false,
+          "description": "The name of the main navigation. Translate it on Arabic pages.",
+          "descriptionAr": "اسم قائمة التنقل الرئيسية. ترجمه في الصفحات العربية."
+        },
+        {
+          "name": "menuLabel",
+          "type": "string",
+          "default": "\"Menu\"",
+          "required": false,
+          "description": "The name of the button that opens the menu on small screens.",
+          "descriptionAr": "اسم الزر الذي يفتح القائمة على الشاشات الصغيرة."
+        },
+        {
+          "name": "drawerTitle",
+          "type": "string",
+          "default": "\"Menu\"",
+          "required": false,
+          "description": "The title of the drawer.",
+          "descriptionAr": "عنوان الدرج."
+        },
+        {
+          "name": "drawerDescription",
+          "type": "string",
+          "default": null,
+          "required": false,
+          "description": "A line under the drawer title for screen readers.",
+          "descriptionAr": "سطر تحت عنوان الدرج لقارئات الشاشة."
+        },
+        {
+          "name": "closeLabel",
+          "type": "string",
+          "default": "\"Close\"",
+          "required": false,
+          "description": "The name of the drawer's close button.",
+          "descriptionAr": "اسم زر إغلاق الدرج."
+        },
+        {
+          "name": "defaultMenuOpen",
+          "type": "boolean",
+          "default": "false",
+          "required": false,
+          "description": "Opens the drawer on first render. For showing it in documentation.",
+          "descriptionAr": "يفتح الدرج عند أول عرض. لعرضه في التوثيق."
+        }
+      ]
+    },
+    {
+      "name": "HeaderAction",
+      "description": "One action in the header bar (DGA: Header Action): an icon and a label, inline or with the icon above. It renders a link when it has an `href`, a button otherwise. Below the `lg` width the label is hidden and stays as the accessible name.",
+      "descriptionAr": "إجراء واحد في شريط الترويسة (DGA: `Header Action`): أيقونة ونص، في سطر واحد أو بالأيقونة فوق النص. يصير رابطًا إن كان له `href` وإلا زرًّا. تحت عرض `lg` يُخفى النص ويبقى اسمًا للوصول.",
+      "inherits": {
+        "name": "Menu",
+        "url": "https://base-ui.com/react/components/menu"
+      },
+      "props": [
+        {
+          "name": "icon",
+          "type": "IconSvgElement",
+          "default": null,
+          "required": false,
+          "description": "",
+          "descriptionAr": ""
+        },
+        {
+          "name": "label",
+          "type": "string",
+          "default": null,
+          "required": true,
+          "description": "",
+          "descriptionAr": ""
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "default": null,
+          "required": false,
+          "description": "",
+          "descriptionAr": ""
+        },
+        {
+          "name": "selected",
+          "type": "boolean",
+          "default": null,
+          "required": false,
+          "description": "",
+          "descriptionAr": ""
+        },
+        {
+          "name": "iconOnly",
+          "type": "boolean",
+          "default": null,
+          "required": false,
+          "description": "Hides the label (it stays as the accessible name).",
+          "descriptionAr": "يخفي النص (ويبقى اسمًا للوصول)."
+        },
+        {
+          "name": "iconPosition",
+          "type": "\"inline\" | \"top\"",
+          "default": "\"inline\"",
+          "required": false,
+          "description": "Puts the icon above the label.",
+          "descriptionAr": "يضع الأيقونة فوق النص."
+        },
+        {
+          "name": "children",
+          "type": "string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<AwaitedReactNode>",
+          "default": null,
+          "required": false,
+          "description": "",
+          "descriptionAr": ""
         }
       ]
     }
@@ -3041,6 +4095,56 @@
           "required": false,
           "description": "Hint shown while empty.",
           "descriptionAr": "نص تلميحي يظهر والحقل فارغ."
+        }
+      ]
+    }
+  ],
+  "second-nav": [
+    {
+      "name": "SecondNav",
+      "description": "The secondary strip above the header (DGA: Second Nav Header): contextual items such as the date, the weather or sibling pages, then actions, 40px high, gray or primary. Entries with an `href` are links, with `onClick` buttons, and the rest plain text. On narrow screens it scrolls sideways instead of wrapping. Name it with `aria-label`.",
+      "descriptionAr": "الشريط الثانوي فوق الترويسة (DGA: Second Nav Header): عناصر سياقية مثل التاريخ أو الطقس أو الصفحات الشقيقة، ثم الإجراءات، بارتفاع 40px، رمادي أو أساسي. الإدخال الذي له `href` رابط، والذي له `onClick` زر، وغيره نص عادي. على الشاشات الضيقة يتمرر أفقيًا بدل الالتفاف. سمِّه بـ `aria-label`.",
+      "inherits": null,
+      "props": [
+        {
+          "name": "tone",
+          "type": "\"gray\" | \"primary\"",
+          "default": "\"gray\"",
+          "required": false,
+          "description": "",
+          "descriptionAr": ""
+        },
+        {
+          "name": "items",
+          "type": "SecondNavEntry[]",
+          "default": "[]",
+          "required": false,
+          "description": "Contextual items at the start: a date, the weather, a location, or links to sibling pages.",
+          "descriptionAr": "عناصر سياقية في البداية: تاريخ أو طقس أو موقع، أو روابط إلى صفحات شقيقة."
+        },
+        {
+          "name": "actions",
+          "type": "SecondNavEntry[]",
+          "default": "[]",
+          "required": false,
+          "description": "Actions at the end: text size, contrast, a help link.",
+          "descriptionAr": "إجراءات في النهاية: حجم الخط أو التباين أو رابط مساعدة."
+        },
+        {
+          "name": "fullWidth",
+          "type": "boolean",
+          "default": "false",
+          "required": false,
+          "description": "Spans the whole width. Default: centred, 1280px at most.",
+          "descriptionAr": "يمتد بكامل العرض. الافتراضي: في المنتصف بعرض أقصى 1280px."
+        },
+        {
+          "name": "divider",
+          "type": "boolean",
+          "default": "true",
+          "required": false,
+          "description": "Shows the divider between items and actions. Default true.",
+          "descriptionAr": "يعرض الفاصل بين العناصر والإجراءات. الافتراضي `true`."
         }
       ]
     }

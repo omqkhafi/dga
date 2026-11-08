@@ -59,6 +59,7 @@ export const ar: Dictionary = {
   "search.crumb.forms": "النماذج",
   "search.crumb.interactive": "التفاعلية",
   "search.crumb.navigation": "التنقل وعرض البيانات",
+  "search.crumb.composite": "المكوّنات المركّبة",
   "search.crumb.foundations": "الأساسيات",
   "search.crumb.docs": "التوثيق",
   "search.crumb.ai": "موارد الذكاء الاصطناعي",

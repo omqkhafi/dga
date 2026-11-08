@@ -1,0 +1,98 @@
+---
+title: Filtration
+description: "The filter pattern (DGA: Filtration): a panel of checkbox, radio, select, input and range groups, applied filters as removable tags, a clear-all action and a result count. A Drawer on small screens."
+---
+
+<Preview name="filtration-basic" title="Filtration" minHeight={560} />
+
+## Installation
+
+<ComponentInstall name="filtration" />
+
+It installs the [Button](/docs/components/button), [Checkbox](/docs/components/checkbox), [Drawer](/docs/components/drawer), [Input](/docs/components/input), [Radio](/docs/components/radio), [Select](/docs/components/select) and [Tag](/docs/components/tag) with it.
+
+## Usage
+
+```tsx title="page.tsx"
+import { useState } from "react";
+import { Filtration, type FiltrationValue } from "@/components/dga/filtration";
+
+export function Services({ services }: { services: Service[] }) {
+  const [value, setValue] = useState<FiltrationValue>({});
+  const shown = applyFilters(services, value);
+  return (
+    <Filtration
+      groups={[
+        {
+          id: "city",
+          type: "checkbox",
+          label: "City",
+          options: [
+            { value: "riyadh", label: "Riyadh" },
+            { value: "jeddah", label: "Jeddah" },
+          ],
+        },
+        { id: "q", type: "input", label: "Keyword" },
+      ]}
+      value={value}
+      onValueChange={setValue}
+      resultCount={shown.length}
+    >
+      <ServiceList services={shown} />
+    </Filtration>
+  );
+}
+```
+
+`Filtration` only holds the filters: you filter your own data with `value`. It is controlled with `value` and `onValueChange`, or uncontrolled with `defaultValue`. The value has one entry per group `id`: a list of values for checkboxes, one value for a radio group or a select, text for an input and `[min, max]` for a range. Empty entries are left out.
+
+Every visible text is a prop: `title`, `clearAllLabel`, `appliedLabel`, `removeLabel`, `triggerLabel`, `applyLabel`, `resultLabel` and `closeLabel`, and the labels of the groups and options.
+
+## Anatomy
+
+- **Panel**: 288px beside the results from the `lg` width. Groups of `checkbox`, `radio`, `select`, `input` and `range`, 24px apart.
+- **Applied filters**: a removable [Tag](/docs/components/tag) for each chosen option, text or range, with a clear-all button.
+- **Result count** (`resultCount`): above the results, announced when it changes.
+- **Small screens**: below `lg` a button with the number of filters opens the same panel in a [Drawer](/docs/components/drawer) from `drawerSide` (`start` or `end`), with a button that shows the results.
+
+## Examples
+
+### Uncontrolled, with starting filters
+
+<Preview compact name="filtration-uncontrolled" title="Uncontrolled" minHeight={420} />
+
+Switch the viewport to mobile to see the button and the Drawer.
+
+## RTL
+
+The panel is on the right, the Drawer opens from the right with `drawerSide="start"`, and the Tags run from the right.
+
+<DirectionCompare name="filtration-basic" title="Filtration" minHeight={560} />
+
+## Accessibility
+
+| Key | Action |
+| --- | --- |
+| <kbd>Tab</kbd> | Moves through the groups, the tags and the buttons. |
+| <kbd>Space</kbd> | Toggles a checkbox or chooses a radio. |
+| <kbd>Up</kbd> / <kbd>Down</kbd> | Moves inside a radio group or the select list. |
+| <kbd>Enter</kbd> / <kbd>Space</kbd> | On a tag, its remove button removes the filter. |
+
+- The panel is an `aside` named by `title`. Checkbox, radio and range groups are `fieldset` elements with a `legend`; the select and the input have a label.
+- Each remove button is named, for example "Remove Riyadh" (`removeLabel`). The result count is a status region, so a screen reader hears the new count.
+- The Drawer traps focus and returns it to the button. Text is 4.5:1 and every control keeps its own contrast.
+
+## API Reference
+
+<ApiReference component="filtration" />
+
+## Deviations from DGA
+
+- Figma has the trigger button only (Open, Result, Show Results and the Left, Center and Right placement). The panel, the Tags and the Drawer are composed here from the DGA components.
+- Placement is the Drawer side (`start` or `end`); there is no centred dialog.
+
+<ComponentDeviations component="filtration" />
+
+## Contrast
+
+<ComponentContrast component="filtration" />

@@ -3,7 +3,7 @@
 //   1. `shadcn init <url>/r/dga.json`          the registry:base item (recommended path)
 //   2. `shadcn init <url>/r/dga-style.json`    the style item on its own (Phase 1 path)
 //   3. `shadcn add  <url>/r/dga-tokens.json`   tokens only, no components
-//   5. a project with stock shadcn button, input and dialog in components/ui: @dga items land in
+//   6. a project with stock shadcn button, input, dialog, carousel and calendar in components/ui: @dga items land in
 //      components/dga and leave components/ui byte-identical
 //   4. `shadcn init <url>/r/dga.json`, then `shadcn add @dga/number-input`: one form control on
 //      its own, to check that its registry dependencies (input, field, utils) are pulled in
@@ -75,6 +75,10 @@ const NAVIGATION_ITEMS = [
   "progress",
   "stepper",
 ];
+
+/** The Phase 6 composite items. Stock shadcn has its own calendar and carousel, so the collision
+ *  fixture installs both side by side. */
+const COMPOSITE_ITEMS = ["header", "second-nav", "footer", "date-picker", "carousel", "filtration"];
 
 const work = mkdtempSync(join(tmpdir(), "dga-install-"));
 const registryDir = join(work, "serve");
@@ -222,6 +226,9 @@ try {
       }
       for (const item of NAVIGATION_ITEMS) {
         check(components.includes(item), `${label}: the registry has the navigation item ${item}`);
+      }
+      for (const item of COMPOSITE_ITEMS) {
+        check(components.includes(item), `${label}: the registry has the composite item ${item}`);
       }
       if (add.exitCode !== 0) console.error(add.stderr.toString() || add.stdout.toString());
       for (const c of components) {
@@ -372,6 +379,86 @@ export default function Page() {
     await build(label, app);
   }
 
+  // 4d. composite items on their own: the @dga items each one uses come with it, and the Date
+  //     Picker adds no date library
+  {
+    const label = "dga-composite";
+    const app = await fresh(label);
+    await $`bunx ${shadcn} init ${url}/r/dga.json --yes --no-monorepo < /dev/null`.cwd(app).quiet();
+    const add =
+      await $`bunx ${shadcn} add @dga/header @dga/filtration @dga/date-picker @dga/footer --yes < /dev/null`
+        .cwd(app)
+        .nothrow()
+        .quiet();
+    check(
+      add.exitCode === 0,
+      `${label}: shadcn add @dga/header @dga/filtration @dga/date-picker @dga/footer`,
+    );
+    if (add.exitCode !== 0) console.error(add.stderr.toString() || add.stdout.toString());
+    const r = reader(app);
+    for (const file of [
+      "header",
+      "menu",
+      "drawer",
+      "filtration",
+      "checkbox",
+      "radio",
+      "select",
+      "input",
+      "tag",
+      "button",
+      "date-picker",
+      "content-switcher",
+      "footer",
+      "accordion",
+    ]) {
+      check(
+        existsSync(join(app, `src/components/dga/${file}.tsx`)),
+        `${label}: ${file}.tsx was installed with the composite items`,
+      );
+    }
+    check(
+      existsSync(join(app, "src/lib/dga/direction.tsx")),
+      `${label}: lib/dga/direction.tsx was installed`,
+    );
+    const pkg = r.json<Pkg>("package.json");
+    for (const lib of ["date-fns", "dayjs", "moment", "react-day-picker", "luxon"]) {
+      check(!(lib in pkg.dependencies), `${label}: no date library (${lib}) installed`);
+    }
+    for (const n of ["header", "filtration", "date-picker", "footer"]) {
+      const source = r.text(`src/components/dga/${n}.tsx`);
+      check(
+        !/\bcn-[a-z]/.test(source.replace(/data-slot=|"cn"/g, "")),
+        `${label}: ${n} cn-* inlined`,
+      );
+      check(!source.includes("components/ui"), `${label}: ${n}.tsx never imports components/ui`);
+    }
+    writeFileSync(
+      join(app, "src/app/page.tsx"),
+      `"use client";
+import { DatePicker } from "@/components/dga/date-picker";
+import { Filtration } from "@/components/dga/filtration";
+import { Footer } from "@/components/dga/footer";
+import { Header } from "@/components/dga/header";
+
+export default function Page() {
+  return (
+    <>
+      <Header items={[{ label: "Home", href: "/", current: true }]} />
+      <DatePicker mode="range" calendars={["gregorian", "hijri"]} />
+      <Filtration groups={[{ id: "q", type: "input", label: "Keyword" }]} resultCount={0} />
+      <Footer columns={[{ title: "Services", links: [{ label: "Pay", href: "/pay" }] }]} />
+    </>
+  );
+}
+`,
+    );
+    const tsc = await $`bunx tsc --noEmit -p .`.cwd(app).nothrow().quiet();
+    check(tsc.exitCode === 0, `${label}: the project typechecks`);
+    if (tsc.exitCode !== 0) console.error(tsc.stdout.toString());
+    await build(label, app);
+  }
+
   // 5. a project that already has stock shadcn button, input and dialog in components/ui:
   //    installing @dga items must not touch them, and must not import them.
   {
@@ -379,13 +466,13 @@ export default function Page() {
     const app = await fresh(label);
     await $`bunx ${shadcn} init --defaults --yes --no-monorepo < /dev/null`.cwd(app).quiet();
     const stock =
-      await $`bunx ${shadcn} add button input dialog table card pagination breadcrumb progress --yes < /dev/null`
+      await $`bunx ${shadcn} add button input dialog table card pagination breadcrumb progress carousel calendar --yes < /dev/null`
         .cwd(app)
         .nothrow()
         .quiet();
     check(
       stock.exitCode === 0,
-      `${label}: stock shadcn add button input dialog table card pagination breadcrumb progress`,
+      `${label}: stock shadcn add button input dialog table card pagination breadcrumb progress carousel calendar`,
     );
     const r = reader(app);
     const stockFiles = [
@@ -397,6 +484,8 @@ export default function Page() {
       "pagination",
       "breadcrumb",
       "progress",
+      "carousel",
+      "calendar",
     ].map((n) => `src/components/ui/${n}.tsx`);
     const before = stockFiles.map((f) => r.text(f));
     // Register @dga by hand, as a user with an existing shadcn project would.
@@ -406,13 +495,13 @@ export default function Page() {
     // --overwrite answers the one prompt left: lib/utils.ts (both export cn). With the old
     // components/ui path it would also have replaced the stock files.
     const add =
-      await $`bunx ${shadcn} add @dga/button @dga/field @dga/dialog @dga/table @dga/card @dga/pagination @dga/breadcrumb @dga/progress --yes --overwrite < /dev/null`
+      await $`bunx ${shadcn} add @dga/button @dga/field @dga/dialog @dga/table @dga/card @dga/pagination @dga/breadcrumb @dga/progress @dga/carousel @dga/date-picker --yes --overwrite < /dev/null`
         .cwd(app)
         .nothrow()
         .quiet();
     check(
       add.exitCode === 0,
-      `${label}: shadcn add @dga/button @dga/field @dga/dialog @dga/table @dga/card @dga/pagination @dga/breadcrumb @dga/progress`,
+      `${label}: shadcn add @dga/button @dga/field @dga/dialog @dga/table @dga/card @dga/pagination @dga/breadcrumb @dga/progress @dga/carousel @dga/date-picker`,
     );
     if (add.exitCode !== 0) console.error(add.stderr.toString() || add.stdout.toString());
     stockFiles.forEach((f, i) => {
@@ -429,6 +518,9 @@ export default function Page() {
       "breadcrumb",
       "progress",
       "checkbox",
+      "carousel",
+      "date-picker",
+      "content-switcher",
     ];
     for (const n of dgaFiles) {
       check(

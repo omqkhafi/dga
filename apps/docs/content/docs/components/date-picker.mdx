@@ -1,0 +1,107 @@
+---
+title: Date Picker
+description: "Choose a date or a range (DGA: Date Picker). Gregorian and Hijri (Umm al-Qura) calendars, min, max and disabled dates, an input with a popup calendar, a standalone calendar, and full keyboard support."
+---
+
+<Preview name="date-picker-basic" title="Date Picker" minHeight={200} />
+
+## Installation
+
+<ComponentInstall name="date-picker" />
+
+It installs the [Button](/docs/components/button), the [Content Switcher](/docs/components/content-switcher) and the [Input](/docs/components/input) with it. There is no date library: the Hijri calendar is computed with `Intl` (`islamic-umalqura`), in years 1300 to 1600 AH.
+
+## Usage
+
+```tsx title="page.tsx"
+import { useState } from "react";
+import { DatePicker } from "@/components/dga/date-picker";
+import { Field, FieldDescription, FieldLabel } from "@/components/dga/field";
+
+export function AppointmentDate() {
+  const [date, setDate] = useState<string | null>(null);
+  return (
+    <Field>
+      <FieldLabel>Appointment date</FieldLabel>
+      <DatePicker value={date} onValueChange={setDate} min="2026-11-09" />
+      <FieldDescription>Type a date or choose it from the calendar.</FieldDescription>
+    </Field>
+  );
+}
+```
+
+A date is always a Gregorian ISO string such as `"2026-11-08"`, whichever calendar is shown, so a value does not depend on the time zone. Use `Calendar` on its own for an always-visible calendar, and `mode="range"` for a start and an end (`{ start, end }`).
+
+Pass every visible text in `labels` and `placeholder`; on Arabic pages also pass `numerals="arab"` for Arabic-Indic digits. Month and day names follow the page direction (Arabic when it is right-to-left) or `locale`.
+
+## Anatomy
+
+- **Field**: an Input with the calendar button at its end. Type `YYYY-MM-DD` in the shown calendar (any digits work); it is checked when you leave the field or press Enter. A range has a start and an end field.
+- **Popup**: opens with the button, closes with <kbd>Esc</kbd> and returns focus to the button. It is the field fill with `radius-md` and a large shadow.
+- **Calendar switch**: Gregorian or Hijri (`calendars` limits it to one).
+- **Header**: previous month, the month and year, next month. `months={2}` shows two months side by side.
+- **Date cell**: 56px with a 48px circle. Today has a ring, the chosen day the brand fill, and the days between the ends of a range a pale band. `secondaryDate` shows the day of the other calendar.
+- **Quick options** (`quickOptions`) and **Cancel and Apply** (`confirm`).
+
+## Examples
+
+### Range
+
+<Preview compact name="date-picker-range" title="Range" minHeight={200} />
+
+### Error state in a Field
+
+<Preview compact name="date-picker-error" title="Error" minHeight={200} />
+
+### Limits, quick options and a confirm step
+
+`min`, `max` and `isDateDisabled` mark dates as unavailable. They stay focusable so the arrow keys do not get stuck, but they cannot be chosen.
+
+<Preview compact name="date-picker-options" title="Limits and options" minHeight={200} />
+
+### Standalone calendar
+
+<Preview compact name="calendar-standalone" title="Calendar" minHeight={480} />
+
+### Range in two months, in the Hijri calendar
+
+<Preview compact name="calendar-range" title="Dual-month range" minHeight={480} />
+
+## RTL
+
+The grid starts with the first day of the week on the right, the month arrows mirror, and Left and Right swap. Month and day names are in Arabic.
+
+<DirectionCompare name="calendar-standalone" title="Calendar" minHeight={480} />
+
+## Accessibility
+
+| Key | Action |
+| --- | --- |
+| <kbd>Left</kbd> / <kbd>Right</kbd> | Previous or next day. They swap on Arabic pages. |
+| <kbd>Up</kbd> / <kbd>Down</kbd> | Previous or next week. |
+| <kbd>Home</kbd> / <kbd>End</kbd> | First or last day of the week. |
+| <kbd>Page Up</kbd> / <kbd>Page Down</kbd> | Previous or next month. |
+| <kbd>Shift</kbd> + <kbd>Page Up</kbd> / <kbd>Page Down</kbd> | Previous or next year. |
+| <kbd>Enter</kbd> / <kbd>Space</kbd> | Chooses the focused day. |
+| <kbd>Esc</kbd> | Closes the popup. |
+
+- Each month is a `grid` named by its heading, with column headers, `aria-selected` on the chosen days and `aria-current="date"` on today. Every day is a button named by its full date, for example "Sunday, 8 November 2026" in the shown calendar.
+- One day is in the tab order and it moves with the arrow keys. A disabled day has `aria-disabled` and stays reachable.
+- The month heading is a live region, so a screen reader hears the new month.
+- Text is 4.5:1, rings and focus are 3:1, in light and dark, on every cell state.
+
+## API Reference
+
+<ApiReference component="date-picker" />
+
+## Deviations from DGA
+
+- Figma draws a Gregorian calendar only. The Hijri calendar and the switch are added.
+- Figma's "year dropdown" is not built: Shift with Page Up and Page Down changes the year.
+- The days of the next and previous month can be chosen in one month and are left empty in two.
+
+<ComponentDeviations component="date-picker" />
+
+## Contrast
+
+<ComponentContrast component="date-picker" />

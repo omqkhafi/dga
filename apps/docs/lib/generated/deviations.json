@@ -686,6 +686,15 @@
   },
   {
     "area": "Contrast",
+    "item": "--datecell-background-600 (light)",
+    "original": "--colors-primary-sa-flag-600-primary",
+    "ours": "--colors-primary-sa-flag-800",
+    "reason": "Today's number in the DGA green 600 is 3.84:1 on the hovered cell and 3.25:1 on the pressed one (needs 4.5:1). Green 800 is 4.5:1 or better on the cell in every state.",
+    "status": "fixed",
+    "component": "date-picker"
+  },
+  {
+    "area": "Contrast",
     "item": "--field-border-default (light)",
     "original": "--colors-neutral-400",
     "ours": "--colors-neutral-500",
@@ -2601,6 +2610,22 @@
   },
   {
     "area": "Dark theme",
+    "item": "--datecell-background-600 (dark)",
+    "original": "--colors-primary-sa-flag-600-primary",
+    "ours": "--colors-primary-sa-flag-300",
+    "reason": "Figma Dark keeps today's ring and number at brand 600, 3.68:1 on the dark popup. Brand 300 is 4.5:1 or better on the popup and the hovered and pressed cells.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
+    "item": "--datecell-background-100 (dark)",
+    "original": "--colors-primary-sa-flag-300",
+    "ours": "--colors-primary-sa-flag-950",
+    "reason": "Figma Dark keeps the range band and the mid-range cells at the light brand 100 (f1f9f6-ish): the day number is 1.53:1 on it. Brand 950 holds the light day number above 4.5:1 and the chosen days above 3:1.",
+    "status": "fixed"
+  },
+  {
+    "area": "Dark theme",
     "item": "--background-card (dark)",
     "original": "--colors-neutral-800",
     "ours": "--colors-neutral-dark-900",
@@ -4022,5 +4047,148 @@
     "reason": "Listed here so nobody looks for it in Figma. It adds no colour: every token is one the Table already uses.",
     "status": "fixed",
     "component": "data-table"
+  },
+  {
+    "area": "Naming",
+    "item": "Figma variant names: Mideum, Nex/Prev, 2ndry Date, quarterary",
+    "original": "Carousel Controls Size \"Mideum\"; Date cell property \"Nex/Prev\" and \"2ndry Date\"; the token text-quarterary.",
+    "ours": "md, outside (a day in the next or previous month), secondaryDate. text-quarterary is not used.",
+    "reason": "Typos and abbreviations in Figma names. Prop values in code are spelled out.",
+    "status": "fixed"
+  },
+  {
+    "area": "Components",
+    "item": "Header: skip link, current page and keyboard",
+    "original": "Nav Header, Header Menu Item and Header Action are drawn as states only. There is no skip link, no current-page markup, no keyboard model for the sub-menus, and the CSS (.header-nav) sets only the height and padding.",
+    "ours": "A skip link is the first tab stop. The page the person is on is aria-current=\"page\", and a parent whose child is current takes the selected fill. Left and Right (swapped in RTL), Home and End move between items; the sub-menu is the DGA Menu (Enter, Space or Down opens it, Escape closes it and returns focus).",
+    "reason": "Bypass blocks (WCAG 2.4.1), current-page information (1.3.1, 2.4.8) and keyboard operation (2.1.1) are not met by a states-only drawing.",
+    "status": "fixed",
+    "component": "header"
+  },
+  {
+    "area": "Breakpoints",
+    "item": "Header: breakpoint for the Drawer",
+    "original": "Nav Header has three variants: under 600, 600 to 960 and over 960.",
+    "ours": "The navigation sits in the bar from the lg width (1024px) and moves into the Drawer below it. The sm, md and lg widths are the same as every other Platform Code component.",
+    "reason": "One set of breakpoints for all components. At 960px the main navigation with sub-menus and the actions do not fit one row of the 1280px bar without wrapping.",
+    "status": "fixed",
+    "component": "header"
+  },
+  {
+    "area": "Components",
+    "item": "Header: no official site strip, Header Menu and Nav Drawer composed",
+    "original": "The spec has no \"official site\" strip. The Second Nav Header is the strip above the primary navigation. Header Menu (a chevron button) and the Nav Drawer are separate components.",
+    "ours": "Header takes a `top` slot for a Second Nav and renders no strip of its own. The chevron is part of the menu item and the sub-menu is the DGA Menu. On narrow screens the navigation is the DGA Drawer with expandable parents; Level 2 links are indented.",
+    "reason": "Reusing Menu and Drawer keeps the focus, dismissal and mirroring behaviour in one place instead of copying it into the header.",
+    "status": "fixed",
+    "component": "header"
+  },
+  {
+    "area": "Contrast",
+    "item": "Header, Nav Drawer: selected item text is a background token",
+    "original": "Nav Drawer Item Selected uses fg:background-primary (the brand fill) for the label on button-background-neutral-selected: 3.84:1.",
+    "ours": "The selected item label uses link-primary-pressed (brand 800), 4.5:1 or better, and the item is Semibold.",
+    "reason": "Text needs 4.5:1 (WCAG 1.4.3). A fill token is also the wrong token for text.",
+    "status": "fixed",
+    "component": "header"
+  },
+  {
+    "area": "Components",
+    "item": "Second Nav: contextual strip, links and scrolling",
+    "original": "Second Nav Header is a 40px strip with fixed Show Item 2, 3 and 4 and Show Action 2, 3 and 4 switches, a divider and Gray or Primary. It is described as navigation, but the items are text with an icon (a date, the weather).",
+    "ours": "Items and actions are arrays. An entry is plain text, a link (`href`), or a button (`onClick`), and `current` sets aria-current=\"page\" so it can also be a row of sibling-page links. The strip scrolls sideways on narrow screens instead of wrapping or clipping.",
+    "reason": "A fixed number of switches cannot hold real content, and a 40px strip that wraps would grow. Links need a current state (WCAG 2.4.8).",
+    "status": "fixed",
+    "component": "second-nav"
+  },
+  {
+    "area": "Components",
+    "item": "Footer: hard-coded colours, 72px heading and no mobile form",
+    "original": ".footer sets --colors-gray-neutral-100, --colors-brand-900 and hsla(var(--colors-alpha-white)/30%) directly, and .footer-title-description h3 is 72px / 90px with a 24px paragraph at every width. Figma has a <600 variant that only changes the weight to Semibold.",
+    "ours": "Semantic tokens (background-neutral-100, background-sa-flag, alpha-white-30), no 72px heading (the description is Text md and you place any hero text yourself), and below the sm width the link columns fold into the DGA Accordion, one section per column.",
+    "reason": "Hard-coded values skip the dark theme. A 72px heading overflows a 375px screen. Four link columns at 375px are unreadable.",
+    "status": "fixed",
+    "component": "footer"
+  },
+  {
+    "area": "Components",
+    "item": "Footer: link semantics and on-colour states",
+    "original": "The footer has no states for its links, social icons or accordion, and the green variant has no hover, pressed or focus colour.",
+    "ours": "Links underline on hover and press; social icons have the neutral hover and pressed fills (the transparent on-colour fills on green); focus is a 2px outline (black on gray, white on green). External links get an icon and a screen-reader note.",
+    "reason": "Every interactive element needs a visible focus (WCAG 2.4.7) and a hover state to match the other links.",
+    "status": "fixed",
+    "component": "footer"
+  },
+  {
+    "area": "Components",
+    "item": "Date Picker: two sets of hover rules, opacity for disabled",
+    "original": "The CSS defines .date-cell:hover twice, first with gray-neutral-200 and then with datecell-today-background-hovered, and the today and chosen fills with both brand-600 and text-success. Disabled is opacity .5 on the class and .3 on the attribute.",
+    "ours": "One set: the datecell tokens from Figma for hover, pressed, chosen and range, text-default-disabled for a disabled day (a chosen disabled day keeps its fill). No opacity.",
+    "reason": "Opacity makes the contrast of a disabled or chosen day depend on what is behind it, and two conflicting rule sets give different colours depending on the order of the CSS.",
+    "status": "fixed",
+    "component": "date-picker"
+  },
+  {
+    "area": "Components",
+    "item": "Date Picker: RTL range band and fixed widths",
+    "original": "The range band is a 52x48 pseudo-element with a border-radius that [dir=rtl] rules swap by hand, and the inputs are 50px or 200px wide.",
+    "ours": "The band is the cell's own background, a hard-edged gradient that flips with the direction (to the right in LTR, to the left in RTL), and the cells shrink to fit seven columns in the viewport.",
+    "reason": "A fixed-width pseudo-element leaves gaps between cells when the cell size changes and needs a second rule per direction.",
+    "status": "fixed",
+    "component": "date-picker"
+  },
+  {
+    "area": "Components",
+    "item": "Date Picker: calendars, grid semantics and typing",
+    "original": "Figma draws a Gregorian calendar with a Secondary Date, a year dropdown and an Input field, and gives no behaviour. There is no Hijri calendar and no keyboard model.",
+    "ours": "A switch between Gregorian and Hijri (Umm al-Qura, from Intl; years 1300 to 1600 AH). Dates are ISO strings. The month is a role=grid with column headers, aria-selected, aria-current=\"date\" and a full date as the name of each day; one day is in the tab order, arrows, Page Up, Page Down, Home and End move, and Left and Right swap in RTL. Dates can be typed as YYYY-MM-DD (any digits) and are checked against min, max and disabled dates.",
+    "reason": "A date picker must be usable without a pointer (WCAG 2.1.1), and Saudi forms need both calendars.",
+    "status": "fixed",
+    "component": "date-picker"
+  },
+  {
+    "area": "Components",
+    "item": "Date Picker: days in the next and previous month",
+    "original": "Date cell has a Nex/Prev switch and a Null state.",
+    "ours": "In one month the days of the neighbouring months are shown in text-secondary-paragraph and can be chosen. In the dual-month view they are left empty, so no date appears twice.",
+    "reason": "Two months side by side would otherwise show the same date in both grids.",
+    "status": "fixed",
+    "component": "date-picker"
+  },
+  {
+    "area": "Components",
+    "item": "Carousel: autoplay, pause and reduced motion",
+    "original": "Carousel has three styles (Arrows, Dots, Dots Only) and no behaviour. Moving content is not addressed.",
+    "ours": "Autoplay is off by default. When it is on, a pause button is always shown, it stops while the pointer or focus is inside, and it does not start when the person prefers reduced motion. The live region is off while it plays and polite when it does not.",
+    "reason": "Moving content that starts by itself must be pausable (WCAG 2.2.2), and a live region that fires on every slide would make a screen reader unusable.",
+    "status": "fixed",
+    "component": "carousel"
+  },
+  {
+    "area": "Components",
+    "item": "Carousel: dots are 8 to 16px and distinguished by colour only",
+    "original": "Carousel Controls are 16, 12 or 8px squares in a Selected or not state with no colour given.",
+    "ours": "The dot is drawn 8, 12 or 16px, inside a 24px button. The chosen dot is filled and the others are rings, so it does not rely on colour.",
+    "reason": "A target should be 24px (WCAG 2.5.8) and state should not be shown by colour alone (1.4.1).",
+    "status": "fixed",
+    "component": "carousel"
+  },
+  {
+    "area": "Components",
+    "item": "Carousel: physical Left and Right",
+    "original": "Carousel Arrows have Direction Left and Right and an RTL variant for each.",
+    "ours": "Previous and next. The icon mirrors, the first slide is on the right in RTL, the track moves the other way, the arrow keys swap and a swipe is read by the page direction.",
+    "reason": "One component for both directions instead of mirrored copies; the slide order follows reading order.",
+    "status": "fixed",
+    "component": "carousel"
+  },
+  {
+    "area": "Components",
+    "item": "Filtration: the panel and the mobile form are designed here",
+    "original": "Filtration is a 123x40 trigger with Open, Result and Show Results flags and Placement Center, Right and Left. The internal parts (_Filtration list, _Multi Select Checkbox Filter, _Text Range) are not drawn.",
+    "ours": "A panel of checkbox, radio, select, input and range groups beside the results from lg, applied filters as removable Tags with clear all, a result count, and below lg the same panel in the DGA Drawer from a button. Placement is the drawer side (start or end), with no centred dialog.",
+    "reason": "The spec has the button only. The panel is composed from the DGA Checkbox, Radio, Select, Input, Tag and Drawer so it needs no new colour.",
+    "status": "fixed",
+    "component": "filtration"
   }
 ]

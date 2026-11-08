@@ -1893,7 +1893,7 @@
           "--datecell-today-background-pressed": "var(--colors-neutral-300)",
           "--datecell-today-background-focused": "var(--alpha-white-0)",
           "--datecell-background-300": "var(--colors-primary-sa-flag-300)",
-          "--datecell-background-600": "var(--colors-primary-sa-flag-600-primary)",
+          "--datecell-background-600": "var(--colors-primary-sa-flag-800)",
           "--datecell-background-100": "var(--colors-primary-sa-flag-100)",
           "--text-primary-sa-flag": "var(--colors-primary-sa-flag-800)",
           "--datecell-background-200": "var(--colors-primary-sa-flag-200)",
@@ -2438,7 +2438,7 @@
           "--datecell-today-background-pressed": "var(--colors-neutral-300)",
           "--datecell-today-background-focused": "var(--alpha-white-0)",
           "--datecell-background-300": "var(--colors-primary-sa-flag-300)",
-          "--datecell-background-600": "var(--colors-primary-sa-flag-600-primary)",
+          "--datecell-background-600": "var(--colors-primary-sa-flag-800)",
           "--datecell-background-100": "var(--colors-primary-sa-flag-100)",
           "--text-primary-sa-flag": "var(--colors-primary-sa-flag-800)",
           "--datecell-background-200": "var(--colors-primary-sa-flag-200)",
@@ -2926,8 +2926,8 @@
           "--datecell-today-background-pressed": "var(--colors-neutral-dark-600)",
           "--datecell-today-background-focused": "var(--alpha-white-0)",
           "--datecell-background-300": "var(--colors-primary-sa-flag-300)",
-          "--datecell-background-600": "var(--colors-primary-sa-flag-600-primary)",
-          "--datecell-background-100": "var(--colors-primary-sa-flag-300)",
+          "--datecell-background-600": "var(--colors-primary-sa-flag-300)",
+          "--datecell-background-100": "var(--colors-primary-sa-flag-950)",
           "--text-primary-sa-flag": "var(--colors-primary-sa-flag-100)",
           "--datecell-background-200": "var(--colors-primary-sa-flag-400)",
           "--background-card": "var(--colors-neutral-dark-900)",
@@ -4060,6 +4060,147 @@
           "path": "bases/base/ui/stepper.tsx",
           "type": "registry:ui",
           "target": "components/dga/stepper.tsx"
+        }
+      ]
+    },
+    {
+      "name": "header",
+      "type": "registry:ui",
+      "title": "Header",
+      "description": "DGA Nav Header: logo, main navigation with sub-menus on the DGA Menu, actions, search, language and user slots, a skip link and aria-current. Below lg the navigation moves into the DGA Drawer.",
+      "dependencies": [
+        "@base-ui/react",
+        "@hugeicons/react",
+        "@hugeicons/core-free-icons"
+      ],
+      "registryDependencies": [
+        "https://dga.omqkhafi.dev/r/utils.json",
+        "https://dga.omqkhafi.dev/r/direction.json",
+        "https://dga.omqkhafi.dev/r/menu.json",
+        "https://dga.omqkhafi.dev/r/drawer.json"
+      ],
+      "files": [
+        {
+          "path": "bases/base/ui/header.tsx",
+          "type": "registry:ui",
+          "target": "components/dga/header.tsx"
+        }
+      ]
+    },
+    {
+      "name": "footer",
+      "type": "registry:ui",
+      "title": "Footer",
+      "description": "DGA Footer: logos, description, social links, link columns that fold into the DGA Accordion on mobile, contact, app badges, and a legal and copyright row. Default or dark green.",
+      "dependencies": [
+        "@hugeicons/react",
+        "@hugeicons/core-free-icons",
+        "class-variance-authority"
+      ],
+      "registryDependencies": [
+        "https://dga.omqkhafi.dev/r/utils.json",
+        "https://dga.omqkhafi.dev/r/accordion.json"
+      ],
+      "files": [
+        {
+          "path": "bases/base/ui/footer.tsx",
+          "type": "registry:ui",
+          "target": "components/dga/footer.tsx"
+        }
+      ]
+    },
+    {
+      "name": "second-nav",
+      "type": "registry:ui",
+      "title": "Second Nav",
+      "description": "DGA Second Nav Header: a 40px strip above the header with contextual items and actions, gray or primary, that scrolls sideways on narrow screens.",
+      "dependencies": [
+        "@hugeicons/react",
+        "@hugeicons/core-free-icons",
+        "class-variance-authority"
+      ],
+      "registryDependencies": [
+        "https://dga.omqkhafi.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "bases/base/ui/second-nav.tsx",
+          "type": "registry:ui",
+          "target": "components/dga/second-nav.tsx"
+        }
+      ]
+    },
+    {
+      "name": "date-picker",
+      "type": "registry:ui",
+      "title": "Date Picker",
+      "description": "DGA Date Picker: a standalone Calendar and a field with a popup calendar. Gregorian and Hijri (Umm al-Qura, from Intl), single date and range, min, max, disabled dates, dual-month view, quick options and a confirm step. Full keyboard support.",
+      "dependencies": [
+        "@base-ui/react",
+        "@hugeicons/react",
+        "@hugeicons/core-free-icons"
+      ],
+      "registryDependencies": [
+        "https://dga.omqkhafi.dev/r/utils.json",
+        "https://dga.omqkhafi.dev/r/direction.json",
+        "https://dga.omqkhafi.dev/r/button.json",
+        "https://dga.omqkhafi.dev/r/content-switcher.json",
+        "https://dga.omqkhafi.dev/r/input.json"
+      ],
+      "files": [
+        {
+          "path": "bases/base/ui/date-picker.tsx",
+          "type": "registry:ui",
+          "target": "components/dga/date-picker.tsx"
+        }
+      ]
+    },
+    {
+      "name": "carousel",
+      "type": "registry:ui",
+      "title": "Carousel",
+      "description": "DGA Carousel: slides with previous and next, dots, autoplay with a pause button that respects reduced motion, swipe, arrow keys, and the slide order of the page direction.",
+      "dependencies": [
+        "@hugeicons/react",
+        "@hugeicons/core-free-icons",
+        "class-variance-authority"
+      ],
+      "registryDependencies": [
+        "https://dga.omqkhafi.dev/r/utils.json",
+        "https://dga.omqkhafi.dev/r/direction.json"
+      ],
+      "files": [
+        {
+          "path": "bases/base/ui/carousel.tsx",
+          "type": "registry:ui",
+          "target": "components/dga/carousel.tsx"
+        }
+      ]
+    },
+    {
+      "name": "filtration",
+      "type": "registry:ui",
+      "title": "Filtration",
+      "description": "DGA Filtration: a filter panel of checkbox, radio, select, input and range groups, applied filters as removable Tags, clear all and a result count. Below lg the panel opens in the DGA Drawer.",
+      "dependencies": [
+        "@hugeicons/react",
+        "@hugeicons/core-free-icons"
+      ],
+      "registryDependencies": [
+        "https://dga.omqkhafi.dev/r/utils.json",
+        "https://dga.omqkhafi.dev/r/button.json",
+        "https://dga.omqkhafi.dev/r/checkbox.json",
+        "https://dga.omqkhafi.dev/r/drawer.json",
+        "https://dga.omqkhafi.dev/r/input.json",
+        "https://dga.omqkhafi.dev/r/radio.json",
+        "https://dga.omqkhafi.dev/r/select.json",
+        "https://dga.omqkhafi.dev/r/tag.json"
+      ],
+      "files": [
+        {
+          "path": "bases/base/ui/filtration.tsx",
+          "type": "registry:ui",
+          "target": "components/dga/filtration.tsx"
         }
       ]
     }

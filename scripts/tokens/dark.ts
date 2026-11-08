@@ -234,6 +234,16 @@ export function darkRules(hex: (primitive: string) => string): Record<string, Ru
     REASON.bug,
   );
   set(["field-background-default"], "{background-card}", REASON.bug);
+  set(
+    ["datecell-background-100"],
+    sa(950),
+    "Figma Dark keeps the range band and the mid-range cells at the light brand 100 (f1f9f6-ish): the day number is 1.53:1 on it. Brand 950 holds the light day number above 4.5:1 and the chosen days above 3:1.",
+  );
+  set(
+    ["datecell-background-600"],
+    sa(300),
+    "Figma Dark keeps today's ring and number at brand 600, 3.68:1 on the dark popup. Brand 300 is 4.5:1 or better on the popup and the hovered and pressed cells.",
+  );
   set(["field-background-darker"], N(950), REASON.bug);
   set(["field-background-pressed"], N(800), REASON.bug);
   set(["table-border-row-selected-hovered"], N(800), REASON.bug);

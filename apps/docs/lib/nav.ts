@@ -60,6 +60,16 @@ export const NAVIGATION_COMPONENTS = [
   "stepper",
 ];
 
+/** The composite components, listed under "Composite" in the sidebar, search and llms.txt. */
+export const COMPOSITE_COMPONENTS = [
+  "header",
+  "second-nav",
+  "footer",
+  "date-picker",
+  "carousel",
+  "filtration",
+];
+
 /** Components that are used together, for the "Related" row on each component page. */
 export const RELATED: Record<string, string[]> = {
   button: ["link", "spinner", "badge"],
@@ -101,6 +111,12 @@ export const RELATED: Record<string, string[]> = {
   rating: ["card", "progress", "inline-alert"],
   progress: ["stepper", "spinner", "notification"],
   stepper: ["progress", "tabs", "pagination"],
+  header: ["second-nav", "footer", "drawer"],
+  "second-nav": ["header", "footer", "link"],
+  footer: ["header", "accordion", "link"],
+  "date-picker": ["input", "field", "select"],
+  carousel: ["card", "tabs", "pagination"],
+  filtration: ["checkbox", "tag", "drawer"],
 };
 
 export const FIGMA_URL =

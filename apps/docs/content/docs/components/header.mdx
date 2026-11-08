@@ -1,0 +1,112 @@
+---
+title: Header
+description: "The site header (DGA: Nav Header): logo, main navigation with sub-menus, actions, search, language and user slots. A skip link, keyboard navigation, and a Drawer on small screens."
+---
+
+<Preview name="header-basic" title="Header" minHeight={140} />
+
+## Installation
+
+<ComponentInstall name="header" />
+
+It installs the [Menu](/docs/components/menu) and the [Drawer](/docs/components/drawer) with it. Put a [Second Nav](/docs/components/second-nav) in the `top` slot and a [Footer](/docs/components/footer) at the end of the page.
+
+## Usage
+
+```tsx title="layout.tsx"
+import { Header } from "@/components/dga/header";
+import { SecondNav } from "@/components/dga/second-nav";
+
+export function SiteHeader() {
+  return (
+    <Header
+      logo={<a href="/"><img src="/logo.svg" alt="Digital Services" height={40} /></a>}
+      items={[
+        { label: "Home", href: "/", current: true },
+        {
+          label: "Services",
+          sections: [
+            {
+              title: "Individuals",
+              links: [
+                { label: "Renew a licence", href: "/renew", description: "Renew online in minutes" },
+                { label: "Pay a fee", href: "/pay" },
+              ],
+            },
+          ],
+        },
+        { label: "Contact", href: "/contact" },
+      ]}
+      actions={[{ label: "Notifications", href: "/notifications", iconOnly: true }]}
+      language={<LanguageSwitcher />}
+      user={<SignInButton />}
+      top={<SecondNav aria-label="Page information" items={[{ label: "Sunday 8 November" }]} />}
+    />
+  );
+}
+```
+
+Give your `main` element the id `main-content`, or set `skipHref`. Pass every visible string as a prop: `skipLabel`, `navLabel`, `menuLabel`, `drawerTitle` and `closeLabel` are translated on Arabic pages.
+
+## Anatomy
+
+- **Bar**: 72px high on the menu surface, padded 32px, centred and 1280px wide unless `fullWidth`.
+- **Logo** (`logo`): any element, a link to the home page.
+- **Main navigation** (`items`): each item is a link, or a button that opens a sub-menu when it has `sections`. 72px high, radius `sm`. The selected item (`current`) has the primary fill.
+- **Sub-menu**: the DGA [Menu](/docs/components/menu) with one column per section, up to four. `linkStyle` is `text`, `icon` or `boxed-icon`, and `submenuTone` is `default` or `green` (the dark green of the DGA flag).
+- **Actions** (`actions`, [`HeaderAction`](#api-reference)): an icon and a label, inline or with the icon above (`iconPosition="top"`), or icon-only. Below `lg` the label is hidden and stays as the name.
+- **Slots**: `search`, `language` and `user`.
+- **Drawer**: below the `lg` width a menu button opens the navigation in the DGA [Drawer](/docs/components/drawer). Parents expand in place and Level 2 links are indented.
+
+## Examples
+
+### Sub-menu
+
+<Preview compact name="header-submenu" title="Sub-menu" minHeight={380} />
+
+### Dark green sub-menu with boxed icons
+
+<Preview compact name="header-submenu-green" title="Dark green sub-menu" minHeight={380} />
+
+### Drawer on small screens
+
+Switch the viewport to mobile to see the bar collapse. This frame opens the Drawer.
+
+<Preview compact name="header-drawer-open" title="Drawer" defaultViewport="mobile" minHeight={420} />
+
+## RTL
+
+The logo sits on the right, the items run from the right, and the actions are on the left. The chevrons, sub-menus and the Drawer (which opens from the start side) mirror, and Left and Right swap.
+
+<DirectionCompare name="header-basic" title="Header" minHeight={140} />
+
+## Accessibility
+
+| Key | Action |
+| --- | --- |
+| <kbd>Tab</kbd> | The skip link comes first, then the menu button (small screens), the items and the actions. |
+| <kbd>Left</kbd> / <kbd>Right</kbd> | Moves between the main items. They swap on Arabic pages. |
+| <kbd>Home</kbd> / <kbd>End</kbd> | First and last item. |
+| <kbd>Enter</kbd>, <kbd>Space</kbd> or <kbd>Down</kbd> | Opens a sub-menu. Arrow keys move inside it. |
+| <kbd>Esc</kbd> | Closes the sub-menu or the Drawer and returns focus to the button that opened it. |
+
+- A `header` landmark with a `nav` named by `navLabel`. The page the person is on has `aria-current="page"`; a parent whose child is current shows the selected fill.
+- The skip link is the first tab stop and moves focus to `skipHref`.
+- The Drawer is a modal dialog: focus is trapped and returns to the menu button.
+- Text is 4.5:1, icons and focus rings are 3:1, in light and dark, on the white and the dark green panels.
+
+## API Reference
+
+<ApiReference component="header" />
+
+## Deviations from DGA
+
+- DGA has no "official site" strip in the spec. The [Second Nav](/docs/components/second-nav) is the strip above the navigation, in the `top` slot.
+- Header Menu and Nav Drawer are not separate components: the chevron is part of the item, the sub-menu is the Menu and the small-screen navigation is the Drawer.
+- The Drawer takes over below `lg` (1024px), not at 960px.
+
+<ComponentDeviations component="header" />
+
+## Contrast
+
+<ComponentContrast component="header" />
