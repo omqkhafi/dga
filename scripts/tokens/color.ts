@@ -1,3 +1,4 @@
+// ci timing test
 // Colour helpers for the WCAG 2.x contrast audit.
 
 export type RGBA = { r: number; g: number; b: number; a: number };
