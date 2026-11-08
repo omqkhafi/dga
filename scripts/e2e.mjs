@@ -1609,7 +1609,7 @@ async function navigationChecks() {
     const sep = await page
       .locator("[data-slot=breadcrumb-separator]")
       .first()
-      .evaluate((el) => getComputedStyle(el).transform);
+      .evaluate((el) => getComputedStyle(el).scale);
     check(
       rtl ? sep !== "none" : sep === "none",
       `${lang}: the separator ${rtl ? "mirrors" : "does not mirror"}`,
