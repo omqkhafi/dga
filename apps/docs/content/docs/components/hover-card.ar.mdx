@@ -1,0 +1,93 @@
+---
+title: Hover Card
+description: "معاينة لما يشير إليه رابط، تظهر عند تمرير المؤشر على الرابط أو تركيزه. سطح Popover يفتحه المؤشر أو لوحة المفاتيح."
+sourceHash: b0cd27fa1319
+---
+
+<ExtensionNote
+  name="البطاقة المنبثقة"
+  primitive="Base UI PreviewCard"
+  from="سطح القائمة Menu في DGA عبر Popover، والرابط Link في DGA للزر"
+  tokens={["background-menu", "border-neutral-primary", "link-primary", "text-display", "text-primary-paragraph", "shadow-2xl"]}
+/>
+
+<Preview name="hover-card-basic" title="البطاقة المنبثقة" minHeight={300} />
+
+## التثبيت [#installation]
+
+<ComponentInstall name="hover-card" />
+
+## الاستخدام [#usage]
+
+```tsx title="page.tsx"
+import { Avatar } from "@/components/dga/avatar";
+import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/dga/hover-card";
+
+export function Author() {
+  return (
+    <HoverCard>
+      <HoverCardTrigger href="/authority">هيئة الحكومة الرقمية</HoverCardTrigger>
+      <HoverCardContent>
+        <Avatar initials="هـ" />
+        <p>تقود التحول الرقمي للخدمات الحكومية.</p>
+      </HoverCardContent>
+    </HoverCard>
+  );
+}
+```
+
+استخدم Hover Card لمعاينة ملف شخصي أو خدمة أو تعريف دون مغادرة الصفحة. وهي تيسير لمن يستخدم المؤشر أو لوحة المفاتيح: **شاشات اللمس وقارئات الشاشة لا تحصل على البطاقة**، لذلك يجب أن يكون الزر رابطًا حقيقيًا إلى المحتوى نفسه، ولا يجوز أن تحمل البطاقة النسخة الوحيدة من أي شيء. وإن احتاج الناس إلى التفاعل مع المحتوى فاستخدم [Popover](/docs/components/popover). ولتلميح من سطر واحد استخدم [Tooltip](/docs/components/tooltip).
+
+## البنية [#anatomy]
+
+- **الزر**: وسم `a` بنمط الرابط الأساسي في DGA: مسطّر و`link-primary` وبحالات Link للتمرير والضغط والتركيز.
+- **البطاقة**: سطح Popover بعرض 320px: `background-menu` وحد بسمك 1px وانحناء radius-md و`shadow-2xl`.
+- **السهم** (اختياري): نقطة Tooltip، بـ `showArrow`.
+- **التوقيت**: تفتح بعد `delay` (400 مللي ثانية) وتغلق بعد `closeDelay` (200 مللي ثانية) من مغادرة المؤشر، ويُضبطان على الزر.
+
+## أمثلة [#examples]
+
+### الجهات والسهم [#placements-and-the-beak]
+
+`start` و`end` جهتان للنص، فتتبادلان في الصفحات العربية.
+
+<Preview compact name="hover-card-placements" title="الجهات والسهم" minHeight={600} />
+
+### التوقيت [#timing]
+
+يضبط `delay` و`closeDelay` على الزر سرعة فتح البطاقة وإغلاقها.
+
+<Preview compact name="hover-card-states" title="التوقيت" minHeight={240} />
+
+## RTL [#rtl]
+
+تفتح البطاقة أسفل الرابط وفي المنتصف افتراضيًا. وتتبادل `start` و`end` مع الاتجاه ويتبعهما السهم. ويُقرأ المحتوى داخل البطاقة باتجاه الصفحة.
+
+<DirectionCompare name="hover-card-placements" title="البطاقة المنبثقة" minHeight={600} />
+
+## إمكانية الوصول [#accessibility]
+
+| المفتاح | الإجراء |
+| --- | --- |
+| <kbd>Tab</kbd> | تركيز الرابط يفتح البطاقة. والابتعاد عنه يغلقها. |
+| <kbd>Escape</kbd> | يغلق البطاقة دون نقل التركيز. |
+| <kbd>Enter</kbd> | على الرابط يتبعه كأي رابط. |
+
+- تفتح البطاقة بتركيز لوحة المفاتيح كما بالتمرير، وتبقى مفتوحة ما دام المؤشر فوقها، ويغلقها Escape (WCAG 1.4.13: قابلة للإغلاق وللتمرير فوقها وثابتة).
+- البطاقة معاينة وليست حوارًا: لا يعلنها قارئ الشاشة ولا يمكن الوصول إليها باللمس. ولهذا يجب أن يقود الرابط إلى المحتوى نفسه.
+- النص بنسبة 4.5:1 وحلقة التركيز 3:1 أو أفضل، فاتحًا وداكنًا. ويحتفظ الرابط بخطه السفلي فلا يكون اللون الإشارة الوحيدة.
+- تظهر بتلاشٍ وتكبير؛ ومع تقليل الحركة تظهر دون حركة.
+
+## مرجع API [#api-reference]
+
+<ApiReference component="hover-card" />
+
+## الاشتقاق من DGA [#derivation-from-dga]
+
+لا تعرّف DGA بطاقة منبثقة، فهذا ليس مكوّنًا من DGA وليست له مواصفة منها. البطاقة هي سطح Popover أي سطح Menu في DGA، والزر هو الرابط الأساسي Link في DGA. ولا لون جديد فيه.
+
+<ComponentDeviations component="hover-card" />
+
+## التباين [#contrast]
+
+<ComponentContrast component="hover-card" />

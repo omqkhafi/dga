@@ -1,0 +1,109 @@
+---
+title: Popover
+description: "A panel of content or a small form that opens from a button and stays until it is dismissed. Built from the DGA Menu surface and the Tooltip beak."
+---
+
+<ExtensionNote
+  name="Popover"
+  primitive="Base UI Popover"
+  from="the DGA Menu (surface, border, radius and shadow) and the DGA Tooltip (the beak and the sides)"
+  tokens={["background-menu", "border-neutral-primary", "text-display", "text-primary-paragraph", "icon-default", "shadow-2xl"]}
+/>
+
+<Preview name="popover-basic" title="Popover" minHeight={300} />
+
+## Installation
+
+<ComponentInstall name="popover" />
+
+## Usage
+
+```tsx title="page.tsx"
+import { Button } from "@/components/dga/button";
+import {
+  Popover,
+  PopoverContent,
+  PopoverDescription,
+  PopoverHeader,
+  PopoverTitle,
+  PopoverTrigger,
+} from "@/components/dga/popover";
+
+export function RequestDetails() {
+  return (
+    <Popover>
+      <PopoverTrigger render={<Button variant="outline" />}>Request details</PopoverTrigger>
+      <PopoverContent showCloseButton>
+        <PopoverHeader>
+          <PopoverTitle>Request 24810</PopoverTitle>
+          <PopoverDescription>Submitted on 8 November.</PopoverDescription>
+        </PopoverHeader>
+      </PopoverContent>
+    </Popover>
+  );
+}
+```
+
+Use a Popover for extra detail or a short form that belongs to one control: a date range, a rename field, a filter. It stays open until the person closes it, so it can hold interactive content. For a hint that only names something, use a [Tooltip](/docs/components/tooltip). For a list of actions, use a [Menu](/docs/components/menu). For anything that needs a decision before the page can go on, use a [Dialog](/docs/components/dialog).
+
+## Anatomy
+
+- **Trigger**: the button that opens it. It has `aria-expanded` and `aria-haspopup="dialog"`.
+- **Panel**: `background-menu`, a 1px border, radius-md, `shadow-2xl`, 16px padding, 288px wide, never wider than the screen.
+- **Header**: a title (`text-display`, semibold) and a description (`text-primary-paragraph`). The panel is named by the title and described by the description.
+- **Beak** (optional): the 14px point toward the trigger, the same as the Tooltip. Turn it on with `showArrow`.
+- **Close button** (optional): a 32px icon button in the corner, with `showCloseButton`.
+- **Footer**: actions aligned to the end. Use PopoverClose to close the panel from a button.
+
+## Examples
+
+### Placements and the beak
+
+`side` takes `start` and `end` as well as `top` and `bottom`. They are the sides of the text, so `start` opens to the right in Arabic.
+
+<Preview compact name="popover-placements" title="Placements and the beak" minHeight={600} />
+
+### A small form
+
+Put a Field in the panel. Focus moves to the first field when it opens and returns to the trigger when it closes. PopoverClose renders a Button that closes the panel.
+
+<Preview compact name="popover-form" title="A small form" minHeight={360} />
+
+### Controlled and disabled
+
+Pass `open` and `onOpenChange` to read or set the state. A disabled trigger never opens the panel.
+
+<Preview compact name="popover-states" title="Controlled and disabled" minHeight={360} />
+
+## RTL
+
+The panel aligns to the centre of the trigger by default; with `align="start"` it lines up with the right edge in Arabic. `start` and `end` swap, and the beak follows. Text, the close button and the footer follow the page direction.
+
+<DirectionCompare name="popover-placements" title="Popover" minHeight={600} />
+
+## Accessibility
+
+| Key | Action |
+| --- | --- |
+| <kbd>Enter</kbd> or <kbd>Space</kbd> | On the trigger, opens the panel and moves focus into it. |
+| <kbd>Tab</kbd> | Moves through the controls inside the panel, then on to the rest of the page. |
+| <kbd>Escape</kbd> | Closes the panel and returns focus to the trigger. |
+
+- Built on Base UI Popover: the panel is `role="dialog"`, named by PopoverTitle and described by PopoverDescription. It is not modal, so the page stays reachable and focus is not trapped.
+- Clicking outside closes it, and so does the close button. The close button has an accessible name (`closeLabel`).
+- Text is 4.5:1 and icons and focus rings 3:1 or better on the panel, in light and dark.
+- It fades and scales in; with reduced motion it appears without animation.
+
+## API Reference
+
+<ApiReference component="popover" />
+
+## Derivation from DGA
+
+DGA has no popover, so this is not a DGA component and has no DGA specification. Its look is the DGA Menu surface (`background-menu`, border, radius-md, `shadow-2xl`) with the Tooltip beak and the Dialog close button. No colour is new: every one comes from an existing DGA token.
+
+<ComponentDeviations component="popover" />
+
+## Contrast
+
+<ComponentContrast component="popover" />

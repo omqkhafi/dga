@@ -514,6 +514,80 @@
       ]
     },
     {
+      "name": "popover",
+      "type": "registry:ui",
+      "title": "Popover",
+      "description": "Platform Code extension (not DGA). Popover on Base UI Popover: a panel that opens from a button, on the DGA Menu surface with an optional Tooltip beak, title, description, close button, and sides that mirror in RTL.",
+      "dependencies": ["@base-ui/react", "@hugeicons/react", "@hugeicons/core-free-icons"],
+      "registryDependencies": [
+        "{{REGISTRY_URL}}/r/utils.json",
+        "{{REGISTRY_URL}}/r/direction.json"
+      ],
+      "files": [
+        {
+          "path": "bases/base/ui/popover.tsx",
+          "type": "registry:ui",
+          "target": "components/dga/popover.tsx"
+        }
+      ]
+    },
+    {
+      "name": "hover-card",
+      "type": "registry:ui",
+      "title": "Hover Card",
+      "description": "Platform Code extension (not DGA). Hover Card on Base UI Preview Card: a preview that opens when a link is hovered or focused, on the DGA Menu surface; hoverable and dismissible.",
+      "dependencies": ["@base-ui/react"],
+      "registryDependencies": [
+        "{{REGISTRY_URL}}/r/utils.json",
+        "{{REGISTRY_URL}}/r/direction.json"
+      ],
+      "files": [
+        {
+          "path": "bases/base/ui/hover-card.tsx",
+          "type": "registry:ui",
+          "target": "components/dga/hover-card.tsx"
+        }
+      ]
+    },
+    {
+      "name": "alert-dialog",
+      "type": "registry:ui",
+      "title": "Alert Dialog",
+      "description": "Platform Code extension (not DGA). Alert Dialog on Base UI Alert Dialog, styled as the DGA Dialog: role alertdialog, focus starts on Cancel, no dismissal by clicking outside, destructive action.",
+      "dependencies": ["@base-ui/react", "class-variance-authority"],
+      "registryDependencies": [
+        "{{REGISTRY_URL}}/r/utils.json",
+        "{{REGISTRY_URL}}/r/dialog.json",
+        "{{REGISTRY_URL}}/r/button.json"
+      ],
+      "files": [
+        {
+          "path": "bases/base/ui/alert-dialog.tsx",
+          "type": "registry:ui",
+          "target": "components/dga/alert-dialog.tsx"
+        }
+      ]
+    },
+    {
+      "name": "context-menu",
+      "type": "registry:ui",
+      "title": "Context Menu",
+      "description": "Platform Code extension (not DGA). Context Menu on Base UI Context Menu with the DGA Menu items: right-click, long-press, Shift+F10 and the Menu key, submenus that mirror in RTL.",
+      "dependencies": ["@base-ui/react", "@hugeicons/react", "@hugeicons/core-free-icons"],
+      "registryDependencies": [
+        "{{REGISTRY_URL}}/r/utils.json",
+        "{{REGISTRY_URL}}/r/direction.json",
+        "{{REGISTRY_URL}}/r/menu.json"
+      ],
+      "files": [
+        {
+          "path": "bases/base/ui/context-menu.tsx",
+          "type": "registry:ui",
+          "target": "components/dga/context-menu.tsx"
+        }
+      ]
+    },
+    {
       "name": "tabs",
       "type": "registry:ui",
       "title": "Tabs",

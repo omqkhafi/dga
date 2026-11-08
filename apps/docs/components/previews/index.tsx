@@ -60,7 +60,7 @@ import {
 } from "./display";
 import { inputsPreviews } from "./ext-inputs";
 import { miscPreviews } from "./ext-misc";
-import { overlaysPreviews } from "./ext-overlays";
+import { overlaysPreviews } from "./ext-overlays-map";
 import {
   CheckboxGroupDemo,
   CheckboxSizes,
