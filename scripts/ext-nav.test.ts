@@ -16,7 +16,7 @@ type Item = {
   type: string;
   dependencies?: string[];
   registryDependencies?: string[];
-  files: { path: string; target: string }[];
+  files: { path: string; type: string; target: string }[];
 };
 const registry = JSON.parse(read("registry/registry.json")) as { items: Item[] };
 const item = (name: string) => registry.items.find((i) => i.name === name) as Item;
