@@ -1425,4 +1425,524 @@
   .cn-alert-actions {
     @apply mt-2 flex flex-wrap items-center gap-3;
   }
+
+  /* ------------------------------------------------------------------------------------
+   * Breadcrumb. Text sm Regular, link-neutral, a chevron separator in icon-default-400 (it is
+   * decorative and hidden from screen readers). The current page is Medium in text-default.
+   * ---------------------------------------------------------------------------------- */
+  .cn-breadcrumb {
+    @apply min-w-0 max-w-full text-sm;
+  }
+  .cn-breadcrumb-list {
+    @apply m-0 flex list-none flex-wrap items-center gap-x-1 gap-y-0.5 p-0;
+  }
+  .cn-breadcrumb-item {
+    @apply inline-flex min-w-0 items-center gap-1;
+  }
+  .cn-breadcrumb-link {
+    @apply inline-flex min-h-6 max-w-48 cursor-pointer items-center truncate rounded-xs px-0.5 text-link-neutral underline-offset-4 transition-colors;
+    @apply hover:text-link-neutral-hovered hover:underline active:text-link-neutral-pressed;
+    @apply focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-offset-2 focus-visible:outline-border-black;
+    @apply motion-reduce:transition-none;
+  }
+  .cn-breadcrumb-page {
+    @apply inline-flex min-h-6 max-w-48 items-center truncate px-0.5 font-medium text-text-default;
+  }
+  .cn-breadcrumb-separator {
+    @apply inline-flex shrink-0 text-icon-default-400 rtl:-scale-x-100 [&_svg]:size-4;
+  }
+  .cn-breadcrumb-ellipsis {
+    @apply inline-flex size-6 cursor-pointer items-center justify-center rounded-xs border-0 bg-transparent text-icon-default transition-colors [&_svg]:size-4;
+    @apply hover:bg-button-background-neutral-hovered active:bg-button-background-neutral-pressed;
+    @apply focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-offset-1 focus-visible:outline-border-black;
+    @apply motion-reduce:transition-none;
+  }
+
+  /* ------------------------------------------------------------------------------------
+   * Pagination. Items 24 / 32 / 40px square, gap pagination-items-padding (8px), Text md
+   * (sm at 24px). The current page is the primary fill with an on-colour label.
+   * ---------------------------------------------------------------------------------- */
+  .cn-pagination {
+    @apply max-w-full;
+  }
+  .cn-pagination-list {
+    @apply m-0 flex list-none flex-wrap items-center justify-center gap-pagination-items-padding p-0;
+  }
+  .cn-pagination-item {
+    @apply inline-flex size-(--pg-size) min-w-(--pg-size) cursor-pointer items-center justify-center rounded-sm border-0 bg-transparent p-0 font-normal text-(length:--pg-text) text-text-default no-underline transition-colors tabular-nums;
+    @apply hover:bg-button-background-neutral-hovered active:bg-button-background-neutral-pressed;
+    @apply focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-offset-1 focus-visible:outline-border-black;
+    @apply data-current:bg-background-primary data-current:font-semibold data-current:text-text-oncolor-primary data-current:hover:bg-button-background-primary-hovered data-current:active:bg-button-background-primary-pressed;
+    @apply disabled:pointer-events-none disabled:cursor-not-allowed disabled:bg-transparent disabled:text-text-default-disabled;
+    @apply motion-reduce:transition-none;
+  }
+  .cn-pagination-arrow {
+    @apply size-5 shrink-0 text-icon-default rtl:-scale-x-100 in-disabled:text-icon-default-disabled;
+  }
+  .cn-pagination-ellipsis {
+    @apply inline-flex size-(--pg-size) items-center justify-center text-icon-default [&_svg]:size-4;
+  }
+  .cn-pagination-compact {
+    @apply flex min-w-20 items-center justify-center text-(length:--pg-text) font-medium text-text-default tabular-nums;
+  }
+  .cn-pagination-size-sm {
+    @apply [--pg-size:1.5rem] [--pg-text:var(--text-sm)];
+  }
+  .cn-pagination-size-md {
+    @apply [--pg-size:2rem] [--pg-text:var(--text-md)];
+  }
+  .cn-pagination-size-lg {
+    @apply [--pg-size:2.5rem] [--pg-text:var(--text-md)];
+  }
+
+  /* ------------------------------------------------------------------------------------
+   * Table of Content. 228px wide column, items 32px high with 16px start and 8px end padding,
+   * radius-xs. Level 2 and 3 are indented. The current section is Semibold in text-default.
+   * ---------------------------------------------------------------------------------- */
+  .cn-toc {
+    @apply flex w-full max-w-57 flex-col gap-2;
+  }
+  .cn-toc-title {
+    @apply m-0 px-4 text-sm font-medium text-text-primary-paragraph;
+  }
+  .cn-toc-list {
+    @apply m-0 flex list-none flex-col gap-0.5 p-0;
+  }
+  .cn-toc-link {
+    @apply flex min-h-8 items-center rounded-xs pe-2 ps-(--toc-indent) text-sm font-normal text-text-primary-paragraph no-underline transition-colors;
+    @apply hover:bg-button-background-neutral-hovered hover:text-text-default active:bg-button-background-neutral-pressed active:text-text-default;
+    @apply focus-visible:outline-2 focus-visible:outline-solid focus-visible:-outline-offset-2 focus-visible:outline-border-black;
+    @apply data-active:font-semibold data-active:text-text-default;
+    @apply data-[level='1']:[--toc-indent:1rem] data-[level='2']:[--toc-indent:2rem] data-[level='3']:[--toc-indent:3rem];
+    @apply motion-reduce:transition-none;
+  }
+
+  /* ------------------------------------------------------------------------------------
+   * Card. White card, radius-lg, padding and gap from card-lg-* (16 / 24px). Effect: shadow-md,
+   * a 1px neutral stroke, or none. Hover fills neutral-50; the focus ring is a 2px outline.
+   * ---------------------------------------------------------------------------------- */
+  .cn-card {
+    @apply relative flex min-w-0 flex-col gap-(--card-gap) rounded-lg border border-transparent bg-background-card p-(--card-pad) text-text-default transition-colors;
+    @apply has-[[data-slot=card-link]]:cursor-pointer has-[[data-slot=card-link]]:hover:bg-background-neutral-50;
+    @apply has-[[data-slot=card-link]:focus-visible]:outline-2 has-[[data-slot=card-link]:focus-visible]:outline-solid has-[[data-slot=card-link]:focus-visible]:outline-border-black;
+    @apply data-disabled:pointer-events-none data-disabled:bg-background-disabled data-disabled:text-text-default-disabled data-disabled:shadow-none;
+    @apply motion-reduce:transition-none;
+  }
+  .cn-card-shadow {
+    @apply shadow-md;
+  }
+  .cn-card-stroke {
+    @apply border-border-neutral-primary data-disabled:border-border-disabled;
+  }
+  .cn-card-size-sm {
+    @apply [--card-gap:var(--spacing-card-sm-gap)] [--card-pad:var(--spacing-card-sm-padding)];
+  }
+  .cn-card-size-md {
+    @apply [--card-gap:var(--spacing-card-md-gap)] [--card-pad:var(--spacing-card-md-padding)];
+  }
+  .cn-card-size-lg {
+    @apply [--card-gap:var(--spacing-card-lg-gap)] [--card-pad:var(--spacing-card-lg-padding)];
+  }
+  .cn-card-media {
+    @apply -mx-(--card-pad) -mt-(--card-pad) overflow-hidden rounded-t-[calc(var(--radius-lg)-1px)] [&_img]:block [&_img]:h-auto [&_img]:w-full [&_img]:object-cover;
+  }
+  .cn-card-icon {
+    @apply flex shrink-0 items-center text-icon-success in-data-disabled:text-icon-default-400;
+  }
+  .cn-card-header {
+    @apply flex min-w-0 flex-col gap-1;
+  }
+  .cn-card-title {
+    @apply m-0 text-lg font-bold text-text-display in-data-disabled:text-text-default-disabled;
+  }
+  .cn-card-description {
+    @apply m-0 text-md text-text-primary-paragraph in-data-disabled:text-text-default-disabled;
+  }
+  .cn-card-content {
+    @apply flex min-w-0 flex-col gap-3;
+  }
+  .cn-card-actions {
+    @apply relative z-10 mt-auto flex flex-wrap items-center gap-3;
+  }
+  /* The link's click area covers the card; the actions above it stay clickable. */
+  .cn-card-link {
+    @apply text-inherit no-underline;
+    @apply after:absolute after:inset-0 after:z-0 after:rounded-lg after:content-[''];
+    @apply focus-visible:outline-none;
+  }
+  .cn-card-expandable {
+    @apply hover:bg-background-neutral-50 data-disabled:hover:bg-background-disabled;
+  }
+  .cn-card-expand-trigger {
+    @apply flex w-full cursor-pointer items-center justify-between gap-3 rounded-xs border-0 bg-transparent p-0 text-start text-lg font-bold text-text-display;
+    @apply focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-offset-4 focus-visible:outline-border-black;
+    @apply disabled:cursor-not-allowed disabled:text-text-default-disabled;
+  }
+  .cn-card-expand-chevron {
+    @apply size-5 shrink-0 text-icon-default transition-transform in-data-panel-open:rotate-180 motion-reduce:transition-none;
+  }
+  .cn-card-expand-panel {
+    @apply h-(--collapsible-panel-height) overflow-hidden text-md text-text-primary-paragraph transition-[height] duration-200 ease-out data-ending-style:h-0 data-starting-style:h-0 motion-reduce:transition-none;
+  }
+  .cn-card-selectable {
+    @apply cursor-pointer hover:bg-background-neutral-50 has-[[data-checked]]:border-border-primary has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-solid has-[:focus-visible]:outline-border-black;
+    @apply data-disabled:cursor-not-allowed data-disabled:hover:bg-background-disabled;
+  }
+  .cn-card-checkbox {
+    @apply self-start;
+  }
+
+  /* ------------------------------------------------------------------------------------
+   * List. Text md Regular, items 24px high with an 8px gap to the marker. Ordered markers are
+   * "1-" then "a-" one level down; unordered a 4px dot; icon lists a 16px icon. Colours: primary,
+   * neutral or on-colour (the marker takes the text colour).
+   * ---------------------------------------------------------------------------------- */
+  .cn-list {
+    @apply m-0 flex list-none flex-col p-0 text-md text-(--l-text);
+  }
+  .cn-list-nested {
+    @apply ms-6;
+  }
+  .cn-list-primary {
+    @apply [--l-icon:var(--icon-primary)] [--l-text:var(--text-primary)];
+  }
+  .cn-list-neutral {
+    @apply [--l-icon:var(--icon-default)] [--l-text:var(--text-default)];
+  }
+  .cn-list-on-color {
+    @apply [--l-icon:var(--icon-oncolor)] [--l-text:var(--text-oncolor-primary)];
+  }
+  .cn-list-item {
+    @apply flex flex-col;
+  }
+  .cn-list-row {
+    @apply flex min-h-6 items-start gap-2;
+  }
+  .cn-list-marker {
+    @apply shrink-0 text-(--l-text);
+  }
+  .cn-list-marker-text {
+    @apply min-w-5 tabular-nums;
+  }
+  .cn-list-marker-icon {
+    @apply mt-1 size-4 text-(--l-icon);
+  }
+  .cn-list-marker-dot {
+    @apply mt-2.5 ms-2 me-1 size-1 rounded-full bg-(--l-text);
+  }
+  .cn-list-text {
+    @apply min-w-0 flex-1;
+  }
+
+  /* Structured List: header Text xs Medium (table-text-head), cells Text md (table-text-body),
+   * cell padding table-cell-h/v-padding, 48px header and 64px rows (48px compact). */
+  .cn-structured-list-group {
+    @apply w-full min-w-0;
+  }
+  .cn-structured-list {
+    @apply w-full border-collapse text-start text-md text-table-text-body;
+  }
+  .cn-structured-list-contained {
+    @apply rounded-md border border-table-cell-border;
+  }
+  .cn-structured-list-header {
+    @apply text-xs font-medium text-table-text-head;
+  }
+  .cn-structured-list-head {
+    @apply h-12 px-table-cell-h-padding py-table-cell-v-padding text-start align-middle font-medium;
+  }
+  .cn-structured-list-row {
+    @apply transition-colors motion-reduce:transition-none;
+    @apply has-[[data-checked]]:bg-table-background-row-select has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-solid has-[:focus-visible]:-outline-offset-2 has-[:focus-visible]:outline-table-cell-border-inverse;
+    @apply data-disabled:bg-table-background-disabled data-disabled:text-text-default-disabled;
+  }
+  .cn-structured-list-cell {
+    @apply h-16 px-table-cell-h-padding py-table-cell-v-padding align-middle;
+  }
+  .cn-structured-list-select {
+    @apply w-12 px-table-cell-h-padding py-table-cell-v-padding align-middle;
+  }
+  .cn-structured-list-compact {
+    @apply [&_[data-slot=structured-list-cell]]:h-12;
+  }
+  .cn-structured-list-row-divider {
+    @apply [&_:is([data-slot=structured-list-cell],[data-slot=structured-list-head],[data-slot=structured-list-select])]:border-b [&_:is([data-slot=structured-list-cell],[data-slot=structured-list-head],[data-slot=structured-list-select])]:border-table-cell-border;
+  }
+  .cn-structured-list-column-divider {
+    @apply [&_:is([data-slot=structured-list-cell],[data-slot=structured-list-head])]:border-e [&_:is([data-slot=structured-list-cell],[data-slot=structured-list-head])]:border-table-cell-border [&_:is([data-slot=structured-list-cell],[data-slot=structured-list-head]):last-child]:border-e-0;
+  }
+
+  /* ------------------------------------------------------------------------------------
+   * Table. Header 48px on table-background-header, Text xs Medium (table-text-head); rows 64px
+   * (48px compact), Text md (table-text-body); cell padding table-cell-*-padding. Alternating,
+   * hovered and selected rows use the table-background-* tokens (see Deviations: the alternate
+   * fill equals the row fill in Figma, so stripes use neutral-100). Dividers table-cell-border.
+   * ---------------------------------------------------------------------------------- */
+  .cn-table-container {
+    @apply relative w-full overflow-x-auto overscroll-x-contain;
+    @apply focus-visible:outline-2 focus-visible:outline-solid focus-visible:-outline-offset-2 focus-visible:outline-border-black;
+  }
+  .cn-table-container-contained {
+    @apply rounded-md border border-table-cell-border;
+  }
+  .cn-table {
+    @apply w-full caption-bottom border-collapse text-start text-md text-table-text-body [--t-row:4rem] [--t-head:3rem];
+  }
+  .cn-table-compact {
+    @apply [--t-head:2.5rem] [--t-row:3rem];
+  }
+  .cn-table-header {
+    @apply bg-table-background-header text-xs font-medium text-table-text-head [&_[data-slot=table-row]]:bg-table-background-header [&_[data-slot=table-row]:hover]:bg-table-background-header;
+  }
+  .cn-table-body {
+    @apply [&_tr:last-child>*]:border-b-0;
+  }
+  .cn-table-footer {
+    @apply bg-table-background-header font-medium;
+  }
+  .cn-table-row {
+    @apply bg-table-background-row transition-colors hover:bg-table-background-row-hovered motion-reduce:transition-none;
+    @apply data-selected:bg-table-background-row-select data-selected:hover:bg-table-background-row-selected-hovered data-selected:hover:shadow-[inset_0_-1px_0_0_var(--table-border-row-selected-hovered)];
+  }
+  .cn-table-striped {
+    @apply [&_[data-slot=table-body]>[data-slot=table-row]:nth-child(even):not([data-selected]):not(:hover)]:bg-table-background-row-alt;
+  }
+  .cn-table-head {
+    @apply h-(--t-head) whitespace-nowrap px-table-cell-h-padding py-table-cell-v-padding text-start align-middle font-medium;
+  }
+  .cn-table-cell {
+    @apply h-(--t-row) px-table-cell-h-padding py-table-cell-v-padding align-middle;
+  }
+  .cn-table-caption {
+    @apply px-table-cell-h-padding py-3 text-start text-sm text-text-primary-paragraph;
+  }
+  .cn-table-contained {
+    @apply [&_:is([data-slot=table-cell],[data-slot=table-head])]:border-table-cell-border;
+  }
+  .cn-table-row-divider {
+    @apply [&_:is([data-slot=table-cell],[data-slot=table-head])]:border-b [&_:is([data-slot=table-cell],[data-slot=table-head])]:border-table-cell-border;
+  }
+  .cn-table-column-divider {
+    @apply [&_:is([data-slot=table-cell],[data-slot=table-head])]:border-e [&_:is([data-slot=table-cell],[data-slot=table-head])]:border-table-cell-border [&_:is([data-slot=table-cell],[data-slot=table-head]):last-child]:border-e-0;
+  }
+  /* The sort and filter buttons in a heading: 20px, neutral fill; black when active. */
+  .cn-table-icon-button {
+    @apply inline-flex size-5 shrink-0 cursor-pointer items-center justify-center rounded-xs border-0 bg-button-background-neutral-default p-0 text-icon-default transition-colors [&_svg]:size-4;
+    @apply hover:bg-button-background-neutral-hovered active:bg-button-background-neutral-pressed;
+    @apply focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-offset-1 focus-visible:outline-border-black;
+    @apply data-[sort=asc]:bg-button-background-black-default data-[sort=asc]:text-icon-oncolor data-[sort=asc]:hover:bg-button-background-black-hovered data-[sort=asc]:active:bg-button-background-black-pressed;
+    @apply data-[sort=desc]:bg-button-background-black-default data-[sort=desc]:text-icon-oncolor data-[sort=desc]:hover:bg-button-background-black-hovered data-[sort=desc]:active:bg-button-background-black-pressed;
+    @apply data-active:bg-button-background-black-default data-active:text-icon-oncolor data-active:hover:bg-button-background-black-hovered data-active:active:bg-button-background-black-pressed;
+    @apply disabled:pointer-events-none disabled:bg-transparent disabled:text-icon-default-disabled motion-reduce:transition-none;
+  }
+  .cn-data-table {
+    @apply flex w-full min-w-0 flex-col gap-3;
+  }
+  .cn-data-table-head {
+    @apply flex items-center gap-2;
+  }
+  .cn-data-table-empty {
+    @apply h-40 text-center text-text-primary-paragraph [&_svg]:mx-auto [&_svg]:mb-2 [&_svg]:size-8 [&_svg]:text-icon-default-500;
+  }
+  .cn-data-table-footer {
+    @apply flex flex-wrap items-center justify-between gap-3;
+  }
+  .cn-data-table-summary {
+    @apply m-0 text-sm text-text-primary-paragraph tabular-nums;
+  }
+
+  /* ------------------------------------------------------------------------------------
+   * Rating. Stars 24 / 32 / 48px, gap spacing-xs (4px). Gold (background-secondary) or brand
+   * (background-primary). Every star is outlined, so its shape is 3:1 against the page even
+   * though the gold fill is 2.30:1 (see Deviations).
+   * ---------------------------------------------------------------------------------- */
+  .cn-rating {
+    @apply inline-flex w-min items-center gap-1;
+    @apply [--r-fill:var(--background-secondary)] [--r-line:var(--icon-warning)] [--r-empty:var(--icon-default-500)];
+  }
+  .cn-rating-brand {
+    @apply [--r-fill:var(--background-primary)] [--r-line:var(--icon-primary)];
+  }
+  .cn-rating-size-sm {
+    @apply [--r-size:1.5rem];
+  }
+  .cn-rating-size-md {
+    @apply [--r-size:2rem];
+  }
+  .cn-rating-size-lg {
+    @apply [--r-size:3rem];
+  }
+  .cn-rating-item {
+    @apply inline-flex size-(--r-size) shrink-0 cursor-pointer items-center justify-center rounded-xs border-0 bg-transparent p-0;
+    @apply focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-offset-1 focus-visible:outline-border-black;
+    @apply data-disabled:cursor-not-allowed data-disabled:opacity-50;
+  }
+  .cn-rating-star {
+    @apply size-(--r-size) shrink-0 fill-transparent stroke-(--r-empty) stroke-[1.5] transition-colors data-filled:fill-(--r-fill) data-filled:stroke-(--r-line) motion-reduce:transition-none;
+  }
+
+  /* ------------------------------------------------------------------------------------
+   * Progress. Linear: label and value in Text sm, a track and a fill, helper text. The bar is
+   * 8 / 12 / 16px high (Small / Medium / Large). Circular: 64 to 200px, Text sm Bold in the middle.
+   * ---------------------------------------------------------------------------------- */
+  .cn-progress {
+    @apply flex w-full min-w-0 flex-col gap-1 [--p-fill:var(--icon-primary)] [--p-track:var(--border-neutral-secondary)];
+  }
+  .cn-progress-primary {
+    @apply [--p-fill:var(--icon-primary)];
+  }
+  .cn-progress-neutral {
+    @apply [--p-fill:var(--progress-bar-neutral)];
+  }
+  .cn-progress-success {
+    @apply [--p-badge:var(--background-success)] [--p-fill:var(--icon-success)] [--p-status:var(--text-success)];
+  }
+  .cn-progress-error {
+    @apply [--p-badge:var(--background-error)] [--p-fill:var(--icon-error)] [--p-status:var(--text-error)];
+  }
+  .cn-progress-size-sm {
+    @apply [--p-bar:0.5rem];
+  }
+  .cn-progress-size-md {
+    @apply [--p-bar:0.75rem];
+  }
+  .cn-progress-size-lg {
+    @apply [--p-bar:1rem];
+  }
+  .cn-progress-header {
+    @apply flex items-baseline justify-between gap-3 text-sm;
+  }
+  .cn-progress-label {
+    @apply min-w-0 text-sm font-medium text-field-text-label;
+  }
+  .cn-progress-value {
+    @apply shrink-0 text-sm font-medium text-field-text-label tabular-nums;
+  }
+  .cn-progress-track {
+    @apply relative block h-(--p-bar) w-full overflow-hidden rounded-full bg-(--p-track);
+  }
+  .cn-progress-indicator {
+    @apply block h-full rounded-full bg-(--p-fill) transition-[width] duration-300 ease-out motion-reduce:transition-none;
+    @apply data-indeterminate:w-full data-indeterminate:animate-pulse motion-reduce:data-indeterminate:animate-none motion-reduce:data-indeterminate:opacity-50;
+  }
+  .cn-progress-helper {
+    @apply m-0 flex items-center gap-1.5 text-sm text-(--p-status,var(--text-primary-paragraph));
+  }
+  .cn-progress-status-icon {
+    @apply inline-flex size-4 shrink-0 items-center justify-center rounded-full bg-(--p-badge) text-icon-oncolor [&_svg]:size-3;
+  }
+  .cn-progress-circle {
+    @apply relative inline-flex shrink-0 items-center justify-center [--p-fill:var(--icon-primary)] [--p-track:var(--border-neutral-secondary)];
+  }
+  .cn-progress-circle-64 {
+    @apply size-16 [--p-stroke:8];
+  }
+  .cn-progress-circle-80 {
+    @apply size-20 [--p-stroke:8];
+  }
+  .cn-progress-circle-120 {
+    @apply size-30 [--p-stroke:8];
+  }
+  .cn-progress-circle-160 {
+    @apply size-40 [--p-stroke:8];
+  }
+  .cn-progress-circle-200 {
+    @apply size-50 [--p-stroke:8];
+  }
+  .cn-progress-ring {
+    @apply absolute inset-0 size-full -rotate-90 rtl:-scale-x-100;
+  }
+  .cn-progress-ring-track {
+    @apply stroke-(--p-track) [stroke-width:var(--p-stroke)];
+  }
+  .cn-progress-ring-indicator {
+    @apply stroke-(--p-fill) transition-[stroke-dasharray] duration-300 [stroke-width:var(--p-stroke)] motion-reduce:transition-none;
+    @apply data-indeterminate:origin-center data-indeterminate:animate-spin motion-reduce:data-indeterminate:animate-none;
+  }
+  .cn-progress-circle-content {
+    @apply relative flex flex-col items-center justify-center text-center;
+  }
+  .cn-progress-circle-value {
+    @apply text-sm font-bold text-text-primary-paragraph tabular-nums;
+  }
+  .cn-progress-circle-label {
+    @apply max-w-[70%] text-xs text-text-primary-paragraph in-data-[size='64']:sr-only in-data-[size='80']:sr-only;
+  }
+  .cn-progress-circle-icon {
+    @apply inline-flex size-1/3 items-center justify-center rounded-full bg-(--p-badge) text-icon-oncolor [&_svg]:size-3/5;
+  }
+
+  /* ------------------------------------------------------------------------------------
+   * Stepper (DGA Progress Indicator and Radial Stepper). 32px indicators joined by a 2px line,
+   * gap progress-indicator-gap. Completed is the filled brand circle with a tick; current a
+   * brand ring; upcoming a neutral ring (see Deviations for its contrast); error a red circle.
+   * ---------------------------------------------------------------------------------- */
+  .cn-stepper {
+    @apply m-0 flex list-none p-0;
+  }
+  .cn-stepper-horizontal {
+    @apply w-full flex-row items-start;
+  }
+  .cn-stepper-vertical {
+    @apply flex-col;
+  }
+  .cn-stepper-item {
+    @apply relative flex min-w-0;
+    @apply data-[orientation=horizontal]:flex-1 data-[orientation=horizontal]:flex-col data-[orientation=horizontal]:gap-progress-indicator-gap;
+    @apply data-[orientation=vertical]:flex-row data-[orientation=vertical]:pb-6 data-[orientation=vertical]:last:pb-0;
+    @apply [--s-ring:var(--icon-default-500)] [--s-num:var(--text-primary-paragraph)] [--s-fill:transparent] [--s-title:var(--stepper-text-tertiary)];
+    @apply [--s-hover:var(--stepper-button-upcoming-hovered)] data-[status=completed]:[--s-hover:var(--stepper-button-completed-hovered)] data-[status=current]:[--s-hover:var(--stepper-button-current-hovered)] data-[status=completed]:[--s-ring:var(--stepper-button-completed)] data-[status=completed]:[--s-fill:var(--stepper-button-completed)] data-[status=completed]:[--s-title:var(--stepper-text-primary)];
+    @apply data-[status=current]:[--s-ring:var(--stepper-button-current)] data-[status=current]:[--s-num:var(--stepper-button-current)] data-[status=current]:[--s-title:var(--stepper-button-current)];
+    @apply data-[status=error]:[--s-ring:var(--background-error)] data-[status=error]:[--s-fill:var(--background-error)] data-[status=error]:[--s-title:var(--text-error)];
+  }
+  .cn-stepper-step {
+    @apply relative flex min-w-0 gap-progress-indicator-gap rounded-sm border-0 bg-transparent p-0 text-start;
+    @apply in-data-[orientation=horizontal]:flex-col in-data-[orientation=horizontal]:items-start in-data-[orientation=vertical]:flex-row;
+    @apply [&:is(button)]:cursor-pointer [&:is(button)]:focus-visible:outline-2 [&:is(button)]:focus-visible:outline-solid [&:is(button)]:focus-visible:outline-offset-4 [&:is(button)]:focus-visible:outline-border-black [&:is(button):disabled]:cursor-not-allowed [&:is(button):disabled]:opacity-60;
+    @apply [&:is(button):hover_[data-slot=stepper-indicator]]:bg-(--s-hover) [&:is(button):hover_[data-slot=stepper-indicator]]:border-(--s-hover);
+  }
+  .cn-stepper-indicator {
+    @apply z-10 inline-flex size-8 shrink-0 items-center justify-center rounded-full border-2 border-(--s-ring) bg-(--s-fill) text-md font-medium text-(--s-num) transition-colors tabular-nums motion-reduce:transition-none [&_svg]:size-5;
+    @apply in-data-[status=completed]:text-icon-oncolor in-data-[status=error]:text-icon-oncolor;
+  }
+  .cn-stepper-text {
+    @apply flex min-w-0 flex-col gap-0.5;
+  }
+  .cn-stepper-title {
+    @apply text-md font-medium text-(--s-title) in-data-[status=completed]:font-normal;
+  }
+  .cn-stepper-description {
+    @apply block text-sm text-text-primary-paragraph;
+  }
+  /* Connectors are decorative: each step also says its state in words. */
+  .cn-stepper-line {
+    @apply pointer-events-none absolute bg-stepper-line-upcoming;
+    @apply in-data-[status=completed]:bg-stepper-line-completed;
+    @apply in-data-[orientation=horizontal]:inset-s-10 in-data-[orientation=horizontal]:top-4 in-data-[orientation=horizontal]:h-0.5 in-data-[orientation=horizontal]:w-[calc(100%-2.5rem)];
+    @apply in-data-[orientation=vertical]:inset-s-[calc(1rem-1px)] in-data-[orientation=vertical]:top-10 in-data-[orientation=vertical]:bottom-1 in-data-[orientation=vertical]:w-0.5;
+  }
+  .cn-stepper-compact {
+    @apply hidden items-center gap-4 max-sm:flex;
+  }
+  .cn-stepper-ring {
+    @apply relative inline-flex size-16 shrink-0 items-center justify-center text-sm font-bold text-text-primary-paragraph tabular-nums;
+  }
+  .cn-stepper-ring-svg {
+    @apply absolute inset-0 size-full -rotate-90 rtl:-scale-x-100;
+  }
+  .cn-stepper-ring-track {
+    @apply stroke-border-neutral-primary [stroke-width:8];
+  }
+  .cn-stepper-ring-indicator {
+    @apply stroke-stepper-button-current [stroke-width:8];
+  }
+  .cn-stepper-compact-text {
+    @apply flex min-w-0 flex-col gap-0.5;
+  }
+  .cn-stepper-compact-title {
+    @apply m-0 text-md font-semibold text-text-default;
+  }
+  .cn-stepper-next {
+    @apply m-0 text-sm text-text-primary-paragraph;
+  }
 }

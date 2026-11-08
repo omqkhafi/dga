@@ -224,29 +224,54 @@ export function darkRules(hex: (primitive: string) => string): Record<string, Ru
 
   // Figma Dark bugs: light values or hardcoded hex on dark surfaces ----------
   set(
-    [
-      "table-background-row",
-      "table-background-row-alt",
-      "stepper-button-background",
-      "datecell-background-disabled",
-    ],
+    ["table-background-row", "stepper-button-background", "datecell-background-disabled"],
     N(900),
     REASON.bug,
   );
   set(
-    [
-      "table-background-header",
-      "table-background-row-hovered",
-      "table-background-hover-selected",
-      "field-background-lighter",
-    ],
+    ["table-background-header", "table-background-hover-selected", "field-background-lighter"],
     N(850),
     REASON.bug,
   );
   set(["field-background-default"], "{background-card}", REASON.bug);
   set(["field-background-darker"], N(950), REASON.bug);
   set(["field-background-pressed"], N(800), REASON.bug);
-  set(["table-boarder-row-selected-hovered"], N(800), REASON.bug);
+  set(["table-border-row-selected-hovered"], N(800), REASON.bug);
+  set(
+    ["table-background-row-alt"],
+    N(850),
+    "Figma Dark gives the alternate row the same fill as the row (900), so the stripes are invisible. One step lighter (850).",
+  );
+  set(
+    ["table-background-row-hovered"],
+    N(800),
+    "Figma Dark hovers a row to 850, the header fill and now the alternate row. A hovered row is one step lighter again (800).",
+  );
+  set(
+    ["progress-bar-neutral"],
+    N(300),
+    "Figma Dark keeps the neutral progress fill at 37413d, the colour of the track: 1.00:1. Neutral 300 is 3:1 or more on the track.",
+  );
+  set(
+    ["stepper-button-completed"],
+    sa(500),
+    "Figma Dark keeps the completed step at 079455. Brand 500 is the lightest fill that still holds the white tick at 3:1.",
+  );
+  set(
+    ["stepper-button-completed-hovered"],
+    "{colors-primary-sa-flag-600-primary}",
+    "Figma Dark hovers the completed step to 166a45, which is 2.65:1 on the page. Brand 600 is 3:1 or more and keeps the white tick above 4.5:1.",
+  );
+  set(
+    ["stepper-button-current"],
+    sa(400),
+    "Figma Dark keeps the current step at 079455, 4.48:1 for its number and title. Brand 400 is 7:1 on the page.",
+  );
+  set(
+    ["stepper-button-current-hovered"],
+    sa(300),
+    "Figma Dark hovers the current step to 166a45, which is 2.65:1 on the page. Brand 300 is lighter on hover, as dark mode does elsewhere.",
+  );
   set(["tooltip-background-light"], N(850), REASON.surface);
   set(
     ["control-neutral-checked", "control-neutral-focused"],

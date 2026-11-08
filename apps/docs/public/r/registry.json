@@ -555,16 +555,16 @@
           "color-stepper-button-completed-hovered": "var(--stepper-button-completed-hovered)",
           "color-stepper-button-current": "var(--stepper-button-current)",
           "color-stepper-button-current-hovered": "var(--stepper-button-current-hovered)",
-          "color-stepper-button-upcomming": "var(--stepper-button-upcomming)",
-          "color-stepper-button-upcomming-hovered": "var(--stepper-button-upcomming-hovered)",
+          "color-stepper-button-upcoming": "var(--stepper-button-upcoming)",
+          "color-stepper-button-upcoming-hovered": "var(--stepper-button-upcoming-hovered)",
           "color-stepper-button-background": "var(--stepper-button-background)",
           "color-stepper-text-primary": "var(--stepper-text-primary)",
           "color-stepper-text-secondary": "var(--stepper-text-secondary)",
           "color-stepper-text-tertiary": "var(--stepper-text-tertiary)",
           "color-stepper-line-completed": "var(--stepper-line-completed)",
           "color-stepper-line-completed-hovered": "var(--stepper-line-completed-hovered)",
-          "color-stepper-line-upcomming": "var(--stepper-line-upcomming)",
-          "color-stepper-line-upcomming-hovered": "var(--stepper-line-upcomming-hovered)",
+          "color-stepper-line-upcoming": "var(--stepper-line-upcoming)",
+          "color-stepper-line-upcoming-hovered": "var(--stepper-line-upcoming-hovered)",
           "color-stepper-line-current": "var(--stepper-line-current)",
           "color-table-background-header": "var(--table-background-header)",
           "color-table-background-row": "var(--table-background-row)",
@@ -691,12 +691,12 @@
           "color-alpha-success-10": "var(--alpha-success-10)",
           "color-alpha-success-20": "var(--alpha-success-20)",
           "color-textarea-scrollbar-bar": "var(--textarea-scrollbar-bar)",
-          "color-control-boarder-disabled": "var(--control-boarder-disabled)",
+          "color-control-border-disabled": "var(--control-border-disabled)",
           "color-control-disabled": "var(--control-disabled)",
           "color-border-disabled": "var(--border-disabled)",
           "color-unselected-tab-icon": "var(--unselected-tab-icon)",
           "color-table-background-row-selected-hovered": "var(--table-background-row-selected-hovered)",
-          "color-table-boarder-row-selected-hovered": "var(--table-boarder-row-selected-hovered)",
+          "color-table-border-row-selected-hovered": "var(--table-border-row-selected-hovered)",
           "color-table-background-row-select": "var(--table-background-row-select)",
           "color-table-background-row-hovered": "var(--table-background-row-hovered)",
           "color-table-background-row-alt": "var(--table-background-row-alt)",
@@ -1823,19 +1823,19 @@
           "--stepper-button-completed-hovered": "var(--colors-primary-sa-flag-700)",
           "--stepper-button-current": "var(--colors-primary-sa-flag-600-primary)",
           "--stepper-button-current-hovered": "var(--colors-primary-sa-flag-700)",
-          "--stepper-button-upcomming": "var(--colors-neutral-300)",
-          "--stepper-button-upcomming-hovered": "var(--colors-neutral-400)",
+          "--stepper-button-upcoming": "var(--colors-neutral-300)",
+          "--stepper-button-upcoming-hovered": "var(--colors-neutral-400)",
           "--stepper-button-background": "var(--colors-base-white)",
           "--stepper-text-primary": "var(--text-display)",
           "--stepper-text-secondary": "var(--text-primary-paragraph)",
           "--stepper-text-tertiary": "var(--text-secondary-paragraph)",
           "--stepper-line-completed": "var(--colors-primary-sa-flag-600-primary)",
           "--stepper-line-completed-hovered": "var(--colors-primary-sa-flag-700)",
-          "--stepper-line-upcomming": "var(--colors-neutral-300)",
-          "--stepper-line-upcomming-hovered": "var(--colors-neutral-400)",
+          "--stepper-line-upcoming": "var(--colors-neutral-300)",
+          "--stepper-line-upcoming-hovered": "var(--colors-neutral-400)",
           "--stepper-line-current": "var(--colors-neutral-300)",
           "--table-background-header": "var(--colors-neutral-100)",
-          "--table-background-row": "var(--colors-neutral-50)",
+          "--table-background-row": "var(--colors-base-white)",
           "--background-primary-25": "var(--colors-primary-sa-flag-25)",
           "--background-secondary-25": "var(--colors-secondary-gold-25)",
           "--background-tertiary-25": "var(--colors-tertiary-lavender-25)",
@@ -1959,14 +1959,14 @@
           "--alpha-success-10": "var(--colors-alpha-alpha-green-10)",
           "--alpha-success-20": "var(--colors-alpha-alpha-green-20)",
           "--textarea-scrollbar-bar": "var(--background-neutral-300)",
-          "--control-boarder-disabled": "var(--colors-neutral-400)",
+          "--control-border-disabled": "var(--colors-neutral-400)",
           "--control-disabled": "var(--colors-neutral-300)",
           "--border-disabled": "var(--colors-neutral-300)",
           "--unselected-tab-icon": "var(--colors-neutral-700)",
           "--table-background-row-selected-hovered": "var(--colors-primary-sa-flag-50)",
-          "--table-boarder-row-selected-hovered": "var(--colors-neutral-100)",
+          "--table-border-row-selected-hovered": "var(--colors-neutral-100)",
           "--table-background-row-select": "var(--colors-primary-sa-flag-50)",
-          "--table-background-row-hovered": "var(--colors-neutral-100)",
+          "--table-background-row-hovered": "var(--background-primary-25)",
           "--table-background-row-alt": "var(--colors-neutral-50)",
           "--background-nav-header": "var(--colors-primary-sa-flag-800)",
           "--chip-background-neutral-default": "var(--colors-neutral-100)",
@@ -2368,19 +2368,19 @@
           "--stepper-button-completed-hovered": "var(--colors-primary-sa-flag-700)",
           "--stepper-button-current": "var(--colors-primary-sa-flag-600-primary)",
           "--stepper-button-current-hovered": "var(--colors-primary-sa-flag-700)",
-          "--stepper-button-upcomming": "var(--colors-neutral-300)",
-          "--stepper-button-upcomming-hovered": "var(--colors-neutral-400)",
+          "--stepper-button-upcoming": "var(--colors-neutral-300)",
+          "--stepper-button-upcoming-hovered": "var(--colors-neutral-400)",
           "--stepper-button-background": "var(--colors-base-white)",
           "--stepper-text-primary": "var(--text-display)",
           "--stepper-text-secondary": "var(--text-primary-paragraph)",
           "--stepper-text-tertiary": "var(--text-secondary-paragraph)",
           "--stepper-line-completed": "var(--colors-primary-sa-flag-600-primary)",
           "--stepper-line-completed-hovered": "var(--colors-primary-sa-flag-700)",
-          "--stepper-line-upcomming": "var(--colors-neutral-300)",
-          "--stepper-line-upcomming-hovered": "var(--colors-neutral-400)",
+          "--stepper-line-upcoming": "var(--colors-neutral-300)",
+          "--stepper-line-upcoming-hovered": "var(--colors-neutral-400)",
           "--stepper-line-current": "var(--colors-neutral-300)",
           "--table-background-header": "var(--colors-neutral-100)",
-          "--table-background-row": "var(--colors-neutral-50)",
+          "--table-background-row": "var(--colors-base-white)",
           "--background-primary-25": "var(--colors-primary-sa-flag-25)",
           "--background-secondary-25": "var(--colors-secondary-gold-25)",
           "--background-tertiary-25": "var(--colors-tertiary-lavender-25)",
@@ -2504,14 +2504,14 @@
           "--alpha-success-10": "var(--colors-alpha-alpha-green-10)",
           "--alpha-success-20": "var(--colors-alpha-alpha-green-20)",
           "--textarea-scrollbar-bar": "var(--background-neutral-300)",
-          "--control-boarder-disabled": "var(--colors-neutral-400)",
+          "--control-border-disabled": "var(--colors-neutral-400)",
           "--control-disabled": "var(--colors-neutral-300)",
           "--border-disabled": "var(--colors-neutral-300)",
           "--unselected-tab-icon": "var(--colors-neutral-700)",
           "--table-background-row-selected-hovered": "var(--colors-primary-sa-flag-50)",
-          "--table-boarder-row-selected-hovered": "var(--colors-neutral-100)",
+          "--table-border-row-selected-hovered": "var(--colors-neutral-100)",
           "--table-background-row-select": "var(--colors-primary-sa-flag-50)",
-          "--table-background-row-hovered": "var(--colors-neutral-100)",
+          "--table-background-row-hovered": "var(--background-primary-25)",
           "--table-background-row-alt": "var(--colors-neutral-50)",
           "--background-nav-header": "var(--colors-primary-sa-flag-800)",
           "--chip-background-neutral-default": "var(--colors-neutral-100)",
@@ -2852,20 +2852,20 @@
           "--table-text-body": "var(--colors-neutral-dark-50)",
           "--table-background-disabled": "var(--background-disabled)",
           "--table-background-hover-selected": "var(--colors-neutral-dark-850)",
-          "--stepper-button-completed": "var(--colors-green-600)",
-          "--stepper-button-completed-hovered": "var(--colors-primary-sa-flag-700)",
-          "--stepper-button-current": "var(--colors-green-600)",
-          "--stepper-button-current-hovered": "var(--colors-primary-sa-flag-700)",
-          "--stepper-button-upcomming": "var(--colors-neutral-dark-600)",
-          "--stepper-button-upcomming-hovered": "var(--colors-neutral-dark-600)",
+          "--stepper-button-completed": "var(--colors-primary-sa-flag-500)",
+          "--stepper-button-completed-hovered": "var(--colors-primary-sa-flag-600-primary)",
+          "--stepper-button-current": "var(--colors-primary-sa-flag-400)",
+          "--stepper-button-current-hovered": "var(--colors-primary-sa-flag-300)",
+          "--stepper-button-upcoming": "var(--colors-neutral-dark-600)",
+          "--stepper-button-upcoming-hovered": "var(--colors-neutral-dark-600)",
           "--stepper-button-background": "var(--colors-neutral-dark-900)",
           "--stepper-text-primary": "var(--colors-neutral-dark-50)",
           "--stepper-text-secondary": "var(--colors-neutral-dark-200)",
           "--stepper-text-tertiary": "var(--colors-neutral-dark-300)",
           "--stepper-line-completed": "var(--colors-primary-sa-flag-600-primary)",
           "--stepper-line-completed-hovered": "var(--colors-primary-sa-flag-700)",
-          "--stepper-line-upcomming": "var(--colors-neutral-dark-700)",
-          "--stepper-line-upcomming-hovered": "var(--colors-neutral-dark-700)",
+          "--stepper-line-upcoming": "var(--colors-neutral-dark-700)",
+          "--stepper-line-upcoming-hovered": "var(--colors-neutral-dark-700)",
           "--stepper-line-current": "var(--colors-neutral-dark-700)",
           "--table-background-header": "var(--colors-neutral-dark-850)",
           "--table-background-row": "var(--colors-neutral-dark-900)",
@@ -2992,15 +2992,15 @@
           "--alpha-success-10": "oklch(0.24078 0.03991 155.175)",
           "--alpha-success-20": "oklch(0.27077 0.06046 155.007)",
           "--textarea-scrollbar-bar": "var(--colors-neutral-dark-600)",
-          "--control-boarder-disabled": "var(--alpha-black-30)",
+          "--control-border-disabled": "var(--alpha-black-30)",
           "--control-disabled": "var(--colors-neutral-dark-300)",
           "--border-disabled": "var(--colors-neutral-dark-700)",
           "--unselected-tab-icon": "var(--colors-neutral-dark-200)",
           "--table-background-row-selected-hovered": "var(--alpha-primary-20)",
-          "--table-boarder-row-selected-hovered": "var(--colors-neutral-dark-800)",
+          "--table-border-row-selected-hovered": "var(--colors-neutral-dark-800)",
           "--table-background-row-select": "var(--alpha-primary-20)",
-          "--table-background-row-hovered": "var(--colors-neutral-dark-850)",
-          "--table-background-row-alt": "var(--colors-neutral-dark-900)",
+          "--table-background-row-hovered": "var(--colors-neutral-dark-800)",
+          "--table-background-row-alt": "var(--colors-neutral-dark-850)",
           "--background-nav-header": "var(--colors-primary-sa-flag-800)",
           "--chip-background-neutral-default": "var(--colors-neutral-dark-800)",
           "--chip-background-neutral-focused": "var(--colors-neutral-dark-800)",
@@ -3020,7 +3020,7 @@
           "--charts-red": "var(--colors-red-400)",
           "--charts-yellow": "var(--colors-yellow-400)",
           "--charts-green-primary-200": "var(--colors-primary-sa-flag-200)",
-          "--progress-bar-neutral": "var(--colors-neutral-dark-700)",
+          "--progress-bar-neutral": "var(--colors-neutral-dark-300)",
           "--icon-warning-ring": "var(--alpha-warning-10)",
           "--icon-error-ring": "var(--alpha-error-10)",
           "--icon-info-ring": "var(--alpha-info-10)",
@@ -3848,6 +3848,218 @@
           "path": "bases/base/ui/inline-alert.tsx",
           "type": "registry:ui",
           "target": "components/dga/inline-alert.tsx"
+        }
+      ]
+    },
+    {
+      "name": "breadcrumb",
+      "type": "registry:ui",
+      "title": "Breadcrumb",
+      "description": "DGA Breadcrumb: the path to the current page, folded behind an ellipsis button above five levels and on narrow screens. The separator mirrors in RTL.",
+      "dependencies": [
+        "@hugeicons/react",
+        "@hugeicons/core-free-icons"
+      ],
+      "registryDependencies": [
+        "https://dga.omqkhafi.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "bases/base/ui/breadcrumb.tsx",
+          "type": "registry:ui",
+          "target": "components/dga/breadcrumb.tsx"
+        }
+      ]
+    },
+    {
+      "name": "pagination",
+      "type": "registry:ui",
+      "title": "Pagination",
+      "description": "DGA Pagination: previous, next, page numbers with ellipsis, sm, md and lg, buttons or links, and a compact form on narrow screens. Arrows mirror in RTL.",
+      "dependencies": [
+        "@hugeicons/react",
+        "@hugeicons/core-free-icons",
+        "class-variance-authority"
+      ],
+      "registryDependencies": [
+        "https://dga.omqkhafi.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "bases/base/ui/pagination.tsx",
+          "type": "registry:ui",
+          "target": "components/dga/pagination.tsx"
+        }
+      ]
+    },
+    {
+      "name": "table-of-contents",
+      "type": "registry:ui",
+      "title": "Table of Contents",
+      "description": "DGA Table of Content: links to the sections of a page with three levels, the section being read highlighted, and arrow-key navigation.",
+      "registryDependencies": [
+        "https://dga.omqkhafi.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "bases/base/ui/table-of-contents.tsx",
+          "type": "registry:ui",
+          "target": "components/dga/table-of-contents.tsx"
+        }
+      ]
+    },
+    {
+      "name": "card",
+      "type": "registry:ui",
+      "title": "Card",
+      "description": "DGA Card on Base UI Collapsible: shadow, stroke or none, three sizes, media, actions, a clickable-card link pattern, expandable and selectable cards.",
+      "dependencies": [
+        "@base-ui/react",
+        "@hugeicons/react",
+        "@hugeicons/core-free-icons",
+        "class-variance-authority"
+      ],
+      "registryDependencies": [
+        "https://dga.omqkhafi.dev/r/utils.json",
+        "https://dga.omqkhafi.dev/r/checkbox.json"
+      ],
+      "files": [
+        {
+          "path": "bases/base/ui/card.tsx",
+          "type": "registry:ui",
+          "target": "components/dga/card.tsx"
+        }
+      ]
+    },
+    {
+      "name": "list",
+      "type": "registry:ui",
+      "title": "List",
+      "description": "DGA List and Structured List: ordered, unordered and icon lists in primary, neutral and on-colour, two levels, and selectable structured rows.",
+      "dependencies": [
+        "@hugeicons/react",
+        "@hugeicons/core-free-icons",
+        "class-variance-authority"
+      ],
+      "registryDependencies": [
+        "https://dga.omqkhafi.dev/r/utils.json",
+        "https://dga.omqkhafi.dev/r/radio.json"
+      ],
+      "files": [
+        {
+          "path": "bases/base/ui/list.tsx",
+          "type": "registry:ui",
+          "target": "components/dga/list.tsx"
+        }
+      ]
+    },
+    {
+      "name": "table",
+      "type": "registry:ui",
+      "title": "Table",
+      "description": "DGA Table: a semantic table with header, striped rows, dividers, compact and contained, sortable and filter heading buttons, and sideways scrolling.",
+      "dependencies": [
+        "@hugeicons/react",
+        "@hugeicons/core-free-icons",
+        "class-variance-authority"
+      ],
+      "registryDependencies": [
+        "https://dga.omqkhafi.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "bases/base/ui/table.tsx",
+          "type": "registry:ui",
+          "target": "components/dga/table.tsx"
+        }
+      ]
+    },
+    {
+      "name": "data-table",
+      "type": "registry:ui",
+      "title": "Data Table",
+      "description": "A Table with sorting, filtering, row selection, pagination, loading and empty states, built on TanStack Table, the DGA Table and the DGA Pagination.",
+      "dependencies": [
+        "@hugeicons/react",
+        "@hugeicons/core-free-icons",
+        "@tanstack/react-table"
+      ],
+      "registryDependencies": [
+        "https://dga.omqkhafi.dev/r/utils.json",
+        "https://dga.omqkhafi.dev/r/table.json",
+        "https://dga.omqkhafi.dev/r/pagination.json",
+        "https://dga.omqkhafi.dev/r/checkbox.json",
+        "https://dga.omqkhafi.dev/r/skeleton.json"
+      ],
+      "files": [
+        {
+          "path": "bases/base/ui/data-table.tsx",
+          "type": "registry:ui",
+          "target": "components/dga/data-table.tsx"
+        }
+      ]
+    },
+    {
+      "name": "rating",
+      "type": "registry:ui",
+      "title": "Rating",
+      "description": "DGA Rating on Base UI Radio Group: five stars, sm, md and lg, gold or brand, interactive with arrow keys or read-only.",
+      "dependencies": [
+        "@base-ui/react",
+        "class-variance-authority"
+      ],
+      "registryDependencies": [
+        "https://dga.omqkhafi.dev/r/utils.json",
+        "https://dga.omqkhafi.dev/r/direction.json"
+      ],
+      "files": [
+        {
+          "path": "bases/base/ui/rating.tsx",
+          "type": "registry:ui",
+          "target": "components/dga/rating.tsx"
+        }
+      ]
+    },
+    {
+      "name": "progress",
+      "type": "registry:ui",
+      "title": "Progress",
+      "description": "DGA Progress Bar on Base UI Progress: linear and circular, determinate and indeterminate, primary and neutral, success and error.",
+      "dependencies": [
+        "@base-ui/react",
+        "@hugeicons/react",
+        "@hugeicons/core-free-icons",
+        "class-variance-authority"
+      ],
+      "registryDependencies": [
+        "https://dga.omqkhafi.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "bases/base/ui/progress.tsx",
+          "type": "registry:ui",
+          "target": "components/dga/progress.tsx"
+        }
+      ]
+    },
+    {
+      "name": "stepper",
+      "type": "registry:ui",
+      "title": "Stepper",
+      "description": "DGA Progress Indicator and Radial Stepper: horizontal and vertical steps in completed, current, upcoming and error states, with a compact ring on narrow screens.",
+      "dependencies": [
+        "@hugeicons/react",
+        "@hugeicons/core-free-icons",
+        "class-variance-authority"
+      ],
+      "registryDependencies": [
+        "https://dga.omqkhafi.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "bases/base/ui/stepper.tsx",
+          "type": "registry:ui",
+          "target": "components/dga/stepper.tsx"
         }
       ]
     }
