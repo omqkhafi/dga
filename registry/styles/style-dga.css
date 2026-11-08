@@ -904,6 +904,125 @@
   }
 
   /* ------------------------------------------------------------------------------------
+   * Slider (DGA Slider, no colour tokens in the spec). Label and helper use the Field tokens
+   * (Text sm). Sizes: Small (4px track, 16px thumb) and Medium (6px track, 20px thumb). The track is
+   * control-border and the fill and thumb the control primary tokens, like the Switch, so they
+   * are 3:1 or better on every surface. Hover and drag use the hovered and pressed fills; the
+   * thumb has a 2px ring in the thumb colour; focus is the 2px black outline.
+   * ---------------------------------------------------------------------------------- */
+  .cn-slider {
+    @apply flex w-full min-w-0 flex-col gap-field-label-gap;
+  }
+  .cn-slider-size-sm {
+    @apply [--slider-thumb:1rem] [--slider-track:0.25rem];
+  }
+  .cn-slider-size-md {
+    @apply [--slider-thumb:1.25rem] [--slider-track:0.375rem];
+  }
+  .cn-slider-header {
+    @apply flex items-baseline justify-between gap-3;
+  }
+  .cn-slider-label {
+    @apply text-sm font-medium text-field-text-label data-disabled:text-text-default-disabled;
+  }
+  .cn-slider-value {
+    @apply text-sm text-field-text-helper tabular-nums [unicode-bidi:isolate] in-data-disabled:text-text-default-disabled;
+  }
+  .cn-slider-control {
+    @apply relative flex w-full touch-none items-center py-2 select-none data-disabled:cursor-not-allowed;
+  }
+  .cn-slider-track {
+    @apply relative w-full rounded-full bg-control-border select-none h-(--slider-track) in-data-disabled:bg-border-disabled;
+  }
+  .cn-slider-indicator {
+    @apply rounded-full bg-control-primary-checked select-none in-data-disabled:bg-text-default-disabled in-data-invalid:bg-field-border-error;
+  }
+  .cn-slider-thumb {
+    @apply rounded-full border-2 border-control-thumb bg-control-primary-checked shadow-sm outline-hidden transition-colors size-(--slider-thumb);
+    @apply hover:bg-control-primary-hovered data-dragging:bg-control-primary-pressed active:bg-control-primary-pressed;
+    @apply has-focus-visible:outline-2 has-focus-visible:outline-solid has-focus-visible:outline-offset-2 has-focus-visible:outline-border-black;
+    @apply in-data-invalid:bg-field-border-error in-data-invalid:hover:bg-field-border-error;
+    @apply data-disabled:cursor-not-allowed data-disabled:bg-text-default-disabled data-disabled:hover:bg-text-default-disabled;
+    @apply motion-reduce:transition-none;
+  }
+  .cn-slider-helper {
+    @apply m-0 text-sm text-field-text-helper;
+  }
+  .cn-slider-error {
+    @apply m-0 flex items-start gap-1.5 text-sm text-text-error;
+    @apply [&_svg]:mt-0.5 [&_svg]:size-4 [&_svg]:shrink-0 [&_svg]:text-icon-error;
+  }
+
+  /* ------------------------------------------------------------------------------------
+   * Input OTP (extension, follows Input). One Input box per character: 32 / 40px wide at the
+   * Input heights md / lg, digits centred. The boxes always run left to right (dir="ltr").
+   * ---------------------------------------------------------------------------------- */
+  .cn-otp {
+    @apply flex w-fit max-w-full items-center gap-2;
+  }
+  .cn-otp-slot {
+    @apply w-10 shrink justify-center px-0 data-[size=md]:w-8;
+  }
+  .cn-otp-input {
+    @apply w-full text-center;
+  }
+  .cn-otp-separator {
+    @apply h-0.5 w-3 shrink-0 rounded-full bg-icon-default-500;
+  }
+
+  /* ------------------------------------------------------------------------------------
+   * Toggle Group and Button Group (extensions, follow Button). Attached: shared 1px edges
+   * (items overlap by 1px), only the outer corners rounded (radius-sm), hovered, focused and
+   * pressed items on top. Spaced: 8px apart. Vertical stacks the items.
+   * ---------------------------------------------------------------------------------- */
+  .cn-toggle-group {
+    @apply flex w-fit max-w-full items-stretch data-[orientation=vertical]:flex-col;
+  }
+  .cn-toggle-group-spaced {
+    @apply flex-wrap gap-2;
+  }
+  .cn-toggle-group-attached {
+    @apply gap-0 [&>*]:rounded-none [&>*]:focus-visible:z-10 [&>*]:hover:z-10 [&>[aria-pressed=true]]:z-10;
+    @apply data-[orientation=horizontal]:[&>*:first-child]:rounded-s-sm data-[orientation=horizontal]:[&>*:last-child]:rounded-e-sm data-[orientation=horizontal]:[&>*:not(:first-child)]:-ms-px;
+    @apply data-[orientation=vertical]:[&>*:first-child]:rounded-t-sm data-[orientation=vertical]:[&>*:last-child]:rounded-b-sm data-[orientation=vertical]:[&>*:not(:first-child)]:-mt-px;
+  }
+  .cn-button-group {
+    @apply gap-0 [&>*]:rounded-none [&>*]:focus-visible:z-10 [&>*]:hover:z-10 [&>[aria-pressed=true]]:z-10;
+    @apply data-[orientation=horizontal]:[&>*:first-child]:rounded-s-sm data-[orientation=horizontal]:[&>*:last-child]:rounded-e-sm data-[orientation=horizontal]:[&>*:not(:first-child)]:-ms-px;
+    @apply data-[orientation=vertical]:[&>*:first-child]:rounded-t-sm data-[orientation=vertical]:[&>*:last-child]:rounded-b-sm data-[orientation=vertical]:[&>*:not(:first-child)]:-mt-px;
+    @apply flex w-fit max-w-full items-stretch;
+  }
+  .cn-button-group-horizontal {
+    @apply flex-row;
+  }
+  .cn-button-group-vertical {
+    @apply flex-col;
+  }
+  .cn-button-group-text {
+    @apply inline-flex min-h-8 items-center gap-2 border border-border-neutral-primary bg-background-neutral-100 px-buttons-md-padding text-sm font-medium whitespace-nowrap text-text-default [&_svg]:size-5 [&_svg]:shrink-0;
+  }
+  .cn-button-group-separator {
+    @apply self-stretch;
+  }
+
+  /* ------------------------------------------------------------------------------------
+   * Input Group (extension, follows Input). The Input box with addons: icons, text, a Kbd or a
+   * Button at either end. Gap and states come from .cn-input; the group owns the focus cue.
+   * ---------------------------------------------------------------------------------- */
+  .cn-input-group {
+    @apply gap-1.5;
+  }
+  .cn-input-group-addon {
+    @apply gap-1.5 [&_[data-slot=button]]:-mx-1.5;
+  }
+  .cn-input-group-text {
+    @apply text-inherit whitespace-nowrap [unicode-bidi:plaintext];
+  }
+  .cn-input-group-kbd {
+    @apply inline-flex h-5 min-w-5 items-center justify-center rounded-xs border border-border-neutral-primary bg-background-neutral-100 px-1 text-xs font-medium text-text-default;
+  }
+
+  /* ------------------------------------------------------------------------------------
    * File Upload. Dashed drop zone (a real file input inside a label), file rows with
    * progress and error states.
    * ---------------------------------------------------------------------------------- */

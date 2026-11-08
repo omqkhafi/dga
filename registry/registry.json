@@ -328,6 +328,116 @@
       ]
     },
     {
+      "name": "slider",
+      "type": "registry:ui",
+      "title": "Slider",
+      "description": "DGA Slider on Base UI Slider: a single value or a range, small and medium, label, helper text, value readout and error. The fill and arrow keys follow the page direction.",
+      "dependencies": [
+        "@base-ui/react",
+        "class-variance-authority",
+        "@hugeicons/react",
+        "@hugeicons/core-free-icons"
+      ],
+      "registryDependencies": [
+        "{{REGISTRY_URL}}/r/utils.json",
+        "{{REGISTRY_URL}}/r/direction.json"
+      ],
+      "files": [
+        {
+          "path": "bases/base/ui/slider.tsx",
+          "type": "registry:ui",
+          "target": "components/dga/slider.tsx"
+        }
+      ]
+    },
+    {
+      "name": "input-otp",
+      "type": "registry:ui",
+      "title": "Input OTP",
+      "description": "Platform Code extension on Base UI OTP Field: a one-time code in separate Input boxes with separators, paste and Arabic-Indic digit input. The boxes always run left to right.",
+      "dependencies": ["@base-ui/react", "class-variance-authority"],
+      "registryDependencies": [
+        "{{REGISTRY_URL}}/r/utils.json",
+        "{{REGISTRY_URL}}/r/input.json",
+        "{{REGISTRY_URL}}/r/number-input.json"
+      ],
+      "files": [
+        {
+          "path": "bases/base/ui/input-otp.tsx",
+          "type": "registry:ui",
+          "target": "components/dga/input-otp.tsx"
+        }
+      ]
+    },
+    {
+      "name": "toggle",
+      "type": "registry:ui",
+      "title": "Toggle",
+      "description": "Platform Code extension on Base UI Toggle: a two-state button in the DGA Button outline, subtle, transparent and secondary styles.",
+      "dependencies": ["@base-ui/react", "class-variance-authority"],
+      "registryDependencies": ["{{REGISTRY_URL}}/r/utils.json", "{{REGISTRY_URL}}/r/button.json"],
+      "files": [
+        {
+          "path": "bases/base/ui/toggle.tsx",
+          "type": "registry:ui",
+          "target": "components/dga/toggle.tsx"
+        }
+      ]
+    },
+    {
+      "name": "toggle-group",
+      "type": "registry:ui",
+      "title": "Toggle Group",
+      "description": "Platform Code extension on Base UI Toggle Group: attached or spaced toggles, single or multiple, horizontal or vertical, with arrow keys that follow the direction.",
+      "dependencies": ["@base-ui/react", "class-variance-authority"],
+      "registryDependencies": [
+        "{{REGISTRY_URL}}/r/utils.json",
+        "{{REGISTRY_URL}}/r/toggle.json",
+        "{{REGISTRY_URL}}/r/direction.json"
+      ],
+      "files": [
+        {
+          "path": "bases/base/ui/toggle-group.tsx",
+          "type": "registry:ui",
+          "target": "components/dga/toggle-group.tsx"
+        }
+      ]
+    },
+    {
+      "name": "input-group",
+      "type": "registry:ui",
+      "title": "Input Group",
+      "description": "Platform Code extension: the DGA Input box with addons (prefix, icon, unit, Kbd, button) at either end.",
+      "dependencies": ["@base-ui/react", "class-variance-authority"],
+      "registryDependencies": ["{{REGISTRY_URL}}/r/utils.json", "{{REGISTRY_URL}}/r/input.json"],
+      "files": [
+        {
+          "path": "bases/base/ui/input-group.tsx",
+          "type": "registry:ui",
+          "target": "components/dga/input-group.tsx"
+        }
+      ]
+    },
+    {
+      "name": "button-group",
+      "type": "registry:ui",
+      "title": "Button Group",
+      "description": "Platform Code extension: related DGA Buttons joined into one block with shared edges, a text segment and a separator, horizontal or vertical.",
+      "dependencies": ["@base-ui/react", "class-variance-authority"],
+      "registryDependencies": [
+        "{{REGISTRY_URL}}/r/utils.json",
+        "{{REGISTRY_URL}}/r/button.json",
+        "{{REGISTRY_URL}}/r/divider.json"
+      ],
+      "files": [
+        {
+          "path": "bases/base/ui/button-group.tsx",
+          "type": "registry:ui",
+          "target": "components/dga/button-group.tsx"
+        }
+      ]
+    },
+    {
       "name": "select",
       "type": "registry:ui",
       "title": "Select",
