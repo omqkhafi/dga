@@ -21,6 +21,7 @@
     "radio",
     "switch",
     "file-upload",
+    "slider",
     "---Interactive---",
     "dialog",
     "drawer",
@@ -49,6 +50,20 @@
     "footer",
     "date-picker",
     "carousel",
-    "filtration"
+    "filtration",
+    "digital-stamp",
+    "---Extension: overlays---",
+    "popover",
+    "hover-card",
+    "alert-dialog",
+    "context-menu",
+    "---Extension: inputs---",
+    "toggle",
+    "toggle-group",
+    "combobox",
+    "command",
+    "input-otp",
+    "input-group",
+    "button-group"
   ]
 }

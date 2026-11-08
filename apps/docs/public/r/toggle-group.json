@@ -1,0 +1,24 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "toggle-group",
+  "title": "Toggle Group",
+  "description": "Platform Code extension on Base UI Toggle Group: attached or spaced toggles, single or multiple, horizontal or vertical, with arrow keys that follow the direction.",
+  "dependencies": [
+    "@base-ui/react",
+    "class-variance-authority"
+  ],
+  "registryDependencies": [
+    "https://dga.omqkhafi.dev/r/utils.json",
+    "https://dga.omqkhafi.dev/r/toggle.json",
+    "https://dga.omqkhafi.dev/r/direction.json"
+  ],
+  "files": [
+    {
+      "path": "bases/base/ui/toggle-group.tsx",
+      "content": "\"use client\";\n\nimport { ToggleGroup as ToggleGroupPrimitive } from \"@base-ui/react/toggle-group\";\nimport { cva, type VariantProps } from \"class-variance-authority\";\nimport * as React from \"react\";\nimport { Toggle, type ToggleProps } from \"@/components/dga/toggle\";\nimport { AutoDirection } from \"@/lib/dga/direction\";\nimport { cn } from \"@/registry/bases/base/lib/utils\";\n\nconst toggleGroupVariants = cva(\"flex w-fit max-w-full items-stretch data-[orientation=vertical]:flex-col\", {\n  variants: {\n    attached: { true: \"gap-0 [&>*]:rounded-none [&>*]:focus-visible:z-10 [&>*]:hover:z-10 [&>[aria-pressed=true]]:z-10 data-[orientation=horizontal]:[&>*:first-child]:rounded-s-sm data-[orientation=horizontal]:[&>*:last-child]:rounded-e-sm data-[orientation=horizontal]:[&>*:not(:first-child)]:-ms-px data-[orientation=vertical]:[&>*:first-child]:rounded-t-sm data-[orientation=vertical]:[&>*:last-child]:rounded-b-sm data-[orientation=vertical]:[&>*:not(:first-child)]:-mt-px\", false: \"flex-wrap gap-2\" },\n  },\n  defaultVariants: { attached: true },\n});\n\ntype GroupStyle = Pick<ToggleProps, \"variant\" | \"size\" | \"iconOnly\">;\nconst GroupStyleContext = React.createContext<GroupStyle>({});\n\ntype ToggleGroupProps = ToggleGroupPrimitive.Props &\n  VariantProps<typeof toggleGroupVariants> &\n  GroupStyle;\n\n/**\n * A row (or column) of Toggles that belong together (Platform Code extension). By default one\n * option can be pressed at a time; set `multiple` to allow several, as in a text style toolbar.\n * Unlike a Content Switcher, nothing has to stay chosen: pressing the pressed option turns it off.\n * One toggle is in the tab order and the arrow keys move between them (they swap in RTL). Name\n * the group with `aria-label`.\n */\nfunction ToggleGroup({\n  className,\n  attached = true,\n  variant = \"outline\",\n  size = \"md\",\n  iconOnly,\n  orientation = \"horizontal\",\n  ...props\n}: ToggleGroupProps) {\n  const style = React.useMemo(() => ({ variant, size, iconOnly }), [variant, size, iconOnly]);\n  return (\n    <AutoDirection>\n      <GroupStyleContext.Provider value={style}>\n        <ToggleGroupPrimitive\n          data-slot=\"toggle-group\"\n          orientation={orientation}\n          className={cn(toggleGroupVariants({ attached }), className)}\n          {...props}\n        />\n      </GroupStyleContext.Provider>\n    </AutoDirection>\n  );\n}\n\n/** One option. It takes the look of its group; `value` identifies it in the group's value. */\nfunction ToggleGroupItem(props: ToggleProps) {\n  const style = React.useContext(GroupStyleContext);\n  return <Toggle {...style} {...props} />;\n}\n\nexport type { ToggleGroupProps };\nexport { ToggleGroup, ToggleGroupItem, toggleGroupVariants };\n",
+      "type": "registry:ui",
+      "target": "components/dga/toggle-group.tsx"
+    }
+  ],
+  "type": "registry:ui"
+}

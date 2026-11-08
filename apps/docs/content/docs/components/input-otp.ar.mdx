@@ -1,0 +1,102 @@
+---
+title: Input OTP
+description: "رمز لمرة واحدة في خانات منفصلة، مثل رمز الرسالة النصية. الكتابة والحذف واللصق تنقل بين الخانات، وتُحوَّل الأرقام العربية الهندية، وتبقى الخانات من اليسار إلى اليمين."
+sourceHash: 3996809bf714
+---
+
+<ExtensionNote
+  name="Input OTP"
+  primitive="Base UI OTP Field"
+  from="مكوّني Input وNumber Input"
+  tokens={["field-background-default", "field-border-default", "field-border-pressed", "field-border-error", "field-text-filled"]}
+/>
+
+<Preview name="input-otp-basic" title="Input OTP" minHeight={200} />
+
+## التثبيت [#installation]
+
+<ComponentInstall name="input-otp" />
+
+ويثبّت [Input](/docs/components/input) و[Number Input](/docs/components/number-input) أيضًا.
+
+## الاستخدام [#usage]
+
+```tsx title="page.tsx"
+import { Field, FieldDescription, FieldLabel } from "@/components/dga/field";
+import { InputOTP } from "@/components/dga/input-otp";
+
+export function VerifyField() {
+  return (
+    <Field className="w-fit">
+      <FieldLabel>رمز التحقق</FieldLabel>
+      <InputOTP
+        aria-label="رمز التحقق"
+        slotLabel="الرقم {index} من {length}"
+        groups={[3]}
+        onValueComplete={(code) => verify(code)}
+      />
+      <FieldDescription>أرسلنا رمزًا من 6 أرقام إلى هاتفك.</FieldDescription>
+    </Field>
+  );
+}
+```
+
+استخدمه لرمز قصير ينسخه الناس من رسالة أو يقرؤونه من تطبيق. وللنص الحر الأطول استخدم [Input](/docs/components/input). مرّر `aria-label` أو `aria-labelledby` لتسمية المجموعة، و`slotLabel` لترجمة اسم كل خانة. يُستدعى `onValueComplete` عند امتلاء كل الخانات أو لصق رمز كامل، فتتحقق دون زر.
+
+## البنية [#anatomy]
+
+- **الخانة**: صندوق Input من DGA (بارتفاع 32px أو 40px بحسب `size`)، واحدة لكل حرف، بالحد والخط السفلي وسلوك الخطأ نفسها.
+- **الفاصل** (اختياري): شريط قصير بين المجموعات، يُضبط بـ `groups`.
+- **النص المساعد** و**الخطأ**: من [Field](/docs/components/field).
+
+## أمثلة [#examples]
+
+### المجموعات والأحجام [#groups-and-sizes]
+
+`groups={[3]}` يقسم ست خانات إلى 3 + 3. و`mask` يعرض نقاطًا للرقم السري. و`size="md"` يعطي خانات بارتفاع 32px.
+
+<Preview compact name="input-otp-groups" title="المجموعات والإخفاء والحجم" minHeight={240} />
+
+### الحالات [#states]
+
+رمز خاطئ ومعطّل وللقراءة فقط. ينتقل التركيز مع الكتابة، وتظهر على الخانة المركّز عليها خطوط Input السفلية.
+
+<Preview name="input-otp-states" title="الحالات" minHeight={460} />
+
+### التحقق عند الاكتمال [#verify-when-complete]
+
+<Preview compact name="input-otp-verify" title="onValueComplete" minHeight={220} />
+
+## RTL [#rtl]
+
+تسير الخانات من اليسار إلى اليمين دائمًا، حتى في الصفحات العربية: هكذا تُقرأ الأرقام وتُرسل، مثل Number Input. وكل ما حولها (التسمية والنص المساعد والخطأ) يتبع اتجاه الصفحة. كتابة أرقام عربية هندية (٣) تملأ الخانة برقم غربي (3)، ولصق `٣٤٥٦٧٨` يفعل ذلك بالرمز كله.
+
+<DirectionCompare name="input-otp-basic" title="Input OTP" minHeight={200} />
+
+## إمكانية الوصول [#accessibility]
+
+| المفتاح | الإجراء |
+| --- | --- |
+| <kbd>Tab</kbd> | ينقل إلى الرمز (أول خانة فارغة، ثم يخرج منه). |
+| الأرقام | تملأ الخانة وتنتقل إلى التالية. |
+| <kbd>Backspace</kbd> | يمسح الخانة، أو السابقة إن كانت فارغة، ويعود خطوة. |
+| <kbd>←</kbd> <kbd>→</kbd> | تنقل بين الخانات. |
+| <kbd>Ctrl</kbd> <kbd>V</kbd> | يلصق رمزًا على الخانات. |
+
+- لكل خانة حقل نصي بـ `inputmode="numeric"` و`autocomplete="one-time-code"` فتقترح الهواتف رمز الرسالة. تُسمّى الخانة الأولى بتسمية Field (أو `aria-label` المجموعة)، وتُسمّى الخانات من الثانية إلى السادسة «الرقم 2 من 6» وهكذا (`slotLabel`)، فيعرف قارئ الشاشة موضعك دائمًا.
+- المجموعة عنصر نموذج أصلي بحقل مخفي، فتُرسل وتُتحقق مثل أي حقل. ويضبط الخطأ `aria-invalid` على كل خانة.
+- الحدود والخط السفلي وعلامة التركيز بنسبة 3:1 أو أفضل؛ والأرقام 4.5:1 أو أفضل على تعبئة الخانة، فاتحًا وداكنًا.
+
+## مرجع API [#api-reference]
+
+<ApiReference component="input-otp" />
+
+## الاشتقاق [#derivation]
+
+لا توجد مواصفة من DGA للامتداد. الخانات هي صندوق Input من DGA (`cn-input`) بحالات التمرير والتركيز والضغط والخطأ والقراءة فقط والتعطيل دون تغيير، ومعالجة الأرقام تتبع Number Input. لا ألوان جديدة ولا رموز جديدة.
+
+<ComponentDeviations component="input-otp" />
+
+## التباين [#contrast]
+
+<ComponentContrast component="input-otp" />

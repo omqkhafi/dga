@@ -1,0 +1,86 @@
+---
+title: Toggle
+description: "زر بحالتين يبقى مضغوطًا، بأنماط الزر المحدد بإطار والخفيف والشفاف والثانوي. لإعدادات تسري فورًا ويمكن إيقافها."
+sourceHash: 7c4068013758
+---
+
+<ExtensionNote
+  name="Toggle"
+  primitive="Base UI Toggle"
+  from="الزر Button"
+  tokens={["button-background-neutral-selected", "button-background-neutral-hovered", "button-label-transparent-selected", "border-black"]}
+/>
+
+<Preview name="toggle-variants" title="Toggle" minHeight={340} />
+
+## التثبيت [#installation]
+
+<ComponentInstall name="toggle" />
+
+ويثبّت [Button](/docs/components/button) أيضًا.
+
+## الاستخدام [#usage]
+
+```tsx title="page.tsx"
+import { Toggle } from "@/components/dga/toggle";
+
+export function BoldToggle() {
+  return (
+    <Toggle aria-label="عريض" defaultPressed>
+      عريض
+    </Toggle>
+  );
+}
+```
+
+استخدم Toggle لخيار عرض أو تنسيق يسري لحظة الضغط ويمكن تحريره: عريض أو إظهار المرشحات أو العرض المضغوط. واستخدم [Switch](/docs/components/switch) لإعداد في نموذج، و[Checkbox](/docs/components/checkbox) لاختيار يُرسل مع النموذج، و[Button](/docs/components/button) لإجراء. ولعدة أزرار تبديل مترابطة استخدم [Toggle Group](/docs/components/toggle-group).
+
+## البنية [#anatomy]
+
+- هو زر Button: الارتفاعات نفسها (24 و32 و40px) والحواف والحشو وأحجام الأيقونات والنص.
+- **المضغوط**: تعبئة الزر المحدد وحد داكن بسمك 1px، فلا تُعرف الحالة باللون وحده. وتنقلها `aria-pressed` للتقنيات المساعدة.
+
+## أمثلة [#examples]
+
+### الأنماط والحالات [#variants-and-states]
+
+`outline` (الافتراضي) و`subtle` و`transparent` و`secondary`، كل منها متوقف ومضغوط ومعطّل. مرّر المؤشر واضغط لترى تعبئة التمرير والضغط في الزر.
+
+<Preview name="toggle-variants" title="الأنماط" minHeight={340} />
+
+### الأحجام وأيقونة فقط [#sizes-and-icon-only]
+
+زر التبديل بأيقونة فقط مربع ويحتاج `aria-label`.
+
+<Preview compact name="toggle-sizes" title="الأحجام" minHeight={200} />
+
+## RTL [#rtl]
+
+زر التبديل متماثل، فلا ينعكس إلا ترتيب الأيقونة ونصها. والأيقونة الاتجاهية (كأيقونة المحاذاة) تُعكس بـ `rtl:-scale-x-100`.
+
+<DirectionCompare name="toggle-sizes" title="Toggle" minHeight={200} />
+
+## إمكانية الوصول [#accessibility]
+
+| المفتاح | الإجراء |
+| --- | --- |
+| <kbd>Tab</kbd> | ينقل التركيز إلى الزر. |
+| <kbd>Space</kbd> <kbd>Enter</kbd> | يضغطه أو يحرره. |
+
+- زر `button` أصلي بـ `aria-pressed="true"` أو `"false"`. ويجب ألا يتغير اسمه مع الحالة: اكتب «عريض» لا «عريض مفعّل».
+- الحد المضغوط 3:1 أو أفضل على الصفحة، والنصوص 4.5:1 على كل تعبئة، فاتحًا وداكنًا.
+- التركيز هو حد الزر الأسود بسمك 2px. وتبقى حالة الضغط ظاهرة في الأزرار المعطلة.
+
+## مرجع API [#api-reference]
+
+<ApiReference component="toggle" />
+
+## الاشتقاق [#derivation]
+
+لا يوجد في DGA زر تبديل. هذا هو زر DGA بأنماط `aria-pressed` التي يعرّفها أصلًا، مع حد داكن لحالة الضغط لأن تعبئة التحديد وحدها 1.2:1 على الصفحة في الوضع الفاتح. لا ألوان جديدة.
+
+<ComponentDeviations component="toggle" />
+
+## التباين [#contrast]
+
+<ComponentContrast component="toggle" />

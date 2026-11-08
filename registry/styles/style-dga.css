@@ -904,6 +904,128 @@
   }
 
   /* ------------------------------------------------------------------------------------
+   * Slider (DGA Slider, no colour tokens in the spec). Label and helper use the Field tokens
+   * (Text sm). Sizes: Small (4px track, 16px thumb) and Medium (6px track, 20px thumb). The track is
+   * control-border and the fill and thumb the control primary tokens, like the Switch, so they
+   * are 3:1 or better on every surface. Hover and drag use the hovered and pressed fills; the
+   * thumb has a 2px ring in the thumb colour; focus is the 2px black outline.
+   * ---------------------------------------------------------------------------------- */
+  .cn-slider {
+    @apply flex w-full min-w-0 flex-col gap-field-label-gap;
+  }
+  .cn-slider-size-sm {
+    @apply [--slider-thumb:1rem] [--slider-track:0.25rem];
+  }
+  .cn-slider-size-md {
+    @apply [--slider-thumb:1.25rem] [--slider-track:0.375rem];
+  }
+  .cn-slider-header {
+    @apply flex items-baseline justify-between gap-3;
+  }
+  .cn-slider-label {
+    @apply text-sm font-medium text-field-text-label data-disabled:text-text-default-disabled;
+  }
+  .cn-slider-value {
+    @apply text-sm text-field-text-helper tabular-nums [unicode-bidi:isolate] in-data-disabled:text-text-default-disabled;
+  }
+  .cn-slider-control {
+    @apply relative flex w-full touch-none items-center py-2 select-none data-disabled:cursor-not-allowed;
+  }
+  .cn-slider-track {
+    @apply relative w-full rounded-full bg-control-border select-none h-(--slider-track) in-data-disabled:bg-border-disabled;
+  }
+  .cn-slider-indicator {
+    @apply rounded-full bg-control-primary-checked select-none in-data-disabled:bg-text-default-disabled in-data-invalid:bg-field-border-error;
+  }
+  .cn-slider-thumb {
+    @apply rounded-full border-2 border-control-thumb bg-control-primary-checked shadow-sm outline-hidden transition-colors size-(--slider-thumb);
+    @apply hover:bg-control-primary-hovered data-dragging:bg-control-primary-pressed active:bg-control-primary-pressed;
+    @apply has-focus-visible:outline-2 has-focus-visible:outline-solid has-focus-visible:outline-offset-2 has-focus-visible:outline-border-black;
+    @apply in-data-invalid:bg-field-border-error in-data-invalid:hover:bg-field-border-error;
+    @apply data-disabled:cursor-not-allowed data-disabled:bg-text-default-disabled data-disabled:hover:bg-text-default-disabled;
+    @apply motion-reduce:transition-none;
+  }
+  .cn-slider-helper {
+    @apply m-0 text-sm text-field-text-helper;
+  }
+  .cn-slider-error {
+    @apply m-0 flex items-start gap-1.5 text-sm text-text-error;
+    @apply [&_svg]:mt-0.5 [&_svg]:size-4 [&_svg]:shrink-0 [&_svg]:text-icon-error;
+  }
+
+  /* ------------------------------------------------------------------------------------
+   * Input OTP (extension, follows Input). One Input box per character: 32 / 40px wide at the
+   * Input heights md / lg, digits centred. The boxes always run left to right (dir="ltr").
+   * ---------------------------------------------------------------------------------- */
+  .cn-otp {
+    @apply flex w-fit max-w-full items-center gap-2;
+  }
+  .cn-otp-slot {
+    @apply w-10 shrink justify-center px-0 data-[size=md]:w-8;
+  }
+  .cn-otp-input {
+    @apply w-full text-center;
+  }
+  .cn-otp-separator {
+    @apply h-0.5 w-3 shrink-0 rounded-full bg-icon-default-500;
+  }
+
+  /* ------------------------------------------------------------------------------------
+   * Toggle Group and Button Group (extensions, follow Button). Attached: shared 1px edges
+   * (items overlap by 1px), only the outer corners rounded (radius-sm), hovered, focused and
+   * pressed items on top. Spaced: 8px apart. Vertical stacks the items.
+   * ---------------------------------------------------------------------------------- */
+  .cn-toggle {
+    @apply aria-pressed:border-border-black aria-pressed:hover:border-border-black aria-pressed:active:border-border-black aria-pressed:data-disabled:border-border-disabled aria-pressed:data-disabled:text-text-default-disabled;
+  }
+  .cn-toggle-group {
+    @apply flex w-fit max-w-full items-stretch data-[orientation=vertical]:flex-col;
+  }
+  .cn-toggle-group-spaced {
+    @apply flex-wrap gap-2;
+  }
+  .cn-toggle-group-attached {
+    @apply gap-0 [&>*]:rounded-none [&>*]:focus-visible:z-10 [&>*]:hover:z-10 [&>[aria-pressed=true]]:z-10;
+    @apply data-[orientation=horizontal]:[&>*:first-child]:rounded-s-sm data-[orientation=horizontal]:[&>*:last-child]:rounded-e-sm data-[orientation=horizontal]:[&>*:not(:first-child)]:-ms-px;
+    @apply data-[orientation=vertical]:[&>*:first-child]:rounded-t-sm data-[orientation=vertical]:[&>*:last-child]:rounded-b-sm data-[orientation=vertical]:[&>*:not(:first-child)]:-mt-px;
+  }
+  .cn-button-group {
+    @apply gap-0 [&>*]:rounded-none [&>*]:focus-visible:z-10 [&>*]:hover:z-10 [&>[aria-pressed=true]]:z-10;
+    @apply data-[orientation=horizontal]:[&>*:first-child]:rounded-s-sm data-[orientation=horizontal]:[&>*:last-child]:rounded-e-sm data-[orientation=horizontal]:[&>*:not(:first-child)]:-ms-px;
+    @apply data-[orientation=vertical]:[&>*:first-child]:rounded-t-sm data-[orientation=vertical]:[&>*:last-child]:rounded-b-sm data-[orientation=vertical]:[&>*:not(:first-child)]:-mt-px;
+    @apply flex w-fit max-w-full items-stretch;
+  }
+  .cn-button-group-horizontal {
+    @apply flex-row;
+  }
+  .cn-button-group-vertical {
+    @apply flex-col;
+  }
+  .cn-button-group-text {
+    @apply inline-flex min-h-8 items-center gap-2 border border-border-neutral-primary bg-background-neutral-100 px-buttons-md-padding text-sm font-medium whitespace-nowrap text-text-default [&_svg]:size-5 [&_svg]:shrink-0;
+  }
+  .cn-button-group-separator {
+    @apply self-stretch;
+  }
+
+  /* ------------------------------------------------------------------------------------
+   * Input Group (extension, follows Input). The Input box with addons: icons, text, a Kbd or a
+   * Button at either end. Gap and states come from .cn-input; the group owns the focus cue.
+   * ---------------------------------------------------------------------------------- */
+  .cn-input-group {
+    @apply gap-1.5;
+  }
+  .cn-input-group-addon {
+    @apply gap-1.5 [&_[data-slot=button]]:-mx-1.5;
+  }
+  .cn-input-group-text {
+    @apply text-inherit whitespace-nowrap [unicode-bidi:plaintext];
+  }
+  .cn-input-group-kbd {
+    @apply inline-flex h-5 min-w-5 items-center justify-center rounded-xs border border-border-neutral-primary bg-background-neutral-100 px-1 text-xs font-medium text-text-default;
+  }
+
+  /* ------------------------------------------------------------------------------------
    * File Upload. Dashed drop zone (a real file input inside a label), file rows with
    * progress and error states.
    * ---------------------------------------------------------------------------------- */
@@ -1144,6 +1266,66 @@
   }
   .cn-menu-chevron {
     @apply ms-auto rtl:-scale-x-100;
+  }
+
+  /* ------------------------------------------------------------------------------------
+   * Popover, Hover Card, Alert Dialog and Context Menu: Platform Code extensions, no DGA spec.
+   * Popover and Hover Card use the Menu surface (background-menu, 1px border, radius-md,
+   * shadow-2xl) with padding 16 (spacing-4) and the Tooltip beak (14px, same offsets). Alert Dialog is the
+   * Dialog (cn-dialog-*). Context Menu is the Menu (cn-menu-*), so it has no classes of its own
+   * beyond the focus ring of its trigger area.
+   * ---------------------------------------------------------------------------------- */
+  .cn-popover-positioner {
+    @apply z-50 outline-hidden;
+  }
+  .cn-popover {
+    @apply relative flex w-72 max-w-(--available-width) flex-col gap-3 rounded-md border border-border-neutral-primary bg-background-menu p-4 text-md text-text-default shadow-2xl outline-hidden;
+    @apply origin-(--transform-origin) transition-[opacity,scale] duration-150 data-ending-style:scale-95 data-ending-style:opacity-0 data-starting-style:scale-95 data-starting-style:opacity-0 motion-reduce:transition-none;
+  }
+  .cn-hover-card {
+    @apply w-80;
+  }
+  .cn-popover-header {
+    @apply flex flex-col gap-1 in-data-has-close:pe-8;
+  }
+  .cn-popover-title {
+    @apply m-0 text-md font-semibold text-text-display;
+  }
+  .cn-popover-description {
+    @apply m-0 text-sm text-text-primary-paragraph;
+  }
+  .cn-popover-footer {
+    @apply flex flex-wrap justify-end gap-2 pt-1;
+  }
+  .cn-popover-close {
+    @apply absolute end-2 top-2 inline-flex size-8 cursor-pointer items-center justify-center rounded-sm border-0 bg-transparent p-0 text-icon-default transition-colors;
+    @apply hover:bg-button-background-neutral-hovered active:bg-button-background-neutral-pressed;
+    @apply focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-offset-1 focus-visible:outline-border-black;
+    @apply [&_svg]:size-5 motion-reduce:transition-none;
+  }
+  .cn-popover-arrow {
+    @apply flex;
+    /* logical-ok: Base UI positions the popup by physical side, so the beak sits on a physical edge. */
+    @apply data-[side=bottom]:-top-2.25 data-[side=top]:-bottom-2.25 data-[side=top]:rotate-180 data-[side=left]:-right-3.25 data-[side=left]:rotate-90 data-[side=right]:-left-3.25 data-[side=right]:-rotate-90; /* logical-ok */
+  }
+  .cn-popover-arrow-fill {
+    @apply fill-background-menu stroke-none;
+  }
+  .cn-popover-arrow-line {
+    @apply fill-none stroke-border-neutral-primary stroke-1;
+  }
+  .cn-hover-card-trigger {
+    @apply cursor-pointer rounded-xs text-link-primary underline underline-offset-4 transition-colors;
+    @apply hover:text-link-primary-hovered active:text-link-primary-pressed;
+    @apply focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-offset-2 focus-visible:outline-border-black;
+    @apply motion-reduce:transition-none;
+  }
+  .cn-alert-dialog-header {
+    @apply flex flex-col gap-modal-gap;
+  }
+  .cn-context-menu-trigger {
+    @apply rounded-sm outline-hidden select-none;
+    @apply focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-offset-2 focus-visible:outline-border-black;
   }
 
   /* ------------------------------------------------------------------------------------
@@ -2405,5 +2587,174 @@
     @apply data-chosen:border-datecell-background-default data-chosen:bg-datecell-background-default data-chosen:text-text-oncolor-primary data-chosen:hover:bg-datecell-background-hovered data-chosen:active:bg-datecell-background-pressed data-chosen:data-today:text-text-oncolor-primary;
     @apply data-disabled:cursor-not-allowed data-disabled:text-text-default-disabled data-disabled:hover:bg-transparent data-disabled:active:bg-transparent data-disabled:data-today:text-text-default-disabled;
     @apply data-disabled:data-chosen:bg-datecell-background-default data-disabled:data-chosen:text-text-oncolor-primary;
+  }
+
+  /* ------------------------------------------------------------------------------------
+   * Combobox (Platform Code extension, no DGA spec). The field is the Input box (cn-input),
+   * so every Input state, size and fill applies; the arrow and the clear button sit on the end
+   * side like Select's. The list is Select's popup: card surface, radius-sm, shadow-md, items
+   * 32px with the bar and fill on the highlighted one. Chips are the neutral Tag (24px, radius-sm).
+   * A multiple combobox grows taller as the chips wrap.
+   * ---------------------------------------------------------------------------------- */
+  .cn-combobox-control {
+    @apply has-[[data-slot=combobox-chips]]:h-auto has-[[data-slot=combobox-chips]]:py-1 data-[size=lg]:has-[[data-slot=combobox-chips]]:min-h-10 data-[size=md]:has-[[data-slot=combobox-chips]]:min-h-8;
+    @apply cursor-text;
+  }
+  .cn-combobox-chips {
+    @apply flex min-w-0 flex-1 flex-wrap items-center gap-1;
+  }
+  .cn-combobox-input {
+    @apply min-h-6 min-w-16 flex-1;
+  }
+  .cn-combobox-chip {
+    @apply inline-flex h-6 max-w-full cursor-default items-center gap-1 rounded-sm border border-border-neutral-secondary bg-tag-background-neutral-light ps-2 pe-1 text-xs font-semibold text-tag-text-neutral outline-hidden;
+    @apply data-highlighted:outline-2 data-highlighted:outline-solid data-highlighted:outline-offset-1 data-highlighted:outline-border-black focus-within:outline-2 focus-within:outline-solid focus-within:outline-offset-1 focus-within:outline-border-black;
+  }
+  .cn-combobox-chip-text {
+    @apply min-w-0 truncate;
+  }
+  .cn-combobox-chip-remove {
+    @apply relative inline-flex size-4 shrink-0 cursor-pointer items-center justify-center rounded-xs border-0 bg-transparent p-0 text-icon-default hover:bg-alpha-black-10;
+    @apply after:absolute after:-inset-1 focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-border-black [&_svg]:size-3;
+  }
+  .cn-combobox-clear {
+    @apply inline-flex size-6 shrink-0 cursor-pointer items-center justify-center rounded-xs border-0 bg-transparent p-0 text-icon-default-500 transition-colors;
+    @apply hover:bg-button-background-neutral-default hover:text-icon-default active:bg-button-background-neutral-pressed;
+    @apply focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-offset-1 focus-visible:outline-border-black [&_svg]:size-4;
+  }
+  .cn-combobox-trigger {
+    @apply -me-1 inline-flex size-6 shrink-0 cursor-pointer items-center justify-center rounded-xs border-0 bg-transparent p-0 text-icon-default-500 transition-[color,background-color] motion-reduce:transition-none;
+    @apply hover:bg-button-background-neutral-default hover:text-icon-default active:bg-button-background-neutral-pressed;
+    @apply focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-offset-1 focus-visible:outline-border-black;
+    @apply data-popup-open:[&_svg]:rotate-180 data-disabled:cursor-not-allowed data-disabled:text-icon-default-disabled [&_svg]:size-5 [&_svg]:transition-transform motion-reduce:[&_svg]:transition-none;
+  }
+  .cn-combobox-positioner {
+    @apply z-50 outline-hidden select-none;
+  }
+  .cn-combobox-content {
+    @apply flex max-h-(--available-height) min-w-(--anchor-width) origin-(--transform-origin) flex-col overflow-hidden rounded-sm border border-border-neutral-primary bg-background-card text-text-default shadow-md outline-hidden;
+    @apply transition-[scale,opacity] duration-100 data-starting-style:scale-95 data-starting-style:opacity-0 data-ending-style:scale-95 data-ending-style:opacity-0 motion-reduce:transition-none;
+  }
+  .cn-combobox-list {
+    @apply relative max-h-[min(18rem,var(--available-height))] min-h-0 overflow-y-auto overscroll-contain p-1 outline-hidden empty:hidden;
+  }
+  .cn-combobox-empty {
+    @apply flex items-center gap-2 px-3 py-3 text-sm text-text-primary-paragraph empty:hidden;
+  }
+  .cn-combobox-item {
+    @apply relative flex min-h-8 cursor-default items-center gap-2 rounded-xs px-3 py-1.5 text-sm text-text-default outline-hidden select-none;
+    @apply data-highlighted:bg-button-background-neutral-default data-highlighted:before:absolute data-highlighted:before:inset-y-1 data-highlighted:before:start-0 data-highlighted:before:w-0.5 data-highlighted:before:rounded-full data-highlighted:before:bg-border-black;
+    @apply data-selected:font-medium data-disabled:cursor-not-allowed data-disabled:text-text-default-disabled;
+    @apply data-creatable:font-medium data-creatable:[&_svg]:text-icon-primary [&_svg]:shrink-0;
+  }
+  .cn-combobox-item-text {
+    @apply min-w-0 flex-1 truncate;
+  }
+  .cn-combobox-item-indicator {
+    @apply inline-flex shrink-0 text-icon-primary [&_svg]:size-4;
+  }
+  .cn-combobox-group {
+    @apply flex flex-col;
+  }
+  .cn-combobox-label {
+    @apply px-3 py-1.5 text-xs font-semibold text-field-text-helper;
+  }
+  .cn-combobox-separator {
+    @apply -mx-1 my-1 h-px bg-border-neutral-secondary;
+  }
+
+  /* ------------------------------------------------------------------------------------
+   * Command (Platform Code extension). A Search Box (cn-input) over a Menu-style list: surface
+   * background-menu, 1px border, radius-md, items 40px with Text md. The highlighted action has
+   * the neutral hovered fill and a 2px bar on the start side (focus stays in the search box, so
+   * the bar is the non-colour cue), pressed is the pressed fill. Shortcuts stay left to right.
+   * ---------------------------------------------------------------------------------- */
+  .cn-command {
+    @apply flex w-full min-w-0 flex-col gap-2;
+  }
+  .cn-command-search {
+    @apply shrink-0;
+  }
+  .cn-command-in-dialog {
+    @apply gap-3;
+  }
+  .cn-command-results {
+    @apply flex min-h-0 flex-col overflow-hidden rounded-md border border-border-neutral-primary bg-background-menu text-text-default;
+  }
+  .cn-command-list {
+    @apply relative max-h-[min(20rem,50dvh)] min-h-0 overflow-y-auto overscroll-contain p-1 outline-hidden empty:hidden;
+  }
+  .cn-command-empty {
+    @apply px-4 py-6 text-center text-md text-text-primary-paragraph empty:hidden;
+  }
+  .cn-command-group {
+    @apply flex flex-col not-last:mb-1;
+  }
+  .cn-command-label {
+    @apply px-button-menu-h-padding py-1.5 text-xs font-bold text-text-display;
+  }
+  .cn-command-item {
+    @apply relative flex min-h-10 w-full cursor-pointer items-center gap-button-menu-gap rounded-sm px-button-menu-h-padding py-button-menu-v-padding text-start text-md text-text-default outline-hidden select-none;
+    @apply data-highlighted:bg-button-background-neutral-hovered data-highlighted:before:absolute data-highlighted:before:inset-y-1.5 data-highlighted:before:start-0 data-highlighted:before:w-0.5 data-highlighted:before:rounded-full data-highlighted:before:bg-border-black active:bg-button-background-neutral-pressed;
+    @apply data-disabled:cursor-not-allowed data-disabled:bg-transparent data-disabled:text-text-default-disabled data-disabled:[&_svg]:text-icon-default-disabled;
+    @apply [&_svg]:size-5 [&_svg]:shrink-0 [&_svg]:text-icon-default;
+  }
+  .cn-command-item-text {
+    @apply min-w-0 flex-1 truncate;
+  }
+  .cn-command-shortcut {
+    @apply ms-auto shrink-0 ps-4 font-sans text-sm text-text-primary-paragraph in-data-disabled:text-text-default-disabled;
+  }
+  .cn-command-dialog {
+    @apply gap-0! p-3! sm:p-4!;
+  }
+
+  /* ------------------------------------------------------------------------------------
+   * Digital Stamp (DGA). A 32px strip, background-neutral-100, Text sm Medium, padded with
+   * section-padding. Opened: a panel under the strip with one row per check (domain, https,
+   * registration); each row is an icon-success icon and a Text lg Semibold title (the DGA
+   * "Extension" part shows the domain suffix), 16px (spacing-xl) apart.
+   * ---------------------------------------------------------------------------------- */
+  .cn-digital-stamp {
+    @apply w-full bg-background-neutral-100 text-sm font-medium text-text-default;
+  }
+  .cn-digital-stamp-bar {
+    @apply mx-auto flex min-h-8 w-full max-w-[1280px] flex-wrap items-center gap-x-2 px-section-padding py-1;
+  }
+  .cn-digital-stamp-flag {
+    @apply size-4 shrink-0 text-icon-default;
+  }
+  .cn-digital-stamp-label {
+    @apply min-w-0;
+  }
+  .cn-digital-stamp-toggle {
+    @apply inline-flex min-h-6 cursor-pointer items-center gap-1 rounded-xs border-0 bg-transparent p-0 text-sm font-medium text-text-default underline underline-offset-4;
+    @apply hover:decoration-2 active:decoration-2;
+    @apply focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-offset-2 focus-visible:outline-border-black;
+    @apply [&_svg]:size-4 [&_svg]:shrink-0 [&_svg]:transition-transform aria-expanded:[&_svg]:rotate-180 motion-reduce:[&_svg]:transition-none;
+  }
+  .cn-digital-stamp-panel {
+    @apply border-t border-border-neutral-secondary;
+  }
+  .cn-digital-stamp-items {
+    @apply mx-auto m-0 grid w-full max-w-[1280px] list-none gap-6 p-0 px-section-padding py-4 md:grid-cols-3;
+  }
+  .cn-digital-stamp-item {
+    @apply flex items-start gap-(--spacing-xl);
+  }
+  .cn-digital-stamp-icon {
+    @apply size-6 shrink-0 text-icon-success;
+  }
+  .cn-digital-stamp-text {
+    @apply flex min-w-0 flex-col gap-1;
+  }
+  .cn-digital-stamp-title {
+    @apply m-0 text-lg font-semibold text-text-default;
+  }
+  .cn-digital-stamp-description {
+    @apply m-0 text-sm font-normal text-text-primary-paragraph;
+  }
+  .cn-digital-stamp-domain {
+    @apply font-bold;
   }
 }

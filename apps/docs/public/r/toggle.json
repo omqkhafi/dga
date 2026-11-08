@@ -1,0 +1,23 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "toggle",
+  "title": "Toggle",
+  "description": "Platform Code extension on Base UI Toggle: a two-state button in the DGA Button outline, subtle, transparent and secondary styles.",
+  "dependencies": [
+    "@base-ui/react",
+    "class-variance-authority"
+  ],
+  "registryDependencies": [
+    "https://dga.omqkhafi.dev/r/utils.json",
+    "https://dga.omqkhafi.dev/r/button.json"
+  ],
+  "files": [
+    {
+      "path": "bases/base/ui/toggle.tsx",
+      "content": "\"use client\";\n\nimport { Toggle as TogglePrimitive } from \"@base-ui/react/toggle\";\nimport type { VariantProps } from \"class-variance-authority\";\nimport { buttonVariants } from \"@/components/dga/button\";\nimport { cn } from \"@/registry/bases/base/lib/utils\";\n\ntype ToggleProps = Omit<TogglePrimitive.Props, \"value\"> &\n  Pick<VariantProps<typeof buttonVariants>, \"size\" | \"iconOnly\" | \"onColor\"> & {\n    /**\n     * Look of the button. `outline` (default), `subtle` and `transparent` follow the DGA Button\n     * styles; `secondary` is the solid one.\n     */\n    variant?: \"outline\" | \"subtle\" | \"transparent\" | \"secondary\";\n    /** The value inside a ToggleGroup. */\n    value?: string;\n  };\n\n/**\n * A two-state button that stays pressed (Platform Code extension; looks like a DGA Button).\n * Use it for a setting that applies right away and can be turned off again, such as Bold or\n * Show filters. Space and Enter flip it. The pressed state is the Button selected fill plus a\n * dark border, and `aria-pressed`, so it is not colour alone. An icon-only toggle needs an `aria-label`.\n * Use a Switch for on and off settings in a form, and a Checkbox for choices sent with a form.\n */\nfunction Toggle({\n  className,\n  variant = \"outline\",\n  size = \"md\",\n  iconOnly = false,\n  onColor = false,\n  ...props\n}: ToggleProps) {\n  return (\n    <TogglePrimitive\n      data-slot=\"toggle\"\n      data-variant={variant}\n      data-size={size}\n      className={cn(buttonVariants({ variant, size, iconOnly, onColor }), \"aria-pressed:border-border-black aria-pressed:hover:border-border-black aria-pressed:active:border-border-black aria-pressed:data-disabled:border-border-disabled aria-pressed:data-disabled:text-text-default-disabled\", className)}\n      {...props}\n    />\n  );\n}\n\nexport type { ToggleProps };\nexport { Toggle };\n",
+      "type": "registry:ui",
+      "target": "components/dga/toggle.tsx"
+    }
+  ],
+  "type": "registry:ui"
+}

@@ -1,0 +1,92 @@
+---
+title: Hover Card
+description: "A preview of what a link points to, shown when the link is hovered or focused. The Popover surface, opened by the pointer or the keyboard."
+---
+
+<ExtensionNote
+  name="Hover Card"
+  primitive="Base UI PreviewCard"
+  from="the DGA Menu surface through the Popover, and the DGA Link for the trigger"
+  tokens={["background-menu", "border-neutral-primary", "link-primary", "text-display", "text-primary-paragraph", "shadow-2xl"]}
+/>
+
+<Preview name="hover-card-basic" title="Hover Card" minHeight={300} />
+
+## Installation
+
+<ComponentInstall name="hover-card" />
+
+## Usage
+
+```tsx title="page.tsx"
+import { Avatar } from "@/components/dga/avatar";
+import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/dga/hover-card";
+
+export function Author() {
+  return (
+    <HoverCard>
+      <HoverCardTrigger href="/authority">Digital Government Authority</HoverCardTrigger>
+      <HoverCardContent>
+        <Avatar initials="DG" />
+        <p>Leads the digital transformation of government services.</p>
+      </HoverCardContent>
+    </HoverCard>
+  );
+}
+```
+
+Use a Hover Card to preview a profile, a service or a definition without leaving the page. It is a convenience for people with a pointer or a keyboard: **touch screens and screen readers do not get the card**, so the trigger must be a real link to the same content, and the card must never hold the only copy of anything. If people need to interact with the content, use a [Popover](/docs/components/popover). For a one-line hint, use a [Tooltip](/docs/components/tooltip).
+
+## Anatomy
+
+- **Trigger**: an anchor (`a`) styled as the DGA primary link: underlined, `link-primary`, with the hover, pressed and focus states of Link.
+- **Card**: the Popover surface, 320px wide: `background-menu`, a 1px border, radius-md, `shadow-2xl`.
+- **Beak** (optional): the Tooltip point, with `showArrow`.
+- **Timing**: it opens after `delay` (400ms) and closes `closeDelay` (200ms) after the pointer leaves, both set on the trigger.
+
+## Examples
+
+### Placements and the beak
+
+`start` and `end` are the sides of the text, so they swap on Arabic pages.
+
+<Preview compact name="hover-card-placements" title="Placements and the beak" minHeight={600} />
+
+### Timing
+
+`delay` and `closeDelay` on the trigger set how fast the card opens and closes.
+
+<Preview compact name="hover-card-states" title="Timing" minHeight={240} />
+
+## RTL
+
+The card opens below the link and centred by default. `start` and `end` swap with the direction and the beak follows. Content inside the card reads in the page direction.
+
+<DirectionCompare name="hover-card-placements" title="Hover Card" minHeight={600} />
+
+## Accessibility
+
+| Key | Action |
+| --- | --- |
+| <kbd>Tab</kbd> | Focusing the link opens the card. Moving away closes it. |
+| <kbd>Escape</kbd> | Closes the card without moving focus. |
+| <kbd>Enter</kbd> | On the link, follows it, as for any link. |
+
+- The card opens on keyboard focus as well as hover, stays open while the pointer is over it, and closes with Escape (WCAG 1.4.13: dismissible, hoverable, persistent).
+- The card is a preview, not a dialog: it is not announced to screen readers and it is not reachable by touch. That is why the link must lead to the same content.
+- Text is 4.5:1 and the focus ring 3:1 or better in light and dark. The link keeps its underline, so colour is not the only cue.
+- It fades and scales in; with reduced motion it appears without animation.
+
+## API Reference
+
+<ApiReference component="hover-card" />
+
+## Derivation from DGA
+
+DGA has no hover card, so this is not a DGA component and has no DGA specification. The card is the Popover surface, which is the DGA Menu surface, and the trigger is the DGA primary Link. No colour is new.
+
+<ComponentDeviations component="hover-card" />
+
+## Contrast
+
+<ComponentContrast component="hover-card" />

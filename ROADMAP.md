@@ -1,7 +1,7 @@
 # Roadmap
 
-Phases 0, 1 and 2 are done (0.1.0), the Phase 2.5 docs polish is in 0.1.1 and 0.1.2, the Arabic locale (Phase 2.6) is in 0.2.0, the forms (Phase 3) are in 0.3.0, the interactive components (Phase 4) are in 0.4.0, the AI Resources docs and the docs polish are in 0.4.1, 0.4.2 moves component installs to `components/dga` and fixes the Arabic 404, and 0.4.3 makes preview content follow the direction toggle, and 0.5.0 emits every colour as OKLCH and adds the navigation and data display components (Phase 5), and 0.6.0 adds the composite components (Phase 6); see [CHANGELOG.md](CHANGELOG.md).
-Next: Phase 7 (shadcn extension: components DGA does not define), Phase 8 (Section blocks) and Phase 9 (Mobile components, as needed), then the Release.
+Phases 0, 1 and 2 are done (0.1.0), the Phase 2.5 docs polish is in 0.1.1 and 0.1.2, the Arabic locale (Phase 2.6) is in 0.2.0, the forms (Phase 3) are in 0.3.0, the interactive components (Phase 4) are in 0.4.0, the AI Resources docs and the docs polish are in 0.4.1, 0.4.2 moves component installs to `components/dga` and fixes the Arabic 404, and 0.4.3 makes preview content follow the direction toggle, and 0.5.0 emits every colour as OKLCH and adds the navigation and data display components (Phase 5), and 0.6.0 adds the composite components (Phase 6), and 0.7.0 adds the first half of Phase 7 (overlays, inputs and the official-site strip); see [CHANGELOG.md](CHANGELOG.md).
+Next: Phase 7 part 2 (0.7.1: navigation, layout and display), Phase 8 (Section blocks) and Phase 9 (Mobile components, as needed), then the Release.
 Component specs for each phase are in `docs/design-system/components/`.
 
 ## Rules for every phase
@@ -124,19 +124,36 @@ Follow-ups, not blocking Phase 4:
 
 ## Phase 7: shadcn extension (components DGA does not define)
 
-Covers only the shadcn components that have no DGA equivalent. Depends on Phases 3 to 6.
+Covers only the shadcn components that have no DGA equivalent. Depends on Phases 3 to 6. Split in two releases: 0.7.0 (overlays, inputs and the official-site strip) and 0.7.1 (navigation, layout and display).
 
-- Each one is built like every other `@dga` item: Base UI where a primitive exists, the stable `cn-*` classes, DGA tokens only, RTL and LTR, light and dark, the contrast audit, docs in English and Arabic, the `components/dga` install path and the install test.
+Rules for both parts:
+
+- Each one is built like every other `@dga` item: Base UI where a primitive exists, the stable `cn-*` classes, DGA tokens only, RTL and LTR, light and dark, the contrast audit, docs in English and Arabic, the `components/dga` install path and the install test (with the collision fixture).
 - **No new colours.** Derive from the existing DGA semantic tokens, and log any new token in Deviations as "new, no DGA source".
 - **DGA wins where it has a component.** No shadcn duplicate ships for Dialog, Drawer (Sheet), Toast (Sonner), Tabs, Accordion, Tooltip, Menu (Dropdown Menu), Select, Checkbox, Radio, Switch, Input, Textarea, Field/Label, Badge, Avatar, Skeleton, Spinner, Divider (Separator), Inline Alert (Alert), Breadcrumbs, Pagination, Card, Table, Progress, Date Picker/Calendar and Carousel.
-- **Marked as an extension.** Each page states clearly that the component is a Platform Code extension and not part of DGA, and how its look is derived from DGA tokens.
-- **The look follows the nearest DGA component:** popovers follow Menu and Tooltip, inputs follow the Input field states, toggles follow Button.
-- **Candidates** (confirm against the current shadcn registry at the start of the phase, and drop anything Phases 5 and 6 already cover):
-  - Overlays: Popover, Hover Card, Alert Dialog, Context Menu.
-  - Inputs: Slider, Input OTP, Toggle, Toggle Group, Combobox, Command, Input Group, Button Group.
-  - Navigation: Menubar, Navigation Menu, Sidebar.
-  - Layout: Collapsible, Scroll Area, Resizable, Aspect Ratio.
-  - Display: Kbd, Empty, Item, Chart (using the DGA chart tokens).
+- **Marked as an extension.** Each page states clearly that the component is a Platform Code extension and not part of DGA, and how its look is derived from DGA tokens. The sidebar and the page header carry an "Extension" badge, and the [Extensions](apps/docs/content/docs/extensions.mdx) page lists every one.
+- **The look follows the nearest DGA component:** popovers follow Menu and Tooltip, inputs follow the Input field states, toggles follow Button, command and combobox lists follow Menu and Select.
+
+### Phase 7, part 1: overlays, inputs and the official-site strip (done, 0.7.0)
+
+- [x] **Overlays:** Popover, Hover Card, Alert Dialog and Context Menu.
+- [x] **Inputs:** Toggle, Toggle Group, Combobox (single, multiple and creatable), Command, Input OTP, Input Group and Button Group.
+- [x] **DGA-defined, so not extensions:** the **Slider** (single and range) has a DGA specification (`docs/design-system/components/slider.md`) that Phases 3 to 6 had not built, and the **Digital Stamp** is the DGA specification of the Saudi government "official website" strip (`digital-stamp.md`: the expandable strip above the Header and its domain Extension panel). Both follow the DGA specs, are listed under Forms and Composite, and carry no Extension badge. The Header takes the stamp in a `stamp` slot.
+- [x] **Checked against the shadcn registry and the existing `@dga` items before building**, with these decisions (every drop or merge is also recorded in the CHANGELOG):
+  - **Alert Dialog** stays a separate item, not a Dialog variant: it has a different role (`alertdialog`), cannot be dismissed by clicking outside, and puts focus on the safe action. It reuses the Dialog classes and Button.
+  - **Command** is not merged into Combobox: Combobox stores a form value, Command runs actions (a palette with groups and shortcuts). They share the list look (Menu and Select), and Command is built on the Base UI Autocomplete, so there is no `cmdk` dependency.
+  - **Input OTP** is built on the Base UI OTP Field, so there is no `input-otp` dependency.
+  - **Input Group** and **Button Group** stay: Input already has icon slots, but not text, button and key addons in one field; Button Group joins actions, which Content Switcher (choose a view) and Toggle Group (keep a state) do not.
+  - **Dropped, because the DGA or an existing item already covers it:** none of the eleven extensions was dropped; Slider and the stamp moved out of "extension" because DGA defines them.
+- [x] Each page in English and Arabic with previews of every variant and state, contrast pairs for every state, install and collision tests, and keyboard and RTL browser tests for Slider, Input OTP, Combobox, Command, Context Menu and Toggle Group.
+
+### Phase 7, part 2: navigation, layout and display (planned, 0.7.1)
+
+Candidates (confirm against the current shadcn registry at the start of the part, and drop anything the DGA components already cover):
+
+- Navigation: Menubar, Navigation Menu, Sidebar.
+- Layout: Collapsible, Scroll Area, Resizable, Aspect Ratio.
+- Display: Kbd, Empty, Item, Chart (using the DGA chart tokens).
 
 ## Phase 8: Section blocks
 

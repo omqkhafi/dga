@@ -58,6 +58,7 @@ import type * as PageTree from "fumadocs-core/page-tree";
 import NextLink from "next/link";
 import { usePathname } from "next/navigation";
 import type { ReactNode } from "react";
+import { isExtensionPath } from "@/lib/extension-slugs";
 import { useT } from "@/lib/locale-context";
 import { Badge } from "@/registry/bases/base/ui/badge";
 import { Icon } from "./icon";
@@ -203,6 +204,17 @@ export function SidebarNav({
                         className={active ? "text-text-primary" : "text-icon-default-500"}
                       />
                       {item.name}
+                      {isExtensionPath(item.url) ? (
+                        <Badge
+                          variant="neutral"
+                          size="sm"
+                          outlined
+                          className="ms-auto"
+                          title={t("ext.badgeTitle")}
+                        >
+                          {t("ext.badge")}
+                        </Badge>
+                      ) : null}
                     </NextLink>
                   </li>
                 );

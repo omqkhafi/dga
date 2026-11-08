@@ -1,0 +1,90 @@
+---
+title: Button Group
+description: "Related Buttons joined into one block with shared edges, with an optional text segment and separator, horizontal or vertical."
+---
+
+<ExtensionNote
+  name="Button Group"
+  primitive="a plain group element"
+  from="Button"
+  tokens={["button-background-neutral-default", "border-neutral-primary", "background-neutral-100", "text-default"]}
+/>
+
+<Preview name="button-group-basic" title="Button Group" minHeight={200} />
+
+## Installation
+
+<ComponentInstall name="button-group" />
+
+Installs [Button](/docs/components/button) and [Divider](/docs/components/divider) too.
+
+## Usage
+
+```tsx title="page.tsx"
+import { Button } from "@/components/dga/button";
+import { ButtonGroup } from "@/components/dga/button-group";
+
+export function PageActions() {
+  return (
+    <ButtonGroup aria-label="Page actions">
+      <Button variant="outline">Save</Button>
+      <Button variant="outline">Print</Button>
+      <Button variant="outline">Share</Button>
+    </ButtonGroup>
+  );
+}
+```
+
+A Button Group is only layout: every [Button](/docs/components/button) keeps its own action, size and variant, and the group removes the gap and shares the edges. Use it for actions that belong together (Save, Print, Share), a primary action next to its options (a split button with a [Menu](/docs/components/menu)), or a zoom control.
+
+**Which one?** Use [Toggle Group](/docs/components/toggle-group) when the buttons are pressed on and off, and [Content Switcher](/docs/components/content-switcher) when exactly one option is always chosen and switches the view.
+
+## Anatomy
+
+- **Group**: `role="group"`, named with `aria-label`. Only the outer corners are rounded; neighbouring buttons overlap by 1px so borders are not doubled.
+- **ButtonGroupText**: a non-interactive segment (a count, a label) drawn on `background-neutral-100` with a border.
+- **ButtonGroupSeparator**: a thin line between two buttons that share a fill, such as primary and secondary.
+
+## Examples
+
+### Outline buttons and a primary with options
+
+A primary button needs the separator, or its neighbour looks fused to it.
+
+<Preview name="button-group-basic" title="Basic" minHeight={200} />
+
+### Text segment and split button
+
+The split button opens a Menu from an icon-only button that has an accessible name.
+
+<Preview compact name="button-group-parts" title="Text and Menu" minHeight={260} />
+
+### Vertical and small
+
+<Preview compact name="button-group-vertical" title="Vertical" minHeight={260} />
+
+## RTL
+
+The first button is on the side where the text starts, and the rounded outer corners follow, so nothing is mirrored by hand. A split button's options button sits at the end, on the left in Arabic, and its menu opens aligned to that end.
+
+<DirectionCompare name="button-group-parts" title="Button Group" minHeight={260} />
+
+## Accessibility
+
+- A `group` role with an accessible name. Each button is a normal button in the tab order; the group adds no keyboard behaviour of its own.
+- Hover, focused and pressed buttons are raised above their neighbours, so the focus outline and borders are never clipped.
+- The text segment is 4.5:1 on its fill, in light and dark.
+
+## API Reference
+
+<ApiReference component="button-group" />
+
+## Derivation
+
+DGA has no button group. The buttons are DGA Buttons unchanged. The text segment uses the neutral background and primary border tokens. No new colours.
+
+<ComponentDeviations component="button-group" />
+
+## Contrast
+
+<ComponentContrast component="button-group" />

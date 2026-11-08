@@ -6,6 +6,7 @@
 
 import { chromePairs } from "./chrome";
 import { compositePairs } from "./composite";
+import { extensionPairs } from "./extensions";
 import { formPairs } from "./forms";
 import { interactivePairs } from "./interactive";
 import { navigationPairs } from "./navigation";
@@ -521,5 +522,6 @@ export function componentPairs(): ComponentPair[] {
     ...interactivePairs(),
     ...navigationPairs(),
     ...compositePairs(),
+    ...extensionPairs(),
   ];
 }

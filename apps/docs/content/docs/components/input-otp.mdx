@@ -1,0 +1,100 @@
+---
+title: Input OTP
+description: "A one-time code in separate boxes, such as an SMS code. Typing, deleting and pasting move between boxes, Arabic-Indic digits are converted, and the boxes always run left to right."
+---
+
+<ExtensionNote
+  name="Input OTP"
+  primitive="Base UI OTP Field"
+  from="Input and Number Input"
+  tokens={["field-background-default", "field-border-default", "field-border-pressed", "field-border-error", "field-text-filled"]}
+/>
+
+<Preview name="input-otp-basic" title="Input OTP" minHeight={200} />
+
+## Installation
+
+<ComponentInstall name="input-otp" />
+
+Installs [Input](/docs/components/input) and [Number Input](/docs/components/number-input) too.
+
+## Usage
+
+```tsx title="page.tsx"
+import { Field, FieldDescription, FieldLabel } from "@/components/dga/field";
+import { InputOTP } from "@/components/dga/input-otp";
+
+export function VerifyField() {
+  return (
+    <Field className="w-fit">
+      <FieldLabel>Verification code</FieldLabel>
+      <InputOTP
+        aria-label="Verification code"
+        groups={[3]}
+        onValueComplete={(code) => verify(code)}
+      />
+      <FieldDescription>We sent a 6-digit code to your phone.</FieldDescription>
+    </Field>
+  );
+}
+```
+
+Use it for a short code that people copy from a message or read from an app. For longer free text use [Input](/docs/components/input). Pass `aria-label` or `aria-labelledby` to name the group, and `slotLabel` to translate the name of each box. `onValueComplete` fires when every box is filled or a whole code is pasted, so you can verify without a button.
+
+## Anatomy
+
+- **Box**: the DGA Input box (32px or 40px high, `size`), one per character, with the same border, underline and error behaviour.
+- **Separator** (optional): a short bar between groups, set with `groups`.
+- **Helper text** and **error**: from [Field](/docs/components/field).
+
+## Examples
+
+### Groups and sizes
+
+`groups={[3]}` splits six boxes into 3 + 3. `mask` shows dots, for a PIN. `size="md"` gives the 32px boxes.
+
+<Preview compact name="input-otp-groups" title="Groups, mask and size" minHeight={240} />
+
+### States
+
+Wrong code, disabled and read-only. Focus moves with the typing, and the focused box shows the Input underline.
+
+<Preview name="input-otp-states" title="States" minHeight={460} />
+
+### Verify when complete
+
+<Preview compact name="input-otp-verify" title="onValueComplete" minHeight={220} />
+
+## RTL
+
+The boxes always run left to right, also on Arabic pages: digits are read and sent in that order, like in Number Input. Everything around them (label, helper text, error) follows the page direction. Typing Arabic-Indic digits (٣) fills the box with a Western digit (3), and pasting `٣٤٥٦٧٨` does the same for the whole code.
+
+<DirectionCompare name="input-otp-basic" title="Input OTP" minHeight={200} />
+
+## Accessibility
+
+| Key | Action |
+| --- | --- |
+| <kbd>Tab</kbd> | Moves to the code (the first empty box, then out of it). |
+| Digits | Fill the box and move on to the next one. |
+| <kbd>Backspace</kbd> | Clears the box, or the previous one if it is empty, and moves back. |
+| <kbd>←</kbd> <kbd>→</kbd> | Move between boxes. |
+| <kbd>Ctrl</kbd> <kbd>V</kbd> | Pastes a code across the boxes. |
+
+- Each box is a text input with `inputmode="numeric"` and `autocomplete="one-time-code"`, so phones suggest the SMS code. The first box is named by the Field label (or the group's `aria-label`); boxes 2 to 6 are named "Digit 2 of 6" and so on (`slotLabel`), so a screen reader always says where you are.
+- The group is a native-form control with a hidden input, so it is submitted and validated like any field. An error sets `aria-invalid` on every box.
+- Borders, the underline and the focus cue are 3:1 or better; digits are 4.5:1 or better on the box fill, in light and dark.
+
+## API Reference
+
+<ApiReference component="input-otp" />
+
+## Derivation
+
+An extension has no DGA specification. The boxes are the DGA Input box (`cn-input`) with the Input hover, focus, pressed, error, read-only and disabled states unchanged, and the digit handling follows Number Input. No new colours or tokens.
+
+<ComponentDeviations component="input-otp" />
+
+## Contrast
+
+<ComponentContrast component="input-otp" />

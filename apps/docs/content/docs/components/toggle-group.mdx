@@ -1,0 +1,95 @@
+---
+title: Toggle Group
+description: "A row or column of Toggles that belong together. One or several can be pressed, attached or spaced, with arrow keys that follow the page direction."
+---
+
+<ExtensionNote
+  name="Toggle Group"
+  primitive="Base UI Toggle Group"
+  from="Button and Content Switcher"
+  tokens={["button-background-neutral-selected", "border-neutral-primary", "button-background-neutral-hovered", "border-black"]}
+/>
+
+<Preview name="toggle-group-single" title="Toggle Group" minHeight={240} />
+
+## Installation
+
+<ComponentInstall name="toggle-group" />
+
+Installs [Toggle](/docs/components/toggle) and [Button](/docs/components/button) too.
+
+## Usage
+
+```tsx title="page.tsx"
+import { ToggleGroup, ToggleGroupItem } from "@/components/dga/toggle-group";
+
+export function TextStyle() {
+  return (
+    <ToggleGroup multiple aria-label="Text style" defaultValue={["bold"]}>
+      <ToggleGroupItem value="bold">Bold</ToggleGroupItem>
+      <ToggleGroupItem value="italic">Italic</ToggleGroupItem>
+      <ToggleGroupItem value="underline">Underline</ToggleGroupItem>
+    </ToggleGroup>
+  );
+}
+```
+
+`variant`, `size` and `iconOnly` on the group apply to every item. By default one item can be pressed at a time, and pressing it again releases it; `multiple` allows several. Control it with `value` and `onValueChange` (arrays of item values).
+
+**Which one?** A Toggle Group holds options that are on or off, possibly none. A [Content Switcher](/docs/components/content-switcher) always has exactly one option chosen and switches a view. A [Button Group](/docs/components/button-group) only lays out buttons that each run an action.
+
+## Anatomy
+
+- **Group**: `role="group"`, named with `aria-label`.
+- **Items**: [Toggles](/docs/components/toggle) with shared edges (1px overlap, only the outer corners rounded) or, with `attached={false}`, 8px apart.
+- **Pressed item**: the Button selected fill and a dark border, drawn above its neighbours.
+
+## Examples
+
+### One at a time
+
+Alignment as icons, and a view switch that follows the Subtle style, with a disabled option.
+
+<Preview name="toggle-group-single" title="Single" minHeight={240} />
+
+### Several at a time, and spaced
+
+<Preview compact name="toggle-group-multiple" title="Multiple" minHeight={240} />
+
+### Vertical
+
+<Preview compact name="toggle-group-vertical" title="Vertical" minHeight={220} />
+
+## RTL
+
+The first item is on the side where the text starts, so an attached group reads right to left in Arabic and the outer corners follow. <kbd>Left</kbd> and <kbd>Right</kbd> swap: <kbd>Right</kbd> moves to the previous item in RTL. Mirror direction-specific icons with `rtl:-scale-x-100`.
+
+<DirectionCompare name="toggle-group-single" title="Toggle Group" minHeight={240} />
+
+## Accessibility
+
+| Key | Action |
+| --- | --- |
+| <kbd>Tab</kbd> | Moves focus into the group (one item) and out again. |
+| <kbd>→</kbd> <kbd>←</kbd> | Move to the next or previous item. Swapped in RTL. |
+| <kbd>↓</kbd> <kbd>↑</kbd> | Do the same in a vertical group. |
+| <kbd>Home</kbd> <kbd>End</kbd> | Move to the first or last item. |
+| <kbd>Space</kbd> <kbd>Enter</kbd> | Press or release the focused item. |
+
+- Roving focus: one item is in the tab order. Items keep `aria-pressed`, and the group is named by `aria-label`.
+- The pressed item is shown by the fill and a dark border; the label is 4.5:1 and the border 3:1 in light and dark.
+- A disabled item is skipped by the arrow keys' action but stays visible in its state.
+
+## API Reference
+
+<ApiReference component="toggle-group" />
+
+## Derivation
+
+DGA has no toggle group. The items are DGA Buttons, and the attached shape follows the Content Switcher. No new colours.
+
+<ComponentDeviations component="toggle-group" />
+
+## Contrast
+
+<ComponentContrast component="toggle-group" />

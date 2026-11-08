@@ -1,0 +1,89 @@
+---
+title: Digital Stamp
+description: "شريط الموقع الرسمي في أعلى موقع حكومي، مع لوحة تبيّن كيف يُتحقق من النطاق وhttps والتسجيل (DGA: Digital Stamp)."
+sourceHash: 10c27e29806e
+---
+
+<Preview name="digital-stamp-open" title="الختم الرقمي" minHeight={260} />
+
+## التثبيت [#installation]
+
+<ComponentInstall name="digital-stamp" />
+
+## الاستخدام [#usage]
+
+```tsx title="layout.tsx"
+import { DigitalStamp } from "@/components/dga/digital-stamp";
+import { Header } from "@/components/dga/header";
+
+export function SiteHeader() {
+  return <Header stamp={<DigitalStamp domain="gov.sa" />} logo={<Logo />} items={items} />;
+}
+```
+
+ضع الختم في أعلى كل صفحة من موقع حكومي، فوق [Second Nav](/docs/components/second-nav) و[Header](/docs/components/header): مرّره في خانة `stamp` من Header التي تقع فوق `top`. يخبر الزائر أن الموقع رسمي ويتيح له التحقق: العنوان ينتهي بنطاق سعودي، والاتصال https، والموقع مسجّل لدى هيئة الحكومة الرقمية. تعطي DGA التخطيط ولا تعطي النصوص، لذلك كل نص خاصية بقيمة افتراضية بالإنجليزية؛ ترجمها في الصفحات العربية. اضبط `domain` على اللاحقة التي يستخدمها موقعك.
+
+## البنية [#anatomy]
+
+- **الشريط**: بارتفاع 32px، و`background-neutral-100`، ونص sm بوزن Medium، وحشوة `section-padding`. وفي الشاشات الضيقة يلتف إلى سطر ثانٍ.
+- **أيقونة العلم** (اختيارية): يزيلها `hideIcon`.
+- **المبدّل**: زر حقيقي بـ `aria-expanded` و`aria-controls` يفتح اللوحة.
+- **اللوحة**: صف لكل فحص، بأيقونة `icon-success` وعنوان lg بوزن Semibold. الصف الأول هو جزء Extension في DGA: يعرض لاحقة النطاق (`gov.sa` أو `edu.sa` أو `med.sa` أو `org.sa` أو `sch.sa` أو `.sa`). مرّر `registrationTitle={null}` لحذف صف التسجيل.
+
+## أمثلة [#examples]
+
+### مغلق [#closed]
+
+الشريط وحده بارتفاع 32px.
+
+<Preview compact name="digital-stamp-closed" title="مغلق" minHeight={120} />
+
+### مفتوح [#opened]
+
+اضغط الزر لفتحه، واضغطه ثانيةً أو <kbd>Esc</kbd> لإغلاقه.
+
+<Preview compact name="digital-stamp-open" title="مفتوح" minHeight={260} />
+
+### النطاقات [#domains]
+
+اللواحق الست التي تذكرها DGA. تُقرأ اللاحقة دائمًا من اليسار إلى اليمين، حتى في العربية.
+
+<Preview name="digital-stamp-domains" title="النطاقات" minHeight={720} />
+
+### في الترويسة [#in-the-header]
+
+<Preview compact name="header-stamp" title="في الترويسة" minHeight={260} />
+
+## الاتجاه من اليمين إلى اليسار [#rtl]
+
+يبدأ العلم والنص من اليمين ويتبعهما المبدّل. تجري الصفوف الثلاثة من اليمين. وتبقى لاحقة النطاق من اليسار إلى اليمين ومعزولة عن العربية حولها.
+
+<DirectionCompare name="digital-stamp-open" title="Digital Stamp" minHeight={260} />
+
+## إمكانية الوصول [#accessibility]
+
+| المفتاح | الإجراء |
+| --- | --- |
+| <kbd>Tab</kbd> | ينقل التركيز إلى المبدّل. |
+| <kbd>Enter</kbd> أو <kbd>Space</kbd> | يفتح اللوحة أو يغلقها. |
+| <kbd>Esc</kbd> | يغلق اللوحة ويُبقي التركيز على المبدّل. |
+
+- الشريط منطقة لها تسمية. يعلن المبدّل `aria-expanded` ويشير إلى اللوحة بـ `aria-controls`؛ واللوحة المغلقة مخفية عن شجرة إمكانية الوصول.
+- تُفتح اللوحة بلا حركة، فلا تحتاج إعدادات تقليل الحركة معالجة خاصة. ويُعطَّل دوران السهم مع تقليل الحركة.
+- النص بتباين 4.5:1 على الشريط وكذلك المبدّل، مع حلقة تركيز 2px، في الفاتح والداكن.
+
+## مرجع الواجهة البرمجية [#api-reference]
+
+<ApiReference component="digital-stamp" />
+
+## الاختلافات عن DGA [#deviations-from-dga]
+
+- في Figma من DGA الشريط (مغلقًا ومفتوحًا، للحاسوب والجوال) وجزء Extension، دون نصوص أو رسومات. النصوص وأيقونة العلم وصفا https والتسجيل جديدة، بلا مصدر من DGA.
+- يلتف الشريط في الشاشات الضيقة بدل إطار جوال منفصل.
+- جزء Extension صف في اللوحة، لا شريطًا مستقلًا بارتفاع 88px.
+
+<ComponentDeviations component="digital-stamp" />
+
+## التباين [#contrast]
+
+<ComponentContrast component="digital-stamp" />

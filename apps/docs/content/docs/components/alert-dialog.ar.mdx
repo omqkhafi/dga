@@ -1,0 +1,120 @@
+---
+title: Alert Dialog
+description: "حوار يقاطع لتأكيد إجراء يصعب التراجع عنه. هو Dialog في DGA بسلوك حوار التنبيه: يبدأ التركيز على الإلغاء ولا يغلقه النقر خارجه."
+sourceHash: 07507562717e
+---
+
+<ExtensionNote
+  name="حوار التنبيه"
+  primitive="Base UI AlertDialog"
+  from="النافذة المنبثقة Dialog (Modal) في DGA للنافذة، والزر Button في DGA للإجراءات"
+  tokens={["background-white", "alpha-black-50", "text-display", "text-primary-paragraph", "shadow-3xl", "button-background-danger-primary-default"]}
+/>
+
+<Preview name="alert-dialog-basic" title="حوار التنبيه" minHeight={300} />
+
+## التثبيت [#installation]
+
+<ComponentInstall name="alert-dialog" />
+
+## الاستخدام [#usage]
+
+```tsx title="page.tsx"
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/dga/alert-dialog";
+import { Button } from "@/components/dga/button";
+
+export function WithdrawRequest() {
+  return (
+    <AlertDialog>
+      <AlertDialogTrigger render={<Button destructive variant="outline" />}>
+        سحب الطلب
+      </AlertDialogTrigger>
+      <AlertDialogContent>
+        <AlertDialogHeader>
+          <AlertDialogTitle>سحب هذا الطلب؟</AlertDialogTitle>
+          <AlertDialogDescription>
+            سيُسحب الطلب ٢٤٨١٠. لا يمكن التراجع عن ذلك.
+          </AlertDialogDescription>
+        </AlertDialogHeader>
+        <AlertDialogFooter>
+          <AlertDialogCancel>الإبقاء على الطلب</AlertDialogCancel>
+          <AlertDialogAction destructive onClick={withdraw}>
+            سحب
+          </AlertDialogAction>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
+  );
+}
+```
+
+استخدم Alert Dialog حين تكون الخطوة التالية صعبة التراجع أو مستحيلته ويجب أن يختار الشخص قبل المتابعة: سحب طلب أو حذف ملف أو تسجيل الخروج من كل مكان. يطرح سؤالًا واحدًا بجوابين. وللنماذج أو الشرح الأطول أو ما ليس تأكيدًا استخدم [Dialog](/docs/components/dialog).
+
+### لماذا مكوّن مستقل لا نسخة من Dialog [#why-a-separate-component-not-a-dialog-variant]
+
+يشبه Dialog تمامًا (يستخدم الأصناف نفسها)، لكنه يتصرف بشكل مختلف في أمور تخص إمكانية الوصول ولا يمكن أن تكون مجرد نمط: له الدور `role="alertdialog"` فتعلنه التقنيات المساندة سؤالًا عاجلًا وتقرأ وصفه فورًا؛ ويبدأ التركيز على الإلغاء وهو الجواب الآمن لا على أول عنصر تحكم؛ ولا يغلقه النقر على الخلفية فلا يضيع الاختيار بالخطأ. وبقاؤها في عنصر صغير مستقل يعفي Dialog من تخمين السلوك الذي تريده.
+
+## البنية [#anatomy]
+
+- **النافذة**: بطاقة Dialog: `background-white` وradius-md و`shadow-3xl` وعرض 400px (`size="md"` يعني 600px) فوق خلفية `alpha-black-50`.
+- **العنوان والوصف**: السؤال وما سيحدث. وكلاهما مرتبط بالنافذة لقارئات الشاشة.
+- **الإلغاء**: زر Button بإطار فقط. يبدأ التركيز هنا.
+- **الإجراء**: زر Button أساسي، أو مدمّر بـ `destructive`. ضعه أخيرًا.
+- لا يوجد زر إغلاق في الزاوية: يجيب الشخص بأحد الإجراءين أو بـ Escape.
+
+## أمثلة [#examples]
+
+### غير مدمّر [#not-destructive]
+
+التأكيد غير المدمّر يستخدم الإجراء الأساسي. و`size="md"` يعطي نافذة أعرض لشرح أطول.
+
+<Preview compact name="alert-dialog-neutral" title="غير مدمّر" minHeight={300} />
+
+### بتحكّم خارجي [#controlled]
+
+مرّر `open` و`onOpenChange` لفتحه من شيفرتك. النقر خارجه لا يغلقه؛ يغلقه Escape والزران.
+
+<Preview compact name="alert-dialog-controlled" title="بتحكّم خارجي" minHeight={300} />
+
+## RTL [#rtl]
+
+النافذة في المنتصف. وتتبع أزرار التذييل الاتجاه (الإجراء الرئيسي على اليسار بالعربية) ويُقرأ النص من اليمين إلى اليسار.
+
+<DirectionCompare name="alert-dialog-basic" title="حوار التنبيه" minHeight={300} />
+
+## إمكانية الوصول [#accessibility]
+
+| المفتاح | الإجراء |
+| --- | --- |
+| <kbd>Enter</kbd> أو <kbd>Space</kbd> | على الزر يفتح الحوار. وعلى زر داخله يختاره. |
+| <kbd>Tab</kbd> | ينتقل بين الإجراءين. ويبقى التركيز داخل الحوار. |
+| <kbd>Escape</kbd> | يلغي: يغلق الحوار ويعيد التركيز إلى الزر. |
+
+- الدور `role="alertdialog"` والعنوان اسمه والوصف وصفه. يبدأ التركيز على الإلغاء ويعود إلى الزر عند الإغلاق. والصفحة خلفه معطّلة.
+- النقر على الخلفية لا يفعل شيئًا. و Escape هو مخرج لوحة المفاتيح كما في نمط WAI-ARIA.
+- النص بنسبة 4.5:1 وحلقات التركيز 3:1 أو أفضل على النافذة، فاتحًا وداكنًا. والإجراء المدمّر مسمّى بالكلمات أيضًا فلا يكون اللون الإشارة الوحيدة.
+- يظهر بتلاشٍ وتكبير؛ ومع تقليل الحركة يظهر دون حركة.
+
+## مرجع API [#api-reference]
+
+<ApiReference component="alert-dialog" />
+
+## الاشتقاق من DGA [#derivation-from-dga]
+
+في DGA نافذة Modal لكن لا حوار تنبيه، فهذا ليس مكوّنًا من DGA. نافذته وعنوانه ووصفه وتذييله هي Dialog في DGA (أصناف `cn-dialog` نفسها)، وإجراءاته هي Button في DGA. ولا لون جديد فيه.
+
+<ComponentDeviations component="alert-dialog" />
+
+## التباين [#contrast]
+
+<ComponentContrast component="alert-dialog" />

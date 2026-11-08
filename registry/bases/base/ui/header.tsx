@@ -316,7 +316,9 @@ type HeaderProps = Omit<React.ComponentProps<"header">, "children"> & {
   language?: React.ReactNode;
   /** The user area: a sign-in button or an account menu. */
   user?: React.ReactNode;
-  /** A strip above the bar: put a Second Nav here. */
+  /** The official-site strip above everything else: put a Digital Stamp here. */
+  stamp?: React.ReactNode;
+  /** A strip above the bar, below the stamp: put a Second Nav here. */
   top?: React.ReactNode;
   /** Spans the whole width. Default: centred, 1280px at most. */
   fullWidth?: boolean;
@@ -357,6 +359,7 @@ function Header({
   search,
   language,
   user,
+  stamp,
   top,
   fullWidth = false,
   submenuTone = "default",
@@ -401,6 +404,7 @@ function Header({
       <a href={skipHref} data-slot="header-skip" className="cn-header-skip">
         {skipLabel}
       </a>
+      {stamp}
       {top}
       <div className="cn-header-bar" data-full={fullWidth ? "" : undefined}>
         <Drawer open={open} onOpenChange={setOpen} side="start">

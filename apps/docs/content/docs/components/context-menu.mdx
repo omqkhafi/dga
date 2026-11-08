@@ -1,0 +1,104 @@
+---
+title: Context Menu
+description: "A menu of actions that opens where people right-click, long-press, or press Shift+F10. The DGA Menu list on an area of the page."
+---
+
+<ExtensionNote
+  name="Context Menu"
+  primitive="Base UI ContextMenu"
+  from="the DGA Menu: the same list, items, groups, checkbox and radio items and submenus"
+  tokens={["background-menu", "border-neutral-primary", "button-background-neutral-hovered", "background-primary-50", "text-default", "shadow-2xl"]}
+/>
+
+<Preview name="context-menu-basic" title="Context Menu" minHeight={300} />
+
+## Installation
+
+<ComponentInstall name="context-menu" />
+
+## Usage
+
+```tsx title="page.tsx"
+import {
+  ContextMenu,
+  ContextMenuContent,
+  ContextMenuItem,
+  ContextMenuSeparator,
+  ContextMenuTrigger,
+} from "@/components/dga/context-menu";
+
+export function RequestRow() {
+  return (
+    <ContextMenu>
+      <ContextMenuTrigger aria-label="Request 24810. Right-click for actions.">
+        Request 24810
+      </ContextMenuTrigger>
+      <ContextMenuContent>
+        <ContextMenuItem>Edit request</ContextMenuItem>
+        <ContextMenuSeparator />
+        <ContextMenuItem>Withdraw request</ContextMenuItem>
+      </ContextMenuContent>
+    </ContextMenu>
+  );
+}
+```
+
+A context menu is a shortcut for people who know to look for it. **Every action in it must also be reachable another way**, such as a visible [Menu](/docs/components/menu) button on the same row, because most people never right-click and touch users have to long-press. Use it on rows, cards, files and canvases. The list is the DGA Menu, so the items work the same way.
+
+## Anatomy
+
+- **Trigger area**: any region. It is focusable (`tabIndex=0`), so keyboard users can open the menu. Name it with `aria-label` when its content does not say that a menu exists.
+- **Menu** (`role="menu"`): `background-menu`, a 1px border, radius-md, `shadow-2xl`. It opens at the pointer and keeps clear of the screen edges.
+- **Items**: ContextMenuItem (40px, an icon, a label, a shortcut), ContextMenuCheckboxItem and ContextMenuRadioItem.
+- **Groups**: ContextMenuGroup with ContextMenuLabel, and ContextMenuSeparator.
+- **Submenu**: ContextMenuSub with a ContextMenuSubTrigger and ContextMenuSubContent.
+
+## Examples
+
+### Checkbox and radio items
+
+The same items as the Menu. A checked item shows a check mark or a dot on the end side.
+
+<Preview compact name="context-menu-groups" title="Checkbox and radio items" minHeight={300} />
+
+### Submenu
+
+A submenu opens beside its item on the end side, with Enter, Space or the arrow that points at it.
+
+<Preview compact name="context-menu-submenu" title="Submenu" minHeight={300} />
+
+## RTL
+
+The menu opens at the pointer and its text follows the page direction. A submenu opens on the end side, so on the left in Arabic, and its chevron is mirrored. Left and Right swap: Left opens a submenu in Arabic. Shortcuts stay left to right.
+
+<DirectionCompare name="context-menu-submenu" title="Context Menu" minHeight={300} />
+
+## Accessibility
+
+| Key | Action |
+| --- | --- |
+| <kbd>Shift</kbd> + <kbd>F10</kbd> or the Menu key | On the focused area, opens the menu. |
+| Long press | On a touch screen, opens the menu. |
+| <kbd>ArrowDown</kbd> / <kbd>ArrowUp</kbd> | Moves between items. |
+| <kbd>Home</kbd> / <kbd>End</kbd> | Moves to the first or last item. |
+| <kbd>ArrowRight</kbd> | Opens a submenu (ArrowLeft in Arabic); the opposite arrow closes it. |
+| <kbd>Enter</kbd> or <kbd>Space</kbd> | Chooses the focused item. |
+| <kbd>Escape</kbd> | Closes the menu and returns focus to the area. |
+
+- Built on Base UI ContextMenu: `role="menu"` with `menuitem`, `menuitemcheckbox` and `menuitemradio` items, roving focus, and focus returned to the area on close.
+- The browser's own menu is replaced only inside the area. Everywhere else the normal menu works.
+- Text is 4.5:1 and icons and rings 3:1 or better in every state, in light and dark. A disabled item stays in the arrow-key order but cannot be chosen.
+
+## API Reference
+
+<ApiReference component="context-menu" />
+
+## Derivation from DGA
+
+DGA has no context menu, so this is not a DGA component. The list, items and submenus are the DGA Menu and the items are the Menu's own components. The only addition is the focus ring of the trigger area. No colour is new.
+
+<ComponentDeviations component="context-menu" />
+
+## Contrast
+
+<ComponentContrast component="context-menu" />

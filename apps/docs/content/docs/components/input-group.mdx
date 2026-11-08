@@ -1,0 +1,100 @@
+---
+title: Input Group
+description: "The DGA Input box with addons at either end: a prefix, an icon, a unit, a keyboard hint or a button. The focus underline and the error belong to the whole group."
+---
+
+<ExtensionNote
+  name="Input Group"
+  primitive="Base UI Input"
+  from="Input"
+  tokens={["field-background-default", "field-border-default", "field-border-pressed", "field-border-error", "text-primary-paragraph"]}
+/>
+
+<Preview name="input-group-addons" title="Input Group" minHeight={420} />
+
+## Installation
+
+<ComponentInstall name="input-group" />
+
+Installs [Input](/docs/components/input) too.
+
+## Usage
+
+```tsx title="page.tsx"
+import { Field, FieldLabel } from "@/components/dga/field";
+import {
+  InputGroup,
+  InputGroupAddon,
+  InputGroupInput,
+  InputGroupText,
+} from "@/components/dga/input-group";
+
+export function AmountField() {
+  return (
+    <Field>
+      <FieldLabel>Amount</FieldLabel>
+      <InputGroup>
+        <InputGroupAddon>
+          <InputGroupText>SAR</InputGroupText>
+        </InputGroupAddon>
+        <InputGroupInput inputMode="decimal" />
+      </InputGroup>
+    </Field>
+  );
+}
+```
+
+For one icon or a short prefix, the [Input](/docs/components/input) already has `startAdornment` and `endAdornment`. Reach for an Input Group when you need several addons, a button inside the field, or a keyboard hint. Put a [Button](/docs/components/button) (`size="sm"`, `variant="subtle"` or `primary`) in an `InputGroupAddon` for an action, and give an icon-only button an `aria-label`.
+
+## Anatomy
+
+- **Group**: the Input box, 32px (`md`) or 40px (`lg`), with the default, lighter or darker fill.
+- **InputGroupInput**: the text field, which a [Field](/docs/components/field) labels, describes and validates.
+- **InputGroupAddon**: icon, text, Kbd or Button, at the start or end of the field.
+
+## Examples
+
+### Addons
+
+An icon and a keyboard hint, a text prefix with left-to-right digits, and a phone prefix.
+
+<Preview name="input-group-addons" title="Addons" minHeight={420} />
+
+### Buttons
+
+A read-only value with a copy button, and a field with an Apply button.
+
+<Preview compact name="input-group-buttons" title="Buttons" minHeight={300} />
+
+### States
+
+Error, disabled, and the filled darker fill at the medium size.
+
+<Preview name="input-group-states" title="States" minHeight={420} />
+
+## RTL
+
+Addons sit on the side the text starts and ends: a prefix is on the right in Arabic, a trailing button on the left. Digits, amounts and phone numbers are set `dir="ltr"` so they keep their order, and `InputGroupKbd` is always left to right.
+
+<DirectionCompare name="input-group-addons" title="Input Group" minHeight={420} />
+
+## Accessibility
+
+- Focus is the Input focus: the underline grows from the centre, the border darkens and the box casts the focus shadow. There is no extra outline; the whole group lights up when the field or a button inside has focus.
+- Decorative icons are `aria-hidden`; text addons are read as part of the group. Give the Field label to the input, not to the addon.
+- The group has `role="group"`. An error sets `aria-invalid` on the input and the red border on the group.
+- Digits are 4.5:1, the border and underline 3:1 and addon icons 3:1 on the fill, in light and dark.
+
+## API Reference
+
+<ApiReference component="input-group" />
+
+## Derivation
+
+DGA has no input group. The group is the DGA Input box with its states untouched. Addons use the Input's own prefix and suffix text and icon tokens. No new colours.
+
+<ComponentDeviations component="input-group" />
+
+## Contrast
+
+<ComponentContrast component="input-group" />

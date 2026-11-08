@@ -5,6 +5,39 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
 
 ## [Unreleased]
 
+## [0.7.0] - 2026-11-08
+
+Phase 7, part 1: overlays, inputs and the official-site strip. No visual change to existing components, and no new dependency (no `cmdk`, no `input-otp`: Base UI covers both).
+
+### Added
+
+- **Platform Code extensions** (components DGA does not define), each marked with an "Extension" badge in the sidebar and the page header and a note at the top of its page that says it is not part of DGA and which DGA components and tokens its look comes from. English and Arabic pages with previews of every variant and state, API references with Arabic descriptions, contrast tables, registry items that declare the `@dga` items they use, and install and collision tests.
+  - **Overlays:** **Popover** (the Menu surface with the Tooltip beak, start and end sides that mirror), **Hover Card** (opens on hover and on keyboard focus, hoverable and dismissible), **Alert Dialog** (role `alertdialog`, focus on Cancel, no outside dismissal, destructive action) and **Context Menu** (right click, Shift+F10, the Menu key and long press; submenus open on the end side).
+  - **Inputs:** **Toggle** and **Toggle Group** (Button styles, single or multiple, roving focus that follows the direction), **Combobox** (single, multiple with removable chips, creatable, groups, async, Arabic-aware search, inside Field), **Command** (a palette of actions on the Base UI Autocomplete, with a dialog form), **Input OTP** (digits stay left to right in RTL, Arabic-Indic digits normalised, paste), **Input Group** (text, icon, button and key addons) and **Button Group**.
+- **Components DGA does define**, built from its specs (no Extension badge): **Slider** (single and range, sm and md, label, helper text and error, fill and keys mirror in RTL; listed under Forms) and **Digital Stamp**, the Saudi government "official website" strip with its domain Extension panel (listed under Composite). The Header takes it in a new `stamp` slot above `top`.
+- **Extensions page** (`/docs/extensions`) and an **Extensions** area on the Deviations page.
+- **Docs:** two sidebar groups, "Extension: overlays" and "Extension: inputs", in search, `llms.txt`, the sitemap, Open Graph images and the agent skill.
+- **Tests:** unit tests for each stream; the install test installs the new items on their own and checks that no `cmdk` or `input-otp` package arrives; the collision fixture puts the stock shadcn `popover`, `hover-card`, `alert-dialog`, `context-menu`, `toggle`, `toggle-group`, `combobox`, `command`, `input-otp`, `input-group`, `button-group` and `slider` in `components/ui` and checks they stay byte-identical; browser tests cover keyboard and RTL for Slider, Input OTP, Combobox, Command, Context Menu and Toggle Group, and every new page at 375 and 1280px.
+
+### Scope decisions
+
+Each candidate was checked against the shadcn registry and the existing `@dga` items before building.
+
+- **Slider and the official-site strip are not extensions.** DGA specifies both (`slider.md`, `digital-stamp.md`), so they follow the specs. The earlier Deviations entry that said DGA had no official site strip is corrected.
+- **Alert Dialog stays separate from Dialog** (different role, no outside dismissal, focus on the safe action); it reuses the Dialog classes and Button.
+- **Command is not merged into Combobox** (Combobox stores a value, Command runs actions); they share the matching function and the list look. **Creatable** is a Combobox mode, our addition: shadcn has none.
+- **Input Group and Button Group stay**: Input has only icon adornments, and Content Switcher and Toggle Group are different jobs.
+- **Dropped:** none of the eleven candidates; no `cmdk` or `input-otp` dependency.
+
+### Deviations
+
+New entries under Extensions or Components, all "new, no DGA source": Popover, Hover Card, Alert Dialog, Context Menu, Combobox (and its creatable mode), Command and the Toggle pressed border (a 1px `--border-black`, an existing token, because the selected fill is 1.2:1 against the page), plus the Slider track and thumb (derived from the Switch tokens, the spec has none) and the Digital Stamp wording and flag icon. No new colour tokens.
+
+### Changed
+
+- **ROADMAP.md:** Phase 7 is split into 0.7.0 (done) and 0.7.1 (navigation, layout and display, planned).
+- **Locale allowlist:** adds the words the new Arabic pages need.
+
 ## [0.6.0] - 2026-11-08
 
 The composite components (Phase 6): Header, Second Nav, Footer, Date Picker, Carousel and Filtration. No visual change to existing components, and no new dependency.

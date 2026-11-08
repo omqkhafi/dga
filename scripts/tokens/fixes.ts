@@ -1,4 +1,5 @@
 import { COMPONENT_ADDITIONS, COMPONENT_DEVIATIONS, COMPONENT_OVERRIDES } from "./component-fixes";
+import { EXTENSION_ADDITIONS, EXTENSION_DEVIATIONS } from "./extensions";
 
 // Every place where Platform Code intentionally differs from the DGA Figma source.
 // Each entry is applied by the generator AND listed on the docs "Deviations from DGA" page,
@@ -13,7 +14,8 @@ export type DeviationArea =
   | "Theming"
   | "Dark theme"
   | "Tailwind"
-  | "Components";
+  | "Components"
+  | "Extensions";
 
 export type Deviation = {
   area: DeviationArea;
@@ -330,6 +332,7 @@ export const ADDITIONS: Addition[] = [
       "White on the gold fill (background-secondary, gold-600) is 2.30:1. Text on gold uses black (7.85:1), which keeps the brand gold fill.",
   },
   ...COMPONENT_ADDITIONS,
+  ...EXTENSION_ADDITIONS,
 ];
 
 // ---------------------------------------------------------------------------
@@ -563,10 +566,10 @@ export const COMPOSITE_DEVIATIONS: Deviation[] = [
   },
   {
     area: "Components",
-    item: "Header: no official site strip, Header Menu and Nav Drawer composed",
+    item: "Header: official site strip, Header Menu and Nav Drawer composed",
     original:
-      'The spec has no "official site" strip. The Second Nav Header is the strip above the primary navigation. Header Menu (a chevron button) and the Nav Drawer are separate components.',
-    ours: "Header takes a `top` slot for a Second Nav and renders no strip of its own. The chevron is part of the menu item and the sub-menu is the DGA Menu. On narrow screens the navigation is the DGA Drawer with expandable parents; Level 2 links are indented.",
+      "The official site strip is the separate Digital Stamp component, and the Second Nav Header is the strip above the primary navigation. Header Menu (a chevron button) and the Nav Drawer are separate components.",
+    ours: "Header takes a `stamp` slot for the Digital Stamp (0.7.0) and a `top` slot for a Second Nav, and renders no strip of its own. The chevron is part of the menu item and the sub-menu is the DGA Menu. On narrow screens the navigation is the DGA Drawer with expandable parents; Level 2 links are indented.",
     reason:
       "Reusing Menu and Drawer keeps the focus, dismissal and mirroring behaviour in one place instead of copying it into the header.",
     status: "fixed",
@@ -860,4 +863,5 @@ export const OTHER_DEVIATIONS: Deviation[] = [
   ...COMPONENT_DEVIATIONS,
   ...NAVIGATION_DEVIATIONS,
   ...COMPOSITE_DEVIATIONS,
+  ...EXTENSION_DEVIATIONS,
 ];
