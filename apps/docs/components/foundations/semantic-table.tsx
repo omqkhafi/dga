@@ -22,6 +22,9 @@ function ModeCell({ token, mode }: { token: SemanticToken; mode: "light" | "dark
       <Swatch color={value.value} className="mt-0.5 size-8" />
       <div className="flex min-w-0 flex-col gap-1">
         <span className="font-mono text-xs text-foreground uppercase">{value.value}</span>
+        <span dir="ltr" className="font-mono text-xs break-all text-muted-foreground">
+          {value.oklch}
+        </span>
         {value.ref && (
           <span
             className="truncate font-mono text-xs text-muted-foreground"

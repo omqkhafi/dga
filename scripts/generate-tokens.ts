@@ -4,9 +4,10 @@
 
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join, relative } from "node:path";
-import { docsData } from "./tokens/docs-data";
+import { deviationsWithOklch, docsData } from "./tokens/docs-data";
 import { themeCss, themeEntries, tokensCss } from "./tokens/emit";
 import { auditContrast, buildModel } from "./tokens/model";
+import { checkOklchRoundTrip } from "./tokens/oklch-check";
 import { ROOT } from "./tokens/source";
 
 const check = process.argv.includes("--check");
@@ -35,13 +36,23 @@ if (failing.length > 0) {
   process.exit(1);
 }
 
+// The CSS carries every colour as oklch(); each one must convert back to its source hex.
+const roundTrip = checkOklchRoundTrip(model);
+if (roundTrip.mismatches.length > 0) {
+  for (const m of roundTrip.mismatches) {
+    console.error(`✗ OKLCH round trip: ${m.where}: ${m.source} → ${m.emitted} → ${m.back}`);
+  }
+  console.error(`${roundTrip.mismatches.length} colour(s) do not round-trip to their source hex.`);
+  process.exit(1);
+}
+
 const json = (value: unknown) => `${JSON.stringify(value, null, 2)}\n`;
 
 const outputs: Record<string, string> = {
   "registry/styles/dga/tokens.css": tokensCss(model),
   "registry/styles/dga/theme.css": themeCss(model),
   "apps/docs/lib/generated/tokens.json": json(docsData(model)),
-  "apps/docs/lib/generated/deviations.json": json(model.deviations),
+  "apps/docs/lib/generated/deviations.json": json(deviationsWithOklch(model.deviations)),
 };
 
 let stale = 0;
@@ -64,5 +75,5 @@ for (const [path, content] of Object.entries(outputs)) {
 
 if (stale > 0) process.exit(1);
 console.log(
-  `Tokens OK: ${model.themes.size} semantic, ${model.primitives.size} primitive, ${auditContrast(model).length} contrast checks pass, ${model.deviations.length} deviations.`,
+  `Tokens OK: ${model.themes.size} semantic, ${model.primitives.size} primitive, ${roundTrip.checked} OKLCH values round-trip to their source hex, ${auditContrast(model).length} contrast checks pass, ${model.deviations.length} deviations.`,
 );

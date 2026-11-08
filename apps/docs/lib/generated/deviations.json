@@ -575,7 +575,10 @@
     "ours": "#b423184d",
     "reason": "Figma keeps the light red-50 fill in dark mode, so dark-mode error text (red-400) is 1.96–2.56:1. A translucent red tint (10/20/30%) matches the dark tag and status tints and gives 4.57:1 or better.",
     "status": "fixed",
-    "component": "button"
+    "component": "button",
+    "colors": {
+      "#b423184d": "oklch(0.50034 0.18205 29.513 / 0.302)"
+    }
   },
   {
     "area": "Contrast",
@@ -1459,7 +1462,10 @@
     "original": "--colors-neutral-800",
     "ours": "#2f2600",
     "reason": "Soft tint of the colour's own 500 step (400 for amber and purple) at the opacity that gives every hue the same OKLab lightness over the surface, instead of a solid saturated fill or a 950 step. Reads as the light-mode soft tint, never brown.",
-    "status": "fixed"
+    "status": "fixed",
+    "colors": {
+      "#2f2600": "oklch(0.27083 0.05566 95.47)"
+    }
   },
   {
     "area": "Dark theme",
@@ -1467,7 +1473,10 @@
     "original": "--colors-neutral-800",
     "ours": "#311d3b",
     "reason": "Soft tint of the colour's own 500 step (400 for amber and purple) at the opacity that gives every hue the same OKLab lightness over the surface, instead of a solid saturated fill or a 950 step. Reads as the light-mode soft tint, never brown.",
-    "status": "fixed"
+    "status": "fixed",
+    "colors": {
+      "#311d3b": "oklch(0.27107 0.05961 313.652)"
+    }
   },
   {
     "area": "Dark theme",
@@ -1987,7 +1996,10 @@
     "original": "#4d5761",
     "ours": "--colors-neutral-dark-800",
     "reason": "Figma Dark keeps a light value (or hardcoded hex) on a dark surface here. Mapped to the tinted ramp.",
-    "status": "fixed"
+    "status": "fixed",
+    "colors": {
+      "#4d5761": "oklch(0.45174 0.0207 248.285)"
+    }
   },
   {
     "area": "Dark theme",
@@ -2179,7 +2191,10 @@
     "original": "--colors-neutral-900",
     "ours": "#251f06",
     "reason": "Soft tint of the colour's own 500 step (400 for amber and purple) at the opacity that gives every hue the same OKLab lightness over the surface, instead of a solid saturated fill or a 950 step. Reads as the light-mode soft tint, never brown.",
-    "status": "fixed"
+    "status": "fixed",
+    "colors": {
+      "#251f06": "oklch(0.23992 0.04073 95.916)"
+    }
   },
   {
     "area": "Dark theme",
@@ -2187,7 +2202,10 @@
     "original": "--colors-neutral-900",
     "ours": "#26192d",
     "reason": "Soft tint of the colour's own 500 step (400 for amber and purple) at the opacity that gives every hue the same OKLab lightness over the surface, instead of a solid saturated fill or a 950 step. Reads as the light-mode soft tint, never brown.",
-    "status": "fixed"
+    "status": "fixed",
+    "colors": {
+      "#26192d": "oklch(0.23943 0.04136 313.228)"
+    }
   },
   {
     "area": "Dark theme",
@@ -2227,7 +2245,10 @@
     "original": "--colors-green-700",
     "ours": "#005730",
     "reason": "The strongest dark fill: the same tint at a higher opacity, never a solid saturated colour. White label on top.",
-    "status": "fixed"
+    "status": "fixed",
+    "colors": {
+      "#005730": "oklch(0.40143 0.0982 155.546)"
+    }
   },
   {
     "area": "Dark theme",
@@ -2235,7 +2256,10 @@
     "original": "--alpha-success-10",
     "ours": "#003b1f",
     "reason": "Soft tint of the colour's own 500 step (400 for amber and purple) at the opacity that gives every hue the same OKLab lightness over the surface, instead of a solid saturated fill or a 950 step. Reads as the light-mode soft tint, never brown.",
-    "status": "fixed"
+    "status": "fixed",
+    "colors": {
+      "#003b1f": "oklch(0.30967 0.07553 155.699)"
+    }
   },
   {
     "area": "Dark theme",
@@ -2243,7 +2267,10 @@
     "original": "--colors-blue-600",
     "ours": "#134881",
     "reason": "The strongest dark fill: the same tint at a higher opacity, never a solid saturated colour. White label on top.",
-    "status": "fixed"
+    "status": "fixed",
+    "colors": {
+      "#134881": "oklch(0.40029 0.11014 253.77)"
+    }
   },
   {
     "area": "Dark theme",
@@ -2251,7 +2278,10 @@
     "original": "--alpha-info-10",
     "ours": "#0b305a",
     "reason": "Soft tint of the colour's own 500 step (400 for amber and purple) at the opacity that gives every hue the same OKLab lightness over the surface, instead of a solid saturated fill or a 950 step. Reads as the light-mode soft tint, never brown.",
-    "status": "fixed"
+    "status": "fixed",
+    "colors": {
+      "#0b305a": "oklch(0.30916 0.08578 254.583)"
+    }
   },
   {
     "area": "Dark theme",
@@ -2259,7 +2289,10 @@
     "original": "--colors-yellow-700",
     "ours": "#624000",
     "reason": "The strongest dark fill: the same tint at a higher opacity, never a solid saturated colour. White label on top.",
-    "status": "fixed"
+    "status": "fixed",
+    "colors": {
+      "#624000": "oklch(0.4007 0.08453 75.012)"
+    }
   },
   {
     "area": "Dark theme",
@@ -2267,7 +2300,10 @@
     "original": "--alpha-warning-10",
     "ours": "#432b00",
     "reason": "Soft tint of the colour's own 500 step (400 for amber and purple) at the opacity that gives every hue the same OKLab lightness over the surface, instead of a solid saturated fill or a 950 step. Reads as the light-mode soft tint, never brown.",
-    "status": "fixed"
+    "status": "fixed",
+    "colors": {
+      "#432b00": "oklch(0.31058 0.06523 76.034)"
+    }
   },
   {
     "area": "Dark theme",
@@ -2275,7 +2311,10 @@
     "original": "--colors-red-600",
     "ours": "#782b23",
     "reason": "The strongest dark fill: the same tint at a higher opacity, never a solid saturated colour. White label on top.",
-    "status": "fixed"
+    "status": "fixed",
+    "colors": {
+      "#782b23": "oklch(0.40071 0.10965 28.798)"
+    }
   },
   {
     "area": "Dark theme",
@@ -2283,7 +2322,10 @@
     "original": "--alpha-error-10",
     "ours": "#531b16",
     "reason": "Soft tint of the colour's own 500 step (400 for amber and purple) at the opacity that gives every hue the same OKLab lightness over the surface, instead of a solid saturated fill or a 950 step. Reads as the light-mode soft tint, never brown.",
-    "status": "fixed"
+    "status": "fixed",
+    "colors": {
+      "#531b16": "oklch(0.30916 0.08487 28.105)"
+    }
   },
   {
     "area": "Dark theme",
@@ -2579,7 +2621,11 @@
     "original": "#166a451a",
     "ours": "#0d2518",
     "reason": "Soft tint of the colour's own 500 step (400 for amber and purple) at the opacity that gives every hue the same OKLab lightness over the surface, instead of a solid saturated fill or a 950 step. Reads as the light-mode soft tint, never brown.",
-    "status": "fixed"
+    "status": "fixed",
+    "colors": {
+      "#166a451a": "oklch(0.46613 0.09833 158.951 / 0.102)",
+      "#0d2518": "oklch(0.24053 0.03947 157.801)"
+    }
   },
   {
     "area": "Dark theme",
@@ -2595,7 +2641,10 @@
     "original": "#ffffff",
     "ours": "--colors-neutral-dark-900",
     "reason": "Figma Dark keeps a light value (or hardcoded hex) on a dark surface here. Mapped to the tinted ramp.",
-    "status": "fixed"
+    "status": "fixed",
+    "colors": {
+      "#ffffff": "oklch(1 0 0)"
+    }
   },
   {
     "area": "Dark theme",
@@ -2603,7 +2652,11 @@
     "original": "#166a4533",
     "ours": "#032f1b",
     "reason": "Soft tint of the colour's own 500 step (400 for amber and purple) at the opacity that gives every hue the same OKLab lightness over the surface, instead of a solid saturated fill or a 950 step. Reads as the light-mode soft tint, never brown.",
-    "status": "fixed"
+    "status": "fixed",
+    "colors": {
+      "#166a4533": "oklch(0.46613 0.09833 158.951 / 0.2)",
+      "#032f1b": "oklch(0.27021 0.05983 158.282)"
+    }
   },
   {
     "area": "Dark theme",
@@ -2611,7 +2664,11 @@
     "original": "#b547081a",
     "ours": "#2a1c07",
     "reason": "Soft tint of the colour's own 500 step (400 for amber and purple) at the opacity that gives every hue the same OKLab lightness over the surface, instead of a solid saturated fill or a 950 step. Reads as the light-mode soft tint, never brown.",
-    "status": "fixed"
+    "status": "fixed",
+    "colors": {
+      "#b547081a": "oklch(0.53942 0.15617 42.994 / 0.102)",
+      "#2a1c07": "oklch(0.23893 0.04 75.031)"
+    }
   },
   {
     "area": "Dark theme",
@@ -2619,7 +2676,11 @@
     "original": "#b5470833",
     "ours": "#372200",
     "reason": "Soft tint of the colour's own 500 step (400 for amber and purple) at the opacity that gives every hue the same OKLab lightness over the surface, instead of a solid saturated fill or a 950 step. Reads as the light-mode soft tint, never brown.",
-    "status": "fixed"
+    "status": "fixed",
+    "colors": {
+      "#b5470833": "oklch(0.53942 0.15617 42.994 / 0.2)",
+      "#372200": "oklch(0.27188 0.05738 74.909)"
+    }
   },
   {
     "area": "Dark theme",
@@ -2627,7 +2688,11 @@
     "original": "#b423181a",
     "ours": "#301714",
     "reason": "Soft tint of the colour's own 500 step (400 for amber and purple) at the opacity that gives every hue the same OKLab lightness over the surface, instead of a solid saturated fill or a 950 step. Reads as the light-mode soft tint, never brown.",
-    "status": "fixed"
+    "status": "fixed",
+    "colors": {
+      "#b423181a": "oklch(0.50034 0.18205 29.513 / 0.102)",
+      "#301714": "oklch(0.23927 0.04113 27.761)"
+    }
   },
   {
     "area": "Dark theme",
@@ -2635,7 +2700,11 @@
     "original": "#b4231833",
     "ours": "#3f1915",
     "reason": "Soft tint of the colour's own 500 step (400 for amber and purple) at the opacity that gives every hue the same OKLab lightness over the surface, instead of a solid saturated fill or a 950 step. Reads as the light-mode soft tint, never brown.",
-    "status": "fixed"
+    "status": "fixed",
+    "colors": {
+      "#b4231833": "oklch(0.50034 0.18205 29.513 / 0.2)",
+      "#3f1915": "oklch(0.26931 0.06046 27.888)"
+    }
   },
   {
     "area": "Dark theme",
@@ -2643,7 +2712,11 @@
     "original": "#175cd31a",
     "ours": "#112032",
     "reason": "Soft tint of the colour's own 500 step (400 for amber and purple) at the opacity that gives every hue the same OKLab lightness over the surface, instead of a solid saturated fill or a 950 step. Reads as the light-mode soft tint, never brown.",
-    "status": "fixed"
+    "status": "fixed",
+    "colors": {
+      "#175cd31a": "oklch(0.50931 0.19546 260.887 / 0.102)",
+      "#112032": "oklch(0.23987 0.04046 253.793)"
+    }
   },
   {
     "area": "Dark theme",
@@ -2651,7 +2724,11 @@
     "original": "#175cd333",
     "ours": "#0f2743",
     "reason": "Soft tint of the colour's own 500 step (400 for amber and purple) at the opacity that gives every hue the same OKLab lightness over the surface, instead of a solid saturated fill or a 950 step. Reads as the light-mode soft tint, never brown.",
-    "status": "fixed"
+    "status": "fixed",
+    "colors": {
+      "#175cd333": "oklch(0.50931 0.19546 260.887 / 0.2)",
+      "#0f2743": "oklch(0.26976 0.0604 253.902)"
+    }
   },
   {
     "area": "Dark theme",
@@ -2659,7 +2736,11 @@
     "original": "#0676471a",
     "ours": "#0e2517",
     "reason": "Soft tint of the colour's own 500 step (400 for amber and purple) at the opacity that gives every hue the same OKLab lightness over the surface, instead of a solid saturated fill or a 950 step. Reads as the light-mode soft tint, never brown.",
-    "status": "fixed"
+    "status": "fixed",
+    "colors": {
+      "#0676471a": "oklch(0.49874 0.11676 157.07 / 0.102)",
+      "#0e2517": "oklch(0.24078 0.03991 155.175)"
+    }
   },
   {
     "area": "Dark theme",
@@ -2667,7 +2748,11 @@
     "original": "#06764733",
     "ours": "#062f19",
     "reason": "Soft tint of the colour's own 500 step (400 for amber and purple) at the opacity that gives every hue the same OKLab lightness over the surface, instead of a solid saturated fill or a 950 step. Reads as the light-mode soft tint, never brown.",
-    "status": "fixed"
+    "status": "fixed",
+    "colors": {
+      "#06764733": "oklch(0.49874 0.11676 157.07 / 0.2)",
+      "#062f19": "oklch(0.27077 0.06046 155.007)"
+    }
   },
   {
     "area": "Dark theme",
@@ -2739,7 +2824,10 @@
     "original": "#ffffff",
     "ours": "--colors-neutral-dark-900",
     "reason": "Figma Dark keeps a light value (or hardcoded hex) on a dark surface here. Mapped to the tinted ramp.",
-    "status": "fixed"
+    "status": "fixed",
+    "colors": {
+      "#ffffff": "oklch(1 0 0)"
+    }
   },
   {
     "area": "Dark theme",
@@ -2875,7 +2963,10 @@
     "original": "--colors-primary-sa-flag-950",
     "ours": "#003b21",
     "reason": "Soft tint of the colour's own 500 step (400 for amber and purple) at the opacity that gives every hue the same OKLab lightness over the surface, instead of a solid saturated fill or a 950 step. Reads as the light-mode soft tint, never brown.",
-    "status": "fixed"
+    "status": "fixed",
+    "colors": {
+      "#003b21": "oklch(0.31015 0.07334 157.386)"
+    }
   },
   {
     "area": "Dark theme",
@@ -2899,7 +2990,10 @@
     "original": "--colors-red-950",
     "ours": "#531b16",
     "reason": "Soft tint of the colour's own 500 step (400 for amber and purple) at the opacity that gives every hue the same OKLab lightness over the surface, instead of a solid saturated fill or a 950 step. Reads as the light-mode soft tint, never brown.",
-    "status": "fixed"
+    "status": "fixed",
+    "colors": {
+      "#531b16": "oklch(0.30916 0.08487 28.105)"
+    }
   },
   {
     "area": "Dark theme",
@@ -2923,7 +3017,10 @@
     "original": "--colors-yellow-950",
     "ours": "#432b00",
     "reason": "Soft tint of the colour's own 500 step (400 for amber and purple) at the opacity that gives every hue the same OKLab lightness over the surface, instead of a solid saturated fill or a 950 step. Reads as the light-mode soft tint, never brown.",
-    "status": "fixed"
+    "status": "fixed",
+    "colors": {
+      "#432b00": "oklch(0.31058 0.06523 76.034)"
+    }
   },
   {
     "area": "Dark theme",
@@ -2947,7 +3044,10 @@
     "original": "--colors-blue-950",
     "ours": "#0b305a",
     "reason": "Soft tint of the colour's own 500 step (400 for amber and purple) at the opacity that gives every hue the same OKLab lightness over the surface, instead of a solid saturated fill or a 950 step. Reads as the light-mode soft tint, never brown.",
-    "status": "fixed"
+    "status": "fixed",
+    "colors": {
+      "#0b305a": "oklch(0.30916 0.08578 254.583)"
+    }
   },
   {
     "area": "Dark theme",
@@ -2971,7 +3071,10 @@
     "original": "--colors-tertiary-lavender-950",
     "ours": "#40214e",
     "reason": "Soft tint of the colour's own 500 step (400 for amber and purple) at the opacity that gives every hue the same OKLab lightness over the surface, instead of a solid saturated fill or a 950 step. Reads as the light-mode soft tint, never brown.",
-    "status": "fixed"
+    "status": "fixed",
+    "colors": {
+      "#40214e": "oklch(0.31102 0.08516 314.294)"
+    }
   },
   {
     "area": "Dark theme",
@@ -2995,7 +3098,10 @@
     "original": "--colors-orange-950",
     "ours": "#521e04",
     "reason": "Soft tint of the colour's own 500 step (400 for amber and purple) at the opacity that gives every hue the same OKLab lightness over the surface, instead of a solid saturated fill or a 950 step. Reads as the light-mode soft tint, never brown.",
-    "status": "fixed"
+    "status": "fixed",
+    "colors": {
+      "#521e04": "oklch(0.30975 0.08558 43.484)"
+    }
   },
   {
     "area": "Dark theme",
@@ -3019,7 +3125,10 @@
     "original": "--colors-primary-sa-flag-600-primary",
     "ours": "#005633",
     "reason": "The strongest dark fill: the same tint at a higher opacity, never a solid saturated colour. White label on top.",
-    "status": "fixed"
+    "status": "fixed",
+    "colors": {
+      "#005633": "oklch(0.39906 0.0937 157.784)"
+    }
   },
   {
     "area": "Dark theme",
@@ -3027,7 +3136,10 @@
     "original": "--colors-primary-sa-flag-950",
     "ours": "#003b21",
     "reason": "Soft tint of the colour's own 500 step (400 for amber and purple) at the opacity that gives every hue the same OKLab lightness over the surface, instead of a solid saturated fill or a 950 step. Reads as the light-mode soft tint, never brown.",
-    "status": "fixed"
+    "status": "fixed",
+    "colors": {
+      "#003b21": "oklch(0.31015 0.07334 157.386)"
+    }
   },
   {
     "area": "Dark theme",
@@ -3067,7 +3179,10 @@
     "original": "--colors-green-700",
     "ours": "#005730",
     "reason": "The strongest dark fill: the same tint at a higher opacity, never a solid saturated colour. White label on top.",
-    "status": "fixed"
+    "status": "fixed",
+    "colors": {
+      "#005730": "oklch(0.40143 0.0982 155.546)"
+    }
   },
   {
     "area": "Dark theme",
@@ -3075,7 +3190,10 @@
     "original": "--colors-green-950",
     "ours": "#003b1f",
     "reason": "Soft tint of the colour's own 500 step (400 for amber and purple) at the opacity that gives every hue the same OKLab lightness over the surface, instead of a solid saturated fill or a 950 step. Reads as the light-mode soft tint, never brown.",
-    "status": "fixed"
+    "status": "fixed",
+    "colors": {
+      "#003b1f": "oklch(0.30967 0.07553 155.699)"
+    }
   },
   {
     "area": "Dark theme",
@@ -3083,7 +3201,10 @@
     "original": "--colors-red-600",
     "ours": "#782b23",
     "reason": "The strongest dark fill: the same tint at a higher opacity, never a solid saturated colour. White label on top.",
-    "status": "fixed"
+    "status": "fixed",
+    "colors": {
+      "#782b23": "oklch(0.40071 0.10965 28.798)"
+    }
   },
   {
     "area": "Dark theme",
@@ -3091,7 +3212,10 @@
     "original": "--colors-red-950",
     "ours": "#531b16",
     "reason": "Soft tint of the colour's own 500 step (400 for amber and purple) at the opacity that gives every hue the same OKLab lightness over the surface, instead of a solid saturated fill or a 950 step. Reads as the light-mode soft tint, never brown.",
-    "status": "fixed"
+    "status": "fixed",
+    "colors": {
+      "#531b16": "oklch(0.30916 0.08487 28.105)"
+    }
   },
   {
     "area": "Dark theme",
@@ -3099,7 +3223,10 @@
     "original": "--colors-yellow-700",
     "ours": "#624000",
     "reason": "The strongest dark fill: the same tint at a higher opacity, never a solid saturated colour. White label on top.",
-    "status": "fixed"
+    "status": "fixed",
+    "colors": {
+      "#624000": "oklch(0.4007 0.08453 75.012)"
+    }
   },
   {
     "area": "Dark theme",
@@ -3107,7 +3234,10 @@
     "original": "--colors-yellow-950",
     "ours": "#432b00",
     "reason": "Soft tint of the colour's own 500 step (400 for amber and purple) at the opacity that gives every hue the same OKLab lightness over the surface, instead of a solid saturated fill or a 950 step. Reads as the light-mode soft tint, never brown.",
-    "status": "fixed"
+    "status": "fixed",
+    "colors": {
+      "#432b00": "oklch(0.31058 0.06523 76.034)"
+    }
   },
   {
     "area": "Dark theme",
@@ -3115,7 +3245,10 @@
     "original": "--colors-blue-600",
     "ours": "#134881",
     "reason": "The strongest dark fill: the same tint at a higher opacity, never a solid saturated colour. White label on top.",
-    "status": "fixed"
+    "status": "fixed",
+    "colors": {
+      "#134881": "oklch(0.40029 0.11014 253.77)"
+    }
   },
   {
     "area": "Dark theme",
@@ -3123,7 +3256,10 @@
     "original": "--colors-blue-950",
     "ours": "#0b305a",
     "reason": "Soft tint of the colour's own 500 step (400 for amber and purple) at the opacity that gives every hue the same OKLab lightness over the surface, instead of a solid saturated fill or a 950 step. Reads as the light-mode soft tint, never brown.",
-    "status": "fixed"
+    "status": "fixed",
+    "colors": {
+      "#0b305a": "oklch(0.30916 0.08578 254.583)"
+    }
   },
   {
     "area": "Dark theme",
@@ -3460,7 +3596,10 @@
     "ours": "The same, kept as DGA draws it. The value text is 4.5:1 or better.",
     "reason": "Not remapped: #d2d6db is 1.5:1 on white, below the 3:1 of WCAG 1.4.11 if the boundary is needed to find the control. A read-only field shows a value, is not edited, and is named by its label, so the boundary is not what identifies it. Teams that treat read-only fields as controls should use a plain text display instead.",
     "status": "unresolved",
-    "component": "input"
+    "component": "input",
+    "colors": {
+      "#d2d6db": "oklch(0.87446 0.00815 253.86)"
+    }
   },
   {
     "area": "Components",
@@ -3469,7 +3608,11 @@
     "ours": "The same, kept as DGA draws it. The border is transparent at rest (not removed), so the box does not shift when it appears.",
     "reason": "Not remapped: the fills are 1.0:1 and 1.1:1 against the page, below the 3:1 of WCAG 1.4.11 for the resting boundary. The label, the placeholder (4.5:1 or better) and the hover, focus and press border identify the field. Use the default fill where the field must be findable at rest.",
     "status": "unresolved",
-    "component": "input"
+    "component": "input",
+    "colors": {
+      "#fcfcfd": "oklch(0.99135 0.00132 286.376)",
+      "#f3f4f6": "oklch(0.96696 0.00287 264.542)"
+    }
   },
   {
     "area": "Components",

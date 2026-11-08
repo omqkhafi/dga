@@ -1,7 +1,7 @@
 // Data the docs site renders (swatches, scales, deviations). Generated, never hand-edited.
 
-import { contrastRatio } from "./color";
-import { fontWeightNumber, ITALIC_WEIGHTS, SHADCN_VARS, tailwindTheme } from "./emit";
+import { contrastRatio, hexToOklchCss, isHexColor } from "./color";
+import { fontWeightNumber, ITALIC_WEIGHTS, SHADCN_VARS, shadowColour, tailwindTheme } from "./emit";
 import { BREAKPOINTS, MODE_MIN_WIDTH } from "./fixes";
 import { auditContrast, type Model, resolve, tokenValue } from "./model";
 import type { Mode } from "./source";
@@ -20,6 +20,20 @@ function category(name: string) {
     alpha: "Alpha",
   };
   return known[head] ?? "Component";
+}
+
+/** `{ hex, oklch }` for a resolved colour; the docs show both (designers work in hex). */
+const colour = (hex: string) => ({ hex, oklch: isHexColor(hex) ? hexToOklchCss(hex) : hex });
+
+/** Adds an `oklch` next to every hex literal a deviation mentions. */
+export function deviationsWithOklch(deviations: Model["deviations"]) {
+  return deviations.map((d) => {
+    const hexes = new Set(
+      `${d.original} ${d.ours}`.match(/#(?:[0-9a-fA-F]{8}|[0-9a-fA-F]{6})\b/g) ?? [],
+    );
+    if (hexes.size === 0) return d;
+    return { ...d, colors: Object.fromEntries([...hexes].map((h) => [h, hexToOklchCss(h)])) };
+  });
 }
 
 export function docsData(model: Model) {
@@ -47,8 +61,13 @@ export function docsData(model: Model) {
     white: {
       token: "text-oncolor-primary",
       value: tokenValue(model, "text-oncolor-primary", "light"),
+      oklch: colour(tokenValue(model, "text-oncolor-primary", "light")).oklch,
     },
-    black: { token: "text-default", value: tokenValue(model, "text-default", "light") },
+    black: {
+      token: "text-default",
+      value: tokenValue(model, "text-default", "light"),
+      oklch: colour(tokenValue(model, "text-default", "light")).oklch,
+    },
   };
 
   const primitives = [...model.primitives.values()]
@@ -64,6 +83,7 @@ export function docsData(model: Model) {
         source: p.source,
         palette,
         value: resolve(model, p.value),
+        oklch: colour(resolve(model, p.value)).oklch,
         utility: `${p.name.replace(/^colors-/, "")}`,
         onWhite: floor(contrastRatio(swatchText.white.value, resolve(model, p.value))),
         onBlack: floor(contrastRatio(swatchText.black.value, resolve(model, p.value))),
@@ -78,8 +98,16 @@ export function docsData(model: Model) {
       source: t.source,
       category: category(t.name),
       fixed,
-      light: { ref: ref(t.light), value: tokenValue(model, t.name, "light") },
-      dark: { ref: ref(t.dark), value: tokenValue(model, t.name, "dark") },
+      light: {
+        ref: ref(t.light),
+        value: tokenValue(model, t.name, "light"),
+        oklch: colour(tokenValue(model, t.name, "light")).oklch,
+      },
+      dark: {
+        ref: ref(t.dark),
+        value: tokenValue(model, t.name, "dark"),
+        oklch: colour(tokenValue(model, t.name, "dark")).oklch,
+      },
       aliases: aliases.filter((a) => a.token === t.name).map((a) => a.utility),
       contrast: {
         light: worst(t.name, "light"),
@@ -158,6 +186,15 @@ export function docsData(model: Model) {
       value: fontWeightNumber(t.name, resolve(model, t.values.desktop)),
     }));
 
+  // The colours behind the component audit, as hex and OKLCH, keyed "light:token-name".
+  const auditColors: Record<string, { hex: string; oklch: string }> = {};
+  for (const c of fullAudit.filter((x) => x.component)) {
+    for (const token of [c.fg, c.bg]) {
+      const key = `${c.mode}:${token}`;
+      auditColors[key] ??= colour(tokenValue(model, token, c.mode));
+    }
+  }
+
   return {
     shadcn: Object.entries(SHADCN_VARS).map(([name, token]) => ({ name, token })),
     swatchText,
@@ -166,7 +203,10 @@ export function docsData(model: Model) {
     typography: { family: "IBM Plex Sans Arabic", sizes: typeSizes, weights },
     spacing: { scale: spacingScale, tokens: spacingTokens },
     radius,
-    shadows: model.shadows.map((s) => ({ name: s.name, value: s.layers.join(", ") })),
+    shadows: model.shadows.map((s) => ({
+      name: s.name,
+      value: s.layers.map(shadowColour).join(", "),
+    })),
     blurs: model.blurs,
     breakpoints: Object.entries(BREAKPOINTS).map(([name, rem]) => ({
       name,
@@ -182,6 +222,7 @@ export function docsData(model: Model) {
       checks: fullAudit.length,
       failing: fullAudit.filter((c) => c.ratio < c.min).length,
     },
+    auditColors,
     componentAudit: fullAudit
       .filter((c) => c.component)
       .map((c) => ({

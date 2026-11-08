@@ -13,6 +13,26 @@ const label = (component: string, chrome: string) =>
     ? chrome
     : component.replace(/(^|-)([a-z])/g, (_, s, c) => (s ? " " : "") + c.toUpperCase());
 
+/** The pair's colours as hex and OKLCH (the audit runs on the hex source values). */
+function ColourPair({ check }: { check: Check }) {
+  const fg = tokens.auditColors[`${check.mode}:${check.fg}` as keyof typeof tokens.auditColors];
+  const bg = tokens.auditColors[`${check.mode}:${check.bg}` as keyof typeof tokens.auditColors];
+  if (!fg || !bg) return null;
+  return (
+    <span
+      dir="ltr"
+      className="flex flex-col font-mono text-xs break-all text-text-secondary-paragraph"
+    >
+      <span className="uppercase">
+        {fg.hex} / {bg.hex}
+      </span>
+      <span>
+        {fg.oklch} / {bg.oklch}
+      </span>
+    </span>
+  );
+}
+
 /** Every audited pair, one component at a time, with the tokens behind each ratio. */
 export function ContrastReport() {
   const t = useT();
@@ -137,7 +157,10 @@ export function ContrastReport() {
                   return (
                     <td key={mode} className="px-3 py-1.5">
                       {c ? (
-                        <ContrastBadge ratio={c.ratio} min={c.min} label={`${c.fg} on ${c.bg}`} />
+                        <div className="flex flex-col gap-1">
+                          <ContrastBadge ratio={c.ratio} min={c.min} label={`${c.fg} on ${c.bg}`} />
+                          <ColourPair check={c} />
+                        </div>
                       ) : (
                         <span aria-hidden>–</span>
                       )}

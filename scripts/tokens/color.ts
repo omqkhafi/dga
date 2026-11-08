@@ -110,3 +110,132 @@ export function oklchHex(L: number, maxChroma: number, hue: number) {
   };
   return `#${fromOklch(L, lo, hue).map(encode).join("")}`;
 }
+
+// ---------------------------------------------------------------------------
+// OKLCH output. The Figma hex values stay the source of truth; the CSS is emitted as oklch().
+// The matrices are the CSS Color 4 ones (sRGB → XYZ D65 → LMS → OKLab), so browsers read the
+// emitted value back to the same sRGB colour.
+// ---------------------------------------------------------------------------
+
+type Matrix = [[number, number, number], [number, number, number], [number, number, number]];
+
+const SRGB_TO_XYZ: Matrix = [
+  [0.41239079926595934, 0.357584339383878, 0.1804807884018343],
+  [0.21263900587151027, 0.715168678767756, 0.07219231536073371],
+  [0.01933081871559182, 0.11919477979462598, 0.9505321522496607],
+];
+const XYZ_TO_LMS: Matrix = [
+  [0.819022437996703, 0.3619062600528904, -0.1288737815209879],
+  [0.0329836539323885, 0.9292868615863434, 0.0361446663506424],
+  [0.0481771893596242, 0.2642395317527308, 0.6335478284694309],
+];
+const LMS_TO_LAB: Matrix = [
+  [0.210454268309314, 0.7936177747023054, -0.0040720430116193],
+  [1.9779985324311684, -2.42859224204858, 0.450593709617411],
+  [0.0259040424655478, 0.7827717124575296, -0.8086757549230774],
+];
+
+const multiply = (a: Matrix, b: Matrix): Matrix =>
+  a.map((row) =>
+    [0, 1, 2].map((j) => row[0] * b[0][j] + row[1] * b[1][j] + row[2] * b[2][j]),
+  ) as Matrix;
+
+function invert(m: Matrix): Matrix {
+  const [[a, b, c], [d, e, f], [g, h, i]] = m;
+  const det = a * (e * i - f * h) - b * (d * i - f * g) + c * (d * h - e * g);
+  return [
+    [(e * i - f * h) / det, (c * h - b * i) / det, (b * f - c * e) / det],
+    [(f * g - d * i) / det, (a * i - c * g) / det, (c * d - a * f) / det],
+    [(d * h - e * g) / det, (b * g - a * h) / det, (a * e - b * d) / det],
+  ];
+}
+
+const apply = (m: Matrix, v: number[]) =>
+  m.map((row) => row[0] * (v[0] ?? 0) + row[1] * (v[1] ?? 0) + row[2] * (v[2] ?? 0)) as [
+    number,
+    number,
+    number,
+  ];
+
+const SRGB_TO_LMS = multiply(XYZ_TO_LMS, SRGB_TO_XYZ);
+const LMS_TO_SRGB = invert(SRGB_TO_LMS);
+const LAB_TO_LMS = invert(LMS_TO_LAB);
+
+const toLinear = (c: number) => (c <= 0.04045 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4);
+const fromLinear = (c: number) => (c <= 0.0031308 ? 12.92 * c : 1.055 * c ** (1 / 2.4) - 0.055);
+
+export type Oklch = { l: number; c: number; h: number; alpha: number };
+
+/** Decimal places kept in the emitted value. Enough for an exact 8-bit sRGB round trip. */
+const PRECISION = { l: 5, c: 5, h: 3, alpha: 4 };
+
+const trim = (n: number, places: number) => {
+  const text = n
+    .toFixed(places)
+    .replace(/(\.\d*?)0+$/, "$1")
+    .replace(/\.$/, "");
+  return text === "-0" ? "0" : text;
+};
+
+export function hexToOklch(hex: string): Oklch {
+  const { r, g, b, a } = parseHex(hex);
+  const lms = apply(SRGB_TO_LMS, [toLinear(r), toLinear(g), toLinear(b)]).map(Math.cbrt);
+  const [l, A, B] = apply(LMS_TO_LAB, lms);
+  const c = Math.hypot(A, B);
+  const h = c < 1e-6 ? 0 : ((Math.atan2(B, A) * 180) / Math.PI + 360) % 360;
+  return { l, c, h, alpha: a };
+}
+
+/** `oklch(L C H)` or `oklch(L C H / alpha)` for a `#rrggbb` or `#rrggbbaa` colour. */
+export function hexToOklchCss(hex: string) {
+  const { l, c, h, alpha } = hexToOklch(hex);
+  const chroma = c < 0.5 * 10 ** -PRECISION.c ? 0 : c;
+  const parts = [
+    trim(l, PRECISION.l),
+    trim(chroma, PRECISION.c),
+    chroma === 0 ? "0" : trim(h, PRECISION.h),
+  ].join(" ");
+  const opacity = alpha < 1 ? ` / ${trim(alpha, PRECISION.alpha)}` : "";
+  return `oklch(${parts}${opacity})`;
+}
+
+const OKLCH = /^oklch\(\s*([\d.]+)\s+([\d.]+)\s+([\d.]+)(?:\s*\/\s*([\d.]+))?\s*\)$/;
+
+export function parseOklchCss(css: string): Oklch {
+  const match = OKLCH.exec(css.trim());
+  if (!match) throw new Error(`Not an oklch() value: ${css}`);
+  return {
+    l: Number(match[1]),
+    c: Number(match[2]),
+    h: Number(match[3]),
+    alpha: match[4] === undefined ? 1 : Number(match[4]),
+  };
+}
+
+/** The 8-bit sRGB `#rrggbb` (or `#rrggbbaa` when translucent) an oklch() value displays as. */
+export function oklchToHex(value: string | Oklch) {
+  const { l, c, h, alpha } = typeof value === "string" ? parseOklchCss(value) : value;
+  const a = c * Math.cos((h * Math.PI) / 180);
+  const b = c * Math.sin((h * Math.PI) / 180);
+  const lms = apply(LAB_TO_LMS, [l, a, b]).map((v) => v ** 3);
+  const byte = (v: number) =>
+    Math.round(Math.min(1, Math.max(0, fromLinear(v))) * 255)
+      .toString(16)
+      .padStart(2, "0");
+  const [r, g, bl] = apply(LMS_TO_SRGB, lms);
+  const rgb = `#${byte(r)}${byte(g)}${byte(bl)}`;
+  return alpha < 1
+    ? `${rgb}${Math.round(alpha * 255)
+        .toString(16)
+        .padStart(2, "0")}`
+    : rgb;
+}
+
+/** Normalises `#rgb`-free hex to lower-case `#rrggbb` / `#rrggbbaa`, dropping an opaque `ff` alpha. */
+export function normalizeHex(hex: string) {
+  const value = hex.trim().toLowerCase().replace(/^#/, "");
+  parseHex(value);
+  return `#${value.length === 8 && value.endsWith("ff") ? value.slice(0, 6) : value}`;
+}
+
+export const isHexColor = (value: string) => /^#([0-9a-f]{6}|[0-9a-f]{8})$/i.test(value.trim());

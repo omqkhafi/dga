@@ -22,6 +22,27 @@ const AREA_KEYS: Record<string, Key> = {
   Typography: "dev.area.typography",
 };
 
+/** A deviation's original/ours text, with the OKLCH value next to every hex it mentions. */
+function WithOklch({ text, colors }: { text: string; colors?: Record<string, string> }) {
+  if (!colors) return <>{text}</>;
+  const parts = text.split(/(#(?:[0-9a-fA-F]{8}|[0-9a-fA-F]{6})\b)/);
+  return (
+    <>
+      {parts.map((part, i) => {
+        const oklch = colors[part];
+        // biome-ignore lint/suspicious/noArrayIndexKey: static split of one string
+        if (!oklch) return <span key={i}>{part}</span>;
+        return (
+          // biome-ignore lint/suspicious/noArrayIndexKey: static split of one string
+          <span key={i}>
+            {part} <span className="text-muted-foreground">({oklch})</span>
+          </span>
+        );
+      })}
+    </>
+  );
+}
+
 function Status({ status }: { status?: string | null }) {
   const t = useT();
   if (!status || status === "fixed") return null;
@@ -142,7 +163,7 @@ export function DeviationsTable() {
                     lang="en"
                     className="inline-block text-xs break-words text-muted-foreground"
                   >
-                    {d.original}
+                    <WithOklch text={d.original} colors={"colors" in d ? d.colors : undefined} />
                   </span>
                 </td>
                 <td className="align-top lg:px-3 lg:py-2">
@@ -154,7 +175,7 @@ export function DeviationsTable() {
                     lang="en"
                     className="inline-block text-xs break-words text-foreground"
                   >
-                    {d.ours}
+                    <WithOklch text={d.ours} colors={"colors" in d ? d.colors : undefined} />
                   </span>
                 </td>
                 <td
