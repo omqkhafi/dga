@@ -241,7 +241,7 @@ describe("docs", () => {
   });
   test("llms.txt, search and the agent skill know the new components", () => {
     const llms = readFileSync(join(ROOT, "apps/docs/lib/llms.ts"), "utf8");
-    expect(llms).toContain("COMPOSITE_COMPONENTS");
+    expect(llms).toContain("componentSection");
     const skill = readFileSync(join(ROOT, "skills/platform-code/SKILL.md"), "utf8");
     for (const word of [
       "Header",
