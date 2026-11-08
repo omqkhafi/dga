@@ -1,0 +1,96 @@
+---
+title: Toggle Group
+description: "صف أو عمود من أزرار التبديل المترابطة. يمكن ضغط واحد أو عدة، متصلة أو متباعدة، بمفاتيح أسهم تتبع اتجاه الصفحة."
+sourceHash: 89211ff8c52b
+---
+
+<ExtensionNote
+  name="Toggle Group"
+  primitive="Base UI Toggle Group"
+  from="الزر Button ومبدّل المحتوى Content Switcher"
+  tokens={["button-background-neutral-selected", "border-neutral-primary", "button-background-neutral-hovered", "border-black"]}
+/>
+
+<Preview name="toggle-group-single" title="Toggle Group" minHeight={240} />
+
+## التثبيت [#installation]
+
+<ComponentInstall name="toggle-group" />
+
+ويثبّت [Toggle](/docs/components/toggle) و[Button](/docs/components/button) أيضًا.
+
+## الاستخدام [#usage]
+
+```tsx title="page.tsx"
+import { ToggleGroup, ToggleGroupItem } from "@/components/dga/toggle-group";
+
+export function TextStyle() {
+  return (
+    <ToggleGroup multiple aria-label="نمط النص" defaultValue={["bold"]}>
+      <ToggleGroupItem value="bold">عريض</ToggleGroupItem>
+      <ToggleGroupItem value="italic">مائل</ToggleGroupItem>
+      <ToggleGroupItem value="underline">تسطير</ToggleGroupItem>
+    </ToggleGroup>
+  );
+}
+```
+
+`variant` و`size` و`iconOnly` على المجموعة تسري على كل العناصر. يمكن افتراضيًا ضغط عنصر واحد في كل مرة، والضغط عليه مجددًا يحرره؛ و`multiple` يسمح بعدة عناصر. تحكّم به بـ `value` و`onValueChange` (مصفوفات قيم العناصر).
+
+**أيها أستخدم؟** Toggle Group لخيارات مفعّلة أو متوقفة، وقد لا يكون أي منها مفعّلًا. أما [Content Switcher](/docs/components/content-switcher) ففيه خيار واحد مختار دائمًا ويبدّل العرض. و[Button Group](/docs/components/button-group) يرتّب أزرارًا يشغّل كل منها إجراءً فقط.
+
+## البنية [#anatomy]
+
+- **المجموعة**: `role="group"`، تُسمّى بـ `aria-label`.
+- **العناصر**: أزرار [Toggle](/docs/components/toggle) بحواف مشتركة (تداخل 1px والزوايا الخارجية فقط مستديرة) أو، مع `attached={false}`، متباعدة 8px.
+- **العنصر المضغوط**: تعبئة الزر المحدد وحد داكن، ويُرسم فوق جيرانه.
+
+## أمثلة [#examples]
+
+### واحد في كل مرة [#one-at-a-time]
+
+محاذاة النص بأيقونات، ومبدّل عرض بنمط `subtle` مع خيار معطّل.
+
+<Preview name="toggle-group-single" title="مفرد" minHeight={240} />
+
+### عدة معًا ومتباعدة [#several-at-a-time-and-spaced]
+
+<Preview compact name="toggle-group-multiple" title="متعدد" minHeight={240} />
+
+### عمودي [#vertical]
+
+<Preview compact name="toggle-group-vertical" title="عمودي" minHeight={220} />
+
+## RTL [#rtl]
+
+العنصر الأول في الجهة التي يبدأ منها النص، فالمجموعة المتصلة تُقرأ من اليمين إلى اليسار في العربية وتتبعها الزوايا الخارجية. ويتبادل <kbd>Left</kbd> و<kbd>Right</kbd>: ينقل <kbd>Right</kbd> إلى العنصر السابق في RTL. اعكس الأيقونات الاتجاهية بـ `rtl:-scale-x-100`.
+
+<DirectionCompare name="toggle-group-single" title="Toggle Group" minHeight={240} />
+
+## إمكانية الوصول [#accessibility]
+
+| المفتاح | الإجراء |
+| --- | --- |
+| <kbd>Tab</kbd> | ينقل التركيز إلى المجموعة (عنصر واحد) ثم يخرج منها. |
+| <kbd>→</kbd> <kbd>←</kbd> | ينقلان إلى العنصر التالي أو السابق. ويتبادلان في RTL. |
+| <kbd>↓</kbd> <kbd>↑</kbd> | يفعلان ذلك في المجموعة العمودية. |
+| <kbd>Home</kbd> <kbd>End</kbd> | ينقلان إلى العنصر الأول أو الأخير. |
+| <kbd>Space</kbd> <kbd>Enter</kbd> | يضغطان العنصر المركّز عليه أو يحرّرانه. |
+
+- تركيز متنقل: عنصر واحد في ترتيب Tab. وتبقى `aria-pressed` على العناصر، وتُسمّى المجموعة بـ `aria-label`.
+- يظهر العنصر المضغوط بالتعبئة والحد الداكن؛ والنص 4.5:1 والحد 3:1 فاتحًا وداكنًا.
+- يبقى العنصر المعطّل ظاهرًا بحالته ولا يستجيب للتفاعل.
+
+## مرجع API [#api-reference]
+
+<ApiReference component="toggle-group" />
+
+## الاشتقاق [#derivation]
+
+لا توجد في DGA مجموعة أزرار تبديل. العناصر أزرار DGA، والشكل المتصل يتبع Content Switcher. لا ألوان جديدة.
+
+<ComponentDeviations component="toggle-group" />
+
+## التباين [#contrast]
+
+<ComponentContrast component="toggle-group" />

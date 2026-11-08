@@ -1,0 +1,91 @@
+---
+title: Button Group
+description: "أزرار مترابطة مضمومة في كتلة واحدة بحواف مشتركة، مع مقطع نصي وفاصل اختياريين، أفقية أو عمودية."
+sourceHash: a44b93fec027
+---
+
+<ExtensionNote
+  name="Button Group"
+  primitive="عنصر تجميع عادي"
+  from="الزر Button"
+  tokens={["button-background-neutral-default", "border-neutral-primary", "background-neutral-100", "text-default"]}
+/>
+
+<Preview name="button-group-basic" title="Button Group" minHeight={200} />
+
+## التثبيت [#installation]
+
+<ComponentInstall name="button-group" />
+
+ويثبّت [Button](/docs/components/button) و[Divider](/docs/components/divider) أيضًا.
+
+## الاستخدام [#usage]
+
+```tsx title="page.tsx"
+import { Button } from "@/components/dga/button";
+import { ButtonGroup } from "@/components/dga/button-group";
+
+export function PageActions() {
+  return (
+    <ButtonGroup aria-label="إجراءات الصفحة">
+      <Button variant="outline">حفظ</Button>
+      <Button variant="outline">طباعة</Button>
+      <Button variant="outline">مشاركة</Button>
+    </ButtonGroup>
+  );
+}
+```
+
+Button Group تخطيط فقط: يحتفظ كل [Button](/docs/components/button) بإجرائه وحجمه ونمطه، وتزيل المجموعة الفراغ وتشارك الحواف. استخدمها لإجراءات مترابطة (حفظ وطباعة ومشاركة)، أو إجراء رئيسي بجوار خياراته (زر مقسوم مع [Menu](/docs/components/menu))، أو عنصر تحكم بالتكبير.
+
+**أيها أستخدم؟** استخدم [Toggle Group](/docs/components/toggle-group) حين تُضغط الأزرار وتُحرر، و[Content Switcher](/docs/components/content-switcher) حين يكون خيار واحد مختارًا دائمًا ويبدّل العرض.
+
+## البنية [#anatomy]
+
+- **المجموعة**: `role="group"` تُسمّى بـ `aria-label`. الزوايا الخارجية وحدها مستديرة؛ والأزرار المتجاورة تتداخل 1px فلا تتضاعف الحدود.
+- **ButtonGroupText**: مقطع غير تفاعلي (عدد أو تسمية) على `background-neutral-100` بحد.
+- **ButtonGroupSeparator**: خط رفيع بين زرين لهما التعبئة نفسها، كالرئيسي والثانوي.
+
+## أمثلة [#examples]
+
+### أزرار بإطار وزر رئيسي مع خياراته [#outline-buttons-and-a-primary-with-options]
+
+يحتاج الزر الرئيسي إلى الفاصل وإلا بدا جاره ملتصقًا به.
+
+<Preview name="button-group-basic" title="أساسي" minHeight={200} />
+
+### مقطع نصي وزر مقسوم [#text-segment-and-split-button]
+
+يفتح الزر المقسوم Menu من زر بأيقونة فقط له اسم برمجي.
+
+<Preview compact name="button-group-parts" title="نص وقائمة" minHeight={260} />
+
+### عمودي وصغير [#vertical-and-small]
+
+<Preview compact name="button-group-vertical" title="عمودي" minHeight={260} />
+
+## RTL [#rtl]
+
+الزر الأول في الجهة التي يبدأ منها النص، وتتبعه الزوايا الخارجية المستديرة، فلا يُعكس شيء يدويًا. وزر الخيارات في الزر المقسوم في النهاية، على اليسار في العربية، وتُفتح قائمته محاذية لتلك النهاية.
+
+<DirectionCompare name="button-group-parts" title="Button Group" minHeight={260} />
+
+## إمكانية الوصول [#accessibility]
+
+- دور `group` باسم برمجي. كل زر زر عادي في ترتيب Tab؛ ولا تضيف المجموعة سلوك لوحة مفاتيح من عندها.
+- تُرفع الأزرار الممرَّر عليها والمركّز عليها والمضغوطة فوق جيرانها، فلا يُقصّ حد التركيز ولا الحدود.
+- المقطع النصي 4.5:1 على تعبئته، فاتحًا وداكنًا.
+
+## مرجع API [#api-reference]
+
+<ApiReference component="button-group" />
+
+## الاشتقاق [#derivation]
+
+لا توجد في DGA مجموعة أزرار. الأزرار أزرار DGA دون تغيير. ويستخدم المقطع النصي رمزي الخلفية المحايدة والحد الأساسي. لا ألوان جديدة.
+
+<ComponentDeviations component="button-group" />
+
+## التباين [#contrast]
+
+<ComponentContrast component="button-group" />

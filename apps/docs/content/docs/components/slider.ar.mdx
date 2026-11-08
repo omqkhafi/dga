@@ -1,0 +1,106 @@
+---
+title: Slider
+description: "يختار قيمة، أو نطاقًا من قيمتين، بسحب مقبض على مسار. بحجمين صغير ومتوسط، مع تسمية ونص مساعد وعرض للقيمة وخطأ. يتبع الملء والمفاتيح اتجاه الصفحة."
+sourceHash: 7ab7def47a9c
+---
+
+<Preview name="slider-basic" title="أحجام المنزلق" minHeight={420} />
+
+## التثبيت [#installation]
+
+<ComponentInstall name="slider" />
+
+## الاستخدام [#usage]
+
+```tsx title="page.tsx"
+import { Slider } from "@/components/dga/slider";
+
+export function PriorityField() {
+  return (
+    <Slider
+      label="أولوية المعالجة"
+      helperText="تُعالَج القيم الأعلى أولًا."
+      showValue
+      locale="ar-EG"
+      defaultValue={50}
+    />
+  );
+}
+```
+
+استخدم Slider حين يهم موضع القيمة بين حدين أكثر من الرقم بدقة: نطاق رسوم أو أولوية أو مستوى صوت. وإن احتاج الناس إلى كتابة قيمة دقيقة فاستخدم [Number Input](/docs/components/number-input). وفي النموذج احذف `label` و`helperText` و`error` وضع Slider داخل [Field](/docs/components/field) لتُسمّى مثل بقية عناصر التحكم.
+
+```tsx title="range.tsx"
+<Slider
+  label="نطاق الرسوم (ريال)"
+  showValue
+  locale="ar-EG"
+  defaultValue={[20, 70]}
+  thumbLabels={["الحد الأدنى للرسوم", "الحد الأقصى للرسوم"]}
+/>
+```
+
+## البنية [#anatomy]
+
+- **التسمية** و**القيمة**: بحجم نص sm. تعرض القيمة رقمًا واحدًا، أو رقمي النطاق، مقابل التسمية.
+- **المسار**: بسمك 4px (صغير) أو 6px (متوسط)، باللون `control-border`.
+- **الملء**: الجزء بين البداية والمقبض (أو بين المقبضين)، باللون `control-primary-checked`.
+- **المقبض**: بقطر 16px (صغير) أو 20px (متوسط)، بلون الملء مع حلقة بسمك 2px باللون `control-thumb`.
+- **النص المساعد** و**الخطأ**: بحجم نص sm، والخطأ مع أيقونة.
+
+## أمثلة [#examples]
+
+### قيمة واحدة والأحجام [#single-value-and-sizes]
+
+قيم مواصفة DGA هي 0 و20 و50 و100. مرّر المؤشر على المقبض أو اسحبه أو ركّز عليه لترى حالاته.
+
+<Preview name="slider-basic" title="قيمة واحدة" minHeight={420} />
+
+### النطاق [#range]
+
+مصفوفة في `value` أو `defaultValue` تصنع نطاقًا بمقبضين. سمِّ كل مقبض بـ `thumbLabels`: فيقرأ قارئ الشاشة «الحد الأدنى للرسوم، منزلق، 20».
+
+<Preview compact name="slider-range" title="نطاق" minHeight={260} />
+
+### الخطوة والتعطيل والخطأ والحقل [#step-disabled-error-and-field]
+
+`step` و`largeStep` يحددان مقدار حركة مفاتيح الأسهم وPage Up وDown. ويحمّر الخطأ الملء والمقابض ويضيف رسالة بأيقونة.
+
+<Preview name="slider-states" title="الحالات" minHeight={520} />
+
+## RTL [#rtl]
+
+الحد الأدنى في الجهة التي يبدأ منها النص: اليمين في العربية. ينمو الملء من اليمين، ويعمل السحب كذلك، وتتبع مفاتيح الأسهم ما تراه: <kbd>Left</kbd> يرفع القيمة و<kbd>Right</kbd> يخفضها. وتبقى القيمة المعروضة معزولة من اليسار إلى اليمين فتحتفظ الأرقام بترتيبها.
+
+<DirectionCompare name="slider-range" title="المنزلق" minHeight={260} />
+
+## إمكانية الوصول [#accessibility]
+
+| المفتاح | الإجراء |
+| --- | --- |
+| <kbd>Tab</kbd> | ينقل التركيز إلى المقبض (إلى كل مقبض في النطاق). |
+| <kbd>→</kbd> <kbd>↑</kbd> | يرفع القيمة بمقدار `step`. وفي RTL يرفعها <kbd>←</kbd>. |
+| <kbd>←</kbd> <kbd>↓</kbd> | يخفض القيمة بمقدار `step`. وفي RTL يخفضها <kbd>→</kbd>. |
+| <kbd>Page Up</kbd> <kbd>Page Down</kbd> | يرفع القيمة أو يخفضها بمقدار `largeStep`. |
+| <kbd>Home</kbd> <kbd>End</kbd> | ينتقل إلى الحد الأدنى أو الأقصى. |
+
+- كل مقبض حقل أصلي `input type="range"` بدلالات `role="slider"` و`aria-valuenow` و`aria-valuemin` و`aria-valuemax` وقيمة منطوقة بلغة الصفحة (`locale`).
+- تسمّي التسمية المنزلق المفرد؛ أما النطاق فيحتاج `thumbLabels` لمقبضيه. ويرتبط النص المساعد والخطأ بـ `aria-describedby`، وتُضبط `aria-invalid` عند الخطأ.
+- المسار والملء والمقبض بنسبة 3:1 أو أفضل على كل سطح فاتحًا وداكنًا (WCAG 1.4.11). والتركيز حد بسمك 2px على بعد 2px خارج المقبض.
+- منطقة اللمس: صف التحكم كله قابل للسحب، والمقبض 20px في الحجم المتوسط.
+- يتغير لون المقبض دون حركة انتقالية عند تقليل الحركة.
+
+## مرجع API [#api-reference]
+
+<ApiReference component="slider" />
+
+## الاختلافات عن DGA [#deviations-from-dga]
+
+- لا تحدد مواصفة DGA ألوانًا لمسار المنزلق ومقبضه، بل التسمية والنص المساعد فقط. اشتُقت الألوان من رموز التحكم في Switch وهي 3:1 أو أفضل.
+- حالة الخطأ وعرض القيمة ليسا في المواصفة. ويتبع الخطأ [Field](/docs/components/field): نص أحمر مع أيقونة.
+
+<ComponentDeviations component="slider" />
+
+## التباين [#contrast]
+
+<ComponentContrast component="slider" />
