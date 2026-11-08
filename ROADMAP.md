@@ -177,3 +177,5 @@ Tab Bar, Navigation Bar, Banner, from the DGA Mobile Components Figma file.
 - Accessibility audit: axe in CI, plus manual screen-reader passes (VoiceOver, NVDA) in Arabic and English.
 - Visual regression tests for previews in every direction, theme and viewport.
 - 1.0 release.
+
+<!-- ci timing test -->
