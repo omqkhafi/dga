@@ -36,7 +36,7 @@ const isGroup = (item: unknown): item is ComboboxGroupData =>
 function normalizeArabic(text: string) {
   return text
     .normalize("NFKD")
-    .replace(/[ً-ٰٟـ‌‍‎‏]/g, "")
+    .replace(/[\u064B-\u065F\u0670\u0640]|\u200C|\u200D|\u200E|\u200F/g, "")
     .replace(/[أإآٱ]/g, "ا")
     .replace(/ى/g, "ي")
     .replace(/ة/g, "ه")
@@ -82,7 +82,7 @@ type ComboboxProps<Multiple extends boolean | undefined = false> = Omit<
    * Called when someone chooses the create row. Return the new option (and add it to `items`)
    * and it is selected. Return nothing to ignore it.
    */
-  onCreate?: (label: string) => ComboboxOption | undefined | void;
+  onCreate?: (label: string) => ComboboxOption | undefined;
 };
 
 /**
@@ -124,6 +124,9 @@ function Combobox<Multiple extends boolean | undefined = false>({
     trimmed !== "" &&
     flat.some((option) => normalizeArabic(option.label) === normalizeArabic(trimmed));
   const showCreate = creatable && trimmed !== "" && !exists;
+  // An inline createLabel changes on every render; the row only needs to change with the query.
+  const createLabelRef = React.useRef(createLabel);
+  createLabelRef.current = createLabel;
   const view = React.useMemo<ComboboxItemData[]>(
     () =>
       showCreate
@@ -131,13 +134,11 @@ function Combobox<Multiple extends boolean | undefined = false>({
             ...items,
             {
               value: `${CREATE_PREFIX}${trimmed}`,
-              label: createLabel(trimmed),
+              label: createLabelRef.current(trimmed),
               creatable: trimmed,
             },
           ]
         : items,
-    // createLabel is usually an inline function: the text only changes with the query.
-    // biome-ignore lint/correctness/useExhaustiveDependencies: see above
     [items, showCreate, trimmed],
   );
   const match = filter === undefined ? matchesQuery : filter;
@@ -317,7 +318,7 @@ type ComboboxContentProps = Omit<ComboboxPrimitive.Popup.Props, "children"> &
     loading?: boolean;
     /** The text read to screen readers when the number of results changes. */
     statusLabel?: (count: number) => string;
-    /** The icon of the create row is decorative, so there is no label for it. */
+    /** Class names for every option. */
     itemClassName?: string;
   };
 

@@ -1,0 +1,137 @@
+---
+title: Command
+description: "مربع بحث فوق قائمة إجراءات، بمجموعات وأيقونات واختصارات، وحوار لقائمة الأوامر. مبني على Base UI Autocomplete بلا cmdk. امتداد من كود المنصات وليس جزءًا من DGA."
+sourceHash: 7bce169af419
+---
+
+<ExtensionNote
+  name="قائمة الأوامر"
+  primitive="مكوّن Base UI الخاص بالإكمال التلقائي"
+  from="Menu (القائمة وعناصرها) وSearch Box (الحقل)"
+  tokens={["background-menu", "border-neutral-primary", "button-background-neutral-hovered", "button-background-neutral-pressed", "text-primary-paragraph"]}
+/>
+
+<Preview name="command-basic" title="Command" minHeight={380} />
+
+## التثبيت [#installation]
+
+<ComponentInstall name="command" />
+
+ويثبّت [Combobox](/docs/components/combobox) (لأجل بحثه) و[Input](/docs/components/input) و[Dialog](/docs/components/dialog) أيضًا. لا يوجد اعتماد على `cmdk`: القائمة هي Base UI Autocomplete معروضة داخل الصفحة.
+
+## الاستخدام [#usage]
+
+```tsx title="page.tsx"
+import { File01Icon } from "@hugeicons/core-free-icons";
+import { CommandDialog } from "@/components/dga/command";
+
+const groups = [
+  {
+    label: "الخدمات",
+    items: [
+      {
+        value: "renew",
+        label: "تجديد رخصة",
+        icon: File01Icon,
+        shortcut: "⌘R",
+        onSelect: () => router.push("/renew"),
+      },
+    ],
+  },
+];
+
+export function Palette() {
+  const [open, setOpen] = useState(false);
+  useEffect(() => {
+    const onKey = (event: KeyboardEvent) => {
+      if ((event.metaKey || event.ctrlKey) && event.key === "k") {
+        event.preventDefault();
+        setOpen((value) => !value);
+      }
+    };
+    document.addEventListener("keydown", onKey);
+    return () => document.removeEventListener("keydown", onKey);
+  }, []);
+  return (
+    <CommandDialog
+      items={groups}
+      open={open}
+      onOpenChange={setOpen}
+      title="قائمة الأوامر"
+      placeholder="اكتب أمرًا أو ابحث…"
+      emptyText="لا توجد أوامر مطابقة."
+    />
+  );
+}
+```
+
+Command **ينفّذ إجراءات** ولا يحفظ قيمة. وللحقل الذي يحفظ اختيارًا في نموذج استخدم [Combobox](/docs/components/combobox). يتشاركان البحث نفسه (لا يفرّق بين حالات الأحرف ويراعي العربية) وشكلًا متقاربًا للعناصر، لكن عنصر Command له أيقونة واختصار و`onSelect`، وقائمته مفتوحة دائمًا. يضع `Command` المربع والقائمة في الصفحة، ويضعهما `CommandDialog` داخل [Dialog](/docs/components/dialog). ولا يربط المكوّن المفتاحين <kbd>Ctrl</kbd> أو <kbd>⌘</kbd> مع <kbd>K</kbd>: يقرر تطبيقك أي المفاتيح تفتحه، كما في المثال.
+
+## البنية [#anatomy]
+
+- **مربع البحث**: شكل [Search Box](/docs/components/search-box) مع أيقونة البحث في جهة البداية.
+- **النتائج**: سطح [Menu](/docs/components/menu) بحد 1px وزوايا radius-md.
+- **المجموعة** و**العنوان**: عناوين للإجراءات المتقاربة.
+- **العنصر**: بارتفاع 40px، وأيقونة اختيارية، والنص، واختصار اختياري في جهة النهاية. ويبقى الاختصار من اليسار إلى اليمين.
+- **نص الفراغ**: يظهر حين لا يطابق شيء.
+
+## أمثلة [#examples]
+
+### الأساسي [#basic]
+
+اكتب للتصفية. يُظلَّل أول مطابق أثناء الكتابة، وتنقل مفاتيح الأسهم، وينفّذ <kbd>Enter</kbd> الإجراء المظلَّل.
+
+<Preview compact name="command-basic" title="الأساسي" minHeight={380} />
+
+### الفارغ [#empty]
+
+حين لا يطابق شيء يحل نص الفراغ محل القائمة، ويسمع قارئ الشاشة عدد النتائج.
+
+<Preview compact name="command-empty" title="الفارغ" minHeight={200} />
+
+### داخل حوار [#in-a-dialog]
+
+يفتح CommandDialog فوق الصفحة. ينتقل التركيز إلى مربع البحث، ويغلقه <kbd>Esc</kbd>، ويعود التركيز إلى الزر.
+
+<Preview compact name="command-dialog" title="داخل حوار" minHeight={160} />
+
+## الاتجاه من اليمين إلى اليسار [#rtl]
+
+أيقونة البحث والنص على اليمين، والاختصارات على اليسار وتبقى من اليسار إلى اليمين، وشريط التظليل على اليمين.
+
+<DirectionCompare name="command-basic" title="Command" minHeight={380} />
+
+## إمكانية الوصول [#accessibility]
+
+| المفتاح | الإجراء |
+| --- | --- |
+| الكتابة | تصفّي الإجراءات وتظلّل أول مطابق. |
+| <kbd>ArrowDown</kbd> / <kbd>ArrowUp</kbd> | ينقلان التظليل. |
+| <kbd>Enter</kbd> | ينفّذ الإجراء المظلَّل. |
+| <kbd>Esc</kbd> | في الحوار يغلقه ويعيد التركيز إلى الزر الذي فتحه. |
+
+- مربع البحث `combobox` يتحكم في `listbox`؛ ويُكشف الإجراء المظلَّل بـ `aria-activedescendant` ويبقى التركيز في المربع. سمِّ المربع بـ `inputLabel`.
+- يُعلَن عدد النتائج بهدوء كلما تغيّر (`countLabel`).
+- للحوار عنوان ووصف لقارئ الشاشة (`title` و`description`)، ويحبس التركيز ويعطّل الصفحة خلفه.
+- للإجراء المظلَّل شريط بعرض 2px إضافة إلى التظليل. النص بتباين 4.5:1 والاختصار 4.5:1 على التظليل، في الفاتح والداكن.
+
+## مرجع الواجهة البرمجية [#api-reference]
+
+<ApiReference component="command" />
+
+## الاشتقاق [#derivation]
+
+- غير موجود في DGA. القائمة وعناصرها من [Menu](/docs/components/menu)، والحقل من [Search Box](/docs/components/search-box)، والحوار من [Dialog](/docs/components/dialog).
+- أبقيناه منفصلًا عن Combobox لأنه يؤدي عملًا مختلفًا (تنفيذ إجراءات لا اختيار قيمة) وليس له قيمة في نموذج. ويشارك Combobox دالة البحث.
+- لا ألوان جديدة ولا رموز جديدة.
+
+## الاختلافات عن DGA [#deviations-from-dga]
+
+- لا توجد قائمة أوامر في DGA ليُختلف عنها. هذه قائمة بما خالفنا فيه المكوّنات المبني عليها.
+- للإجراء المظلَّل شريط إضافة إلى تظليل Menu عند التمرير، لأن التركيز يبقى في مربع البحث والتظليل وحده بتباين 1.1:1.
+
+<ComponentDeviations component="command" />
+
+## التباين [#contrast]
+
+<ComponentContrast component="command" />

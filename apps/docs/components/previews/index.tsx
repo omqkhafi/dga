@@ -59,7 +59,8 @@ import {
   SkeletonLayouts,
 } from "./display";
 import { inputsPreviews } from "./ext-inputs";
-import { miscPreviews } from "./ext-misc";
+import { HeaderStamp } from "./ext-misc";
+import { miscPreviews } from "./ext-misc-map";
 import { overlaysPreviews } from "./ext-overlays";
 import {
   CheckboxGroupDemo,
@@ -148,6 +149,7 @@ export const previews = {
   ...inputsPreviews,
   ...miscPreviews,
   "header-basic": HeaderBasic,
+  "header-stamp": HeaderStamp,
   "header-submenu": HeaderSubmenu,
   "header-submenu-green": HeaderSubmenuGreen,
   "header-drawer-open": HeaderDrawerOpen,

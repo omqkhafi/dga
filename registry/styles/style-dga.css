@@ -2463,7 +2463,7 @@
     @apply relative flex min-h-8 cursor-default items-center gap-2 rounded-xs px-3 py-1.5 text-sm text-text-default outline-hidden select-none;
     @apply data-highlighted:bg-button-background-neutral-default data-highlighted:before:absolute data-highlighted:before:inset-y-1 data-highlighted:before:start-0 data-highlighted:before:w-0.5 data-highlighted:before:rounded-full data-highlighted:before:bg-border-black;
     @apply data-selected:font-medium data-disabled:cursor-not-allowed data-disabled:text-text-default-disabled;
-    @apply data-creatable:font-medium data-creatable:text-text-primary [&_svg]:shrink-0;
+    @apply data-creatable:font-medium data-creatable:[&_svg]:text-icon-primary [&_svg]:shrink-0;
   }
   .cn-combobox-item-text {
     @apply min-w-0 flex-1 truncate;
@@ -2546,7 +2546,7 @@
     @apply min-w-0;
   }
   .cn-digital-stamp-toggle {
-    @apply inline-flex min-h-6 cursor-pointer items-center gap-1 rounded-xs border-0 bg-transparent p-0 text-sm font-medium text-text-primary underline underline-offset-4;
+    @apply inline-flex min-h-6 cursor-pointer items-center gap-1 rounded-xs border-0 bg-transparent p-0 text-sm font-medium text-text-default underline underline-offset-4;
     @apply hover:decoration-2 active:decoration-2;
     @apply focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-offset-2 focus-visible:outline-border-black;
     @apply [&_svg]:size-4 [&_svg]:shrink-0 [&_svg]:transition-transform aria-expanded:[&_svg]:rotate-180 motion-reduce:[&_svg]:transition-none;

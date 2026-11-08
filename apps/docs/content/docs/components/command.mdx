@@ -1,0 +1,127 @@
+---
+title: Command
+description: "A search box over a list of actions, with groups, icons and shortcuts, and a command-menu dialog. Built on Base UI Autocomplete, no cmdk. A Platform Code extension, not part of DGA."
+---
+
+<ExtensionNote
+  name="Command"
+  primitive="Base UI Autocomplete"
+  from="Menu (the list and its items) and Search Box (the field)"
+  tokens={["background-menu", "border-neutral-primary", "button-background-neutral-hovered", "button-background-neutral-pressed", "text-primary-paragraph"]}
+/>
+
+<Preview name="command-basic" title="Command" minHeight={380} />
+
+## Installation
+
+<ComponentInstall name="command" />
+
+Installs [Combobox](/docs/components/combobox) (for its search), [Input](/docs/components/input) and [Dialog](/docs/components/dialog) too. There is no `cmdk` dependency: the list is Base UI Autocomplete, shown inline.
+
+## Usage
+
+```tsx title="page.tsx"
+import { File01Icon } from "@hugeicons/core-free-icons";
+import { CommandDialog } from "@/components/dga/command";
+
+const groups = [
+  {
+    label: "Services",
+    items: [
+      {
+        value: "renew",
+        label: "Renew a licence",
+        icon: File01Icon,
+        shortcut: "⌘R",
+        onSelect: () => router.push("/renew"),
+      },
+    ],
+  },
+];
+
+export function Palette() {
+  const [open, setOpen] = useState(false);
+  useEffect(() => {
+    const onKey = (event: KeyboardEvent) => {
+      if ((event.metaKey || event.ctrlKey) && event.key === "k") {
+        event.preventDefault();
+        setOpen((value) => !value);
+      }
+    };
+    document.addEventListener("keydown", onKey);
+    return () => document.removeEventListener("keydown", onKey);
+  }, []);
+  return <CommandDialog items={groups} open={open} onOpenChange={setOpen} />;
+}
+```
+
+Command **runs actions**; it does not store a value. For a form field that stores a choice, use [Combobox](/docs/components/combobox). They share the same search (case-insensitive, Arabic-aware) and a similar item look, but a Command item has an icon, a shortcut and an `onSelect`, and the list is always open. `Command` puts the box and list in the page; `CommandDialog` puts them in a [Dialog](/docs/components/dialog). The component does not bind <kbd>Ctrl</kbd> or <kbd>⌘</kbd> with <kbd>K</kbd>: your app decides which keys open it, as above.
+
+## Anatomy
+
+- **Search box**: the [Search Box](/docs/components/search-box) look, with the search icon on the start side.
+- **Results**: the [Menu](/docs/components/menu) surface with a 1px border and radius-md.
+- **Group** and **label**: headings for related actions.
+- **Item**: 40px, an optional icon, the label and an optional shortcut on the end side. The shortcut stays left to right.
+- **Empty text**: shown when nothing matches.
+
+## Examples
+
+### Basic
+
+Type to filter. The first match is highlighted as you type, the arrow keys move, and <kbd>Enter</kbd> runs the highlighted action.
+
+<Preview compact name="command-basic" title="Basic" minHeight={380} />
+
+### Empty
+
+When nothing matches, the empty text replaces the list and screen readers hear the result count.
+
+<Preview compact name="command-empty" title="Empty" minHeight={200} />
+
+### In a dialog
+
+CommandDialog opens over the page. Focus goes to the search box, <kbd>Esc</kbd> closes it, and focus returns to the button.
+
+<Preview compact name="command-dialog" title="In a dialog" minHeight={160} />
+
+## RTL
+
+The search icon and the text are on the right, shortcuts are on the left and stay left to right, and the highlight bar is on the right.
+
+<DirectionCompare name="command-basic" title="Command" minHeight={380} />
+
+## Accessibility
+
+| Key | Action |
+| --- | --- |
+| Type | Filters the actions and highlights the first match. |
+| <kbd>ArrowDown</kbd> / <kbd>ArrowUp</kbd> | Moves the highlight. |
+| <kbd>Enter</kbd> | Runs the highlighted action. |
+| <kbd>Esc</kbd> | In a dialog, closes it and returns focus to the button that opened it. |
+
+- The search box is a `combobox` that controls a `listbox`; the highlighted action is exposed with `aria-activedescendant` and focus stays in the box. Name the box with `inputLabel`.
+- The number of results is announced politely every time it changes (`countLabel`).
+- The dialog has a title and description for screen readers (`title`, `description`), traps focus and makes the page behind it inert.
+- The highlighted action has a 2px bar as well as a tint. Text is 4.5:1 and the shortcut 4.5:1 on the tint, in light and dark.
+
+## API Reference
+
+<ApiReference component="command" />
+
+## Derivation
+
+- Not in DGA. The list and items are [Menu](/docs/components/menu), the field is [Search Box](/docs/components/search-box), and the dialog is [Dialog](/docs/components/dialog).
+- Kept separate from Combobox because it does a different job (running actions, not choosing a value) and has no form value. It shares Combobox's search function.
+- No new colours and no new tokens.
+
+## Deviations from DGA
+
+- There is no DGA command menu to deviate from. This lists where we departed from the components it is built on.
+- The highlighted action has a bar as well as the Menu hover tint, because focus stays in the search box and the tint alone is 1.1:1.
+
+<ComponentDeviations component="command" />
+
+## Contrast
+
+<ComponentContrast component="command" />

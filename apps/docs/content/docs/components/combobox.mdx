@@ -1,0 +1,158 @@
+---
+title: Combobox
+description: "A select you can type in. Single, multiple with removable chips, groups, create-your-own and async loading, on Base UI Combobox. A Platform Code extension, not part of DGA."
+---
+
+<ExtensionNote
+  name="Combobox"
+  primitive="Base UI Combobox"
+  from="Select (the field, the arrow and the list), Input (the box and its states) and Tag (the chips)"
+  tokens={["field-border-default", "field-background-default", "background-card", "border-neutral-primary", "tag-background-neutral-light", "button-background-neutral-default"]}
+/>
+
+<Preview name="combobox-states" title="Combobox states" />
+
+## Installation
+
+<ComponentInstall name="combobox" />
+
+Installs [Input](/docs/components/input) and [Spinner](/docs/components/spinner) too. Label it with a [Field](/docs/components/field). It adds no dependency beyond Base UI.
+
+## Usage
+
+```tsx title="page.tsx"
+import { Combobox, ComboboxContent, ComboboxControl } from "@/components/dga/combobox";
+import { Field, FieldLabel } from "@/components/dga/field";
+
+const services = [
+  { value: "renew", label: "Renew passport" },
+  { value: "id", label: "Issue national ID" },
+];
+
+export function ServiceField() {
+  return (
+    <Field name="service">
+      <FieldLabel>Service</FieldLabel>
+      <Combobox items={services}>
+        <ComboboxControl placeholder="Search services" />
+        <ComboboxContent emptyText="No services found." />
+      </Combobox>
+    </Field>
+  );
+}
+```
+
+Use a Combobox instead of [Select](/docs/components/select) when the list is long enough that people need to type to find an option, or when they should be able to choose several. For fewer than about ten options, Select is simpler. `items` are `{ value, label }` options, or `{ label, items }` groups. Search ignores case and, in Arabic, diacritics and the spelling variants of alef, ya and ta marbuta, so a name typed without its hamza still finds the name written with it. Pass your own `filter` to change that, or `filter={null}` when a server has already filtered the list.
+
+## Anatomy
+
+- **Control**: the [Input](/docs/components/input) box with the text field, a clear button and the arrow on the end side. In a multiple combobox the chosen options are chips before the field, and the box grows taller as they wrap.
+- **Chip**: the neutral [Tag](/docs/components/tag) with a remove button.
+- **Content**: the popup on the card surface, as wide as the field, with the list, the empty text and the loading text.
+- **Item**: one option, with a check mark on the end side when chosen. The create row has a plus icon.
+- **Group**, **Label** and **Separator** (optional): group related options.
+
+## Examples
+
+### Basic
+
+Type to narrow the list, or open it with the arrow or <kbd>ArrowDown</kbd>. <kbd>Enter</kbd> chooses the highlighted option.
+
+<Preview compact name="combobox-basic" title="Basic" minHeight={200} />
+
+### States
+
+Default, filled, read-only, disabled and error, and the medium size with a darker fill. They are the Input states.
+
+<Preview name="combobox-states" title="States" />
+
+### Open list
+
+The list is open from the start so the item states show: the highlighted option has a bar and a tint, and the chosen one a check mark.
+
+<Preview compact name="combobox-open" title="Open list" minHeight={380} />
+
+### Multiple
+
+Add `multiple`. The value is an array. Each chosen option is a removable chip, and <kbd>Backspace</kbd> in the empty field removes the last one.
+
+<Preview compact name="combobox-multiple" title="Multiple" minHeight={260} />
+
+### Groups
+
+Pass groups as `items`.
+
+<Preview compact name="combobox-groups" title="Groups" minHeight={300} />
+
+### Creatable
+
+Add `creatable` to show a create row when what was typed matches no option. `onCreate` receives the text and returns the new option, which is selected; add it to your `items` too. This is our addition: shadcn's combobox has no creatable mode, and Base UI shows it only as a recipe.
+
+<Preview compact name="combobox-creatable" title="Creatable" minHeight={300} />
+
+```tsx title="page.tsx"
+const [items, setItems] = useState(services);
+
+<Combobox
+  multiple
+  creatable
+  items={items}
+  createLabel={(query) => `Add "${query}"`}
+  onCreate={(label) => {
+    const option = { value: label, label };
+    setItems((list) => [...list, option]);
+    return option;
+  }}
+>
+```
+
+### Async
+
+Load options from a server: keep your results in state, pass `filter={null}` so the list is not filtered again, and set `loading` on `ComboboxContent` while a request runs.
+
+<Preview compact name="combobox-async" title="Async" minHeight={300} />
+
+## RTL
+
+The text starts on the right with the arrow and clear button on the left. The popup is as wide as the field and aligned to its start edge, chips fill from the right, and the check mark is on the left.
+
+<DirectionCompare name="combobox-multiple" title="Combobox" minHeight={260} />
+
+## Accessibility
+
+| Key | Action |
+| --- | --- |
+| <kbd>Tab</kbd> | Moves focus to the field. The arrow button is skipped. |
+| Type | Narrows the list and opens it. |
+| <kbd>ArrowDown</kbd> / <kbd>ArrowUp</kbd> | Opens the list, then moves between options. |
+| <kbd>Enter</kbd> | Chooses the highlighted option. In a creatable combobox, adds a new one. |
+| <kbd>Esc</kbd> | Closes the list. |
+| <kbd>Backspace</kbd> | In a multiple combobox with an empty field, removes the last chip. |
+
+- The field has the `combobox` role with `aria-expanded`, `aria-controls` and `aria-activedescendant`; focus stays in the field while the highlighted option changes. The list is a `listbox` of `option` elements with `aria-selected`.
+- The number of results is announced politely each time it changes, and so is the loading text. Translate both with `statusLabel` and `loadingText`.
+- Each chip is named by its label and described by `removeHint`, and its remove button by `removeLabel`.
+- The label, helper text and error come from [Field](/docs/components/field) and are linked with `aria-describedby`.
+- The highlighted option has a 2px bar as well as a tint. The text is 4.5:1 and every border 3:1, in light and dark.
+
+## API Reference
+
+<ApiReference component="combobox" />
+
+## Derivation
+
+- Not in DGA. The box, the states and the fills are [Input](/docs/components/input); the arrow, the popup surface and the items are [Select](/docs/components/select) (DGA Dropdown Input); the chips are the neutral [Tag](/docs/components/tag).
+- No new colours and no new tokens.
+- Built on `@base-ui/react/combobox`, in our own markup so the `cn-*` classes hold the look.
+
+## Deviations from DGA
+
+- There is no DGA Combobox to deviate from. This lists where we departed from the components it is built on.
+- The arrow button has `tabIndex={-1}`: the field already opens the list from the keyboard.
+- A multiple combobox grows taller instead of scrolling its chips sideways, so every choice stays visible.
+
+<ComponentDeviations component="combobox" />
+
+## Contrast
+
+<ComponentContrast component="combobox" />
