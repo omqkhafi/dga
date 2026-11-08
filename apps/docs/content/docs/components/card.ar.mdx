@@ -39,6 +39,8 @@ export function ServiceCard() {
 
 استخدم البطاقة لمجموعة محتوى وإجراءات مترابطة: خدمة أو شخص أو مكان. وينبغي أن تحمل البطاقات في صف النوع نفسه من الأشياء. وللبطاقة التي تنقل إلى صفحة أخرى استخدم `CardLink`؛ وللاختيار استخدم `SelectableCard`؛ وللتفاصيل التي تُفتح وتُغلق استخدم `CardExpandable`.
 
+يتبع الحشو والوسائط والإجراءات وسهم التوسيع اتجاه الصفحة.
+
 ## البنية [#anatomy]
 
 - **Card**: بلون `background-card` ونصف قطر lg، وحشو وفجوة من `card-lg-*` (16px و24px).
@@ -77,12 +79,6 @@ export function ServiceCard() {
 `SelectableCard` خانة اختيار على هيئة بطاقة. والنقر في أي موضع منها يبدّلها، وتأخذ البطاقة المختارة حدًا أساسيًا.
 
 <Preview compact name="card-selectable" title="قابلة للاختيار" />
-
-## RTL [#rtl]
-
-يتبع الحشو والوسائط والإجراءات وسهم التوسيع اتجاه الصفحة.
-
-<DirectionCompare name="card-effects" title="البطاقة" />
 
 ## إمكانية الوصول [#accessibility]
 

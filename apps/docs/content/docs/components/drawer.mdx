@@ -44,6 +44,8 @@ export function FilterDrawer() {
 
 Use a Drawer for content that sits beside the page and should not leave it: a navigation menu on a phone, filters, a details panel. For a decision that must be answered, use a [Dialog](/docs/components/dialog). `side` is `start`, `end`, `top` or `bottom`. `start` and `end` follow the page direction, so a `start` drawer is on the left in English and on the right in Arabic, and swiping toward that edge closes it. Give it a DrawerTitle.
 
+`start` and `end` swap: the same drawer slides in from the right on Arabic pages, with its border on the left, and a swipe toward the right closes it. The slide animation mirrors with it.
+
 ## Anatomy
 
 - **Backdrop**: dims the page and makes it inert.
@@ -71,12 +73,6 @@ The gray tone, a `start` drawer with a list of links. Links are ordinary buttons
 Pass `open` and `onOpenChange` to open the drawer from your own code, and set `showCloseButton={false}` when the footer already has a close action. Escape and a click on the page behind still close it.
 
 <Preview compact name="drawer-controlled" title="Controlled" minHeight={420} />
-
-## RTL
-
-`start` and `end` swap: the same drawer slides in from the right on Arabic pages, with its border on the left, and a swipe toward the right closes it. The slide animation mirrors with it.
-
-<DirectionCompare name="drawer-sides" title="Drawer" minHeight={420} />
 
 ## Accessibility
 

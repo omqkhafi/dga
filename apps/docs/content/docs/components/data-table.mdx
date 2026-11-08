@@ -33,6 +33,8 @@ export function Requests({ rows }: { rows: Request[] }) {
 
 Use it for records people need to sort, search or pick. The table is client-side: it sorts, filters and pages the `data` you give it. For very large or server-paged data, use [Table](/docs/components/table) and [Pagination](/docs/components/pagination) with your own state. Columns are TanStack Table column definitions: give each a string `header` (or `meta: { label }`) so the sort button can be named.
 
+Columns run from the right, and the pagination arrows mirror.
+
 ## Anatomy
 
 - **Table**: the DGA Table with striped rows, in a region that scrolls sideways.
@@ -58,12 +60,6 @@ Type in the search box to filter every column, choose a heading's button to sort
 ### Labels
 
 Every string the table shows by itself is in `labels`: translate them, and pass `formatNumber` inside `labels.pagination` for Arabic-Indic digits.
-
-## RTL
-
-Columns run from the right, and the pagination arrows mirror.
-
-<DirectionCompare name="data-table-basic" title="Data Table" />
 
 ## Accessibility
 

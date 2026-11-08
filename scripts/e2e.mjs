@@ -1136,45 +1136,6 @@ async function polishChecks() {
     );
     await context.close();
   }
-  for (const width of [1280, 375]) {
-    const context = await browser.newContext({ viewport: { width, height: 900 } });
-    const page = await context.newPage();
-    await page.goto(`${BASE}/en/docs/components/badge`, { waitUntil: "networkidle" });
-    await page
-      .locator("#rtl")
-      .scrollIntoViewIfNeeded()
-      .catch(() => {});
-    await scrollThrough(page);
-    const compare = await page.evaluate(() => {
-      const figures = [...document.querySelectorAll("[data-preview-direction]")];
-      return figures.map((fig) => {
-        const frame = fig.querySelector("iframe");
-        const f = fig.getBoundingClientRect();
-        const i = frame.getBoundingClientRect();
-        return {
-          top: Math.round(f.top),
-          width: Math.round(f.width),
-          frame: Math.round(i.width) * 1,
-          scale: i.width / frame.offsetWidth,
-        };
-      });
-    });
-    check(compare.length === 2, `badge @${width}: two RTL comparison panels`);
-    for (const c of compare) {
-      check(
-        Math.abs(c.width - 2 - c.frame) <= 3,
-        `badge @${width}: the panel is filled by its frame, no dead space (${c.width} vs ${c.frame})`,
-      );
-    }
-    if (width === 375)
-      check(compare[1].top > compare[0].top + 40, "badge @375: the two panels are stacked");
-    else
-      check(
-        Math.abs(compare[1].top - compare[0].top) < 4,
-        "badge @1280: the two panels sit side by side",
-      );
-    await context.close();
-  }
 }
 
 /** A URL under /en or /ar that matches no page is a 404 in that language, not in English. */

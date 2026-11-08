@@ -22,6 +22,8 @@ export function Upload({ percent }: { percent: number }) {
 
 استخدم التقدم لمهمة معلومة المدة، كالرفع أو نموذج من أجزاء عدة. وحين لا يُعرف المدى مرّر `value={null}`. وللانتظار ثانية أو ثانيتين استخدم [Spinner](/docs/components/spinner). ولبيان موضع الشخص في تسلسل صفحات استخدم [Stepper](/docs/components/stepper).
 
+يمتلئ الشريط من اليمين وتدور الحلقة في الاتجاه المعاكس.
+
 ## البنية [#anatomy]
 
 - **الشريط**: تسمية ونسبة مئوية، ومسار وتعبئة، وسطر مساعدة. ارتفاع الشريط 8 أو 12 أو 16px (قيمة `size` هي `sm` أو `md` أو `lg`). وقيمة `tone` إما `primary` أو `neutral`.
@@ -43,12 +45,6 @@ export function Upload({ percent }: { percent: number }) {
 <Preview compact name="progress-circle" title="أحجام الحلقة وحالاتها" />
 
 يحوّل `formatValue` الرقم إلى النص، لتظهر الأرقام الهندية في الصفحات العربية.
-
-## RTL [#rtl]
-
-يمتلئ الشريط من اليمين وتدور الحلقة في الاتجاه المعاكس.
-
-<DirectionCompare name="progress-linear" title="التقدم" />
 
 ## إمكانية الوصول [#accessibility]
 

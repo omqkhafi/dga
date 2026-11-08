@@ -31,6 +31,8 @@ export function NationalIdField({ error }: { error?: string }) {
 
 Put one control in each Field. The label names the control, and the helper text and the error message are read after it through `aria-describedby`. Use [Input](/docs/components/input), [Textarea](/docs/components/textarea), [Select](/docs/components/select), [Number Input](/docs/components/number-input), [Search Box](/docs/components/search-box), [Checkbox](/docs/components/checkbox), [Radio](/docs/components/radio), [Switch](/docs/components/switch) or [File Upload](/docs/components/file-upload) as the control.
 
+The label, helper text and error sit on the start side and the error icon comes first in reading order. The required marker follows the label text. Horizontal fields put the control on the start side.
+
 ## Anatomy
 
 - **Field** (`<div>`): holds the state (`invalid`, `disabled`) that every part reads.
@@ -74,12 +76,6 @@ Use `orientation="horizontal"` with FieldContent for a checkbox or switch, and F
   </FieldContent>
 </Field>
 ```
-
-## RTL
-
-The label, helper text and error sit on the start side and the error icon comes first in reading order. The required marker follows the label text. Horizontal fields put the control on the start side.
-
-<DirectionCompare name="field-anatomy" title="Field" />
 
 ## Accessibility
 

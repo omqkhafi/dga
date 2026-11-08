@@ -196,7 +196,6 @@ describe("pages and previews", () => {
         expect(page).toContain(`<ApiReference component="${name}" />`);
         expect(page).toContain(`<ComponentContrast component="${name}" />`);
         expect(page).toContain(`<ComponentDeviations component="${name}" />`);
-        expect(page).toContain("<DirectionCompare");
         for (const [, preview] of page.matchAll(/<Preview[^>]*name="([^"]+)"/g))
           expect({ preview, mapped: map.includes(`"${preview}"`) }).toEqual({
             preview,

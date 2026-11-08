@@ -37,6 +37,8 @@ export function ServiceFaq() {
 
 Use an Accordion for content people scan by heading and open only in part: questions and answers, the sections of a long form. Do not hide what everyone must read. By default one section is open at a time; set `multiple` to let people open several.
 
+The chevron sits on the end side (the left in Arabic), or the start side with `iconPosition="leading"`. The panel text is indented with logical padding so it lines up with the heading text. No `[dir=rtl]` overrides are needed.
+
 ## Anatomy
 
 - **Item**: one section, with a 1px line above it. The `value` identifies it.
@@ -50,12 +52,6 @@ Use an Accordion for content people scan by heading and open only in part: quest
 `size` sets the header padding: `sm` 8px, `md` 12px, `lg` 16px. `iconPosition="leading"` puts the chevron first. `flush` keeps the lines 16px from the edges. `multiple` lets several sections stay open.
 
 <Preview compact name="accordion-variants" title="Sizes, leading and flush" />
-
-## RTL
-
-The chevron sits on the end side (the left in Arabic), or the start side with `iconPosition="leading"`. The panel text is indented with logical padding so it lines up with the heading text. No `[dir=rtl]` overrides are needed.
-
-<DirectionCompare name="accordion-basic" title="Accordion" />
 
 ## Accessibility
 

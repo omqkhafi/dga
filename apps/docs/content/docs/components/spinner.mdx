@@ -17,6 +17,8 @@ import { Spinner } from "@/components/dga/spinner";
 <Spinner label="Loading" />
 ```
 
+A ring has no direction, so nothing mirrors. Translate the `label` for Arabic pages.
+
 ## Anatomy
 
 - **Root**: a `role="status"` element with the animated ring.
@@ -31,12 +33,6 @@ Seven sizes from `2xs` (20px) to `2xl` (44px), in `primary`, `neutral`, `on-colo
 ### Decorative
 
 Pass `label={null}` when the surrounding element already announces the busy state, as [Button](/docs/components/button) does.
-
-## RTL
-
-A ring has no direction, so nothing mirrors. Translate the `label` for Arabic pages.
-
-<DirectionCompare name="spinner-sizes" title="Spinner" />
 
 ## Accessibility
 

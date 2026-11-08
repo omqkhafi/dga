@@ -21,6 +21,8 @@ export function Upload({ percent }: { percent: number }) {
 
 Use progress for a task with a known length, such as an upload or a form with several parts. When the length is not known pass `value={null}`. For a wait of a second or two, use a [Spinner](/docs/components/spinner). To show where someone is in a sequence of pages use a [Stepper](/docs/components/stepper).
 
+The bar fills from the right and the ring turns the other way.
+
 ## Anatomy
 
 - **Linear**: a label and the percentage, a track with a fill, and a helper line. The bar is 8, 12 or 16px high (`size` `sm`, `md`, `lg`). `tone` is `primary` or `neutral`.
@@ -42,12 +44,6 @@ Use progress for a task with a known length, such as an upload or a form with se
 <Preview compact name="progress-circle" title="Circular sizes and states" />
 
 `formatValue` turns the number into the text, for Arabic-Indic digits on Arabic pages.
-
-## RTL
-
-The bar fills from the right and the ring turns the other way.
-
-<DirectionCompare name="progress-linear" title="Progress" />
 
 ## Accessibility
 

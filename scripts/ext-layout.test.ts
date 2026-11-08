@@ -152,7 +152,6 @@ describe("docs", () => {
         expect(page).toContain(`<ComponentDeviations component="${name}" />`);
         expect(page).toContain(`<ApiReference component="${name}" />`);
         expect(page).toContain(`<ComponentInstall name="${name}" />`);
-        expect(page).toContain("<DirectionCompare");
       }
       expect(read(`apps/docs/content/docs/components/${name}.ar.mdx`)).toContain("sourceHash:");
     });

@@ -51,6 +51,8 @@ export function ServiceField() {
 
 Use Select to pick one option from five to fifteen. For fewer, [Radio](/docs/components/radio) shows every option at once; for many, add a search field. Pass `items` so the trigger shows the label of the chosen value, and a `placeholder` that says what to choose.
 
+The trigger text starts on the right and the chevron is on the left. The popup opens below the trigger and aligns to its start (right) edge; the check mark sits on the left.
+
 ## Anatomy
 
 - **Trigger** (`<button>`): the border, the chosen label or the placeholder, and a chevron.
@@ -77,12 +79,6 @@ Default, filled, read-only, disabled and error, and the medium size with a darke
 Wrap related options in `SelectGroup` with a `SelectLabel`, and separate groups with `SelectSeparator`.
 
 <Preview compact name="select-groups" title="Groups" />
-
-## RTL
-
-The trigger text starts on the right and the chevron is on the left. The popup opens below the trigger and aligns to its start (right) edge; the check mark sits on the left.
-
-<DirectionCompare name="select-basic" title="Select" />
 
 ## Accessibility
 

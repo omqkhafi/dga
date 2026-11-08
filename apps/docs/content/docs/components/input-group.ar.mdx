@@ -47,6 +47,8 @@ export function AmountField() {
 
 لأيقونة واحدة أو بادئة قصيرة، لدى [Input](/docs/components/input) أصلًا `startAdornment` و`endAdornment`. استخدم Input Group حين تحتاج إلى عدة إضافات أو زر داخل الحقل أو تلميح لوحة مفاتيح. وضع [Button](/docs/components/button) (`size="sm"` و`variant="subtle"` أو `primary`) داخل `InputGroupAddon` لإجراء، وأعطِ الزر بأيقونة فقط `aria-label`.
 
+تقع الإضافات في الجهة التي يبدأ منها النص وينتهي: البادئة على اليمين في العربية، والزر الأخير على اليسار. وتُضبط الأرقام والمبالغ وأرقام الهواتف على `dir="ltr"` لتحتفظ بترتيبها، و`InputGroupKbd` من اليسار إلى اليمين دائمًا.
+
 ## البنية [#anatomy]
 
 - **المجموعة**: صندوق Input بارتفاع 32px (`md`) أو 40px (`lg`)، بالتعبئة الافتراضية أو الفاتحة أو الداكنة.
@@ -72,12 +74,6 @@ export function AmountField() {
 الخطأ والتعطيل والتعبئة الداكنة بالحجم المتوسط.
 
 <Preview name="input-group-states" title="الحالات" minHeight={420} />
-
-## RTL [#rtl]
-
-تقع الإضافات في الجهة التي يبدأ منها النص وينتهي: البادئة على اليمين في العربية، والزر الأخير على اليسار. وتُضبط الأرقام والمبالغ وأرقام الهواتف على `dir="ltr"` لتحتفظ بترتيبها، و`InputGroupKbd` من اليسار إلى اليمين دائمًا.
-
-<DirectionCompare name="input-group-addons" title="Input Group" minHeight={420} />
 
 ## إمكانية الوصول [#accessibility]
 

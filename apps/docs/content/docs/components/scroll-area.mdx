@@ -32,6 +32,8 @@ export function Applications({ items }: { items: string[] }) {
 
 Use it for a list, a table or a panel that scrolls inside a page that does not, such as a menu, a sidebar section or a log. Give it a height (for a vertical area) or a width (for a horizontal one). If the whole page scrolls, leave the browser's own scrollbar alone.
 
+The vertical bar is on the left in Arabic, the end side of the text, and the content starts at the right. The horizontal bar scrolls from the right.
+
 ## Anatomy
 
 - **Viewport**: the scrolling element. It is a focusable region (`tabindex="0"`, `role="region"`) named by `label`, so a keyboard user can focus it and scroll.
@@ -56,12 +58,6 @@ Use it for a list, a table or a panel that scrolls inside a page that does not, 
 `visibility="hover"` (default) shows the bar while the pointer is over the area, while it scrolls and while it has keyboard focus. `visibility="always"` keeps it visible, which suits touch screens and anywhere people need to see that there is more.
 
 <Preview compact name="scroll-area-visibility" title="Visibility" minHeight={300} />
-
-## RTL
-
-The vertical bar is on the left in Arabic, the end side of the text, and the content starts at the right. The horizontal bar scrolls from the right.
-
-<DirectionCompare name="scroll-area-vertical" title="Scroll Area" minHeight={300} />
 
 ## Accessibility
 

@@ -31,6 +31,8 @@ export function MaintenanceNotice() {
 
 Use a Notification at the top of a page or section for something that concerns all of it: planned maintenance, a new service, an account problem. It stays until the person dismisses it or the cause is gone. For a message tied to one form or card use an [Inline Alert](/docs/components/inline-alert); for something that just happened use a [Toast](/docs/components/toast). Mount a Notification when it applies, not before: a live region is announced when its content appears. Start it with a short bold `title` ("Important:").
 
+The icon is on the right, the action and close button on the left, and the text starts on the right. Nothing is flipped by hand.
+
 ## Anatomy
 
 - **Banner** (`role="status"`, or `role="alert"` for `critical`): full width, padding 8 by 24px, radius-xs, a 2px bottom border in the kind's colour.
@@ -50,12 +52,6 @@ Use a Notification at the top of a page or section for something that concerns a
 `hideIcon` removes the status icon: the colour and the bold title still carry the kind. After the person dismisses a notification `onDismiss` runs and nothing is rendered in its place, so keep the state in the page if you need to bring it back.
 
 <Preview compact name="notification-states" title="Without an icon and dismissed" />
-
-## RTL
-
-The icon is on the right, the action and close button on the left, and the text starts on the right. Nothing is flipped by hand.
-
-<DirectionCompare name="notification-kinds" title="Notification" />
 
 ## Accessibility
 

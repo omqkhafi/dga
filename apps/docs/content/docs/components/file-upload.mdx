@@ -35,6 +35,8 @@ export function DocumentsField() {
 
 Use File Upload to attach documents and images to a request. The component picks and checks files; you upload them. Pass `onFilesAdded` to start uploads, then keep the list in your state (`files`) and update each file's `status` and `progress`. Say the accepted formats and the size limit in `hint`.
 
+The icon and text of each row start on the right, the remove button is on the left and the progress bar fills from right to left. File names keep their own direction (`dir="auto"` in a `<bdi>`): an Arabic name reads right to left and `report.pdf` left to right. Sizes and percentages are Western digits, left to right.
+
 ## Anatomy
 
 - **Drop zone** (`<label>` around a file `<input>`): the dashed area. The input is the focusable control.
@@ -81,12 +83,6 @@ const [files, setFiles] = useState<UploadFile[]>([]);
   }
 />
 ```
-
-## RTL
-
-The icon and text of each row start on the right, the remove button is on the left and the progress bar fills from right to left. File names keep their own direction (`dir="auto"` in a `<bdi>`): an Arabic name reads right to left and `report.pdf` left to right. Sizes and percentages are Western digits, left to right.
-
-<DirectionCompare name="file-upload-states" title="File Upload" />
 
 ## Accessibility
 

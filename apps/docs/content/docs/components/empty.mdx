@@ -47,6 +47,8 @@ export function NoRequests() {
 
 Use Empty when a whole area has nothing to show: no results, nothing created yet, a folder with no files, or an error that left the area empty. Say why and what to do next. The [Data Table](/docs/components/data-table) keeps its own compact empty row for a table; use Empty for the page or card around it.
 
+All content is centred, so nothing flips. The buttons in `EmptyContent` follow the page direction.
+
 ## Anatomy
 
 - **Media**: the icon in `icon-default-500`, or with `variant="icon"` on a 48px round `background-neutral-100` fill with an `icon-default` glyph.
@@ -70,12 +72,6 @@ Use Empty when a whole area has nothing to show: no results, nothing created yet
 An error that leaves the area empty uses the same layout; word the title and the retry action for the failure.
 
 <Preview compact name="empty-error" title="An error" minHeight={380} />
-
-## RTL
-
-All content is centred, so nothing flips. The buttons in `EmptyContent` follow the page direction.
-
-<DirectionCompare name="empty-basic" title="Empty" minHeight={420} />
 
 ## Accessibility
 

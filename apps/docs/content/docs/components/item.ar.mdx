@@ -41,6 +41,8 @@ export function Request() {
 
 استخدم Item لصف فيه أكثر من سطر نص: له متسع للوسائط وسطرين من النص والإجراءات. وللقائمة النقطية أو المرقمة العادية استخدم [List](/docs/components/list)، ولكتلة محتوى استخدم [Card](/docs/components/card)، وللصفوف ذات الأعمدة استخدم [Table](/docs/components/table).
 
+تقع الوسائط في جهة البداية والإجراءات في جهة النهاية، فينعكس الصف. ويتبع النص اتجاه الصفحة.
+
 ## البنية [#anatomy]
 
 - **Item**: الصف. الأنماط `default` (بلا تعبئة) و`outline` (حد 1px بلون `border-neutral-primary`) و`muted` (`background-neutral-50`). والحجمان `default` (حشوة 16px) و`sm`.
@@ -74,12 +76,6 @@ export function Request() {
 ### ترويسة وتذييل [#header-and-footer]
 
 <Preview compact name="item-header-footer" title="ترويسة وتذييل" minHeight={220} />
-
-## RTL [#rtl]
-
-تقع الوسائط في جهة البداية والإجراءات في جهة النهاية، فينعكس الصف. ويتبع النص اتجاه الصفحة.
-
-<DirectionCompare name="item-variants" title="Item" minHeight={340} />
 
 ## إمكانية الوصول [#accessibility]
 

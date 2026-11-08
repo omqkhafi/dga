@@ -149,11 +149,9 @@ describe("docs", () => {
   test("the pages document the keyboard, RTL and the Derivation from DGA", () => {
     for (const name of ITEMS) {
       const en = read(`apps/docs/content/docs/components/${name}.mdx`);
-      expect(en).toContain("## RTL");
       expect(en).toContain("## Accessibility");
       expect(en).toContain("## Derivation from DGA");
       const ar = read(`apps/docs/content/docs/components/${name}.ar.mdx`);
-      expect(ar).toContain("[#rtl]");
       expect(ar).toContain("[#derivation-from-dga]");
     }
   });

@@ -44,6 +44,8 @@ export function SubmitButton() {
 
 Use a Toast to confirm something that just happened and needs no reply: a request was sent, a draft was saved. Do not use it for an error that blocks the person (show it next to the field, or in an [Inline Alert](/docs/components/inline-alert)), or for anything they must act on before it disappears. Mount one `Toaster` at the root and call `toast.add({ title, description, type })` from anywhere, even outside React. `type` is `neutral`, `info`, `success`, `warning` or `error`. A toast goes after 6 seconds; pass `timeout: 0` for one that stays until it is closed, and use that for errors people need to read. Keep the message to one short sentence; an `actionProps` button gives one quick action (such as Undo).
 
+Toasts appear at the bottom end of the screen: the bottom right in English and the bottom left in Arabic. The bar is on the start side, and a swipe toward the edge they came from dismisses them.
+
 ## Anatomy
 
 - **Toaster** (`role="region"`, a live region): the list at the bottom end of the screen. It holds up to 3 toasts.
@@ -64,12 +66,6 @@ Press a button to add a toast. `error` and `warning` are announced at once (`pri
 A toast closes by itself after six seconds. Pass `timeout: 0` to `toast.add` to keep it until the person closes it, and `actionProps` to add a button. Warnings and errors use `priority: "high"`, so a screen reader announces them at once; the others wait their turn. Only three toasts show at once (`limit` on Toaster), and the rest queue behind them.
 
 <Preview compact name="toast-behaviour" title="Timeout, priority and actions" minHeight={340} />
-
-## RTL
-
-Toasts appear at the bottom end of the screen: the bottom right in English and the bottom left in Arabic. The bar is on the start side, and a swipe toward the edge they came from dismisses them.
-
-<DirectionCompare name="toast-demo" title="Toast" minHeight={340} />
 
 ## Accessibility
 

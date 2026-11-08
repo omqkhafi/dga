@@ -23,6 +23,8 @@ export function Results() {
 
 Use pagination to split a long list or table into pages the person can step through. Show the number of the current page and let them jump to the first and last. For a list that loads more as you scroll, or for fewer than two pages, do not use it. In a [Data Table](/docs/components/data-table) the pagination is built in.
 
+The arrows mirror, so previous points to the right and next to the left, and the numbers run from the right.
+
 ## Anatomy
 
 - **Pagination** (`nav` with a list): items 24, 32 or 40px square, 8px apart.
@@ -46,12 +48,6 @@ The row keeps the same number of slots while there are enough pages, so it does 
 <Preview compact name="pagination-states" title="States" />
 
 Translate the labels and turn the digits into Arabic-Indic digits for Arabic pages with `previousLabel`, `nextLabel`, `pageLabel`, `compactLabel` and `formatNumber`.
-
-## RTL
-
-The arrows mirror, so previous points to the right and next to the left, and the numbers run from the right.
-
-<DirectionCompare name="pagination-basic" title="Pagination" />
 
 ## Accessibility
 

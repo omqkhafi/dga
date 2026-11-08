@@ -29,6 +29,8 @@ export function PageOutline() {
 
 استخدمه في صفحة طويلة بأقسام عدة، في عمود جانبي يبقى ظاهرًا. يجب أن يطابق كل `id` عنصرًا في الصفحة (غالبًا عنوان)، ويحتاج هذا العنصر إلى `scroll-margin-top` إن كانت الترويسة ثابتة. وهو يتبع موضع التمرير تلقائيًا؛ ومرّر `activeId` لتتحكم فيه. وللتنقل بين الصفحات استخدم [Tabs](/docs/components/tabs) أو [Breadcrumb](/docs/components/breadcrumb).
 
+الإزاحة والحشو عند جهة البداية، فهما على اليمين في العربية.
+
 ## البنية [#anatomy]
 
 - **جدول المحتويات** (`nav`): بعرض 228px على الأكثر. والعنوان بخط Text sm وبوزن Medium ولون `text-primary-paragraph`.
@@ -45,12 +47,6 @@ export function PageOutline() {
 <Preview compact name="table-of-contents-basic" title="ثلاثة مستويات" />
 
 الخط على بعد `offset` بكسل من الأعلى (الافتراضي 96). اجعله بارتفاع ترويستك الثابتة.
-
-## RTL [#rtl]
-
-الإزاحة والحشو عند جهة البداية، فهما على اليمين في العربية.
-
-<DirectionCompare name="table-of-contents-basic" title="جدول المحتويات" />
 
 ## إمكانية الوصول [#accessibility]
 

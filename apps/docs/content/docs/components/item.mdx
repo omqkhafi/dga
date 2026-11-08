@@ -40,6 +40,8 @@ export function Request() {
 
 Use Item for a row that is more than one line of text: it has room for media, two lines of text and actions. For a plain bulleted or numbered list use the [List](/docs/components/list); for a block of content use the [Card](/docs/components/card); for rows with columns use the [Table](/docs/components/table).
 
+Media sits on the start side and actions on the end side, so the row mirrors. Text follows the page direction.
+
 ## Anatomy
 
 - **Item**: the row. Variants `default` (no fill), `outline` (a 1px `border-neutral-primary`) and `muted` (`background-neutral-50`). Sizes `default` (16px padding) and `sm`.
@@ -73,12 +75,6 @@ Render the group as a `ul` and each row as an `li` so screen readers announce ho
 ### Header and footer
 
 <Preview compact name="item-header-footer" title="Header and footer" minHeight={220} />
-
-## RTL
-
-Media sits on the start side and actions on the end side, so the row mirrors. Text follows the page direction.
-
-<DirectionCompare name="item-variants" title="Item" minHeight={340} />
 
 ## Accessibility
 

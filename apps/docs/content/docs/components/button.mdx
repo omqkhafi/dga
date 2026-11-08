@@ -21,6 +21,8 @@ export default function Page() {
 }
 ```
 
+Icons, gaps and padding swap sides on their own (logical properties). Directional icons such as arrows do not: add `rtl:-scale-x-100`.
+
 ## Anatomy
 
 **Root** (`<button type="button">`, or any element through `render`), an optional **Icon** before or after the **Label**, and a **Spinner** that replaces the leading icon while `loading`.
@@ -79,12 +81,6 @@ To make a link look like a button, render an anchor with the `render` prop:
   Services
 </Button>
 ```
-
-## RTL
-
-Icons, gaps and padding swap sides on their own (logical properties). Directional icons such as arrows do not: add `rtl:-scale-x-100`.
-
-<DirectionCompare name="button-variants" title="Button styles" />
 
 ## Accessibility
 

@@ -34,6 +34,8 @@ export function Requests({ rows }: { rows: Request[] }) {
 
 استخدمه لسجلات يحتاج الناس إلى ترتيبها أو البحث فيها أو اختيار منها. والجدول يعمل على جهة العميل: يرتّب `data` التي تعطيها ويصفّيها ويقسمها صفحات. وللبيانات الكبيرة جدًا أو المرقّمة من الخادم استخدم [Table](/docs/components/table) و[Pagination](/docs/components/pagination) بحالتك أنت. والأعمدة تعريفات أعمدة TanStack Table: أعطِ كل عمود `header` نصًا (أو `meta: { label }`) ليُسمّى زر الترتيب.
 
+تمتد الأعمدة من اليمين، وتنعكس أسهم الترقيم.
+
 ## البنية [#anatomy]
 
 - **الجدول**: Table من DGA بصفوف متبادلة، في منطقة تتمرر أفقيًا.
@@ -59,12 +61,6 @@ export function Requests({ rows }: { rows: Request[] }) {
 ### التسميات [#labels]
 
 كل نص يعرضه الجدول بنفسه موجود في `labels`: ترجمها، ومرّر `formatNumber` داخل `labels.pagination` للأرقام الهندية.
-
-## RTL [#rtl]
-
-تمتد الأعمدة من اليمين، وتنعكس أسهم الترقيم.
-
-<DirectionCompare name="data-table-basic" title="جدول البيانات" />
 
 ## إمكانية الوصول [#accessibility]
 

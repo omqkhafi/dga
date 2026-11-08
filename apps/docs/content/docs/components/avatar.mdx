@@ -24,6 +24,8 @@ import { Avatar, AvatarGroup } from "@/components/dga/avatar";
 
 Built on the [Base UI Avatar](https://base-ui.com/react/components/avatar), which shows the fallback while the image loads and if it fails.
 
+A group stacks from the start side, so the overlap direction flips in Arabic.
+
 ## Anatomy
 
 - **Avatar**: the root, with the image or the fallback.
@@ -40,12 +42,6 @@ Built on the [Base UI Avatar](https://base-ui.com/react/components/avatar), whic
 ### Groups
 
 `AvatarGroup` overlaps its children by 4px with a white ring (`stacked`, the default). Set `stacked={false}` to space them.
-
-## RTL
-
-A group stacks from the start side, so the overlap direction flips in Arabic.
-
-<DirectionCompare name="avatar" title="Avatar and group" />
 
 ## Accessibility
 

@@ -37,6 +37,8 @@ export function RequiredDocuments() {
 
 Use a Collapsible for one block of detail that most people do not need: a longer description, extra options, a "show more" list. For several panels where opening one closes the others, use an [Accordion](/docs/components/accordion). For a card whose details open, use the [Card](/docs/components/card) Expandable, which is this component inside a card.
 
+The chevron and the text follow the page direction. The chevron points down in both directions, so nothing mirrors.
+
 ## Anatomy
 
 - **Trigger**: a button with `aria-expanded` and `aria-controls`. It is `text-display`, bold, 18px. Turn on the chevron with `showChevron`, or render your own button with `render`.
@@ -62,12 +64,6 @@ Put the always-visible part before the content and render the trigger as a Butto
 ## The Card's Expandable
 
 The Card's `CardExpandable`, `CardExpandableTrigger` and `CardExpandablePanel` are this component with the card surface around it. Installing the Card installs the Collapsible with it, and there is one implementation of the open and close behaviour. Nothing changed in how the Card looks.
-
-## RTL
-
-The chevron and the text follow the page direction. The chevron points down in both directions, so nothing mirrors.
-
-<DirectionCompare name="collapsible-basic" title="Collapsible" minHeight={240} />
 
 ## Accessibility
 

@@ -48,6 +48,8 @@ export function NoRequests() {
 
 استخدم Empty حين لا يوجد ما يُعرض في منطقة كاملة: لا نتائج، أو لم يُنشأ شيء بعد، أو مجلد بلا ملفات، أو خطأ ترك المنطقة فارغة. اذكر السبب والخطوة التالية. يحتفظ [Data Table](/docs/components/data-table) بصفه الفارغ المدمج للجدول؛ واستخدم Empty للصفحة أو البطاقة المحيطة به.
 
+المحتوى كله موسّط فلا ينقلب شيء. وتتبع أزرار `EmptyContent` اتجاه الصفحة.
+
 ## البنية [#anatomy]
 
 - **الوسائط**: الأيقونة بلون `icon-default-500`، أو مع `variant="icon"` على تعبئة دائرية بقطر 48px بلون `background-neutral-100` ورمز `icon-default`.
@@ -71,12 +73,6 @@ export function NoRequests() {
 الخطأ الذي يترك المنطقة فارغة يستخدم التخطيط نفسه؛ صغ العنوان وإجراء إعادة المحاولة بحسب الخطأ.
 
 <Preview compact name="empty-error" title="خطأ" minHeight={380} />
-
-## RTL [#rtl]
-
-المحتوى كله موسّط فلا ينقلب شيء. وتتبع أزرار `EmptyContent` اتجاه الصفحة.
-
-<DirectionCompare name="empty-basic" title="Empty" minHeight={420} />
 
 ## إمكانية الوصول [#accessibility]
 

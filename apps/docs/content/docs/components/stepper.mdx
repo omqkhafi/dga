@@ -27,6 +27,8 @@ export function RequestSteps({ step }: { step: number }) {
 
 Use a stepper for a process of three to seven steps in a fixed order, such as a form in parts. It combines DGA's Progress Indicator and Radial Stepper. Put the form itself below it. For a bar that fills continuously use [Progress](/docs/components/progress).
 
+Steps run from the right, the line grows to the left and the compact ring fills the other way.
+
 ## Anatomy
 
 - **Step**: a 32px indicator, a title and an optional description, joined to the next step by a 2px line.
@@ -53,12 +55,6 @@ With `onValueChange` the steps are buttons. Disable a step with `disabled` to st
 <Preview compact name="stepper-interactive" title="Interactive" />
 
 Translate `labels`, `compactLabel` and `nextLabel`, and pass `formatNumber`, on Arabic pages. Narrow the preview to see the compact form.
-
-## RTL
-
-Steps run from the right, the line grows to the left and the compact ring fills the other way.
-
-<DirectionCompare name="stepper-horizontal" title="Stepper" />
 
 ## Accessibility
 

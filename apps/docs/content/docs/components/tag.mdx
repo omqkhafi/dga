@@ -20,6 +20,8 @@ import { StatusTag, Tag } from "@/components/dga/tag";
 
 Tags label content by category or show the filters a user has picked. Status tags show the state of an item, task or request.
 
+The dot, icon and close button sit on the logical start and end sides.
+
 ## Anatomy
 
 - **Tag**: a `<span>` with optional icon and close button.
@@ -39,12 +41,6 @@ Pass `onDismiss` to add a close button. Give it a specific name with `dismissLab
 `subtle` (default) sits on a tint, `inverted` on a solid fill and `ghost` has no fill. All three start with a coloured dot.
 
 <Preview compact name="status-tags" title="Status Tag" />
-
-## RTL
-
-The dot, icon and close button sit on the logical start and end sides.
-
-<DirectionCompare name="tag-dismiss" title="Removable tags" />
 
 ## Accessibility
 

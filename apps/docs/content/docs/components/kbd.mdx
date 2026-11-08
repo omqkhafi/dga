@@ -37,6 +37,8 @@ export function Hint() {
 
 Use Kbd to show a key the person can press, in help text, menus, tooltips and buttons. It is a hint and takes no focus. It does not listen for keys: the shortcut itself is yours to bind. To show a shortcut at the end of a menu row, use the Menu's own shortcut text; to show one inside a field, use the Input Group's key addon, which is a Kbd.
 
+Key names read left to right on Arabic pages, so `Ctrl+K` never turns into `K+Ctrl`. Both Kbd and KbdGroup set `dir="ltr"`. Pass `dir="rtl"` to a Kbd whose label is an Arabic word.
+
 ## Anatomy
 
 - **Key**: a 20px cap, at least 20px wide, `background-neutral-100`, a 1px `border-neutral-primary`, radius-xs, `text-xs` medium in `text-default`.
@@ -49,12 +51,6 @@ Use Kbd to show a key the person can press, in help text, menus, tooltips and bu
 Next to text, inside an Input Group and inside a button.
 
 <Preview compact name="kbd-context" title="In context" minHeight={300} />
-
-## RTL
-
-Key names read left to right on Arabic pages, so `Ctrl+K` never turns into `K+Ctrl`. Both Kbd and KbdGroup set `dir="ltr"`. Pass `dir="rtl"` to a Kbd whose label is an Arabic word.
-
-<DirectionCompare name="kbd-context" title="Kbd" minHeight={300} />
 
 ## Accessibility
 

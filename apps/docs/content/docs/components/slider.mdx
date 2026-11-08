@@ -37,6 +37,8 @@ Use a Slider when the exact number matters less than where it sits between two l
 />
 ```
 
+The minimum is on the side the text starts: the right in Arabic. The fill grows from the right, dragging works the same way, and the arrow keys follow what you see: <kbd>Left</kbd> raises the value and <kbd>Right</kbd> lowers it. The value readout stays a left-to-right isolate, so digits keep their order.
+
 ## Anatomy
 
 - **Label** and **value**: Text sm. The value shows one number, or both numbers of a range, opposite the label.
@@ -64,12 +66,6 @@ An array as `value` or `defaultValue` makes a range with two thumbs. Name each t
 `step` and `largeStep` set how far the arrow keys and Page Up and Down move. An error turns the fill and thumbs red and adds a message with an icon.
 
 <Preview name="slider-states" title="States" minHeight={520} />
-
-## RTL
-
-The minimum is on the side the text starts: the right in Arabic. The fill grows from the right, dragging works the same way, and the arrow keys follow what you see: <kbd>Left</kbd> raises the value and <kbd>Right</kbd> lowers it. The value readout stays a left-to-right isolate, so digits keep their order.
-
-<DirectionCompare name="slider-range" title="Slider" minHeight={260} />
 
 ## Accessibility
 

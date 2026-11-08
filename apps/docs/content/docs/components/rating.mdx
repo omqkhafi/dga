@@ -23,6 +23,8 @@ export function RateService() {
 
 Use a rating to ask how satisfied someone was, and to show the result. Pair it with a way to say why when the score is low. Use `readOnly` to display a score (an average, or a submitted answer). DGA defines whole stars, so there are no half stars.
 
+The first star is on the right and the fill grows from the right. The arrow keys follow: the left arrow raises the rating in Arabic.
+
 ## Anatomy
 
 - **Stars**: five, 24, 32 or 48px, 4px apart (`size` `sm`, `md`, `lg`).
@@ -43,12 +45,6 @@ The rating is uncontrolled with `defaultValue`, or controlled with `value` and `
 <Preview compact name="rating-states" title="Read-only, disabled and not rated" />
 
 Translate `starLabel` and `summaryLabel` on Arabic pages.
-
-## RTL
-
-The first star is on the right and the fill grows from the right. The arrow keys follow: the left arrow raises the rating in Arabic.
-
-<DirectionCompare name="rating-basic" title="Rating" />
 
 ## Accessibility
 

@@ -41,6 +41,8 @@ export function VerifyField() {
 
 Use it for a short code that people copy from a message or read from an app. For longer free text use [Input](/docs/components/input). Pass `aria-label` or `aria-labelledby` to name the group, and `slotLabel` to translate the name of each box. `onValueComplete` fires when every box is filled or a whole code is pasted, so you can verify without a button.
 
+The boxes always run left to right, also on Arabic pages: digits are read and sent in that order, like in Number Input. Everything around them (label, helper text, error) follows the page direction. Typing Arabic-Indic digits (٣) fills the box with a Western digit (3), and pasting `٣٤٥٦٧٨` does the same for the whole code.
+
 ## Anatomy
 
 - **Box**: the DGA Input box (32px or 40px high, `size`), one per character, with the same border, underline and error behaviour.
@@ -64,12 +66,6 @@ Wrong code, disabled and read-only. Focus moves with the typing, and the focused
 ### Verify when complete
 
 <Preview compact name="input-otp-verify" title="onValueComplete" minHeight={220} />
-
-## RTL
-
-The boxes always run left to right, also on Arabic pages: digits are read and sent in that order, like in Number Input. Everything around them (label, helper text, error) follows the page direction. Typing Arabic-Indic digits (٣) fills the box with a Western digit (3), and pasting `٣٤٥٦٧٨` does the same for the whole code.
-
-<DirectionCompare name="input-otp-basic" title="Input OTP" minHeight={200} />
 
 ## Accessibility
 

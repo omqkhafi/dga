@@ -64,6 +64,8 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
 
 Use the Sidebar for the main navigation of an application with many sections. For the navigation of a public site use the [Header](/docs/components/header). The Sidebar is a layout: it sits beside the page and takes its height from its parent (a full-height shell, or a `className` such as `h-96` inside a container). Wrap the label of every item in an element such as `<span>`: on the icon rail it is hidden visually and still read by screen readers. Every visible string is yours to pass in.
 
+The sidebar sits on the start side, so it is on the right in Arabic, with its border and the Drawer on that side. The trigger icon, the group chevrons and the tooltip side (the end side of the rail) mirror. Nothing needs an Arabic variant.
+
 ## Anatomy
 
 - **Provider**: holds the open state, the Ctrl or Command + B shortcut, the Tooltips of the rail and the Drawer breakpoint.
@@ -127,12 +129,6 @@ import { parseSidebarState, SIDEBAR_COOKIE_NAME } from "@/components/dga/sidebar
 const store = await cookies();
 const defaultOpen = store.get(SIDEBAR_COOKIE_NAME)?.value !== "false";
 ```
-
-## RTL
-
-The sidebar sits on the start side, so it is on the right in Arabic, with its border and the Drawer on that side. The trigger icon, the group chevrons and the tooltip side (the end side of the rail) mirror. Nothing needs an Arabic variant.
-
-<DirectionCompare name="sidebar-icon" title="Sidebar" minHeight={420} />
 
 ## Accessibility
 

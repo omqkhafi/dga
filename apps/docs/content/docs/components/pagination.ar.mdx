@@ -24,6 +24,8 @@ export function Results() {
 
 استخدم ترقيم الصفحات لتقسيم قائمة أو جدول طويل إلى صفحات يتنقل بينها الشخص. أظهر رقم الصفحة الحالية وأتح القفز إلى الأولى والأخيرة. ولا تستخدمه لقائمة تتحمّل المزيد أثناء التمرير، ولا لأقل من صفحتين. وفي [Data Table](/docs/components/data-table) يكون الترقيم مدمجًا.
 
+ينعكس السهمان، فيشير السابق إلى اليمين والتالي إلى اليسار، وتمتد الأرقام من اليمين.
+
 ## البنية [#anatomy]
 
 - **Pagination** (عنصر `nav` مع قائمة): عناصر مربعة بحجم 24 أو 32 أو 40px، بينها 8px.
@@ -47,12 +49,6 @@ export function Results() {
 <Preview compact name="pagination-states" title="الحالات" />
 
 ترجم التسميات وحوّل الأرقام إلى الأرقام الهندية في الصفحات العربية بـ `previousLabel` و`nextLabel` و`pageLabel` و`compactLabel` و`formatNumber`.
-
-## RTL [#rtl]
-
-ينعكس السهمان، فيشير السابق إلى اليمين والتالي إلى اليسار، وتمتد الأرقام من اليمين.
-
-<DirectionCompare name="pagination-basic" title="ترقيم الصفحات" />
 
 ## إمكانية الوصول [#accessibility]
 

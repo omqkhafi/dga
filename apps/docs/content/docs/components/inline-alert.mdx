@@ -30,6 +30,8 @@ export function DocumentsNeeded() {
 
 Use an Inline Alert for a message that belongs to one place: a form that has a problem, a card that needs a step, a section with a notice. It is part of the page, so it does not move or disappear by itself. For the whole page use a [Notification](/docs/components/notification); for something that just happened use a [Toast](/docs/components/toast). Give it a short `title`, one or two sentences of text, and at most two `actions`: the main one first. `tinted` colours the fill and text in the kind's colour; the default is a white card with a coloured bar.
 
+The bar and the icon are on the right, the close button on the left, and the actions start on the right. The alert is as wide as its container.
+
 ## Anatomy
 
 - **Alert** (`role="status"`, or `role="alert"` for `warning` and `destructive`): radius-md, a 1px border, padding 16 by 24px.
@@ -50,12 +52,6 @@ The five kinds on a white fill (left) and `tinted` (right). The info and warning
 `hideIcon` removes the status icon: the bar and the title still carry the kind. A destructive or warning alert is announced at once. After it is dismissed `onDismiss` runs and nothing is rendered in its place.
 
 <Preview compact name="inline-alert-states" title="Without an icon and dismissed" />
-
-## RTL
-
-The bar and the icon are on the right, the close button on the left, and the actions start on the right. The alert is as wide as its container.
-
-<DirectionCompare name="inline-alert-kinds" title="Inline Alert" />
 
 ## Accessibility
 

@@ -44,6 +44,8 @@ export function ServiceField() {
 
 Use a Combobox instead of [Select](/docs/components/select) when the list is long enough that people need to type to find an option, or when they should be able to choose several. For fewer than about ten options, Select is simpler. `items` are `{ value, label }` options, or `{ label, items }` groups. Search ignores case and, in Arabic, diacritics and the spelling variants of alef, ya and ta marbuta, so a name typed without its hamza still finds the name written with it. Pass your own `filter` to change that, or `filter={null}` when a server has already filtered the list.
 
+The text starts on the right with the arrow and clear button on the left. The popup is as wide as the field and aligned to its start edge, chips fill from the right, and the check mark is on the left.
+
 ## Anatomy
 
 - **Control**: the [Input](/docs/components/input) box with the text field, a clear button and the arrow on the end side. In a multiple combobox the chosen options are chips before the field, and the box grows taller as they wrap.
@@ -111,12 +113,6 @@ const [items, setItems] = useState(services);
 Load options from a server: keep your results in state, pass `filter={null}` so the list is not filtered again, and set `loading` on `ComboboxContent` while a request runs.
 
 <Preview compact name="combobox-async" title="Async" minHeight={300} />
-
-## RTL
-
-The text starts on the right with the arrow and clear button on the left. The popup is as wide as the field and aligned to its start edge, chips fill from the right, and the check mark is on the left.
-
-<DirectionCompare name="combobox-multiple" title="Combobox" minHeight={260} />
 
 ## Accessibility
 

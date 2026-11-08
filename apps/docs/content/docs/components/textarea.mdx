@@ -30,6 +30,8 @@ export function DetailsField() {
 
 Use Textarea for answers that need more than a line: descriptions, comments, reasons. Set `rows` for the starting height. Tell people the limit in the helper text, and do not cut text off silently.
 
+Text starts on the right and the resize handle sits in the bottom-left corner. Everything follows the page direction.
+
 ## Anatomy
 
 - **Textarea** (`<textarea>`): the border, fill, text and resize handle in one element.
@@ -50,12 +52,6 @@ Default, filled, read-only, disabled and error, plus the darker fill without res
 ```tsx title="page.tsx"
 <Textarea resize="none" rows={6} />
 ```
-
-## RTL
-
-Text starts on the right and the resize handle sits in the bottom-left corner. Everything follows the page direction.
-
-<DirectionCompare name="textarea-states" title="Textarea" />
 
 ## Accessibility
 

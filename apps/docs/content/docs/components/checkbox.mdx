@@ -31,6 +31,8 @@ export function ConsentField() {
 
 Use a Checkbox when someone can choose none, one or several options, or confirm something before submitting. The choice is applied when the form is submitted; for a setting that takes effect at once use [Switch](/docs/components/switch). For exactly one of several options use [Radio](/docs/components/radio).
 
+The box is on the right (start) of its label and the helper text lines up under the label. The check mark is not directional, so it is not flipped.
+
 ## Anatomy
 
 - **Box** (`<span role="checkbox">` and a hidden `<input>`): the border and fill.
@@ -56,12 +58,6 @@ Unchecked, checked, indeterminate, read-only, disabled, error and the neutral st
 Set `indeterminate` on the parent when only some children are checked. The parent checks or clears them all.
 
 <Preview compact name="checkbox-group" title="Group with a parent" />
-
-## RTL
-
-The box is on the right (start) of its label and the helper text lines up under the label. The check mark is not directional, so it is not flipped.
-
-<DirectionCompare name="checkbox-states" title="Checkbox" />
 
 ## Accessibility
 

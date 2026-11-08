@@ -28,6 +28,8 @@ export function PageOutline() {
 
 Use it on a long page with several sections, in a side column that stays in view. Each `id` must match an element on the page (usually a heading), and those elements need `scroll-margin-top` if the header is sticky. It follows the scroll position by itself; pass `activeId` to control it. For moving between pages use a [Tabs](/docs/components/tabs) or a [Breadcrumb](/docs/components/breadcrumb).
 
+The indent and the padding are on the start side, so they are on the right in Arabic.
+
 ## Anatomy
 
 - **Table of Contents** (`nav`): at most 228px wide. The title is Text sm Medium in `text-primary-paragraph`.
@@ -44,12 +46,6 @@ Three levels. The section nearest the top of the page is current; choosing a lin
 <Preview compact name="table-of-contents-basic" title="Three levels" />
 
 The line is `offset` pixels from the top (default 96). Set it to the height of your sticky header.
-
-## RTL
-
-The indent and the padding are on the start side, so they are on the right in Arabic.
-
-<DirectionCompare name="table-of-contents-basic" title="Table of Contents" />
 
 ## Accessibility
 

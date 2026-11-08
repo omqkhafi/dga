@@ -49,6 +49,8 @@ export function Services({ services }: { services: Service[] }) {
 
 كل نص ظاهر خاصية: `title` و`clearAllLabel` و`appliedLabel` و`removeLabel` و`triggerLabel` و`applyLabel` و`resultLabel` و`closeLabel`، وتسميات المجموعات والخيارات.
 
+اللوحة على اليمين، ويُفتح الدرج من اليمين مع `drawerSide="start"`، وتجري الوسوم من اليمين.
+
 ## البنية [#anatomy]
 
 - **اللوحة**: بعرض 288px بجانب النتائج من عرض `lg`. مجموعات `checkbox` و`radio` و`select` و`input` و`range`، بينها 24px.
@@ -63,12 +65,6 @@ export function Services({ services }: { services: Service[] }) {
 <Preview compact name="filtration-uncontrolled" title="دون تحكم" minHeight={420} />
 
 بدّل منفذ العرض إلى الجوال لترى الزر والدرج.
-
-## الاتجاه من اليمين إلى اليسار [#rtl]
-
-اللوحة على اليمين، ويُفتح الدرج من اليمين مع `drawerSide="start"`، وتجري الوسوم من اليمين.
-
-<DirectionCompare name="filtration-basic" title="التصفية" minHeight={560} />
 
 ## إمكانية الوصول [#accessibility]
 

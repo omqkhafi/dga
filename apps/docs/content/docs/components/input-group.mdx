@@ -46,6 +46,8 @@ export function AmountField() {
 
 For one icon or a short prefix, the [Input](/docs/components/input) already has `startAdornment` and `endAdornment`. Reach for an Input Group when you need several addons, a button inside the field, or a keyboard hint. Put a [Button](/docs/components/button) (`size="sm"`, `variant="subtle"` or `primary`) in an `InputGroupAddon` for an action, and give an icon-only button an `aria-label`.
 
+Addons sit on the side the text starts and ends: a prefix is on the right in Arabic, a trailing button on the left. Digits, amounts and phone numbers are set `dir="ltr"` so they keep their order, and `InputGroupKbd` is always left to right.
+
 ## Anatomy
 
 - **Group**: the Input box, 32px (`md`) or 40px (`lg`), with the default, lighter or darker fill.
@@ -71,12 +73,6 @@ A read-only value with a copy button, and a field with an Apply button.
 Error, disabled, and the filled darker fill at the medium size.
 
 <Preview name="input-group-states" title="States" minHeight={420} />
-
-## RTL
-
-Addons sit on the side the text starts and ends: a prefix is on the right in Arabic, a trailing button on the left. Digits, amounts and phone numbers are set `dir="ltr"` so they keep their order, and `InputGroupKbd` is always left to right.
-
-<DirectionCompare name="input-group-addons" title="Input Group" minHeight={420} />
 
 ## Accessibility
 

@@ -22,6 +22,8 @@ export function SiteHeader() {
 
 Put the stamp at the very top of every page of a government site, above the [Second Nav](/docs/components/second-nav) and the [Header](/docs/components/header): pass it in the Header's `stamp` slot, which sits above `top`. It tells visitors the site is official and lets them check it: the address ends in a Saudi domain, the connection is https, and the site is registered with the Digital Government Authority. DGA gives the layout but no wording, so every string is a prop with an English default; translate them on Arabic pages. Set `domain` to the suffix your site uses.
 
+The flag and text start on the right and the toggle follows the text. The three rows run from the right. The domain suffix stays left to right and isolated from the Arabic around it.
+
 ## Anatomy
 
 - **Strip**: 32px high, `background-neutral-100`, Text sm Medium, padded with `section-padding`. On narrow screens it wraps to a second line.
@@ -52,12 +54,6 @@ The six suffixes DGA lists. The suffix always reads left to right, even in Arabi
 ### In the Header
 
 <Preview compact name="header-stamp" title="In the Header" minHeight={260} />
-
-## RTL
-
-The flag and text start on the right and the toggle follows the text. The three rows run from the right. The domain suffix stays left to right and isolated from the Arabic around it.
-
-<DirectionCompare name="digital-stamp-open" title="Digital Stamp" minHeight={260} />
 
 ## Accessibility
 

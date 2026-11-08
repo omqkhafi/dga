@@ -84,7 +84,7 @@ export default async function HomePage({ params }: PageProps<"/[lang]">) {
     {
       value: t("home.fact.rtl.value"),
       label: t("home.fact.rtl"),
-      href: `/${lang}/docs/components/button#rtl`,
+      href: `/${lang}/docs/components/button#usage`,
       cta: t("home.fact.rtl.cta"),
     },
   ];

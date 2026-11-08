@@ -69,6 +69,8 @@ export function Requests() {
 
 ChartContainer wraps one Recharts chart. The `config` gives each series a label and a colour, and exposes the colour as `--color-<key>`. Everything inside is plain Recharts, so any Recharts chart or component works. Use a chart to show a trend, a comparison or a share. Give every chart a `title` and a `description`, and the data as a `table`.
 
+`useChartDirection` returns the props that put a chart in reading order. In Arabic the first category is on the right, the vertical axis is on the right, and a pie turns counter-clockwise. Spread `xAxisProps` on the XAxis, `yAxisProps` on the YAxis and `pieProps` on the Pie. The tooltip and legend follow the direction. Numbers stay Western digits, left to right, so `1,200` never reads as `0021,`.
+
 ## Anatomy
 
 - **ChartContainer**: names the chart, applies the colours, and renders the optional table and its button.
@@ -110,12 +112,6 @@ The first slice starts at 12 o'clock and the rest follow the reading direction: 
 Set `interactive` and the chart becomes a focusable group: the arrow keys move between the points and show the tooltip. The table remains the static alternative.
 
 <Preview compact name="chart-interactive" title="With the keyboard" minHeight={460} />
-
-## RTL
-
-`useChartDirection` returns the props that put a chart in reading order. In Arabic the first category is on the right, the vertical axis is on the right, and a pie turns counter-clockwise. Spread `xAxisProps` on the XAxis, `yAxisProps` on the YAxis and `pieProps` on the Pie. The tooltip and legend follow the direction. Numbers stay Western digits, left to right, so `1,200` never reads as `0021,`.
-
-<DirectionCompare name="chart-bar" title="Chart" minHeight={420} />
 
 ## Accessibility
 

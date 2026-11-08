@@ -43,6 +43,8 @@ export function Requests() {
 
 Use a table for data that people compare across rows and columns. It is plain HTML, so it needs no JavaScript. For sorting, filtering, selecting and paging use the [Data Table](/docs/components/data-table). For a short list of facts use the [Structured List](/docs/components/list).
 
+Columns run from the right. Dividers and padding are logical.
+
 ## Anatomy
 
 - **Table**: wrapped in a scrolling region. Text md in `table-text-body`, cell padding from `table-cell-*-padding`.
@@ -72,12 +74,6 @@ Use a table for data that people compare across rows and columns. It is plain HT
 ### On narrow screens
 
 Pass `scrollLabel` and the table scrolls sideways inside a region that takes keyboard focus (<kbd>Tab</kbd>, then the arrow keys).
-
-## RTL
-
-Columns run from the right. Dividers and padding are logical.
-
-<DirectionCompare name="table-basic" title="Table" />
 
 ## Accessibility
 

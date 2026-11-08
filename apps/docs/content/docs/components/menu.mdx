@@ -45,6 +45,8 @@ export function RequestActions() {
 
 Use a Menu for a set of actions on one thing: a table row, a card, a profile. For choosing a value that is saved in a form, use [Select](/docs/components/select). Items run an action when they are chosen. Put an icon first (it is decorative), the label, then optional trailing content such as MenuShortcut. For a link, render an anchor: `<MenuItem render={<a href="/" />}>`. Keep the menu to about seven items; split a longer one with MenuSeparator and MenuGroup.
 
+Menus align to the start edge of the trigger (the right edge in Arabic). A submenu opens on the end side, so on the left, and its chevron is mirrored. Left and Right swap: Left opens a submenu in Arabic. Digits and shortcuts stay left to right.
+
 ## Anatomy
 
 - **Trigger**: the button that opens the menu.
@@ -73,12 +75,6 @@ MenuSub opens a second list beside its item, on the end side. It opens with Ente
 A checkbox or radio item can set `closeOnClick={false}` so the menu stays open while the person changes several options. Pass `open` and `onOpenChange` to Menu to read or set its state. An ordinary item still closes the menu.
 
 <Preview compact name="menu-states" title="Stay open and controlled" minHeight={300} />
-
-## RTL
-
-Menus align to the start edge of the trigger (the right edge in Arabic). A submenu opens on the end side, so on the left, and its chevron is mirrored. Left and Right swap: Left opens a submenu in Arabic. Digits and shortcuts stay left to right.
-
-<DirectionCompare name="menu-submenu" title="Menu" minHeight={300} />
 
 ## Accessibility
 

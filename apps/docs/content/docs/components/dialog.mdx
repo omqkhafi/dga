@@ -45,6 +45,8 @@ export function CancelRequest() {
 
 Use a Dialog when the person must answer or finish something before going on: confirm a destructive action, edit a few fields, read terms. Do not use it for a message that needs no answer (use [Toast](/docs/components/toast) or [Inline Alert](/docs/components/inline-alert)) or for a long page of content. Always give it a DialogTitle: it names the dialog for screen readers. Put the main action last, and name actions by what they do ("Cancel request"), not "Yes" and "No". `closeLabel` is the accessible name of the close button; translate it on Arabic pages.
 
+The close button moves to the left, the footer actions are aligned to the left, and the window fades and scales the same way. Nothing is mirrored by hand: the layout uses `start` and `end`.
+
 ## Anatomy
 
 - **Backdrop**: dims the page and makes it inert.
@@ -79,12 +81,6 @@ Set `disablePointerDismissal` on Dialog for a decision that cannot be skipped: a
 Pass `open` and `onOpenChange` to own the state: open the dialog from your own code, and close it when a request finishes. The trigger is optional.
 
 <Preview compact name="dialog-controlled" title="Controlled" minHeight={360} />
-
-## RTL
-
-The close button moves to the left, the footer actions are aligned to the left, and the window fades and scales the same way. Nothing is mirrored by hand: the layout uses `start` and `end`.
-
-<DirectionCompare name="dialog-basic" title="Dialog" minHeight={360} />
 
 ## Accessibility
 

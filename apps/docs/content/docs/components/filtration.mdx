@@ -48,6 +48,8 @@ export function Services({ services }: { services: Service[] }) {
 
 Every visible text is a prop: `title`, `clearAllLabel`, `appliedLabel`, `removeLabel`, `triggerLabel`, `applyLabel`, `resultLabel` and `closeLabel`, and the labels of the groups and options.
 
+The panel is on the right, the Drawer opens from the right with `drawerSide="start"`, and the Tags run from the right.
+
 ## Anatomy
 
 - **Panel**: 288px beside the results from the `lg` width. Groups of `checkbox`, `radio`, `select`, `input` and `range`, 24px apart.
@@ -62,12 +64,6 @@ Every visible text is a prop: `title`, `clearAllLabel`, `appliedLabel`, `removeL
 <Preview compact name="filtration-uncontrolled" title="Uncontrolled" minHeight={420} />
 
 Switch the viewport to mobile to see the button and the Drawer.
-
-## RTL
-
-The panel is on the right, the Drawer opens from the right with `drawerSide="start"`, and the Tags run from the right.
-
-<DirectionCompare name="filtration-basic" title="Filtration" minHeight={560} />
 
 ## Accessibility
 

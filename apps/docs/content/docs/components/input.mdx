@@ -30,6 +30,8 @@ export function NameField() {
 
 Use Input for short single-line answers: names, IDs, email addresses, phone numbers. Set `type` and `inputMode` for the right keyboard, and `autoComplete` so browsers can fill it in. For numbers you add and subtract use [Number Input](/docs/components/number-input); for several lines use [Textarea](/docs/components/textarea).
 
+The text, placeholder and adornments start on the right. Typed Arabic aligns right; typed Latin text (an email) aligns with `dir="ltr"` when you set it.
+
 ## Anatomy
 
 - **Box** (`<div>`): the border, fill, shadow and the underline.
@@ -56,12 +58,6 @@ Use Input for short single-line answers: names, IDs, email addresses, phone numb
 `startAdornment` and `endAdornment` take an icon or text. They sit on the logical start and end sides. Phone numbers and emails stay left to right with `dir="ltr"`.
 
 <Preview compact name="input-adornments" title="Prefix and suffix" />
-
-## RTL
-
-The text, placeholder and adornments start on the right. Typed Arabic aligns right; typed Latin text (an email) aligns with `dir="ltr"` when you set it.
-
-<DirectionCompare name="input-adornments" title="Input" />
 
 ## Accessibility
 

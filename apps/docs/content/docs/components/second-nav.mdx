@@ -33,6 +33,8 @@ export function PageInfo() {
 
 Use it for context that belongs to the whole site, or as a row of links to the sibling pages of a section. Put it in the `top` slot of a [Header](/docs/components/header). Pass icons with `icon`.
 
+Items start on the right, the actions are on the left, and the strip scrolls from the right.
+
 ## Anatomy
 
 - **Strip**: 40px high, padded 32px, centred and 1280px wide unless `fullWidth`. Text md Regular. **Gray** is neutral-100, **primary** is the brand fill with on-colour text.
@@ -52,12 +54,6 @@ Use it for context that belongs to the whole site, or as a row of links to the s
 When the entries do not fit, the strip scrolls sideways. It never wraps, so it stays 40px high.
 
 <Preview compact name="second-nav-overflow" title="Overflow" minHeight={80} />
-
-## RTL
-
-Items start on the right, the actions are on the left, and the strip scrolls from the right.
-
-<DirectionCompare name="second-nav-tones" title="Second Nav" minHeight={160} />
 
 ## Accessibility
 

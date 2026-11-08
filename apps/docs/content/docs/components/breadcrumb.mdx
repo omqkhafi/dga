@@ -38,6 +38,8 @@ export function Trail() {
 
 A breadcrumb shows where the current page sits in the site and lets people go back to a wider page. Put it above the page title, list the levels from the home page down, and end with the current page as plain text. It shows the path, not the history: for the way back to the previous screen use a [Link](/docs/components/link) or a [Button](/docs/components/button). Name the navigation with `aria-label`.
 
+The separator is a chevron that mirrors, so it points to the left in Arabic, and the first level is on the right.
+
 ## Anatomy
 
 - **Breadcrumb** (`nav` with an `ol`): Text sm, wraps if it must.
@@ -61,12 +63,6 @@ Above `maxItems` levels (default 5) the levels between the first and the last tw
 <Preview compact name="breadcrumb-collapsed" title="Seven levels, folded" />
 
 Long labels are cut with an ellipsis at 12rem; give each link a `title` if the full text matters.
-
-## RTL
-
-The separator is a chevron that mirrors, so it points to the left in Arabic, and the first level is on the right.
-
-<DirectionCompare name="breadcrumb-basic" title="Breadcrumb" />
 
 ## Accessibility
 

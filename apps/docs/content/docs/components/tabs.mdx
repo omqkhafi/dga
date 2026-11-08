@@ -32,6 +32,8 @@ export function RequestTabs() {
 
 Use Tabs to split one page into parts that belong together and are read one at a time: the details, documents and history of a request. Tabs do not change the page: for moving between pages use links or a navigation menu. Tabs are not steps; use a stepper for a sequence. Every TabsTrigger needs a `value`, and the TabsContent with the same `value` is its panel. Give the list an `aria-label` if the page has more than one.
 
+The list starts on the right, and the Left and Right arrows swap: in Arabic, Left moves to the next tab. The components read the direction from `<html dir>` themselves, so you do not wrap them in a provider.
+
 ## Anatomy
 
 - **List** (`role="tablist"`): the row of tabs, with a 3px divider under it (`divider`). It scrolls sideways when the tabs do not fit.
@@ -57,12 +59,6 @@ Use Tabs to split one page into parts that belong together and are read one at a
 By default an arrow key moves focus and selects the tab. Set `activateOnFocus={false}` on TabsList for manual activation: arrows only move focus, and <kbd>Enter</kbd> or <kbd>Space</kbd> selects. `divider={false}` removes the line under the list, `flush` removes its side padding, and `value` with `onValueChange` makes the selection yours to control.
 
 <Preview compact name="tabs-behaviour" title="Behaviour" />
-
-## RTL
-
-The list starts on the right, and the Left and Right arrows swap: in Arabic, Left moves to the next tab. The components read the direction from `<html dir>` themselves, so you do not wrap them in a provider.
-
-<DirectionCompare name="tabs-horizontal" title="Tabs" />
 
 ## Accessibility
 

@@ -35,6 +35,8 @@ export function Cover() {
 
 لا يحلّ محل شيء في DGA: وسائط [Card](/docs/components/card) ليست لها نسبة خاصة، فضع Aspect Ratio بداخلها حين تحتاج إلى نسبة.
 
+ليس للصندوق اتجاه خاص به. النص بداخله يتبع اتجاه الصفحة.
+
 ## البنية [#anatomy]
 
 - **الصندوق**: `position: relative` و`aspect-ratio` من `ratio` (الافتراضي 16 / 9) و`overflow: hidden` وانحناء `radius-md`. أعطه عرضًا (أو دعه يملأ أصله) ويتبعه الارتفاع.
@@ -53,12 +55,6 @@ export function Cover() {
 `fit="cover"` يقصّ الوسائط لتملأ الصندوق. و`fit="contain"` يعرضها كاملة ويترك فراغًا على الجانبين.
 
 <Preview compact name="aspect-ratio-fit" title="الملاءمة" minHeight={240} />
-
-## RTL [#rtl]
-
-ليس للصندوق اتجاه خاص به. النص بداخله يتبع اتجاه الصفحة.
-
-<DirectionCompare name="aspect-ratio-ratios" title="نسبة العرض إلى الارتفاع" minHeight={240} />
 
 ## إمكانية الوصول [#accessibility]
 

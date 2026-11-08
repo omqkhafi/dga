@@ -25,6 +25,8 @@ import { Avatar, AvatarGroup } from "@/components/dga/avatar";
 
 مبني على [Base UI Avatar](https://base-ui.com/react/components/avatar)، الذي يعرض البديل أثناء تحميل الصورة وعند فشلها.
 
+تتراكب المجموعة من جهة البداية، فينقلب اتجاه التراكب في العربية.
+
 ## البنية [#anatomy]
 
 - **Avatar**: الجذر، وفيه الصورة أو البديل.
@@ -41,12 +43,6 @@ import { Avatar, AvatarGroup } from "@/components/dga/avatar";
 ### المجموعات [#groups]
 
 يُراكب `AvatarGroup` عناصره بمقدار 4px مع حلقة بيضاء (`stacked`، وهو الافتراضي). اضبط `stacked={false}` للتباعد.
-
-## اتجاه RTL [#rtl]
-
-تتراكب المجموعة من جهة البداية، فينقلب اتجاه التراكب في العربية.
-
-<DirectionCompare name="avatar" title="Avatar والمجموعة" />
 
 ## إمكانية الوصول [#accessibility]
 

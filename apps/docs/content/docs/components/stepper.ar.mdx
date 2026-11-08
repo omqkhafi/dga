@@ -28,6 +28,8 @@ export function RequestSteps({ step }: { step: number }) {
 
 استخدم Stepper لعملية من ثلاث إلى سبع خطوات بترتيب ثابت، كنموذج على أجزاء. وهو يجمع Progress Indicator وRadial Stepper من DGA. وضع النموذج نفسه تحته. ولشريط يمتلئ باستمرار استخدم [Progress](/docs/components/progress).
 
+تمتد الخطوات من اليمين، ويمتد الخط إلى اليسار، وتمتلئ الحلقة المضغوطة في الاتجاه المعاكس.
+
 ## البنية [#anatomy]
 
 - **الخطوة**: مؤشر بحجم 32px وعنوان ووصف اختياري، يصلها بالخطوة التالية خط بسمك 2px.
@@ -54,12 +56,6 @@ export function RequestSteps({ step }: { step: number }) {
 <Preview compact name="stepper-interactive" title="تفاعلي" />
 
 ترجم `labels` و`compactLabel` و`nextLabel`، ومرّر `formatNumber`، في الصفحات العربية. وضيّق المعاينة لترى الشكل المضغوط.
-
-## RTL [#rtl]
-
-تمتد الخطوات من اليمين، ويمتد الخط إلى اليسار، وتمتلئ الحلقة المضغوطة في الاتجاه المعاكس.
-
-<DirectionCompare name="stepper-horizontal" title="خطوات العملية" />
 
 ## إمكانية الوصول [#accessibility]
 

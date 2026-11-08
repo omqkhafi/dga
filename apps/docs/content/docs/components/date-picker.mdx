@@ -34,6 +34,8 @@ A date is always a Gregorian ISO string such as `"2026-11-08"`, whichever calend
 
 Pass every visible text in `labels` and `placeholder`; on Arabic pages also pass `numerals="arab"` for Arabic-Indic digits. Month and day names follow the page direction (Arabic when it is right-to-left) or `locale`.
 
+The grid starts with the first day of the week on the right, the month arrows mirror, and Left and Right swap. Month and day names are in Arabic.
+
 ## Anatomy
 
 - **Field**: an Input with the calendar button at its end. Type `YYYY-MM-DD` in the shown calendar (any digits work); it is checked when you leave the field or press Enter. A range has a start and an end field.
@@ -66,12 +68,6 @@ Pass every visible text in `labels` and `placeholder`; on Arabic pages also pass
 ### Range in two months, in the Hijri calendar
 
 <Preview compact name="calendar-range" title="Dual-month range" minHeight={480} />
-
-## RTL
-
-The grid starts with the first day of the week on the right, the month arrows mirror, and Left and Right swap. Month and day names are in Arabic.
-
-<DirectionCompare name="calendar-standalone" title="Calendar" minHeight={480} />
 
 ## Accessibility
 

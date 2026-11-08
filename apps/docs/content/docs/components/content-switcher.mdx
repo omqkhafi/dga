@@ -29,6 +29,8 @@ export function PeriodSwitcher() {
 
 Use a Content Switcher to change how one set of content is shown: a day, week or month view; a list or a map. All options show the same kind of thing. For separate sections of content use [Tabs](/docs/components/tabs); for a choice that is saved in a form use [Radio](/docs/components/radio). Keep two to four short labels. Name the group with `aria-label`, and put the content it controls right under it.
 
+The first option is on the right and the Left and Right arrows swap. The switcher is as wide as its options; give it `className="w-full"` to fill a row.
+
 ## Anatomy
 
 - **Switcher** (`role="group"`): the track, neutral-100 with a 1px border. 32, 40 or 48px high.
@@ -53,12 +55,6 @@ Use a Content Switcher to change how one set of content is shown: a day, week or
 A disabled option stays visible and cannot be chosen. Put an icon first in an option when it helps, and pass `value` with `onValueChange` to own the selection.
 
 <Preview compact name="content-switcher-states" title="Disabled, icons and controlled" />
-
-## RTL
-
-The first option is on the right and the Left and Right arrows swap. The switcher is as wide as its options; give it `className="w-full"` to fill a row.
-
-<DirectionCompare name="content-switcher-basic" title="Content Switcher" />
 
 ## Accessibility
 

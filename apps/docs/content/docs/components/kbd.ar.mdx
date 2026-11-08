@@ -38,6 +38,8 @@ export function Hint() {
 
 استخدم Kbd لعرض مفتاح يمكن للشخص ضغطه، في نص المساعدة والقوائم والتلميحات والأزرار. هو تلميح ولا يأخذ التركيز، ولا يستمع إلى المفاتيح: ربط الاختصار نفسه عليك. لعرض اختصار في نهاية صف قائمة استخدم نص الاختصار في Menu، ولعرضه داخل حقل استخدم إضافة المفتاح في Input Group وهي Kbd.
 
+تُقرأ أسماء المفاتيح من اليسار إلى اليمين في الصفحات العربية، فلا تنقلب `Ctrl+K` إلى `K+Ctrl`. يضبط كل من Kbd وKbdGroup القيمة `dir="ltr"`. مرّر `dir="rtl"` إلى Kbd يكون اسمه كلمة عربية.
+
 ## البنية [#anatomy]
 
 - **المفتاح**: قبعة بارتفاع 20px وعرض 20px على الأقل، و`background-neutral-100` وحد بسمك 1px بلون `border-neutral-primary` وانحناء radius-xs، والنص `text-xs` متوسط الوزن بلون `text-default`.
@@ -50,12 +52,6 @@ export function Hint() {
 بجانب النص، وداخل Input Group، وداخل زر.
 
 <Preview compact name="kbd-context" title="في سياق" minHeight={300} />
-
-## RTL [#rtl]
-
-تُقرأ أسماء المفاتيح من اليسار إلى اليمين في الصفحات العربية، فلا تنقلب `Ctrl+K` إلى `K+Ctrl`. يضبط كل من Kbd وKbdGroup القيمة `dir="ltr"`. مرّر `dir="rtl"` إلى Kbd يكون اسمه كلمة عربية.
-
-<DirectionCompare name="kbd-context" title="Kbd" minHeight={300} />
 
 ## إمكانية الوصول [#accessibility]
 

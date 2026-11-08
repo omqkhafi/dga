@@ -47,6 +47,8 @@ export function DocumentMenus() {
 
 Use a Menubar for the commands of an application or an editor, where people move across several menus. For one menu behind one button use a [Menu](/docs/components/menu); for links to pages use a [Navigation Menu](/docs/components/navigation-menu). The lists are the DGA Menu, so items, groups, checkbox and radio items and submenus work the same way. Every visible string, the shortcuts included, is yours to pass in.
 
+The bar reads from the start side, so File is on the right in Arabic. Left and Right swap, a menu opens aligned to the start edge of its trigger, a submenu opens on the end side (the left in Arabic) with a mirrored chevron, and shortcuts stay left to right.
+
 ## Anatomy
 
 - **Bar** (`role="menubar"`): `background-menu`, a 1px border and radius-md, 40px high. Pass an `aria-label`.
@@ -68,12 +70,6 @@ A checked item shows a check mark or a dot on the end side.
 An open menu, a closed one and a disabled trigger, with a disabled item inside the open menu.
 
 <Preview compact name="menubar-states" title="States" minHeight={300} />
-
-## RTL
-
-The bar reads from the start side, so File is on the right in Arabic. Left and Right swap, a menu opens aligned to the start edge of its trigger, a submenu opens on the end side (the left in Arabic) with a mirrored chevron, and shortcuts stay left to right.
-
-<DirectionCompare name="menubar-basic" title="Menubar" minHeight={300} />
 
 ## Accessibility
 
