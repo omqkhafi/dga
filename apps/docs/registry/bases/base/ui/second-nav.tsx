@@ -119,7 +119,7 @@ function SecondNav({
       className={cn(secondNavVariants({ tone }), className)}
       {...props}
     >
-      <div className="mx-auto flex h-10 w-full max-w-[1280px] items-center gap-4 overflow-x-auto overflow-y-hidden px-4 whitespace-nowrap lg:px-8 data-full:max-w-none [scrollbar-width:none]" data-full={fullWidth ? "" : undefined}>
+      <div className="relative mx-auto flex h-10 w-full max-w-[1280px] items-center gap-4 overflow-x-auto overflow-y-hidden px-4 whitespace-nowrap lg:px-8 data-full:max-w-none [scrollbar-width:none]" data-full={fullWidth ? "" : undefined}>
         {items.length > 0 ? (
           <ul className="m-0 flex list-none items-center gap-4 p-0">
             {items.map((entry) => (

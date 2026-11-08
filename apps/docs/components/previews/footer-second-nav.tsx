@@ -45,7 +45,7 @@ function useTools() {
     { label: t("Voice reading", "القراءة الصوتية"), icon: Mic01Icon, iconOnly: true },
     { label: t("Zoom in", "تكبير"), icon: ZoomInAreaIcon, iconOnly: true },
     { label: t("Zoom out", "تصغير"), icon: ZoomOutAreaIcon, iconOnly: true },
-    { label: t("Contrast", "التباين"), icon: ViewIcon, iconOnly: true },
+    { label: t("Reading mode", "وضع القراءة"), icon: ViewIcon, iconOnly: true },
   ].map((tool) => ({ ...tool, onClick: () => {} }));
 }
 

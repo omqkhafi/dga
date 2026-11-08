@@ -187,21 +187,21 @@ function DigitalStamp({
         className="cn-digital-stamp-panel"
       >
         <div className="cn-digital-stamp-items">
-          <div className="cn-digital-stamp-item">
+          <div data-slot="digital-stamp-item" className="cn-digital-stamp-item">
             <span className="cn-digital-stamp-icon">
               <HugeiconsIcon icon={GlobalIcon} aria-hidden />
             </span>
             <div className="cn-digital-stamp-text">
               <p className="cn-digital-stamp-title">
                 {domainTitle ?? fallback.title}{" "}
-                <bdi dir="ltr" className="cn-digital-stamp-domain">
+                <bdi dir="ltr" data-slot="digital-stamp-domain" className="cn-digital-stamp-domain">
                   {suffix}
                 </bdi>
               </p>
               <p className="cn-digital-stamp-description">{domainText ?? fallback.text}</p>
             </div>
           </div>
-          <div className="cn-digital-stamp-item">
+          <div data-slot="digital-stamp-item" className="cn-digital-stamp-item">
             <span className="cn-digital-stamp-icon">
               <HugeiconsIcon icon={LockIcon} aria-hidden />
             </span>

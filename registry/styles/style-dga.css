@@ -2322,7 +2322,7 @@
     @apply bg-background-primary text-text-oncolor-primary;
   }
   .cn-second-nav-inner {
-    @apply mx-auto flex h-10 w-full max-w-[1280px] items-center gap-4 overflow-x-auto overflow-y-hidden px-4 whitespace-nowrap lg:px-8 data-full:max-w-none [scrollbar-width:none];
+    @apply relative mx-auto flex h-10 w-full max-w-[1280px] items-center gap-4 overflow-x-auto overflow-y-hidden px-4 whitespace-nowrap lg:px-8 data-full:max-w-none [scrollbar-width:none];
   }
   .cn-second-nav-group {
     @apply m-0 flex list-none items-center gap-4 p-0;

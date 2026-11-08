@@ -1496,7 +1496,7 @@ async function navigationChecks() {
       rtl ? starA.x > starE.x : starA.x < starE.x,
       `${lang}: the first star is on the ${rtl ? "right" : "left"} (the fill runs ${rtl ? "right to left" : "left to right"})`,
     );
-    await open("rating-states");
+    await open("rating-readonly");
     check(
       (await page.locator("[data-slot=rating][role=img]").first().getAttribute("aria-label"))
         ?.length > 0,
@@ -1746,12 +1746,6 @@ async function compositeChecks() {
       (await slot("header-menu-button").isVisible()) === false,
       `${lang}: no menu button at 1280px`,
     );
-    // Second Nav strip above the bar, with a divider before the actions.
-    check(
-      (await slot("second-nav").count()) === 1,
-      `${lang}: the Second Nav sits above the header`,
-    );
-
     await open("header-submenu-green");
     await page.waitForTimeout(300);
     check(

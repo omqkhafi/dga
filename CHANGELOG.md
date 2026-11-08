@@ -36,6 +36,7 @@ Patch: DGA conformance fixes from a side-by-side review of Figma, the DGA docs a
 
 ### Fixed
 
+- **Second Nav:** the screen-reader labels of icon-only items no longer widen the page when the strip scrolls (the strip is now the containing block of its hidden labels).
 - Docs claims that contradicted DGA ("whole stars only", Slider Value and Min/Max "not in the specification", Digital Stamp "no DGA source") are gone, and the Deviations entries are rewritten.
 
 ### Tests

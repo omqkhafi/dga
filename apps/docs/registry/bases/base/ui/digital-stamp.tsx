@@ -187,21 +187,21 @@ function DigitalStamp({
         className="border-t border-border-neutral-secondary"
       >
         <div className="mx-auto m-0 grid w-full max-w-[1280px] grid-cols-1 gap-6 px-section-padding py-4 md:grid-cols-3 md:items-start">
-          <div className="flex items-start gap-(--spacing-xl)">
+          <div data-slot="digital-stamp-item" className="flex items-start gap-(--spacing-xl)">
             <span className="inline-flex size-10 shrink-0 items-center justify-center rounded-full border-2 border-solid border-icon-success text-icon-success [&_svg]:size-5">
               <HugeiconsIcon icon={GlobalIcon} aria-hidden />
             </span>
             <div className="flex min-w-0 flex-col gap-1">
               <p className="m-0 text-lg font-semibold text-text-default">
                 {domainTitle ?? fallback.title}{" "}
-                <bdi dir="ltr" className="font-bold text-text-success">
+                <bdi dir="ltr" data-slot="digital-stamp-domain" className="font-bold text-text-success">
                   {suffix}
                 </bdi>
               </p>
               <p className="m-0 text-sm font-normal text-text-primary-paragraph">{domainText ?? fallback.text}</p>
             </div>
           </div>
-          <div className="flex items-start gap-(--spacing-xl)">
+          <div data-slot="digital-stamp-item" className="flex items-start gap-(--spacing-xl)">
             <span className="inline-flex size-10 shrink-0 items-center justify-center rounded-full border-2 border-solid border-icon-success text-icon-success [&_svg]:size-5">
               <HugeiconsIcon icon={LockIcon} aria-hidden />
             </span>
