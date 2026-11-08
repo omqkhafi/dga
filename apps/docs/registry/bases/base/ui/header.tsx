@@ -1,7 +1,7 @@
 "use client";
 
 import { Menu as MenuPrimitive } from "@base-ui/react/menu";
-import { ArrowDown01Icon, Menu01Icon } from "@hugeicons/core-free-icons";
+import { ArrowDown01Icon, Menu01Icon, MoreHorizontalIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import * as React from "react";
 import {
@@ -12,7 +12,7 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/dga/drawer";
-import { Menu, MenuContent, MenuTrigger } from "@/components/dga/menu";
+import { Menu, MenuContent, MenuItem, MenuTrigger } from "@/components/dga/menu";
 import { useDocumentDirection } from "@/lib/dga/direction";
 import { cn } from "@/registry/bases/base/lib/utils";
 
@@ -79,9 +79,10 @@ type HeaderActionProps = Omit<React.ComponentProps<"a">, "children"> &
   HeaderActionItem & { children?: React.ReactNode };
 
 /**
- * One action in the header bar (DGA: Header Action): an icon and a label, inline or with the icon
- * above. It renders a link when it has an `href`, a button otherwise. Below the `lg` width the
- * label is hidden and stays as the accessible name.
+ * One action in the header bar (DGA: Header Action): Inline (icon beside the label), Top (icon
+ * above the label), Text only (no icon) or Icon only, with default, hovered, pressed, focused and
+ * disabled states and the selected block with its bottom bar. It renders a link when it has an
+ * `href`, a button otherwise. Below the `lg` width the actions move into the overflow menu.
  */
 function HeaderAction({
   label,
@@ -95,17 +96,19 @@ function HeaderAction({
   className,
   ...props
 }: HeaderActionProps) {
+  const hideLabel = Boolean(iconOnly && icon);
   const content = (
     <>
       {icon ? <HugeiconsIcon icon={icon} aria-hidden className="size-5 shrink-0 text-icon-default" /> : null}
-      <span className={cn("max-lg:sr-only", iconOnly && "sr-only")}>{label}</span>
+      <span className={cn("min-w-0", hideLabel && "sr-only")}>{label}</span>
     </>
   );
   const shared = {
     "data-slot": "header-action",
     "data-current": selected ? "" : undefined,
-    "data-icon-position": iconPosition,
-    className: cn("inline-flex h-18 min-w-10 cursor-pointer items-center justify-center gap-1 rounded-sm border-0 bg-transparent px-2 py-2 text-md font-medium whitespace-nowrap text-text-default no-underline lg:px-4 hover:bg-button-background-neutral-hovered active:bg-button-background-neutral-pressed focus-visible:outline-2 focus-visible:outline-solid focus-visible:-outline-offset-2 focus-visible:outline-border-black data-current:bg-button-background-primary-default data-current:text-text-oncolor-primary data-current:[&_svg]:text-icon-oncolor data-current:hover:bg-button-background-primary-hovered data-current:active:bg-button-background-primary-pressed data-[icon-position=top]:flex-col disabled:pointer-events-none disabled:cursor-not-allowed disabled:bg-transparent disabled:text-text-default-disabled disabled:[&_svg]:text-icon-default-disabled transition-colors motion-reduce:transition-none", className),
+    "data-icon-position": icon && !hideLabel ? iconPosition : "inline",
+    "data-icon-only": hideLabel ? "" : undefined,
+    className: cn("data-[icon-position=top]:flex-col data-[icon-position=top]:gap-1 relative inline-flex h-18 cursor-pointer items-center justify-center gap-1 overflow-hidden rounded-sm border-0 bg-transparent px-4 py-2 text-md font-medium whitespace-nowrap text-text-default no-underline after:pointer-events-none after:absolute after:inset-x-0 after:bottom-0 after:h-1 after:bg-transparent after:content-[''] hover:bg-button-background-neutral-hovered active:bg-button-background-neutral-pressed focus-visible:outline-2 focus-visible:outline-solid focus-visible:-outline-offset-2 focus-visible:outline-border-black data-current:bg-button-background-primary-default data-current:text-text-oncolor-primary data-current:after:bg-primary-sa-flag-200 data-current:[&_svg]:text-icon-oncolor data-current:hover:bg-button-background-primary-hovered data-current:active:bg-button-background-primary-pressed disabled:pointer-events-none disabled:cursor-not-allowed disabled:bg-transparent disabled:text-text-default-disabled disabled:[&_svg]:text-icon-default-disabled disabled:data-current:bg-transparent disabled:data-current:after:bg-border-disabled aria-disabled:pointer-events-none aria-disabled:cursor-not-allowed aria-disabled:bg-transparent aria-disabled:text-text-default-disabled aria-disabled:[&_svg]:text-icon-default-disabled aria-disabled:data-current:bg-transparent aria-disabled:data-current:after:bg-border-disabled transition-colors motion-reduce:transition-none", className),
   };
   if (href && !disabled) {
     return (
@@ -121,9 +124,33 @@ function HeaderAction({
       disabled={disabled}
       aria-pressed={selected && !href ? true : undefined}
       onClick={onClick}
+      {...(props as React.ComponentProps<"button">)}
     >
       {content}
     </button>
+  );
+}
+
+/** One action inside the overflow menu on small screens. */
+function OverflowAction({ action }: { action: HeaderActionItem }) {
+  const { label, icon, href, onClick, selected, disabled } = action;
+  return (
+    <MenuItem
+      data-slot="header-overflow-item"
+      className="gap-2 data-current:bg-button-background-primary-default data-current:text-text-oncolor-primary data-current:[&_svg]:text-icon-oncolor"
+      disabled={disabled}
+      onClick={onClick}
+      data-current={selected ? "" : undefined}
+      render={
+        href && !disabled ? (
+          // biome-ignore lint/a11y/useAnchorContent: Base UI renders the item's children inside it.
+          <a href={href} aria-current={selected ? "page" : undefined} />
+        ) : undefined
+      }
+    >
+      {icon ? <HugeiconsIcon icon={icon} aria-hidden className="size-5 shrink-0 text-icon-default" /> : null}
+      {label}
+    </MenuItem>
   );
 }
 
@@ -177,7 +204,7 @@ function DesktopItem({
           data-header-item=""
           data-current={current ? "" : undefined}
           data-disabled={item.disabled ? "" : undefined}
-          className="inline-flex h-18 cursor-pointer items-center gap-1 rounded-sm border-0 bg-transparent px-4 py-2 text-md font-medium whitespace-nowrap text-text-default no-underline hover:bg-button-background-neutral-hovered active:bg-button-background-neutral-pressed data-popup-open:bg-button-background-neutral-hovered focus-visible:outline-2 focus-visible:outline-solid focus-visible:-outline-offset-2 focus-visible:outline-border-black data-current:bg-button-background-primary-default data-current:text-text-oncolor-primary data-current:[&_svg]:text-icon-oncolor data-current:hover:bg-button-background-primary-hovered data-current:active:bg-button-background-primary-pressed disabled:pointer-events-none disabled:cursor-not-allowed disabled:bg-transparent disabled:text-text-default-disabled disabled:[&_svg]:text-icon-default-disabled aria-disabled:pointer-events-none aria-disabled:cursor-not-allowed aria-disabled:bg-transparent aria-disabled:text-text-default-disabled aria-disabled:[&_svg]:text-icon-default-disabled transition-colors motion-reduce:transition-none"
+          className="data-popup-open:bg-button-background-neutral-hovered relative inline-flex h-18 cursor-pointer items-center justify-center gap-1 overflow-hidden rounded-sm border-0 bg-transparent px-4 py-2 text-md font-medium whitespace-nowrap text-text-default no-underline after:pointer-events-none after:absolute after:inset-x-0 after:bottom-0 after:h-1 after:bg-transparent after:content-[''] hover:bg-button-background-neutral-hovered active:bg-button-background-neutral-pressed focus-visible:outline-2 focus-visible:outline-solid focus-visible:-outline-offset-2 focus-visible:outline-border-black data-current:bg-button-background-primary-default data-current:text-text-oncolor-primary data-current:after:bg-primary-sa-flag-200 data-current:[&_svg]:text-icon-oncolor data-current:hover:bg-button-background-primary-hovered data-current:active:bg-button-background-primary-pressed disabled:pointer-events-none disabled:cursor-not-allowed disabled:bg-transparent disabled:text-text-default-disabled disabled:[&_svg]:text-icon-default-disabled disabled:data-current:bg-transparent disabled:data-current:after:bg-border-disabled aria-disabled:pointer-events-none aria-disabled:cursor-not-allowed aria-disabled:bg-transparent aria-disabled:text-text-default-disabled aria-disabled:[&_svg]:text-icon-default-disabled aria-disabled:data-current:bg-transparent aria-disabled:data-current:after:bg-border-disabled transition-colors motion-reduce:transition-none"
           href={item.disabled ? undefined : item.href}
           aria-current={item.current ? "page" : undefined}
           aria-disabled={item.disabled ? true : undefined}
@@ -196,7 +223,7 @@ function DesktopItem({
           data-header-item=""
           data-current={current ? "" : undefined}
           disabled={item.disabled}
-          className="inline-flex h-18 cursor-pointer items-center gap-1 rounded-sm border-0 bg-transparent px-4 py-2 text-md font-medium whitespace-nowrap text-text-default no-underline hover:bg-button-background-neutral-hovered active:bg-button-background-neutral-pressed data-popup-open:bg-button-background-neutral-hovered focus-visible:outline-2 focus-visible:outline-solid focus-visible:-outline-offset-2 focus-visible:outline-border-black data-current:bg-button-background-primary-default data-current:text-text-oncolor-primary data-current:[&_svg]:text-icon-oncolor data-current:hover:bg-button-background-primary-hovered data-current:active:bg-button-background-primary-pressed disabled:pointer-events-none disabled:cursor-not-allowed disabled:bg-transparent disabled:text-text-default-disabled disabled:[&_svg]:text-icon-default-disabled aria-disabled:pointer-events-none aria-disabled:cursor-not-allowed aria-disabled:bg-transparent aria-disabled:text-text-default-disabled aria-disabled:[&_svg]:text-icon-default-disabled transition-colors motion-reduce:transition-none"
+          className="data-popup-open:bg-button-background-neutral-hovered relative inline-flex h-18 cursor-pointer items-center justify-center gap-1 overflow-hidden rounded-sm border-0 bg-transparent px-4 py-2 text-md font-medium whitespace-nowrap text-text-default no-underline after:pointer-events-none after:absolute after:inset-x-0 after:bottom-0 after:h-1 after:bg-transparent after:content-[''] hover:bg-button-background-neutral-hovered active:bg-button-background-neutral-pressed focus-visible:outline-2 focus-visible:outline-solid focus-visible:-outline-offset-2 focus-visible:outline-border-black data-current:bg-button-background-primary-default data-current:text-text-oncolor-primary data-current:after:bg-primary-sa-flag-200 data-current:[&_svg]:text-icon-oncolor data-current:hover:bg-button-background-primary-hovered data-current:active:bg-button-background-primary-pressed disabled:pointer-events-none disabled:cursor-not-allowed disabled:bg-transparent disabled:text-text-default-disabled disabled:[&_svg]:text-icon-default-disabled disabled:data-current:bg-transparent disabled:data-current:after:bg-border-disabled aria-disabled:pointer-events-none aria-disabled:cursor-not-allowed aria-disabled:bg-transparent aria-disabled:text-text-default-disabled aria-disabled:[&_svg]:text-icon-default-disabled aria-disabled:data-current:bg-transparent aria-disabled:data-current:after:bg-border-disabled transition-colors motion-reduce:transition-none"
         >
           {icon}
           {item.label}
@@ -334,6 +361,8 @@ type HeaderProps = Omit<React.ComponentProps<"header">, "children"> & {
   navLabel?: string;
   /** The name of the button that opens the menu on small screens. */
   menuLabel?: string;
+  /** The name of the overflow (…) button on small screens, which opens the actions. */
+  moreLabel?: string;
   /** The title of the drawer. */
   drawerTitle?: string;
   /** A line under the drawer title for screen readers. */
@@ -349,7 +378,9 @@ type HeaderProps = Omit<React.ComponentProps<"header">, "children"> & {
  * search, a language switcher and a user area. A skip link comes first in the tab order. Left
  * and Right (swapped on Arabic pages), Home and End move between the items; Enter, Space or Down
  * opens a sub-menu, which is a DGA Menu. Below the `lg` width the navigation moves into a
- * Drawer. The page the person is on has `aria-current="page"`.
+ * Drawer: on a phone the menu button is on the start side, the logo is centred and an overflow
+ * (…) button holding the actions is on the end side; the bar mirrors on Arabic pages. The page the
+ * person is on has `aria-current="page"`.
  */
 function Header({
   className,
@@ -368,6 +399,7 @@ function Header({
   skipLabel = "Skip to main content",
   navLabel = "Main",
   menuLabel = "Menu",
+  moreLabel = "More",
   drawerTitle = "Menu",
   drawerDescription,
   closeLabel = "Close",
@@ -406,12 +438,12 @@ function Header({
       </a>
       {stamp}
       {top}
-      <div className="mx-auto flex h-18 w-full max-w-[1280px] items-center gap-4 px-4 lg:px-8 data-full:max-w-none" data-full={fullWidth ? "" : undefined}>
+      <div className="mx-auto grid h-18 w-full max-w-[1280px] grid-cols-[1fr_auto_1fr] items-center gap-4 px-4 data-full:max-w-none lg:flex lg:px-8" data-full={fullWidth ? "" : undefined}>
         <Drawer open={open} onOpenChange={setOpen} side="start">
           <DrawerTrigger
             data-slot="header-menu-button"
             aria-label={menuLabel}
-            className="inline-flex size-10 shrink-0 cursor-pointer items-center justify-center rounded-sm border-0 bg-transparent text-icon-default lg:hidden [&_svg]:size-6 hover:bg-button-background-neutral-hovered active:bg-button-background-neutral-pressed focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-offset-1 focus-visible:outline-border-black"
+            className="col-start-1 justify-self-start inline-flex size-10 shrink-0 cursor-pointer items-center justify-center rounded-sm border-0 bg-transparent text-icon-default lg:hidden [&_svg]:size-6 hover:bg-button-background-neutral-hovered active:bg-button-background-neutral-pressed focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-offset-1 focus-visible:outline-border-black"
           >
             <HugeiconsIcon icon={Menu01Icon} aria-hidden />
           </DrawerTrigger>
@@ -432,11 +464,17 @@ function Header({
                 ))}
               </ul>
             </nav>
+            {language || user ? (
+              <div className="mt-4 flex flex-wrap items-center gap-2 border-t border-border-neutral-secondary pt-4">
+                {language}
+                {user}
+              </div>
+            ) : null}
           </DrawerContent>
         </Drawer>
 
         {logo ? (
-          <div data-slot="header-logo" className="flex shrink-0 items-center">
+          <div data-slot="header-logo" className="col-start-2 flex shrink-0 items-center justify-self-center lg:col-auto">
             {logo}
           </div>
         ) : null}
@@ -454,7 +492,24 @@ function Header({
           </ul>
         </nav>
 
-        <div data-slot="header-end" className="ms-auto flex shrink-0 items-center gap-2">
+        {actions.length ? (
+          <Menu>
+            <MenuTrigger
+              data-slot="header-overflow-button"
+              aria-label={moreLabel}
+              className="col-start-3 justify-self-end inline-flex size-10 shrink-0 cursor-pointer items-center justify-center rounded-sm border-0 bg-transparent text-icon-default lg:hidden [&_svg]:size-6 hover:bg-button-background-neutral-hovered active:bg-button-background-neutral-pressed focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-offset-1 focus-visible:outline-border-black"
+            >
+              <HugeiconsIcon icon={MoreHorizontalIcon} aria-hidden />
+            </MenuTrigger>
+            <MenuContent align="end" className="min-w-48 lg:hidden">
+              {actions.map((action) => (
+                <OverflowAction key={action.label} action={action} />
+              ))}
+            </MenuContent>
+          </Menu>
+        ) : null}
+
+        <div data-slot="header-end" className="ms-auto flex shrink-0 items-center gap-2 max-lg:hidden">
           {search ? <div className="hidden w-48 shrink-0 lg:block xl:w-56">{search}</div> : null}
           {actions.map((action) => (
             <HeaderAction key={action.label} {...action} />

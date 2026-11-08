@@ -42,7 +42,6 @@ import {
 } from "@/registry/bases/base/ui/filtration";
 import { Header, HeaderAction, type HeaderNavItem } from "@/registry/bases/base/ui/header";
 import { Input } from "@/registry/bases/base/ui/input";
-import { SecondNav } from "@/registry/bases/base/ui/second-nav";
 import { Switch } from "@/registry/bases/base/ui/switch";
 import { useBi, useLanguage } from "./bi";
 import { Row, Stack } from "./kit";
@@ -163,25 +162,6 @@ function useHeaderSlots() {
       drawerTitle: t("Menu", "القائمة"),
       closeLabel: t("Close", "إغلاق"),
     },
-  };
-}
-
-function useSecondNavEntries() {
-  const t = useBi();
-  const digits = useDigits();
-  return {
-    items: [
-      {
-        label: `${t("Sunday", "الأحد")} ${digits(8)} ${t("November", "نوفمبر")}`,
-        icon: Calendar03Icon,
-      },
-      { label: `${digits(24)}° ${t("Cloudy", "غائم")}`, icon: CloudIcon },
-    ],
-    actions: [
-      { label: t("Text size", "حجم الخط"), icon: TextFontIcon, onClick: () => {} },
-      { label: t("Contrast", "التباين"), icon: ContrastIcon, onClick: () => {} },
-    ],
-    label: t("Page information", "معلومات الصفحة"),
   };
 }
 

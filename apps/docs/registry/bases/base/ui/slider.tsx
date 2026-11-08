@@ -29,6 +29,16 @@ type SliderProps<Value extends number | readonly number[] = number | readonly nu
     /** Shows the current value (or both values of a range) opposite the label. */
     showValue?: boolean;
     /**
+     * Shows the Min/Max labels (DGA) under the two ends of the track: `min` on the start side and
+     * `max` on the end side, formatted with `locale`. Replace either text with `minLabel` or
+     * `maxLabel`.
+     */
+    showMinMax?: boolean;
+    /** Replaces the text of the Min label, for example "0 SAR". */
+    minLabel?: React.ReactNode;
+    /** Replaces the text of the Max label, for example "500 SAR". */
+    maxLabel?: React.ReactNode;
+    /**
      * Accessible names of the thumbs. A range needs two (for example Minimum and Maximum); a
      * single slider is named by the label. Translate them on Arabic pages.
      */
@@ -40,7 +50,8 @@ type SliderProps<Value extends number | readonly number[] = number | readonly nu
  * and Right (or Up and Down) move a thumb by `step`, Page Up and Down by `largeStep`, Home and End
  * to the ends. The fill and the arrow keys follow the page direction: on Arabic pages the minimum
  * is on the right, Left raises the value and Right lowers it. Pass an array as `value` or
- * `defaultValue` for a range.
+ * `defaultValue` for a range. DGA names two readouts: the Value (`showValue`) and the Min/Max
+ * labels at the ends of the track (`showMinMax`).
  */
 function Slider<Value extends number | readonly number[] = number>({
   className,
@@ -49,6 +60,9 @@ function Slider<Value extends number | readonly number[] = number>({
   helperText,
   error,
   showValue = false,
+  showMinMax = false,
+  minLabel,
+  maxLabel,
   thumbLabels,
   ...props
 }: SliderProps<Value>) {
@@ -56,6 +70,7 @@ function Slider<Value extends number | readonly number[] = number>({
   const current = props.value ?? props.defaultValue;
   const count = Array.isArray(current) ? current.length : 1;
   const names = thumbLabels ?? (count > 1 ? ["Minimum", "Maximum"] : []);
+  const format = (n: number) => new Intl.NumberFormat(props.locale).format(n);
   const describedBy =
     [error ? `${id}-error` : null, helperText ? `${id}-helper` : null].filter(Boolean).join(" ") ||
     undefined;
@@ -102,6 +117,16 @@ function Slider<Value extends number | readonly number[] = number>({
             ))}
           </SliderPrimitive.Track>
         </SliderPrimitive.Control>
+        {showMinMax ? (
+          <div data-slot="slider-range-labels" className="flex items-baseline justify-between gap-3" aria-hidden>
+            <span data-slot="slider-min" className="text-sm text-field-text-helper tabular-nums [unicode-bidi:isolate]">
+              {minLabel ?? format(props.min ?? 0)}
+            </span>
+            <span data-slot="slider-max" className="text-sm text-field-text-helper tabular-nums [unicode-bidi:isolate]">
+              {maxLabel ?? format(props.max ?? 100)}
+            </span>
+          </div>
+        ) : null}
         {helperText ? (
           <p id={`${id}-helper`} data-slot="slider-helper" className="m-0 text-sm text-field-text-helper">
             {helperText}

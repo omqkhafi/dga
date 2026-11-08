@@ -13,7 +13,7 @@ export const API_DESCRIPTIONS_AR_EXT_INPUTS: Record<string, string> = {
   "slider.Slider.error": "رسالة خطأ بأيقونة، وتحمّر معها المقابض. داخل Field استخدم FieldError.",
   "slider.Slider.showValue": "يعرض القيمة الحالية (أو قيمتي النطاق) مقابل التسمية (في DGA: Value).",
   "slider.Slider.showMinMax":
-    "يعرض تسميتي الحد الأدنى والأقصى (في DGA: Min/Max) تحت طرفي المسار. الافتراضي false.",
+    "يعرض تسميتي الحد الأدنى والأقصى (في DGA: الحد الأدنى والأقصى) تحت طرفي المسار. الافتراضي `false`.",
   "slider.Slider.minLabel": "يستبدل نص تسمية الحد الأدنى، وهي `min` افتراضيًا.",
   "slider.Slider.maxLabel": "يستبدل نص تسمية الحد الأقصى، وهي `max` افتراضيًا.",
   "slider.Slider.thumbLabels":

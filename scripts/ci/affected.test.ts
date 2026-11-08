@@ -89,12 +89,12 @@ describe("what a pull request runs", () => {
     expect(run(["bun.lock"]).full).toBe(true);
   });
   test("one component: its install, its groups and its dependants only", () => {
-    const p = run(["registry/bases/base/ui/rating.tsx"]);
+    const p = run(["registry/bases/base/ui/breadcrumb.tsx"]);
     expect(p.full).toBe(false);
-    expect(p.install).toEqual({ run: true, items: ["rating"] });
+    expect(p.install).toEqual({ run: true, items: ["breadcrumb"] });
     expect(p.e2e.groups).toEqual(expect.arrayContaining([...map.shell, "navigation"]));
     expect(p.e2e.groups).not.toContain("composite");
-    expect(p.e2e.components).toEqual(["rating"]);
+    expect(p.e2e.components).toEqual(["breadcrumb"]);
     expect(p.lighthouse).toBe(false);
   });
   test("dependants are tested too", () => {

@@ -28,14 +28,13 @@ function useDigits() {
 
 // ----------------------------------------------------------------------------- Second Nav
 
-/** The four ready-made items. Date and time follow the Figma samples: 3-September-2024, 2:30 PM. */
+/** The four ready-made items. Date and time follow the Figma samples, in Western digits as Figma draws them: 3-September-2024, 2:30 PM (Arabic 3-سبتمبر-2024, 2:30 مساءً). */
 function useStripItems() {
   const t = useBi();
-  const d = useDigits();
   return [
-    { kind: "weather" as const, label: t("Cloudy 24°", `غائم ${d(24)}°`) },
-    { kind: "date" as const, label: t("3-September-2024", `${d(3)}-سبتمبر-${d(2024)}`) },
-    { kind: "time" as const, label: t("2:30 PM", `${d(2)}:${d(30)} مساءً`) },
+    { kind: "weather" as const, label: t("Cloudy 24°", "غائم 24°") },
+    { kind: "date" as const, label: t("3-September-2024", "3-سبتمبر-2024") },
+    { kind: "time" as const, label: t("2:30 PM", "2:30 مساءً") },
     { kind: "location" as const, label: t("Riyadh", "الرياض") },
   ];
 }

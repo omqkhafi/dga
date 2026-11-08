@@ -4026,7 +4026,7 @@
       "name": "tabs",
       "type": "registry:ui",
       "title": "Tabs",
-      "description": "DGA Tabs on Base UI Tabs: horizontal and vertical, sm, md and lg, with icons, a divider and flush. Arrow keys follow the page direction.",
+      "description": "DGA Tabs on Base UI Tabs: horizontal and vertical, sm, md and lg, with icons, a divider, flush and a More overflow menu. Arrow keys follow the page direction.",
       "dependencies": [
         "@base-ui/react",
         "@hugeicons/react",
@@ -4035,7 +4035,8 @@
       ],
       "registryDependencies": [
         "https://dga.omqkhafi.dev/r/utils.json",
-        "https://dga.omqkhafi.dev/r/direction.json"
+        "https://dga.omqkhafi.dev/r/direction.json",
+        "https://dga.omqkhafi.dev/r/menu.json"
       ],
       "files": [
         {
@@ -4568,7 +4569,7 @@
       "name": "filtration",
       "type": "registry:ui",
       "title": "Filtration",
-      "description": "DGA Filtration: a filter panel of checkbox, radio, select, input and range groups, applied filters as removable Tags, clear all and a result count. Below lg the panel opens in the DGA Drawer.",
+      "description": "DGA Filtration: a filter panel of checkbox and radio groups (with search and Show more), select, input, range, date, rating and custom groups, applied filters as removable Tags, clear all and a result count. Beside the results from lg, or opened from a button in a side Drawer or a centred Dialog.",
       "dependencies": [
         "@hugeicons/react",
         "@hugeicons/core-free-icons"
@@ -4577,9 +4578,13 @@
         "https://dga.omqkhafi.dev/r/utils.json",
         "https://dga.omqkhafi.dev/r/button.json",
         "https://dga.omqkhafi.dev/r/checkbox.json",
+        "https://dga.omqkhafi.dev/r/date-picker.json",
+        "https://dga.omqkhafi.dev/r/dialog.json",
         "https://dga.omqkhafi.dev/r/drawer.json",
         "https://dga.omqkhafi.dev/r/input.json",
         "https://dga.omqkhafi.dev/r/radio.json",
+        "https://dga.omqkhafi.dev/r/rating.json",
+        "https://dga.omqkhafi.dev/r/search-box.json",
         "https://dga.omqkhafi.dev/r/select.json",
         "https://dga.omqkhafi.dev/r/tag.json"
       ],
@@ -4721,7 +4726,7 @@
       "name": "chart",
       "type": "registry:ui",
       "title": "Chart",
-      "description": "Platform Code extension (not DGA). Chart: bar, line, area and pie charts on Recharts with the DGA chart palette (four series, 3:1 against the page and the neighbouring series), tooltip, legend, a data-table fallback, and axes that follow RTL.",
+      "description": "DGA Charts on Recharts: bar, line, area, pie and donut with the DGA chart colours (four series corrected to 3:1 against the page and the neighbouring series), tooltip, legend, axis labels, a data-table fallback, and axes that follow RTL.",
       "dependencies": [
         "recharts@3.8.0",
         "react-is@19.3.1"

@@ -268,9 +268,14 @@ test("RTL preview content (every Arabic string) has no English words", async () 
 test("RTL preview content uses one digit system: Arabic-Indic digits in sample content", async () => {
   // Names, IDs, dates and counts use natural Arabic forms. Technical values (sizes in px, file
   // sizes, the 1 to 10 range of a number input) keep Western digits, as CONTRIBUTING says.
+  // The Second Nav strip keeps Figma's Western-digit date, time and temperature (0.7.3).
+  const figmaStrip = /\d-سبتمبر-\d{4}|\d:\d{2} [صم]|\d°/;
   const technical = /px|MB|KB|\d+\s*(إلى|و)\s*\d+|من \d+ إلى|بين \d/;
   const bad = (await previewPairs())
-    .filter((p) => /[0-9]/.test(p.ar) && ARABIC.test(p.ar) && !technical.test(p.ar))
+    .filter(
+      (p) =>
+        /[0-9]/.test(p.ar) && ARABIC.test(p.ar) && !technical.test(p.ar) && !figmaStrip.test(p.ar),
+    )
     .map((p) => `${p.file}: ${p.ar}`);
   expect(bad).toEqual([]);
 });
