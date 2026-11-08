@@ -5,6 +5,26 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
 
 ## [Unreleased]
 
+## [0.7.2] - 2026-11-08
+
+Patch: extensions move into the sidebar sections of the DGA components, and the ROADMAP is restructured. No component changes.
+
+### Changed
+
+- **Sidebar:** the five "Extension: ..." groups are gone, in English and Arabic. Every extension now sits in its natural section, right after the DGA component it is closest to, and keeps its Extension badge at the end of the item and the badge and "derived from" note in its page header:
+  - **Components** (ungrouped): Button Group after Button.
+  - **Forms:** Input Group and Input OTP after Input, Combobox after Select, Toggle and Toggle Group after Switch (Slider was already here).
+  - **Interactive:** Alert Dialog after Dialog, Popover and Hover Card after Tooltip, Context Menu after Menu, Command after Context Menu.
+  - **Navigation and data display:** Menubar, Navigation Menu and Sidebar after Table of Contents, Item after List, Chart and Empty after Data Table, Kbd at the end.
+  - **Layout** (new section, Arabic التخطيط): Collapsible, Scroll Area, Resizable and Aspect Ratio. No existing section holds layout primitives (Composite is the page-level Header, Footer and Date Picker group), so one was added.
+  - **Composite:** unchanged.
+- Search breadcrumbs, `llms.txt` and the sitemap follow the same grouping through one `componentSection()` helper; the five `search.crumb.ext*` strings are replaced by `search.crumb.layout`. The Extensions page stays as a reference list, not a sidebar section.
+- **ROADMAP:** 0.7.2 is marked done; the Section blocks phase is split into one minor version per group (0.8.0 Overlays, 0.9.0 Heroes and headers, 0.10.0 Content sections, 0.11.0 Service and life journey, 0.12.0 Forms and contact, 0.13.0 Search and errors), Mobile components move to 0.14.0, and the intro, phase numbering and README cross-references are updated.
+
+### Tests
+
+- New `scripts/sidebar-sections.test.ts` checks both `meta` files against `nav.ts` and that no Extension section remains. No browser test relied on the old grouping.
+
 ## [0.7.1] - 2026-11-08
 
 Phase 7, part 2: navigation, layout and display. Eleven more Platform Code extensions (components DGA does not define), each with the Extension badge and the "derived from" note, English and Arabic pages with previews of every variant and state, API references with Arabic descriptions, contrast tables, registry items that declare the `@dga` items they use, and install and collision tests.

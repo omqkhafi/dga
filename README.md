@@ -27,7 +27,7 @@ Inside a component preview, the sample content follows the LTR/RTL toggle rather
 
 ## Roadmap
 
-OKLCH colour output and Phase 5 (Navigation and data display) are done in 0.5.0, Phase 6 (Composite: Header, Second Nav, Footer, Date Picker, Carousel and Filtration) in 0.6.0, the first half of Phase 7 (overlays, inputs and the Digital Stamp) in 0.7.0 and the second half (navigation, layout and display) in 0.7.1. Next are Phase 8 (Section blocks) and Phase 9 (Mobile components, as needed). See [ROADMAP.md](ROADMAP.md).
+OKLCH colour output and Phase 5 (Navigation and data display) are done in 0.5.0, Phase 6 (Composite: Header, Second Nav, Footer, Date Picker, Carousel and Filtration) in 0.6.0, the first half of Phase 7 (overlays, inputs and the Digital Stamp) in 0.7.0 and the second half (navigation, layout and display) in 0.7.1. 0.7.2 puts the extensions in the sidebar sections of the DGA components. Next are the Section blocks, one minor version per group (0.8.0 Overlays, 0.9.0 Heroes and headers, 0.10.0 Content sections, 0.11.0 Service and life journey, 0.12.0 Forms and contact, 0.13.0 Search and errors) and the Mobile components (0.14.0 and later, as needed). See [ROADMAP.md](ROADMAP.md).
 
 ## Repository
 

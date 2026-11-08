@@ -18,60 +18,7 @@ export function orderedPages(lang: Locale): { name: string; url: string }[] {
   return pages;
 }
 
-/** The form components, listed under "Forms" in the sidebar, search and llms.txt. */
-export const FORM_COMPONENTS = [
-  "field",
-  "input",
-  "textarea",
-  "select",
-  "number-input",
-  "search-box",
-  "checkbox",
-  "radio",
-  "switch",
-  "file-upload",
-  "slider",
-];
-
-/** The interactive components, listed under "Interactive" in the sidebar, search and llms.txt. */
-export const INTERACTIVE_COMPONENTS = [
-  "dialog",
-  "drawer",
-  "tooltip",
-  "menu",
-  "tabs",
-  "accordion",
-  "content-switcher",
-  "toast",
-  "notification",
-  "inline-alert",
-];
-
-/** The navigation and data display components, listed under "Navigation and data display". */
-export const NAVIGATION_COMPONENTS = [
-  "breadcrumb",
-  "pagination",
-  "table-of-contents",
-  "card",
-  "list",
-  "table",
-  "data-table",
-  "rating",
-  "progress",
-  "stepper",
-];
-
-/** The composite components, listed under "Composite" in the sidebar, search and llms.txt. */
-export const COMPOSITE_COMPONENTS = [
-  "header",
-  "second-nav",
-  "footer",
-  "date-picker",
-  "carousel",
-  "filtration",
-  "digital-stamp",
-];
-
+export * from "./component-sections";
 export * from "./extension-slugs";
 
 /** Components that are used together, for the "Related" row on each component page. */

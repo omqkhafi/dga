@@ -1,7 +1,7 @@
 # Roadmap
 
-Phases 0, 1 and 2 are done (0.1.0), the Phase 2.5 docs polish is in 0.1.1 and 0.1.2, the Arabic locale (Phase 2.6) is in 0.2.0, the forms (Phase 3) are in 0.3.0, the interactive components (Phase 4) are in 0.4.0, the AI Resources docs and the docs polish are in 0.4.1, 0.4.2 moves component installs to `components/dga` and fixes the Arabic 404, and 0.4.3 makes preview content follow the direction toggle, and 0.5.0 emits every colour as OKLCH and adds the navigation and data display components (Phase 5), and 0.6.0 adds the composite components (Phase 6), and 0.7.0 adds the first half of Phase 7 (overlays, inputs and the official-site strip), and 0.7.1 the second half (navigation, layout and display); see [CHANGELOG.md](CHANGELOG.md).
-Next: Phase 8 (Section blocks) and Phase 9 (Mobile components, as needed), then the Release.
+Phases 0, 1 and 2 are done (0.1.0), the Phase 2.5 docs polish is in 0.1.1 and 0.1.2, the Arabic locale (Phase 2.6) is in 0.2.0, the forms (Phase 3) are in 0.3.0, the interactive components (Phase 4) are in 0.4.0, the AI Resources docs and the docs polish are in 0.4.1, 0.4.2 moves component installs to `components/dga` and fixes the Arabic 404, and 0.4.3 makes preview content follow the direction toggle, and 0.5.0 emits every colour as OKLCH and adds the navigation and data display components (Phase 5), and 0.6.0 adds the composite components (Phase 6), and 0.7.0 adds the first half of Phase 7 (overlays, inputs and the official-site strip), and 0.7.1 the second half (navigation, layout and display), and 0.7.2 moves the extensions into the sidebar sections of the DGA components and splits the Section blocks into versions; see [CHANGELOG.md](CHANGELOG.md).
+Next: the Section blocks, one minor version per group (0.8.0 to 0.13.0), and the Mobile components (0.14.0 and later, as needed), then the Release.
 Component specs for each phase are in `docs/design-system/components/`.
 
 ## Rules for every phase
@@ -158,19 +158,43 @@ Rules for both parts:
   - **Dropped:** none of the eleven candidates. shadcn's Sidebar rail handle is not built; the icon rail is `collapsible="icon"`.
   - **Pinned dependencies:** `recharts@3.8.0` (shadcn's pin) with `react-is@19.3.1`, and `react-resizable-panels@4.14.8` (newest stable at least two weeks old).
 
-## Phase 8: Section blocks
+## Patch 0.7.2: Extensions in the sidebar sections (done, 0.7.2)
 
-Reusable `registry:block` section items only. Users compose their own pages: no full-page templates and no example or composed pages. Depends on Phases 3 to 7. Header, Footer and Second nav stay in Phase 6.
+- [x] No separate "Extension" groups in the sidebar, in English and Arabic: each extension sits in its natural section next to the DGA components (Button Group by Button; Input Group, Input OTP, Combobox, Toggle and Toggle Group in Forms; Popover, Hover Card, Alert Dialog, Context Menu and Command in Interactive; Menubar, Navigation Menu, Sidebar, Item, Chart, Empty and Kbd in Navigation and data display), plus a new **Layout** section for Collapsible, Scroll Area, Resizable and Aspect Ratio.
+- [x] The Extension badge in the sidebar item and the badge and "derived from" note in the page header are unchanged. Search, `llms.txt`, the sitemap and the agent skill follow the grouping; the Extensions page stays as a reference list.
+- [x] This ROADMAP: the Section blocks are split into one minor version per group, and Mobile components move to 0.14.0.
 
-- **Overlays:** `cookies-banner`, `page-feedback`, `service-rating`, `chatbot-panel`, `announcement-banner`.
-- **Heroes and headers:** `hero` (image, colour, with search and chips, multi-slide, seasonal) and `page-header`.
-- **Content sections:** `cards-grid`, `stats-section`, `faq-section`, `content-section`, `sitemap-section`, `org-structure`, `policy-list`, `budget-table`.
-- **Service and life journey:** `service-header`, `service-steps`, `service-meta-card`, `journey-overview`, `journey-steps`.
-- **Forms and contact:** `multi-step-form`, `contact-form`, `contact-info`.
-- **Search and errors:** `search-results`, `error-state`.
-- **Out of scope:** full page templates, composed example pages, Header and Footer, login and auth (DGA has no template), and seasonal pages as separate products (use the `hero` and `cards-grid` variants instead).
+## Section blocks (0.8.0 to 0.13.0)
 
-## Phase 9: Mobile components (as needed)
+Reusable `registry:block` section items only, one minor version per group. Users compose their own pages: no full-page templates and no example or composed pages. Depends on Phases 3 to 7. Header, Footer and Second nav stay in Phase 6. The rules for every phase apply to each block.
+
+### 0.8.0: Overlays
+
+- [ ] `cookies-banner`, `page-feedback`, `service-rating`, `chatbot-panel`, `announcement-banner`.
+
+### 0.9.0: Heroes and headers
+
+- [ ] `hero` (image, colour, with search and chips, multi-slide, seasonal) and `page-header`.
+
+### 0.10.0: Content sections
+
+- [ ] `cards-grid`, `stats-section`, `faq-section`, `content-section`, `sitemap-section`, `org-structure`, `policy-list`, `budget-table`.
+
+### 0.11.0: Service and life journey
+
+- [ ] `service-header`, `service-steps`, `service-meta-card`, `journey-overview`, `journey-steps`.
+
+### 0.12.0: Forms and contact
+
+- [ ] `multi-step-form`, `contact-form`, `contact-info`.
+
+### 0.13.0: Search and errors
+
+- [ ] `search-results`, `error-state`.
+
+**Out of scope for every Section blocks version:** full page templates, composed example pages, Header and Footer, login and auth (DGA has no template), and seasonal pages as separate products (use the `hero` and `cards-grid` variants instead).
+
+## Mobile components, 0.14.0 and later (as needed)
 
 Tab Bar, Navigation Bar, Banner, from the DGA Mobile Components Figma file.
 

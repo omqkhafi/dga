@@ -1,16 +1,6 @@
 import { getT } from "./dictionary";
 import type { Locale } from "./i18n";
-import {
-  COMPOSITE_COMPONENTS,
-  EXTENSION_DISPLAY_COMPONENTS,
-  EXTENSION_INPUT_COMPONENTS,
-  EXTENSION_LAYOUT_COMPONENTS,
-  EXTENSION_NAVIGATION_COMPONENTS,
-  EXTENSION_OVERLAY_COMPONENTS,
-  FORM_COMPONENTS,
-  INTERACTIVE_COMPONENTS,
-  NAVIGATION_COMPONENTS,
-} from "./nav";
+import { componentSection } from "./nav";
 import { siteUrl } from "./shared";
 import { getPageMarkdown, source } from "./source";
 
@@ -22,40 +12,12 @@ export function llmsIndex(lang: Locale) {
   const t = getT(lang);
   const groups = new Map<string, string[]>();
   for (const page of source.getPages(lang)) {
-    const isForm = page.slugs[0] === "components" && FORM_COMPONENTS.includes(page.slugs[1] ?? "");
-    const isInteractive =
-      page.slugs[0] === "components" && INTERACTIVE_COMPONENTS.includes(page.slugs[1] ?? "");
-    const isNavigation =
-      page.slugs[0] === "components" && NAVIGATION_COMPONENTS.includes(page.slugs[1] ?? "");
-    const isComposite =
-      page.slugs[0] === "components" && COMPOSITE_COMPONENTS.includes(page.slugs[1] ?? "");
-    const isExtOverlay =
-      page.slugs[0] === "components" && EXTENSION_OVERLAY_COMPONENTS.includes(page.slugs[1] ?? "");
-    const isExtInput =
-      page.slugs[0] === "components" && EXTENSION_INPUT_COMPONENTS.includes(page.slugs[1] ?? "");
-    const inList = (list: string[]) =>
-      page.slugs[0] === "components" && list.includes(page.slugs[1] ?? "");
-    const group = isExtOverlay
-      ? "extOverlays"
-      : isExtInput
-        ? "extInputs"
-        : inList(EXTENSION_NAVIGATION_COMPONENTS)
-          ? "extNavigation"
-          : inList(EXTENSION_LAYOUT_COMPONENTS)
-            ? "extLayout"
-            : inList(EXTENSION_DISPLAY_COMPONENTS)
-              ? "extDisplay"
-              : isForm
-                ? "forms"
-                : isInteractive
-                  ? "interactive"
-                  : isNavigation
-                    ? "navigation"
-                    : isComposite
-                      ? "composite"
-                      : page.slugs.length > 1
-                        ? (page.slugs[0] as string)
-                        : "";
+    const group =
+      page.slugs[0] === "components" && page.slugs.length > 1
+        ? componentSection(page.slugs[1] ?? "")
+        : page.slugs.length > 1
+          ? (page.slugs[0] as string)
+          : "";
     const line = `- [${page.data.title}](${mdUrl(page.url, lang)})${page.data.description ? `: ${page.data.description}` : ""}`;
     groups.set(group, [...(groups.get(group) ?? []), line]);
   }
@@ -67,11 +29,7 @@ export function llmsIndex(lang: Locale) {
     interactive: t("search.crumb.interactive"),
     navigation: t("search.crumb.navigation"),
     composite: t("search.crumb.composite"),
-    extOverlays: t("search.crumb.extOverlays"),
-    extInputs: t("search.crumb.extInputs"),
-    extNavigation: t("search.crumb.extNavigation"),
-    extLayout: t("search.crumb.extLayout"),
-    extDisplay: t("search.crumb.extDisplay"),
+    layout: t("search.crumb.layout"),
     ai: t("search.crumb.ai"),
   };
   const body = [...groups]

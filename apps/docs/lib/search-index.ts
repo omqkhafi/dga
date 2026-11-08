@@ -1,16 +1,6 @@
 import { getT } from "@/lib/dictionary";
 import type { Locale } from "@/lib/i18n";
-import {
-  COMPOSITE_COMPONENTS,
-  EXTENSION_DISPLAY_COMPONENTS,
-  EXTENSION_INPUT_COMPONENTS,
-  EXTENSION_LAYOUT_COMPONENTS,
-  EXTENSION_NAVIGATION_COMPONENTS,
-  EXTENSION_OVERLAY_COMPONENTS,
-  FORM_COMPONENTS,
-  INTERACTIVE_COMPONENTS,
-  NAVIGATION_COMPONENTS,
-} from "@/lib/nav";
+import { componentSection } from "@/lib/nav";
 import { getPageMarkdown, source } from "@/lib/source";
 
 /** One searchable unit: a page, or one heading section of a page. */
@@ -47,36 +37,13 @@ export async function buildSearchIndex(lang: Locale): Promise<SearchEntry[]> {
   for (const page of source.getPages(lang)) {
     const segment = page.slugs.length > 1 ? (page.slugs[0] ?? "") : "";
     const crumb =
-      segment === "components" && FORM_COMPONENTS.includes(page.slugs[1] ?? "")
-        ? t("search.crumb.forms")
-        : segment === "components" && INTERACTIVE_COMPONENTS.includes(page.slugs[1] ?? "")
-          ? t("search.crumb.interactive")
-          : segment === "components" && NAVIGATION_COMPONENTS.includes(page.slugs[1] ?? "")
-            ? t("search.crumb.navigation")
-            : segment === "components" && COMPOSITE_COMPONENTS.includes(page.slugs[1] ?? "")
-              ? t("search.crumb.composite")
-              : segment === "components" &&
-                  EXTENSION_OVERLAY_COMPONENTS.includes(page.slugs[1] ?? "")
-                ? t("search.crumb.extOverlays")
-                : segment === "components" &&
-                    EXTENSION_INPUT_COMPONENTS.includes(page.slugs[1] ?? "")
-                  ? t("search.crumb.extInputs")
-                  : segment === "components" &&
-                      EXTENSION_NAVIGATION_COMPONENTS.includes(page.slugs[1] ?? "")
-                    ? t("search.crumb.extNavigation")
-                    : segment === "components" &&
-                        EXTENSION_LAYOUT_COMPONENTS.includes(page.slugs[1] ?? "")
-                      ? t("search.crumb.extLayout")
-                      : segment === "components" &&
-                          EXTENSION_DISPLAY_COMPONENTS.includes(page.slugs[1] ?? "")
-                        ? t("search.crumb.extDisplay")
-                        : segment === "components"
-                          ? t("search.crumb.components")
-                          : segment === "foundations"
-                            ? t("search.crumb.foundations")
-                            : segment === "ai"
-                              ? t("search.crumb.ai")
-                              : t("search.crumb.docs");
+      segment === "components"
+        ? t(`search.crumb.${componentSection(page.slugs[1] ?? "")}`)
+        : segment === "foundations"
+          ? t("search.crumb.foundations")
+          : segment === "ai"
+            ? t("search.crumb.ai")
+            : t("search.crumb.docs");
     const base = { page: page.data.title, pageUrl: page.url, crumb };
     const pageEntry: SearchEntry = {
       ...base,
