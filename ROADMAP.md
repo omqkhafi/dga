@@ -1,7 +1,7 @@
 # Roadmap
 
-Phases 0, 1 and 2 are done (0.1.0), the Phase 2.5 docs polish is in 0.1.1 and 0.1.2, the Arabic locale (Phase 2.6) is in 0.2.0, the forms (Phase 3) are in 0.3.0, the interactive components (Phase 4) are in 0.4.0, the AI Resources docs and the docs polish are in 0.4.1, 0.4.2 moves component installs to `components/dga` and fixes the Arabic 404, and 0.4.3 makes preview content follow the direction toggle, and 0.5.0 emits every colour as OKLCH and adds the navigation and data display components (Phase 5), and 0.6.0 adds the composite components (Phase 6), and 0.7.0 adds the first half of Phase 7 (overlays, inputs and the official-site strip); see [CHANGELOG.md](CHANGELOG.md).
-Next: Phase 7 part 2 (0.7.1: navigation, layout and display), Phase 8 (Section blocks) and Phase 9 (Mobile components, as needed), then the Release.
+Phases 0, 1 and 2 are done (0.1.0), the Phase 2.5 docs polish is in 0.1.1 and 0.1.2, the Arabic locale (Phase 2.6) is in 0.2.0, the forms (Phase 3) are in 0.3.0, the interactive components (Phase 4) are in 0.4.0, the AI Resources docs and the docs polish are in 0.4.1, 0.4.2 moves component installs to `components/dga` and fixes the Arabic 404, and 0.4.3 makes preview content follow the direction toggle, and 0.5.0 emits every colour as OKLCH and adds the navigation and data display components (Phase 5), and 0.6.0 adds the composite components (Phase 6), and 0.7.0 adds the first half of Phase 7 (overlays, inputs and the official-site strip), and 0.7.1 the second half (navigation, layout and display); see [CHANGELOG.md](CHANGELOG.md).
+Next: Phase 8 (Section blocks) and Phase 9 (Mobile components, as needed), then the Release.
 Component specs for each phase are in `docs/design-system/components/`.
 
 ## Rules for every phase
@@ -147,13 +147,16 @@ Rules for both parts:
   - **Dropped, because the DGA or an existing item already covers it:** none of the eleven extensions was dropped; Slider and the stamp moved out of "extension" because DGA defines them.
 - [x] Each page in English and Arabic with previews of every variant and state, contrast pairs for every state, install and collision tests, and keyboard and RTL browser tests for Slider, Input OTP, Combobox, Command, Context Menu and Toggle Group.
 
-### Phase 7, part 2: navigation, layout and display (planned, 0.7.1)
+### Phase 7, part 2: navigation, layout and display (done, 0.7.1)
 
-Candidates (confirm against the current shadcn registry at the start of the part, and drop anything the DGA components already cover):
-
-- Navigation: Menubar, Navigation Menu, Sidebar.
-- Layout: Collapsible, Scroll Area, Resizable, Aspect Ratio.
-- Display: Kbd, Empty, Item, Chart (using the DGA chart tokens).
+- [x] **Navigation:** Menubar, Navigation Menu, Sidebar (collapsible, icon rail, mobile Drawer, nested groups, active state, persisted open state).
+- [x] **Layout:** Collapsible, Scroll Area, Resizable, Aspect Ratio.
+- [x] **Display:** Kbd, Empty, Item, Chart (bar, line, area and pie on Recharts, a DGA series palette, tooltip, legend, data-table fallback, RTL axis order).
+- [x] **Checked against the current shadcn registry and the existing `@dga` items before building**, with these decisions (also in the CHANGELOG):
+  - **Merged:** Collapsible is its own item and Card's Expandable now depends on it instead of repeating it. Kbd is the single key-cap element: `InputGroupKbd` is now a thin wrapper over it.
+  - **Not merged:** `CommandShortcut` stays plain trailing text (a cap would change Command's look). Navigation Menu stays beside the Header: the Header is the site-level composite, Navigation Menu the standalone primitive. Sidebar stays beside the Header Nav Drawer and Second Nav: it is app navigation. Empty does not replace Data Table's empty state (Data Table is unchanged). Item stays beside List and Card (a generic row with media and actions).
+  - **Dropped:** none of the eleven candidates. shadcn's Sidebar rail handle is not built; the icon rail is `collapsible="icon"`.
+  - **Pinned dependencies:** `recharts@3.8.0` (shadcn's pin) with `react-is@19.3.1`, and `react-resizable-panels@4.14.8` (newest stable at least two weeks old).
 
 ## Phase 8: Section blocks
 

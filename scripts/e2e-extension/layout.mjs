@@ -175,10 +175,14 @@ export async function extLayoutChecks({ browser, BASE, check }) {
     const afterArrow = await viewport.evaluate((el) => el.scrollTop);
     check(afterArrow > 0, `${lang}: ArrowDown scrolls the scroll area (${afterArrow}px)`);
     await page.keyboard.press("PageDown");
-    await page.waitForTimeout(500);
+    // Smooth scrolling on a busy runner can take a while: poll instead of one fixed pause.
+    for (let i = 0; i < 20; i++) {
+      if ((await viewport.evaluate((el) => el.scrollTop)) > afterArrow) break;
+      await page.waitForTimeout(250);
+    }
     check(
       (await viewport.evaluate((el) => el.scrollTop)) > afterArrow,
-      `${lang}: Page Down scrolls further`,
+      `${lang}: Page Down scrolls further (after arrow ${afterArrow}px)`,
     );
     await page.keyboard.press("End");
     await page.waitForTimeout(800);

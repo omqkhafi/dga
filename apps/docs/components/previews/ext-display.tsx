@@ -654,7 +654,7 @@ export function ChartPie() {
       )}
       table={table}
       tableLabels={tableLabels(t)}
-      className="mx-auto max-h-72"
+      className="mx-auto aspect-square max-h-72 w-full max-w-72"
     >
       <PieChart>
         <ChartTooltip content={<ChartTooltipContent hideLabel nameKey="channel" />} />

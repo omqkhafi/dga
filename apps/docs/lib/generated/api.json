@@ -1148,7 +1148,24 @@
       "description": "",
       "descriptionAr": "",
       "inherits": null,
-      "props": []
+      "props": [
+        {
+          "name": "nameKey",
+          "type": "string",
+          "default": null,
+          "required": false,
+          "description": "",
+          "descriptionAr": ""
+        },
+        {
+          "name": "hideIcon",
+          "type": "boolean",
+          "default": "false",
+          "required": false,
+          "description": "",
+          "descriptionAr": ""
+        }
+      ]
     },
     {
       "name": "ChartSwatch",
@@ -1187,7 +1204,48 @@
       "description": "",
       "descriptionAr": "",
       "inherits": null,
-      "props": []
+      "props": [
+        {
+          "name": "indicator",
+          "type": "\"dot\" | \"line\" | \"dashed\"",
+          "default": "\"dot\"",
+          "required": false,
+          "description": "How a series is marked in the tooltip: a `dot`, a `line` or a `dashed` line.",
+          "descriptionAr": "كيف تُعلَّم السلسلة في التلميح: بنقطة `dot` أو بخط `line` أو بخط متقطع `dashed`."
+        },
+        {
+          "name": "hideLabel",
+          "type": "boolean",
+          "default": "false",
+          "required": false,
+          "description": "",
+          "descriptionAr": ""
+        },
+        {
+          "name": "hideIndicator",
+          "type": "boolean",
+          "default": "false",
+          "required": false,
+          "description": "",
+          "descriptionAr": ""
+        },
+        {
+          "name": "nameKey",
+          "type": "string",
+          "default": null,
+          "required": false,
+          "description": "",
+          "descriptionAr": ""
+        },
+        {
+          "name": "labelKey",
+          "type": "string",
+          "default": null,
+          "required": false,
+          "description": "",
+          "descriptionAr": ""
+        }
+      ]
     }
   ],
   "checkbox": [
@@ -6294,14 +6352,88 @@
       "description": "The handle between two panels: a focusable separator with `aria-valuenow`, the size of the panel before it. Arrow keys move it 5%, Home and End send it to either end, and Enter collapses a collapsible panel. Pass `aria-label` to name it.",
       "descriptionAr": "المقبض بين لوحتين: فاصل يأخذ التركيز وله `aria-valuenow` وهو حجم اللوحة التي قبله. الأسهم تحركه 5%، وHome وEnd يرسلانه إلى أحد الطرفين، وEnter يطوي اللوحة القابلة للطي.",
       "inherits": null,
-      "props": []
+      "props": [
+        {
+          "name": "withHandle",
+          "type": "boolean",
+          "default": "false",
+          "required": false,
+          "description": "Shows a grip on the handle.",
+          "descriptionAr": "يعرض مقبضًا للإمساك على المقبض."
+        },
+        {
+          "name": "aria-label",
+          "type": "string",
+          "default": null,
+          "required": false,
+          "description": "Defines a string value that labels the current element.",
+          "descriptionAr": "الاسم الذي يقرؤه قارئ الشاشة للمقبض. ترجمه في الصفحات العربية."
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "default": null,
+          "required": false,
+          "description": "When disabled, the separator cannot be used to resize its neighboring panels. ℹ️ The panels may still be resized indirectly (while other panels are being resized). To prevent a panel from being resized at all, it needs to also be disabled.",
+          "descriptionAr": "لا يمكن سحب المقبض ولا تحريكه بلوحة المفاتيح."
+        }
+      ]
     },
     {
       "name": "ResizablePanel",
       "description": "One panel. Give it `defaultSize`, `minSize` and `maxSize` as numbers (pixels) or strings (\"30%\").",
       "descriptionAr": "لوحة واحدة. حدّد `defaultSize` و`minSize` و`maxSize` بأرقام (بكسل) أو نصوص مثل `\"30%\"`.",
       "inherits": null,
-      "props": []
+      "props": [
+        {
+          "name": "id",
+          "type": "string",
+          "default": null,
+          "required": false,
+          "description": "Uniquely identifies this panel within the parent group. Falls back to `useId` when not provided. ℹ️ This prop is used to associate persisted group layouts with the original panel. ℹ️ This value will also be assigned to the `id` and `data-testid` attributes; (an explicit `data-testid` prop will take precedence).",
+          "descriptionAr": "اسم اللوحة. يلزم لحفظ التخطيط واستعادته."
+        },
+        {
+          "name": "defaultSize",
+          "type": "number | string",
+          "default": null,
+          "required": false,
+          "description": "Default size of Panel within its parent group; default is auto-assigned based on the total number of Panels. ℹ️ Interpretation rules: - Numbers are interpreted as pixels (e.g. `defaultSize={200}` is 200 pixels) - Strings without explicit units are interpreted as percentage (e.g. `defaultSize=\"50\"` is 50 percent) - Use explicit units (e.g. \"px\", \"%\", \"em\", \"rem\", \"vh\", or \"vw\") to change interpretation ⚠️ Percentage based sizes may cause slight layout shift when server-rendering. For more information see the documentation.",
+          "descriptionAr": "الحجم في البداية. الرقم بكسل والنص مثل `\"30%\"` نسبة مئوية."
+        },
+        {
+          "name": "minSize",
+          "type": "number | string",
+          "default": null,
+          "required": false,
+          "description": "Minimum size of Panel within its parent group; defaults to 0%. ℹ️ Interpretation rules: - Numbers are interpreted as pixels (e.g. `minSize={200}` is 200 pixels) - Strings without explicit units are interpreted as percentage (e.g. `minSize=\"50\"` is 50 percent) - Use explicit units (e.g. \"px\", \"%\", \"em\", \"rem\", \"vh\", or \"vw\") to change interpretation",
+          "descriptionAr": "أصغر حجم يمكن سحبها إليه."
+        },
+        {
+          "name": "maxSize",
+          "type": "number | string",
+          "default": null,
+          "required": false,
+          "description": "Maximum size of Panel within its parent group; defaults to `\"100%\"`. ℹ️ Interpretation rules: - Numbers are interpreted as pixels (e.g. `maxSize={200}` is 200 pixels) - Strings without explicit units are interpreted as percentage (e.g. `maxSize=\"50\"` is 50 percent) - Use explicit units (e.g. \"px\", \"%\", \"em\", \"rem\", \"vh\", or \"vw\") to change interpretation",
+          "descriptionAr": "أكبر حجم يمكن سحبها إليه."
+        },
+        {
+          "name": "collapsible",
+          "type": "boolean",
+          "default": null,
+          "required": false,
+          "description": "This panel can be collapsed. ℹ️ A collapsible panel will collapse when its size is less than the specified `minSize`",
+          "descriptionAr": "السحب إلى ما دون `minSize` يطويها إلى `collapsedSize`. وزر Enter على المقبض يطويها ويفتحها."
+        },
+        {
+          "name": "collapsedSize",
+          "type": "number | string",
+          "default": null,
+          "required": false,
+          "description": "Panel size when collapsed; defaults to 0%.",
+          "descriptionAr": "الحجم عند الطي. الافتراضي `0%`."
+        }
+      ]
     },
     {
       "name": "ResizablePanelGroup",
@@ -6324,6 +6456,30 @@
           "required": false,
           "description": "Remembers the sizes in `localStorage` under this key, so a reload keeps the layout. Each group on a page needs its own key, and every panel needs an `id`.",
           "descriptionAr": "يحفظ الأحجام في `localStorage` بهذا المفتاح فيبقى التخطيط بعد إعادة التحميل. لكل مجموعة في الصفحة مفتاحها، ولكل لوحة `id`."
+        },
+        {
+          "name": "orientation",
+          "type": "\"horizontal\" | \"vertical\"",
+          "default": "\"horizontal\"",
+          "required": false,
+          "description": "Specifies the resizable orientation (\"horizontal\" or \"vertical\"); defaults to \"horizontal\"",
+          "descriptionAr": "هل تقع اللوحات جنبًا إلى جنب (`horizontal` وهو الافتراضي) أم فوق بعضها."
+        },
+        {
+          "name": "defaultLayout",
+          "type": "Record<string, number>",
+          "default": null,
+          "required": false,
+          "description": "Default layout for the Group. ℹ️ This value allows layouts to be remembered between page reloads. ⚠️ Slight layout shift may occur when server-rendering panels with percentage-based default sizes. Refer to the documentation for suggestions on how to minimize the impact of this.",
+          "descriptionAr": "الأحجام بالنسبة المئوية بحسب `id` اللوحة، لتبدأ منها."
+        },
+        {
+          "name": "onLayoutChanged",
+          "type": "(layout: Record<string, number>) => void",
+          "default": null,
+          "required": false,
+          "description": "Called after the Group's layout has been changed. ℹ️ For layout changes caused by pointer events, this method is not called until the pointer has been released. This method is recommended when saving layouts to some storage api. ℹ️ The second argument contains meta information about the layout change. The `isUserInteraction` attribute signals whether the resize was caused by direct user input. It is true for resizes caused by pointer or keyboard input and false for other triggers (e.g. imperative API calls, initial mount, etc.) The `requestedLayout` attribute is the layout before constraints were applied for the current Group size; prefer it when persisting layouts.",
+          "descriptionAr": "تُستدعى بعد انتهاء تغيير الحجم، ومعها حجم كل لوحة بالنسبة المئوية بحسب `id`."
         }
       ]
     }

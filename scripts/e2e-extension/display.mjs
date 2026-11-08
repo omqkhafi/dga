@@ -95,7 +95,8 @@ export async function extDisplayChecks({ browser, BASE, check }) {
       await page.goto(`${BASE}/preview/${name}?dir=${rtl ? "rtl" : "ltr"}`, {
         waitUntil: "networkidle",
       });
-      await page.waitForTimeout(900);
+      await page.waitForSelector("svg.recharts-surface, [data-slot]", { timeout: 15000 });
+      await page.waitForTimeout(1500);
     };
     const boxes = (selector) =>
       page.evaluate((s) => {
@@ -125,7 +126,7 @@ export async function extDisplayChecks({ browser, BASE, check }) {
     );
 
     // Axis order: the first category sits on the start side.
-    const ticks = await boxes(".recharts-xAxis text");
+    const ticks = await boxes(".recharts-xAxis-tick-labels text");
     check(ticks.length === 6, `${lang}: six categories on the X axis (${ticks.length})`);
     if (ticks.length === 6) {
       const first = ticks[0];
@@ -137,7 +138,7 @@ export async function extDisplayChecks({ browser, BASE, check }) {
     }
     // The vertical axis sits on the start side... in RTL on the right, in LTR on the left.
     const chartBox = await boxes('[data-slot="chart"]');
-    const yTicks = await boxes(".recharts-yAxis text");
+    const yTicks = await boxes(".recharts-yAxis-tick-labels text");
     check(yTicks.length > 2, `${lang}: the Y axis has ticks`);
     if (yTicks.length > 2 && chartBox[0]) {
       const mid = chartBox[0].x + chartBox[0].width / 2;
@@ -242,31 +243,28 @@ export async function extDisplayChecks({ browser, BASE, check }) {
     const surface = page.locator('[data-slot="chart"] svg[tabindex="0"]');
     check((await surface.count()) >= 1, `${lang}: the interactive chart takes focus`);
     await surface.first().focus();
-    await page.keyboard.press("ArrowRight");
-    await page.waitForTimeout(300);
+    // The arrow keys follow the picture: toward the end of the axis on screen.
+    const forward = rtl ? "ArrowLeft" : "ArrowRight";
+    const backward = rtl ? "ArrowRight" : "ArrowLeft";
     const labelOf = async () =>
-      (await page
-        .locator('[data-slot="chart-tooltip"] .cn-chart-tooltip-label')
+      page
+        .locator('[data-slot="chart-tooltip"] > div:first-child')
         .first()
-        .textContent()
-        .catch(() => null)) ??
-      (await page
-        .locator('[data-slot="chart-tooltip"]')
-        .first()
-        .textContent()
-        .catch(() => null));
+        .textContent({ timeout: 1500 })
+        .catch(() => null);
+    await page.keyboard.press(forward);
+    await page.waitForTimeout(300);
     const one = await labelOf();
-    await page.keyboard.press("ArrowRight");
+    await page.keyboard.press(forward);
     await page.waitForTimeout(300);
     const two = await labelOf();
     check(
       Boolean(one) && Boolean(two) && one !== two,
       `${lang}: an arrow key moves the tooltip (${one} → ${two})`,
     );
-    await page.keyboard.press("ArrowLeft");
+    await page.keyboard.press(backward);
     await page.waitForTimeout(300);
-    const three = await labelOf();
-    check(three === one, `${lang}: the opposite arrow moves back (${three})`);
+    check((await labelOf()) === one, `${lang}: the opposite arrow moves back`);
 
     // Pie and line: markers and the slice order.
     await open("chart-line");
