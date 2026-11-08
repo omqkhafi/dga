@@ -5,6 +5,8 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
 
 ## [Unreleased]
 
+- CI runs only what a pull request can affect and runs the browser checks in parallel shards; the full suite still runs on every push to main. See CONTRIBUTING.md.
+
 ## [0.7.0] - 2026-11-08
 
 Phase 7, part 1: overlays, inputs and the official-site strip. No visual change to existing components, and no new dependency (no `cmdk`, no `input-otp`: Base UI covers both).
