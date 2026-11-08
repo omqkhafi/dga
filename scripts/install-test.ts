@@ -101,6 +101,23 @@ const EXTENSION_ITEMS = [
   "button-group",
 ];
 const PHASE7_DGA_ITEMS = ["slider", "digital-stamp"];
+/** The Phase 7 part 2 items (0.7.1), all extensions. Stock shadcn has its own version of every
+ *  name here, so the collision fixture installs both side by side. Recharts and
+ *  react-resizable-panels arrive only with chart and resizable, at their pinned versions. */
+const EXTENSION_ITEMS_2 = [
+  "menubar",
+  "navigation-menu",
+  "sidebar",
+  "collapsible",
+  "scroll-area",
+  "resizable",
+  "aspect-ratio",
+  "kbd",
+  "empty",
+  "item",
+  "chart",
+];
+const PINNED_LIBS = { recharts: "3.8.0", "react-resizable-panels": "4.14.8" };
 const PHASE7_ITEMS = [...EXTENSION_ITEMS, ...PHASE7_DGA_ITEMS];
 const STOCK_PHASE7 = EXTENSION_ITEMS.concat("slider");
 
@@ -527,6 +544,50 @@ export default function Page() {
     await build(label, app);
   }
 
+  // 4f. Phase 7 part 2 items (0.7.1) on their own: the @dga items they use come along, Card
+  //     installs the Collapsible, and Recharts and react-resizable-panels arrive only with chart and
+  //     resizable, at the versions the registry pins.
+  if (wants([...EXTENSION_ITEMS_2, "card"])) {
+    const label = "dga-extensions-2";
+    const app = await fresh(label);
+    await $`bunx ${shadcn} init ${url}/r/dga.json --yes --no-monorepo < /dev/null`.cwd(app).quiet();
+    const add =
+      await $`bunx ${shadcn} add ${[...EXTENSION_ITEMS_2, "card"].map((n) => `@dga/${n}`)} --yes < /dev/null`
+        .cwd(app)
+        .nothrow()
+        .quiet();
+    check(add.exitCode === 0, `${label}: shadcn add @dga/{${EXTENSION_ITEMS_2.join(",")},card}`);
+    if (add.exitCode !== 0) console.error(add.stderr.toString() || add.stdout.toString());
+    const r = reader(app);
+    for (const n of [...EXTENSION_ITEMS_2, "card", "drawer", "tooltip", "menu", "button"]) {
+      check(
+        existsSync(join(app, `src/components/dga/${n}.tsx`)),
+        `${label}: components/dga/${n}.tsx`,
+      );
+    }
+    const pkg = r.json<Pkg>("package.json");
+    for (const [lib, version] of Object.entries(PINNED_LIBS)) {
+      const installed = r.json<{ version: string }>(`node_modules/${lib}/package.json`).version;
+      check(installed === version, `${label}: ${lib} resolves to the pinned ${version}`);
+    }
+    for (const lib of ["@radix-ui/react-menubar", "@radix-ui/react-collapsible", "radix-ui"]) {
+      check(!(lib in pkg.dependencies), `${label}: no extra package (${lib}) installed`);
+    }
+    check(
+      r.text("src/components/dga/card.tsx").includes('"@/components/dga/collapsible"'),
+      `${label}: card imports the Collapsible instead of repeating it`,
+    );
+    for (const n of EXTENSION_ITEMS_2) {
+      const source = r.text(`src/components/dga/${n}.tsx`);
+      check(
+        !/\bcn-[a-z]/.test(source.replace(/data-slot=|"cn"/g, "")),
+        `${label}: ${n} cn-* inlined`,
+      );
+      check(!source.includes("components/ui"), `${label}: ${n}.tsx never imports components/ui`);
+    }
+    await build(label, app);
+  }
+
   // 5. a project that already has stock shadcn button, input and dialog in components/ui:
   //    installing @dga items must not touch them, and must not import them.
   if (
@@ -698,6 +759,51 @@ export default function Page() {
       !existsSync(join(app, "src/components/ui/digital-stamp.tsx")),
       `${label}: no @dga file in components/ui`,
     );
+    await build(label, app);
+  }
+
+  // 5c. the same for the Phase 7 part 2 names: stock shadcn menubar, navigation-menu, sidebar,
+  //     collapsible, scroll-area, resizable, aspect-ratio, kbd, empty, item and chart sit in
+  //     components/ui and must come out byte-identical.
+  if (wants(EXTENSION_ITEMS_2)) {
+    const label = "dga-collision-extensions-2";
+    const app = await fresh(label);
+    await $`bunx ${shadcn} init --defaults --yes --no-monorepo < /dev/null`.cwd(app).quiet();
+    const stock = await $`bunx ${shadcn} add ${EXTENSION_ITEMS_2} --yes < /dev/null`
+      .cwd(app)
+      .nothrow()
+      .quiet();
+    check(stock.exitCode === 0, `${label}: stock shadcn add ${EXTENSION_ITEMS_2.join(" ")}`);
+    if (stock.exitCode !== 0) console.error(stock.stderr.toString() || stock.stdout.toString());
+    const r = reader(app);
+    const stockFiles = EXTENSION_ITEMS_2.map((n) => `src/components/ui/${n}.tsx`);
+    for (const f of stockFiles) {
+      check(existsSync(join(app, f)), `${label}: stock ${f} exists before installing @dga`);
+    }
+    const before = stockFiles.map((f) => (existsSync(join(app, f)) ? r.text(f) : ""));
+    const config = r.json<{ registries: Record<string, string> }>("components.json");
+    config.registries["@dga"] = `${url}/r/{name}.json`;
+    writeFileSync(join(app, "components.json"), JSON.stringify(config, null, 2));
+    const add =
+      await $`bunx ${shadcn} add ${EXTENSION_ITEMS_2.map((n) => `@dga/${n}`)} --yes --overwrite < /dev/null`
+        .cwd(app)
+        .nothrow()
+        .quiet();
+    check(add.exitCode === 0, `${label}: shadcn add @dga/{${EXTENSION_ITEMS_2.join(",")}}`);
+    if (add.exitCode !== 0) console.error(add.stderr.toString() || add.stdout.toString());
+    stockFiles.forEach((f, i) => {
+      check(r.text(f) === before[i], `${label}: ${f} is byte-identical after installing @dga`);
+    });
+    for (const n of EXTENSION_ITEMS_2) {
+      check(
+        existsSync(join(app, `src/components/dga/${n}.tsx`)),
+        `${label}: components/dga/${n}.tsx`,
+      );
+      check(
+        !r.text(`src/components/dga/${n}.tsx`).includes("components/ui"),
+        `${label}: ${n}.tsx never imports components/ui`,
+      );
+    }
     await build(label, app);
   }
 

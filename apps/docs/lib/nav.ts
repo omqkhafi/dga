@@ -134,6 +134,17 @@ export const RELATED: Record<string, string[]> = {
   "input-otp": ["input", "number-input", "field"],
   "input-group": ["input", "button-group", "field"],
   "button-group": ["button", "toggle-group", "input-group"],
+  menubar: ["menu", "navigation-menu", "context-menu"],
+  "navigation-menu": ["header", "menubar", "second-nav"],
+  sidebar: ["drawer", "collapsible", "second-nav"],
+  collapsible: ["accordion", "card", "sidebar"],
+  "scroll-area": ["sidebar", "resizable", "table"],
+  resizable: ["scroll-area", "sidebar", "drawer"],
+  "aspect-ratio": ["card", "carousel", "skeleton"],
+  kbd: ["command", "menu", "input-group"],
+  empty: ["data-table", "inline-alert", "list"],
+  item: ["list", "card", "menu"],
+  chart: ["card", "data-table", "progress"],
 };
 
 export const FIGMA_URL =
