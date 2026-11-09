@@ -6764,7 +6764,7 @@
   "second-nav": [
     {
       "name": "SecondNav",
-      "description": "The secondary strip above the header (DGA: Second Nav Header): contextual items such as the weather, date, time and location, then actions (icon-only or icon and text), 40px high, gray or primary. Entries with an `href` are links, with `onClick` buttons, and the rest plain text. On narrow screens it scrolls sideways instead of wrapping. Name it with `aria-label`.",
+      "description": "The secondary strip above the header (DGA: Second Nav Header): contextual items such as the weather, date, time and location at the start and actions (icon-only or icon and text) at the end, spread apart, 40px high, gray or primary. An optional `links` menu can sit at the start or in the centre. Entries with an `href` are links, with `onClick` buttons, and the rest plain text. On narrow screens it scrolls sideways instead of wrapping. Name it with `aria-label`.",
       "descriptionAr": "الشريط الثانوي فوق الترويسة (DGA: Second Nav Header): عناصر سياقية هي الطقس والتاريخ والوقت والموقع، ثم الإجراءات بأيقونة فقط أو بأيقونة ونص، بارتفاع 40px، رمادي أو أساسي. الإدخال الذي له `href` رابط، والذي له `onClick` زر، وغيره نص عادي. على الشاشات الضيقة يتمرر أفقيًا بدل الالتفاف. سمِّه بـ `aria-label`.",
       "inherits": null,
       "props": [
@@ -6793,20 +6793,28 @@
           "descriptionAr": "إجراءات في النهاية: بأيقونة فقط (`iconOnly`) أو بأيقونة ونص، مثل التكبير أو التباين."
         },
         {
+          "name": "links",
+          "type": "SecondNavEntry[]",
+          "default": "[]",
+          "required": false,
+          "description": "An optional menu of links (not part of DGA's Second Nav).",
+          "descriptionAr": "قائمة روابط اختيارية (ليست من DGA) في الشريط، أي إدخالات لها `href` وربما `current`."
+        },
+        {
+          "name": "linksPosition",
+          "type": "\"start\" | \"center\"",
+          "default": "\"start\"",
+          "required": false,
+          "description": "Where the `links` menu sits: `start` (before the items, default) or `center` (in the middle of the strip, between the items and the actions).",
+          "descriptionAr": "موضع قائمة `links`: `start` (قبل العناصر، الافتراضي) أو `center` (في منتصف الشريط بين العناصر والإجراءات)."
+        },
+        {
           "name": "fullWidth",
           "type": "boolean",
           "default": "false",
           "required": false,
           "description": "Spans the whole width. Default: centred, 1280px at most.",
           "descriptionAr": "يمتد بكامل العرض. الافتراضي: في المنتصف بعرض أقصى 1280px."
-        },
-        {
-          "name": "divider",
-          "type": "boolean",
-          "default": "true",
-          "required": false,
-          "description": "Shows the divider between items and actions. Default true.",
-          "descriptionAr": "يعرض الفاصل بين العناصر والإجراءات. الافتراضي `true`."
         }
       ]
     },

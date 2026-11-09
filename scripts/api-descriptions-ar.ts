@@ -839,7 +839,10 @@ export const API_DESCRIPTIONS_AR: Record<string, string> = {
   "second-nav.SecondNavItem":
     "عنصر واحد من الشريط (في DGA: عنصر الشريط الفرعي): أيقونة اختيارية ونص بينهما 4px، بحالة افتراضية وحالة على اللون. يصير رابطًا إن كان له `href` وزرًّا إن كان له `onClick`. يستخدمه `SecondNav`، ويمكن استخدامه وحده.",
   "second-nav.SecondNav.fullWidth": "يمتد بكامل العرض. الافتراضي: في المنتصف بعرض أقصى 1280px.",
-  "second-nav.SecondNav.divider": "يعرض الفاصل بين العناصر والإجراءات. الافتراضي `true`.",
+  "second-nav.SecondNav.links":
+    "قائمة روابط اختيارية (ليست من DGA) في الشريط، أي إدخالات لها `href` وربما `current`.",
+  "second-nav.SecondNav.linksPosition":
+    "موضع قائمة `links`: `start` (قبل العناصر، الافتراضي) أو `center` (في منتصف الشريط بين العناصر والإجراءات).",
   "second-nav.SecondNav":
     "الشريط الثانوي فوق الترويسة (DGA: Second Nav Header): عناصر سياقية هي الطقس والتاريخ والوقت والموقع، ثم الإجراءات بأيقونة فقط أو بأيقونة ونص، بارتفاع 40px، رمادي أو أساسي. الإدخال الذي له `href` رابط، والذي له `onClick` زر، وغيره نص عادي. على الشاشات الضيقة يتمرر أفقيًا بدل الالتفاف. سمِّه بـ `aria-label`.",
   "header.Header.defaultMenuOpen": "يفتح الدرج عند أول عرض. لعرضه في التوثيق.",

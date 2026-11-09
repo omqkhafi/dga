@@ -2307,34 +2307,39 @@
   }
 
   /* ------------------------------------------------------------------------------------
-   * Second Nav (Second Nav Header). 40px high strip, padded 32px, Text md Regular. Gray is
-   * background-neutral-100, Primary is the brand fill with on-colour text. Items and actions
-   * are icon plus text with a 4px gap; a vertical divider sits between the two groups. On narrow
-   * screens the strip scrolls sideways.
+   * Second Nav (Second Nav Header). 40px high strip, padded 32px, Text sm Regular. Gray is
+   * background-neutral-100 with a line under it, Primary is the brand fill with on-colour text.
+   * Items and actions are icon plus text with a 4px gap, in two groups spread to the two ends (no
+   * divider). An optional links menu sits at the start or in the centre. On narrow screens the
+   * strip scrolls sideways.
    * ---------------------------------------------------------------------------------- */
   .cn-second-nav {
-    @apply w-full text-md;
+    @apply w-full text-sm;
   }
   .cn-second-nav-tone-gray {
-    @apply bg-background-neutral-100 text-text-primary-paragraph;
+    @apply border-b border-border-neutral-primary bg-background-neutral-100 text-text-primary-paragraph;
   }
   .cn-second-nav-tone-primary {
     @apply bg-background-primary text-text-oncolor-primary;
   }
   .cn-second-nav-inner {
-    @apply relative mx-auto flex h-10 w-full max-w-[1280px] items-center gap-4 overflow-x-auto overflow-y-hidden px-4 whitespace-nowrap lg:px-8 data-full:max-w-none [scrollbar-width:none];
+    @apply relative mx-auto flex h-10 w-full max-w-[1280px] items-center gap-6 overflow-x-auto overflow-y-hidden px-4 whitespace-nowrap lg:px-8 data-full:max-w-none [scrollbar-width:none];
+    @apply data-[links=center]:grid data-[links=center]:grid-cols-[minmax(max-content,1fr)_auto_minmax(max-content,1fr)] data-[links=center]:gap-x-6;
   }
   .cn-second-nav-group {
     @apply m-0 flex list-none items-center gap-4 p-0;
   }
-  .cn-second-nav-actions {
-    @apply ms-auto;
+  .cn-second-nav-links {
+    @apply in-data-[links=center]:col-start-2 in-data-[links=center]:row-start-1 in-data-[links=center]:justify-self-center;
   }
-  .cn-second-nav-divider {
-    @apply h-5 w-px shrink-0 bg-border-neutral-primary in-data-[tone=primary]:bg-alpha-white-30;
+  .cn-second-nav-items {
+    @apply in-data-[links=center]:col-start-1 in-data-[links=center]:row-start-1;
+  }
+  .cn-second-nav-actions {
+    @apply ms-auto in-data-[links=center]:col-start-3 in-data-[links=center]:row-start-1 in-data-[links=center]:justify-self-end;
   }
   .cn-second-nav-item {
-    @apply inline-flex h-6 shrink-0 items-center gap-1 rounded-xs border-0 bg-transparent p-0 text-md font-normal text-inherit no-underline;
+    @apply inline-flex h-6 shrink-0 items-center gap-1 rounded-xs border-0 bg-transparent p-0 text-sm leading-none font-normal text-inherit no-underline;
     @apply [&_svg]:size-4 [&_svg]:shrink-0 [&_svg]:text-icon-neutral in-data-[tone=primary]:[&_svg]:text-icon-oncolor data-[tone=on-color]:text-text-oncolor-primary data-[tone=on-color]:[&_svg]:text-icon-oncolor;
     @apply data-icon-only:min-w-6 data-icon-only:justify-center;
     @apply [&:is(a,button)]:cursor-pointer [&:is(a,button)]:hover:underline [&:is(a,button)]:hover:underline-offset-4 [&:is(a,button)]:active:underline [&:is(a,button)]:active:underline-offset-4;

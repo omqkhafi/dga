@@ -1941,6 +1941,69 @@ async function compositeChecks() {
     });
     check(visibleLast, `${lang}: a focused entry scrolls into view`);
 
+    // The strip has two parts spread to the two ends, no divider; small, centred items.
+    await open("second-nav-gray", 1280);
+    const strip = await page.evaluate(() => {
+      const nav = document.querySelector("[data-slot=second-nav]");
+      const inner = nav.firstElementChild.getBoundingClientRect();
+      const items = [...nav.querySelectorAll("[data-slot=second-nav-item]")];
+      const first = items[0].getBoundingClientRect();
+      const last = items[items.length - 1].getBoundingClientRect();
+      const middle = inner.top + inner.height / 2;
+      return {
+        divider: nav.querySelectorAll("[aria-hidden=true]:not(svg):not(path)").length,
+        font: Number.parseFloat(getComputedStyle(items[0]).fontSize),
+        off: Math.max(
+          ...items.map((el) => {
+            const box = el.getBoundingClientRect();
+            return Math.abs(box.top + box.height / 2 - middle);
+          }),
+        ),
+        gapStart: Math.round(Math.min(first.left - inner.left, inner.right - first.right)),
+        gapEnd: Math.round(Math.min(last.left - inner.left, inner.right - last.right)),
+        inner: Math.round(inner.width),
+      };
+    });
+    check(strip.divider === 0, `${lang}: no divider between the items and the actions`);
+    check(strip.font === 14, `${lang}: the strip text is 14px (${strip.font}px)`);
+    check(strip.off <= 1, `${lang}: the items are centred on the strip (off by ${strip.off}px)`);
+    check(
+      strip.gapStart < 40 && strip.gapEnd < 40,
+      `${lang}: the two parts sit at the two ends (${JSON.stringify(strip)})`,
+    );
+    await open("second-nav-links-center", 1280);
+    const centred = await page.evaluate(() => {
+      const nav = document.querySelector("[data-slot=second-nav]");
+      const inner = nav.firstElementChild.getBoundingClientRect();
+      const links = nav.querySelector("[data-slot=second-nav-links]").getBoundingClientRect();
+      const tops = [...nav.querySelectorAll("[data-slot=second-nav-item]")].map((el) =>
+        Math.round(el.getBoundingClientRect().top),
+      );
+      return {
+        off: Math.round(Math.abs(links.left + links.width / 2 - (inner.left + inner.width / 2))),
+        oneRow: Math.max(...tops) - Math.min(...tops) <= 1,
+        count: tops.length,
+      };
+    });
+    check(centred.off <= 2, `${lang}: the links menu is in the centre (off by ${centred.off}px)`);
+    check(
+      centred.oneRow && centred.count >= 8,
+      `${lang}: the items, the links and the actions share one row (${centred.count} entries)`,
+    );
+    await open("second-nav-links-start", 1280);
+    const atStart = await page.evaluate(() => {
+      const nav = document.querySelector("[data-slot=second-nav]");
+      const inner = nav.firstElementChild.getBoundingClientRect();
+      const links = nav.querySelector("[data-slot=second-nav-links]").getBoundingClientRect();
+      return {
+        fromStart: Math.round(Math.min(links.left - inner.left, inner.right - links.right)),
+      };
+    });
+    check(
+      atStart.fromStart < 40,
+      `${lang}: the links menu is at the start (${atStart.fromStart}px)`,
+    );
+
     // ---------------------------------------------------------------- Footer
     await open("footer-default", 1280);
     check(

@@ -168,6 +168,10 @@ Rules for both parts:
 
 - [x] Header, Second Nav, Footer, Accordion, Digital Stamp, Rating, Slider, Breadcrumb, Tabs, Date Picker, Filtration and Textarea fixed against the findings; Chart is a DGA component. The separate RTL section is gone from every component page. What was checked, and which values are unverified, is in [docs/conformance/0.7.3.md](docs/conformance/0.7.3.md).
 
+## Patches 0.7.4 and 0.7.5: Header and Second Nav (done)
+
+- [x] 0.7.4: Header Menu Item bar, states and phone layout checked against the Figma frames. 0.7.5: Second Nav without the divider, smaller centred items, and an optional links menu at the start or in the centre; see [CHANGELOG.md](CHANGELOG.md).
+
 ## Section blocks (0.8.0 to 0.13.0)
 
 Reusable `registry:block` section items only, one minor version per group. Users compose their own pages: no full-page templates and no example or composed pages. Depends on Phases 3 to 7. Header, Footer and Second nav stay in Phase 6. The rules for every phase apply to each block.

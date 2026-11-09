@@ -128,20 +128,41 @@ export function SecondNavItemOnColor() {
   );
 }
 
-/** Optional, not from DGA: a row of links to the sibling pages of a section. */
-export function SecondNavLinks() {
+/** The optional links menu (not from DGA), the links at the start of the strip. */
+function useMenuLinks() {
+  const t = useBi();
+  return [
+    { label: t("Overview", "نظرة عامة"), href: "#overview", current: true },
+    { label: t("Requirements", "المتطلبات"), href: "#requirements" },
+    { label: t("Fees", "الرسوم"), href: "#fees" },
+    { label: t("Support", "الدعم"), href: "#support" },
+  ];
+}
+
+export function SecondNavLinksStart() {
   const t = useBi();
   return (
     <div className="-m-4">
       <SecondNav
         aria-label={t("Related pages", "صفحات ذات صلة")}
-        items={[
-          { label: t("Overview", "نظرة عامة"), href: "#overview", current: true },
-          { label: t("Requirements", "المتطلبات"), href: "#requirements" },
-          { label: t("Fees", "الرسوم"), href: "#fees" },
-          { label: t("Support", "الدعم"), href: "#support" },
-        ]}
+        links={useMenuLinks()}
+        linksPosition="start"
         actions={[{ label: t("Print", "طباعة"), icon: PrinterIcon, onClick: () => {} }]}
+      />
+    </div>
+  );
+}
+
+export function SecondNavLinksCenter() {
+  const t = useBi();
+  return (
+    <div className="-m-4">
+      <SecondNav
+        aria-label={t("Related pages", "صفحات ذات صلة")}
+        items={useStripItems().slice(1, 3)}
+        links={useMenuLinks()}
+        linksPosition="center"
+        actions={useTools().slice(1, 3)}
       />
     </div>
   );

@@ -47,10 +47,15 @@ type SecondNavProps = Omit<React.ComponentProps<"nav">, "children"> &
     items?: SecondNavEntry[];
     /** Actions at the end: icon-only (`iconOnly`) or icon and text, such as zoom or contrast. */
     actions?: SecondNavEntry[];
+    /** An optional menu of links (not part of DGA's Second Nav). */
+    links?: SecondNavEntry[];
+    /**
+     * Where the `links` menu sits: `start` (before the items, default) or `center` (in the middle
+     * of the strip, between the items and the actions).
+     */
+    linksPosition?: "start" | "center";
     /** Spans the whole width. Default: centred, 1280px at most. */
     fullWidth?: boolean;
-    /** Shows the divider between items and actions. Default true. */
-    divider?: boolean;
   };
 
 type SecondNavItemProps = {
@@ -99,19 +104,31 @@ function SecondNavItem({ entry, tone }: SecondNavItemProps) {
 
 /**
  * The secondary strip above the header (DGA: Second Nav Header): contextual items such as the
- * weather, date, time and location, then actions (icon-only or icon and text), 40px high, gray or
- * primary. Entries with an `href` are links, with `onClick` buttons, and the rest plain text. On narrow screens it scrolls
- * sideways instead of wrapping. Name it with `aria-label`.
+ * weather, date, time and location at the start and actions (icon-only or icon and text) at the
+ * end, spread apart, 40px high, gray or primary. An optional `links` menu can sit at the start or
+ * in the centre. Entries with an `href` are links, with `onClick` buttons, and the rest plain
+ * text. On narrow screens it scrolls sideways instead of wrapping. Name it with `aria-label`.
  */
 function SecondNav({
   className,
   tone,
   items = [],
   actions = [],
+  links = [],
+  linksPosition = "start",
   fullWidth = false,
-  divider = true,
   ...props
 }: SecondNavProps) {
+  const linksGroup =
+    links.length > 0 ? (
+      <ul className="cn-second-nav-group cn-second-nav-links" data-slot="second-nav-links">
+        {links.map((entry) => (
+          <li key={entry.label} className="flex items-center">
+            <SecondNavItem entry={entry} />
+          </li>
+        ))}
+      </ul>
+    ) : null;
   return (
     <nav
       data-slot="second-nav"
@@ -119,28 +136,26 @@ function SecondNav({
       className={cn(secondNavVariants({ tone }), className)}
       {...props}
     >
-      <div className="cn-second-nav-inner" data-full={fullWidth ? "" : undefined}>
+      <div
+        className="cn-second-nav-inner"
+        data-full={fullWidth ? "" : undefined}
+        data-links={links.length > 0 ? linksPosition : undefined}
+      >
+        {linksPosition === "start" ? linksGroup : null}
         {items.length > 0 ? (
-          <ul className="cn-second-nav-group">
+          <ul className="cn-second-nav-group cn-second-nav-items">
             {items.map((entry) => (
-              <li key={entry.label}>
+              <li key={entry.label} className="flex items-center">
                 <SecondNavItem entry={entry} />
               </li>
             ))}
           </ul>
         ) : null}
-        {divider && items.length > 0 && actions.length > 0 ? (
-          <span aria-hidden className="cn-second-nav-divider ms-auto" />
-        ) : null}
+        {linksPosition === "center" ? linksGroup : null}
         {actions.length > 0 ? (
-          <ul
-            className={cn(
-              "cn-second-nav-group",
-              !(divider && items.length > 0) && "cn-second-nav-actions",
-            )}
-          >
+          <ul className="cn-second-nav-group cn-second-nav-actions">
             {actions.map((entry) => (
-              <li key={entry.label}>
+              <li key={entry.label} className="flex items-center">
                 <SecondNavItem entry={entry} />
               </li>
             ))}

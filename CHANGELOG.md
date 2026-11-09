@@ -5,6 +5,28 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
 
 ## [Unreleased]
 
+## [0.7.5] - 2026-11-09
+
+Patch: Second Nav follows the Figma strip more closely, and gets an optional links menu.
+
+### Added
+
+- **Second Nav:** an optional `links` menu (not part of DGA) with `linksPosition`: `"start"` (before the items, the default) or `"center"` (in the middle of the strip, between the items and the actions). Entries use the same item, with `href` and `current`.
+
+### Changed
+
+- **Second Nav:** the vertical "|" divider between the items and the actions is gone (Figma has none; its "divider" is the line under the Gray strip, which the Gray strip now has). The strip is two parts, the items at the start and the actions at the end, spread apart.
+- **Second Nav:** items are smaller and centred: Text sm (14px) instead of Text md, with 16px icons, 24px high and centred on the 40px strip in every language (an Arabic line-height no longer pushes them off-centre).
+- **Docs:** the Second Nav previews no longer leave empty space under the strip, and the optional links example is now two examples, at the start and in the centre.
+
+### Removed
+
+- **Second Nav:** the `divider` prop. Remove it from your code; the divider no longer exists.
+
+### Tests
+
+- The composite browser group checks that the strip has no divider, 14px text, items centred on the strip, the two parts at the two ends, and the links menu at the start or in the centre on one row, in both directions.
+
 ## [0.7.4] - 2026-11-08
 
 Patch: two Header fixes found by looking at the published 0.7.3 previews.
