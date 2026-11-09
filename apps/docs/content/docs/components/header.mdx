@@ -120,17 +120,19 @@ The Drawer opened from the menu button.
 
 ### Nav Drawer header and footer
 
-The top and the bottom of the Drawer take anything. `drawerLogo` shows the `logo` at the top instead of the title, `drawerHeader` replaces the top with your own content (a logo with a user card, a banner), and `drawerFooter` puts your content at the bottom edge, below the navigation and the `language` and `user` slots. The drawer keeps `drawerTitle` as its accessible name, hidden from view, whichever top you choose.
+The top and the bottom of the Drawer are parts you put inside the Header, and each takes any content. `HeaderDrawerHeader` replaces the visible title at the top (a logo, a user card, a banner) and `HeaderDrawerFooter` sits at the bottom edge, below the navigation and the `language` and `user` slots. `HeaderLogo` is a ready-made logo link (an image from `src`, or your own markup as `children`) that you can use in the bar's `logo` and again in the Drawer's header. The drawer keeps `drawerTitle` as its accessible name, hidden from view, when you add a header.
 
 <Preview compact name="header-drawer-slots" title="Logo and footer" defaultViewport="mobile" minHeight={380} />
 
 ```tsx title="layout.tsx"
-<Header
-  logo={<Logo />}
-  items={items}
-  drawerLogo
-  drawerFooter={<p>Need help? Call 920000000.</p>}
-/>
+<Header logo={<HeaderLogo src="/logo.svg" alt="Digital Services" />} items={items}>
+  <HeaderDrawerHeader>
+    <HeaderLogo src="/logo.svg" alt="Digital Services" />
+  </HeaderDrawerHeader>
+  <HeaderDrawerFooter>
+    <p>Need help? Call 920000000.</p>
+  </HeaderDrawerFooter>
+</Header>
 ```
 
 ### Official-site strip

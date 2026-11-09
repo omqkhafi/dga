@@ -825,13 +825,17 @@ export const API_DESCRIPTIONS_AR: Record<string, string> = {
   "header.Header.moreLabel": "اسم زر الفائض (…) على الشاشات الصغيرة، وهو يفتح الإجراءات.",
   "header.Header.drawerTitle": "عنوان الدرج.",
   "header.Header.drawerDescription": "سطر تحت عنوان الدرج لقارئات الشاشة.",
-  "header.Header.drawerHeader":
-    "أي محتوى لأعلى درج التنقل بدل العنوان المرئي: شعار أو بطاقة مستخدم أو لافتة. يحتفظ الدرج بـ `drawerTitle` اسمًا متاحًا مخفيًا عن النظر.",
-  "header.Header.drawerLogo":
-    "يعرض `logo` في أعلى درج التنقل بدل العنوان المرئي. يُتجاهل عند تمرير `drawerHeader`. الافتراضي `false`.",
-  "header.Header.drawerFooter":
-    "أي محتوى لأسفل درج التنقل، تحت التنقل وخانتي `language` و`user`: بيانات تواصل أو رقم إصدار أو زر. يبقى عند الحافة السفلية.",
   "header.Header.closeLabel": "اسم زر إغلاق الدرج.",
+  "header.Header.children":
+    "أجزاء لدرج التنقل تُوضع داخل Header مباشرة: `HeaderDrawerHeader` للأعلى (بدل العنوان المرئي) و`HeaderDrawerFooter` للحافة السفلية. يقبل كل منهما أي محتوى. لا يُعرض غيرهما.",
+  "header.HeaderLogo.src": "صورة الشعار. للأيقونة SVG أو لمحتواك استعمل `children`.",
+  "header.HeaderLogo.alt": "ما تعرضه الصورة، مثل اسم الموقع. هو اسم الرابط، فاضبطه دائمًا مع `src`.",
+  "header.HeaderLogo":
+    "الشعار رابطًا إلى الصفحة الرئيسية (`href`، الافتراضي `/`): صورة من `src` أو محتواك في `children`. استعمله في `logo` الخاص بـ Header ومرة أخرى داخل `HeaderDrawerHeader`.",
+  "header.HeaderDrawerHeader":
+    "أعلى درج التنقل بدل العنوان المرئي. ضعه داخل Header مباشرة. يقبل أي محتوى: `HeaderLogo` أو بطاقة مستخدم أو لافتة. يحتفظ الدرج بـ `drawerTitle` اسمًا متاحًا مخفيًا عن النظر.",
+  "header.HeaderDrawerFooter":
+    "أسفل درج التنقل عند حافته السفلية، تحت التنقل وخانتي `language` و`user`. ضعه داخل Header مباشرة. يقبل أي محتوى.",
   "header.Header":
     'ترويسة الموقع (DGA: Nav Header): شعار، وقائمة التنقل الرئيسية مع قوائم فرعية، وإجراءات وبحث ومبدّل لغة ومنطقة مستخدم. رابط التخطي أول ما يصله التركيز. مفتاحا اليمين واليسار (يتبادلان في الصفحات العربية) وHome وEnd ينقلان بين العناصر؛ وEnter أو Space أو السهم لأسفل يفتح القائمة الفرعية، وهي Menu من DGA. تحت عرض `lg` يصير الشريط زر القائمة والشعار في المنتصف وزر الفائض (…)، وتنتقل القائمة إلى Drawer. للصفحة الحالية `aria-current="page"`.',
   "header.HeaderAction.iconOnly": "أيقونة فقط: يخفي النص (ويبقى اسمًا للوصول). يحتاج إلى `icon`.",

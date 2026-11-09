@@ -453,7 +453,68 @@ function DrawerItem({ item, onNavigate }: { item: HeaderNavItem; onNavigate: () 
   );
 }
 
+type HeaderLogoProps = Omit<React.ComponentProps<"a">, "children"> & {
+  /** An image for the logo. For an SVG or your own markup use `children` instead. */
+  src?: string;
+  /** What the image shows, such as the name of the site. It is the link's name, so always set it with `src`. */
+  alt?: string;
+  children?: React.ReactNode;
+};
+
+/**
+ * The logo as a link to the home page (`href`, default `/`): an image from `src` or your own
+ * markup as `children`. Use it as the Header's `logo` and again inside a `HeaderDrawerHeader`.
+ */
+function HeaderLogo({ href = "/", src, alt = "", className, children, ...props }: HeaderLogoProps) {
+  return (
+    <a
+      data-slot="header-logo-link"
+      href={href}
+      className={cn("cn-header-logo-link", className)}
+      {...props}
+    >
+      {src ? <img src={src} alt={alt} className="cn-header-logo-image" /> : null}
+      {children}
+    </a>
+  );
+}
+
+/**
+ * The top of the Nav Drawer, in place of the visible title. Put it directly inside the Header.
+ * It takes any content: a `HeaderLogo`, a user card, a banner. The drawer keeps `drawerTitle` as
+ * its accessible name, hidden from view.
+ */
+function HeaderDrawerHeader({ className, ...props }: React.ComponentProps<"div">) {
+  return (
+    <div
+      data-slot="header-drawer-header"
+      className={cn("cn-header-drawer-header", className)}
+      {...props}
+    />
+  );
+}
+
+/**
+ * The bottom of the Nav Drawer, at its bottom edge, below the navigation and the `language` and
+ * `user` slots. Put it directly inside the Header. It takes any content.
+ */
+function HeaderDrawerFooter({ className, ...props }: React.ComponentProps<"div">) {
+  return (
+    <div
+      data-slot="header-drawer-footer"
+      className={cn("cn-header-drawer-footer", className)}
+      {...props}
+    />
+  );
+}
+
 type HeaderProps = Omit<React.ComponentProps<"header">, "children"> & {
+  /**
+   * Parts for the Nav Drawer, placed directly inside the Header: a `HeaderDrawerHeader` for the top
+   * (in place of the visible title) and a `HeaderDrawerFooter` for the bottom edge. Each takes any
+   * content. Nothing else is rendered.
+   */
+  children?: React.ReactNode;
   /** The logo, usually a link to the home page. Pass your own `img` or SVG. */
   logo?: React.ReactNode;
   /** The main navigation. */
@@ -502,18 +563,6 @@ type HeaderProps = Omit<React.ComponentProps<"header">, "children"> & {
   drawerTitle?: string;
   /** A line under the drawer title for screen readers. */
   drawerDescription?: string;
-  /**
-   * Anything for the top of the Nav Drawer, in place of the visible title: a logo, a user card, a
-   * banner. The drawer keeps `drawerTitle` as its accessible name, hidden from view.
-   */
-  drawerHeader?: React.ReactNode;
-  /**
-   * Shows `logo` at the top of the Nav Drawer instead of the visible title. Ignored when
-   * `drawerHeader` is given. Default `false`.
-   */
-  drawerLogo?: boolean;
-  /** Anything for the bottom of the Nav Drawer, below the navigation and the `language` and `user` slots: contact details, a version, a button. It stays at the bottom edge. */
-  drawerFooter?: React.ReactNode;
   /** The name of the drawer's close button. */
   closeLabel?: string;
   /** Opens the drawer on first render. For showing it in documentation. */
@@ -532,6 +581,7 @@ type HeaderProps = Omit<React.ComponentProps<"header">, "children"> & {
 function Header({
   className,
   ref,
+  children,
   logo,
   items = [],
   navPosition = "start",
@@ -552,15 +602,18 @@ function Header({
   moreLabel = "More",
   drawerTitle = "Menu",
   drawerDescription,
-  drawerHeader,
-  drawerLogo = false,
-  drawerFooter,
   closeLabel = "Close",
   defaultMenuOpen = false,
   ...props
 }: HeaderProps) {
   const [open, setOpen] = React.useState(defaultMenuOpen);
-  const showDrawerLogo = Boolean(drawerLogo && logo);
+  const parts = React.Children.toArray(children);
+  const drawerHeader = parts.find(
+    (part) => React.isValidElement(part) && part.type === HeaderDrawerHeader,
+  );
+  const drawerFooter = parts.find(
+    (part) => React.isValidElement(part) && part.type === HeaderDrawerFooter,
+  );
   const rtl = useDocumentDirection() === "rtl";
   const headerRef = React.useRef<HTMLElement | null>(null);
   const setHeaderRef = React.useCallback(
@@ -616,14 +669,8 @@ function Header({
           </DrawerTrigger>
           <DrawerContent closeLabel={closeLabel}>
             <DrawerHeader>
-              {drawerHeader ? (
-                <div data-slot="header-drawer-custom-header">{drawerHeader}</div>
-              ) : showDrawerLogo ? (
-                <div data-slot="header-drawer-logo" className="cn-header-drawer-logo">
-                  {logo}
-                </div>
-              ) : null}
-              <DrawerTitle className={drawerHeader || showDrawerLogo ? "sr-only" : undefined}>
+              {drawerHeader}
+              <DrawerTitle className={drawerHeader ? "sr-only" : undefined}>
                 {drawerTitle}
               </DrawerTitle>
               {drawerDescription ? (
@@ -646,11 +693,7 @@ function Header({
                 {user}
               </div>
             ) : null}
-            {drawerFooter ? (
-              <div data-slot="header-drawer-footer" className="cn-header-drawer-footer">
-                {drawerFooter}
-              </div>
-            ) : null}
+            {drawerFooter}
           </DrawerContent>
         </Drawer>
 
@@ -710,6 +753,7 @@ export type {
   HeaderActionItem,
   HeaderActionProps,
   HeaderLinkStyle,
+  HeaderLogoProps,
   HeaderNavItem,
   HeaderProps,
   HeaderSection,
@@ -717,4 +761,4 @@ export type {
   HeaderSubmenuTone,
   HeaderSubmenuWidth,
 };
-export { Header, HeaderAction };
+export { Header, HeaderAction, HeaderDrawerFooter, HeaderDrawerHeader, HeaderLogo };

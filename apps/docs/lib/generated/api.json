@@ -3956,6 +3956,14 @@
           "descriptionAr": "شريط فوق الترويسة: ضع هنا Second Nav."
         },
         {
+          "name": "children",
+          "type": "string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<AwaitedReactNode>",
+          "default": null,
+          "required": false,
+          "description": "Parts for the Nav Drawer, placed directly inside the Header: a `HeaderDrawerHeader` for the top (in place of the visible title) and a `HeaderDrawerFooter` for the bottom edge. Each takes any content. Nothing else is rendered.",
+          "descriptionAr": "أجزاء لدرج التنقل تُوضع داخل Header مباشرة: `HeaderDrawerHeader` للأعلى (بدل العنوان المرئي) و`HeaderDrawerFooter` للحافة السفلية. يقبل كل منهما أي محتوى. لا يُعرض غيرهما."
+        },
+        {
           "name": "actions",
           "type": "HeaderActionItem[]",
           "default": "[]",
@@ -3988,6 +3996,30 @@
           "descriptionAr": "الشعار، وهو عادةً رابط إلى الصفحة الرئيسية. مرّر `img` أو SVG خاصًّا بك."
         },
         {
+          "name": "user",
+          "type": "string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<AwaitedReactNode>",
+          "default": null,
+          "required": false,
+          "description": "The user area: a sign-in button or an account menu.",
+          "descriptionAr": "منطقة المستخدم: زر تسجيل الدخول أو قائمة الحساب."
+        },
+        {
+          "name": "drawerTitle",
+          "type": "string",
+          "default": "\"Menu\"",
+          "required": false,
+          "description": "The title of the drawer.",
+          "descriptionAr": "عنوان الدرج."
+        },
+        {
+          "name": "language",
+          "type": "string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<AwaitedReactNode>",
+          "default": null,
+          "required": false,
+          "description": "The language switcher (for example a Menu or a link).",
+          "descriptionAr": "مبدّل اللغة (مثل Menu أو رابط)."
+        },
+        {
           "name": "items",
           "type": "HeaderNavItem[]",
           "default": "[]",
@@ -4010,22 +4042,6 @@
           "required": false,
           "description": "A search field or a button that opens search. Shown in the bar from `lg`, and at the top of the drawer below it.",
           "descriptionAr": "حقل بحث أو زر يفتح البحث. يظهر في الشريط من `lg`، وفي أعلى الدرج تحته."
-        },
-        {
-          "name": "language",
-          "type": "string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<AwaitedReactNode>",
-          "default": null,
-          "required": false,
-          "description": "The language switcher (for example a Menu or a link).",
-          "descriptionAr": "مبدّل اللغة (مثل Menu أو رابط)."
-        },
-        {
-          "name": "user",
-          "type": "string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<AwaitedReactNode>",
-          "default": null,
-          "required": false,
-          "description": "The user area: a sign-in button or an account menu.",
-          "descriptionAr": "منطقة المستخدم: زر تسجيل الدخول أو قائمة الحساب."
         },
         {
           "name": "stamp",
@@ -4076,44 +4092,12 @@
           "descriptionAr": "اسم زر الفائض (…) على الشاشات الصغيرة، وهو يفتح الإجراءات."
         },
         {
-          "name": "drawerTitle",
-          "type": "string",
-          "default": "\"Menu\"",
-          "required": false,
-          "description": "The title of the drawer.",
-          "descriptionAr": "عنوان الدرج."
-        },
-        {
           "name": "drawerDescription",
           "type": "string",
           "default": null,
           "required": false,
           "description": "A line under the drawer title for screen readers.",
           "descriptionAr": "سطر تحت عنوان الدرج لقارئات الشاشة."
-        },
-        {
-          "name": "drawerHeader",
-          "type": "string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<AwaitedReactNode>",
-          "default": null,
-          "required": false,
-          "description": "Anything for the top of the Nav Drawer, in place of the visible title: a logo, a user card, a banner. The drawer keeps `drawerTitle` as its accessible name, hidden from view.",
-          "descriptionAr": "أي محتوى لأعلى درج التنقل بدل العنوان المرئي: شعار أو بطاقة مستخدم أو لافتة. يحتفظ الدرج بـ `drawerTitle` اسمًا متاحًا مخفيًا عن النظر."
-        },
-        {
-          "name": "drawerLogo",
-          "type": "boolean",
-          "default": "false",
-          "required": false,
-          "description": "Shows `logo` at the top of the Nav Drawer instead of the visible title. Ignored when `drawerHeader` is given. Default `false`.",
-          "descriptionAr": "يعرض `logo` في أعلى درج التنقل بدل العنوان المرئي. يُتجاهل عند تمرير `drawerHeader`. الافتراضي `false`."
-        },
-        {
-          "name": "drawerFooter",
-          "type": "string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<AwaitedReactNode>",
-          "default": null,
-          "required": false,
-          "description": "Anything for the bottom of the Nav Drawer, below the navigation and the `language` and `user` slots: contact details, a version, a button. It stays at the bottom edge.",
-          "descriptionAr": "أي محتوى لأسفل درج التنقل، تحت التنقل وخانتي `language` و`user`: بيانات تواصل أو رقم إصدار أو زر. يبقى عند الحافة السفلية."
         },
         {
           "name": "closeLabel",
@@ -4197,6 +4181,61 @@
           "required": false,
           "description": "",
           "descriptionAr": ""
+        }
+      ]
+    },
+    {
+      "name": "HeaderDrawerFooter",
+      "description": "The bottom of the Nav Drawer, at its bottom edge, below the navigation and the `language` and `user` slots. Put it directly inside the Header. It takes any content.",
+      "descriptionAr": "أسفل درج التنقل عند حافته السفلية، تحت التنقل وخانتي `language` و`user`. ضعه داخل Header مباشرة. يقبل أي محتوى.",
+      "inherits": {
+        "name": "Menu",
+        "url": "https://base-ui.com/react/components/menu"
+      },
+      "props": []
+    },
+    {
+      "name": "HeaderDrawerHeader",
+      "description": "The top of the Nav Drawer, in place of the visible title. Put it directly inside the Header. It takes any content: a `HeaderLogo`, a user card, a banner. The drawer keeps `drawerTitle` as its accessible name, hidden from view.",
+      "descriptionAr": "أعلى درج التنقل بدل العنوان المرئي. ضعه داخل Header مباشرة. يقبل أي محتوى: `HeaderLogo` أو بطاقة مستخدم أو لافتة. يحتفظ الدرج بـ `drawerTitle` اسمًا متاحًا مخفيًا عن النظر.",
+      "inherits": {
+        "name": "Menu",
+        "url": "https://base-ui.com/react/components/menu"
+      },
+      "props": []
+    },
+    {
+      "name": "HeaderLogo",
+      "description": "The logo as a link to the home page (`href`, default `/`): an image from `src` or your own markup as `children`. Use it as the Header's `logo` and again inside a `HeaderDrawerHeader`.",
+      "descriptionAr": "الشعار رابطًا إلى الصفحة الرئيسية (`href`، الافتراضي `/`): صورة من `src` أو محتواك في `children`. استعمله في `logo` الخاص بـ Header ومرة أخرى داخل `HeaderDrawerHeader`.",
+      "inherits": {
+        "name": "Menu",
+        "url": "https://base-ui.com/react/components/menu"
+      },
+      "props": [
+        {
+          "name": "children",
+          "type": "string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<AwaitedReactNode>",
+          "default": null,
+          "required": false,
+          "description": "",
+          "descriptionAr": ""
+        },
+        {
+          "name": "src",
+          "type": "string",
+          "default": null,
+          "required": false,
+          "description": "An image for the logo. For an SVG or your own markup use `children` instead.",
+          "descriptionAr": "صورة الشعار. للأيقونة SVG أو لمحتواك استعمل `children`."
+        },
+        {
+          "name": "alt",
+          "type": "string",
+          "default": "\"\"",
+          "required": false,
+          "description": "What the image shows, such as the name of the site. It is the link's name, so always set it with `src`.",
+          "descriptionAr": "ما تعرضه الصورة، مثل اسم الموقع. هو اسم الرابط، فاضبطه دائمًا مع `src`."
         }
       ]
     }

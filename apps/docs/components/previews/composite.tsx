@@ -36,7 +36,14 @@ import {
   type FiltrationGroup,
   type FiltrationValue,
 } from "@/registry/bases/base/ui/filtration";
-import { Header, HeaderAction, type HeaderNavItem } from "@/registry/bases/base/ui/header";
+import {
+  Header,
+  HeaderAction,
+  HeaderDrawerFooter,
+  HeaderDrawerHeader,
+  HeaderLogo,
+  type HeaderNavItem,
+} from "@/registry/bases/base/ui/header";
 import { Input } from "@/registry/bases/base/ui/input";
 import { Switch } from "@/registry/bases/base/ui/switch";
 import { useBi, useLanguage } from "./bi";
@@ -387,26 +394,35 @@ export function HeaderDrawerOpen() {
   );
 }
 
-/** The Nav Drawer with the logo at the top and your own content at the bottom. */
+/** The Nav Drawer with a logo at the top and your own content at the bottom. */
 export function HeaderDrawerSlots() {
   const slots = useHeaderSlots();
   const items = useHeaderItems();
   const t = useBi();
+  const mark = (
+    <>
+      <span aria-hidden className="size-8 rounded-sm bg-background-primary" />
+      <span className="max-sm:sr-only">{t("Digital Services", "الخدمات الرقمية")}</span>
+    </>
+  );
   return (
     <div className="-m-4 min-h-96">
       <Header
         {...slots.labels}
-        logo={slots.logo}
+        logo={<HeaderLogo href="#top">{mark}</HeaderLogo>}
         items={items}
         actions={slots.actions}
-        drawerLogo
-        drawerFooter={
+        defaultMenuOpen
+      >
+        <HeaderDrawerHeader>
+          <HeaderLogo href="#top">{mark}</HeaderLogo>
+        </HeaderDrawerHeader>
+        <HeaderDrawerFooter>
           <p className="m-0 text-xs text-text-primary-paragraph">
             {t("Need help? Call 920000000.", "تحتاج مساعدة؟ اتصل على ٩٢٠٠٠٠٠٠٠.")}
           </p>
-        }
-        defaultMenuOpen
-      />
+        </HeaderDrawerFooter>
+      </Header>
     </div>
   );
 }

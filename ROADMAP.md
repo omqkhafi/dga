@@ -168,9 +168,9 @@ Rules for both parts:
 
 - [x] Header, Second Nav, Footer, Accordion, Digital Stamp, Rating, Slider, Breadcrumb, Tabs, Date Picker, Filtration and Textarea fixed against the findings; Chart is a DGA component. The separate RTL section is gone from every component page. What was checked, and which values are unverified, is in [docs/conformance/0.7.3.md](docs/conformance/0.7.3.md).
 
-## Patches 0.7.4 to 0.7.6: Header and Second Nav (done)
+## Patches 0.7.4 to 0.7.7: Header and Second Nav (done)
 
-- [x] 0.7.4: Header Menu Item bar, states and phone layout checked against the Figma frames. 0.7.5: Second Nav without the divider, smaller centred items, and an optional links menu at the start or in the centre. 0.7.6: the Header sub-menu item tag, label states and a full-width sub-menu (`submenuWidth`); see [CHANGELOG.md](CHANGELOG.md).
+- [x] 0.7.4: Header Menu Item bar, states and phone layout checked against the Figma frames. 0.7.5: Second Nav without the divider, smaller centred items, and an optional links menu at the start or in the centre. 0.7.6: the Header sub-menu item tag, label states and a full-width sub-menu (`submenuWidth`). 0.7.7: the Nav Drawer Item states, badge and divider, and a Nav Drawer header and footer you fill (`HeaderDrawerHeader`, `HeaderDrawerFooter`) and a ready-made `HeaderLogo`; see [CHANGELOG.md](CHANGELOG.md).
 
 ## Section blocks (0.8.0 to 0.13.0)
 

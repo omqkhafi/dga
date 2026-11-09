@@ -5,15 +5,23 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
 
 ## [Unreleased]
 
+## [0.7.7] - 2026-11-09
+
+Patch: the Header Nav Drawer Item follows the Figma and DGA site states, and the Nav Drawer takes your own header and footer parts.
+
 ### Added
 
-- **Header, Nav Drawer header and footer:** `drawerLogo` shows the `logo` at the top of the Nav Drawer instead of the title, `drawerHeader` replaces the top with any content, and `drawerFooter` puts any content at the bottom edge. The drawer keeps `drawerTitle` as its hidden accessible name. New example "Nav Drawer header and footer".
+- **Header, Nav Drawer header and footer:** `HeaderDrawerHeader` and `HeaderDrawerFooter`, parts you put inside the Header, take any content for the top (in place of the visible title) and the bottom edge of the Nav Drawer. `HeaderLogo` is a ready-made logo link (`src` and `alt`, or your own `children`) for the bar's `logo` and the drawer header. The drawer keeps `drawerTitle` as its hidden accessible name. New example "Nav Drawer header and footer".
 - **Header, Nav Drawer Item:** a link or sub-link takes `badge` (for example "+99"), shown at the end of the item in the Nav Drawer (the DGA Nav Drawer Item badge); a nav item takes `divider`, which draws a line above it in the Nav Drawer (the DGA Divider item). Neither shows in the bar. The Header now installs the Badge with it.
 
 ### Changed
 
 - **Header, Nav Drawer Item:** the item follows the Figma Nav Drawer Item states. Hovered, pressed and selected show a 6px by 24px rounded bar at the start edge (mirrored in RTL): `icon-default-500` hovered, `icon-default` pressed and `icon-primary` selected; focused shows only the 2px outline. The selected item has a brand icon as well as the brand label, and keeps its fill when hovered or pressed. A selected, disabled item drops the fill and shows a muted bar. Disabled icons and chevrons are greyed.
 - **Header, Nav Drawer Item:** a 16px icon (was 20px); the divider is inset 16px on each side; Level 2 labels and sub-headings now line up with the Level 1 label (40px from the start edge instead of 32px).
+
+### Tests
+
+- The composite browser group checks the Nav Drawer Item: 36px high, the Level 1 and Level 2 labels on the same line, the divider inset 16px, the 6px by 24px state bar, the badge, and the Drawer header and footer (`HeaderDrawerHeader`, `HeaderDrawerFooter`) with the drawer still named, in both directions.
 
 ## [0.7.6] - 2026-11-09
 
