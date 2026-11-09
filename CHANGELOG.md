@@ -5,6 +5,10 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
 
 ## [Unreleased]
 
+## [0.7.8] - 2026-11-09
+
+Patch: an open Header sub-menu trigger for the current page stays readable, and the full-width sub-menu opens from the middle.
+
 ### Fixed
 
 - **Header:** a sub-menu trigger whose page is current and whose panel is open was white text on a light-grey fill. It now keeps the current look (brand block, white label and chevron, flag-gold bar) while open; a trigger that is not current keeps the light-grey open state. The closed, hovered, pressed and focused states are unchanged. The compound rule is on `cn-header-item`, so the link branch stays in sync.
