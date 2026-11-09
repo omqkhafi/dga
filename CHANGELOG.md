@@ -11,8 +11,8 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
 
 ### Changed
 
-- **Header, Nav Drawer Item:** the item follows the Figma Nav Drawer Item states. Hovered, pressed and selected show a 4px rounded bar at the start edge (mirrored in RTL): `icon-default-500` hovered, `icon-default` pressed and `icon-primary` selected; focused shows only the 2px outline. The selected item has a brand icon as well as the brand label, and keeps its fill when hovered or pressed. A selected, disabled item drops the fill and shows a muted bar. Disabled icons and chevrons are greyed.
-- **Header, Nav Drawer Item:** 44px high (the Figma mobile item) instead of 36px, with a 16px icon; Level 2 labels and sub-headings now line up with the Level 1 label (40px from the start edge instead of 32px).
+- **Header, Nav Drawer Item:** the item follows the Figma Nav Drawer Item states. Hovered, pressed and selected show a 6px by 24px rounded bar at the start edge (mirrored in RTL): `icon-default-500` hovered, `icon-default` pressed and `icon-primary` selected; focused shows only the 2px outline. The selected item has a brand icon as well as the brand label, and keeps its fill when hovered or pressed. A selected, disabled item drops the fill and shows a muted bar. Disabled icons and chevrons are greyed.
+- **Header, Nav Drawer Item:** a 16px icon (was 20px); the divider is inset 16px on each side; Level 2 labels and sub-headings now line up with the Level 1 label (40px from the start edge instead of 32px).
 
 ## [0.7.6] - 2026-11-09
 
