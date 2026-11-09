@@ -335,6 +335,12 @@ type HeaderProps = Omit<React.ComponentProps<"header">, "children"> & {
   logo?: React.ReactNode;
   /** The main navigation. */
   items?: HeaderNavItem[];
+  /**
+   * Where the navigation sits in the bar from `lg`: `start` (next to the logo, default) or
+   * `center` (in the middle of the bar, with the logo at the start and the actions at the end).
+   * Below `lg` the navigation is in the Drawer either way.
+   */
+  navPosition?: "start" | "center";
   /** Actions at the end of the bar. */
   actions?: HeaderActionItem[];
   /** A search field or a button that opens search. Shown in the bar from `lg`, and at the top of the drawer below it. */
@@ -386,6 +392,7 @@ function Header({
   className,
   logo,
   items = [],
+  navPosition = "start",
   actions = [],
   search,
   language,
@@ -438,7 +445,11 @@ function Header({
       </a>
       {stamp}
       {top}
-      <div className="cn-header-bar" data-full={fullWidth ? "" : undefined}>
+      <div
+        className="cn-header-bar"
+        data-full={fullWidth ? "" : undefined}
+        data-nav={navPosition === "center" ? "center" : undefined}
+      >
         <Drawer open={open} onOpenChange={setOpen} side="start">
           <DrawerTrigger
             data-slot="header-menu-button"

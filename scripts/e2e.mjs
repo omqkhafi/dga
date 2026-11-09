@@ -1818,6 +1818,59 @@ async function compositeChecks() {
       `${lang}: disabled items are not reachable with Tab`,
     );
 
+    // navPosition="center": the logo at the start, the navigation in the middle of the bar, the
+    // actions at the end, in both directions.
+    await open("header-nav-center", 1280);
+    const centre = await page.evaluate(() => {
+      const box = (s) => document.querySelector(`[data-slot=${s}]`).getBoundingClientRect();
+      const bar = document
+        .querySelector("[data-slot=header-logo]")
+        .parentElement.getBoundingClientRect();
+      const [logo, nav, end] = [box("header-logo"), box("header-nav"), box("header-end")];
+      const navItems = [
+        ...document.querySelectorAll("[data-slot=header-nav] [data-slot=header-item]"),
+      ];
+      const left = Math.min(...navItems.map((el) => el.getBoundingClientRect().left));
+      const right = Math.max(...navItems.map((el) => el.getBoundingClientRect().right));
+      return {
+        off: Math.round(Math.abs((left + right) / 2 - (bar.left + bar.width / 2))),
+        logo: logo.x,
+        nav: nav.x,
+        end: end.x,
+        oneRow: Math.abs(logo.y - end.y) < 40 && Math.abs(nav.y - logo.y) < 40,
+      };
+    });
+    check(
+      centre.off <= 2,
+      `${lang}: the navigation is in the centre of the bar (off by ${centre.off}px)`,
+    );
+    check(
+      centre.oneRow &&
+        (rtl
+          ? centre.logo > centre.nav && centre.nav > centre.end
+          : centre.logo < centre.nav && centre.nav < centre.end),
+      `${lang}: the logo, the navigation and the actions run along the bar (${JSON.stringify(centre)})`,
+    );
+    await open("header-basic", 1280);
+    const atStart = await page.evaluate(() => {
+      const logo = document.querySelector("[data-slot=header-logo]").getBoundingClientRect();
+      const boxes = [
+        ...document.querySelectorAll("[data-slot=header-nav] [data-slot=header-item]"),
+      ].map((el) => el.getBoundingClientRect());
+      const gap = Math.min(
+        ...boxes.flatMap((box) => [
+          Math.abs(box.left - logo.right),
+          Math.abs(logo.left - box.right),
+        ]),
+      );
+      return { gap: Math.round(gap) };
+    });
+    check(
+      atStart.gap < 120,
+      `${lang}: by default the navigation sits next to the logo (${atStart.gap}px)`,
+    );
+    await open("header-menu-items", 1280);
+
     // The selected bar follows DGA: 6px high, inset 8px from each side, fully rounded.
     const bar = await page.evaluate(() => {
       const el = document.querySelector(
@@ -1970,38 +2023,6 @@ async function compositeChecks() {
     check(
       strip.gapStart < 40 && strip.gapEnd < 40,
       `${lang}: the two parts sit at the two ends (${JSON.stringify(strip)})`,
-    );
-    await open("second-nav-links-center", 1280);
-    const centred = await page.evaluate(() => {
-      const nav = document.querySelector("[data-slot=second-nav]");
-      const inner = nav.firstElementChild.getBoundingClientRect();
-      const links = nav.querySelector("[data-slot=second-nav-links]").getBoundingClientRect();
-      const tops = [...nav.querySelectorAll("[data-slot=second-nav-item]")].map((el) =>
-        Math.round(el.getBoundingClientRect().top),
-      );
-      return {
-        off: Math.round(Math.abs(links.left + links.width / 2 - (inner.left + inner.width / 2))),
-        oneRow: Math.max(...tops) - Math.min(...tops) <= 1,
-        count: tops.length,
-      };
-    });
-    check(centred.off <= 2, `${lang}: the links menu is in the centre (off by ${centred.off}px)`);
-    check(
-      centred.oneRow && centred.count >= 8,
-      `${lang}: the items, the links and the actions share one row (${centred.count} entries)`,
-    );
-    await open("second-nav-links-start", 1280);
-    const atStart = await page.evaluate(() => {
-      const nav = document.querySelector("[data-slot=second-nav]");
-      const inner = nav.firstElementChild.getBoundingClientRect();
-      const links = nav.querySelector("[data-slot=second-nav-links]").getBoundingClientRect();
-      return {
-        fromStart: Math.round(Math.min(links.left - inner.left, inner.right - links.right)),
-      };
-    });
-    check(
-      atStart.fromStart < 40,
-      `${lang}: the links menu is at the start (${atStart.fromStart}px)`,
     );
 
     // ---------------------------------------------------------------- Footer

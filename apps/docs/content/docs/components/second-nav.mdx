@@ -1,6 +1,6 @@
 ---
 title: Second Nav
-description: "The secondary strip above the header (DGA: Second Nav Header): the weather, date, time and location, then icon or text actions, with an optional links menu. Gray or primary (green), scrolls sideways on narrow screens."
+description: "The secondary strip above the header (DGA: Second Nav Header): the weather, date, time and location, then icon or text actions. Gray or primary (green), scrolls sideways on narrow screens."
 ---
 
 <Preview name="second-nav-gray" title="Second Nav" minHeight={40} />
@@ -34,15 +34,14 @@ export function PageInfo() {
 }
 ```
 
-Use it for context that belongs to the whole site: the weather, the date, the time and the location, and tools such as zoom. Put it in the `top` slot of a [Header](/docs/components/header). Each entry has a `kind` (`weather`, `date`, `time` or `location`) that brings its icon, or an `icon` of your own; `iconOnly` shows just the icon and keeps the `label` as its accessible name. The strip has two parts, the items at the start edge and the actions at the end, spread apart with no divider between them; it scrolls from the start edge. An optional `links` menu can sit at the start or in the centre (`linksPosition`).
+Use it for context that belongs to the whole site: the weather, the date, the time and the location, and tools such as zoom. Put it in the `top` slot of a [Header](/docs/components/header). Each entry has a `kind` (`weather`, `date`, `time` or `location`) that brings its icon, or an `icon` of your own; `iconOnly` shows just the icon and keeps the `label` as its accessible name. The strip has two parts, the items at the start edge and the actions at the end, spread apart with no divider between them; it scrolls from the start edge.
 
 ## Anatomy
 
 - **Strip**: 40px high, padded 32px, centred and 1280px wide unless `fullWidth`. **Gray** is neutral-100 with a line under it, **primary** is the brand fill with on-colour text.
 - **Item** (`items`, part `SecondNavItem`, DGA: sub-header-Item): an optional icon and text sm Regular, 4px apart, 24px high, centred on the strip. It has a default state and an on-colour state (on the primary strip, or with `tone="on-color"` when used alone). An entry is plain text, a link when it has `href`, or a button when it has `onClick`.
 - **Actions** (`actions`): the same item at the end of the strip, icon and text or icon only. The items and the actions are the two parts of the strip; there is no divider between them.
-- **Links menu** (`links`, optional, not DGA): a row of links, at the start (`linksPosition="start"`, before the items) or in the centre of the strip (`"center"`).
-- **Current entry** (`current`): bold, underlined, `aria-current="page"`. Used by the links menu.
+- **Current entry** (`current`): bold, underlined, `aria-current="page"`. Used by the optional links row.
 
 ## Examples
 
@@ -68,17 +67,11 @@ The four ready-made items. Date and time formats follow Figma: day, month name a
 
 <Preview compact name="second-nav-item-on-color" title="Item, on colour" minHeight={40} />
 
-### Optional: links menu at the start
+### Optional: links to sibling pages
 
-This is not a DGA example. The Second Nav can hold a menu of links to the pages of a section, with the current one marked. At the start it comes before the items; the actions stay at the end.
+This is not a DGA example. The Second Nav can also hold a row of links to the pages of a section, with the current one marked.
 
-<Preview compact name="second-nav-links-start" title="Links menu at the start (not DGA)" minHeight={40} />
-
-### Optional: links menu in the centre
-
-With `linksPosition="center"` the menu sits in the middle of the strip, between the items at the start and the actions at the end.
-
-<Preview compact name="second-nav-links-center" title="Links menu in the centre (not DGA)" minHeight={40} />
+<Preview compact name="second-nav-links" title="Optional links row (not DGA)" minHeight={40} />
 
 ### Narrow screens
 
@@ -106,7 +99,7 @@ When the entries do not fit, the strip scrolls sideways. It never wraps, so it s
 
 - Figma draws fixed switches (Show Item 2, 3 and 4, Show Action 2, 3 and 4). Here `items` and `actions` are arrays.
 - Ready-made item `kind`s (weather, date, time, location) and `iconOnly` actions are added, so the icons and the accessible names come with the item.
-- The optional `links` menu (at the start or in the centre) and the link, button and current states are added. DGA draws no links here.
+- Links, buttons and a current state are added for the optional links row. DGA draws no links here.
 - Items are Text sm and 16px icons, smaller than the Text md of the earlier version, and the two parts are spread apart with no vertical divider, as in Figma.
 - The strip scrolls instead of wrapping.
 

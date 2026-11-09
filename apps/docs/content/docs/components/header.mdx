@@ -58,9 +58,16 @@ On Arabic pages the logo sits on the right, the items run from the right and the
 - **Sub-menu**: the DGA [Menu](/docs/components/menu) with one column per section, up to four. `linkStyle` is `text`, `icon` or `boxed-icon`, and `submenuTone` is `default` or `green` (the dark green of the DGA flag).
 - **Actions** (`actions`, [`HeaderAction`](#api-reference)): Inline (icon beside the label), Top (`iconPosition="top"`, icon above the label), Text only (no icon) or Icon only (`iconOnly`), with the same five states and selected block and bar as a menu item.
 - **Phone layout**: below `lg` the bar is the overflow (…) button on the start side, which opens the actions, the logo centred and the menu button on the end side. The menu button opens the navigation in the Nav Drawer: the DGA [Drawer](/docs/components/drawer), where parents expand in place and Level 2 links are indented.
+- **Navigation position** (`navPosition`): `start` (default, next to the logo) or `center` (in the middle of the bar from `lg`).
 - **Optional slots**: `search`, `language` and `user`. They are not part of DGA's anatomy and appear only in the extras example.
 
 ## Examples
+
+### Navigation in the centre
+
+By default the navigation sits at the start, next to the logo. With `navPosition="center"` it sits in the middle of the bar, with the logo at the start and the actions at the end. Below `lg` the navigation is in the Drawer either way. The centre position is an option, not DGA's layout.
+
+<Preview compact name="header-nav-center" title="Navigation in the centre" minHeight={80} />
 
 ### Menu item
 
@@ -138,6 +145,7 @@ Search, a notifications bell, help, a language button and a sign-in button are n
 - The Drawer takes over below `lg` (1024px), not at 960px.
 - Menu item and Action selected state is a block with a bar, as in DGA; hovered, pressed and the focus ring use the neutral hover and pressed fills and a 2px outline inside the item, not a Figma stroke.
 - Nav Drawer: the white panel only. DGA's Green and Gray panel colours, the item badge, the external-link icon and the divider item are not built.
+- `navPosition="center"` puts the navigation in the middle of the bar. DGA draws it at the start, which stays the default.
 - Actions are not shown in the bar below `lg`; they move into the overflow (…) menu, and `language` and `user` move to the foot of the Nav Drawer.
 
 <ComponentDeviations component="header" />

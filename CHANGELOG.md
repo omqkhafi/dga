@@ -7,17 +7,17 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
 
 ## [0.7.5] - 2026-11-09
 
-Patch: Second Nav follows the Figma strip more closely, and gets an optional links menu.
+Patch: Second Nav follows the Figma strip more closely, and the Header navigation can be centred.
 
 ### Added
 
-- **Second Nav:** an optional `links` menu (not part of DGA) with `linksPosition`: `"start"` (before the items, the default) or `"center"` (in the middle of the strip, between the items and the actions). Entries use the same item, with `href` and `current`.
+- **Header:** `navPosition`: `"start"` (the default, next to the logo, as in DGA) or `"center"`, which puts the navigation in the middle of the bar from `lg` with the logo at the start and the actions at the end. Below `lg` the navigation is in the Drawer either way. Logged in Deviations; new example "Navigation in the centre".
 
 ### Changed
 
 - **Second Nav:** the vertical "|" divider between the items and the actions is gone (Figma has none; its "divider" is the line under the Gray strip, which the Gray strip now has). The strip is two parts, the items at the start and the actions at the end, spread apart.
 - **Second Nav:** items are smaller and centred: Text sm (14px) instead of Text md, with 16px icons, 24px high and centred on the 40px strip in every language (an Arabic line-height no longer pushes them off-centre).
-- **Docs:** the Second Nav previews no longer leave empty space under the strip, and the optional links example is now two examples, at the start and in the centre.
+- **Docs:** the Second Nav previews no longer leave empty space under the strip.
 
 ### Removed
 
@@ -25,7 +25,7 @@ Patch: Second Nav follows the Figma strip more closely, and gets an optional lin
 
 ### Tests
 
-- The composite browser group checks that the strip has no divider, 14px text, items centred on the strip, the two parts at the two ends, and the links menu at the start or in the centre on one row, in both directions.
+- The composite browser group checks that the Second Nav has no divider, 14px text, items centred on the strip and the two parts at the two ends, and that the Header navigation is in the centre with `navPosition="center"` and next to the logo by default, in both directions.
 
 ## [0.7.4] - 2026-11-08
 

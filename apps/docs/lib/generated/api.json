@@ -3980,6 +3980,14 @@
           "descriptionAr": "قائمة التنقل الرئيسية."
         },
         {
+          "name": "navPosition",
+          "type": "\"start\" | \"center\"",
+          "default": "\"start\"",
+          "required": false,
+          "description": "Where the navigation sits in the bar from `lg`: `start` (next to the logo, default) or `center` (in the middle of the bar, with the logo at the start and the actions at the end). Below `lg` the navigation is in the Drawer either way.",
+          "descriptionAr": "موضع التنقل في الشريط من `lg`: `start` (بجانب الشعار، الافتراضي) أو `center` (في منتصف الشريط، والشعار في البداية والإجراءات في النهاية). تحت `lg` يكون التنقل في الدرج في الحالتين."
+        },
+        {
           "name": "search",
           "type": "string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<AwaitedReactNode>",
           "default": null,
@@ -6764,7 +6772,7 @@
   "second-nav": [
     {
       "name": "SecondNav",
-      "description": "The secondary strip above the header (DGA: Second Nav Header): contextual items such as the weather, date, time and location at the start and actions (icon-only or icon and text) at the end, spread apart, 40px high, gray or primary. An optional `links` menu can sit at the start or in the centre. Entries with an `href` are links, with `onClick` buttons, and the rest plain text. On narrow screens it scrolls sideways instead of wrapping. Name it with `aria-label`.",
+      "description": "The secondary strip above the header (DGA: Second Nav Header): contextual items such as the weather, date, time and location at the start and actions (icon-only or icon and text) at the end, spread apart, 40px high, gray or primary. Entries with an `href` are links, with `onClick` buttons, and the rest plain text. On narrow screens it scrolls sideways instead of wrapping. Name it with `aria-label`.",
       "descriptionAr": "الشريط الثانوي فوق الترويسة (DGA: Second Nav Header): عناصر سياقية هي الطقس والتاريخ والوقت والموقع، ثم الإجراءات بأيقونة فقط أو بأيقونة ونص، بارتفاع 40px، رمادي أو أساسي. الإدخال الذي له `href` رابط، والذي له `onClick` زر، وغيره نص عادي. على الشاشات الضيقة يتمرر أفقيًا بدل الالتفاف. سمِّه بـ `aria-label`.",
       "inherits": null,
       "props": [
@@ -6791,22 +6799,6 @@
           "required": false,
           "description": "Actions at the end: icon-only (`iconOnly`) or icon and text, such as zoom or contrast.",
           "descriptionAr": "إجراءات في النهاية: بأيقونة فقط (`iconOnly`) أو بأيقونة ونص، مثل التكبير أو التباين."
-        },
-        {
-          "name": "links",
-          "type": "SecondNavEntry[]",
-          "default": "[]",
-          "required": false,
-          "description": "An optional menu of links (not part of DGA's Second Nav).",
-          "descriptionAr": "قائمة روابط اختيارية (ليست من DGA) في الشريط، أي إدخالات لها `href` وربما `current`."
-        },
-        {
-          "name": "linksPosition",
-          "type": "\"start\" | \"center\"",
-          "default": "\"start\"",
-          "required": false,
-          "description": "Where the `links` menu sits: `start` (before the items, default) or `center` (in the middle of the strip, between the items and the actions).",
-          "descriptionAr": "موضع قائمة `links`: `start` (قبل العناصر، الافتراضي) أو `center` (في منتصف الشريط بين العناصر والإجراءات)."
         },
         {
           "name": "fullWidth",

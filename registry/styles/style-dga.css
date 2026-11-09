@@ -2183,7 +2183,7 @@
     @apply focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-offset-2 focus-visible:outline-border-black;
   }
   .cn-header-bar {
-    @apply mx-auto grid h-18 w-full max-w-[1280px] grid-cols-[1fr_auto_1fr] items-center gap-4 px-4 data-full:max-w-none lg:flex lg:px-8;
+    @apply mx-auto grid h-18 w-full max-w-[1280px] grid-cols-[1fr_auto_1fr] items-center gap-4 px-4 data-full:max-w-none lg:flex lg:px-8 data-[nav=center]:lg:grid data-[nav=center]:lg:grid-cols-[1fr_auto_1fr];
   }
   .cn-header-logo {
     @apply col-start-2 row-start-1 flex shrink-0 items-center justify-self-center lg:col-auto lg:row-auto;
@@ -2198,7 +2198,7 @@
     @apply flex-row flex-nowrap items-center gap-1;
   }
   .cn-header-end {
-    @apply ms-auto flex shrink-0 items-center gap-2 max-lg:hidden;
+    @apply ms-auto flex shrink-0 items-center justify-self-end gap-2 max-lg:hidden;
   }
   .cn-header-search {
     @apply hidden w-48 shrink-0 lg:block xl:w-56;
@@ -2310,8 +2310,7 @@
    * Second Nav (Second Nav Header). 40px high strip, padded 32px, Text sm Regular. Gray is
    * background-neutral-100 with a line under it, Primary is the brand fill with on-colour text.
    * Items and actions are icon plus text with a 4px gap, in two groups spread to the two ends (no
-   * divider). An optional links menu sits at the start or in the centre. On narrow screens the
-   * strip scrolls sideways.
+   * divider). On narrow screens the strip scrolls sideways.
    * ---------------------------------------------------------------------------------- */
   .cn-second-nav {
     @apply w-full text-sm;
@@ -2324,19 +2323,12 @@
   }
   .cn-second-nav-inner {
     @apply relative mx-auto flex h-10 w-full max-w-[1280px] items-center gap-6 overflow-x-auto overflow-y-hidden px-4 whitespace-nowrap lg:px-8 data-full:max-w-none [scrollbar-width:none];
-    @apply data-[links=center]:grid data-[links=center]:grid-cols-[minmax(max-content,1fr)_auto_minmax(max-content,1fr)] data-[links=center]:gap-x-6;
   }
   .cn-second-nav-group {
     @apply m-0 flex list-none items-center gap-4 p-0;
   }
-  .cn-second-nav-links {
-    @apply in-data-[links=center]:col-start-2 in-data-[links=center]:row-start-1 in-data-[links=center]:justify-self-center;
-  }
-  .cn-second-nav-items {
-    @apply in-data-[links=center]:col-start-1 in-data-[links=center]:row-start-1;
-  }
   .cn-second-nav-actions {
-    @apply ms-auto in-data-[links=center]:col-start-3 in-data-[links=center]:row-start-1 in-data-[links=center]:justify-self-end;
+    @apply ms-auto;
   }
   .cn-second-nav-item {
     @apply inline-flex h-6 shrink-0 items-center gap-1 rounded-xs border-0 bg-transparent p-0 text-sm leading-none font-normal text-inherit no-underline;
