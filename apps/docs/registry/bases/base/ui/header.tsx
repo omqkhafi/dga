@@ -241,7 +241,7 @@ function SubmenuPanel({
           data-slot="menu-content"
           data-tone={tone}
           data-width="full"
-          className="max-h-(--available-height) min-w-52 origin-(--transform-origin) overflow-y-auto rounded-md border border-border-neutral-primary bg-background-menu p-1 text-text-default shadow-2xl outline-hidden transition-[opacity,scale] duration-100 data-ending-style:scale-95 data-ending-style:opacity-0 data-starting-style:scale-95 data-starting-style:opacity-0 motion-reduce:transition-none w-(--anchor-width) max-w-none rounded-none border-x-0 p-0 shadow-lg data-[tone=green]:border-0 data-[tone=green]:bg-background-sa-flag data-[tone=green]:text-text-oncolor-primary"
+          className="max-h-(--available-height) min-w-52 origin-(--transform-origin) overflow-y-auto rounded-md border border-border-neutral-primary bg-background-menu p-1 text-text-default shadow-2xl outline-hidden transition-[opacity,scale] duration-100 data-ending-style:scale-95 data-ending-style:opacity-0 data-starting-style:scale-95 data-starting-style:opacity-0 motion-reduce:transition-none w-(--anchor-width) max-w-none origin-top rounded-none border-x-0 p-0 shadow-lg data-[tone=green]:border-0 data-[tone=green]:bg-background-sa-flag data-[tone=green]:text-text-oncolor-primary"
         >
           <div className="mx-auto w-full max-w-[1280px] px-8 py-6 data-full:max-w-none" data-full={fullWidth ? "" : undefined}>
             {children}

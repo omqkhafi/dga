@@ -1824,6 +1824,9 @@ async function compositeChecks() {
           headerWidth: Math.round(h.width),
           gap: Math.round(p.top - b.bottom),
           gridInBar: g.left >= b.left && g.right <= b.right,
+          // The panel opens from its horizontal middle (the content sub-menu opens from the start).
+          originX: Number.parseFloat(getComputedStyle(panel).transformOrigin),
+          originMiddle: p.width / 2,
         };
       });
       check(full !== null, `${lang}: ${name} opens a full-width panel`);
@@ -1836,6 +1839,10 @@ async function compositeChecks() {
         `${lang}: ${name} sits directly under the bar (${full?.gap}px)`,
       );
       check(full?.gridInBar === true, `${lang}: ${name} columns line up with the bar`);
+      check(
+        full !== null && Math.abs(full.originX - full.originMiddle) <= 1,
+        `${lang}: ${name} opens from the middle (origin ${full?.originX} of ${full?.originMiddle})`,
+      );
     }
 
     // A selected item that is disabled drops the brand block, so its label must not stay white.

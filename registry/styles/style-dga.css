@@ -2259,7 +2259,7 @@
     @apply data-[tone=green]:bg-background-sa-flag data-[tone=green]:text-text-oncolor-primary;
   }
   .cn-header-submenu-full {
-    @apply w-(--anchor-width) max-w-none rounded-none border-x-0 p-0 shadow-lg;
+    @apply w-(--anchor-width) max-w-none origin-top rounded-none border-x-0 p-0 shadow-lg;
     @apply data-[tone=green]:border-0 data-[tone=green]:bg-background-sa-flag data-[tone=green]:text-text-oncolor-primary;
   }
   .cn-header-submenu-inner {
