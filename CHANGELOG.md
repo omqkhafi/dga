@@ -5,6 +5,10 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
 
 ## [Unreleased]
 
+## [0.7.6] - 2026-11-09
+
+Patch: the Header sub-menu gets the With Tag item, label states and a full-width panel.
+
 ### Added
 
 - **Header:** `submenuWidth` (`"content"`, the default, or `"full"`). `"full"` makes the sub-menu a panel as wide as the header, directly under the bar, with its columns lined up with the bar's content (the 1280px width, or the whole bar with `fullWidth`). A nav item can override it with its own `submenuWidth`. New examples "Full-width sub-menu" (white and dark green).
