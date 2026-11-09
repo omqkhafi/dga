@@ -5,6 +5,15 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
 
 ## [Unreleased]
 
+### Added
+
+- **Header, Nav Drawer Item:** a link or sub-link takes `badge` (for example "+99"), shown at the end of the item in the Nav Drawer (the DGA Nav Drawer Item badge); a nav item takes `divider`, which draws a line above it in the Nav Drawer (the DGA Divider item). Neither shows in the bar. The Header now installs the Badge with it.
+
+### Changed
+
+- **Header, Nav Drawer Item:** the item follows the Figma Nav Drawer Item states. Hovered, pressed and selected show a 4px rounded bar at the start edge (mirrored in RTL): `icon-default-500` hovered, `icon-default` pressed and `icon-primary` selected; focused shows only the 2px outline. The selected item has a brand icon as well as the brand label, and keeps its fill when hovered or pressed. A selected, disabled item drops the fill and shows a muted bar. Disabled icons and chevrons are greyed.
+- **Header, Nav Drawer Item:** 44px high (the Figma mobile item) instead of 36px, with a 16px icon; Level 2 labels and sub-headings now line up with the Level 1 label (40px from the start edge instead of 32px).
+
 ## [0.7.6] - 2026-11-09
 
 Patch: the Header sub-menu gets the With Tag item, label states and a full-width panel.

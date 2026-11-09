@@ -154,6 +154,24 @@ export function compositePairs(): ComponentPair[] {
     4.5,
     "background-menu",
   );
+  add(
+    "header",
+    "drawer item, current, icon",
+    "icon-primary",
+    "button-background-neutral-selected",
+    3,
+    "background-menu",
+  );
+  add(
+    "header",
+    "drawer item, current, bar",
+    "icon-primary",
+    "button-background-neutral-selected",
+    3,
+    "background-menu",
+  );
+  add("header", "drawer item, hovered, bar", "icon-default-500", hover, 3, "background-menu");
+  add("header", "drawer item, pressed, bar", "icon-default", press, 3, "background-menu");
   add("header", "drawer sub-heading", "text-primary-paragraph", "background-menu", 4.5);
   add("header", "drawer menu button icon", "icon-default", "background-menu", 3);
   add("header", "drawer item, focus ring", "border-black", "background-menu", 3);

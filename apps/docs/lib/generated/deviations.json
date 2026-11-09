@@ -4167,8 +4167,8 @@
     "area": "Components",
     "item": "Nav Drawer: panel colours, badge, external link and divider",
     "original": "Nav Drawer has Green, White and Gray backgrounds, an item Badge, an External Link icon, a Divider item type, on-colour item states and an optional scroll bar, border and overlay.",
-    "ours": "The Header's Drawer is the white panel (the Drawer component has white and gray tones). Item states, Level 1 and 2, Parent and Link with an expanded chevron, selected and disabled are built. Badge, external-link icon, divider items and the green on-colour panel are not.",
-    "reason": "The Header composes the shared Drawer instead of a second panel component. The missing parts are not needed to navigate and can be added to the Drawer later.",
+    "ours": "The Header's Drawer is the white panel (the Drawer component has white and gray tones). Item states (hovered, pressed and selected with the 4px bar at the start edge, focused with the outline, disabled), Level 1 and 2, Parent and Link with an expanded chevron, the item badge (`badge`) and the divider item (`divider`, a line above a Level 1 item) are built. The external-link icon and the green on-colour panel are not.",
+    "reason": "The Header composes the shared Drawer instead of a second panel component. The missing parts are not needed to navigate and can be added to the Drawer later. The item is 44px high, the Figma mobile item (the web item is 36px), because the Drawer is the phone navigation and 44px is a comfortable touch target. The bar colours are the Header's: hovered icon-default-500 and pressed icon-default (DGA's neutral bars fail 3:1), selected icon-primary (background-primary is 2.23:1 on the selected fill in dark mode).",
     "status": "fixed",
     "component": "header"
   },

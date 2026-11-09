@@ -4,6 +4,7 @@ import { Menu as MenuPrimitive } from "@base-ui/react/menu";
 import { ArrowDown01Icon, Menu01Icon, MoreHorizontalIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import * as React from "react";
+import { Badge } from "@/components/dga/badge";
 import {
   Drawer,
   DrawerContent,
@@ -29,6 +30,8 @@ type HeaderSubLink = {
   icon?: IconSvg;
   /** A short label after the link text, such as "New" (the DGA Header Sub-menu Item With Tag). */
   tag?: string;
+  /** A count or short label at the end of the item in the Nav Drawer, such as "+99" (the DGA Nav Drawer Item badge). Not shown in the sub-menu. */
+  badge?: string;
   /** Marks the page the person is on: `aria-current="page"`. */
   current?: boolean;
   disabled?: boolean;
@@ -47,6 +50,10 @@ type HeaderNavItem = {
   /** Makes the item a link. Leave it out when the item has `sections`. */
   href?: string;
   icon?: IconSvg;
+  /** A count or short label at the end of a link in the Nav Drawer, such as "+99" (the DGA Nav Drawer Item badge). Not shown in the bar. */
+  badge?: string;
+  /** Draws a line above this item in the Nav Drawer (the DGA Nav Drawer Divider item). Not shown in the bar. */
+  divider?: boolean;
   /** The page the person is on (`aria-current="page"`). A parent is marked when a child is current. */
   current?: boolean;
   disabled?: boolean;
@@ -344,82 +351,105 @@ function DesktopItem({
   );
 }
 
+function DrawerBadge({ children }: { children: React.ReactNode }) {
+  return (
+    <Badge size="sm" rounded className="cn-header-drawer-badge">
+      {children}
+    </Badge>
+  );
+}
+
+/**
+ * One item of the Nav Drawer (DGA: Nav Drawer Item): a Level 1 link, a Level 1 parent that expands
+ * its Level 2 links, or a Level 2 link. Each has default, hovered, pressed, focused, selected and
+ * disabled states; hovered, pressed and selected show the bar at the start edge. A link can end
+ * with a badge, and `divider` draws a line above a Level 1 item.
+ */
 function DrawerItem({ item, onNavigate }: { item: HeaderNavItem; onNavigate: () => void }) {
   const [expanded, setExpanded] = React.useState(isCurrent(item));
   const id = React.useId();
   const icon = item.icon ? (
     <HugeiconsIcon icon={item.icon} aria-hidden className="cn-header-icon" />
   ) : null;
+  const divider = item.divider ? <li aria-hidden className="cn-header-drawer-divider" /> : null;
   if (!item.sections?.length) {
     return (
-      <li>
-        <a
-          data-slot="header-drawer-item"
-          data-level="1"
-          data-current={item.current ? "" : undefined}
-          data-disabled={item.disabled ? "" : undefined}
-          className="cn-header-drawer-item"
-          href={item.disabled ? undefined : item.href}
-          aria-current={item.current ? "page" : undefined}
-          aria-disabled={item.disabled ? true : undefined}
-          onClick={onNavigate}
-        >
-          {icon}
-          {item.label}
-        </a>
-      </li>
+      <>
+        {divider}
+        <li>
+          <a
+            data-slot="header-drawer-item"
+            data-level="1"
+            data-current={item.current ? "" : undefined}
+            data-disabled={item.disabled ? "" : undefined}
+            className="cn-header-drawer-item"
+            href={item.disabled ? undefined : item.href}
+            aria-current={item.current ? "page" : undefined}
+            aria-disabled={item.disabled ? true : undefined}
+            onClick={onNavigate}
+          >
+            {icon}
+            <span className="cn-header-drawer-label">{item.label}</span>
+            {item.badge ? <DrawerBadge>{item.badge}</DrawerBadge> : null}
+          </a>
+        </li>
+      </>
     );
   }
   return (
-    <li>
-      <button
-        type="button"
-        data-slot="header-drawer-item"
-        data-level="1"
-        data-current={isCurrent(item) ? "" : undefined}
-        className="cn-header-drawer-item"
-        aria-expanded={expanded}
-        aria-controls={id}
-        disabled={item.disabled}
-        onClick={() => setExpanded((value) => !value)}
-      >
-        {icon}
-        {item.label}
-        <HugeiconsIcon icon={ArrowDown01Icon} aria-hidden className="cn-header-drawer-chevron" />
-      </button>
-      <div id={id} hidden={!expanded} className="cn-header-drawer-sub">
-        {item.sections.map((section) => (
-          <ul
-            key={section.title ?? section.links.map((l) => l.href).join()}
-            className="cn-header-list"
-          >
-            {section.title ? <li className="cn-header-drawer-heading">{section.title}</li> : null}
-            {section.links.map((link) => (
-              <li key={link.href}>
-                <a
-                  data-slot="header-drawer-item"
-                  data-level="2"
-                  data-current={link.current ? "" : undefined}
-                  data-disabled={link.disabled ? "" : undefined}
-                  className="cn-header-drawer-item"
-                  href={link.disabled ? undefined : link.href}
-                  aria-current={link.current ? "page" : undefined}
-                  aria-disabled={link.disabled ? true : undefined}
-                  onClick={onNavigate}
-                >
-                  {link.label}
-                  {link.tag ? (
-                    <Tag size="sm" variant="success">
-                      {link.tag}
-                    </Tag>
-                  ) : null}
-                </a>
-              </li>
-            ))}
-          </ul>
-        ))}
-      </div>
-    </li>
+    <>
+      {divider}
+      <li>
+        <button
+          type="button"
+          data-slot="header-drawer-item"
+          data-level="1"
+          data-current={isCurrent(item) ? "" : undefined}
+          className="cn-header-drawer-item"
+          aria-expanded={expanded}
+          aria-controls={id}
+          disabled={item.disabled}
+          onClick={() => setExpanded((value) => !value)}
+        >
+          {icon}
+          <span className="cn-header-drawer-label">{item.label}</span>
+          <HugeiconsIcon icon={ArrowDown01Icon} aria-hidden className="cn-header-drawer-chevron" />
+        </button>
+        <div id={id} hidden={!expanded} className="cn-header-drawer-sub">
+          {item.sections.map((section) => (
+            <ul
+              key={section.title ?? section.links.map((l) => l.href).join()}
+              className="cn-header-list"
+            >
+              {section.title ? <li className="cn-header-drawer-heading">{section.title}</li> : null}
+              {section.links.map((link) => (
+                <li key={link.href}>
+                  <a
+                    data-slot="header-drawer-item"
+                    data-level="2"
+                    data-current={link.current ? "" : undefined}
+                    data-disabled={link.disabled ? "" : undefined}
+                    className="cn-header-drawer-item"
+                    href={link.disabled ? undefined : link.href}
+                    aria-current={link.current ? "page" : undefined}
+                    aria-disabled={link.disabled ? true : undefined}
+                    onClick={onNavigate}
+                  >
+                    <span className="cn-header-drawer-label">{link.label}</span>
+                    {link.tag ? (
+                      <Tag size="sm" variant="success">
+                        {link.tag}
+                      </Tag>
+                    ) : null}
+                    {link.badge ? <DrawerBadge>{link.badge}</DrawerBadge> : null}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          ))}
+        </div>
+      </li>
+    </>
   );
 }
 

@@ -4,6 +4,7 @@ import { Menu as MenuPrimitive } from "@base-ui/react/menu";
 import { ArrowDown01Icon, Menu01Icon, MoreHorizontalIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import * as React from "react";
+import { Badge } from "@/components/dga/badge";
 import {
   Drawer,
   DrawerContent,
@@ -29,6 +30,8 @@ type HeaderSubLink = {
   icon?: IconSvg;
   /** A short label after the link text, such as "New" (the DGA Header Sub-menu Item With Tag). */
   tag?: string;
+  /** A count or short label at the end of the item in the Nav Drawer, such as "+99" (the DGA Nav Drawer Item badge). Not shown in the sub-menu. */
+  badge?: string;
   /** Marks the page the person is on: `aria-current="page"`. */
   current?: boolean;
   disabled?: boolean;
@@ -47,6 +50,10 @@ type HeaderNavItem = {
   /** Makes the item a link. Leave it out when the item has `sections`. */
   href?: string;
   icon?: IconSvg;
+  /** A count or short label at the end of a link in the Nav Drawer, such as "+99" (the DGA Nav Drawer Item badge). Not shown in the bar. */
+  badge?: string;
+  /** Draws a line above this item in the Nav Drawer (the DGA Nav Drawer Divider item). Not shown in the bar. */
+  divider?: boolean;
   /** The page the person is on (`aria-current="page"`). A parent is marked when a child is current. */
   current?: boolean;
   disabled?: boolean;
@@ -307,12 +314,7 @@ function DesktopItem({
           {item.label}
           <HugeiconsIcon icon={ArrowDown01Icon} aria-hidden className="size-4 shrink-0 text-icon-default transition-transform in-data-popup-open:rotate-180 motion-reduce:transition-none" />
         </MenuTrigger>
-        <SubmenuPanel
-          tone={submenuTone}
-          width={width}
-          anchor={anchor}
-          fullWidth={fullWidth}
-        >
+        <SubmenuPanel tone={submenuTone} width={width} anchor={anchor} fullWidth={fullWidth}>
           <div
             className="grid gap-8 [grid-template-columns:repeat(var(--header-columns,1),minmax(var(--header-column-min,12rem),1fr))]"
             style={
@@ -349,82 +351,105 @@ function DesktopItem({
   );
 }
 
+function DrawerBadge({ children }: { children: React.ReactNode }) {
+  return (
+    <Badge size="sm" rounded className="ms-auto in-aria-disabled:opacity-60">
+      {children}
+    </Badge>
+  );
+}
+
+/**
+ * One item of the Nav Drawer (DGA: Nav Drawer Item): a Level 1 link, a Level 1 parent that expands
+ * its Level 2 links, or a Level 2 link. Each has default, hovered, pressed, focused, selected and
+ * disabled states; hovered, pressed and selected show the bar at the start edge. A link can end
+ * with a badge, and `divider` draws a line above a Level 1 item.
+ */
 function DrawerItem({ item, onNavigate }: { item: HeaderNavItem; onNavigate: () => void }) {
   const [expanded, setExpanded] = React.useState(isCurrent(item));
   const id = React.useId();
   const icon = item.icon ? (
     <HugeiconsIcon icon={item.icon} aria-hidden className="size-5 shrink-0 text-icon-default" />
   ) : null;
+  const divider = item.divider ? <li aria-hidden className="my-2 h-px list-none bg-border-neutral-secondary" /> : null;
   if (!item.sections?.length) {
     return (
-      <li>
-        <a
-          data-slot="header-drawer-item"
-          data-level="1"
-          data-current={item.current ? "" : undefined}
-          data-disabled={item.disabled ? "" : undefined}
-          className="flex min-h-9 w-full cursor-pointer items-center gap-2 rounded-sm border-0 bg-transparent px-4 py-2 text-start text-sm font-semibold text-text-default no-underline hover:bg-button-background-neutral-hovered active:bg-button-background-neutral-pressed focus-visible:outline-2 focus-visible:outline-solid focus-visible:-outline-offset-2 focus-visible:outline-border-black data-current:bg-button-background-neutral-selected data-current:text-link-primary-pressed data-[level=2]:ps-8 data-[level=2]:font-normal data-[level=2]:data-current:font-semibold disabled:cursor-not-allowed disabled:text-text-default-disabled aria-disabled:pointer-events-none aria-disabled:text-text-default-disabled"
-          href={item.disabled ? undefined : item.href}
-          aria-current={item.current ? "page" : undefined}
-          aria-disabled={item.disabled ? true : undefined}
-          onClick={onNavigate}
-        >
-          {icon}
-          {item.label}
-        </a>
-      </li>
+      <>
+        {divider}
+        <li>
+          <a
+            data-slot="header-drawer-item"
+            data-level="1"
+            data-current={item.current ? "" : undefined}
+            data-disabled={item.disabled ? "" : undefined}
+            className="relative flex min-h-11 w-full cursor-pointer items-center gap-2 rounded-sm border-0 bg-transparent px-4 py-3 text-start text-sm font-semibold text-text-default no-underline before:pointer-events-none before:absolute before:inset-y-2 before:start-0 before:w-1 before:rounded-full before:bg-transparent before:content-[''] [&_svg]:size-4 hover:bg-button-background-neutral-hovered hover:before:bg-icon-default-500 active:bg-button-background-neutral-pressed active:before:bg-icon-default focus-visible:outline-2 focus-visible:outline-solid focus-visible:-outline-offset-2 focus-visible:outline-border-black focus-visible:before:bg-transparent data-current:bg-button-background-neutral-selected data-current:text-link-primary-pressed data-current:before:bg-icon-primary data-current:[&_svg]:text-icon-primary data-current:hover:bg-button-background-neutral-selected data-current:hover:before:bg-icon-primary data-current:active:bg-button-background-neutral-selected data-current:active:before:bg-icon-primary data-[level=2]:ps-10 data-[level=2]:font-normal data-[level=2]:data-current:font-semibold disabled:pointer-events-none disabled:cursor-not-allowed disabled:bg-transparent disabled:text-text-default-disabled disabled:before:bg-transparent disabled:[&_svg]:text-icon-default-disabled disabled:data-current:bg-transparent disabled:data-current:[&_svg]:text-icon-default-disabled disabled:data-current:before:bg-background-neutral-100 aria-disabled:pointer-events-none aria-disabled:cursor-not-allowed aria-disabled:bg-transparent aria-disabled:text-text-default-disabled aria-disabled:before:bg-transparent aria-disabled:[&_svg]:text-icon-default-disabled aria-disabled:data-current:bg-transparent aria-disabled:data-current:[&_svg]:text-icon-default-disabled aria-disabled:data-current:before:bg-background-neutral-100 transition-colors motion-reduce:transition-none"
+            href={item.disabled ? undefined : item.href}
+            aria-current={item.current ? "page" : undefined}
+            aria-disabled={item.disabled ? true : undefined}
+            onClick={onNavigate}
+          >
+            {icon}
+            <span className="min-w-0 flex-1 text-start">{item.label}</span>
+            {item.badge ? <DrawerBadge>{item.badge}</DrawerBadge> : null}
+          </a>
+        </li>
+      </>
     );
   }
   return (
-    <li>
-      <button
-        type="button"
-        data-slot="header-drawer-item"
-        data-level="1"
-        data-current={isCurrent(item) ? "" : undefined}
-        className="flex min-h-9 w-full cursor-pointer items-center gap-2 rounded-sm border-0 bg-transparent px-4 py-2 text-start text-sm font-semibold text-text-default no-underline hover:bg-button-background-neutral-hovered active:bg-button-background-neutral-pressed focus-visible:outline-2 focus-visible:outline-solid focus-visible:-outline-offset-2 focus-visible:outline-border-black data-current:bg-button-background-neutral-selected data-current:text-link-primary-pressed data-[level=2]:ps-8 data-[level=2]:font-normal data-[level=2]:data-current:font-semibold disabled:cursor-not-allowed disabled:text-text-default-disabled aria-disabled:pointer-events-none aria-disabled:text-text-default-disabled"
-        aria-expanded={expanded}
-        aria-controls={id}
-        disabled={item.disabled}
-        onClick={() => setExpanded((value) => !value)}
-      >
-        {icon}
-        {item.label}
-        <HugeiconsIcon icon={ArrowDown01Icon} aria-hidden className="ms-auto size-4 shrink-0 text-icon-default transition-transform in-aria-expanded:rotate-180 motion-reduce:transition-none" />
-      </button>
-      <div id={id} hidden={!expanded} className="flex flex-col">
-        {item.sections.map((section) => (
-          <ul
-            key={section.title ?? section.links.map((l) => l.href).join()}
-            className="m-0 flex list-none flex-col p-0"
-          >
-            {section.title ? <li className="px-4 pt-2 ps-8 text-xs font-bold text-text-primary-paragraph">{section.title}</li> : null}
-            {section.links.map((link) => (
-              <li key={link.href}>
-                <a
-                  data-slot="header-drawer-item"
-                  data-level="2"
-                  data-current={link.current ? "" : undefined}
-                  data-disabled={link.disabled ? "" : undefined}
-                  className="flex min-h-9 w-full cursor-pointer items-center gap-2 rounded-sm border-0 bg-transparent px-4 py-2 text-start text-sm font-semibold text-text-default no-underline hover:bg-button-background-neutral-hovered active:bg-button-background-neutral-pressed focus-visible:outline-2 focus-visible:outline-solid focus-visible:-outline-offset-2 focus-visible:outline-border-black data-current:bg-button-background-neutral-selected data-current:text-link-primary-pressed data-[level=2]:ps-8 data-[level=2]:font-normal data-[level=2]:data-current:font-semibold disabled:cursor-not-allowed disabled:text-text-default-disabled aria-disabled:pointer-events-none aria-disabled:text-text-default-disabled"
-                  href={link.disabled ? undefined : link.href}
-                  aria-current={link.current ? "page" : undefined}
-                  aria-disabled={link.disabled ? true : undefined}
-                  onClick={onNavigate}
-                >
-                  {link.label}
-                  {link.tag ? (
-                    <Tag size="sm" variant="success">
-                      {link.tag}
-                    </Tag>
-                  ) : null}
-                </a>
-              </li>
-            ))}
-          </ul>
-        ))}
-      </div>
-    </li>
+    <>
+      {divider}
+      <li>
+        <button
+          type="button"
+          data-slot="header-drawer-item"
+          data-level="1"
+          data-current={isCurrent(item) ? "" : undefined}
+          className="relative flex min-h-11 w-full cursor-pointer items-center gap-2 rounded-sm border-0 bg-transparent px-4 py-3 text-start text-sm font-semibold text-text-default no-underline before:pointer-events-none before:absolute before:inset-y-2 before:start-0 before:w-1 before:rounded-full before:bg-transparent before:content-[''] [&_svg]:size-4 hover:bg-button-background-neutral-hovered hover:before:bg-icon-default-500 active:bg-button-background-neutral-pressed active:before:bg-icon-default focus-visible:outline-2 focus-visible:outline-solid focus-visible:-outline-offset-2 focus-visible:outline-border-black focus-visible:before:bg-transparent data-current:bg-button-background-neutral-selected data-current:text-link-primary-pressed data-current:before:bg-icon-primary data-current:[&_svg]:text-icon-primary data-current:hover:bg-button-background-neutral-selected data-current:hover:before:bg-icon-primary data-current:active:bg-button-background-neutral-selected data-current:active:before:bg-icon-primary data-[level=2]:ps-10 data-[level=2]:font-normal data-[level=2]:data-current:font-semibold disabled:pointer-events-none disabled:cursor-not-allowed disabled:bg-transparent disabled:text-text-default-disabled disabled:before:bg-transparent disabled:[&_svg]:text-icon-default-disabled disabled:data-current:bg-transparent disabled:data-current:[&_svg]:text-icon-default-disabled disabled:data-current:before:bg-background-neutral-100 aria-disabled:pointer-events-none aria-disabled:cursor-not-allowed aria-disabled:bg-transparent aria-disabled:text-text-default-disabled aria-disabled:before:bg-transparent aria-disabled:[&_svg]:text-icon-default-disabled aria-disabled:data-current:bg-transparent aria-disabled:data-current:[&_svg]:text-icon-default-disabled aria-disabled:data-current:before:bg-background-neutral-100 transition-colors motion-reduce:transition-none"
+          aria-expanded={expanded}
+          aria-controls={id}
+          disabled={item.disabled}
+          onClick={() => setExpanded((value) => !value)}
+        >
+          {icon}
+          <span className="min-w-0 flex-1 text-start">{item.label}</span>
+          <HugeiconsIcon icon={ArrowDown01Icon} aria-hidden className="ms-auto size-4 shrink-0 text-icon-default transition-transform in-aria-expanded:rotate-180 in-disabled:text-icon-default-disabled motion-reduce:transition-none" />
+        </button>
+        <div id={id} hidden={!expanded} className="flex flex-col">
+          {item.sections.map((section) => (
+            <ul
+              key={section.title ?? section.links.map((l) => l.href).join()}
+              className="m-0 flex list-none flex-col p-0"
+            >
+              {section.title ? <li className="px-4 pt-2 ps-10 text-xs font-bold text-text-primary-paragraph">{section.title}</li> : null}
+              {section.links.map((link) => (
+                <li key={link.href}>
+                  <a
+                    data-slot="header-drawer-item"
+                    data-level="2"
+                    data-current={link.current ? "" : undefined}
+                    data-disabled={link.disabled ? "" : undefined}
+                    className="relative flex min-h-11 w-full cursor-pointer items-center gap-2 rounded-sm border-0 bg-transparent px-4 py-3 text-start text-sm font-semibold text-text-default no-underline before:pointer-events-none before:absolute before:inset-y-2 before:start-0 before:w-1 before:rounded-full before:bg-transparent before:content-[''] [&_svg]:size-4 hover:bg-button-background-neutral-hovered hover:before:bg-icon-default-500 active:bg-button-background-neutral-pressed active:before:bg-icon-default focus-visible:outline-2 focus-visible:outline-solid focus-visible:-outline-offset-2 focus-visible:outline-border-black focus-visible:before:bg-transparent data-current:bg-button-background-neutral-selected data-current:text-link-primary-pressed data-current:before:bg-icon-primary data-current:[&_svg]:text-icon-primary data-current:hover:bg-button-background-neutral-selected data-current:hover:before:bg-icon-primary data-current:active:bg-button-background-neutral-selected data-current:active:before:bg-icon-primary data-[level=2]:ps-10 data-[level=2]:font-normal data-[level=2]:data-current:font-semibold disabled:pointer-events-none disabled:cursor-not-allowed disabled:bg-transparent disabled:text-text-default-disabled disabled:before:bg-transparent disabled:[&_svg]:text-icon-default-disabled disabled:data-current:bg-transparent disabled:data-current:[&_svg]:text-icon-default-disabled disabled:data-current:before:bg-background-neutral-100 aria-disabled:pointer-events-none aria-disabled:cursor-not-allowed aria-disabled:bg-transparent aria-disabled:text-text-default-disabled aria-disabled:before:bg-transparent aria-disabled:[&_svg]:text-icon-default-disabled aria-disabled:data-current:bg-transparent aria-disabled:data-current:[&_svg]:text-icon-default-disabled aria-disabled:data-current:before:bg-background-neutral-100 transition-colors motion-reduce:transition-none"
+                    href={link.disabled ? undefined : link.href}
+                    aria-current={link.current ? "page" : undefined}
+                    aria-disabled={link.disabled ? true : undefined}
+                    onClick={onNavigate}
+                  >
+                    <span className="min-w-0 flex-1 text-start">{link.label}</span>
+                    {link.tag ? (
+                      <Tag size="sm" variant="success">
+                        {link.tag}
+                      </Tag>
+                    ) : null}
+                    {link.badge ? <DrawerBadge>{link.badge}</DrawerBadge> : null}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          ))}
+        </div>
+      </li>
+    </>
   );
 }
 

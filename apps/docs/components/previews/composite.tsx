@@ -107,8 +107,8 @@ function useHeaderItems(): HeaderNavItem[] {
         },
       ],
     },
-    { label: t("About", "عن الجهة"), href: "#about", icon: Building03Icon },
-    { label: t("Contact", "تواصل معنا"), href: "#contact", icon: Mail01Icon },
+    { label: t("About", "عن الجهة"), href: "#about", icon: Building03Icon, divider: true },
+    { label: t("Contact", "تواصل معنا"), href: "#contact", icon: Mail01Icon, badge: "+9" },
   ];
 }
 
