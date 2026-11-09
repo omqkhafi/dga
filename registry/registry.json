@@ -1157,6 +1157,26 @@
       ]
     },
     {
+      "name": "nav-drawer",
+      "type": "registry:ui",
+      "title": "Nav Drawer",
+      "description": "DGA Navigation Drawer: a panel that slides in from the start edge with a header, the navigation items (links, parents that expand in place, Level 2 links, badges, dividers) and a footer. Its header and footer take any content. It draws its own menu button and works with or without the Header.",
+      "dependencies": ["@hugeicons/react", "@hugeicons/core-free-icons"],
+      "registryDependencies": [
+        "{{REGISTRY_URL}}/r/utils.json",
+        "{{REGISTRY_URL}}/r/drawer.json",
+        "{{REGISTRY_URL}}/r/badge.json",
+        "{{REGISTRY_URL}}/r/tag.json"
+      ],
+      "files": [
+        {
+          "path": "bases/base/ui/nav-drawer.tsx",
+          "type": "registry:ui",
+          "target": "components/dga/nav-drawer.tsx"
+        }
+      ]
+    },
+    {
       "name": "header",
       "type": "registry:ui",
       "title": "Header",
@@ -1166,8 +1186,7 @@
         "{{REGISTRY_URL}}/r/utils.json",
         "{{REGISTRY_URL}}/r/direction.json",
         "{{REGISTRY_URL}}/r/menu.json",
-        "{{REGISTRY_URL}}/r/drawer.json",
-        "{{REGISTRY_URL}}/r/badge.json",
+        "{{REGISTRY_URL}}/r/nav-drawer.json",
         "{{REGISTRY_URL}}/r/tag.json"
       ],
       "files": [

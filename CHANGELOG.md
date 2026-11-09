@@ -7,21 +7,23 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
 
 ## [0.7.7] - 2026-11-09
 
-Patch: the Header Nav Drawer Item follows the Figma and DGA site states, and the Nav Drawer takes your own header and footer parts.
+Patch: the Nav Drawer is a component of its own, and the Header navigation is made of parts.
 
 ### Added
 
-- **Header, Nav Drawer header and footer:** `HeaderDrawerHeader` and `HeaderDrawerFooter`, parts you put inside the Header, take any content for the top (in place of the visible title) and the bottom edge of the Nav Drawer. `HeaderLogo` is a ready-made logo link (`src` and `alt`, or your own `children`) for the bar's `logo` and the drawer header. The drawer keeps `drawerTitle` as its hidden accessible name. New example "Nav Drawer header and footer".
-- **Header, Nav Drawer Item:** a link or sub-link takes `badge` (for example "+99"), shown at the end of the item in the Nav Drawer (the DGA Nav Drawer Item badge); a nav item takes `divider`, which draws a line above it in the Nav Drawer (the DGA Divider item). Neither shows in the bar. The Header now installs the Badge with it.
+- **Nav Drawer** (new component, `nav-drawer`): the DGA Navigation Drawer, moved out of the Header. A panel from the start edge with parts: `NavDrawerHeader` (any content in place of the visible title), `NavDrawerNav` with `NavDrawerItem`, `NavDrawerLink`, `NavDrawerSection` and `NavDrawerDivider`, and `NavDrawerFooter` (any content at the bottom edge). It draws its own menu button (or none with `hideTrigger`), is controlled with `open` and `onOpenChange`, and works with or without a Header. `items` data is a shortcut, `search` and `end` are optional slots.
+- **Header:** the navigation as parts: `HeaderNav` with `HeaderNavItem`, `HeaderNavSection`, `HeaderNavLink` and `HeaderNavDivider`. The same items are in the bar from `lg` and in the Nav Drawer below it, so you write them once. The `items` array still works as a shortcut and can be mixed with the parts. `HeaderLogo` is a ready-made logo link (`src` and `alt`, or your own `children`) for the bar's `logo` and for a `NavDrawerHeader`.
+- **Header, Nav Drawer Item:** `badge` (for example "+99") on a link, and a divider item. Neither shows in the bar. The Nav Drawer installs the Badge, the Tag and the Drawer with it; the Header installs the Nav Drawer.
+- **Header:** put a `NavDrawer` inside the Header to give its drawer its own header, footer or items. Without one the Header draws a default drawer from its items, as before.
 
 ### Changed
 
-- **Header, Nav Drawer Item:** the item follows the Figma Nav Drawer Item states. Hovered, pressed and selected show a 6px by 24px rounded bar at the start edge (mirrored in RTL): `icon-default-500` hovered, `icon-default` pressed and `icon-primary` selected; focused shows only the 2px outline. The selected item has a brand icon as well as the brand label, and keeps its fill when hovered or pressed. A selected, disabled item drops the fill and shows a muted bar. Disabled icons and chevrons are greyed.
-- **Header, Nav Drawer Item:** a 16px icon (was 20px); the divider is inset 16px on each side; Level 2 labels and sub-headings now line up with the Level 1 label (40px from the start edge instead of 32px).
+- **Nav Drawer Item** follows the Figma and DGA site states: 36px high with a 16px icon; hovered, pressed and selected show a 6px by 24px rounded bar at the start edge (mirrored in RTL): `icon-default-500` hovered, `icon-default` pressed and `icon-primary` selected (`background-primary` is 2.23:1 on the selected fill in dark mode); focused shows only the 2px outline. The selected item has a brand icon as well as the brand label, and keeps its fill when hovered or pressed. A selected, disabled item drops the fill and shows a muted bar. Level 1 and Level 2 labels line up, and the divider item is inset 16px on each side.
+- **Header:** the data-slot names of the drawer changed with the move: `header-menu-button` is `nav-drawer-trigger`, and `header-drawer-item` and `header-drawer-nav` are `nav-drawer-item` and `nav-drawer-nav`. The CSS classes `cn-header-drawer-*` are `cn-nav-drawer-*`.
 
 ### Tests
 
-- The composite browser group checks the Nav Drawer Item: 36px high, the Level 1 and Level 2 labels on the same line, the divider inset 16px, the 6px by 24px state bar, the badge, and the Drawer header and footer (`HeaderDrawerHeader`, `HeaderDrawerFooter`) with the drawer still named, in both directions.
+- The composite browser group checks the Nav Drawer Item (36px high, labels on one line, the divider inset 16px, the 6px by 24px bar, the badge), the Header and the Nav Drawer parts (the logo at the top, the footer at the bottom edge, the drawer still named), and a NavDrawer on its own (its button, a divider, a disabled item, Escape and focus), in both directions.
 
 ## [0.7.6] - 2026-11-09
 

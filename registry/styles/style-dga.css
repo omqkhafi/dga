@@ -2188,6 +2188,13 @@
   .cn-header-logo {
     @apply col-start-2 row-start-1 flex shrink-0 items-center justify-self-center lg:col-auto lg:row-auto;
   }
+  .cn-header-logo-link {
+    @apply inline-flex items-center gap-2 rounded-sm text-lg font-bold text-text-display no-underline;
+    @apply focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-offset-2 focus-visible:outline-border-black;
+  }
+  .cn-header-logo-image {
+    @apply h-10 w-auto max-w-full object-contain;
+  }
   .cn-header-nav {
     @apply hidden min-w-0 flex-1 lg:block;
   }
@@ -2229,14 +2236,13 @@
   .cn-header-action-label {
     @apply min-w-0;
   }
-  .cn-header-menu-button,
   .cn-header-overflow-button {
     @apply inline-flex size-10 shrink-0 cursor-pointer items-center justify-center rounded-sm border-0 bg-transparent text-icon-default lg:hidden [&_svg]:size-6;
     @apply hover:bg-button-background-neutral-hovered active:bg-button-background-neutral-pressed;
     @apply focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-offset-1 focus-visible:outline-border-black;
   }
   .cn-header-menu-button {
-    @apply col-start-3 row-start-1 justify-self-end;
+    @apply col-start-3 row-start-1 justify-self-end lg:hidden;
   }
   .cn-header-overflow-button {
     @apply col-start-1 row-start-1 justify-self-start;
@@ -2293,23 +2299,28 @@
   .cn-header-sub-description {
     @apply text-sm font-normal text-text-primary-paragraph in-data-[tone=green]:text-text-oncolor-primary;
   }
-  .cn-header-drawer-search {
+  /* ------------------------------------------------------------------------------------
+   * Nav Drawer (Figma: Nav Drawer). The trigger is the 40px menu button. The panel is the DGA
+   * Drawer with a header, the items and a footer.
+   * ---------------------------------------------------------------------------------- */
+  .cn-nav-drawer-trigger {
+    @apply inline-flex size-10 shrink-0 cursor-pointer items-center justify-center rounded-sm border-0 bg-transparent text-icon-default [&_svg]:size-6;
+    @apply hover:bg-button-background-neutral-hovered active:bg-button-background-neutral-pressed;
+    @apply focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-offset-1 focus-visible:outline-border-black;
+  }
+  .cn-nav-drawer-list {
+    @apply m-0 flex list-none flex-col p-0;
+  }
+  .cn-nav-drawer-search {
     @apply mb-4;
   }
-  .cn-header-drawer-header {
+  .cn-nav-drawer-header {
     @apply flex min-h-10 items-center;
   }
-  .cn-header-logo-link {
-    @apply inline-flex items-center gap-2 rounded-sm text-lg font-bold text-text-display no-underline;
-    @apply focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-offset-2 focus-visible:outline-border-black;
-  }
-  .cn-header-logo-image {
-    @apply h-10 w-auto max-w-full object-contain;
-  }
-  .cn-header-drawer-footer {
+  .cn-nav-drawer-footer {
     @apply mt-auto border-t border-border-neutral-secondary pt-4;
   }
-  .cn-header-drawer-end {
+  .cn-nav-drawer-end {
     @apply mt-4 flex flex-wrap items-center gap-2 border-t border-border-neutral-secondary pt-4;
   }
   /* Nav Drawer Item: 36px high (the Figma web item), Text sm, 16px icon, 8px gap. Hovered,
@@ -2317,7 +2328,7 @@
    * only the 2px outline, as in Figma. The divider item is 17px high, inset 16px on each side.
    * Level 2 has no icon and its label lines up with the Level 1 label
    * (16px padding + 16px icon + 8px gap = 40px). */
-  .cn-header-drawer-item {
+  .cn-nav-drawer-item {
     @apply relative flex min-h-9 w-full cursor-pointer items-center gap-2 rounded-sm border-0 bg-transparent px-4 py-2 text-start text-sm font-semibold text-text-default no-underline;
     @apply before:pointer-events-none before:absolute before:inset-y-1.5 before:start-0 before:w-1.5 before:rounded-full before:bg-transparent before:content-[''];
     @apply [&_svg]:size-4;
@@ -2329,22 +2340,22 @@
     @apply aria-disabled:pointer-events-none aria-disabled:cursor-not-allowed aria-disabled:bg-transparent aria-disabled:text-text-default-disabled aria-disabled:before:bg-transparent aria-disabled:[&_svg]:text-icon-default-disabled aria-disabled:data-current:bg-transparent aria-disabled:data-current:[&_svg]:text-icon-default-disabled aria-disabled:data-current:before:bg-background-neutral-100;
     @apply transition-colors motion-reduce:transition-none;
   }
-  .cn-header-drawer-label {
+  .cn-nav-drawer-label {
     @apply min-w-0 flex-1 text-start;
   }
-  .cn-header-drawer-badge {
+  .cn-nav-drawer-badge {
     @apply ms-auto in-aria-disabled:opacity-60;
   }
-  .cn-header-drawer-chevron {
+  .cn-nav-drawer-chevron {
     @apply ms-auto size-4 shrink-0 text-icon-default transition-transform in-aria-expanded:rotate-180 in-disabled:text-icon-default-disabled motion-reduce:transition-none;
   }
-  .cn-header-drawer-sub {
+  .cn-nav-drawer-sub {
     @apply flex flex-col;
   }
-  .cn-header-drawer-heading {
+  .cn-nav-drawer-heading {
     @apply px-4 pt-2 ps-10 text-xs font-bold text-text-primary-paragraph;
   }
-  .cn-header-drawer-divider {
+  .cn-nav-drawer-divider {
     @apply mx-4 my-2 h-px list-none bg-border-neutral-secondary;
   }
 

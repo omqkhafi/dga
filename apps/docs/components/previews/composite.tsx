@@ -39,12 +39,24 @@ import {
 import {
   Header,
   HeaderAction,
-  HeaderDrawerFooter,
-  HeaderDrawerHeader,
   HeaderLogo,
-  type HeaderNavItem,
+  HeaderNav,
+  HeaderNavDivider,
+  HeaderNavItem,
+  HeaderNavLink,
+  HeaderNavSection,
 } from "@/registry/bases/base/ui/header";
 import { Input } from "@/registry/bases/base/ui/input";
+import {
+  NavDrawer,
+  NavDrawerDivider,
+  NavDrawerFooter,
+  NavDrawerHeader,
+  NavDrawerItem,
+  NavDrawerLink,
+  NavDrawerNav,
+  NavDrawerSection,
+} from "@/registry/bases/base/ui/nav-drawer";
 import { Switch } from "@/registry/bases/base/ui/switch";
 import { useBi, useLanguage } from "./bi";
 import { Row, Stack } from "./kit";
@@ -119,6 +131,60 @@ function useHeaderItems(): HeaderNavItem[] {
   ];
 }
 
+/** The same navigation as `useHeaderItems`, written as parts: the way the docs recommend. */
+function useHeaderNav() {
+  const t = useBi();
+  return (
+    <HeaderNav>
+      <HeaderNavItem href="#home" icon={Home01Icon} current>
+        {t("Home", "الرئيسية")}
+      </HeaderNavItem>
+      <HeaderNavItem label={t("Services", "الخدمات")} icon={File01Icon}>
+        <HeaderNavSection title={t("Individuals", "الأفراد")}>
+          <HeaderNavLink
+            href="#renew"
+            icon={File01Icon}
+            description={t("Renew online in minutes", "جدّد إلكترونيًا في دقائق")}
+          >
+            {t("Renew a licence", "تجديد ترخيص")}
+          </HeaderNavLink>
+          <HeaderNavLink
+            href="#pay"
+            icon={CreditCardIcon}
+            description={t("Pay with a card or transfer", "ادفع ببطاقة أو بتحويل")}
+          >
+            {t("Pay a fee", "سداد رسم")}
+          </HeaderNavLink>
+        </HeaderNavSection>
+        <HeaderNavSection title={t("Businesses", "الأعمال")}>
+          <HeaderNavLink
+            href="#register"
+            icon={Building03Icon}
+            description={t("Start a new business", "ابدأ نشاطًا تجاريًا جديدًا")}
+          >
+            {t("Register a company", "تسجيل منشأة")}
+          </HeaderNavLink>
+          <HeaderNavLink
+            href="#permit"
+            icon={File01Icon}
+            tag={t("New", "جديد")}
+            description={t("Apply for an operating permit", "قدّم على تصريح تشغيل")}
+          >
+            {t("Request a permit", "طلب تصريح")}
+          </HeaderNavLink>
+        </HeaderNavSection>
+      </HeaderNavItem>
+      <HeaderNavDivider />
+      <HeaderNavItem href="#about" icon={Building03Icon}>
+        {t("About", "عن الجهة")}
+      </HeaderNavItem>
+      <HeaderNavItem href="#contact" icon={Mail01Icon} badge="+9">
+        {t("Contact", "تواصل معنا")}
+      </HeaderNavItem>
+    </HeaderNav>
+  );
+}
+
 function useHeaderSlots() {
   const t = useBi();
   return {
@@ -174,10 +240,12 @@ function useHeaderSlots() {
 /** The header at the width of the frame: brand logo, navigation links and actions only. */
 export function HeaderBasic() {
   const slots = useHeaderSlots();
-  const items = useHeaderItems();
+  const nav = useHeaderNav();
   return (
     <div className="-m-4">
-      <Header {...slots.labels} logo={slots.logo} items={items} actions={slots.actions} />
+      <Header {...slots.labels} logo={slots.logo} actions={slots.actions}>
+        {nav}
+      </Header>
     </div>
   );
 }
@@ -394,34 +462,80 @@ export function HeaderDrawerOpen() {
   );
 }
 
-/** The Nav Drawer with a logo at the top and your own content at the bottom. */
-export function HeaderDrawerSlots() {
-  const slots = useHeaderSlots();
-  const items = useHeaderItems();
+function useNavDrawerMark() {
   const t = useBi();
-  const mark = (
-    <>
+  return (
+    <HeaderLogo href="#top">
       <span aria-hidden className="size-8 rounded-sm bg-background-primary" />
       <span className="max-sm:sr-only">{t("Digital Services", "الخدمات الرقمية")}</span>
-    </>
+    </HeaderLogo>
   );
+}
+
+/** A NavDrawer on its own: items, a parent, a divider, a badge, a selected and a disabled item. */
+export function NavDrawerBasic() {
+  const t = useBi();
   return (
     <div className="-m-4 min-h-96">
-      <Header
-        {...slots.labels}
-        logo={<HeaderLogo href="#top">{mark}</HeaderLogo>}
-        items={items}
-        actions={slots.actions}
-        defaultMenuOpen
+      <NavDrawer
+        defaultOpen
+        title={t("Menu", "القائمة")}
+        navLabel={t("Main", "الرئيسية")}
+        menuLabel={t("Menu", "القائمة")}
+        closeLabel={t("Close", "إغلاق")}
       >
-        <HeaderDrawerHeader>
-          <HeaderLogo href="#top">{mark}</HeaderLogo>
-        </HeaderDrawerHeader>
-        <HeaderDrawerFooter>
-          <p className="m-0 text-xs text-text-primary-paragraph">
-            {t("Need help? Call 920000000.", "تحتاج مساعدة؟ اتصل على ٩٢٠٠٠٠٠٠٠.")}
-          </p>
-        </HeaderDrawerFooter>
+        <NavDrawerNav>
+          <NavDrawerItem href="#home" icon={Home01Icon} current>
+            {t("Home", "الرئيسية")}
+          </NavDrawerItem>
+          <NavDrawerItem label={t("Services", "الخدمات")} icon={File01Icon}>
+            <NavDrawerSection title={t("Individuals", "الأفراد")}>
+              <NavDrawerLink href="#renew">{t("Renew a licence", "تجديد ترخيص")}</NavDrawerLink>
+              <NavDrawerLink href="#pay">{t("Pay a fee", "سداد رسم")}</NavDrawerLink>
+            </NavDrawerSection>
+            <NavDrawerSection title={t("Businesses", "الأعمال")}>
+              <NavDrawerLink href="#register">
+                {t("Register a company", "تسجيل منشأة")}
+              </NavDrawerLink>
+              <NavDrawerLink href="#permit" tag={t("New", "جديد")}>
+                {t("Request a permit", "طلب تصريح")}
+              </NavDrawerLink>
+            </NavDrawerSection>
+          </NavDrawerItem>
+          <NavDrawerDivider />
+          <NavDrawerItem href="#about" icon={Building03Icon}>
+            {t("About", "عن الجهة")}
+          </NavDrawerItem>
+          <NavDrawerItem href="#contact" icon={Mail01Icon} badge="+9">
+            {t("Contact", "تواصل معنا")}
+          </NavDrawerItem>
+          <NavDrawerItem href="#archive" icon={File01Icon} disabled>
+            {t("Archive", "الأرشيف")}
+          </NavDrawerItem>
+        </NavDrawerNav>
+      </NavDrawer>
+    </div>
+  );
+}
+
+/** A NavDrawer with a logo at the top and your own content at the bottom, inside a Header. */
+export function NavDrawerParts() {
+  const slots = useHeaderSlots();
+  const nav = useHeaderNav();
+  const mark = useNavDrawerMark();
+  const t = useBi();
+  return (
+    <div className="-m-4 min-h-96">
+      <Header {...slots.labels} logo={mark} actions={slots.actions}>
+        {nav}
+        <NavDrawer defaultOpen>
+          <NavDrawerHeader>{mark}</NavDrawerHeader>
+          <NavDrawerFooter>
+            <p className="m-0 text-xs text-text-primary-paragraph">
+              {t("Need help? Call 920000000.", "تحتاج مساعدة؟ اتصل على ٩٢٠٠٠٠٠٠٠.")}
+            </p>
+          </NavDrawerFooter>
+        </NavDrawer>
       </Header>
     </div>
   );

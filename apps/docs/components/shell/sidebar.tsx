@@ -116,6 +116,7 @@ const ICONS: Record<string, IconSvgElement> = {
   "/docs/components/progress": Progress01Icon,
   "/docs/components/stepper": LeftToRightListNumberIcon,
   "/docs/components/header": Layout01Icon,
+  "/docs/components/nav-drawer": Menu01Icon,
   "/docs/components/second-nav": ListViewIcon,
   "/docs/components/footer": Layout01Icon,
   "/docs/components/date-picker": Calendar03Icon,

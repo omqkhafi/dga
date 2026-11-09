@@ -4452,6 +4452,29 @@
       ]
     },
     {
+      "name": "nav-drawer",
+      "type": "registry:ui",
+      "title": "Nav Drawer",
+      "description": "DGA Navigation Drawer: a panel that slides in from the start edge with a header, the navigation items (links, parents that expand in place, Level 2 links, badges, dividers) and a footer. Its header and footer take any content. It draws its own menu button and works with or without the Header.",
+      "dependencies": [
+        "@hugeicons/react",
+        "@hugeicons/core-free-icons"
+      ],
+      "registryDependencies": [
+        "https://dga.omqkhafi.dev/r/utils.json",
+        "https://dga.omqkhafi.dev/r/drawer.json",
+        "https://dga.omqkhafi.dev/r/badge.json",
+        "https://dga.omqkhafi.dev/r/tag.json"
+      ],
+      "files": [
+        {
+          "path": "bases/base/ui/nav-drawer.tsx",
+          "type": "registry:ui",
+          "target": "components/dga/nav-drawer.tsx"
+        }
+      ]
+    },
+    {
       "name": "header",
       "type": "registry:ui",
       "title": "Header",
@@ -4465,8 +4488,7 @@
         "https://dga.omqkhafi.dev/r/utils.json",
         "https://dga.omqkhafi.dev/r/direction.json",
         "https://dga.omqkhafi.dev/r/menu.json",
-        "https://dga.omqkhafi.dev/r/drawer.json",
-        "https://dga.omqkhafi.dev/r/badge.json",
+        "https://dga.omqkhafi.dev/r/nav-drawer.json",
         "https://dga.omqkhafi.dev/r/tag.json"
       ],
       "files": [

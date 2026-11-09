@@ -9,56 +9,61 @@ description: "The site header (DGA: Nav Header): logo, main navigation with sub-
 
 <ComponentInstall name="header" />
 
-It installs the [Menu](/docs/components/menu), the [Drawer](/docs/components/drawer) and the [Tag](/docs/components/tag) with it. Put a [Second Nav](/docs/components/second-nav) in the `top` slot and a [Footer](/docs/components/footer) at the end of the page.
+It installs the [Menu](/docs/components/menu), the [Nav Drawer](/docs/components/nav-drawer) and the [Tag](/docs/components/tag) with it. Put a [Second Nav](/docs/components/second-nav) in the `top` slot and a [Footer](/docs/components/footer) at the end of the page.
 
 ## Usage
 
 ```tsx title="layout.tsx"
-import { Header } from "@/components/dga/header";
+import {
+  Header,
+  HeaderLogo,
+  HeaderNav,
+  HeaderNavItem,
+  HeaderNavLink,
+  HeaderNavSection,
+} from "@/components/dga/header";
 import { Globe02Icon, UserIcon } from "@hugeicons/core-free-icons";
 
 export function SiteHeader() {
   return (
     <Header
-      logo={<a href="/"><img src="/logo.svg" alt="Digital Services" height={40} /></a>}
-      items={[
-        { label: "Home", href: "/", current: true },
-        {
-          label: "Services",
-          sections: [
-            {
-              title: "Individuals",
-              links: [
-                { label: "Renew a licence", href: "/renew", description: "Renew online in minutes" },
-                { label: "Pay a fee", href: "/pay" },
-              ],
-            },
-          ],
-        },
-        { label: "Contact", href: "/contact" },
-      ]}
+      logo={<HeaderLogo src="/logo.svg" alt="Digital Services" />}
       actions={[
         { label: "Language", href: "/ar", icon: Globe02Icon },
         { label: "Sign in", href: "/sign-in", icon: UserIcon },
       ]}
-    />
+    >
+      <HeaderNav>
+        <HeaderNavItem href="/" current>Home</HeaderNavItem>
+        <HeaderNavItem label="Services">
+          <HeaderNavSection title="Individuals">
+            <HeaderNavLink href="/renew" description="Renew online in minutes">
+              Renew a licence
+            </HeaderNavLink>
+            <HeaderNavLink href="/pay">Pay a fee</HeaderNavLink>
+          </HeaderNavSection>
+        </HeaderNavItem>
+        <HeaderNavItem href="/contact">Contact</HeaderNavItem>
+      </HeaderNav>
+    </Header>
   );
 }
 ```
 
-Give your `main` element the id `main-content`, or set `skipHref`. Pass every visible string as a prop: `skipLabel`, `navLabel`, `menuLabel`, `moreLabel`, `drawerTitle` and `closeLabel` are translated on Arabic pages.
+The navigation is made of parts: a `HeaderNav` with `HeaderNavItem` parts, a parent holding `HeaderNavSection` and `HeaderNavLink` parts, and a `HeaderNavDivider` for a line in the Nav Drawer. They go directly inside the part that names them and draw nothing themselves; the Header reads them. The `items` array of the earlier versions still works as a shortcut and can be mixed with them. The same items are in the bar from `lg` and in the [Nav Drawer](/docs/components/nav-drawer) below it, so you write them once.
 
-On Arabic pages the logo sits on the right, the items run from the right and the actions are on the left. The chevrons, sub-menus, the phone layout and the Drawer (which opens from the start side) mirror, and Left and Right swap.
+Give your `main` element the id `main-content`, or set `skipHref`. Pass every visible string as a prop: `skipLabel`, `navLabel`, `menuLabel`, `moreLabel`, `drawerTitle` and `closeLabel` are translated on Arabic pages. `HeaderLogo` is a ready-made logo link: an image from `src` and `alt`, or your own markup as `children`.
+
+On Arabic pages the logo sits on the right, the items run from the right and the actions are on the left. The chevrons, sub-menus, the phone layout and the Nav Drawer (which opens from the start side) mirror, and Left and Right swap.
 
 ## Anatomy
 
 - **Bar**: 72px high on the menu surface, padded 32px, centred and 1280px wide unless `fullWidth`.
 - **Logo** (`logo`): the brand logo, any element, a link to the home page.
-- **Menu item** (`items`): a link, or a button that opens a sub-menu when it has `sections`. 72px high, radius `sm`, with an optional leading icon and, for a sub-menu, a chevron. States: default, hovered, pressed, focused and disabled. The selected item (`current`) is a full-height brand block with a rounded 6px bar along its bottom edge, inset 8px from each side; when it is disabled the block goes and the bar is muted. An unselected item shows the bar on hover, and darker when pressed or open; focus shows only the outline.
+- **Menu item** (`HeaderNavItem`, or `items`): a link, or a button that opens a sub-menu when it has `sections`. 72px high, radius `sm`, with an optional leading icon and, for a sub-menu, a chevron. States: default, hovered, pressed, focused and disabled. The selected item (`current`) is a full-height brand block with a rounded 6px bar along its bottom edge, inset 8px from each side; when it is disabled the block goes and the bar is muted. An unselected item shows the bar on hover, and darker when pressed or open; focus shows only the outline.
 - **Sub-menu**: the DGA [Menu](/docs/components/menu) with one column per section, up to four. Each link is a DGA Header Sub-menu Item: a label with optional helper text (`description`), an icon (`icon`, shown with `linkStyle` `icon` or `boxed-icon`) and a tag (`tag`, such as "New"), with default, hovered, pressed and focused states. `linkStyle` is `text`, `icon` or `boxed-icon`, `submenuTone` is `default` or `green` (the dark green of the DGA flag) and `submenuWidth` is `content` or `full`.
 - **Actions** (`actions`, [`HeaderAction`](#api-reference)): Inline (icon beside the label), Top (`iconPosition="top"`, icon above the label), Text only (no icon) or Icon only (`iconOnly`), with the same five states and selected block and bar as a menu item.
-- **Phone layout**: below `lg` the bar is the overflow (…) button on the start side, which opens the actions, the logo centred and the menu button on the end side. The menu button opens the navigation in the Nav Drawer: the DGA [Drawer](/docs/components/drawer), where parents expand in place and Level 2 links are indented.
-- **Nav Drawer Item**: 36px high, Text sm Semibold with a 16px icon. A Level 1 link, a Level 1 parent with a chevron, or a Level 2 link (Regular, no icon, its label lined up with the Level 1 label). States: default, hovered and pressed (a neutral fill and a bar at the start edge), focused (only the outline), selected (`current`: the selected fill, a brand bar and brand text) and disabled. A link can end with a `badge` such as "+99", and `divider` draws a line above a Level 1 item.
+- **Phone layout**: below `lg` the bar is the overflow (…) button on the start side, which opens the actions, the logo centred and the menu button on the end side. The menu button opens the navigation in the [Nav Drawer](/docs/components/nav-drawer), a component of its own: the same items as a list, where parents expand in place, Level 2 links are indented and a `badge` or a divider can be added. Put a `NavDrawer` in the Header to give the drawer its own header, footer or items.
 - **Navigation position** (`navPosition`): `start` (default, next to the logo) or `center` (in the middle of the bar from `lg`).
 - **Optional slots**: `search`, `language` and `user`. They are not part of DGA's anatomy and appear only in the extras example.
 
@@ -114,26 +119,9 @@ The overflow (…) button on the start side, the logo centred and the menu butto
 
 ### Nav Drawer
 
-The Drawer opened from the menu button.
+The Nav Drawer opened from the menu button. It shows the Header's items, with a badge and a divider. The drawer is a [component of its own](/docs/components/nav-drawer), with a header and a footer that take any content.
 
 <Preview compact name="header-drawer-open" title="Nav Drawer" defaultViewport="mobile" minHeight={380} />
-
-### Nav Drawer header and footer
-
-The top and the bottom of the Drawer are parts you put inside the Header, and each takes any content. `HeaderDrawerHeader` replaces the visible title at the top (a logo, a user card, a banner) and `HeaderDrawerFooter` sits at the bottom edge, below the navigation and the `language` and `user` slots. `HeaderLogo` is a ready-made logo link (an image from `src`, or your own markup as `children`) that you can use in the bar's `logo` and again in the Drawer's header. The drawer keeps `drawerTitle` as its accessible name, hidden from view, when you add a header.
-
-<Preview compact name="header-drawer-slots" title="Logo and footer" defaultViewport="mobile" minHeight={380} />
-
-```tsx title="layout.tsx"
-<Header logo={<HeaderLogo src="/logo.svg" alt="Digital Services" />} items={items}>
-  <HeaderDrawerHeader>
-    <HeaderLogo src="/logo.svg" alt="Digital Services" />
-  </HeaderDrawerHeader>
-  <HeaderDrawerFooter>
-    <p>Need help? Call 920000000.</p>
-  </HeaderDrawerFooter>
-</Header>
-```
 
 ### Official-site strip
 
@@ -173,13 +161,12 @@ Search, a notifications bell, help, a language button and a sign-in button are n
 ## Deviations from DGA
 
 - The official-site strip is the [Digital Stamp](/docs/components/digital-stamp), passed in the `stamp` slot, which sits above `top`. The [Second Nav](/docs/components/second-nav) goes in `top`, below it.
-- Header Menu and Nav Drawer are not separate components: the chevron is part of the item, the sub-menu is the Menu and the small-screen navigation is the Drawer.
-- The Drawer takes over below `lg` (1024px), not at 960px.
+- Header Menu is not a separate component: the chevron is part of the item and the sub-menu is the Menu. The Nav Drawer is the [Nav Drawer](/docs/components/nav-drawer) component, which the Header uses below `lg`.
+- The Nav Drawer takes over below `lg` (1024px), not at 960px.
 - Menu item and Action selected state is a block with a bar, as in DGA; hovered, pressed and the focus ring use the neutral hover and pressed fills and a 2px outline inside the item, not a Figma stroke.
-- Nav Drawer: the white panel only. DGA's Green and Gray panel colours and the external-link icon are not built. The divider is inset 16px on each side, as on the DGA site.
 - The sub-menu item's tag is the Platform Code [Tag](/docs/components/tag) (success, or on-colour on the green panel), not a separate Header tag. `submenuWidth="full"` is an option; the card under the item stays the default.
 - `navPosition="center"` puts the navigation in the middle of the bar. DGA draws it at the start, which stays the default.
-- Actions are not shown in the bar below `lg`; they move into the overflow (…) menu, and `language` and `user` move to the foot of the Nav Drawer.
+- Actions are not shown in the bar below `lg`; they move into the overflow (…) menu, and `language` and `user` move to the end row of the Nav Drawer.
 
 <ComponentDeviations component="header" />
 

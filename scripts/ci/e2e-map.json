@@ -77,6 +77,7 @@
     "rating": ["form-pages", "navigation"],
     "progress": ["form-pages", "navigation"],
     "header": ["form-pages", "composite"],
+    "nav-drawer": ["form-pages", "composite"],
     "second-nav": ["form-pages", "composite"],
     "footer": ["form-pages", "composite"],
     "date-picker": ["form-pages", "composite"],

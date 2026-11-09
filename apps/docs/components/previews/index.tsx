@@ -30,7 +30,6 @@ import {
   HeaderActionStates,
   HeaderBasic,
   HeaderDrawerOpen,
-  HeaderDrawerSlots,
   HeaderExtras,
   HeaderMenuItems,
   HeaderMobile,
@@ -39,6 +38,8 @@ import {
   HeaderSubmenuFull,
   HeaderSubmenuFullGreen,
   HeaderSubmenuGreen,
+  NavDrawerBasic,
+  NavDrawerParts,
 } from "./composite";
 import {
   CardEffects,
@@ -206,7 +207,8 @@ export const previews = {
   "header-submenu-full": HeaderSubmenuFull,
   "header-submenu-full-green": HeaderSubmenuFullGreen,
   "header-drawer-open": HeaderDrawerOpen,
-  "header-drawer-slots": HeaderDrawerSlots,
+  "nav-drawer-basic": NavDrawerBasic,
+  "nav-drawer-parts": NavDrawerParts,
   "second-nav-gray": SecondNavGray,
   "second-nav-primary": SecondNavPrimary,
   "second-nav-kinds": SecondNavKinds,

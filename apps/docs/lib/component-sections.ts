@@ -85,6 +85,7 @@ export const LAYOUT_COMPONENTS = ["collapsible", "scroll-area", "resizable", "as
 /** Listed under "Composite". */
 export const COMPOSITE_COMPONENTS = [
   "header",
+  "nav-drawer",
   "second-nav",
   "footer",
   "date-picker",

@@ -4122,7 +4122,7 @@
     "area": "Components",
     "item": "Header: official site strip, Header Menu and Nav Drawer composed",
     "original": "The official site strip is the separate Digital Stamp component, and the Second Nav Header is the strip above the primary navigation. Header Menu (a chevron button) and the Nav Drawer are separate components.",
-    "ours": "Header takes a `stamp` slot for the Digital Stamp (0.7.0) and a `top` slot for a Second Nav, and renders no strip of its own. The chevron is part of the menu item and the sub-menu is the DGA Menu. On narrow screens the navigation is the DGA Drawer with expandable parents; Level 2 links are indented.",
+    "ours": "Header takes a `stamp` slot for the Digital Stamp (0.7.0) and a `top` slot for a Second Nav, and renders no strip of its own. The chevron is part of the menu item and the sub-menu is the DGA Menu. On narrow screens the navigation is the Nav Drawer, a component of its own, with expandable parents; Level 2 links are indented.",
     "reason": "Reusing Menu and Drawer keeps the focus, dismissal and mirroring behaviour in one place instead of copying it into the header.",
     "status": "fixed",
     "component": "header"
@@ -4133,6 +4133,15 @@
     "original": "Selected Header Menu Item and Header Action are a primary fill. Focused is a 2px border-black stroke; Disabled has no bar.",
     "ours": "Selected is a full-height primary block with DGA's bottom bar: 6px high, inset 8px from each side, fully rounded, in primary-sa-flag-200. An unselected item shows a bar on hover (icon-default-500) and when pressed or open (icon-default); focused shows only the outline, as in Figma. Selected and disabled drops the block, greys the label and shows a muted bar (background-neutral-100). Focus is a 2px outline inside the item (a stroke would shift the label) shown on keyboard focus only.",
     "reason": "The bar shape follows the Figma Nav Header frames and a live DGA-based site (6px, inset 8px, fully rounded). Its colours are contrast corrections: DGA's bar colours measure 2.10:1 (primary-400 on the selected block, 2.92:1 hovered), 2.28:1 (neutral-400 on the hover fill) and 1.00:1 (neutral-800 on the pressed fill in dark mode), below the 3:1 for a state indicator. The selected bar is primary-sa-flag-200 (3:1 or more on the default, hovered and pressed blocks in both modes), the hover bar is icon-default-500 and the pressed or open bar is icon-default. Every pair is in the Contrast audit. Disabled items are exempt from contrast.",
+    "status": "fixed",
+    "component": "header"
+  },
+  {
+    "area": "Components",
+    "item": "Header: navigation as parts",
+    "original": "Header Menu Item and Header Sub-menu Item are components; the Nav Header holds a logo, items and actions.",
+    "ours": "The navigation is made of parts: `HeaderNav` with `HeaderNavItem`, `HeaderNavSection`, `HeaderNavLink` and `HeaderNavDivider`, and `HeaderLogo` is a ready-made logo link. The `items` array of 0.7.0 to 0.7.6 still works as a shortcut and can be mixed with the parts. The same items are in the bar from `lg` and in the Nav Drawer below it.",
+    "reason": "Parts read like the DGA components and let a developer write the navigation once. The parts are read by the Header and draw nothing themselves, so they must be direct children of the part that names them.",
     "status": "fixed",
     "component": "header"
   },
@@ -4167,10 +4176,19 @@
     "area": "Components",
     "item": "Nav Drawer: panel colours, badge, external link and divider",
     "original": "Nav Drawer has Green, White and Gray backgrounds, an item Badge, an External Link icon, a Divider item type, on-colour item states and an optional scroll bar, border and overlay.",
-    "ours": "The Header's Drawer is the white panel (the Drawer component has white and gray tones). Item states (hovered, pressed and selected with the 4px bar at the start edge, focused with the outline, disabled), Level 1 and 2, Parent and Link with an expanded chevron, the item badge (`badge`) and the divider item (`divider`, a line above a Level 1 item) are built. The top and bottom of the drawer take any content (`HeaderDrawerHeader`, `HeaderDrawerFooter`, with the ready-made `HeaderLogo`), which stands in for Figma's Nav Drawer Header and Custom Content, without DGA's gray or green header band. The external-link icon and the green on-colour panel are not built.",
-    "reason": "The Header composes the shared Drawer instead of a second panel component. The missing parts are not needed to navigate and can be added to the Drawer later. The item is 36px high, the Figma web item and the DGA site (the Figma mobile item is 44px). The bar colours are the Header's: hovered icon-default-500 and pressed icon-default (DGA's neutral bars fail 3:1), selected icon-primary (background-primary is 2.23:1 on the selected fill in dark mode).",
+    "ours": "The Nav Drawer is the white panel (the Drawer component has white and gray tones). Item states (hovered, pressed and selected with a 6px by 24px bar at the start edge, focused with the outline, disabled), Level 1 and 2, Parent and Link with an expanded chevron, the item badge (`badge`) and the divider item (`NavDrawerDivider`, a line above the next item, inset 16px) are built. The external-link icon and the green on-colour panel are not.",
+    "reason": "The Nav Drawer composes the shared Drawer instead of a second panel component. The missing parts are not needed to navigate and can be added later. The item is 36px high, the Figma web item and the DGA site (the Figma mobile item is 44px). The bar colours are the Header's: hovered icon-default-500 and pressed icon-default (DGA's neutral bars fail 3:1), selected icon-primary (background-primary is 2.23:1 on the selected fill in dark mode).",
     "status": "fixed",
-    "component": "header"
+    "component": "nav-drawer"
+  },
+  {
+    "area": "Components",
+    "item": "Nav Drawer: items as parts, and a header and footer that take any content",
+    "original": "Nav Drawer Item is a component with fixed variants. Nav Drawer Header holds a logo placeholder, and the Nav Drawer has a Custom Content swap slot.",
+    "ours": "The Nav Drawer is a component of its own with parts: `NavDrawerHeader` (any content, in place of the visible title), `NavDrawerNav` with `NavDrawerItem`, `NavDrawerLink`, `NavDrawerSection` and `NavDrawerDivider`, and `NavDrawerFooter` (any content, at the bottom edge). An `items` array is a shortcut. It draws its own menu button and works with or without the Header; inside a Header it shows the Header's items unless it has its own. The drawer keeps `title` as its hidden accessible name when there is a header part.",
+    "reason": "Developers fill the top and the bottom with their own content, and write the navigation once for the bar and the drawer. There is no gray or green header band. The parts are read by the NavDrawer and draw nothing themselves, so they must be direct children of the part that names them.",
+    "status": "fixed",
+    "component": "nav-drawer"
   },
   {
     "area": "Contrast",
@@ -4179,7 +4197,7 @@
     "ours": "The selected item label uses link-primary-pressed (brand 800), 4.5:1 or better, and the item is Semibold.",
     "reason": "Text needs 4.5:1 (WCAG 1.4.3). A fill token is also the wrong token for text.",
     "status": "fixed",
-    "component": "header"
+    "component": "nav-drawer"
   },
   {
     "area": "Components",

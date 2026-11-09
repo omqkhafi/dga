@@ -143,11 +143,11 @@ export function compositePairs(): ComponentPair[] {
   );
   add("header", "sub-menu link, green, focus ring", "border-white", green, 3);
   // Drawer (white tone).
-  add("header", "drawer item", "text-default", "background-menu", 4.5);
-  add("header", "drawer item, hovered", "text-default", hover, 4.5, "background-menu");
-  add("header", "drawer item, pressed", "text-default", press, 4.5, "background-menu");
+  add("nav-drawer", "drawer item", "text-default", "background-menu", 4.5);
+  add("nav-drawer", "drawer item, hovered", "text-default", hover, 4.5, "background-menu");
+  add("nav-drawer", "drawer item, pressed", "text-default", press, 4.5, "background-menu");
   add(
-    "header",
+    "nav-drawer",
     "drawer item, current",
     "link-primary-pressed",
     "button-background-neutral-selected",
@@ -155,7 +155,7 @@ export function compositePairs(): ComponentPair[] {
     "background-menu",
   );
   add(
-    "header",
+    "nav-drawer",
     "drawer item, current, icon",
     "icon-primary",
     "button-background-neutral-selected",
@@ -163,18 +163,18 @@ export function compositePairs(): ComponentPair[] {
     "background-menu",
   );
   add(
-    "header",
+    "nav-drawer",
     "drawer item, current, bar",
     "icon-primary",
     "button-background-neutral-selected",
     3,
     "background-menu",
   );
-  add("header", "drawer item, hovered, bar", "icon-default-500", hover, 3, "background-menu");
-  add("header", "drawer item, pressed, bar", "icon-default", press, 3, "background-menu");
-  add("header", "drawer sub-heading", "text-primary-paragraph", "background-menu", 4.5);
-  add("header", "drawer menu button icon", "icon-default", "background-menu", 3);
-  add("header", "drawer item, focus ring", "border-black", "background-menu", 3);
+  add("nav-drawer", "drawer item, hovered, bar", "icon-default-500", hover, 3, "background-menu");
+  add("nav-drawer", "drawer item, pressed, bar", "icon-default", press, 3, "background-menu");
+  add("nav-drawer", "drawer sub-heading", "text-primary-paragraph", "background-menu", 4.5);
+  add("nav-drawer", "drawer menu button icon", "icon-default", "background-menu", 3);
+  add("nav-drawer", "drawer item, focus ring", "border-black", "background-menu", 3);
 
   // Second Nav: gray strip and primary strip.
   add("second-nav", "gray, text", "text-primary-paragraph", "background-neutral-100", 4.5);

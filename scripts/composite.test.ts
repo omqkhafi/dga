@@ -19,7 +19,15 @@ import { getAppliedFilters } from "../registry/bases/base/ui/filtration";
 import { buildModel } from "./tokens/model";
 import { ROOT } from "./tokens/source";
 
-const COMPOSITE = ["header", "second-nav", "footer", "date-picker", "carousel", "filtration"];
+const COMPOSITE = [
+  "header",
+  "nav-drawer",
+  "second-nav",
+  "footer",
+  "date-picker",
+  "carousel",
+  "filtration",
+];
 
 describe("Hijri (Umm al-Qura) calendar", () => {
   test("known dates match the official calendar", () => {
@@ -185,7 +193,7 @@ describe("registry", () => {
     }
   });
   test("the composition the roadmap asks for is declared", () => {
-    expect(need("header")).toEqual(expect.arrayContaining(["menu", "drawer"]));
+    expect(need("header")).toEqual(expect.arrayContaining(["menu", "nav-drawer"]));
     expect(need("footer")).toContain("accordion");
     expect(need("filtration")).toEqual(
       expect.arrayContaining(["checkbox", "radio", "select", "input", "tag", "drawer", "button"]),

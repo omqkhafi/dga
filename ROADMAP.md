@@ -170,7 +170,7 @@ Rules for both parts:
 
 ## Patches 0.7.4 to 0.7.7: Header and Second Nav (done)
 
-- [x] 0.7.4: Header Menu Item bar, states and phone layout checked against the Figma frames. 0.7.5: Second Nav without the divider, smaller centred items, and an optional links menu at the start or in the centre. 0.7.6: the Header sub-menu item tag, label states and a full-width sub-menu (`submenuWidth`). 0.7.7: the Nav Drawer Item states, badge and divider, and a Nav Drawer header and footer you fill (`HeaderDrawerHeader`, `HeaderDrawerFooter`) and a ready-made `HeaderLogo`; see [CHANGELOG.md](CHANGELOG.md).
+- [x] 0.7.4: Header Menu Item bar, states and phone layout checked against the Figma frames. 0.7.5: Second Nav without the divider, smaller centred items, and an optional links menu at the start or in the centre. 0.7.6: the Header sub-menu item tag, label states and a full-width sub-menu (`submenuWidth`). 0.7.7: the Nav Drawer as a component of its own (parts for its header, items and footer, and the Item states, badge and divider) and the Header navigation as parts with a ready-made `HeaderLogo`; see [CHANGELOG.md](CHANGELOG.md).
 
 ## Section blocks (0.8.0 to 0.13.0)
 
