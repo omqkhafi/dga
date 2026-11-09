@@ -252,6 +252,9 @@ function SubmenuPanel({
   );
 }
 
+// A trigger that is current and open keeps the current look (primary background, white label and
+// chevron, flag-gold bar). Its class also carries a compound `data-current:data-popup-open` rule so
+// the open look (light grey) never mixes with the current look's white text, whatever the CSS order.
 function DesktopItem({
   item,
   linkStyle,
