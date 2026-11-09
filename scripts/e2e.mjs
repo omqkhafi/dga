@@ -1743,7 +1743,7 @@ async function compositeChecks() {
       `${lang}: the logo is on the ${rtl ? "right" : "left"} and the actions on the ${rtl ? "left" : "right"}`,
     );
     check(
-      (await slot("header-menu-button").isVisible()) === false,
+      (await slot("nav-drawer-trigger").isVisible()) === false,
       `${lang}: no menu button at 1280px`,
     );
     await open("header-submenu-green");
@@ -1934,7 +1934,7 @@ async function compositeChecks() {
     // ---------------------------------------------------------------- Header, mobile Drawer
     await open("header-basic", 375);
     check(
-      !(await slot("header-nav").isVisible()) && (await slot("header-menu-button").isVisible()),
+      !(await slot("header-nav").isVisible()) && (await slot("nav-drawer-trigger").isVisible()),
       `${lang}: at 375px the navigation is replaced by the menu button`,
     );
     check(
@@ -1948,7 +1948,7 @@ async function compositeChecks() {
       const [more, logo, menu] = [
         box("header-overflow-button"),
         box("header-logo"),
-        box("header-menu-button"),
+        box("nav-drawer-trigger"),
       ];
       return {
         more: more.x,
@@ -1964,7 +1964,7 @@ async function compositeChecks() {
           : phone.more < phone.logo && phone.logo < phone.menu),
       `${lang}: on a phone the overflow button is on the start side, the logo in the middle and the menu on the end (${JSON.stringify(phone)})`,
     );
-    await slot("header-menu-button").focus();
+    await slot("nav-drawer-trigger").focus();
     await page.keyboard.press("Enter");
     await page.waitForTimeout(400);
     const drawer = page.getByRole("dialog");
@@ -1979,7 +1979,7 @@ async function compositeChecks() {
         true,
       `${lang}: focus moves into the Drawer`,
     );
-    const parent = slot("header-drawer-item")
+    const parent = slot("nav-drawer-item")
       .filter({ hasText: /./ })
       .locator("xpath=self::button")
       .first();
@@ -1995,19 +1995,104 @@ async function compositeChecks() {
     );
     check(
       (await page
-        .locator("[data-slot=header-drawer-item][data-level='2']")
+        .locator("[data-slot=nav-drawer-item][data-level='2']")
         .filter({ visible: true })
         .count()) === 4,
       `${lang}: the parent shows its four Level 2 links`,
     );
     check(
-      (await page.locator("[data-slot=header-drawer-item][aria-current=page]").count()) === 1,
+      (await page.locator("[data-slot=nav-drawer-item][aria-current=page]").count()) === 1,
       `${lang}: the Drawer marks the current page`,
     );
+    // Nav Drawer Item: 36px high, Level 1 and Level 2 labels on one line, the divider inset 16px,
+    // the 6px by 24px state bar and the badge.
+    const item = await page.evaluate(() => {
+      const nav = document.querySelector("[data-slot=nav-drawer-nav]");
+      const one = nav?.querySelector("[data-slot=nav-drawer-item][data-level='1']");
+      const two = nav?.querySelector("[data-slot=nav-drawer-item][data-level='2']");
+      const line = nav?.querySelector("li[aria-hidden=true]");
+      const label = (el) => el?.querySelector(":scope > span")?.getBoundingClientRect();
+      if (!(one && two && line)) return null;
+      const box = one.getBoundingClientRect();
+      const rule = line.getBoundingClientRect();
+      const bar = getComputedStyle(one, "::before");
+      const start = (r) => (document.dir === "rtl" ? box.right - r.right : r.left - box.left);
+      return {
+        height: Math.round(box.height),
+        sameLine: Math.abs((label(one)?.x ?? 0) - (label(two)?.x ?? 99)) <= 1,
+        inset: Math.round(start(rule)),
+        barSize: `${bar.width} ${bar.height}`,
+        badge: nav.querySelectorAll("[data-slot=badge]").length,
+      };
+    });
+    check(item !== null, `${lang}: the Drawer shows items and a divider`);
+    check(item?.height === 36, `${lang}: a Drawer item is 36px high (${item?.height}px)`);
+    check(item?.sameLine === true, `${lang}: Level 1 and Level 2 labels line up`);
+    check(item?.inset === 16, `${lang}: the divider is inset 16px (${item?.inset}px)`);
+    check(item?.barSize === "6px 24px", `${lang}: the state bar is 6px by 24px (${item?.barSize})`);
+    check((item?.badge ?? 0) >= 1, `${lang}: a Drawer item shows its badge`);
     await page.keyboard.press("Escape");
     await page.waitForTimeout(400);
     check(!(await drawer.isVisible().catch(() => false)), `${lang}: Escape closes the Drawer`);
-    check((await active()) === "header-menu-button", `${lang}: focus returns to the menu button`);
+    check((await active()) === "nav-drawer-trigger", `${lang}: focus returns to the menu button`);
+
+    // Drawer header and footer (NavDrawerHeader, NavDrawerFooter): the logo at the top, your
+    // content at the bottom edge, and the drawer still has its name.
+    await open("nav-drawer-parts", 375);
+    await page.getByRole("dialog").waitFor({ state: "visible", timeout: 3000 });
+    const slots = await page.evaluate(() => {
+      const panel = document.querySelector("[data-slot=drawer-content]");
+      const logo = panel?.querySelector(
+        "[data-slot=nav-drawer-header] [data-slot=header-logo-link]",
+      );
+      const foot = panel?.querySelector("[data-slot=nav-drawer-footer]");
+      const title = panel?.querySelector("[data-slot=drawer-title]");
+      if (!(panel && logo && foot && title)) return null;
+      const p = panel.getBoundingClientRect();
+      return {
+        footAtBottom: Math.round(p.bottom - foot.getBoundingClientRect().bottom) <= 32,
+        titleHidden: title.getBoundingClientRect().width <= 1,
+        named: Boolean(document.querySelector("[role=dialog]")?.getAttribute("aria-labelledby")),
+      };
+    });
+    check(slots !== null, `${lang}: the Drawer shows the logo and the footer`);
+    check(slots?.footAtBottom === true, `${lang}: the Drawer footer sits at the bottom edge`);
+    check(
+      slots?.titleHidden === true && slots?.named === true,
+      `${lang}: with the logo the title is hidden and the Drawer is still named`,
+    );
+
+    // NavDrawer on its own (no Header): it draws its own menu button at any width, the parent
+    // expands, a disabled item is not a link, and Escape closes it and returns focus to the button.
+    await open("nav-drawer-basic", 1280);
+    await page.getByRole("dialog").waitFor({ state: "visible", timeout: 3000 });
+    const alone = await page.evaluate(() => {
+      const items = [...document.querySelectorAll("[data-slot=nav-drawer-item]")];
+      const disabled = items.find((el) => el.getAttribute("aria-disabled") === "true");
+      return {
+        trigger: Boolean(document.querySelector("[data-slot=nav-drawer-trigger]")),
+        items: items.length,
+        disabledNoHref: disabled ? !disabled.hasAttribute("href") : false,
+        divider: Boolean(document.querySelector("[data-slot=nav-drawer-nav] li[aria-hidden=true]")),
+      };
+    });
+    check(
+      alone.trigger && alone.items === 9,
+      `${lang}: a NavDrawer alone shows its button and items`,
+    );
+    check(
+      alone.disabledNoHref && alone.divider,
+      `${lang}: a NavDrawer has a divider and a disabled item`,
+    );
+    await page.keyboard.press("Escape");
+    await page.waitForTimeout(400);
+    check(
+      !(await page
+        .getByRole("dialog")
+        .isVisible()
+        .catch(() => false)) && (await active()) === "nav-drawer-trigger",
+      `${lang}: Escape closes a NavDrawer and focus returns to its button`,
+    );
 
     // ---------------------------------------------------------------- Second Nav
     await open("second-nav-overflow", 375);

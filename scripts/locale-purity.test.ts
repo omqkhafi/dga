@@ -88,6 +88,7 @@ test("the Arabic API descriptions have no English words", async () => {
     "stepper",
     // The Phase 6 components (0.6.0).
     "header",
+    "nav-drawer",
     "second-nav",
     "footer",
     "date-picker",

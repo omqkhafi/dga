@@ -826,6 +826,81 @@ export const API_DESCRIPTIONS_AR: Record<string, string> = {
   "header.Header.drawerTitle": "عنوان الدرج.",
   "header.Header.drawerDescription": "سطر تحت عنوان الدرج لقارئات الشاشة.",
   "header.Header.closeLabel": "اسم زر إغلاق الدرج.",
+  "header.Header.children":
+    "أجزاء الترويسة تُوضع داخلها مباشرة: `HeaderNav` بعناصر التنقل، و`NavDrawer` لتشكيل الدرج الذي يُفتح تحت `lg` (رأسه وعناصره الخاصة وتذييله). لا يُرسم غيرهما.",
+  "header.HeaderNav":
+    "التنقل الرئيسي. ضع فيه أجزاء `HeaderNavItem` و`HeaderNavDivider` مباشرة داخل Header. العناصر نفسها في الشريط من `lg` وفي درج التنقل تحته.",
+  "header.HeaderNav.children": "أجزاء `HeaderNavItem` و`HeaderNavDivider`.",
+  "header.HeaderNavItem":
+    "عنصر من التنقل الرئيسي (DGA: Header Menu Item): رابط نصه في `children`، أو عنصر أم له `label` وأجزاء `HeaderNavSection` تُفتح قائمة فرعية. ضعه في `HeaderNav`. تقرؤه Header وترسمه في الشريط وفي درج التنقل.",
+  "header.HeaderNavItem.label": "نص العنصر الأم. للرابط يكون نصه في `children`.",
+  "header.HeaderNavItem.href":
+    "يجعل العنصر رابطًا. اتركه للعنصر الأم الذي له أجزاء `HeaderNavSection`.",
+  "header.HeaderNavItem.badge":
+    'رقم أو نص قصير في نهاية الرابط في درج التنقل، مثل "+99". لا يظهر في الشريط.',
+  "header.HeaderNavItem.current":
+    'الصفحة التي يقف فيها الشخص (`aria-current="page"`). يُعلَّم الأب إذا كان أحد أبنائه الحالي.',
+  "header.HeaderNavItem.submenuWidth":
+    "يتجاوز `submenuWidth` الخاص بالترويسة لقائمة هذا العنصر الفرعية.",
+  "header.HeaderNavItem.defaultOpen": "يفتح القائمة الفرعية عند أول عرض. لعرضها في الوثائق.",
+  "header.HeaderNavItem.children": "نص الرابط، أو أجزاء `HeaderNavSection` للعنصر الأم.",
+  "header.HeaderNavSection":
+    "عمود في القائمة الفرعية بعنوان اختياري. تسمح DGA بأربعة أعمدة. ضعه في `HeaderNavItem`.",
+  "header.HeaderNavSection.title": "عنوان العمود.",
+  "header.HeaderNavSection.children": "أجزاء `HeaderNavLink`.",
+  "header.HeaderNavLink": "رابط داخل قائمة فرعية. ضعه في `HeaderNavSection`. تقرؤه Header وترسمه.",
+  "header.HeaderNavLink.description":
+    "سطر نص مساعد تحت التسمية (نص DGA المساعد لعنصر القائمة الفرعية).",
+  "header.HeaderNavLink.icon": "يظهر مع `linkStyle` بقيمة `icon` و`boxed-icon`.",
+  "header.HeaderNavLink.tag": 'تسمية قصيرة بعد نص الرابط، مثل "جديد" (عنصر DGA مع وسم).',
+  "header.HeaderNavLink.badge":
+    'رقم أو نص قصير في نهاية العنصر في درج التنقل، مثل "+99". لا يظهر في القائمة الفرعية.',
+  "header.HeaderNavLink.children": "نص الرابط.",
+  "nav-drawer.NavDrawer":
+    'درج التنقل (DGA: Navigation Drawer): لوحة تنزلق من جهة البداية فيها رأس وعناصر التنقل وتذييل. تتوسع العناصر الأم في مكانها وتُزاح روابط المستوى الثاني، وللصفحة الحالية `aria-current="page"`، ويغلقه Esc. يرسم زر القائمة الخاص به، أو لا يرسم شيئًا مع `hideTrigger`. داخل Header يُفتح من زر القائمة فيها ويعرض عناصرها ما لم تكن له عناصره الخاصة.',
+  "nav-drawer.NavDrawer.children":
+    "أجزاء الدرج: `NavDrawerHeader` للأعلى (بدل العنوان المرئي)، و`NavDrawerNav` بأجزاء `NavDrawerItem` و`NavDrawerDivider`، و`NavDrawerFooter` للحافة السفلية. ضعها مباشرة داخل NavDrawer. لا يُرسم غيرها.",
+  "nav-drawer.NavDrawer.items":
+    "العناصر بيانات بدل `NavDrawerNav`. يغلب `NavDrawerNav` عند تمرير الاثنين.",
+  "nav-drawer.NavDrawer.search": "حقل بحث في أعلى الدرج فوق العناصر.",
+  "nav-drawer.NavDrawer.end": "صف بعد العناصر وفوق التذييل، مثل مبدّل لغة ومنطقة مستخدم.",
+  "nav-drawer.NavDrawer.open": "يتحكم في كون الدرج مفتوحًا.",
+  "nav-drawer.NavDrawer.defaultOpen": "يفتح الدرج عند أول عرض. لعرضه في الوثائق.",
+  "nav-drawer.NavDrawer.side":
+    "الحافة التي ينزلق منها الدرج: `start` (الافتراضي) أو `end`. كلتاهما تتبع اتجاه الصفحة.",
+  "nav-drawer.NavDrawer.title":
+    "اسم الدرج لقارئات الشاشة، ويظهر عنوانًا مرئيًا ما لم يكن هناك `NavDrawerHeader`.",
+  "nav-drawer.NavDrawer.description": "سطر تحت العنوان. بدونه يسمع قارئ الشاشة `navLabel`.",
+  "nav-drawer.NavDrawer.navLabel": "اسم قائمة التنقل. ترجمه في الصفحات العربية.",
+  "nav-drawer.NavDrawer.menuLabel": "اسم الزر الذي يفتح الدرج. ترجمه في الصفحات العربية.",
+  "nav-drawer.NavDrawer.closeLabel": "اسم زر الإغلاق. ترجمه في الصفحات العربية.",
+  "nav-drawer.NavDrawer.hideTrigger": "يحذف زر القائمة، لدرج تفتحه بـ `open`.",
+  "nav-drawer.NavDrawer.triggerClassName": "أصناف CSS لزر القائمة، لتحديد موضعه.",
+  "nav-drawer.NavDrawerHeader":
+    "أعلى الدرج بدل العنوان المرئي. يقبل أي محتوى: شعارًا أو بطاقة مستخدم أو لافتة. يحتفظ الدرج بـ `title` اسمًا متاحًا مخفيًا عن النظر.",
+  "nav-drawer.NavDrawerFooter": "أسفل الدرج عند حافته السفلية، تحت العناصر. يقبل أي محتوى.",
+  "nav-drawer.NavDrawerNav": "قائمة العناصر. ضع فيها أجزاء `NavDrawerItem` و`NavDrawerDivider`.",
+  "nav-drawer.NavDrawerNav.children": "أجزاء `NavDrawerItem` و`NavDrawerDivider`.",
+  "nav-drawer.NavDrawerItem":
+    "عنصر من المستوى الأول (DGA: Nav Drawer Item): رابط نصه في `children`، أو عنصر أم له `label` وأجزاء `NavDrawerLink` أو `NavDrawerSection` تتوسع في مكانها.",
+  "nav-drawer.NavDrawerItem.label": "نص العنصر الأم. للرابط يكون نصه في `children`.",
+  "nav-drawer.NavDrawerItem.href":
+    "يجعل العنصر رابطًا. اتركه للعنصر الأم الذي له أجزاء `NavDrawerLink` أو `NavDrawerSection`.",
+  "nav-drawer.NavDrawerItem.badge": 'رقم أو نص قصير في نهاية الرابط، مثل "+99".',
+  "nav-drawer.NavDrawerItem.children":
+    "نص الرابط، أو أجزاء `NavDrawerLink` و`NavDrawerSection` للعنصر الأم.",
+  "nav-drawer.NavDrawerSection":
+    "مجموعة روابط من المستوى الثاني بعنوان صغير. ضعها في `NavDrawerItem`.",
+  "nav-drawer.NavDrawerSection.title": "عنوان صغير فوق الروابط.",
+  "nav-drawer.NavDrawerLink":
+    "رابط من المستوى الثاني (DGA: Nav Drawer Item، المستوى الثاني). ضعه في `NavDrawerItem` أو `NavDrawerSection`.",
+  "nav-drawer.NavDrawerLink.tag": 'تسمية قصيرة بعد النص، مثل "جديد".',
+  "nav-drawer.NavDrawerLink.badge": 'رقم أو نص قصير في النهاية، مثل "+99".',
+  "nav-drawer.NavDrawerLink.children": "نص الرابط.",
+  "header.HeaderLogo.src": "صورة الشعار. للأيقونة SVG أو لمحتواك استعمل `children`.",
+  "header.HeaderLogo.alt": "ما تعرضه الصورة، مثل اسم الموقع. هو اسم الرابط، فاضبطه دائمًا مع `src`.",
+  "header.HeaderLogo":
+    "الشعار رابطًا إلى الصفحة الرئيسية (`href`، الافتراضي `/`): صورة من `src` أو محتواك في `children`. استعمله في `logo` الخاص بـ Header ومرة أخرى داخل `HeaderDrawerHeader`.",
   "header.Header":
     'ترويسة الموقع (DGA: Nav Header): شعار، وقائمة التنقل الرئيسية مع قوائم فرعية، وإجراءات وبحث ومبدّل لغة ومنطقة مستخدم. رابط التخطي أول ما يصله التركيز. مفتاحا اليمين واليسار (يتبادلان في الصفحات العربية) وHome وEnd ينقلان بين العناصر؛ وEnter أو Space أو السهم لأسفل يفتح القائمة الفرعية، وهي Menu من DGA. تحت عرض `lg` يصير الشريط زر القائمة والشعار في المنتصف وزر الفائض (…)، وتنتقل القائمة إلى Drawer. للصفحة الحالية `aria-current="page"`.',
   "header.HeaderAction.iconOnly": "أيقونة فقط: يخفي النص (ويبقى اسمًا للوصول). يحتاج إلى `icon`.",

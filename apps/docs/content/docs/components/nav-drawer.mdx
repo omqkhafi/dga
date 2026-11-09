@@ -1,0 +1,124 @@
+---
+title: Nav Drawer
+description: "The navigation drawer (DGA: Navigation Drawer): a panel that slides in from the start edge with a header, the navigation items and a footer. Parents expand in place. The header and the footer take any content."
+---
+
+<Preview compact name="nav-drawer-basic" title="Nav Drawer" defaultViewport="mobile" minHeight={380} />
+
+## Installation
+
+<ComponentInstall name="nav-drawer" />
+
+It installs the [Drawer](/docs/components/drawer), the [Badge](/docs/components/badge) and the [Tag](/docs/components/tag) with it. The [Header](/docs/components/header) uses it below `lg`, and you can use it without a Header.
+
+## Usage
+
+```tsx title="layout.tsx"
+import { Home01Icon } from "@hugeicons/core-free-icons";
+import {
+  NavDrawer,
+  NavDrawerDivider,
+  NavDrawerFooter,
+  NavDrawerHeader,
+  NavDrawerItem,
+  NavDrawerLink,
+  NavDrawerNav,
+  NavDrawerSection,
+} from "@/components/dga/nav-drawer";
+
+export function SiteMenu() {
+  return (
+    <NavDrawer title="Menu" menuLabel="Open the menu" closeLabel="Close">
+      <NavDrawerHeader>
+        <img src="/logo.svg" alt="Digital Services" height={40} />
+      </NavDrawerHeader>
+      <NavDrawerNav>
+        <NavDrawerItem href="/" icon={Home01Icon} current>
+          Home
+        </NavDrawerItem>
+        <NavDrawerItem label="Services">
+          <NavDrawerSection title="Individuals">
+            <NavDrawerLink href="/renew">Renew a licence</NavDrawerLink>
+            <NavDrawerLink href="/pay" tag="New">Pay a fee</NavDrawerLink>
+          </NavDrawerSection>
+        </NavDrawerItem>
+        <NavDrawerDivider />
+        <NavDrawerItem href="/contact" badge="+9">
+          Contact
+        </NavDrawerItem>
+      </NavDrawerNav>
+      <NavDrawerFooter>Need help? Call 920000000.</NavDrawerFooter>
+    </NavDrawer>
+  );
+}
+```
+
+The `NavDrawer` draws its own menu button and opens the panel from the start edge. Use `open` and `onOpenChange` to control it, with `hideTrigger` to leave the button out. The parts go directly inside the part that names them: `NavDrawerHeader`, `NavDrawerNav` and `NavDrawerFooter` inside the `NavDrawer`, and `NavDrawerItem` and `NavDrawerDivider` inside `NavDrawerNav`. They draw nothing themselves; the `NavDrawer` reads them. Every visible string is a prop (`title`, `navLabel`, `menuLabel`, `closeLabel`), translated on Arabic pages.
+
+On Arabic pages the drawer opens from the right and everything mirrors: the bar at the start edge, the chevrons, the indent of Level 2 and the badge.
+
+## Anatomy
+
+The drawer has three parts, and the middle one is the navigation.
+
+- **Header** (`NavDrawerHeader`): the top of the drawer, in place of the visible title. It takes any content: a logo, a user card, a banner. The drawer keeps `title` as its accessible name, hidden from view. Without it the drawer shows `title`.
+- **Items** (`NavDrawerNav`, with `NavDrawerItem`, `NavDrawerLink`, `NavDrawerSection` and `NavDrawerDivider`): the navigation.
+- **Footer** (`NavDrawerFooter`): the bottom of the drawer, at its bottom edge. It takes any content.
+- **Search** (`search`) and **end row** (`end`): optional slots above the items and between the items and the footer, for a search field, a language switcher or a user area.
+
+### Item
+
+An item is 36px high, Text sm Semibold with a 16px icon and an 8px gap. A Level 1 link, a Level 1 parent with a chevron (up when expanded), or a Level 2 link (Regular, no icon, its label lined up with the Level 1 label). A link can end with a `badge` such as "+99", and a Level 2 link can have a `tag` such as "New". `NavDrawerDivider` draws a line above the next item, inset 16px on each side.
+
+States: **default**; **hovered** and **pressed** (a neutral fill and a 6px bar at the start edge, lighter when hovered); **focused** (only a 2px outline); **selected** (`current`: the selected fill, a brand bar, brand icon and text, and `aria-current="page"`); **disabled**.
+
+## Examples
+
+### In a Header
+
+Inside a [Header](/docs/components/header) the drawer opens from the Header's menu button below `lg` and shows the Header's items, so you write them once. Add a `NavDrawer` to shape its header and footer, or to give it items of its own.
+
+<Preview compact name="nav-drawer-parts" title="Logo at the top, your content at the bottom" defaultViewport="mobile" minHeight={380} />
+
+```tsx title="layout.tsx"
+<Header logo={<HeaderLogo src="/logo.svg" alt="Digital Services" />}>
+  <HeaderNav>…</HeaderNav>
+  <NavDrawer>
+    <NavDrawerHeader>
+      <HeaderLogo src="/logo.svg" alt="Digital Services" />
+    </NavDrawerHeader>
+    <NavDrawerFooter>Need help? Call 920000000.</NavDrawerFooter>
+  </NavDrawer>
+</Header>
+```
+
+## Accessibility
+
+| Key | Action |
+| --- | --- |
+| <kbd>Enter</kbd> or <kbd>Space</kbd> | Opens the drawer from its button, follows a link, or expands and collapses a parent. |
+| <kbd>Tab</kbd> | Moves through the items. Focus stays inside the open drawer. |
+| <kbd>Esc</kbd> | Closes the drawer and returns focus to its button. |
+
+- The drawer is a modal dialog named by `title`, with the items in a `nav` landmark named by `navLabel`.
+- A parent is a button with `aria-expanded` and `aria-controls`. Expanding it leaves focus on the parent (the disclosure pattern); DGA suggests moving focus to the first child, which is not done here.
+- The current page has `aria-current="page"` and is also marked by the bar, the brand colour and the weight, so it does not rely on colour alone.
+- A focused item has a 2px outline. Text is 4.5:1 and icons and the bar 3:1 in light and dark.
+- DGA mentions arrow keys: the items are reached with Tab, as in a list of links.
+
+## API Reference
+
+<ApiReference component="nav-drawer" />
+
+## Deviations from DGA
+
+- Figma draws a Nav Drawer Item with fixed variants. Here the items are parts (`NavDrawerItem`, `NavDrawerLink`, `NavDrawerSection`, `NavDrawerDivider`) and `items` data is a shortcut.
+- The header and the footer are parts that take any content, in place of Figma's Nav Drawer Header with its logo placeholder and its Custom Content swap slot. There is no gray or green header band.
+- The panel is the white [Drawer](/docs/components/drawer). The Green and Gray panels, the external-link icon and the on-colour item states are not built.
+- The item is 36px high, as the Figma web item and the DGA site draw it (the Figma mobile item is 44px).
+
+<ComponentDeviations component="nav-drawer" />
+
+## Contrast
+
+<ComponentContrast component="nav-drawer" />

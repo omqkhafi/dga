@@ -82,7 +82,15 @@ const NAVIGATION_ITEMS = [
 
 /** The Phase 6 composite items. Stock shadcn has its own calendar and carousel, so the collision
  *  fixture installs both side by side. */
-const COMPOSITE_ITEMS = ["header", "second-nav", "footer", "date-picker", "carousel", "filtration"];
+const COMPOSITE_ITEMS = [
+  "header",
+  "nav-drawer",
+  "second-nav",
+  "footer",
+  "date-picker",
+  "carousel",
+  "filtration",
+];
 
 /** The Phase 7 items (0.7.0): the Platform Code extensions, and the Slider and Digital Stamp that
  *  DGA does define. Stock shadcn has its own version of every name here except digital-stamp, so

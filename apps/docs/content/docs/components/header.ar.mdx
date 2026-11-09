@@ -1,7 +1,7 @@
 ---
 title: Header
 description: "ترويسة الموقع (DGA: Nav Header): الشعار وقائمة التنقل الرئيسية مع قوائم فرعية، والإجراءات، وخانات البحث واللغة والمستخدم. رابط تخطٍّ، وتنقل بلوحة المفاتيح، ودرج على الشاشات الصغيرة."
-sourceHash: a47e7b2ca7c9
+sourceHash: c627db43eebb
 ---
 
 <Preview compact name="header-basic" title="الترويسة" minHeight={110} />
@@ -10,44 +10,50 @@ sourceHash: a47e7b2ca7c9
 
 <ComponentInstall name="header" />
 
-يُثبَّت معه [Menu](/docs/components/menu) و[Drawer](/docs/components/drawer) و[Tag](/docs/components/tag). ضع [Second Nav](/docs/components/second-nav) في خانة `top`، و[Footer](/docs/components/footer) في آخر الصفحة.
+يُثبَّت معه [Menu](/docs/components/menu) و[Nav Drawer](/docs/components/nav-drawer) و[Tag](/docs/components/tag). ضع [Second Nav](/docs/components/second-nav) في خانة `top`، و[Footer](/docs/components/footer) في آخر الصفحة.
 
 ## الاستخدام [#usage]
 
 ```tsx title="layout.tsx"
-import { Header } from "@/components/dga/header";
+import {
+  Header,
+  HeaderLogo,
+  HeaderNav,
+  HeaderNavItem,
+  HeaderNavLink,
+  HeaderNavSection,
+} from "@/components/dga/header";
 import { Globe02Icon, UserIcon } from "@hugeicons/core-free-icons";
 
 export function SiteHeader() {
   return (
     <Header
-      logo={<a href="/"><img src="/logo.svg" alt="الخدمات الرقمية" height={40} /></a>}
-      items={[
-        { label: "الرئيسية", href: "/", current: true },
-        {
-          label: "الخدمات",
-          sections: [
-            {
-              title: "الأفراد",
-              links: [
-                { label: "تجديد ترخيص", href: "/renew", description: "جدّد إلكترونيًا في دقائق" },
-                { label: "سداد رسم", href: "/pay" },
-              ],
-            },
-          ],
-        },
-        { label: "تواصل معنا", href: "/contact" },
-      ]}
+      logo={<HeaderLogo src="/logo.svg" alt="الخدمات الرقمية" />}
       actions={[
         { label: "اللغة", href: "/en", icon: Globe02Icon },
         { label: "تسجيل الدخول", href: "/sign-in", icon: UserIcon },
       ]}
-    />
+    >
+      <HeaderNav>
+        <HeaderNavItem href="/" current>الرئيسية</HeaderNavItem>
+        <HeaderNavItem label="الخدمات">
+          <HeaderNavSection title="الأفراد">
+            <HeaderNavLink href="/renew" description="جدّد إلكترونيًا في دقائق">
+              تجديد ترخيص
+            </HeaderNavLink>
+            <HeaderNavLink href="/pay">سداد رسم</HeaderNavLink>
+          </HeaderNavSection>
+        </HeaderNavItem>
+        <HeaderNavItem href="/contact">تواصل معنا</HeaderNavItem>
+      </HeaderNav>
+    </Header>
   );
 }
 ```
 
-أعطِ العنصر `main` المعرّف `main-content`، أو اضبط `skipHref`. مرّر كل نص ظاهر خاصية: ترجم `skipLabel` و`navLabel` و`menuLabel` و`moreLabel` و`drawerTitle` و`closeLabel` في الصفحات العربية.
+التنقل مبني من أجزاء: `HeaderNav` فيه أجزاء `HeaderNavItem`، والعنصر الأم يحمل أجزاء `HeaderNavSection` و`HeaderNavLink`، و`HeaderNavDivider` لخط في درج التنقل. تُوضع مباشرة داخل الجزء الذي يسمّيها ولا ترسم شيئًا بنفسها؛ تقرؤها Header. ما زالت مصفوفة `items` في الإصدارات السابقة تعمل اختصارًا، ويمكن خلطها بالأجزاء. العناصر نفسها في الشريط من `lg` وفي [Nav Drawer](/docs/components/nav-drawer) تحته، فتكتبها مرة واحدة.
+
+أعطِ العنصر `main` المعرّف `main-content`، أو اضبط `skipHref`. مرّر كل نص ظاهر خاصية: ترجم `skipLabel` و`navLabel` و`menuLabel` و`moreLabel` و`drawerTitle` و`closeLabel` في الصفحات العربية. `HeaderLogo` رابط شعار جاهز: صورة من `src` و`alt`، أو محتواك في `children`.
 
 يقع الشعار على اليمين، وتجري العناصر من اليمين، وتكون الإجراءات على اليسار. تنعكس الأسهم والقوائم الفرعية وتخطيط الجوال والدرج (الذي يُفتح من جهة البداية)، ويتبادل اليمين واليسار.
 
@@ -55,10 +61,10 @@ export function SiteHeader() {
 
 - **الشريط**: ارتفاعه 72px على سطح القائمة، بحشوة 32px، في المنتصف وبعرض 1280px ما لم تستخدم `fullWidth`.
 - **الشعار** (`logo`): شعار الجهة، أي عنصر، وهو رابط إلى الصفحة الرئيسية.
-- **عنصر القائمة** (`items`): رابط، أو زر يفتح قائمة فرعية إن كان له `sections`. ارتفاعه 72px وزواياه `sm`، وفيه أيقونة أمامية اختيارية وسهم للقائمة الفرعية. الحالات: افتراضي، تمرير، ضغط، تركيز، معطل. العنصر المحدد (`current`) كتلة بلون العلامة بكامل الارتفاع وفي حافتها السفلية شريط مستدير بارتفاع 6px يبتعد 8px عن كل جانب؛ وإذا عُطّل تزول الكتلة ويصير الشريط خافتًا. ويُظهر العنصر غير المحدد الشريط عند التمرير، ويصير أغمق عند الضغط أو الفتح؛ أما التركيز فيظهر الإطار فقط.
+- **عنصر القائمة** (`HeaderNavItem`، أو `items`): رابط، أو زر يفتح قائمة فرعية إن كان له `sections`. ارتفاعه 72px وزواياه `sm`، وفيه أيقونة أمامية اختيارية وسهم للقائمة الفرعية. الحالات: افتراضي، تمرير، ضغط، تركيز، معطل. العنصر المحدد (`current`) كتلة بلون العلامة بكامل الارتفاع وفي حافتها السفلية شريط مستدير بارتفاع 6px يبتعد 8px عن كل جانب؛ وإذا عُطّل تزول الكتلة ويصير الشريط خافتًا. ويُظهر العنصر غير المحدد الشريط عند التمرير، ويصير أغمق عند الضغط أو الفتح؛ أما التركيز فيظهر الإطار فقط.
 - **القائمة الفرعية**: [Menu](/docs/components/menu) من DGA بعمود لكل قسم، حتى أربعة. كل رابط عنصر قائمة فرعية من DGA (`Header Sub-menu Item`): نص مع نص مساعد اختياري (`description`)، وأيقونة (`icon`، تظهر مع `linkStyle` بقيمة `icon` أو `boxed-icon`)، ووسم (`tag`، مثل «جديد»)، بالحالات: افتراضي، تمرير، ضغط، تركيز. قيمة `linkStyle` هي `text` أو `icon` أو `boxed-icon`، وقيمة `submenuTone` هي `default` أو `green` (الأخضر الداكن لعلم DGA)، وقيمة `submenuWidth` هي `content` أو `full`.
 - **الإجراءات** (`actions`، [`HeaderAction`](#api-reference)): مضمّن (الأيقونة بجانب النص)، أو علوي (`iconPosition="top"`، الأيقونة فوق النص)، أو نص فقط (بلا أيقونة)، أو أيقونة فقط (`iconOnly`)، بالحالات الخمس نفسها وبكتلة التحديد وشريطها كعنصر القائمة.
-- **تخطيط الجوال**: تحت `lg` يتألف الشريط من زر فائض (…) في جهة البداية يفتح الإجراءات، والشعار في المنتصف، وزر القائمة في جهة النهاية. يفتح زر القائمة التنقل في درج التنقل: [Drawer](/docs/components/drawer) من DGA، حيث تتوسع العناصر الأم في مكانها وتُزاح روابط المستوى الثاني.
+- **تخطيط الجوال**: تحت `lg` يتألف الشريط من زر فائض (…) في جهة البداية يفتح الإجراءات، والشعار في المنتصف، وزر القائمة في جهة النهاية. يفتح زر القائمة التنقل في [Nav Drawer](/docs/components/nav-drawer)، وهو مكوّن قائم بنفسه: العناصر نفسها قائمة، تتوسع العناصر الأم في مكانها وتُزاح روابط المستوى الثاني ويمكن إضافة شارة أو فاصل. ضع `NavDrawer` في Header لتعطي الدرج رأسه أو تذييله أو عناصره الخاصة.
 - **موضع التنقل** (`navPosition`): `start` (الافتراضي، بجانب الشعار) أو `center` (في منتصف الشريط من `lg`).
 - **الخانات الاختيارية**: `search` و`language` و`user`. ليست من بنية DGA وتظهر في مثال الإضافات فقط.
 
@@ -114,7 +120,7 @@ export function SiteHeader() {
 
 ### درج التنقل
 
-الدرج مفتوحًا من زر القائمة.
+درج التنقل مفتوحًا من زر القائمة. يعرض عناصر Header، مع شارة وفاصل. الدرج [مكوّن قائم بنفسه](/docs/components/nav-drawer)، له رأس وتذييل يقبلان أي محتوى.
 
 <Preview compact name="header-drawer-open" title="درج التنقل" defaultViewport="mobile" minHeight={380} />
 
@@ -156,13 +162,12 @@ export function SiteHeader() {
 ## الاختلافات عن DGA [#deviations-from-dga]
 
 - شريط الموقع الرسمي هو [الختم الرقمي](/docs/components/digital-stamp) ويُمرَّر في خانة `stamp` التي تقع فوق `top`. أما [Second Nav](/docs/components/second-nav) فيوضع في `top` تحته.
-- Header Menu وNav Drawer ليسا مكوّنين منفصلين: السهم جزء من العنصر، والقائمة الفرعية هي Menu، والتنقل في الشاشات الصغيرة هو Drawer.
+- Header Menu ليس مكوّنًا منفصلًا: السهم جزء من العنصر والقائمة الفرعية هي Menu. أما Nav Drawer فهو مكوّن [Nav Drawer](/docs/components/nav-drawer) الذي تستعمله Header تحت `lg`.
 - يتولى الدرج الأمر تحت `lg` (1024px) لا عند 960px.
 - حالة التحديد في عنصر القائمة والإجراء كتلة بشريط كما في DGA؛ أما التمرير والضغط وحلقة التركيز فتستخدم تعبئتي التمرير والضغط المحايدتين وإطارًا بعرض 2px داخل العنصر، لا حدًّا من Figma.
-- درج التنقل: اللوحة البيضاء فقط. لم تُنفَّذ لوحتا DGA الخضراء والرمادية، ولا شارة العنصر، ولا أيقونة الرابط الخارجي، ولا عنصر الفاصل.
 - وسم عنصر القائمة الفرعية هو [Tag](/docs/components/tag) من Platform Code (نجاح، أو على اللون في اللوحة الخضراء)، لا وسمًا خاصًّا بالترويسة. و`submenuWidth="full"` خيار؛ وتبقى البطاقة تحت العنصر هي الافتراضية.
 - يضع `navPosition="center"` التنقل في منتصف الشريط. يرسمه DGA في البداية، وتبقى هي الافتراضية.
-- لا تظهر الإجراءات في الشريط تحت `lg`؛ تنتقل إلى قائمة الفائض (…)، وتنتقل `language` و`user` إلى أسفل درج التنقل.
+- لا تظهر الإجراءات في الشريط تحت `lg`؛ تنتقل إلى قائمة الفائض (…)، وتنتقل `language` و`user` إلى صف نهاية درج التنقل.
 
 <ComponentDeviations component="header" />
 

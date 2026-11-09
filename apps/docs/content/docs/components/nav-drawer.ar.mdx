@@ -1,0 +1,125 @@
+---
+title: Nav Drawer
+description: "درج التنقل (DGA: Navigation Drawer): لوحة تنزلق من جهة البداية فيها رأس وعناصر التنقل وتذييل. تتوسع العناصر الأم في مكانها. يقبل الرأس والتذييل أي محتوى."
+sourceHash: f5b43643b4c6
+---
+
+<Preview compact name="nav-drawer-basic" title="درج التنقل" defaultViewport="mobile" minHeight={380} />
+
+## التثبيت [#installation]
+
+<ComponentInstall name="nav-drawer" />
+
+يُثبَّت معه [Drawer](/docs/components/drawer) و[Badge](/docs/components/badge) و[Tag](/docs/components/tag). تستعمله [Header](/docs/components/header) تحت `lg`، ويمكنك استعماله بدون Header.
+
+## الاستخدام [#usage]
+
+```tsx title="layout.tsx"
+import { Home01Icon } from "@hugeicons/core-free-icons";
+import {
+  NavDrawer,
+  NavDrawerDivider,
+  NavDrawerFooter,
+  NavDrawerHeader,
+  NavDrawerItem,
+  NavDrawerLink,
+  NavDrawerNav,
+  NavDrawerSection,
+} from "@/components/dga/nav-drawer";
+
+export function SiteMenu() {
+  return (
+    <NavDrawer title="القائمة" menuLabel="افتح القائمة" closeLabel="إغلاق">
+      <NavDrawerHeader>
+        <img src="/logo.svg" alt="الخدمات الرقمية" height={40} />
+      </NavDrawerHeader>
+      <NavDrawerNav>
+        <NavDrawerItem href="/" icon={Home01Icon} current>
+          الرئيسية
+        </NavDrawerItem>
+        <NavDrawerItem label="الخدمات">
+          <NavDrawerSection title="الأفراد">
+            <NavDrawerLink href="/renew">تجديد ترخيص</NavDrawerLink>
+            <NavDrawerLink href="/pay" tag="جديد">سداد رسم</NavDrawerLink>
+          </NavDrawerSection>
+        </NavDrawerItem>
+        <NavDrawerDivider />
+        <NavDrawerItem href="/contact" badge="+٩">
+          تواصل معنا
+        </NavDrawerItem>
+      </NavDrawerNav>
+      <NavDrawerFooter>تحتاج مساعدة؟ اتصل على ٩٢٠٠٠٠٠٠٠.</NavDrawerFooter>
+    </NavDrawer>
+  );
+}
+```
+
+يرسم `NavDrawer` زر القائمة الخاص به ويفتح اللوحة من جهة البداية. استعمل `open` و`onOpenChange` للتحكم فيه، مع `hideTrigger` لحذف الزر. تُوضع الأجزاء مباشرة داخل الجزء الذي يسمّيها: `NavDrawerHeader` و`NavDrawerNav` و`NavDrawerFooter` داخل `NavDrawer`، و`NavDrawerItem` و`NavDrawerDivider` داخل `NavDrawerNav`. لا ترسم الأجزاء شيئًا بنفسها؛ يقرؤها `NavDrawer`. كل نص ظاهر خاصية (`title` و`navLabel` و`menuLabel` و`closeLabel`)، تُترجم في الصفحات العربية.
+
+في الصفحات العربية يُفتح الدرج من اليمين وينعكس كل شيء: الشريط عند حافة البداية، والأسهم، وإزاحة المستوى الثاني، والشارة.
+
+## البنية [#anatomy]
+
+للدرج ثلاثة أجزاء، والأوسط هو التنقل.
+
+- **الرأس** (`NavDrawerHeader`): أعلى الدرج بدل العنوان المرئي. يقبل أي محتوى: شعارًا أو بطاقة مستخدم أو لافتة. يحتفظ الدرج بـ `title` اسمًا متاحًا مخفيًا عن النظر. بدونه يعرض الدرج `title`.
+- **العناصر** (`NavDrawerNav` مع `NavDrawerItem` و`NavDrawerLink` و`NavDrawerSection` و`NavDrawerDivider`): التنقل.
+- **التذييل** (`NavDrawerFooter`): أسفل الدرج عند حافته السفلية. يقبل أي محتوى.
+- **البحث** (`search`) و**صف النهاية** (`end`): خانتان اختياريتان فوق العناصر وبينها وبين التذييل، لحقل بحث أو مبدّل لغة أو منطقة مستخدم.
+
+### العنصر
+
+ارتفاع العنصر 36px، بنص Text sm Semibold وأيقونة 16px وفجوة 8px. إما رابط من المستوى الأول، أو عنصر أم من المستوى الأول بسهم (لأعلى عند التوسعة)، أو رابط من المستوى الثاني (Regular، بلا أيقونة، وتحاذي تسميته تسمية المستوى الأول). يمكن أن ينتهي الرابط بشارة `badge` مثل "+٩٩"، ولرابط المستوى الثاني `tag` مثل "جديد". يرسم `NavDrawerDivider` خطًا فوق العنصر التالي، مُزاحًا 16px من كل جانب.
+
+الحالات: **الافتراضية**؛ و**التمرير** و**الضغط** (تعبئة محايدة وشريط 6px عند حافة البداية، أخف عند التمرير)؛ و**التركيز** (إطار 2px فقط)؛ و**المحدد** (`current`: تعبئة المحدد وشريط وأيقونة ونص بلون العلامة و`aria-current="page"`)؛ و**المعطّل**.
+
+## أمثلة [#examples]
+
+### داخل Header
+
+داخل [Header](/docs/components/header) يُفتح الدرج من زر القائمة في الـ Header تحت `lg` ويعرض عناصر الـ Header، فتكتبها مرة واحدة. أضف `NavDrawer` لتشكّل رأسه وتذييله، أو لتعطيه عناصر خاصة به.
+
+<Preview compact name="nav-drawer-parts" title="شعار في الأعلى ومحتواك في الأسفل" defaultViewport="mobile" minHeight={380} />
+
+```tsx title="layout.tsx"
+<Header logo={<HeaderLogo src="/logo.svg" alt="الخدمات الرقمية" />}>
+  <HeaderNav>…</HeaderNav>
+  <NavDrawer>
+    <NavDrawerHeader>
+      <HeaderLogo src="/logo.svg" alt="الخدمات الرقمية" />
+    </NavDrawerHeader>
+    <NavDrawerFooter>تحتاج مساعدة؟ اتصل على ٩٢٠٠٠٠٠٠٠.</NavDrawerFooter>
+  </NavDrawer>
+</Header>
+```
+
+## إمكانية الوصول [#accessibility]
+
+| المفتاح | الإجراء |
+| --- | --- |
+| <kbd>Enter</kbd> أو <kbd>Space</kbd> | يفتح الدرج من زره، أو يتبع رابطًا، أو يوسّع عنصرًا أمًّا ويطويه. |
+| <kbd>Tab</kbd> | ينتقل بين العناصر. يبقى التركيز داخل الدرج المفتوح. |
+| <kbd>Esc</kbd> | يغلق الدرج ويعيد التركيز إلى زره. |
+
+- الدرج مربع حوار معتم اسمه `title`، وعناصره في معلم `nav` اسمه `navLabel`.
+- العنصر الأم زر له `aria-expanded` و`aria-controls`. توسعته تترك التركيز على الأم (نمط الإفصاح)؛ تقترح DGA نقل التركيز إلى أول عنصر فرعي، ولا يُفعل هذا هنا.
+- للصفحة الحالية `aria-current="page"`، وتُعلَّم أيضًا بالشريط ولون العلامة والوزن، فلا تعتمد على اللون وحده.
+- للعنصر المركَّز إطار 2px. النص 4.5:1 والأيقونات والشريط 3:1 في الفاتح والداكن.
+- تذكر DGA مفاتيح الأسهم: يُوصل إلى العناصر بـ Tab، كما في قائمة روابط.
+
+## مرجع الواجهة البرمجية [#api-reference]
+
+<ApiReference component="nav-drawer" />
+
+## الاختلافات عن DGA [#deviations-from-dga]
+
+- يرسم Figma عنصر Nav Drawer Item بمتغيرات ثابتة. هنا العناصر أجزاء (`NavDrawerItem` و`NavDrawerLink` و`NavDrawerSection` و`NavDrawerDivider`)، وبيانات `items` اختصار.
+- الرأس والتذييل جزءان يقبلان أي محتوى، بدل Nav Drawer Header في Figma بمكان شعاره وخانة التبديل `Custom Content`. لا يوجد شريط رأس رمادي أو أخضر.
+- اللوحة هي [Drawer](/docs/components/drawer) الأبيض. لم تُنفَّذ اللوحتان الخضراء والرمادية، ولا أيقونة الرابط الخارجي، ولا حالات العنصر على اللون.
+- ارتفاع العنصر 36px كما يرسمه عنصر الويب في Figma وموقع DGA (عنصر الجوال في Figma 44px).
+
+<ComponentDeviations component="nav-drawer" />
+
+## التباين [#contrast]
+
+<ComponentContrast component="nav-drawer" />

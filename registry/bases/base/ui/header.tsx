@@ -1,18 +1,11 @@
 "use client";
 
 import { Menu as MenuPrimitive } from "@base-ui/react/menu";
-import { ArrowDown01Icon, Menu01Icon, MoreHorizontalIcon } from "@hugeicons/core-free-icons";
+import { ArrowDown01Icon, MoreHorizontalIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import * as React from "react";
-import {
-  Drawer,
-  DrawerContent,
-  DrawerDescription,
-  DrawerHeader,
-  DrawerTitle,
-  DrawerTrigger,
-} from "@/components/dga/drawer";
 import { Menu, MenuContent, MenuItem, MenuTrigger } from "@/components/dga/menu";
+import { NavDrawer, type NavDrawerProps } from "@/components/dga/nav-drawer";
 import { Tag } from "@/components/dga/tag";
 import { useDocumentDirection } from "@/lib/dga/direction";
 import { cn } from "@/registry/bases/base/lib/utils";
@@ -29,6 +22,8 @@ type HeaderSubLink = {
   icon?: IconSvg;
   /** A short label after the link text, such as "New" (the DGA Header Sub-menu Item With Tag). */
   tag?: string;
+  /** A count or short label at the end of the item in the Nav Drawer, such as "+99" (the DGA Nav Drawer Item badge). Not shown in the sub-menu. */
+  badge?: string;
   /** Marks the page the person is on: `aria-current="page"`. */
   current?: boolean;
   disabled?: boolean;
@@ -47,6 +42,10 @@ type HeaderNavItem = {
   /** Makes the item a link. Leave it out when the item has `sections`. */
   href?: string;
   icon?: IconSvg;
+  /** A count or short label at the end of a link in the Nav Drawer, such as "+99" (the DGA Nav Drawer Item badge). Not shown in the bar. */
+  badge?: string;
+  /** Draws a line above this item in the Nav Drawer (the DGA Nav Drawer Divider item). Not shown in the bar. */
+  divider?: boolean;
   /** The page the person is on (`aria-current="page"`). A parent is marked when a child is current. */
   current?: boolean;
   disabled?: boolean;
@@ -344,89 +343,184 @@ function DesktopItem({
   );
 }
 
-function DrawerItem({ item, onNavigate }: { item: HeaderNavItem; onNavigate: () => void }) {
-  const [expanded, setExpanded] = React.useState(isCurrent(item));
-  const id = React.useId();
-  const icon = item.icon ? (
-    <HugeiconsIcon icon={item.icon} aria-hidden className="cn-header-icon" />
-  ) : null;
-  if (!item.sections?.length) {
-    return (
-      <li>
-        <a
-          data-slot="header-drawer-item"
-          data-level="1"
-          data-current={item.current ? "" : undefined}
-          data-disabled={item.disabled ? "" : undefined}
-          className="cn-header-drawer-item"
-          href={item.disabled ? undefined : item.href}
-          aria-current={item.current ? "page" : undefined}
-          aria-disabled={item.disabled ? true : undefined}
-          onClick={onNavigate}
-        >
-          {icon}
-          {item.label}
-        </a>
-      </li>
-    );
-  }
+type HeaderLogoProps = Omit<React.ComponentProps<"a">, "children"> & {
+  /** An image for the logo. For an SVG or your own markup use `children` instead. */
+  src?: string;
+  /** What the image shows, such as the name of the site. It is the link's name, so always set it with `src`. */
+  alt?: string;
+  children?: React.ReactNode;
+};
+
+/**
+ * The logo as a link to the home page (`href`, default `/`): an image from `src` or your own
+ * markup as `children`. Use it as the Header's `logo` and again inside a `NavDrawerHeader`.
+ */
+function HeaderLogo({ href = "/", src, alt = "", className, children, ...props }: HeaderLogoProps) {
   return (
-    <li>
-      <button
-        type="button"
-        data-slot="header-drawer-item"
-        data-level="1"
-        data-current={isCurrent(item) ? "" : undefined}
-        className="cn-header-drawer-item"
-        aria-expanded={expanded}
-        aria-controls={id}
-        disabled={item.disabled}
-        onClick={() => setExpanded((value) => !value)}
-      >
-        {icon}
-        {item.label}
-        <HugeiconsIcon icon={ArrowDown01Icon} aria-hidden className="cn-header-drawer-chevron" />
-      </button>
-      <div id={id} hidden={!expanded} className="cn-header-drawer-sub">
-        {item.sections.map((section) => (
-          <ul
-            key={section.title ?? section.links.map((l) => l.href).join()}
-            className="cn-header-list"
-          >
-            {section.title ? <li className="cn-header-drawer-heading">{section.title}</li> : null}
-            {section.links.map((link) => (
-              <li key={link.href}>
-                <a
-                  data-slot="header-drawer-item"
-                  data-level="2"
-                  data-current={link.current ? "" : undefined}
-                  data-disabled={link.disabled ? "" : undefined}
-                  className="cn-header-drawer-item"
-                  href={link.disabled ? undefined : link.href}
-                  aria-current={link.current ? "page" : undefined}
-                  aria-disabled={link.disabled ? true : undefined}
-                  onClick={onNavigate}
-                >
-                  {link.label}
-                  {link.tag ? (
-                    <Tag size="sm" variant="success">
-                      {link.tag}
-                    </Tag>
-                  ) : null}
-                </a>
-              </li>
-            ))}
-          </ul>
-        ))}
-      </div>
-    </li>
+    <a
+      data-slot="header-logo-link"
+      href={href}
+      className={cn("cn-header-logo-link", className)}
+      {...props}
+    >
+      {src ? <img src={src} alt={alt} className="cn-header-logo-image" /> : null}
+      {children}
+    </a>
   );
 }
 
+type HeaderNavLinkProps = {
+  href: string;
+  /** A line of helper text under the label (the DGA Header Sub-menu Item helper text). */
+  description?: string;
+  /** Shown with `linkStyle="icon"` and `"boxed-icon"`. */
+  icon?: IconSvg;
+  /** A short label after the link text, such as "New" (the DGA Header Sub-menu Item With Tag). */
+  tag?: string;
+  /** A count or short label at the end of the item in the Nav Drawer, such as "+99". Not shown in the sub-menu. */
+  badge?: string;
+  current?: boolean;
+  disabled?: boolean;
+  /** The text of the link. */
+  children?: React.ReactNode;
+};
+
+/** A link inside a sub-menu. Put it in a `HeaderNavSection`. The Header reads it and draws it. */
+function HeaderNavLink(_props: HeaderNavLinkProps): null {
+  return null;
+}
+
+type HeaderNavSectionProps = {
+  /** The column heading. */
+  title?: string;
+  /** `HeaderNavLink` parts. */
+  children?: React.ReactNode;
+};
+
+/** A column of a sub-menu, with an optional heading. DGA allows up to four. Put it in a `HeaderNavItem`. */
+function HeaderNavSection(_props: HeaderNavSectionProps): null {
+  return null;
+}
+
+type HeaderNavItemProps = {
+  /** The text of a parent item. A link takes its text as `children`. */
+  label?: string;
+  /** Makes the item a link. Leave it out for a parent that has `HeaderNavSection` children. */
+  href?: string;
+  icon?: IconSvg;
+  /** A count or short label at the end of a link in the Nav Drawer, such as "+99". Not shown in the bar. */
+  badge?: string;
+  /** The page the person is on (`aria-current="page"`). A parent is marked when a child is current. */
+  current?: boolean;
+  disabled?: boolean;
+  /** Overrides the header's `submenuWidth` for this item's sub-menu. */
+  submenuWidth?: HeaderSubmenuWidth;
+  /** Opens the sub-menu on first render. For showing it in documentation. */
+  defaultOpen?: boolean;
+  /** The text of a link, or the `HeaderNavSection` parts of a parent. */
+  children?: React.ReactNode;
+};
+
+/**
+ * One item of the main navigation (DGA: Header Menu Item): a link with the text as `children`, or a
+ * parent with a `label` and `HeaderNavSection` children that open as a sub-menu. Put it in a
+ * `HeaderNav`. The Header reads it and draws it, in the bar and in the Nav Drawer.
+ */
+function HeaderNavItem(_props: HeaderNavItemProps): null {
+  return null;
+}
+
+/** A line above the next item in the Nav Drawer. It does not show in the bar. Put it in a `HeaderNav`. */
+function HeaderNavDivider(): null {
+  return null;
+}
+
+type HeaderNavProps = {
+  /** `HeaderNavItem` and `HeaderNavDivider` parts. */
+  children?: React.ReactNode;
+};
+
+/**
+ * The main navigation. Put `HeaderNavItem` and `HeaderNavDivider` parts in it, directly inside the
+ * Header. The same items are in the bar from `lg` and in the Nav Drawer below it.
+ */
+function HeaderNav(_props: HeaderNavProps): null {
+  return null;
+}
+
+function nodeText(children: React.ReactNode) {
+  return React.Children.toArray(children)
+    .filter(
+      (child): child is string | number => typeof child === "string" || typeof child === "number",
+    )
+    .join("")
+    .trim();
+}
+
+function parseHeaderLinks(children: React.ReactNode): HeaderSubLink[] {
+  const links: HeaderSubLink[] = [];
+  for (const node of React.Children.toArray(children)) {
+    if (!React.isValidElement<HeaderNavLinkProps>(node) || node.type !== HeaderNavLink) continue;
+    const { children: text, ...rest } = node.props;
+    links.push({ ...rest, label: nodeText(text) });
+  }
+  return links;
+}
+
+function parseHeaderSections(children: React.ReactNode): HeaderSection[] {
+  const sections: HeaderSection[] = [];
+  let loose: React.ReactNode[] = [];
+  const flush = () => {
+    if (loose.length) sections.push({ links: parseHeaderLinks(loose) });
+    loose = [];
+  };
+  for (const node of React.Children.toArray(children)) {
+    if (!React.isValidElement(node)) continue;
+    if (node.type === HeaderNavSection) {
+      flush();
+      const { title, children: inner } = node.props as HeaderNavSectionProps;
+      sections.push({ title, links: parseHeaderLinks(inner) });
+    } else if (node.type === HeaderNavLink) {
+      loose.push(node);
+    }
+  }
+  flush();
+  return sections.filter((section) => section.links.length > 0);
+}
+
+function parseHeaderNav(children: React.ReactNode): HeaderNavItem[] {
+  const items: HeaderNavItem[] = [];
+  let divider = false;
+  for (const node of React.Children.toArray(children)) {
+    if (!React.isValidElement(node)) continue;
+    if (node.type === HeaderNavDivider) {
+      divider = true;
+      continue;
+    }
+    if (node.type !== HeaderNavItem) continue;
+    const { label, children: inner, ...rest } = node.props as HeaderNavItemProps;
+    const sections = parseHeaderSections(inner);
+    items.push({
+      ...rest,
+      label: label ?? nodeText(inner),
+      divider: divider || undefined,
+      sections: sections.length ? sections : undefined,
+    });
+    divider = false;
+  }
+  return items;
+}
+
 type HeaderProps = Omit<React.ComponentProps<"header">, "children"> & {
+  /**
+   * The parts of the header, placed directly inside it: a `HeaderNav` with the navigation items,
+   * and a `NavDrawer` to shape the drawer that opens below `lg` (its header, its own items, its
+   * footer). Nothing else is drawn.
+   */
+  children?: React.ReactNode;
   /** The logo, usually a link to the home page. Pass your own `img` or SVG. */
   logo?: React.ReactNode;
-  /** The main navigation. */
+  /** The main navigation as data. A shortcut for a `HeaderNav`; both are used when both are given. */
   items?: HeaderNavItem[];
   /**
    * Where the navigation sits in the bar from `lg`: `start` (next to the logo, default) or
@@ -483,15 +577,16 @@ type HeaderProps = Omit<React.ComponentProps<"header">, "children"> & {
  * search, a language switcher and a user area. A skip link comes first in the tab order. Left
  * and Right (swapped on Arabic pages), Home and End move between the items; Enter, Space or Down
  * opens a sub-menu, which is a DGA Menu. Below the `lg` width the navigation moves into a
- * Drawer: on a phone the overflow (…) button holding the actions is on the start side, the logo is
+ * NavDrawer: on a phone the overflow (…) button holding the actions is on the start side, the logo is
  * centred and the menu button is on the end side (as in Figma); the bar mirrors on Arabic pages. The page the
  * person is on has `aria-current="page"`.
  */
 function Header({
   className,
   ref,
+  children,
   logo,
-  items = [],
+  items: itemsProp = [],
   navPosition = "start",
   actions = [],
   search,
@@ -514,7 +609,45 @@ function Header({
   defaultMenuOpen = false,
   ...props
 }: HeaderProps) {
-  const [open, setOpen] = React.useState(defaultMenuOpen);
+  const parts = React.Children.toArray(children);
+  const nav = parts.find((part) => React.isValidElement(part) && part.type === HeaderNav);
+  const items = [
+    ...itemsProp,
+    ...(React.isValidElement<HeaderNavProps>(nav) ? parseHeaderNav(nav.props.children) : []),
+  ];
+  const custom = parts.find(
+    (part): part is React.ReactElement<NavDrawerProps> =>
+      React.isValidElement(part) && part.type === NavDrawer,
+  );
+  const drawerProps: NavDrawerProps = {
+    items,
+    search,
+    end:
+      language || user ? (
+        <>
+          {language}
+          {user}
+        </>
+      ) : undefined,
+    defaultOpen: defaultMenuOpen,
+    title: drawerTitle,
+    description: drawerDescription,
+    navLabel,
+    menuLabel,
+    closeLabel,
+    triggerClassName: "cn-header-menu-button",
+  };
+  const drawer = custom ? (
+    React.cloneElement(custom, {
+      ...drawerProps,
+      ...Object.fromEntries(
+        Object.entries(custom.props).filter(([, value]) => value !== undefined),
+      ),
+      triggerClassName: cn(drawerProps.triggerClassName, custom.props.triggerClassName),
+    })
+  ) : (
+    <NavDrawer {...drawerProps} />
+  );
   const rtl = useDocumentDirection() === "rtl";
   const headerRef = React.useRef<HTMLElement | null>(null);
   const setHeaderRef = React.useCallback(
@@ -560,39 +693,7 @@ function Header({
         data-full={fullWidth ? "" : undefined}
         data-nav={navPosition === "center" ? "center" : undefined}
       >
-        <Drawer open={open} onOpenChange={setOpen} side="start">
-          <DrawerTrigger
-            data-slot="header-menu-button"
-            aria-label={menuLabel}
-            className="cn-header-menu-button"
-          >
-            <HugeiconsIcon icon={Menu01Icon} aria-hidden />
-          </DrawerTrigger>
-          <DrawerContent closeLabel={closeLabel}>
-            <DrawerHeader>
-              <DrawerTitle>{drawerTitle}</DrawerTitle>
-              {drawerDescription ? (
-                <DrawerDescription>{drawerDescription}</DrawerDescription>
-              ) : (
-                <DrawerDescription className="sr-only">{navLabel}</DrawerDescription>
-              )}
-            </DrawerHeader>
-            {search ? <div className="cn-header-drawer-search">{search}</div> : null}
-            <nav aria-label={navLabel} data-slot="header-drawer-nav">
-              <ul className="cn-header-list">
-                {items.map((item) => (
-                  <DrawerItem key={item.label} item={item} onNavigate={() => setOpen(false)} />
-                ))}
-              </ul>
-            </nav>
-            {language || user ? (
-              <div className="cn-header-drawer-end">
-                {language}
-                {user}
-              </div>
-            ) : null}
-          </DrawerContent>
-        </Drawer>
+        {drawer}
 
         {logo ? (
           <div data-slot="header-logo" className="cn-header-logo">
@@ -650,11 +751,24 @@ export type {
   HeaderActionItem,
   HeaderActionProps,
   HeaderLinkStyle,
-  HeaderNavItem,
+  HeaderLogoProps,
+  HeaderNavItemProps,
+  HeaderNavLinkProps,
+  HeaderNavProps,
+  HeaderNavSectionProps,
   HeaderProps,
   HeaderSection,
   HeaderSubLink,
   HeaderSubmenuTone,
   HeaderSubmenuWidth,
 };
-export { Header, HeaderAction };
+export {
+  Header,
+  HeaderAction,
+  HeaderLogo,
+  HeaderNav,
+  HeaderNavDivider,
+  HeaderNavItem,
+  HeaderNavLink,
+  HeaderNavSection,
+};
