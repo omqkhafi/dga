@@ -13,6 +13,7 @@ import {
   DrawerTrigger,
 } from "@/components/dga/drawer";
 import { Menu, MenuContent, MenuItem, MenuTrigger } from "@/components/dga/menu";
+import { Tag } from "@/components/dga/tag";
 import { useDocumentDirection } from "@/lib/dga/direction";
 import { cn } from "@/registry/bases/base/lib/utils";
 
@@ -26,6 +27,8 @@ type HeaderSubLink = {
   description?: string;
   /** Shown with `linkStyle="icon"` and `"boxed-icon"`. */
   icon?: IconSvg;
+  /** A short label after the link text, such as "New" (the DGA Header Sub-menu Item With Tag). */
+  tag?: string;
   /** Marks the page the person is on: `aria-current="page"`. */
   current?: boolean;
   disabled?: boolean;
@@ -49,6 +52,8 @@ type HeaderNavItem = {
   disabled?: boolean;
   /** The sub-menu: one column per section. */
   sections?: HeaderSection[];
+  /** Overrides the header's `submenuWidth` for this item's sub-menu. */
+  submenuWidth?: HeaderSubmenuWidth;
   /** Opens the sub-menu on first render. For showing it in documentation. */
   defaultOpen?: boolean;
 };
@@ -154,7 +159,15 @@ function OverflowAction({ action }: { action: HeaderActionItem }) {
   );
 }
 
-function SubLink({ link, linkStyle }: { link: HeaderSubLink; linkStyle: HeaderLinkStyle }) {
+function SubLink({
+  link,
+  linkStyle,
+  submenuTone,
+}: {
+  link: HeaderSubLink;
+  linkStyle: HeaderLinkStyle;
+  submenuTone: HeaderSubmenuTone;
+}) {
   return (
     <MenuPrimitive.Item
       data-slot="header-submenu-item"
@@ -171,7 +184,14 @@ function SubLink({ link, linkStyle }: { link: HeaderSubLink; linkStyle: HeaderLi
         </span>
       ) : null}
       <span className="cn-header-sub-text">
-        <span className="cn-header-sub-label">{link.label}</span>
+        <span className="cn-header-sub-heading">
+          <span className="cn-header-sub-label">{link.label}</span>
+          {link.tag ? (
+            <Tag size="sm" variant={submenuTone === "green" ? "on-color" : "success"}>
+              {link.tag}
+            </Tag>
+          ) : null}
+        </span>
         {link.description ? (
           <span className="cn-header-sub-description">{link.description}</span>
         ) : null}
@@ -182,17 +202,75 @@ function SubLink({ link, linkStyle }: { link: HeaderSubLink; linkStyle: HeaderLi
 
 type HeaderLinkStyle = "text" | "icon" | "boxed-icon";
 type HeaderSubmenuTone = "default" | "green";
+type HeaderSubmenuWidth = "content" | "full";
+
+/**
+ * The sub-menu panel. `content` is a card as wide as its columns, under the trigger. `full` is a
+ * panel as wide as the header, directly under the bar, with the columns lined up with the bar.
+ */
+function SubmenuPanel({
+  tone,
+  width,
+  anchor,
+  fullWidth,
+  children,
+}: {
+  tone: HeaderSubmenuTone;
+  width: HeaderSubmenuWidth;
+  anchor: React.RefObject<HTMLElement | null>;
+  fullWidth: boolean;
+  children: React.ReactNode;
+}) {
+  if (width !== "full") {
+    return (
+      <MenuContent className="cn-header-submenu" data-tone={tone} sideOffset={0}>
+        {children}
+      </MenuContent>
+    );
+  }
+  return (
+    <MenuPrimitive.Portal>
+      <MenuPrimitive.Positioner
+        anchor={anchor}
+        side="bottom"
+        align="start"
+        sideOffset={0}
+        collisionAvoidance={{ side: "none", align: "none", fallbackAxisSide: "none" }}
+        className="cn-menu-positioner"
+      >
+        <MenuPrimitive.Popup
+          data-slot="menu-content"
+          data-tone={tone}
+          data-width="full"
+          className="cn-menu cn-header-submenu-full"
+        >
+          <div className="cn-header-submenu-inner" data-full={fullWidth ? "" : undefined}>
+            {children}
+          </div>
+        </MenuPrimitive.Popup>
+      </MenuPrimitive.Positioner>
+    </MenuPrimitive.Portal>
+  );
+}
 
 function DesktopItem({
   item,
   linkStyle,
   submenuTone,
+  submenuWidth,
+  anchor,
+  fullWidth,
 }: {
   item: HeaderNavItem;
   linkStyle: HeaderLinkStyle;
   submenuTone: HeaderSubmenuTone;
+  submenuWidth: HeaderSubmenuWidth;
+  anchor: React.RefObject<HTMLElement | null>;
+  fullWidth: boolean;
 }) {
   const current = isCurrent(item);
+  const width = item.submenuWidth ?? submenuWidth;
+  const full = width === "full";
   const icon = item.icon ? (
     <HugeiconsIcon icon={item.icon} aria-hidden className="cn-header-icon" />
   ) : null;
@@ -229,10 +307,15 @@ function DesktopItem({
           {item.label}
           <HugeiconsIcon icon={ArrowDown01Icon} aria-hidden className="cn-header-chevron" />
         </MenuTrigger>
-        <MenuContent className="cn-header-submenu" data-tone={submenuTone} sideOffset={0}>
+        <SubmenuPanel tone={submenuTone} width={width} anchor={anchor} fullWidth={fullWidth}>
           <div
             className="cn-header-submenu-grid"
-            style={{ "--header-columns": item.sections.length } as React.CSSProperties}
+            style={
+              {
+                "--header-columns": item.sections.length,
+                "--header-column-min": full ? "0px" : undefined,
+              } as React.CSSProperties
+            }
           >
             {item.sections.map((section) => (
               <MenuPrimitive.Group
@@ -245,12 +328,17 @@ function DesktopItem({
                   </MenuPrimitive.GroupLabel>
                 ) : null}
                 {section.links.map((link) => (
-                  <SubLink key={link.href} link={link} linkStyle={linkStyle} />
+                  <SubLink
+                    key={link.href}
+                    link={link}
+                    linkStyle={linkStyle}
+                    submenuTone={submenuTone}
+                  />
                 ))}
               </MenuPrimitive.Group>
             ))}
           </div>
-        </MenuContent>
+        </SubmenuPanel>
       </Menu>
     </li>
   );
@@ -320,6 +408,11 @@ function DrawerItem({ item, onNavigate }: { item: HeaderNavItem; onNavigate: () 
                   onClick={onNavigate}
                 >
                   {link.label}
+                  {link.tag ? (
+                    <Tag size="sm" variant="success">
+                      {link.tag}
+                    </Tag>
+                  ) : null}
                 </a>
               </li>
             ))}
@@ -357,6 +450,12 @@ type HeaderProps = Omit<React.ComponentProps<"header">, "children"> & {
   fullWidth?: boolean;
   /** The sub-menu panel: white, or the dark green of the DGA flag. */
   submenuTone?: HeaderSubmenuTone;
+  /**
+   * How wide the sub-menu is: `content` (default, a card under the item, as wide as its columns)
+   * or `full` (a panel as wide as the header, directly under the bar, with the columns lined up
+   * with the bar). An item can override it with its own `submenuWidth`.
+   */
+  submenuWidth?: HeaderSubmenuWidth;
   /** How sub-menu links look: text only, with a simple icon, or with an icon in a box. */
   linkStyle?: HeaderLinkStyle;
   /** Where the skip link goes. Default `#main-content`. Give your main element that id. */
@@ -390,6 +489,7 @@ type HeaderProps = Omit<React.ComponentProps<"header">, "children"> & {
  */
 function Header({
   className,
+  ref,
   logo,
   items = [],
   navPosition = "start",
@@ -401,6 +501,7 @@ function Header({
   top,
   fullWidth = false,
   submenuTone = "default",
+  submenuWidth = "content",
   linkStyle = "text",
   skipHref = "#main-content",
   skipLabel = "Skip to main content",
@@ -415,6 +516,15 @@ function Header({
 }: HeaderProps) {
   const [open, setOpen] = React.useState(defaultMenuOpen);
   const rtl = useDocumentDirection() === "rtl";
+  const headerRef = React.useRef<HTMLElement | null>(null);
+  const setHeaderRef = React.useCallback(
+    (node: HTMLElement | null) => {
+      headerRef.current = node;
+      if (typeof ref === "function") ref(node);
+      else if (ref) ref.current = node;
+    },
+    [ref],
+  );
 
   const onKeyDown = (event: React.KeyboardEvent<HTMLUListElement>) => {
     if (event.defaultPrevented) return;
@@ -439,7 +549,7 @@ function Header({
   };
 
   return (
-    <header data-slot="header" className={cn("cn-header", className)} {...props}>
+    <header ref={setHeaderRef} data-slot="header" className={cn("cn-header", className)} {...props}>
       <a href={skipHref} data-slot="header-skip" className="cn-header-skip">
         {skipLabel}
       </a>
@@ -498,6 +608,9 @@ function Header({
                 item={item}
                 linkStyle={linkStyle}
                 submenuTone={submenuTone}
+                submenuWidth={submenuWidth}
+                anchor={headerRef}
+                fullWidth={fullWidth}
               />
             ))}
           </ul>
@@ -542,5 +655,6 @@ export type {
   HeaderSection,
   HeaderSubLink,
   HeaderSubmenuTone,
+  HeaderSubmenuWidth,
 };
 export { Header, HeaderAction };
