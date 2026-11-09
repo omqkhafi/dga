@@ -33,6 +33,7 @@ import {
   HeaderExtras,
   HeaderMenuItems,
   HeaderMobile,
+  HeaderNavCenter,
   HeaderSubmenu,
   HeaderSubmenuGreen,
 } from "./composite";
@@ -190,6 +191,7 @@ export const previews = {
   ...layoutPreviews,
   ...displayPreviews,
   "header-basic": HeaderBasic,
+  "header-nav-center": HeaderNavCenter,
   "header-menu-items": HeaderMenuItems,
   "header-action-layouts": HeaderActionLayouts,
   "header-action-states": HeaderActionStates,

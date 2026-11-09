@@ -808,6 +808,8 @@ export const API_DESCRIPTIONS_AR: Record<string, string> = {
   "header.Header.submenuTone": "لوحة القائمة الفرعية: بيضاء، أو بالأخضر الداكن لعلم DGA.",
   "header.Header.logo": "الشعار، وهو عادةً رابط إلى الصفحة الرئيسية. مرّر `img` أو SVG خاصًّا بك.",
   "header.Header.items": "قائمة التنقل الرئيسية.",
+  "header.Header.navPosition":
+    "موضع التنقل في الشريط من `lg`: `start` (بجانب الشعار، الافتراضي) أو `center` (في منتصف الشريط، والشعار في البداية والإجراءات في النهاية). تحت `lg` يكون التنقل في الدرج في الحالتين.",
   "header.Header.actions": "إجراءات في نهاية الشريط.",
   "header.Header.search": "حقل بحث أو زر يفتح البحث. يظهر في الشريط من `lg`، وفي أعلى الدرج تحته.",
   "header.Header.language": "مبدّل اللغة (مثل Menu أو رابط).",
@@ -839,7 +841,6 @@ export const API_DESCRIPTIONS_AR: Record<string, string> = {
   "second-nav.SecondNavItem":
     "عنصر واحد من الشريط (في DGA: عنصر الشريط الفرعي): أيقونة اختيارية ونص بينهما 4px، بحالة افتراضية وحالة على اللون. يصير رابطًا إن كان له `href` وزرًّا إن كان له `onClick`. يستخدمه `SecondNav`، ويمكن استخدامه وحده.",
   "second-nav.SecondNav.fullWidth": "يمتد بكامل العرض. الافتراضي: في المنتصف بعرض أقصى 1280px.",
-  "second-nav.SecondNav.divider": "يعرض الفاصل بين العناصر والإجراءات. الافتراضي `true`.",
   "second-nav.SecondNav":
     "الشريط الثانوي فوق الترويسة (DGA: Second Nav Header): عناصر سياقية هي الطقس والتاريخ والوقت والموقع، ثم الإجراءات بأيقونة فقط أو بأيقونة ونص، بارتفاع 40px، رمادي أو أساسي. الإدخال الذي له `href` رابط، والذي له `onClick` زر، وغيره نص عادي. على الشاشات الضيقة يتمرر أفقيًا بدل الالتفاف. سمِّه بـ `aria-label`.",
   "header.Header.defaultMenuOpen": "يفتح الدرج عند أول عرض. لعرضه في التوثيق.",

@@ -49,8 +49,6 @@ type SecondNavProps = Omit<React.ComponentProps<"nav">, "children"> &
     actions?: SecondNavEntry[];
     /** Spans the whole width. Default: centred, 1280px at most. */
     fullWidth?: boolean;
-    /** Shows the divider between items and actions. Default true. */
-    divider?: boolean;
   };
 
 type SecondNavItemProps = {
@@ -99,9 +97,10 @@ function SecondNavItem({ entry, tone }: SecondNavItemProps) {
 
 /**
  * The secondary strip above the header (DGA: Second Nav Header): contextual items such as the
- * weather, date, time and location, then actions (icon-only or icon and text), 40px high, gray or
- * primary. Entries with an `href` are links, with `onClick` buttons, and the rest plain text. On narrow screens it scrolls
- * sideways instead of wrapping. Name it with `aria-label`.
+ * weather, date, time and location at the start and actions (icon-only or icon and text) at the
+ * end, spread apart, 40px high, gray or primary. Entries with an `href` are links, with `onClick`
+ * buttons, and the rest plain text. On narrow screens it scrolls sideways instead of wrapping.
+ * Name it with `aria-label`.
  */
 function SecondNav({
   className,
@@ -109,7 +108,6 @@ function SecondNav({
   items = [],
   actions = [],
   fullWidth = false,
-  divider = true,
   ...props
 }: SecondNavProps) {
   return (
@@ -123,24 +121,16 @@ function SecondNav({
         {items.length > 0 ? (
           <ul className="cn-second-nav-group">
             {items.map((entry) => (
-              <li key={entry.label}>
+              <li key={entry.label} className="flex items-center">
                 <SecondNavItem entry={entry} />
               </li>
             ))}
           </ul>
         ) : null}
-        {divider && items.length > 0 && actions.length > 0 ? (
-          <span aria-hidden className="cn-second-nav-divider ms-auto" />
-        ) : null}
         {actions.length > 0 ? (
-          <ul
-            className={cn(
-              "cn-second-nav-group",
-              !(divider && items.length > 0) && "cn-second-nav-actions",
-            )}
-          >
+          <ul className="cn-second-nav-group cn-second-nav-actions">
             {actions.map((entry) => (
-              <li key={entry.label}>
+              <li key={entry.label} className="flex items-center">
                 <SecondNavItem entry={entry} />
               </li>
             ))}

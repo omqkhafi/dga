@@ -335,6 +335,12 @@ type HeaderProps = Omit<React.ComponentProps<"header">, "children"> & {
   logo?: React.ReactNode;
   /** The main navigation. */
   items?: HeaderNavItem[];
+  /**
+   * Where the navigation sits in the bar from `lg`: `start` (next to the logo, default) or
+   * `center` (in the middle of the bar, with the logo at the start and the actions at the end).
+   * Below `lg` the navigation is in the Drawer either way.
+   */
+  navPosition?: "start" | "center";
   /** Actions at the end of the bar. */
   actions?: HeaderActionItem[];
   /** A search field or a button that opens search. Shown in the bar from `lg`, and at the top of the drawer below it. */
@@ -386,6 +392,7 @@ function Header({
   className,
   logo,
   items = [],
+  navPosition = "start",
   actions = [],
   search,
   language,
@@ -438,7 +445,11 @@ function Header({
       </a>
       {stamp}
       {top}
-      <div className="mx-auto grid h-18 w-full max-w-[1280px] grid-cols-[1fr_auto_1fr] items-center gap-4 px-4 data-full:max-w-none lg:flex lg:px-8" data-full={fullWidth ? "" : undefined}>
+      <div
+        className="mx-auto grid h-18 w-full max-w-[1280px] grid-cols-[1fr_auto_1fr] items-center gap-4 px-4 data-full:max-w-none lg:flex lg:px-8 data-[nav=center]:lg:grid data-[nav=center]:lg:grid-cols-[1fr_auto_1fr]"
+        data-full={fullWidth ? "" : undefined}
+        data-nav={navPosition === "center" ? "center" : undefined}
+      >
         <Drawer open={open} onOpenChange={setOpen} side="start">
           <DrawerTrigger
             data-slot="header-menu-button"
@@ -509,7 +520,7 @@ function Header({
           </Menu>
         ) : null}
 
-        <div data-slot="header-end" className="ms-auto flex shrink-0 items-center gap-2 max-lg:hidden">
+        <div data-slot="header-end" className="ms-auto flex shrink-0 items-center justify-self-end gap-2 max-lg:hidden">
           {search ? <div className="hidden w-48 shrink-0 lg:block xl:w-56">{search}</div> : null}
           {actions.map((action) => (
             <HeaderAction key={action.label} {...action} />

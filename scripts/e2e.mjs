@@ -1818,6 +1818,59 @@ async function compositeChecks() {
       `${lang}: disabled items are not reachable with Tab`,
     );
 
+    // navPosition="center": the logo at the start, the navigation in the middle of the bar, the
+    // actions at the end, in both directions.
+    await open("header-nav-center", 1280);
+    const centre = await page.evaluate(() => {
+      const box = (s) => document.querySelector(`[data-slot=${s}]`).getBoundingClientRect();
+      const bar = document
+        .querySelector("[data-slot=header-logo]")
+        .parentElement.getBoundingClientRect();
+      const [logo, nav, end] = [box("header-logo"), box("header-nav"), box("header-end")];
+      const navItems = [
+        ...document.querySelectorAll("[data-slot=header-nav] [data-slot=header-item]"),
+      ];
+      const left = Math.min(...navItems.map((el) => el.getBoundingClientRect().left));
+      const right = Math.max(...navItems.map((el) => el.getBoundingClientRect().right));
+      return {
+        off: Math.round(Math.abs((left + right) / 2 - (bar.left + bar.width / 2))),
+        logo: logo.x,
+        nav: nav.x,
+        end: end.x,
+        oneRow: Math.abs(logo.y - end.y) < 40 && Math.abs(nav.y - logo.y) < 40,
+      };
+    });
+    check(
+      centre.off <= 2,
+      `${lang}: the navigation is in the centre of the bar (off by ${centre.off}px)`,
+    );
+    check(
+      centre.oneRow &&
+        (rtl
+          ? centre.logo > centre.nav && centre.nav > centre.end
+          : centre.logo < centre.nav && centre.nav < centre.end),
+      `${lang}: the logo, the navigation and the actions run along the bar (${JSON.stringify(centre)})`,
+    );
+    await open("header-basic", 1280);
+    const atStart = await page.evaluate(() => {
+      const logo = document.querySelector("[data-slot=header-logo]").getBoundingClientRect();
+      const boxes = [
+        ...document.querySelectorAll("[data-slot=header-nav] [data-slot=header-item]"),
+      ].map((el) => el.getBoundingClientRect());
+      const gap = Math.min(
+        ...boxes.flatMap((box) => [
+          Math.abs(box.left - logo.right),
+          Math.abs(logo.left - box.right),
+        ]),
+      );
+      return { gap: Math.round(gap) };
+    });
+    check(
+      atStart.gap < 120,
+      `${lang}: by default the navigation sits next to the logo (${atStart.gap}px)`,
+    );
+    await open("header-menu-items", 1280);
+
     // The selected bar follows DGA: 6px high, inset 8px from each side, fully rounded.
     const bar = await page.evaluate(() => {
       const el = document.querySelector(
@@ -1940,6 +1993,37 @@ async function compositeChecks() {
       return box.left >= parent.left - 1 && box.right <= parent.right + 1;
     });
     check(visibleLast, `${lang}: a focused entry scrolls into view`);
+
+    // The strip has two parts spread to the two ends, no divider; small, centred items.
+    await open("second-nav-gray", 1280);
+    const strip = await page.evaluate(() => {
+      const nav = document.querySelector("[data-slot=second-nav]");
+      const inner = nav.firstElementChild.getBoundingClientRect();
+      const items = [...nav.querySelectorAll("[data-slot=second-nav-item]")];
+      const first = items[0].getBoundingClientRect();
+      const last = items[items.length - 1].getBoundingClientRect();
+      const middle = inner.top + inner.height / 2;
+      return {
+        divider: nav.querySelectorAll("[aria-hidden=true]:not(svg):not(path)").length,
+        font: Number.parseFloat(getComputedStyle(items[0]).fontSize),
+        off: Math.max(
+          ...items.map((el) => {
+            const box = el.getBoundingClientRect();
+            return Math.abs(box.top + box.height / 2 - middle);
+          }),
+        ),
+        gapStart: Math.round(Math.min(first.left - inner.left, inner.right - first.right)),
+        gapEnd: Math.round(Math.min(last.left - inner.left, inner.right - last.right)),
+        inner: Math.round(inner.width),
+      };
+    });
+    check(strip.divider === 0, `${lang}: no divider between the items and the actions`);
+    check(strip.font === 14, `${lang}: the strip text is 14px (${strip.font}px)`);
+    check(strip.off <= 1, `${lang}: the items are centred on the strip (off by ${strip.off}px)`);
+    check(
+      strip.gapStart < 40 && strip.gapEnd < 40,
+      `${lang}: the two parts sit at the two ends (${JSON.stringify(strip)})`,
+    );
 
     // ---------------------------------------------------------------- Footer
     await open("footer-default", 1280);

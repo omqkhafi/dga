@@ -588,6 +588,17 @@ export const COMPOSITE_DEVIATIONS: Deviation[] = [
   },
   {
     area: "Components",
+    item: "Header: navigation position",
+    original:
+      "The Header draws the navigation at the start of the bar, next to the logo, with the actions at the end.",
+    ours: "`navPosition` is `start` (default, as in DGA) or `center`: from lg the bar is three columns, the logo at the start, the navigation in the middle and the actions at the end. Below lg the navigation is in the Drawer either way.",
+    reason:
+      "Some sites centre the main navigation. It is an option; the default layout is DGA's. The centre column is centred on the bar, not on the space left between the logo and the actions.",
+    status: "fixed",
+    component: "header",
+  },
+  {
+    area: "Components",
     item: "Header: phone layout and actions",
     original:
       "The mobile Header shows the menu, the logo and an overflow control. Header Action is an icon and label in the bar.",
@@ -622,8 +633,8 @@ export const COMPOSITE_DEVIATIONS: Deviation[] = [
     area: "Components",
     item: "Second Nav: contextual strip, links and scrolling",
     original:
-      "Second Nav Header is a 40px strip with fixed Show Item 2, 3 and 4 and Show Action 2, 3 and 4 switches, a divider and Gray or Primary. It is described as navigation, but the items are text with an icon (a date, the weather).",
-    ours: 'Items and actions are arrays. An entry is plain text, a link (`href`), or a button (`onClick`), has a ready-made `kind` (weather, date, time, location) with its icon, and can be `iconOnly`. `current` sets aria-current="page" for the optional links row, which is not a DGA example. The strip scrolls sideways on narrow screens instead of wrapping or clipping. Items are 24px high with a 16px gap between them (gap value not in Figma).',
+      "Second Nav Header is a 40px strip with fixed Show Item 2, 3 and 4 and Show Action 2, 3 and 4 switches and Gray or Primary; Gray has a line under it and there is no vertical divider. It is described as navigation, but the items are text with an icon (a date, the weather).",
+    ours: 'Items and actions are arrays. An entry is plain text, a link (`href`), or a button (`onClick`), has a ready-made `kind` (weather, date, time, location) with its icon, and can be `iconOnly`. The strip has two parts, the items at the start and the actions at the end, spread apart with no divider. `current` sets aria-current="page" for the optional links row, which is not a DGA example. The strip scrolls sideways on narrow screens instead of wrapping or clipping. Items are Text sm with 16px icons, 24px high and centred on the strip, with a 16px gap between them (sizes and gap measured from the Figma screenshot and live sites, not from Figma nodes).',
     reason:
       "A fixed number of switches cannot hold real content, and a 40px strip that wraps would grow. Icon-only actions need an accessible name. Links need a current state (WCAG 2.4.8).",
     status: "fixed",

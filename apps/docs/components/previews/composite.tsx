@@ -2,9 +2,6 @@
 
 import {
   Building03Icon,
-  Calendar03Icon,
-  CloudIcon,
-  ContrastIcon,
   CreditCardIcon,
   File01Icon,
   Globe02Icon,
@@ -13,7 +10,6 @@ import {
   Mail01Icon,
   Notification01Icon,
   Search01Icon,
-  TextFontIcon,
   UserIcon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
@@ -174,6 +170,23 @@ export function HeaderBasic() {
   return (
     <div className="-m-4">
       <Header {...slots.labels} logo={slots.logo} items={items} actions={slots.actions} />
+    </div>
+  );
+}
+
+/** The navigation in the centre of the bar (`navPosition="center"`): logo, menu, actions. */
+export function HeaderNavCenter() {
+  const slots = useHeaderSlots();
+  const items = useHeaderItems();
+  return (
+    <div className="-m-4">
+      <Header
+        {...slots.labels}
+        logo={slots.logo}
+        items={items}
+        navPosition="center"
+        actions={slots.actions}
+      />
     </div>
   );
 }
