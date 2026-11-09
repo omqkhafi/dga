@@ -7,6 +7,7 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
 
 ### Added
 
+- **Header, Nav Drawer header and footer:** `drawerLogo` shows the `logo` at the top of the Nav Drawer instead of the title, `drawerHeader` replaces the top with any content, and `drawerFooter` puts any content at the bottom edge. The drawer keeps `drawerTitle` as its hidden accessible name. New example "Nav Drawer header and footer".
 - **Header, Nav Drawer Item:** a link or sub-link takes `badge` (for example "+99"), shown at the end of the item in the Nav Drawer (the DGA Nav Drawer Item badge); a nav item takes `divider`, which draws a line above it in the Nav Drawer (the DGA Divider item). Neither shows in the bar. The Header now installs the Badge with it.
 
 ### Changed

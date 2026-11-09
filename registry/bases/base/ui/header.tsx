@@ -502,6 +502,18 @@ type HeaderProps = Omit<React.ComponentProps<"header">, "children"> & {
   drawerTitle?: string;
   /** A line under the drawer title for screen readers. */
   drawerDescription?: string;
+  /**
+   * Anything for the top of the Nav Drawer, in place of the visible title: a logo, a user card, a
+   * banner. The drawer keeps `drawerTitle` as its accessible name, hidden from view.
+   */
+  drawerHeader?: React.ReactNode;
+  /**
+   * Shows `logo` at the top of the Nav Drawer instead of the visible title. Ignored when
+   * `drawerHeader` is given. Default `false`.
+   */
+  drawerLogo?: boolean;
+  /** Anything for the bottom of the Nav Drawer, below the navigation and the `language` and `user` slots: contact details, a version, a button. It stays at the bottom edge. */
+  drawerFooter?: React.ReactNode;
   /** The name of the drawer's close button. */
   closeLabel?: string;
   /** Opens the drawer on first render. For showing it in documentation. */
@@ -540,11 +552,15 @@ function Header({
   moreLabel = "More",
   drawerTitle = "Menu",
   drawerDescription,
+  drawerHeader,
+  drawerLogo = false,
+  drawerFooter,
   closeLabel = "Close",
   defaultMenuOpen = false,
   ...props
 }: HeaderProps) {
   const [open, setOpen] = React.useState(defaultMenuOpen);
+  const showDrawerLogo = Boolean(drawerLogo && logo);
   const rtl = useDocumentDirection() === "rtl";
   const headerRef = React.useRef<HTMLElement | null>(null);
   const setHeaderRef = React.useCallback(
@@ -600,7 +616,16 @@ function Header({
           </DrawerTrigger>
           <DrawerContent closeLabel={closeLabel}>
             <DrawerHeader>
-              <DrawerTitle>{drawerTitle}</DrawerTitle>
+              {drawerHeader ? (
+                <div data-slot="header-drawer-custom-header">{drawerHeader}</div>
+              ) : showDrawerLogo ? (
+                <div data-slot="header-drawer-logo" className="cn-header-drawer-logo">
+                  {logo}
+                </div>
+              ) : null}
+              <DrawerTitle className={drawerHeader || showDrawerLogo ? "sr-only" : undefined}>
+                {drawerTitle}
+              </DrawerTitle>
               {drawerDescription ? (
                 <DrawerDescription>{drawerDescription}</DrawerDescription>
               ) : (
@@ -619,6 +644,11 @@ function Header({
               <div className="cn-header-drawer-end">
                 {language}
                 {user}
+              </div>
+            ) : null}
+            {drawerFooter ? (
+              <div data-slot="header-drawer-footer" className="cn-header-drawer-footer">
+                {drawerFooter}
               </div>
             ) : null}
           </DrawerContent>

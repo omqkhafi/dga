@@ -118,6 +118,21 @@ The Drawer opened from the menu button.
 
 <Preview compact name="header-drawer-open" title="Nav Drawer" defaultViewport="mobile" minHeight={380} />
 
+### Nav Drawer header and footer
+
+The top and the bottom of the Drawer take anything. `drawerLogo` shows the `logo` at the top instead of the title, `drawerHeader` replaces the top with your own content (a logo with a user card, a banner), and `drawerFooter` puts your content at the bottom edge, below the navigation and the `language` and `user` slots. The drawer keeps `drawerTitle` as its accessible name, hidden from view, whichever top you choose.
+
+<Preview compact name="header-drawer-slots" title="Logo and footer" defaultViewport="mobile" minHeight={380} />
+
+```tsx title="layout.tsx"
+<Header
+  logo={<Logo />}
+  items={items}
+  drawerLogo
+  drawerFooter={<p>Need help? Call 920000000.</p>}
+/>
+```
+
 ### Official-site strip
 
 Pass a [Digital Stamp](/docs/components/digital-stamp) in the `stamp` slot. It renders above `top`, so the order from the top of the page is the stamp, the Second Nav, then the bar.

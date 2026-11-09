@@ -2296,6 +2296,12 @@
   .cn-header-drawer-search {
     @apply mb-4;
   }
+  .cn-header-drawer-logo {
+    @apply flex min-h-10 items-center;
+  }
+  .cn-header-drawer-footer {
+    @apply mt-auto border-t border-border-neutral-secondary pt-4;
+  }
   .cn-header-drawer-end {
     @apply mt-4 flex flex-wrap items-center gap-2 border-t border-border-neutral-secondary pt-4;
   }

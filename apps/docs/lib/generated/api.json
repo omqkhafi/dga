@@ -4092,6 +4092,30 @@
           "descriptionAr": "سطر تحت عنوان الدرج لقارئات الشاشة."
         },
         {
+          "name": "drawerHeader",
+          "type": "string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<AwaitedReactNode>",
+          "default": null,
+          "required": false,
+          "description": "Anything for the top of the Nav Drawer, in place of the visible title: a logo, a user card, a banner. The drawer keeps `drawerTitle` as its accessible name, hidden from view.",
+          "descriptionAr": "أي محتوى لأعلى درج التنقل بدل العنوان المرئي: شعار أو بطاقة مستخدم أو لافتة. يحتفظ الدرج بـ `drawerTitle` اسمًا متاحًا مخفيًا عن النظر."
+        },
+        {
+          "name": "drawerLogo",
+          "type": "boolean",
+          "default": "false",
+          "required": false,
+          "description": "Shows `logo` at the top of the Nav Drawer instead of the visible title. Ignored when `drawerHeader` is given. Default `false`.",
+          "descriptionAr": "يعرض `logo` في أعلى درج التنقل بدل العنوان المرئي. يُتجاهل عند تمرير `drawerHeader`. الافتراضي `false`."
+        },
+        {
+          "name": "drawerFooter",
+          "type": "string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<AwaitedReactNode>",
+          "default": null,
+          "required": false,
+          "description": "Anything for the bottom of the Nav Drawer, below the navigation and the `language` and `user` slots: contact details, a version, a button. It stays at the bottom edge.",
+          "descriptionAr": "أي محتوى لأسفل درج التنقل، تحت التنقل وخانتي `language` و`user`: بيانات تواصل أو رقم إصدار أو زر. يبقى عند الحافة السفلية."
+        },
+        {
           "name": "closeLabel",
           "type": "string",
           "default": "\"Close\"",

@@ -387,6 +387,30 @@ export function HeaderDrawerOpen() {
   );
 }
 
+/** The Nav Drawer with the logo at the top and your own content at the bottom. */
+export function HeaderDrawerSlots() {
+  const slots = useHeaderSlots();
+  const items = useHeaderItems();
+  const t = useBi();
+  return (
+    <div className="-m-4 min-h-96">
+      <Header
+        {...slots.labels}
+        logo={slots.logo}
+        items={items}
+        actions={slots.actions}
+        drawerLogo
+        drawerFooter={
+          <p className="m-0 text-xs text-text-primary-paragraph">
+            {t("Need help? Call 920000000.", "تحتاج مساعدة؟ اتصل على ٩٢٠٠٠٠٠٠٠.")}
+          </p>
+        }
+        defaultMenuOpen
+      />
+    </div>
+  );
+}
+
 // ----------------------------------------------------------------------------- Date Picker
 
 function useDateText() {

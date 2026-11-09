@@ -1,7 +1,7 @@
 ---
 title: Header
 description: "ترويسة الموقع (DGA: Nav Header): الشعار وقائمة التنقل الرئيسية مع قوائم فرعية، والإجراءات، وخانات البحث واللغة والمستخدم. رابط تخطٍّ، وتنقل بلوحة المفاتيح، ودرج على الشاشات الصغيرة."
-sourceHash: 122e46c97135
+sourceHash: 0c7881d93f7c
 ---
 
 <Preview compact name="header-basic" title="الترويسة" minHeight={110} />
@@ -118,6 +118,21 @@ export function SiteHeader() {
 الدرج مفتوحًا من زر القائمة.
 
 <Preview compact name="header-drawer-open" title="درج التنقل" defaultViewport="mobile" minHeight={380} />
+
+### رأس درج التنقل وتذييله [#nav-drawer-header-and-footer]
+
+أعلى الدرج وأسفله يقبلان أي محتوى. `drawerLogo` يعرض `logo` في الأعلى بدل العنوان، و`drawerHeader` يستبدل الأعلى بمحتواك (شعار مع بطاقة مستخدم، أو لافتة)، و`drawerFooter` يضع محتواك عند الحافة السفلية، تحت التنقل وخانتي `language` و`user`. يحتفظ الدرج بـ `drawerTitle` اسمًا متاحًا مخفيًا عن النظر في كل الحالات.
+
+<Preview compact name="header-drawer-slots" title="الشعار والتذييل" defaultViewport="mobile" minHeight={380} />
+
+```tsx title="layout.tsx"
+<Header
+  logo={<Logo />}
+  items={items}
+  drawerLogo
+  drawerFooter={<p>تحتاج مساعدة؟ اتصل على ٩٢٠٠٠٠٠٠٠.</p>}
+/>
+```
 
 ### شريط الموقع الرسمي [#official-site-strip]
 
