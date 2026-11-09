@@ -2229,6 +2229,7 @@
   }
   .cn-header-item {
     @apply data-popup-open:bg-button-background-neutral-hovered data-popup-open:after:bg-icon-default;
+    @apply data-current:data-popup-open:bg-button-background-primary-hovered data-current:data-popup-open:text-text-oncolor-primary data-current:data-popup-open:after:bg-primary-sa-flag-200 data-current:data-popup-open:[&_svg]:text-icon-oncolor;
   }
   .cn-header-action {
     @apply data-[icon-position=top]:flex-col data-[icon-position=top]:gap-1;
@@ -2258,7 +2259,7 @@
     @apply data-[tone=green]:bg-background-sa-flag data-[tone=green]:text-text-oncolor-primary;
   }
   .cn-header-submenu-full {
-    @apply w-(--anchor-width) max-w-none rounded-none border-x-0 p-0 shadow-lg;
+    @apply w-(--anchor-width) max-w-none origin-top rounded-none border-x-0 p-0 shadow-lg;
     @apply data-[tone=green]:border-0 data-[tone=green]:bg-background-sa-flag data-[tone=green]:text-text-oncolor-primary;
   }
   .cn-header-submenu-inner {

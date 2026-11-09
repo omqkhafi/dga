@@ -1757,6 +1757,51 @@ async function compositeChecks() {
       `${lang}: a sub-menu link shows its tag`,
     );
 
+    // A sub-menu trigger that is open keeps one look: the brand block with a light label when its page
+    // is current, the light-grey fill with a dark label when it is not. Colours are read through a
+    // canvas so lab() and color() values compare as sRGB lightness.
+    const openTrigger = (name) =>
+      page.evaluate(async (preview) => {
+        const el = document.querySelector("[data-slot=header-item][data-popup-open]");
+        if (!el) return null;
+        const ctx = document.createElement("canvas").getContext("2d", { willReadFrequently: true });
+        const rgb = (css) => {
+          ctx.clearRect(0, 0, 1, 1);
+          ctx.fillStyle = "#000";
+          ctx.fillStyle = css;
+          ctx.fillRect(0, 0, 1, 1);
+          return [...ctx.getImageData(0, 0, 1, 1).data];
+        };
+        const light = ([r, g, b]) => 0.2126 * r + 0.7152 * g + 0.0722 * b;
+        const style = getComputedStyle(el);
+        return {
+          preview,
+          current: el.hasAttribute("data-current"),
+          text: light(rgb(style.color)),
+          background: light(rgb(style.backgroundColor)),
+          chevron: light(rgb(getComputedStyle(el.querySelector("svg:last-of-type")).color)),
+        };
+      }, name);
+    for (const scheme of ["light", "dark"]) {
+      await open("header-submenu-current", 1280, `&theme=${scheme}`);
+      await page.waitForTimeout(500);
+      const current = await openTrigger("header-submenu-current");
+      check(
+        current?.current && current.text > 200 && current.chevron > 200 && current.background < 128,
+        `${lang} ${scheme}: an open, current trigger has a light label on the brand fill (${JSON.stringify(current)})`,
+      );
+      await open("header-submenu", 1280, `&theme=${scheme}`);
+      await page.waitForTimeout(500);
+      const plainOpen = await openTrigger("header-submenu");
+      check(
+        plainOpen !== null &&
+          !plainOpen.current &&
+          Math.abs(plainOpen.background - (current?.background ?? 0)) > 20 &&
+          Math.abs(plainOpen.text - plainOpen.background) > 100,
+        `${lang} ${scheme}: an open, non-current trigger keeps the neutral open fill, not the brand one (${JSON.stringify(plainOpen)})`,
+      );
+    }
+
     // Full-width sub-menu: a panel as wide as the header, directly under the bar, with the columns
     // lined up with the bar's content.
     for (const name of ["header-submenu-full", "header-submenu-full-green"]) {
@@ -1779,6 +1824,9 @@ async function compositeChecks() {
           headerWidth: Math.round(h.width),
           gap: Math.round(p.top - b.bottom),
           gridInBar: g.left >= b.left && g.right <= b.right,
+          // The panel opens from its horizontal middle (the content sub-menu opens from the start).
+          originX: Number.parseFloat(getComputedStyle(panel).transformOrigin),
+          originMiddle: p.width / 2,
         };
       });
       check(full !== null, `${lang}: ${name} opens a full-width panel`);
@@ -1791,6 +1839,10 @@ async function compositeChecks() {
         `${lang}: ${name} sits directly under the bar (${full?.gap}px)`,
       );
       check(full?.gridInBar === true, `${lang}: ${name} columns line up with the bar`);
+      check(
+        full !== null && Math.abs(full.originX - full.originMiddle) <= 1,
+        `${lang}: ${name} opens from the middle (origin ${full?.originX} of ${full?.originMiddle})`,
+      );
     }
 
     // A selected item that is disabled drops the brand block, so its label must not stay white.

@@ -60,7 +60,7 @@ On Arabic pages the logo sits on the right, the items run from the right and the
 
 - **Bar**: 72px high on the menu surface, padded 32px, centred and 1280px wide unless `fullWidth`.
 - **Logo** (`logo`): the brand logo, any element, a link to the home page.
-- **Menu item** (`HeaderNavItem`, or `items`): a link, or a button that opens a sub-menu when it has `sections`. 72px high, radius `sm`, with an optional leading icon and, for a sub-menu, a chevron. States: default, hovered, pressed, focused and disabled. The selected item (`current`) is a full-height brand block with a rounded 6px bar along its bottom edge, inset 8px from each side; when it is disabled the block goes and the bar is muted. An unselected item shows the bar on hover, and darker when pressed or open; focus shows only the outline.
+- **Menu item** (`HeaderNavItem`, or `items`): a link, or a button that opens a sub-menu when it has `sections`. 72px high, radius `sm`, with an optional leading icon and, for a sub-menu, a chevron. States: default, hovered, pressed, focused and disabled. The selected item (`current`) is a full-height brand block with a rounded 6px bar along its bottom edge, inset 8px from each side; when it is disabled the block goes and the bar is muted. An unselected item shows the bar on hover, and darker when pressed or open; focus shows only the outline. A selected sub-menu parent keeps the selected block while its sub-menu is open.
 - **Sub-menu**: the DGA [Menu](/docs/components/menu) with one column per section, up to four. Each link is a DGA Header Sub-menu Item: a label with optional helper text (`description`), an icon (`icon`, shown with `linkStyle` `icon` or `boxed-icon`) and a tag (`tag`, such as "New"), with default, hovered, pressed and focused states. `linkStyle` is `text`, `icon` or `boxed-icon`, `submenuTone` is `default` or `green` (the dark green of the DGA flag) and `submenuWidth` is `content` or `full`.
 - **Actions** (`actions`, [`HeaderAction`](#api-reference)): Inline (icon beside the label), Top (`iconPosition="top"`, icon above the label), Text only (no icon) or Icon only (`iconOnly`), with the same five states and selected block and bar as a menu item.
 - **Phone layout**: below `lg` the bar is the overflow (…) button on the start side, which opens the actions, the logo centred and the menu button on the end side. The menu button opens the navigation in the [Nav Drawer](/docs/components/nav-drawer), a component of its own: the same items as a list, where parents expand in place, Level 2 links are indented and a `badge` or a divider can be added. Put a `NavDrawer` in the Header to give the drawer its own header, footer or items.
@@ -93,6 +93,10 @@ Default, selected with its bar, a sub-menu parent with a chevron, no icon, and d
 
 <Preview compact name="header-submenu" title="Sub-menu" minHeight={330} />
 
+When the page is inside the sub-menu, its parent is selected, and it keeps the brand block, the white label and the gold bar while the sub-menu is open.
+
+<Preview compact name="header-submenu-current" title="Sub-menu of the current page" minHeight={330} />
+
 A link can carry helper text and a tag (here "Request a permit" has a "New" tag). Hover, press and Tab to see the other states: the label is underlined, the item gets the hover or pressed fill, and focus shows a 2px outline.
 
 ### Dark green sub-menu with boxed icons
@@ -101,7 +105,7 @@ A link can carry helper text and a tag (here "Request a permit" has a "New" tag)
 
 ### Full-width sub-menu
 
-With `submenuWidth="full"` the sub-menu is a panel as wide as the header, directly under the bar, and the columns line up with the bar's content (1280px unless `fullWidth`). It suits menus with three or four columns. Set it on the header, or on one item with `submenuWidth` in the item.
+With `submenuWidth="full"` the sub-menu is a panel as wide as the header, directly under the bar, and the columns line up with the bar's content (1280px unless `fullWidth`). It suits menus with three or four columns. Set it on the header, or on one item with `submenuWidth` in the item. The panel opens from its middle, while the content-width sub-menu opens from its start edge.
 
 <Preview compact name="header-submenu-full" title="Full-width sub-menu" minHeight={330} />
 

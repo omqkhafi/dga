@@ -384,6 +384,34 @@ export function HeaderSubmenu() {
   );
 }
 
+/** The Services sub-menu open while the page is inside it: the trigger keeps the current look. */
+export function HeaderSubmenuCurrent() {
+  const slots = useHeaderSlots();
+  const items = useHeaderItems().map((item) =>
+    item.sections
+      ? {
+          ...item,
+          defaultOpen: true,
+          sections: item.sections.map((section, s) => ({
+            ...section,
+            links: section.links.map((link, l) => ({ ...link, current: s === 0 && l === 0 })),
+          })),
+        }
+      : { ...item, current: false },
+  );
+  return (
+    <div className="-m-4 min-h-96">
+      <Header
+        {...slots.labels}
+        logo={slots.logo}
+        items={items}
+        linkStyle="icon"
+        actions={slots.actions}
+      />
+    </div>
+  );
+}
+
 /** The sub-menu on the dark green panel, with icons in boxes. */
 export function HeaderSubmenuGreen() {
   const slots = useHeaderSlots();
