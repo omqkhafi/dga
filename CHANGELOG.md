@@ -5,6 +5,15 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
 
 ## [Unreleased]
 
+### Added
+
+- **Header:** `submenuWidth` (`"content"`, the default, or `"full"`). `"full"` makes the sub-menu a panel as wide as the header, directly under the bar, with its columns lined up with the bar's content (the 1280px width, or the whole bar with `fullWidth`). A nav item can override it with its own `submenuWidth`. New examples "Full-width sub-menu" (white and dark green).
+- **Header:** a sub-menu link takes `tag` (for example "New"): the DGA Header Sub-menu Item With Tag, drawn with the Tag component (success on white, on-colour on dark green). Level 2 links in the Nav Drawer show it too. The Header now installs the Tag with it.
+
+### Changed
+
+- **Header:** the sub-menu link label is underlined when hovered, pressed or focused, as in the Figma Header Sub-menu Item states.
+
 ## [0.7.5] - 2026-11-09
 
 Patch: Second Nav follows the Figma strip more closely, and the Header navigation can be centred.

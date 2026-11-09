@@ -1,7 +1,7 @@
 ---
 title: Header
 description: "ترويسة الموقع (DGA: Nav Header): الشعار وقائمة التنقل الرئيسية مع قوائم فرعية، والإجراءات، وخانات البحث واللغة والمستخدم. رابط تخطٍّ، وتنقل بلوحة المفاتيح، ودرج على الشاشات الصغيرة."
-sourceHash: 1d3bbabed7a4
+sourceHash: a47e7b2ca7c9
 ---
 
 <Preview compact name="header-basic" title="الترويسة" minHeight={110} />
@@ -10,7 +10,7 @@ sourceHash: 1d3bbabed7a4
 
 <ComponentInstall name="header" />
 
-يُثبَّت معه [Menu](/docs/components/menu) و[Drawer](/docs/components/drawer). ضع [Second Nav](/docs/components/second-nav) في خانة `top`، و[Footer](/docs/components/footer) في آخر الصفحة.
+يُثبَّت معه [Menu](/docs/components/menu) و[Drawer](/docs/components/drawer) و[Tag](/docs/components/tag). ضع [Second Nav](/docs/components/second-nav) في خانة `top`، و[Footer](/docs/components/footer) في آخر الصفحة.
 
 ## الاستخدام [#usage]
 
@@ -56,7 +56,7 @@ export function SiteHeader() {
 - **الشريط**: ارتفاعه 72px على سطح القائمة، بحشوة 32px، في المنتصف وبعرض 1280px ما لم تستخدم `fullWidth`.
 - **الشعار** (`logo`): شعار الجهة، أي عنصر، وهو رابط إلى الصفحة الرئيسية.
 - **عنصر القائمة** (`items`): رابط، أو زر يفتح قائمة فرعية إن كان له `sections`. ارتفاعه 72px وزواياه `sm`، وفيه أيقونة أمامية اختيارية وسهم للقائمة الفرعية. الحالات: افتراضي، تمرير، ضغط، تركيز، معطل. العنصر المحدد (`current`) كتلة بلون العلامة بكامل الارتفاع وفي حافتها السفلية شريط مستدير بارتفاع 6px يبتعد 8px عن كل جانب؛ وإذا عُطّل تزول الكتلة ويصير الشريط خافتًا. ويُظهر العنصر غير المحدد الشريط عند التمرير، ويصير أغمق عند الضغط أو الفتح؛ أما التركيز فيظهر الإطار فقط.
-- **القائمة الفرعية**: [Menu](/docs/components/menu) من DGA بعمود لكل قسم، حتى أربعة. قيمة `linkStyle` هي `text` أو `icon` أو `boxed-icon`، وقيمة `submenuTone` هي `default` أو `green` (الأخضر الداكن لعلم DGA).
+- **القائمة الفرعية**: [Menu](/docs/components/menu) من DGA بعمود لكل قسم، حتى أربعة. كل رابط عنصر قائمة فرعية من DGA (`Header Sub-menu Item`): نص مع نص مساعد اختياري (`description`)، وأيقونة (`icon`، تظهر مع `linkStyle` بقيمة `icon` أو `boxed-icon`)، ووسم (`tag`، مثل «جديد»)، بالحالات: افتراضي، تمرير، ضغط، تركيز. قيمة `linkStyle` هي `text` أو `icon` أو `boxed-icon`، وقيمة `submenuTone` هي `default` أو `green` (الأخضر الداكن لعلم DGA)، وقيمة `submenuWidth` هي `content` أو `full`.
 - **الإجراءات** (`actions`، [`HeaderAction`](#api-reference)): مضمّن (الأيقونة بجانب النص)، أو علوي (`iconPosition="top"`، الأيقونة فوق النص)، أو نص فقط (بلا أيقونة)، أو أيقونة فقط (`iconOnly`)، بالحالات الخمس نفسها وبكتلة التحديد وشريطها كعنصر القائمة.
 - **تخطيط الجوال**: تحت `lg` يتألف الشريط من زر فائض (…) في جهة البداية يفتح الإجراءات، والشعار في المنتصف، وزر القائمة في جهة النهاية. يفتح زر القائمة التنقل في درج التنقل: [Drawer](/docs/components/drawer) من DGA، حيث تتوسع العناصر الأم في مكانها وتُزاح روابط المستوى الثاني.
 - **موضع التنقل** (`navPosition`): `start` (الافتراضي، بجانب الشعار) أو `center` (في منتصف الشريط من `lg`).
@@ -88,9 +88,23 @@ export function SiteHeader() {
 
 <Preview compact name="header-submenu" title="القائمة الفرعية" minHeight={330} />
 
+يمكن أن يحمل الرابط نصًّا مساعدًا ووسمًا (هنا لرابط «طلب تصريح» وسم «جديد»). مرّر المؤشر واضغط وتنقل بـ Tab لترى بقية الحالات: يُسطَّر النص، ويأخذ العنصر تعبئة التمرير أو الضغط، ويظهر التركيز بإطار 2px.
+
 ### قائمة فرعية خضراء داكنة بأيقونات في مربعات
 
 <Preview compact name="header-submenu-green" title="قائمة فرعية خضراء داكنة" minHeight={330} />
+
+### قائمة فرعية بعرض كامل
+
+مع `submenuWidth="full"` تصير القائمة الفرعية لوحة بعرض الترويسة تحت الشريط مباشرة، وتصطف الأعمدة مع محتوى الشريط (1280px ما لم تستخدم `fullWidth`). تناسب القوائم ذات ثلاثة أعمدة أو أربعة. اضبطها على الترويسة، أو على عنصر واحد بـ `submenuWidth` في العنصر.
+
+<Preview compact name="header-submenu-full" title="قائمة فرعية بعرض كامل" minHeight={330} />
+
+<Preview compact name="header-submenu-full-green" title="قائمة فرعية خضراء داكنة بعرض كامل" minHeight={330} />
+
+```tsx title="layout.tsx"
+<Header logo={<Logo />} items={items} submenuWidth="full" submenuTone="green" linkStyle="boxed-icon" />
+```
 
 ### تخطيط الجوال
 
@@ -146,6 +160,7 @@ export function SiteHeader() {
 - يتولى الدرج الأمر تحت `lg` (1024px) لا عند 960px.
 - حالة التحديد في عنصر القائمة والإجراء كتلة بشريط كما في DGA؛ أما التمرير والضغط وحلقة التركيز فتستخدم تعبئتي التمرير والضغط المحايدتين وإطارًا بعرض 2px داخل العنصر، لا حدًّا من Figma.
 - درج التنقل: اللوحة البيضاء فقط. لم تُنفَّذ لوحتا DGA الخضراء والرمادية، ولا شارة العنصر، ولا أيقونة الرابط الخارجي، ولا عنصر الفاصل.
+- وسم عنصر القائمة الفرعية هو [Tag](/docs/components/tag) من Platform Code (نجاح، أو على اللون في اللوحة الخضراء)، لا وسمًا خاصًّا بالترويسة. و`submenuWidth="full"` خيار؛ وتبقى البطاقة تحت العنصر هي الافتراضية.
 - يضع `navPosition="center"` التنقل في منتصف الشريط. يرسمه DGA في البداية، وتبقى هي الافتراضية.
 - لا تظهر الإجراءات في الشريط تحت `lg`؛ تنتقل إلى قائمة الفائض (…)، وتنتقل `language` و`user` إلى أسفل درج التنقل.
 

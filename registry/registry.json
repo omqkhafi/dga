@@ -1166,7 +1166,8 @@
         "{{REGISTRY_URL}}/r/utils.json",
         "{{REGISTRY_URL}}/r/direction.json",
         "{{REGISTRY_URL}}/r/menu.json",
-        "{{REGISTRY_URL}}/r/drawer.json"
+        "{{REGISTRY_URL}}/r/drawer.json",
+        "{{REGISTRY_URL}}/r/tag.json"
       ],
       "files": [
         {

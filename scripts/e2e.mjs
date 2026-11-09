@@ -1752,6 +1752,46 @@ async function compositeChecks() {
       (await page.locator("[data-slot=menu-content][data-tone=green]").count()) === 1,
       `${lang}: the dark green sub-menu opens`,
     );
+    check(
+      (await page.locator("[data-slot=menu-content] [data-slot=tag]").count()) === 1,
+      `${lang}: a sub-menu link shows its tag`,
+    );
+
+    // Full-width sub-menu: a panel as wide as the header, directly under the bar, with the columns
+    // lined up with the bar's content.
+    for (const name of ["header-submenu-full", "header-submenu-full-green"]) {
+      await open(name);
+      await page.waitForTimeout(300);
+      const full = await page.evaluate(() => {
+        const header = document
+          .querySelector("[data-slot=header-nav]")
+          ?.closest("[data-slot=header]");
+        const bar = header?.querySelector("[data-slot=header-nav]")?.parentElement;
+        const panel = document.querySelector("[data-slot=menu-content][data-width=full]");
+        const grid = panel?.querySelector("[style*='--header-columns']");
+        if (!(header && bar && panel && grid)) return null;
+        const h = header.getBoundingClientRect();
+        const b = bar.getBoundingClientRect();
+        const p = panel.getBoundingClientRect();
+        const g = grid.getBoundingClientRect();
+        return {
+          panelWidth: Math.round(p.width),
+          headerWidth: Math.round(h.width),
+          gap: Math.round(p.top - b.bottom),
+          gridInBar: g.left >= b.left && g.right <= b.right,
+        };
+      });
+      check(full !== null, `${lang}: ${name} opens a full-width panel`);
+      check(
+        full !== null && Math.abs(full.panelWidth - full.headerWidth) <= 1,
+        `${lang}: ${name} is as wide as the header (${full?.panelWidth} of ${full?.headerWidth})`,
+      );
+      check(
+        full !== null && Math.abs(full.gap) <= 1,
+        `${lang}: ${name} sits directly under the bar (${full?.gap}px)`,
+      );
+      check(full?.gridInBar === true, `${lang}: ${name} columns line up with the bar`);
+    }
 
     // A selected item that is disabled drops the brand block, so its label must not stay white.
     await open("header-menu-items", 1280);

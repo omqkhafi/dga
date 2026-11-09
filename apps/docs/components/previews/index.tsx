@@ -35,6 +35,8 @@ import {
   HeaderMobile,
   HeaderNavCenter,
   HeaderSubmenu,
+  HeaderSubmenuFull,
+  HeaderSubmenuFullGreen,
   HeaderSubmenuGreen,
 } from "./composite";
 import {
@@ -200,6 +202,8 @@ export const previews = {
   "header-stamp": HeaderStamp,
   "header-submenu": HeaderSubmenu,
   "header-submenu-green": HeaderSubmenuGreen,
+  "header-submenu-full": HeaderSubmenuFull,
+  "header-submenu-full-green": HeaderSubmenuFullGreen,
   "header-drawer-open": HeaderDrawerOpen,
   "second-nav-gray": SecondNavGray,
   "second-nav-primary": SecondNavPrimary,

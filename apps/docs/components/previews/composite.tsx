@@ -101,6 +101,7 @@ function useHeaderItems(): HeaderNavItem[] {
               description: t("Apply for an operating permit", "قدّم على تصريح تشغيل"),
               href: "#permit",
               icon: File01Icon,
+              tag: t("New", "جديد"),
             },
           ],
         },
@@ -322,6 +323,47 @@ export function HeaderSubmenuGreen() {
         items={items}
         linkStyle="boxed-icon"
         submenuTone="green"
+        actions={slots.actions}
+      />
+    </div>
+  );
+}
+
+/** The sub-menu as wide as the header, on white, with simple icons. */
+export function HeaderSubmenuFull() {
+  const slots = useHeaderSlots();
+  const items = useHeaderItems().map((item) =>
+    item.sections ? { ...item, defaultOpen: true } : item,
+  );
+  return (
+    <div className="-m-4 min-h-96">
+      <Header
+        {...slots.labels}
+        logo={slots.logo}
+        items={items}
+        linkStyle="icon"
+        submenuWidth="full"
+        actions={slots.actions}
+      />
+    </div>
+  );
+}
+
+/** The full-width sub-menu on the dark green panel, with icons in boxes. */
+export function HeaderSubmenuFullGreen() {
+  const slots = useHeaderSlots();
+  const items = useHeaderItems().map((item) =>
+    item.sections ? { ...item, defaultOpen: true } : item,
+  );
+  return (
+    <div className="-m-4 min-h-96">
+      <Header
+        {...slots.labels}
+        logo={slots.logo}
+        items={items}
+        linkStyle="boxed-icon"
+        submenuTone="green"
+        submenuWidth="full"
         actions={slots.actions}
       />
     </div>

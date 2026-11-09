@@ -4465,7 +4465,8 @@
         "https://dga.omqkhafi.dev/r/utils.json",
         "https://dga.omqkhafi.dev/r/direction.json",
         "https://dga.omqkhafi.dev/r/menu.json",
-        "https://dga.omqkhafi.dev/r/drawer.json"
+        "https://dga.omqkhafi.dev/r/drawer.json",
+        "https://dga.omqkhafi.dev/r/tag.json"
       ],
       "files": [
         {

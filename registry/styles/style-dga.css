@@ -2251,8 +2251,15 @@
     @apply min-w-80 max-w-[calc(100vw-2rem)] rounded-md p-6 shadow-lg;
     @apply data-[tone=green]:bg-background-sa-flag data-[tone=green]:text-text-oncolor-primary;
   }
+  .cn-header-submenu-full {
+    @apply w-(--anchor-width) max-w-none rounded-none border-x-0 p-0 shadow-lg;
+    @apply data-[tone=green]:border-0 data-[tone=green]:bg-background-sa-flag data-[tone=green]:text-text-oncolor-primary;
+  }
+  .cn-header-submenu-inner {
+    @apply mx-auto w-full max-w-[1280px] px-8 py-6 data-full:max-w-none;
+  }
   .cn-header-submenu-grid {
-    @apply grid gap-8 [grid-template-columns:repeat(var(--header-columns,1),minmax(12rem,1fr))];
+    @apply grid gap-8 [grid-template-columns:repeat(var(--header-columns,1),minmax(var(--header-column-min,12rem),1fr))];
   }
   .cn-header-submenu-column {
     @apply flex flex-col gap-1;
@@ -2264,6 +2271,7 @@
     @apply flex min-h-16 cursor-pointer items-center gap-4 rounded-md px-4 py-2 text-md font-medium text-text-display no-underline outline-hidden select-none;
     @apply data-highlighted:bg-button-background-neutral-hovered active:bg-button-background-neutral-pressed;
     @apply focus-visible:outline-2 focus-visible:outline-solid focus-visible:-outline-offset-2 focus-visible:outline-border-black;
+    @apply data-highlighted:[&_.cn-header-sub-label]:underline data-highlighted:[&_.cn-header-sub-label]:underline-offset-4 active:[&_.cn-header-sub-label]:underline active:[&_.cn-header-sub-label]:underline-offset-4 focus-visible:[&_.cn-header-sub-label]:underline focus-visible:[&_.cn-header-sub-label]:underline-offset-4;
     @apply aria-[current=page]:font-bold aria-[current=page]:underline aria-[current=page]:underline-offset-4;
     @apply data-disabled:cursor-not-allowed data-disabled:bg-transparent data-disabled:text-text-default-disabled;
     @apply in-data-[tone=green]:text-text-oncolor-primary in-data-[tone=green]:data-highlighted:bg-button-background-transparent-hovered in-data-[tone=green]:active:bg-button-background-transparent-pressed in-data-[tone=green]:focus-visible:outline-border-white;
@@ -2275,6 +2283,9 @@
   }
   .cn-header-sub-text {
     @apply flex min-w-0 flex-col;
+  }
+  .cn-header-sub-heading {
+    @apply flex min-w-0 flex-wrap items-center gap-2;
   }
   .cn-header-sub-label {
     @apply text-md font-medium;

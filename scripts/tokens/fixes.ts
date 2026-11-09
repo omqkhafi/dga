@@ -599,6 +599,17 @@ export const COMPOSITE_DEVIATIONS: Deviation[] = [
   },
   {
     area: "Components",
+    item: "Header: sub-menu item tag and full-width sub-menu",
+    original:
+      "Header Sub-menu Item has four variants (Simple List of Menu, With Icon, With Helper Text, With Tag) and four states. Nav Header Sub-Menu is drawn as a wide panel of up to four columns with a Group Label on white or dark green.",
+    ours: "A link takes `description` (helper text), `icon` (with `linkStyle` `icon` or `boxed-icon`) and `tag` (the Platform Code Tag, success on white and on-colour on green). The label is underlined when hovered, pressed or focused, as in Figma. `submenuWidth` is `content` (default, a card under the item) or `full`: a panel as wide as the header, directly under the bar, whose columns line up with the bar's content. It can be set on the header or on one item.",
+    reason:
+      "The With Tag variant and the wide panel were not built. The card under the item stays the default; the full-width panel is an option for menus with three or four columns.",
+    status: "fixed",
+    component: "header",
+  },
+  {
+    area: "Components",
     item: "Header: phone layout and actions",
     original:
       "The mobile Header shows the menu, the logo and an overflow control. Header Action is an icon and label in the bar.",

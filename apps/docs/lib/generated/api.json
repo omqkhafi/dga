@@ -3940,6 +3940,14 @@
           "descriptionAr": "شكل روابط القائمة الفرعية: نص فقط، أو مع أيقونة بسيطة، أو مع أيقونة داخل مربع."
         },
         {
+          "name": "submenuWidth",
+          "type": "\"content\" | \"full\"",
+          "default": "\"content\"",
+          "required": false,
+          "description": "How wide the sub-menu is: `content` (default, a card under the item, as wide as its columns) or `full` (a panel as wide as the header, directly under the bar, with the columns lined up with the bar). An item can override it with its own `submenuWidth`.",
+          "descriptionAr": "عرض القائمة الفرعية: `content` (الافتراضي، بطاقة تحت العنصر بعرض أعمدتها) أو `full` (لوحة بعرض الترويسة تحت الشريط مباشرة، وتصطف الأعمدة مع محتوى الشريط). يمكن للعنصر تجاوزها بـ `submenuWidth` الخاص به."
+        },
+        {
           "name": "top",
           "type": "string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<AwaitedReactNode>",
           "default": null,
@@ -3957,11 +3965,19 @@
         },
         {
           "name": "submenuTone",
-          "type": "\"default\" | \"green\"",
+          "type": "\"green\" | \"default\"",
           "default": "\"default\"",
           "required": false,
           "description": "The sub-menu panel: white, or the dark green of the DGA flag.",
           "descriptionAr": "لوحة القائمة الفرعية: بيضاء، أو بالأخضر الداكن لعلم DGA."
+        },
+        {
+          "name": "fullWidth",
+          "type": "boolean",
+          "default": "false",
+          "required": false,
+          "description": "Spans the whole width. Default: centred, 1280px at most.",
+          "descriptionAr": "يمتد بكامل العرض. الافتراضي: في المنتصف بعرض أقصى 1280px."
         },
         {
           "name": "logo",
@@ -4018,14 +4034,6 @@
           "required": false,
           "description": "The official-site strip above everything else: put a Digital Stamp here.",
           "descriptionAr": "شريط الموقع الرسمي فوق كل شيء: ضع هنا Digital Stamp. يقع فوق `top`."
-        },
-        {
-          "name": "fullWidth",
-          "type": "boolean",
-          "default": "false",
-          "required": false,
-          "description": "Spans the whole width. Default: centred, 1280px at most.",
-          "descriptionAr": "يمتد بكامل العرض. الافتراضي: في المنتصف بعرض أقصى 1280px."
         },
         {
           "name": "skipHref",
