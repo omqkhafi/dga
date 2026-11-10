@@ -1,6 +1,7 @@
 "use client";
 
 import { Combobox as ComboboxPrimitive } from "@base-ui/react/combobox";
+import { DirectionProvider } from "@base-ui/react/direction-provider";
 import { Field as FieldPrimitive } from "@base-ui/react/field";
 import { Input as InputPrimitive } from "@base-ui/react/input";
 import { ArrowDown01Icon, Search01Icon, Tick02Icon } from "@hugeicons/core-free-icons";
@@ -8,7 +9,6 @@ import { HugeiconsIcon } from "@hugeicons/react";
 import * as React from "react";
 import { normalizeArabic } from "@/components/dga/combobox";
 import { inputVariants } from "@/components/dga/input";
-import { AutoDirection, useDocumentDirection } from "@/lib/dga/direction";
 import {
   countryName,
   detectCountry,
@@ -181,7 +181,6 @@ function PhoneInput({
 }: PhoneInputProps) {
   const pageLang = useDocumentLang();
   const locale = localeProp ?? pageLang;
-  const direction = useDocumentDirection();
   const box = React.useRef<HTMLDivElement | null>(null);
   const field = React.useRef<HTMLInputElement | null>(null);
   const pendingCaret = React.useRef<number | null>(null);
@@ -333,9 +332,10 @@ function PhoneInput({
   const shown = format && current ? formatNational(current, details.national) : details.national;
 
   return (
-    <AutoDirection>
+    <DirectionProvider direction="ltr">
       <div
         ref={box}
+        dir="ltr"
         data-slot="phone-input"
         data-size={size ?? "lg"}
         className={cn(inputVariants({ size, appearance }), "gap-0 ps-0", className)}
@@ -377,7 +377,7 @@ function PhoneInput({
                   {flagOf(current.iso)}
                 </span>
               ) : null}
-              <bdi dir="ltr" className="min-w-[3.5ch] text-start tabular-nums [unicode-bidi:isolate] rtl:text-end">
+              <bdi dir="ltr" className="min-w-[3.5ch] text-start tabular-nums [unicode-bidi:isolate]">
                 {current ? `+${current.dial}` : ""}
               </bdi>
               <HugeiconsIcon icon={ArrowDown01Icon} aria-hidden className="size-4 shrink-0 text-icon-default-500 transition-transform motion-reduce:transition-none in-data-popup-open:rotate-180 in-data-disabled:text-icon-default-disabled" />
@@ -390,7 +390,11 @@ function PhoneInput({
                 sideOffset={4}
                 className="z-50 outline-hidden select-none"
               >
-                <ComboboxPrimitive.Popup data-slot="phone-content" className="flex max-h-(--available-height) w-(--anchor-width) min-w-72 origin-(--transform-origin) flex-col overflow-hidden rounded-sm border border-border-neutral-primary bg-background-card text-text-default shadow-md outline-hidden transition-[scale,opacity] duration-100 data-starting-style:scale-95 data-starting-style:opacity-0 data-ending-style:scale-95 data-ending-style:opacity-0 motion-reduce:transition-none">
+                <ComboboxPrimitive.Popup
+                  dir="ltr"
+                  data-slot="phone-content"
+                  className="flex max-h-(--available-height) w-(--anchor-width) min-w-72 origin-(--transform-origin) flex-col overflow-hidden rounded-sm border border-border-neutral-primary bg-background-card text-text-default shadow-md outline-hidden transition-[scale,opacity] duration-100 data-starting-style:scale-95 data-starting-style:opacity-0 data-ending-style:scale-95 data-ending-style:opacity-0 motion-reduce:transition-none"
+                >
                   <div className="flex h-10 shrink-0 items-center gap-2 border-b border-border-neutral-primary px-3 text-icon-default-500 [&_svg]:size-5 [&_svg]:shrink-0">
                     <HugeiconsIcon icon={Search01Icon} aria-hidden />
                     <ComboboxPrimitive.Input
@@ -446,21 +450,20 @@ function PhoneInput({
           readOnly={readOnly}
           required={required}
           aria-invalid={invalid ? true : undefined}
-          data-direction={direction}
           onChange={handleInput}
           onBeforeInput={handleBeforeInput}
           onBlur={(event) => {
             setTouched(true);
             onBlur?.(event);
           }}
-          className={cn("h-full min-w-0 flex-1 bg-transparent p-0 text-inherit [outline:0_none] placeholder:text-(--field-placeholder) disabled:cursor-not-allowed disabled:text-text-default-disabled disabled:placeholder:text-text-default-disabled read-only:text-field-text-readonly [&::-webkit-search-cancel-button]:appearance-none [&::-webkit-search-decoration]:appearance-none tabular-nums [unicode-bidi:isolate] rtl:text-end", inputClassName)}
+          className={cn("h-full min-w-0 flex-1 bg-transparent p-0 text-inherit [outline:0_none] placeholder:text-(--field-placeholder) disabled:cursor-not-allowed disabled:text-text-default-disabled disabled:placeholder:text-text-default-disabled read-only:text-field-text-readonly [&::-webkit-search-cancel-button]:appearance-none [&::-webkit-search-decoration]:appearance-none tabular-nums [unicode-bidi:isolate]", inputClassName)}
         />
         {name ? <input type="hidden" name={name} value={details.e164} /> : null}
         {countryFieldName ? (
           <input type="hidden" name={countryFieldName} value={details.country} />
         ) : null}
       </div>
-    </AutoDirection>
+    </DirectionProvider>
   );
 }
 
@@ -481,7 +484,7 @@ function CountryItem({ option, showFlag }: { option: CountryOption; showFlag: bo
           {flagOf(option.value)}
         </span>
       ) : null}
-      <bdi dir="ltr" className="w-14 shrink-0 text-start whitespace-nowrap text-text-primary-paragraph tabular-nums [unicode-bidi:isolate] rtl:text-end">
+      <bdi dir="ltr" className="w-14 shrink-0 text-start whitespace-nowrap text-text-primary-paragraph tabular-nums [unicode-bidi:isolate]">
         {option.dial}
       </bdi>
       <span className="min-w-0 flex-1 truncate">{option.label}</span>

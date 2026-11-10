@@ -2805,7 +2805,7 @@
   /* ------------------------------------------------------------------------------------
    * Phone Input (Platform Code extension, no DGA spec). One Input box (cn-input) holding the
    * country button, a divider and the number, so every Input state, size and fill applies. The
-   * button shows the calling code in a fixed-width column; the number is always left to right.
+   * button shows the calling code in a fixed-width column. The whole field, box and list, is always left to right, also on Arabic pages.
    * The list is the Combobox popup (card surface, radius-sm, shadow-md, 32px items) with a search
    * box on top. Each row is one line: calling code in a fixed-width column, then the name.
    * ---------------------------------------------------------------------------------- */
@@ -2819,7 +2819,7 @@
     @apply data-disabled:cursor-not-allowed data-disabled:text-text-default-disabled data-disabled:hover:bg-transparent;
   }
   .cn-phone-dial {
-    @apply min-w-[3.5ch] text-start tabular-nums [unicode-bidi:isolate] rtl:text-end;
+    @apply min-w-[3.5ch] text-start tabular-nums [unicode-bidi:isolate];
   }
   .cn-phone-flag {
     @apply shrink-0 text-lg leading-none;
@@ -2832,7 +2832,7 @@
     @apply me-3 h-5 w-px shrink-0 bg-border-neutral-primary;
   }
   .cn-phone-field {
-    @apply tabular-nums [unicode-bidi:isolate] rtl:text-end;
+    @apply tabular-nums [unicode-bidi:isolate];
   }
   .cn-phone-positioner {
     @apply z-50 outline-hidden select-none;
@@ -2865,7 +2865,7 @@
     @apply data-selected:font-medium;
   }
   .cn-phone-item-dial {
-    @apply w-14 shrink-0 text-start whitespace-nowrap text-text-primary-paragraph tabular-nums [unicode-bidi:isolate] rtl:text-end;
+    @apply w-14 shrink-0 text-start whitespace-nowrap text-text-primary-paragraph tabular-nums [unicode-bidi:isolate];
   }
   .cn-phone-item-name {
     @apply min-w-0 flex-1 truncate;

@@ -1,6 +1,7 @@
 "use client";
 
 import { Combobox as ComboboxPrimitive } from "@base-ui/react/combobox";
+import { DirectionProvider } from "@base-ui/react/direction-provider";
 import { Field as FieldPrimitive } from "@base-ui/react/field";
 import { Input as InputPrimitive } from "@base-ui/react/input";
 import { ArrowDown01Icon, Search01Icon, Tick02Icon } from "@hugeicons/core-free-icons";
@@ -8,7 +9,6 @@ import { HugeiconsIcon } from "@hugeicons/react";
 import * as React from "react";
 import { normalizeArabic } from "@/components/dga/combobox";
 import { inputVariants } from "@/components/dga/input";
-import { AutoDirection, useDocumentDirection } from "@/lib/dga/direction";
 import {
   countryName,
   detectCountry,
@@ -181,7 +181,6 @@ function PhoneInput({
 }: PhoneInputProps) {
   const pageLang = useDocumentLang();
   const locale = localeProp ?? pageLang;
-  const direction = useDocumentDirection();
   const box = React.useRef<HTMLDivElement | null>(null);
   const field = React.useRef<HTMLInputElement | null>(null);
   const pendingCaret = React.useRef<number | null>(null);
@@ -333,9 +332,10 @@ function PhoneInput({
   const shown = format && current ? formatNational(current, details.national) : details.national;
 
   return (
-    <AutoDirection>
+    <DirectionProvider direction="ltr">
       <div
         ref={box}
+        dir="ltr"
         data-slot="phone-input"
         data-size={size ?? "lg"}
         className={cn(inputVariants({ size, appearance }), "cn-phone", className)}
@@ -390,7 +390,11 @@ function PhoneInput({
                 sideOffset={4}
                 className="cn-phone-positioner"
               >
-                <ComboboxPrimitive.Popup data-slot="phone-content" className="cn-phone-content">
+                <ComboboxPrimitive.Popup
+                  dir="ltr"
+                  data-slot="phone-content"
+                  className="cn-phone-content"
+                >
                   <div className="cn-phone-search">
                     <HugeiconsIcon icon={Search01Icon} aria-hidden />
                     <ComboboxPrimitive.Input
@@ -446,7 +450,6 @@ function PhoneInput({
           readOnly={readOnly}
           required={required}
           aria-invalid={invalid ? true : undefined}
-          data-direction={direction}
           onChange={handleInput}
           onBeforeInput={handleBeforeInput}
           onBlur={(event) => {
@@ -460,7 +463,7 @@ function PhoneInput({
           <input type="hidden" name={countryFieldName} value={details.country} />
         ) : null}
       </div>
-    </AutoDirection>
+    </DirectionProvider>
   );
 }
 

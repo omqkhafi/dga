@@ -291,7 +291,7 @@ export async function inputsChecks({ browser, BASE, check }) {
         b.querySelector("input[type=tel]").getBoundingClientRect().x,
       ];
     });
-    check(rtl ? xs[0] > xs[1] : xs[0] < xs[1], `phone ${dir}: the country is on the start side`);
+    check(xs[0] < xs[1], `phone ${dir}: the country is on the left in both directions`);
     check(
       (await number.getAttribute("dir")) === "ltr" && (await number.getAttribute("type")) === "tel",
       `phone ${dir}: the number is left to right and a tel field`,
