@@ -9,7 +9,6 @@ import { HugeiconsIcon } from "@hugeicons/react";
 import * as React from "react";
 import { normalizeArabic } from "@/components/dga/combobox";
 import { inputVariants } from "@/components/dga/input";
-import { AutoDirection } from "@/lib/dga/direction";
 import {
   countryName,
   detectCountry,
@@ -343,102 +342,98 @@ function PhoneInput({
       >
         {/* A Field of its own, so the list does not take the label of the Field around the number. */}
         <FieldPrimitive.Root className="contents">
-          <AutoDirection>
-            <ComboboxPrimitive.Root
-              items={options}
-              value={selected}
-              onValueChange={(next: unknown) =>
-                chooseCountry((next as CountryOption | null)?.value)
-              }
-              inputValue={query}
-              onInputValueChange={(text) => setQuery(text)}
-              onOpenChange={(open) => {
-                if (!open) setQuery("");
-              }}
-              itemToStringLabel={(item: unknown) => (item as CountryOption | null)?.label ?? ""}
-              isItemEqualToValue={(a: unknown, b: unknown) =>
-                (a as CountryOption)?.value === (b as CountryOption)?.value
-              }
-              filter={(item: unknown, text: string) => {
-                const option = item as CountryOption;
-                const needle = normalizeArabic(text.replace(/^00/, "+"));
-                if (!needle) return true;
-                return [option.label, ...option.keywords].some((word) =>
-                  normalizeArabic(word).includes(needle),
-                );
-              }}
-              defaultOpen={defaultOpen}
-              disabled={disabled || fieldDisabled || countryDisabled}
-              readOnly={readOnly}
+          <ComboboxPrimitive.Root
+            items={options}
+            value={selected}
+            onValueChange={(next: unknown) => chooseCountry((next as CountryOption | null)?.value)}
+            inputValue={query}
+            onInputValueChange={(text) => setQuery(text)}
+            onOpenChange={(open) => {
+              if (!open) setQuery("");
+            }}
+            itemToStringLabel={(item: unknown) => (item as CountryOption | null)?.label ?? ""}
+            isItemEqualToValue={(a: unknown, b: unknown) =>
+              (a as CountryOption)?.value === (b as CountryOption)?.value
+            }
+            filter={(item: unknown, text: string) => {
+              const option = item as CountryOption;
+              const needle = normalizeArabic(text.replace(/^00/, "+"));
+              if (!needle) return true;
+              return [option.label, ...option.keywords].some((word) =>
+                normalizeArabic(word).includes(needle),
+              );
+            }}
+            defaultOpen={defaultOpen}
+            disabled={disabled || fieldDisabled || countryDisabled}
+            readOnly={readOnly}
+          >
+            <ComboboxPrimitive.Trigger
+              data-slot="phone-country"
+              aria-label={countryLabel(selected?.label ?? current?.iso ?? "")}
+              className="relative inline-flex h-full min-w-[4.75rem] shrink-0 cursor-pointer items-center gap-1 rounded-s-[calc(var(--radius-sm)-1px)] border-0 bg-transparent ps-3 pe-2 text-inherit transition-colors motion-reduce:transition-none hover:bg-button-background-neutral-default active:bg-button-background-neutral-pressed focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-solid focus-visible:outline-border-black data-disabled:cursor-not-allowed data-disabled:text-text-default-disabled data-disabled:hover:bg-transparent"
             >
-              <ComboboxPrimitive.Trigger
-                data-slot="phone-country"
-                aria-label={countryLabel(selected?.label ?? current?.iso ?? "")}
-                className="relative inline-flex h-full min-w-[4.75rem] shrink-0 cursor-pointer items-center gap-1 rounded-s-[calc(var(--radius-sm)-1px)] border-0 bg-transparent ps-3 pe-2 text-inherit transition-colors motion-reduce:transition-none hover:bg-button-background-neutral-default active:bg-button-background-neutral-pressed focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-solid focus-visible:outline-border-black data-disabled:cursor-not-allowed data-disabled:text-text-default-disabled data-disabled:hover:bg-transparent"
+              {showFlag && current ? (
+                <span aria-hidden className="shrink-0 text-lg leading-none">
+                  {flagOf(current.iso)}
+                </span>
+              ) : null}
+              <bdi dir="ltr" className="min-w-[3.5ch] text-start tabular-nums [unicode-bidi:isolate]">
+                {current ? `+${current.dial}` : ""}
+              </bdi>
+              <HugeiconsIcon icon={ArrowDown01Icon} aria-hidden className="size-4 shrink-0 text-icon-default-500 transition-transform motion-reduce:transition-none in-data-popup-open:rotate-180 in-data-disabled:text-icon-default-disabled" />
+            </ComboboxPrimitive.Trigger>
+            <ComboboxPrimitive.Portal>
+              <ComboboxPrimitive.Positioner
+                anchor={box}
+                side="bottom"
+                align="start"
+                sideOffset={4}
+                className="z-50 outline-hidden select-none"
               >
-                {showFlag && current ? (
-                  <span aria-hidden className="shrink-0 text-lg leading-none">
-                    {flagOf(current.iso)}
-                  </span>
-                ) : null}
-                <bdi dir="ltr" className="min-w-[3.5ch] text-start tabular-nums [unicode-bidi:isolate]">
-                  {current ? `+${current.dial}` : ""}
-                </bdi>
-                <HugeiconsIcon icon={ArrowDown01Icon} aria-hidden className="size-4 shrink-0 text-icon-default-500 transition-transform motion-reduce:transition-none in-data-popup-open:rotate-180 in-data-disabled:text-icon-default-disabled" />
-              </ComboboxPrimitive.Trigger>
-              <ComboboxPrimitive.Portal>
-                <ComboboxPrimitive.Positioner
-                  anchor={box}
-                  side="bottom"
-                  align="start"
-                  sideOffset={4}
-                  className="z-50 outline-hidden select-none"
+                <ComboboxPrimitive.Popup
+                  dir="ltr"
+                  data-slot="phone-content"
+                  className="flex max-h-(--available-height) w-(--anchor-width) min-w-72 origin-(--transform-origin) flex-col overflow-hidden rounded-sm border border-border-neutral-primary bg-background-card text-text-default shadow-md outline-hidden transition-[scale,opacity] duration-100 data-starting-style:scale-95 data-starting-style:opacity-0 data-ending-style:scale-95 data-ending-style:opacity-0 motion-reduce:transition-none"
                 >
-                  <ComboboxPrimitive.Popup data-slot="phone-content" className="flex max-h-(--available-height) w-(--anchor-width) min-w-72 origin-(--transform-origin) flex-col overflow-hidden rounded-sm border border-border-neutral-primary bg-background-card text-text-default shadow-md outline-hidden transition-[scale,opacity] duration-100 data-starting-style:scale-95 data-starting-style:opacity-0 data-ending-style:scale-95 data-ending-style:opacity-0 motion-reduce:transition-none">
-                    <div className="flex h-10 shrink-0 items-center gap-2 border-b border-border-neutral-primary px-3 text-icon-default-500 [&_svg]:size-5 [&_svg]:shrink-0">
-                      <HugeiconsIcon icon={Search01Icon} aria-hidden />
-                      <ComboboxPrimitive.Input
-                        data-slot="phone-search"
-                        aria-label={searchPlaceholder}
-                        placeholder={searchPlaceholder}
-                        className="h-full min-w-0 flex-1 border-0 bg-transparent p-0 text-sm text-field-text-filled [outline:0_none] placeholder:text-field-text-placeholder"
-                      />
-                    </div>
-                    <PhoneStatus statusLabel={statusLabel} />
-                    <ComboboxPrimitive.Empty data-slot="phone-empty" className="flex items-center gap-2 px-3 py-3 text-sm text-text-primary-paragraph empty:hidden">
-                      {emptyText}
-                    </ComboboxPrimitive.Empty>
-                    <ComboboxPrimitive.List data-slot="phone-list" className="relative max-h-[min(18rem,var(--available-height))] min-h-0 overflow-y-auto overscroll-contain p-1 outline-hidden empty:hidden">
-                      {(item: CountryOption | CountryGroup) =>
-                        isGroup(item) ? (
-                          <ComboboxPrimitive.Group
-                            key={item.label}
-                            items={item.items}
-                            className="flex flex-col"
-                          >
-                            <ComboboxPrimitive.GroupLabel className="px-3 py-1.5 text-xs font-semibold text-field-text-helper">
-                              {item.label}
-                            </ComboboxPrimitive.GroupLabel>
-                            <ComboboxPrimitive.Collection>
-                              {(option: CountryOption) => (
-                                <CountryItem
-                                  key={option.value}
-                                  option={option}
-                                  showFlag={showFlag}
-                                />
-                              )}
-                            </ComboboxPrimitive.Collection>
-                          </ComboboxPrimitive.Group>
-                        ) : (
-                          <CountryItem key={item.value} option={item} showFlag={showFlag} />
-                        )
-                      }
-                    </ComboboxPrimitive.List>
-                  </ComboboxPrimitive.Popup>
-                </ComboboxPrimitive.Positioner>
-              </ComboboxPrimitive.Portal>
-            </ComboboxPrimitive.Root>
-          </AutoDirection>
+                  <div className="flex h-10 shrink-0 items-center gap-2 border-b border-border-neutral-primary px-3 text-icon-default-500 [&_svg]:size-5 [&_svg]:shrink-0">
+                    <HugeiconsIcon icon={Search01Icon} aria-hidden />
+                    <ComboboxPrimitive.Input
+                      data-slot="phone-search"
+                      aria-label={searchPlaceholder}
+                      placeholder={searchPlaceholder}
+                      className="h-full min-w-0 flex-1 border-0 bg-transparent p-0 text-sm text-field-text-filled [outline:0_none] placeholder:text-field-text-placeholder"
+                    />
+                  </div>
+                  <PhoneStatus statusLabel={statusLabel} />
+                  <ComboboxPrimitive.Empty data-slot="phone-empty" className="flex items-center gap-2 px-3 py-3 text-sm text-text-primary-paragraph empty:hidden">
+                    {emptyText}
+                  </ComboboxPrimitive.Empty>
+                  <ComboboxPrimitive.List data-slot="phone-list" className="relative max-h-[min(18rem,var(--available-height))] min-h-0 overflow-y-auto overscroll-contain p-1 outline-hidden empty:hidden">
+                    {(item: CountryOption | CountryGroup) =>
+                      isGroup(item) ? (
+                        <ComboboxPrimitive.Group
+                          key={item.label}
+                          items={item.items}
+                          className="flex flex-col"
+                        >
+                          <ComboboxPrimitive.GroupLabel className="px-3 py-1.5 text-xs font-semibold text-field-text-helper">
+                            {item.label}
+                          </ComboboxPrimitive.GroupLabel>
+                          <ComboboxPrimitive.Collection>
+                            {(option: CountryOption) => (
+                              <CountryItem key={option.value} option={option} showFlag={showFlag} />
+                            )}
+                          </ComboboxPrimitive.Collection>
+                        </ComboboxPrimitive.Group>
+                      ) : (
+                        <CountryItem key={item.value} option={item} showFlag={showFlag} />
+                      )
+                    }
+                  </ComboboxPrimitive.List>
+                </ComboboxPrimitive.Popup>
+              </ComboboxPrimitive.Positioner>
+            </ComboboxPrimitive.Portal>
+          </ComboboxPrimitive.Root>
         </FieldPrimitive.Root>
         <span aria-hidden className="me-3 h-5 w-px shrink-0 bg-border-neutral-primary" />
         <InputPrimitive
@@ -489,7 +484,7 @@ function CountryItem({ option, showFlag }: { option: CountryOption; showFlag: bo
           {flagOf(option.value)}
         </span>
       ) : null}
-      <bdi dir="ltr" className="w-14 shrink-0 text-start whitespace-nowrap text-text-primary-paragraph tabular-nums [unicode-bidi:isolate] rtl:text-end">
+      <bdi dir="ltr" className="w-14 shrink-0 text-start whitespace-nowrap text-text-primary-paragraph tabular-nums [unicode-bidi:isolate]">
         {option.dial}
       </bdi>
       <span className="min-w-0 flex-1 truncate">{option.label}</span>

@@ -9,7 +9,6 @@ import { HugeiconsIcon } from "@hugeicons/react";
 import * as React from "react";
 import { normalizeArabic } from "@/components/dga/combobox";
 import { inputVariants } from "@/components/dga/input";
-import { AutoDirection } from "@/lib/dga/direction";
 import {
   countryName,
   detectCountry,
@@ -343,102 +342,98 @@ function PhoneInput({
       >
         {/* A Field of its own, so the list does not take the label of the Field around the number. */}
         <FieldPrimitive.Root className="contents">
-          <AutoDirection>
-            <ComboboxPrimitive.Root
-              items={options}
-              value={selected}
-              onValueChange={(next: unknown) =>
-                chooseCountry((next as CountryOption | null)?.value)
-              }
-              inputValue={query}
-              onInputValueChange={(text) => setQuery(text)}
-              onOpenChange={(open) => {
-                if (!open) setQuery("");
-              }}
-              itemToStringLabel={(item: unknown) => (item as CountryOption | null)?.label ?? ""}
-              isItemEqualToValue={(a: unknown, b: unknown) =>
-                (a as CountryOption)?.value === (b as CountryOption)?.value
-              }
-              filter={(item: unknown, text: string) => {
-                const option = item as CountryOption;
-                const needle = normalizeArabic(text.replace(/^00/, "+"));
-                if (!needle) return true;
-                return [option.label, ...option.keywords].some((word) =>
-                  normalizeArabic(word).includes(needle),
-                );
-              }}
-              defaultOpen={defaultOpen}
-              disabled={disabled || fieldDisabled || countryDisabled}
-              readOnly={readOnly}
+          <ComboboxPrimitive.Root
+            items={options}
+            value={selected}
+            onValueChange={(next: unknown) => chooseCountry((next as CountryOption | null)?.value)}
+            inputValue={query}
+            onInputValueChange={(text) => setQuery(text)}
+            onOpenChange={(open) => {
+              if (!open) setQuery("");
+            }}
+            itemToStringLabel={(item: unknown) => (item as CountryOption | null)?.label ?? ""}
+            isItemEqualToValue={(a: unknown, b: unknown) =>
+              (a as CountryOption)?.value === (b as CountryOption)?.value
+            }
+            filter={(item: unknown, text: string) => {
+              const option = item as CountryOption;
+              const needle = normalizeArabic(text.replace(/^00/, "+"));
+              if (!needle) return true;
+              return [option.label, ...option.keywords].some((word) =>
+                normalizeArabic(word).includes(needle),
+              );
+            }}
+            defaultOpen={defaultOpen}
+            disabled={disabled || fieldDisabled || countryDisabled}
+            readOnly={readOnly}
+          >
+            <ComboboxPrimitive.Trigger
+              data-slot="phone-country"
+              aria-label={countryLabel(selected?.label ?? current?.iso ?? "")}
+              className="cn-phone-country"
             >
-              <ComboboxPrimitive.Trigger
-                data-slot="phone-country"
-                aria-label={countryLabel(selected?.label ?? current?.iso ?? "")}
-                className="cn-phone-country"
+              {showFlag && current ? (
+                <span aria-hidden className="cn-phone-flag">
+                  {flagOf(current.iso)}
+                </span>
+              ) : null}
+              <bdi dir="ltr" className="cn-phone-dial">
+                {current ? `+${current.dial}` : ""}
+              </bdi>
+              <HugeiconsIcon icon={ArrowDown01Icon} aria-hidden className="cn-phone-arrow" />
+            </ComboboxPrimitive.Trigger>
+            <ComboboxPrimitive.Portal>
+              <ComboboxPrimitive.Positioner
+                anchor={box}
+                side="bottom"
+                align="start"
+                sideOffset={4}
+                className="cn-phone-positioner"
               >
-                {showFlag && current ? (
-                  <span aria-hidden className="cn-phone-flag">
-                    {flagOf(current.iso)}
-                  </span>
-                ) : null}
-                <bdi dir="ltr" className="cn-phone-dial">
-                  {current ? `+${current.dial}` : ""}
-                </bdi>
-                <HugeiconsIcon icon={ArrowDown01Icon} aria-hidden className="cn-phone-arrow" />
-              </ComboboxPrimitive.Trigger>
-              <ComboboxPrimitive.Portal>
-                <ComboboxPrimitive.Positioner
-                  anchor={box}
-                  side="bottom"
-                  align="start"
-                  sideOffset={4}
-                  className="cn-phone-positioner"
+                <ComboboxPrimitive.Popup
+                  dir="ltr"
+                  data-slot="phone-content"
+                  className="cn-phone-content"
                 >
-                  <ComboboxPrimitive.Popup data-slot="phone-content" className="cn-phone-content">
-                    <div className="cn-phone-search">
-                      <HugeiconsIcon icon={Search01Icon} aria-hidden />
-                      <ComboboxPrimitive.Input
-                        data-slot="phone-search"
-                        aria-label={searchPlaceholder}
-                        placeholder={searchPlaceholder}
-                        className="cn-phone-search-input"
-                      />
-                    </div>
-                    <PhoneStatus statusLabel={statusLabel} />
-                    <ComboboxPrimitive.Empty data-slot="phone-empty" className="cn-phone-empty">
-                      {emptyText}
-                    </ComboboxPrimitive.Empty>
-                    <ComboboxPrimitive.List data-slot="phone-list" className="cn-phone-list">
-                      {(item: CountryOption | CountryGroup) =>
-                        isGroup(item) ? (
-                          <ComboboxPrimitive.Group
-                            key={item.label}
-                            items={item.items}
-                            className="cn-phone-group"
-                          >
-                            <ComboboxPrimitive.GroupLabel className="cn-phone-label">
-                              {item.label}
-                            </ComboboxPrimitive.GroupLabel>
-                            <ComboboxPrimitive.Collection>
-                              {(option: CountryOption) => (
-                                <CountryItem
-                                  key={option.value}
-                                  option={option}
-                                  showFlag={showFlag}
-                                />
-                              )}
-                            </ComboboxPrimitive.Collection>
-                          </ComboboxPrimitive.Group>
-                        ) : (
-                          <CountryItem key={item.value} option={item} showFlag={showFlag} />
-                        )
-                      }
-                    </ComboboxPrimitive.List>
-                  </ComboboxPrimitive.Popup>
-                </ComboboxPrimitive.Positioner>
-              </ComboboxPrimitive.Portal>
-            </ComboboxPrimitive.Root>
-          </AutoDirection>
+                  <div className="cn-phone-search">
+                    <HugeiconsIcon icon={Search01Icon} aria-hidden />
+                    <ComboboxPrimitive.Input
+                      data-slot="phone-search"
+                      aria-label={searchPlaceholder}
+                      placeholder={searchPlaceholder}
+                      className="cn-phone-search-input"
+                    />
+                  </div>
+                  <PhoneStatus statusLabel={statusLabel} />
+                  <ComboboxPrimitive.Empty data-slot="phone-empty" className="cn-phone-empty">
+                    {emptyText}
+                  </ComboboxPrimitive.Empty>
+                  <ComboboxPrimitive.List data-slot="phone-list" className="cn-phone-list">
+                    {(item: CountryOption | CountryGroup) =>
+                      isGroup(item) ? (
+                        <ComboboxPrimitive.Group
+                          key={item.label}
+                          items={item.items}
+                          className="cn-phone-group"
+                        >
+                          <ComboboxPrimitive.GroupLabel className="cn-phone-label">
+                            {item.label}
+                          </ComboboxPrimitive.GroupLabel>
+                          <ComboboxPrimitive.Collection>
+                            {(option: CountryOption) => (
+                              <CountryItem key={option.value} option={option} showFlag={showFlag} />
+                            )}
+                          </ComboboxPrimitive.Collection>
+                        </ComboboxPrimitive.Group>
+                      ) : (
+                        <CountryItem key={item.value} option={item} showFlag={showFlag} />
+                      )
+                    }
+                  </ComboboxPrimitive.List>
+                </ComboboxPrimitive.Popup>
+              </ComboboxPrimitive.Positioner>
+            </ComboboxPrimitive.Portal>
+          </ComboboxPrimitive.Root>
         </FieldPrimitive.Root>
         <span aria-hidden className="cn-phone-divider" />
         <InputPrimitive
