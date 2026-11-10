@@ -1358,7 +1358,7 @@
     @apply flex min-w-0 items-stretch gap-0.75;
   }
   .cn-tabs-overflow-list {
-    @apply flex min-w-0 gap-0.75 overflow-hidden;
+    @apply relative flex min-w-0 gap-0.75 overflow-hidden;
   }
   .cn-tabs-more {
     @apply data-popup-open:bg-button-background-neutral-pressed data-popup-open:text-text-default;
@@ -1377,10 +1377,21 @@
     @apply data-active:font-bold data-active:text-text-default data-active:hover:bg-transparent data-active:active:bg-button-background-neutral-pressed;
     @apply data-disabled:cursor-not-allowed data-disabled:bg-transparent data-disabled:text-text-default-disabled data-disabled:hover:bg-transparent;
     @apply [&_svg]:size-(--tab-icon) [&_svg]:shrink-0 [&_svg]:text-unselected-tab-icon data-active:[&_svg]:text-icon-default data-disabled:[&_svg]:text-icon-default-disabled;
-    @apply after:pointer-events-none after:absolute after:rounded-full after:bg-border-primary after:opacity-0 after:transition-opacity data-active:after:opacity-100 motion-reduce:transition-none motion-reduce:after:transition-none;
+    @apply after:pointer-events-none after:absolute after:rounded-full after:bg-border-primary after:opacity-0 after:transition-opacity motion-reduce:transition-none motion-reduce:after:transition-none;
+    @apply not-data-active:not-data-disabled:hover:after:opacity-40 not-data-active:not-data-disabled:active:after:opacity-70 data-[slot=tabs-more]:data-active:after:opacity-100;
     @apply data-[orientation=horizontal]:after:inset-x-0 data-[orientation=horizontal]:after:bottom-0 data-[orientation=horizontal]:after:h-0.75;
     @apply data-[orientation=vertical]:justify-start data-[orientation=vertical]:after:inset-y-2 data-[orientation=vertical]:after:end-0 data-[orientation=vertical]:after:min-h-4 data-[orientation=vertical]:after:w-0.75;
-    @apply data-[orientation=vertical]:hover:after:bg-border-neutral-primary data-[orientation=vertical]:hover:after:opacity-100 data-[orientation=vertical]:active:after:opacity-100 data-[orientation=vertical]:data-active:after:bg-border-primary;
+    @apply data-[orientation=vertical]:not-data-active:not-data-disabled:hover:after:bg-border-neutral-primary data-[orientation=vertical]:not-data-active:not-data-disabled:hover:after:opacity-100 data-[orientation=vertical]:not-data-active:not-data-disabled:active:after:opacity-100;
+  }
+  /*
+   * The bar under the selected tab is one element that slides between tabs (Base UI sets
+   * --active-tab-left, -top, -width and -height on it). Hovering another tab shows a faded
+   * bar, the pressed tab a stronger one. The More tab draws its own bar while it is selected.
+   */
+  .cn-tabs-indicator {
+    @apply pointer-events-none absolute rounded-full bg-border-primary transition-[left,top,width,height] duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] motion-reduce:transition-none;
+    @apply data-[orientation=horizontal]:bottom-0 data-[orientation=horizontal]:left-(--active-tab-left) data-[orientation=horizontal]:h-0.75 data-[orientation=horizontal]:w-(--active-tab-width); /* logical-ok: measured from the left edge */
+    @apply data-[orientation=vertical]:end-0 data-[orientation=vertical]:top-[calc(var(--active-tab-top)+0.5rem)] data-[orientation=vertical]:h-[max(1rem,calc(var(--active-tab-height)-1rem))] data-[orientation=vertical]:w-0.75;
   }
   .cn-tabs-size-sm {
     @apply [--tab-icon:1rem] [--tab-px:var(--spacing-horizontal-tab-sm-button-h-padding)] [--tab-py:var(--spacing-horizontal-tab-sm-button-v-padding)] [--tab-text:var(--text-sm)];

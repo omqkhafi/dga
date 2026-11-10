@@ -5,6 +5,15 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
 
 ## [Unreleased]
 
+## [0.7.10] - 2026-11-10
+
+Patch: the Tabs bar slides and shows on hover, and Phone Input goes back to a field and list that are both left to right.
+
+### Changed
+
+- **Tabs:** the bar under the selected tab is one element (Base UI `Tabs.Indicator`, in `TabsList`) that slides to the next tab in 300ms, in both directions and in vertical lists, and jumps with reduced motion. A tab that is not selected shows a faded primary bar on hover (40%) and a stronger one on press (70%); disabled tabs show none. Vertical tabs keep the neutral hover bar. The More tab draws its own bar while one of its hidden tabs is selected.
+- **Phone Input:** reverts 0.7.9's last change: the whole field, box and country list, is left to right on Arabic pages again (the list is no longer right to left).
+
 ## [0.7.9] - 2026-11-10
 
 Minor addition: a Phone Input.

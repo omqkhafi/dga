@@ -133,6 +133,7 @@ function TabsList({
       {...props}
     >
       {children}
+      <TabsPrimitive.Indicator data-slot="tabs-indicator" className="cn-tabs-indicator" />
     </TabsPrimitive.List>
   );
 }
@@ -228,6 +229,7 @@ function OverflowTabsList({
         {...props}
       >
         {shown}
+        <TabsPrimitive.Indicator data-slot="tabs-indicator" className="cn-tabs-indicator" />
       </TabsPrimitive.List>
       <Menu>
         <MenuTrigger
