@@ -6,11 +6,22 @@
 //      and the thumbs sit on the start side), and a range keeps its thumbs in order.
 //   3. Input OTP: typing moves on, Backspace goes back, paste fills every box, Arabic-Indic digits
 //      become Western ones, onValueComplete fires, and the boxes run left to right in RTL.
+//   3b. Phone Input: the list opens with a code column and a name on each row, search finds a
+//      country by either language, the code or the ISO code, an excluded country is gone, typing
+//      and pasting set the country and the value, the label focuses the number, in LTR and RTL.
 //   4. Toggle Group: roving focus, arrows that follow the direction, single and multiple.
 //   5. Every preview of these components is pure in both directions.
 import { readFileSync } from "node:fs";
 
-const SLUGS = ["slider", "input-otp", "toggle", "toggle-group", "input-group", "button-group"];
+const SLUGS = [
+  "slider",
+  "input-otp",
+  "phone-input",
+  "toggle",
+  "toggle-group",
+  "input-group",
+  "button-group",
+];
 const EXTENSIONS = SLUGS.filter((s) => s !== "slider");
 
 const ALLOWED = new Set(
@@ -253,6 +264,130 @@ export async function inputsChecks({ browser, BASE, check }) {
     check(
       /Code entered/.test((await page.locator("[role=status]").textContent()) ?? ""),
       "otp: onValueComplete fires when the code is full",
+    );
+    await context.close();
+  }
+
+  // ------------------------------------------------------------------ Phone Input
+  for (const dir of ["ltr", "rtl"]) {
+    const rtl = dir === "rtl";
+    const context = await browser.newContext({ viewport: { width: 800, height: 800 } });
+    const page = await context.newPage();
+    const issues = [];
+    page.on("pageerror", (e) => issues.push(String(e)));
+    await page.goto(`${BASE}/preview/phone-input-countries?dir=${dir}`, {
+      waitUntil: "networkidle",
+    });
+    const boxes = page.locator("[data-slot=phone-input]");
+    // The second box excludes the United States and Canada.
+    const box = boxes.nth(1);
+    const button = box.locator("[data-slot=phone-country]");
+    const number = box.locator("input[type=tel]");
+    check((await button.innerText()).trim() === "+966", `phone ${dir}: the button shows the code`);
+    const xs = await page.evaluate(() => {
+      const b = document.querySelectorAll("[data-slot=phone-input]")[1];
+      return [
+        b.querySelector("[data-slot=phone-country]").getBoundingClientRect().x,
+        b.querySelector("input[type=tel]").getBoundingClientRect().x,
+      ];
+    });
+    check(rtl ? xs[0] > xs[1] : xs[0] < xs[1], `phone ${dir}: the country is on the start side`);
+    check(
+      (await number.getAttribute("dir")) === "ltr" && (await number.getAttribute("type")) === "tel",
+      `phone ${dir}: the number is left to right and a tel field`,
+    );
+    await button.click();
+    await page.waitForSelector("[data-slot=phone-item]");
+    const items = page.locator("[data-slot=phone-item]");
+    const all = await items.allInnerTexts();
+    check(all.length > 200, `phone ${dir}: every country is listed (${all.length})`);
+    check(
+      !all.some((t) => /United States|Canada|الولايات المتحدة|كندا/.test(t)),
+      `phone ${dir}: excluded countries are not listed`,
+    );
+    const rows = await page.evaluate(() =>
+      [...document.querySelectorAll("[data-slot=phone-item]")].slice(0, 12).map((row) => {
+        const dial = row.querySelector(".cn-phone-item-dial, bdi").getBoundingClientRect();
+        const name = row.querySelector("span:not([aria-hidden])").getBoundingClientRect();
+        return { w: Math.round(dial.width), sameLine: Math.abs(dial.top - name.top) < 8 };
+      }),
+    );
+    check(
+      new Set(rows.map((r) => r.w)).size === 1 && rows.every((r) => r.sameLine),
+      `phone ${dir}: the code column has one width and the name is on the same line`,
+    );
+    for (const [query, expected] of [
+      ["egypt", "+20"],
+      ["مصر", "+20"],
+      ["EG", "+20"],
+      ["+971", "+971"],
+      ["0966", "+966"],
+    ]) {
+      await page.keyboard.press("Control+a");
+      await page.keyboard.type(query);
+      await page.waitForTimeout(150);
+      const texts = await items.allInnerTexts();
+      check(
+        texts.some((t) => t.startsWith(expected)),
+        `phone ${dir}: searching "${query}" finds ${expected} (${texts.slice(0, 3).join(" / ").replace(/\n/g, " ")})`,
+      );
+    }
+    await page.keyboard.press("Control+a");
+    await page.keyboard.type("united states");
+    await page.waitForTimeout(150);
+    check((await items.count()) === 0, `phone ${dir}: an excluded country is not found`);
+    await page.keyboard.press("Control+a");
+    await page.keyboard.type("egypt");
+    await page.waitForTimeout(150);
+    await page.keyboard.press("ArrowDown");
+    await page.keyboard.press("Enter");
+    await page.waitForTimeout(200);
+    check((await button.innerText()).trim() === "+20", `phone ${dir}: Enter chooses the country`);
+    check(
+      (await page.evaluate(() => document.activeElement?.getAttribute("type"))) === "tel",
+      `phone ${dir}: focus returns to the number`,
+    );
+    await number.fill("");
+    await number.pressSequentially("٠١٠٠١٢٣٤٥٦٧");
+    check(
+      (await number.inputValue()) === "100 123 4567",
+      `phone ${dir}: Arabic-Indic digits become Western and the leading 0 goes (${await number.inputValue()})`,
+    );
+    await number.fill("+966501234567");
+    check(
+      (await button.innerText()).trim() === "+966" && (await number.inputValue()) === "50 123 4567",
+      `phone ${dir}: a pasted + number picks its country (${await number.inputValue()})`,
+    );
+    await number.fill("+12125551234");
+    check(
+      (await button.innerText()).trim() === "+966",
+      `phone ${dir}: an excluded code is not recognised`,
+    );
+    check(issues.length === 0, `phone ${dir}: no errors (${issues.join("; ")})`);
+    await context.close();
+  }
+  {
+    // The form example: the value, the label and the touched error.
+    const context = await browser.newContext({ viewport: { width: 800, height: 800 } });
+    const page = await context.newPage();
+    await page.goto(`${BASE}/preview/phone-input-form?dir=ltr`, { waitUntil: "networkidle" });
+    await page.locator("label").first().click();
+    check(
+      (await page.evaluate(() => document.activeElement?.getAttribute("type"))) === "tel",
+      "phone: the label focuses the number",
+    );
+    const number = page.locator("input[type=tel]");
+    await number.pressSequentially("0512345678");
+    check(
+      ((await page.locator("p bdi").textContent()) ?? "").trim() === "+966512345678",
+      "phone: the value is the international number",
+    );
+    await number.fill("5123");
+    await page.locator("[data-slot=phone-country]").focus();
+    await page.waitForTimeout(150);
+    check(
+      (await number.getAttribute("aria-invalid")) === "true",
+      "phone: a short number is marked invalid after leaving the field",
     );
     await context.close();
   }

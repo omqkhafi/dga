@@ -2803,6 +2803,78 @@
   }
 
   /* ------------------------------------------------------------------------------------
+   * Phone Input (Platform Code extension, no DGA spec). One Input box (cn-input) holding the
+   * country button, a divider and the number, so every Input state, size and fill applies. The
+   * button shows the calling code in a fixed-width column; the number is always left to right.
+   * The list is the Combobox popup (card surface, radius-sm, shadow-md, 32px items) with a search
+   * box on top. Each row is one line: calling code in a fixed-width column, then the name.
+   * ---------------------------------------------------------------------------------- */
+  .cn-phone {
+    @apply gap-0 ps-0;
+  }
+  .cn-phone-country {
+    @apply relative inline-flex h-full min-w-[4.75rem] shrink-0 cursor-pointer items-center gap-1 rounded-s-[calc(var(--radius-sm)-1px)] border-0 bg-transparent ps-3 pe-2 text-inherit transition-colors motion-reduce:transition-none;
+    @apply hover:bg-button-background-neutral-default active:bg-button-background-neutral-pressed;
+    @apply focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-solid focus-visible:outline-border-black;
+    @apply data-disabled:cursor-not-allowed data-disabled:text-text-default-disabled data-disabled:hover:bg-transparent;
+  }
+  .cn-phone-dial {
+    @apply min-w-[3.5ch] text-start tabular-nums [unicode-bidi:isolate] rtl:text-end;
+  }
+  .cn-phone-flag {
+    @apply shrink-0 text-lg leading-none;
+  }
+  .cn-phone-arrow {
+    @apply size-4 shrink-0 text-icon-default-500 transition-transform motion-reduce:transition-none;
+    @apply in-data-popup-open:rotate-180 in-data-disabled:text-icon-default-disabled;
+  }
+  .cn-phone-divider {
+    @apply me-3 h-5 w-px shrink-0 bg-border-neutral-primary;
+  }
+  .cn-phone-field {
+    @apply tabular-nums [unicode-bidi:isolate] rtl:text-end;
+  }
+  .cn-phone-positioner {
+    @apply z-50 outline-hidden select-none;
+  }
+  .cn-phone-content {
+    @apply flex max-h-(--available-height) w-(--anchor-width) min-w-72 origin-(--transform-origin) flex-col overflow-hidden rounded-sm border border-border-neutral-primary bg-background-card text-text-default shadow-md outline-hidden;
+    @apply transition-[scale,opacity] duration-100 data-starting-style:scale-95 data-starting-style:opacity-0 data-ending-style:scale-95 data-ending-style:opacity-0 motion-reduce:transition-none;
+  }
+  .cn-phone-search {
+    @apply flex h-10 shrink-0 items-center gap-2 border-b border-border-neutral-primary px-3 text-icon-default-500 [&_svg]:size-5 [&_svg]:shrink-0;
+  }
+  .cn-phone-search-input {
+    @apply h-full min-w-0 flex-1 border-0 bg-transparent p-0 text-sm text-field-text-filled [outline:0_none] placeholder:text-field-text-placeholder;
+  }
+  .cn-phone-list {
+    @apply relative max-h-[min(18rem,var(--available-height))] min-h-0 overflow-y-auto overscroll-contain p-1 outline-hidden empty:hidden;
+  }
+  .cn-phone-empty {
+    @apply flex items-center gap-2 px-3 py-3 text-sm text-text-primary-paragraph empty:hidden;
+  }
+  .cn-phone-group {
+    @apply flex flex-col;
+  }
+  .cn-phone-label {
+    @apply px-3 py-1.5 text-xs font-semibold text-field-text-helper;
+  }
+  .cn-phone-item {
+    @apply relative flex min-h-8 cursor-default items-center gap-2 rounded-xs px-3 py-1.5 text-sm text-text-default outline-hidden select-none;
+    @apply data-highlighted:bg-button-background-neutral-default data-highlighted:before:absolute data-highlighted:before:inset-y-1 data-highlighted:before:start-0 data-highlighted:before:w-0.5 data-highlighted:before:rounded-full data-highlighted:before:bg-border-black;
+    @apply data-selected:font-medium;
+  }
+  .cn-phone-item-dial {
+    @apply w-14 shrink-0 text-start whitespace-nowrap text-text-primary-paragraph tabular-nums [unicode-bidi:isolate] rtl:text-end;
+  }
+  .cn-phone-item-name {
+    @apply min-w-0 flex-1 truncate;
+  }
+  .cn-phone-item-indicator {
+    @apply inline-flex shrink-0 text-icon-primary [&_svg]:size-4;
+  }
+
+  /* ------------------------------------------------------------------------------------
    * Command (Platform Code extension). A Search Box (cn-input) over a Menu-style list: surface
    * background-menu, 1px border, radius-md, items 40px with Text md. The highlighted action has
    * the neutral hovered fill and a 2px bar on the start side (focus stays in the search box, so

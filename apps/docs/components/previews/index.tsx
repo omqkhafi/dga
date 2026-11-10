@@ -84,6 +84,7 @@ import { HeaderStamp } from "./ext-misc";
 import { miscPreviews } from "./ext-misc-map";
 import { navPreviews } from "./ext-nav-map";
 import { overlaysPreviews } from "./ext-overlays-map";
+import { phonePreviews } from "./ext-phone-map";
 import {
   FooterAccordion,
   FooterDefault,
@@ -192,6 +193,7 @@ export const previews = {
   ...overlaysPreviews,
   ...inputsPreviews,
   ...miscPreviews,
+  ...phonePreviews,
   ...navPreviews,
   ...layoutPreviews,
   ...displayPreviews,

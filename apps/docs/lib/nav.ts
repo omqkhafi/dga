@@ -80,6 +80,7 @@ export const RELATED: Record<string, string[]> = {
   combobox: ["select", "command", "field"],
   command: ["combobox", "menu", "dialog"],
   "input-otp": ["input", "number-input", "field"],
+  "phone-input": ["combobox", "number-input", "input"],
   "input-group": ["input", "button-group", "field"],
   "button-group": ["button", "toggle-group", "input-group"],
   menubar: ["menu", "navigation-menu", "context-menu"],

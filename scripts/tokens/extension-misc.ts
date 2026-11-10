@@ -62,6 +62,46 @@ export function miscPairs(): ComponentPair[] {
     );
   }
 
+  // Phone Input: the Input box (audited under `input`), the country button and the Combobox list.
+  add("phone-input", "country name", "text-default", card, 4.5);
+  add("phone-input", "country name, highlighted", "text-default", tint, 4.5, card);
+  add("phone-input", "calling code in the list", "text-primary-paragraph", card, 4.5);
+  add(
+    "phone-input",
+    "calling code in the list, highlighted",
+    "text-primary-paragraph",
+    tint,
+    4.5,
+    card,
+  );
+  add("phone-input", "group label", "field-text-helper", card, 4.5);
+  add("phone-input", "empty text", "text-primary-paragraph", card, 4.5);
+  add("phone-input", "search hint", "field-text-placeholder", card, 4.5);
+  add("phone-input", "search text", "field-text-filled", card, 4.5);
+  add("phone-input", "search icon", "icon-default-500", card, 3);
+  add("phone-input", "selected check", "icon-primary", card, 3);
+  add("phone-input", "selected check, highlighted", "icon-primary", tint, 3, card);
+  add("phone-input", "highlight bar", "border-black", card, 3);
+  for (const surface of SURFACES) {
+    add(
+      "phone-input",
+      "country button arrow",
+      "icon-default-500",
+      "field-background-default",
+      3,
+      surface,
+    );
+    add("phone-input", "country button, hovered", "text-default", tint, 4.5, surface);
+    add(
+      "phone-input",
+      "country button, focus ring",
+      "border-black",
+      "field-background-default",
+      3,
+      surface,
+    );
+  }
+
   // Command: the Menu surface and items.
   const menu = "background-menu";
   const hover = "button-background-neutral-hovered";
@@ -117,6 +157,16 @@ export const MISC_DEVIATIONS: Deviation[] = [
       "New, no DGA source. shadcn's registry has no creatable combobox; the behaviour follows Base UI's creatable recipe.",
     status: "fixed",
     component: "combobox",
+  },
+  {
+    area: "Extensions",
+    item: "Phone Input (new component)",
+    original: "—",
+    ours: "The Input box holding a country button (calling code in a fixed-width column) and the number, with the Combobox list and a search box on top.",
+    reason:
+      "New, no DGA source. DGA has no phone field. The box, states and fills are Input; the list is the Combobox popup. Every colour is an existing DGA token and no token was added. Validation is by length per country, not by operator prefix.",
+    status: "fixed",
+    component: "phone-input",
   },
   {
     area: "Extensions",

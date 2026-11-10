@@ -14,6 +14,7 @@ export const EXTENSION_INPUT_COMPONENTS = [
   "toggle",
   "toggle-group",
   "combobox",
+  "phone-input",
   "command",
   "input-otp",
   "input-group",

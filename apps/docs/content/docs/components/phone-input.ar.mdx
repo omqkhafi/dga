@@ -1,0 +1,151 @@
+---
+title: Phone Input
+description: "حقل رقم جوال بقائمة قابلة للبحث بكل دول العالم، مع استثناء دول واقتراح دول وقيمة بالصيغة الدولية. على Base UI Combobox وInput. امتداد من كود المنصات وليس جزءًا من DGA."
+sourceHash: 38afd204bba4
+---
+
+<ExtensionNote
+  name="إدخال رقم الجوال"
+  primitive="مكوّنا Base UI الخاصان بصندوق الاختيار والإدخال"
+  from="Input (الإطار وحالاته) وCombobox (قائمة الدول)"
+  tokens={["field-background-default", "field-border-default", "field-border-pressed", "field-border-error", "background-card", "button-background-neutral-default"]}
+/>
+
+<Preview name="phone-input-states" title="حالات إدخال رقم الجوال" />
+
+## التثبيت [#installation]
+
+<ComponentInstall name="phone-input" />
+
+ويثبّت [Input](/docs/components/input) و[Combobox](/docs/components/combobox) وملف البيانات `phone` أيضًا. سمِّه بواسطة [Field](/docs/components/field). ولا يضيف أي اعتماد غير Base UI: بيانات الدول والمنطق في `lib/dga/phone.ts`، وأسماء الدول تأتي من `Intl.DisplayNames` فتظهر بأي لغة يعرفها المتصفح.
+
+## الاستخدام [#usage]
+
+```tsx title="page.tsx"
+import { Field, FieldDescription, FieldLabel } from "@/components/dga/field";
+import { PhoneInput } from "@/components/dga/phone-input";
+
+export function MobileField() {
+  return (
+    <Field name="mobile">
+      <FieldLabel>رقم الجوال</FieldLabel>
+      <PhoneInput
+        name="mobile"
+        defaultCountry="SA"
+        excludeCountries={["US", "CA"]}
+        onValueChange={(value, details) => console.log(value, details.isValid)}
+      />
+      <FieldDescription>نرسل رمز التحقق إلى هذا الرقم.</FieldDescription>
+    </Field>
+  );
+}
+```
+
+القيمة هي الرقم بالصيغة الدولية، مثل `+966512345678`: وهي ما يستقبله `onValueChange`، وما يأخذه `value` و`defaultValue`، وما يرسله الحقل المخفي المسمّى بـ `name` مع النموذج. وفي المعامل الثاني الدولة والأرقام الوطنية والنص المجمَّع وهل الطول صحيح. استخدم `countryName` لإرسال رمز الدولة في حقل ثانٍ.
+
+يعرض زر الدولة مفتاحها في عمود ثابت العرض. وحين تفتحه تكون القائمة سطرًا واحدًا لكل دولة: المفتاح في عمود ثابت العرض ثم الاسم، فتصطف الأسماء. ويطابق البحث الاسم بالعربية والإنجليزية ورمز الدولة ومفتاحها، فتجد `السعودية` و`saudi` و`SA` و`966` الدولة نفسها، ويُتجاهل التشكيل وفروق كتابة الألف والياء والتاء المربوطة.
+
+يقع زر الدولة في جهة البداية ويليه الرقم. ويُكتب الرقم دائمًا من اليسار إلى اليمين، في الصفحات العربية أيضًا، ويحاذي جهة النهاية فيها.
+
+## البنية [#anatomy]
+
+- **الإطار**: إطار [Input](/docs/components/input)، فتنطبق عليه كل حالاته وأحجامه وتعبئاته.
+- **زر الدولة**: مفتاح الدولة (والعلم مع `showFlag`) وسهم. ويُسمّى بـ `countryLabel`.
+- **القائمة**: النافذة المنبثقة لـ [Combobox](/docs/components/combobox)، بعرض الحقل، وفوقها مربع بحث، ثم مجموعة **مقترحة** اختيارية، ثم كل الدول مرتبة بالاسم بلغة الصفحة.
+- **الرقم**: حقل `tel` يجمّع الأرقام أثناء الكتابة (`51 234 5678`).
+
+## أمثلة [#examples]
+
+### الأساسي [#basic]
+
+اختر دولة ثم اكتب الرقم. وكتابة رقم يبدأ بـ `+` أو `00` (أو لصقه) تختار دولته وتُخرج المفتاح من الحقل.
+
+<Preview compact name="phone-input-basic" title="الأساسي" minHeight={200} />
+
+### الحالات [#states]
+
+الافتراضية والمعبأة وللقراءة فقط والمعطّلة والخطأ، والحجم المتوسط مع التعبئة الأغمق. وهي حالات Input نفسها.
+
+<Preview name="phone-input-states" title="الحالات" />
+
+### القائمة المفتوحة [#open-list]
+
+القائمة مفتوحة من البداية لتظهر الأسطر: للدولة المظلَّلة شريط وتظليل، وللمختارة علامة صح.
+
+<Preview compact name="phone-input-open" title="القائمة المفتوحة" minHeight={440} />
+
+### اختيار الدول [#choosing-the-countries]
+
+يعرض `onlyCountries` مجموعة ثابتة. ويحذف `excludeCountries` دولًا من القائمة كلها، ولا يُتعرَّف على رقم يبدأ بمفتاح إحداها. ويثبّت `preferredCountries` الدول الأكثر استخدامًا في الأعلى تحت `preferredLabel` بالترتيب الذي تعطيه. ويضيف `showFlag` رمز العلم؛ وهو مطفأ افتراضيًا لأن ويندوز يرسم أعلام الإيموجي حرفين.
+
+<Preview compact name="phone-input-countries" title="اختيار الدول" minHeight={320} />
+
+```tsx title="page.tsx"
+<PhoneInput onlyCountries={["SA", "AE", "KW", "QA", "BH", "OM"]} />
+<PhoneInput excludeCountries={["US", "CA"]} />
+<PhoneInput preferredCountries={["SA", "AE", "EG"]} preferredLabel="مقترحة" allLabel="كل الدول" />
+```
+
+### في نموذج [#in-a-form]
+
+احتفظ بالقيمة في الحالة، وأظهر الخطأ من الحقل بعد مغادرته. وبلا `invalid` يعلّم الحقل نفسه بأنه خاطئ بعد مغادرته برقم طوله غير صحيح لدولته.
+
+<Preview compact name="phone-input-form" title="في نموذج" minHeight={260} />
+
+## ماذا يفعل بالرقم [#what-it-does-with-the-number]
+
+- الأرقام العربية الهندية (٠-٩) والفارسية (۰-۹)، كتابةً أو لصقًا، تتحول إلى أرقام غربية. وتُتجاهل المسافات والشرطات والأقواس.
+- يُحذف الصفر الذي يُطلب داخل الدولة (`0512345678`)، فتكون القيمة نفسها بوجوده وبدونه. أطفئه بـ `stripTrunkPrefix={false}`. وتحتفظ إيطاليا بصفرها.
+- تُجمَّع الأرقام بنمط الدولة أثناء الكتابة، ويبقى المؤشر بجانب الرقم نفسه. أطفئه بـ `format={false}`.
+- لا يزيد الرقم على ما تسمح به الدولة، ولا على 15 رقمًا حدّ معيار E.164.
+- يعرض التلميح رقمًا نموذجيًا للدولة المختارة (`5X XXX XXXX`). مرّر `placeholder` خاصًّا بك أو أطفئه بـ `examplePlaceholder={false}`.
+- تُميَّز الدول التي تشترك في مفتاح واحد (‎+1 و+7 و+44‎) برمز المنطقة حين يُلصق رقم، فـ `+1 684…` ساموا الأمريكية و`+1 416…` كندا.
+
+### التحقق [#validation]
+
+يفحص `isPossible` و`isValid` **طول** الرقم الوطني مقابل النطاق الخاص بدولته، لا ما إذا كان المشغّل قد أصدر هذه البادئة. وهذا يكشف الرقم الناقص أو الخطأ في الطول دون أي حزمة. وللفحص الصارم مرّر `validate`، مثلًا مع [libphonenumber-js](https://www.npmjs.com/package/libphonenumber-js):
+
+```tsx title="page.tsx"
+import { isValidPhoneNumber } from "libphonenumber-js/min";
+
+<PhoneInput validate={(details) => isValidPhoneNumber(details.e164)} />
+```
+
+## إمكانية الوصول [#accessibility]
+
+| المفتاح | الإجراء |
+| --- | --- |
+| <kbd>Tab</kbd> | ينقل من زر الدولة إلى الرقم. |
+| <kbd>Enter</kbd> / <kbd>Space</kbd> / <kbd>ArrowDown</kbd> | على زر الدولة يفتح القائمة. |
+| الكتابة | في القائمة تضيّقها. |
+| <kbd>ArrowDown</kbd> / <kbd>ArrowUp</kbd> | ينتقلان بين الدول. |
+| <kbd>Enter</kbd> | يختار الدولة المظلَّلة ويعيد التركيز إلى الرقم. |
+| <kbd>Esc</kbd> | يغلق القائمة. |
+
+- يُسمّى زر الدولة بـ `countryLabel` ويذكر المفتاح المختار. والقائمة `listbox` من عناصر `option` مع `aria-selected`، ويُعلَن عدد النتائج بهدوء كلما تغيّر (`statusLabel`).
+- للرقم `type="tel"` و`inputMode="tel"` و`autocomplete="tel-national"`، فتعرض الهواتف لوحة الاتصال وتقترح المتصفحات الأرقام المحفوظة.
+- يُعزل مفتاح الدولة والرقم من اليسار إلى اليمين، فلا يعيد العربي المحيط بهما ترتيب الأرقام.
+- التسمية والنص المساعد والخطأ من [Field](/docs/components/field) ومرتبطة بـ `aria-describedby`؛ والرقم الخاطئ يضبط `aria-invalid`.
+- للدولة المظلَّلة شريط بعرض 2px إضافة إلى التظليل. النص بتباين 4.5:1 وكل حد 3:1، في الفاتح والداكن.
+
+## مرجع الواجهة البرمجية [#api-reference]
+
+<ApiReference component="phone-input" />
+
+## الاشتقاق [#derivation]
+
+- غير موجود في DGA. الإطار والحالات والتعبئات من [Input](/docs/components/input)؛ والقائمة هي النافذة المنبثقة لـ [Combobox](/docs/components/combobox) وفوقها مربع بحث.
+- لا ألوان جديدة ولا رموز جديدة.
+- مبني على `@base-ui/react/combobox` وخانة إدخاله داخل النافذة، وعلى `@base-ui/react/input`، بعناصرنا نحن كي تحمل أصناف `cn-*` المظهر.
+
+## الاختلافات عن DGA [#deviations-from-dga]
+
+- لا يوجد حقل جوال في DGA ليُختلف عنه. هذه قائمة بما خالفنا فيه المكوّنات المبني عليها.
+- الرقم من اليسار إلى اليمين في الصفحات العربية، لأن الأرقام تُقرأ وتُطلب هكذا.
+- مربع البحث داخل النافذة المنبثقة لا في الحقل: فالحقل يعرض مفتاح الدولة، وهو ما يبحث عنه الناس بالنظر.
+
+<ComponentDeviations component="phone-input" />
+
+## التباين [#contrast]
+
+<ComponentContrast component="phone-input" />

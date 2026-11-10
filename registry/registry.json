@@ -486,6 +486,46 @@
       ]
     },
     {
+      "name": "phone",
+      "type": "registry:lib",
+      "title": "Phone",
+      "description": "The data and logic behind Phone Input: every country with its calling code, length and pattern, number parsing, grouping and E.164. No React and no packages.",
+      "files": [
+        {
+          "path": "bases/base/lib/phone.ts",
+          "type": "registry:lib",
+          "target": "lib/dga/phone.ts"
+        }
+      ]
+    },
+    {
+      "name": "phone-input",
+      "type": "registry:ui",
+      "title": "Phone Input",
+      "description": "Platform Code extension: a phone number field with a searchable list of every country (calling code in a fixed column, then the name), country exclusion, preferred countries, Arabic-Indic digit input, grouping as you type and an international value.",
+      "dependencies": [
+        "@base-ui/react",
+        "class-variance-authority",
+        "@hugeicons/react",
+        "@hugeicons/core-free-icons"
+      ],
+      "registryDependencies": [
+        "{{REGISTRY_URL}}/r/utils.json",
+        "{{REGISTRY_URL}}/r/field.json",
+        "{{REGISTRY_URL}}/r/input.json",
+        "{{REGISTRY_URL}}/r/combobox.json",
+        "{{REGISTRY_URL}}/r/direction.json",
+        "{{REGISTRY_URL}}/r/phone.json"
+      ],
+      "files": [
+        {
+          "path": "bases/base/ui/phone-input.tsx",
+          "type": "registry:ui",
+          "target": "components/dga/phone-input.tsx"
+        }
+      ]
+    },
+    {
       "name": "search-box",
       "type": "registry:ui",
       "title": "Search Box",

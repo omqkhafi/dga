@@ -5,6 +5,26 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
 
 ## [Unreleased]
 
+## [0.7.9] - 2026-11-10
+
+Minor addition: a Phone Input.
+
+### Added
+
+- **Phone Input** (new Platform Code extension, `phone-input`): a phone number field in one Input box. The first part is a country list (Base UI Combobox with its search box inside the popup) of every country and territory (243, with the names from `Intl.DisplayNames`, so they are in English or Arabic by the page language, or any `locale`). The button shows the calling code in a column of fixed width, and each row of the list is one line: the code in a fixed-width column, then the name, with a check on the chosen one. The second part is the number: a `tel` field, always left to right, aligned to the end side in RTL.
+- **Choosing the countries:** `excludeCountries` leaves countries out of the list (and a pasted number that starts with their code is not recognised), `onlyCountries` offers a fixed set, `preferredCountries` pins countries to the top under `preferredLabel`, and `showFlag` adds the flag emoji (off by default, because Windows draws it as two letters).
+- **The number:** the value is the international number (`+966512345678`) in `value`, `defaultValue` and `onValueChange`, and in a hidden field named by `name` (`countryName` submits the ISO code too). The second argument of `onValueChange` has the country, the national digits, the grouped text, `isPossible` and `isValid`. Arabic-Indic and Persian digits become Western digits; spaces, dashes and brackets are ignored; the leading 0 of national dialling is dropped (`stripTrunkPrefix`); the digits are grouped by the country's pattern as you type with the caret kept beside the same digit (`format`); the length is capped at the country's longest number and 15 digits; and the placeholder is a sample number for the country (`examplePlaceholder`).
+- **Detecting the country:** typing or pasting a number that starts with `+` or `00` picks the country and moves the code out of the field (`detectCountry`). Countries that share a calling code (+1, +7, +44) are told apart by area code, so `+1 684` is American Samoa and `+1 416` is Canada.
+- **Validation:** `invalid`, or by default the field marks itself invalid after it is left with a number of the wrong length for its country. The built-in check is by length per country, not by operator prefix; pass `validate` to use a strict library such as libphonenumber-js.
+- **Search:** a country is found by its name in English or Arabic (diacritics and the spelling variants of alef, ya and ta marbuta ignored), its ISO code or its calling code, with or without `+` or `00`.
+- `lib/dga/phone.ts` (the `phone` registry item) holds the country data and the pure functions (`parsePhone`, `getPhoneDetails`, `detectCountry`, `filterCountries`, `formatNational`, `countryName`, `flagOf`). It has no React and no package, and Phone Input adds no dependency beyond Base UI.
+- Docs page in English and Arabic with five previews (basic, states, open list, choosing the countries, in a form), the API reference, and the contrast audit for the country button and the list (light and dark, 3 fills; no colour token was added).
+
+### Tests
+
+- `scripts/phone-input.test.ts`: the country data (unique codes, lengths within 15 digits, names in both languages), exclusion, country detection and shared calling codes, parsing in every international form, Arabic-Indic digits, the trunk prefix, grouping, length checks and the registry entry.
+- The `ext-inputs` browser group opens the list in LTR and RTL and checks the code column has one width with the name on the same line, search in both languages, by code and by ISO code, that an excluded country is neither listed nor found nor detected, Enter returning focus to the number, Arabic-Indic digits, a pasted `+` number, the label focusing the number, and the invalid state after leaving a short number.
+
 ## [0.7.8] - 2026-11-09
 
 Patch: an open Header sub-menu trigger for the current page stays readable, and the full-width sub-menu opens from the middle.

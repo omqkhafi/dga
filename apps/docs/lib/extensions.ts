@@ -150,6 +150,23 @@ export const EXTENSIONS: ExtensionEntry[] = [
     ],
   },
   {
+    slug: "phone-input",
+    title: { en: "Phone Input", ar: "إدخال رقم الجوال" },
+    builtOn: "Base UI Combobox and Input",
+    from: {
+      en: "Input (the box and its states) and Combobox (the country list)",
+      ar: "الحقل Input (الإطار وحالاته) وCombobox (قائمة الدول)",
+    },
+    tokens: [
+      "field-background-default",
+      "field-border-default",
+      "field-border-pressed",
+      "field-border-error",
+      "background-card",
+      "button-background-neutral-default",
+    ],
+  },
+  {
     slug: "input-otp",
     title: { en: "Input OTP", ar: "إدخال رمز التحقق" },
     builtOn: "Base UI OTP Field",

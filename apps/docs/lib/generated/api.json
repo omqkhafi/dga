@@ -6520,6 +6520,259 @@
       ]
     }
   ],
+  "phone-input": [
+    {
+      "name": "PhoneInput",
+      "description": "A phone number field: a searchable list of every country with its calling code, and the number. The number is written left to right on Arabic pages too, Arabic-Indic digits typed or pasted become Western digits, and the value is the international number (`+966512345678`), ready to send to a server. Platform Code extension. Label it with a Field.",
+      "descriptionAr": "حقل رقم جوال: قائمة قابلة للبحث بكل دول العالم، يظهر فيها مفتاح الدولة في عمود ثابت العرض ثم اسمها في سطر واحد، ثم الرقم (امتداد من كود المنصات على Combobox وInput). يبقى الرقم من اليسار إلى اليمين في الصفحات العربية أيضًا، والأرقام العربية الهندية (٥) تتحول إلى غربية (5)، ويُجمَّع الرقم أثناء الكتابة، وقيمته هي الرقم الدولي (`+966512345678`) الجاهز للإرسال. لصق رقم يبدأ بـ `+` أو `00` يختار الدولة تلقائيًا. داخل Field.",
+      "inherits": {
+        "name": "Combobox",
+        "url": "https://base-ui.com/react/components/combobox"
+      },
+      "props": [
+        {
+          "name": "countryName",
+          "type": "string",
+          "default": null,
+          "required": false,
+          "description": "Name of a second hidden field that submits the country's ISO code.",
+          "descriptionAr": "اسم حقل مخفي ثانٍ يرسل رمز الدولة."
+        },
+        {
+          "name": "detectCountry",
+          "type": "boolean",
+          "default": "true",
+          "required": false,
+          "description": "Recognises a country when someone types or pastes a number that starts with `+` or `00`. Default `true`.",
+          "descriptionAr": "يتعرف على الدولة حين يُكتب أو يُلصق رقم يبدأ بـ `+` أو `00`. الافتراضي `true`."
+        },
+        {
+          "name": "stripTrunkPrefix",
+          "type": "boolean",
+          "default": "true",
+          "required": false,
+          "description": "Drops the leading 0 people dial inside their own country (`05…` is `5…`). Default `true`.",
+          "descriptionAr": "يحذف الصفر الذي يُطلب داخل الدولة نفسها (`05…` تصبح `5…`). الافتراضي `true`."
+        },
+        {
+          "name": "country",
+          "type": "string",
+          "default": null,
+          "required": false,
+          "description": "The chosen country (ISO code, `SA`). Controlled.",
+          "descriptionAr": "الدولة المختارة برمزها (`SA`) (متحكَّم بها)."
+        },
+        {
+          "name": "value",
+          "type": "string",
+          "default": null,
+          "required": false,
+          "description": "The number in international format (`+966512345678`). Controlled. Empty string for none.",
+          "descriptionAr": "الرقم بالصيغة الدولية، مثل `+966512345678` (متحكَّم به). نص فارغ يعني حقلًا فارغًا."
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "default": null,
+          "required": false,
+          "description": "Name of the hidden field that is submitted with the form: the international number.",
+          "descriptionAr": "اسم الحقل المخفي الذي يُرسل مع النموذج، وقيمته الرقم الدولي."
+        },
+        {
+          "name": "size",
+          "type": "\"md\" | \"lg\"",
+          "default": null,
+          "required": false,
+          "description": "Height: `md` 32px, `lg` 40px.",
+          "descriptionAr": "الارتفاع: `md` ‏32px، و`lg` ‏40px."
+        },
+        {
+          "name": "defaultValue",
+          "type": "string",
+          "default": null,
+          "required": false,
+          "description": "The number at first (uncontrolled), in international format.",
+          "descriptionAr": "الرقم الأولي بالصيغة الدولية (غير متحكَّم به)."
+        },
+        {
+          "name": "appearance",
+          "type": "\"default\" | \"lighter\" | \"darker\"",
+          "default": null,
+          "required": false,
+          "description": "Fill style. `lighter` and `darker` keep the border.",
+          "descriptionAr": "نمط التعبئة. `lighter` و`darker` يُبقيان الحد."
+        },
+        {
+          "name": "format",
+          "type": "boolean",
+          "default": "true",
+          "required": false,
+          "description": "Groups the digits as they are typed (`51 234 5678`). Default `true`.",
+          "descriptionAr": "يجمّع الأرقام أثناء الكتابة (`51 234 5678`). الافتراضي `true`."
+        },
+        {
+          "name": "onValueChange",
+          "type": "(value: string, details: PhoneDetails) => void",
+          "default": null,
+          "required": false,
+          "description": "Called on every change with the international number and its details.",
+          "descriptionAr": "يُستدعى عند كل تغيير بالرقم الدولي وتفاصيله: الدولة والأرقام الوطنية والتنسيق وصحة الطول."
+        },
+        {
+          "name": "preferredCountries",
+          "type": "readonly string[]",
+          "default": null,
+          "required": false,
+          "description": "Countries (ISO codes) listed first, in this order, under `preferredLabel`.",
+          "descriptionAr": "دول تُعرض أولًا بهذا الترتيب تحت `preferredLabel`، ولا تتكرر في بقية القائمة."
+        },
+        {
+          "name": "defaultCountry",
+          "type": "string",
+          "default": null,
+          "required": false,
+          "description": "The country at first (uncontrolled). Default: the first of `preferredCountries`, else `SA`.",
+          "descriptionAr": "الدولة الأولية (غير متحكَّم بها). الافتراضي: أولى `preferredCountries`، وإلا `SA`."
+        },
+        {
+          "name": "onCountryChange",
+          "type": "(country: string) => void",
+          "default": null,
+          "required": false,
+          "description": "Called when the country changes, by choosing it or by typing or pasting a `+` number.",
+          "descriptionAr": "يُستدعى عند تغير الدولة، باختيارها من القائمة أو بكتابة رقم يبدأ بـ `+` أو لصقه."
+        },
+        {
+          "name": "excludeCountries",
+          "type": "readonly string[]",
+          "default": null,
+          "required": false,
+          "description": "Leaves these countries (ISO codes) out of the list. A number that starts with their code is not recognised either.",
+          "descriptionAr": "يستثني هذه الدول (برموزها) من القائمة. ولا يُتعرَّف على رقم يبدأ بمفتاح إحداها."
+        },
+        {
+          "name": "onlyCountries",
+          "type": "readonly string[]",
+          "default": null,
+          "required": false,
+          "description": "Offers only these countries (ISO codes). Combined with `excludeCountries`.",
+          "descriptionAr": "يعرض هذه الدول فقط (برموزها). يجتمع مع `excludeCountries`."
+        },
+        {
+          "name": "preferredLabel",
+          "type": "string",
+          "default": "\"Suggested\"",
+          "required": false,
+          "description": "Heading of the preferred countries. Translate it on Arabic pages.",
+          "descriptionAr": "عنوان الدول المفضلة. ترجمه في الصفحات العربية."
+        },
+        {
+          "name": "showFlag",
+          "type": "boolean",
+          "default": "false",
+          "required": false,
+          "description": "Shows the flag before the calling code. Off by default: Windows draws flag emoji as letters.",
+          "descriptionAr": "يعرض العلم قبل مفتاح الدولة. مطفأ افتراضيًا لأن ويندوز يرسم أعلام الإيموجي حروفًا."
+        },
+        {
+          "name": "locale",
+          "type": "string",
+          "default": null,
+          "required": false,
+          "description": "Language of the country names (`en`, `ar`). Default: the `lang` of the page, else `en`. Search always matches both.",
+          "descriptionAr": "لغة أسماء الدول (`en` أو `ar`). الافتراضي: `lang` الصفحة. البحث يطابق اللغتين دائمًا."
+        },
+        {
+          "name": "examplePlaceholder",
+          "type": "boolean",
+          "default": "true",
+          "required": false,
+          "description": "Shows a sample number as the hint until something is typed. Default `true`; `placeholder` overrides it.",
+          "descriptionAr": "يعرض رقمًا نموذجيًا تلميحًا حتى تبدأ الكتابة. الافتراضي `true`، و`placeholder` يستبدله."
+        },
+        {
+          "name": "invalid",
+          "type": "boolean",
+          "default": null,
+          "required": false,
+          "description": "Marks the field invalid. By default it turns invalid after leaving the field with a number of the wrong length.",
+          "descriptionAr": "يعلّم الحقل بأنه خاطئ. الافتراضي: يصبح خاطئًا بعد مغادرته برقم طوله غير صحيح لدولته."
+        },
+        {
+          "name": "validate",
+          "type": "(details: PhoneDetails) => boolean",
+          "default": null,
+          "required": false,
+          "description": "Replaces the built-in length check. Receives the details, returns whether the number is valid.",
+          "descriptionAr": "دالة تستبدل فحص الطول المدمج. تستقبل التفاصيل وتعيد هل الرقم صحيح."
+        },
+        {
+          "name": "countryLabel",
+          "type": "(country: string) => string",
+          "default": "(country) => `Country calling code, ${country}`",
+          "required": false,
+          "description": "Accessible name of the country button. Gets the country name. Translate it on Arabic pages.",
+          "descriptionAr": "دالة تعيد اسم زر الدولة لقارئ الشاشة، وتستقبل اسم الدولة. ترجمها في الصفحات العربية."
+        },
+        {
+          "name": "searchPlaceholder",
+          "type": "string",
+          "default": "\"Search country or code\"",
+          "required": false,
+          "description": "Hint of the search box in the list. Translate it on Arabic pages.",
+          "descriptionAr": "تلميح مربع البحث في القائمة. ترجمه في الصفحات العربية."
+        },
+        {
+          "name": "emptyText",
+          "type": "string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<AwaitedReactNode>",
+          "default": "\"No countries found.\"",
+          "required": false,
+          "description": "Shown when no country matches. Translate it on Arabic pages.",
+          "descriptionAr": "يظهر حين لا تطابق أي دولة. ترجمه في الصفحات العربية."
+        },
+        {
+          "name": "allLabel",
+          "type": "string",
+          "default": "\"All countries\"",
+          "required": false,
+          "description": "Heading of the other countries, shown only with `preferredCountries`. Translate it on Arabic pages.",
+          "descriptionAr": "عنوان بقية الدول، ويظهر مع `preferredCountries` فقط. ترجمه في الصفحات العربية."
+        },
+        {
+          "name": "statusLabel",
+          "type": "(count: number) => string",
+          "default": "(count) => (count === 1 ? \"1 country\" : `${count} countries`)",
+          "required": false,
+          "description": "The text read to screen readers when the number of results changes.",
+          "descriptionAr": "النص الذي يُقرأ لقارئ الشاشة عند تغير عدد النتائج."
+        },
+        {
+          "name": "inputClassName",
+          "type": "string",
+          "default": null,
+          "required": false,
+          "description": "Class names for the native number `<input>`. `className` styles the box around it.",
+          "descriptionAr": "أصناف خانة الرقم نفسها. أما `className` فللإطار حولها."
+        },
+        {
+          "name": "countryDisabled",
+          "type": "boolean",
+          "default": null,
+          "required": false,
+          "description": "Disables the country list but leaves the number editable.",
+          "descriptionAr": "يعطّل قائمة الدول ويترك الرقم قابلًا للتحرير."
+        },
+        {
+          "name": "defaultOpen",
+          "type": "boolean",
+          "default": null,
+          "required": false,
+          "description": "Opens the country list at first.",
+          "descriptionAr": "يفتح قائمة الدول من البداية."
+        }
+      ]
+    }
+  ],
   "popover": [
     {
       "name": "Popover",

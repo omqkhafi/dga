@@ -1,0 +1,150 @@
+---
+title: Phone Input
+description: "A phone number field with a searchable list of every country, country exclusion, suggested countries and an international value. On Base UI Combobox and Input. A Platform Code extension, not part of DGA."
+---
+
+<ExtensionNote
+  name="Phone Input"
+  primitive="Base UI Combobox and Input"
+  from="Input (the box and its states) and Combobox (the country list)"
+  tokens={["field-background-default", "field-border-default", "field-border-pressed", "field-border-error", "background-card", "button-background-neutral-default"]}
+/>
+
+<Preview name="phone-input-states" title="Phone Input states" />
+
+## Installation
+
+<ComponentInstall name="phone-input" />
+
+Installs [Input](/docs/components/input), [Combobox](/docs/components/combobox) and the `phone` data file too. Label it with a [Field](/docs/components/field). It adds no dependency beyond Base UI: the country data and the logic are in `lib/dga/phone.ts`, and the country names come from `Intl.DisplayNames`, so they are in any language the browser knows.
+
+## Usage
+
+```tsx title="page.tsx"
+import { Field, FieldDescription, FieldLabel } from "@/components/dga/field";
+import { PhoneInput } from "@/components/dga/phone-input";
+
+export function MobileField() {
+  return (
+    <Field name="mobile">
+      <FieldLabel>Mobile number</FieldLabel>
+      <PhoneInput
+        name="mobile"
+        defaultCountry="SA"
+        excludeCountries={["US", "CA"]}
+        onValueChange={(value, details) => console.log(value, details.isValid)}
+      />
+      <FieldDescription>We send the verification code here.</FieldDescription>
+    </Field>
+  );
+}
+```
+
+The value is the international number, such as `+966512345678`: it is what `onValueChange` receives, what `value` and `defaultValue` take, and what the hidden field named by `name` submits with a form. The second argument has the country, the national digits, the grouped text and whether the length is right. Use `countryName` to submit the ISO code in a second field.
+
+The country button shows the calling code in a column of fixed width. Open it and the list is one line per country: the code in a fixed-width column, then the name, so the names line up. Search matches the name in English and in Arabic, the ISO code and the calling code, so `saudi`, `SA` and `966` find the same country as its Arabic name does, and diacritics and the spelling variants of alef, ya and ta marbuta are ignored.
+
+The country button is on the start side and the number follows it. The number is always written left to right, also on Arabic pages, and aligned to the end side there.
+
+## Anatomy
+
+- **Box**: the [Input](/docs/components/input) box, so every Input state, size and fill applies.
+- **Country button**: the calling code (and the flag, with `showFlag`) and an arrow. It is named by `countryLabel`.
+- **List**: the [Combobox](/docs/components/combobox) popup, as wide as the field, with a search box on top, an optional **Suggested** group, then every country sorted by name in the page language.
+- **Number**: a `tel` field that groups the digits as you type (`51 234 5678`).
+
+## Examples
+
+### Basic
+
+Pick a country, then type the number. Typing a number that starts with `+` or `00` (or pasting one) picks its country and moves the code out of the field.
+
+<Preview compact name="phone-input-basic" title="Basic" minHeight={200} />
+
+### States
+
+Default, filled, read-only, disabled and error, and the medium size with a darker fill. They are the Input states.
+
+<Preview name="phone-input-states" title="States" />
+
+### Open list
+
+The list is open from the start so the rows show: the highlighted country has a bar and a tint, and the chosen one a check mark.
+
+<Preview compact name="phone-input-open" title="Open list" minHeight={440} />
+
+### Choosing the countries
+
+`onlyCountries` offers a fixed set. `excludeCountries` removes countries from the whole list; a number that starts with their code is not recognised either. `preferredCountries` pins the countries people use most to the top under `preferredLabel`, in the order you give. `showFlag` adds the flag emoji; it is off by default because Windows draws flag emoji as two letters.
+
+<Preview compact name="phone-input-countries" title="Choosing the countries" minHeight={320} />
+
+```tsx title="page.tsx"
+<PhoneInput onlyCountries={["SA", "AE", "KW", "QA", "BH", "OM"]} />
+<PhoneInput excludeCountries={["US", "CA"]} />
+<PhoneInput preferredCountries={["SA", "AE", "EG"]} preferredLabel="Suggested" allLabel="All countries" />
+```
+
+### In a form
+
+Keep the value in state, and show the error from the field once it is left. Without `invalid`, the input marks itself invalid after it is left with a number of the wrong length for its country.
+
+<Preview compact name="phone-input-form" title="In a form" minHeight={260} />
+
+## What it does with the number
+
+- Arabic-Indic (٠-٩) and Persian (۰-۹) digits, typed or pasted, become Western digits. Spaces, dashes and brackets are ignored.
+- The leading 0 people dial inside their country (`0512345678`) is dropped, so the value is the same with or without it. Turn it off with `stripTrunkPrefix={false}`. Italy keeps its 0.
+- The digits are grouped by the country's pattern as you type, and the caret stays beside the same digit. Turn it off with `format={false}`.
+- The number cannot be longer than the country allows, or than the 15 digits of the E.164 standard.
+- A placeholder shows a typical number for the chosen country (`5X XXX XXXX`). Pass your own `placeholder` or turn it off with `examplePlaceholder={false}`.
+- Countries that share a calling code (+1, +7, +44) are told apart by the area code when a number is pasted, so `+1 684…` is American Samoa and `+1 416…` is Canada.
+
+### Validation
+
+`isPossible` and `isValid` check the **length** of the national number against the range for its country, not whether the operator has issued the prefix. That catches an unfinished number or a typo in length, and costs no package. For a strict check, pass `validate`, for example with [libphonenumber-js](https://www.npmjs.com/package/libphonenumber-js):
+
+```tsx title="page.tsx"
+import { isValidPhoneNumber } from "libphonenumber-js/min";
+
+<PhoneInput validate={(details) => isValidPhoneNumber(details.e164)} />
+```
+
+## Accessibility
+
+| Key | Action |
+| --- | --- |
+| <kbd>Tab</kbd> | Moves from the country button to the number. |
+| <kbd>Enter</kbd> / <kbd>Space</kbd> / <kbd>ArrowDown</kbd> | On the country button, opens the list. |
+| Type | In the list, narrows it. |
+| <kbd>ArrowDown</kbd> / <kbd>ArrowUp</kbd> | Moves between countries. |
+| <kbd>Enter</kbd> | Chooses the highlighted country and returns focus to the number. |
+| <kbd>Esc</kbd> | Closes the list. |
+
+- The country button is named by `countryLabel` and says which code is chosen. The list is a `listbox` of `option` elements with `aria-selected`, and the number of results is announced politely each time it changes (`statusLabel`).
+- The number has `type="tel"`, `inputMode="tel"` and `autocomplete="tel-national"`, so phones show the dial pad and browsers offer saved numbers.
+- The calling code and the number are isolated left to right, so Arabic around them does not reorder the digits.
+- The label, helper text and error come from [Field](/docs/components/field) and are linked with `aria-describedby`; an invalid number sets `aria-invalid`.
+- The highlighted country has a 2px bar as well as a tint. The text is 4.5:1 and every border 3:1, in light and dark.
+
+## API Reference
+
+<ApiReference component="phone-input" />
+
+## Derivation
+
+- Not in DGA. The box, the states and the fills are [Input](/docs/components/input); the list is the [Combobox](/docs/components/combobox) popup with a search box on top.
+- No new colours and no new tokens.
+- Built on `@base-ui/react/combobox` with its input inside the popup, and `@base-ui/react/input`, in our own markup so the `cn-*` classes hold the look.
+
+## Deviations from DGA
+
+- There is no DGA phone field to deviate from. This lists where we departed from the components it is built on.
+- The number is left to right on Arabic pages, because digits are read and dialled that way.
+- The country list has a search box inside the popup, not in the field: the field shows the calling code, which is what people scan for.
+
+<ComponentDeviations component="phone-input" />
+
+## Contrast
+
+<ComponentContrast component="phone-input" />

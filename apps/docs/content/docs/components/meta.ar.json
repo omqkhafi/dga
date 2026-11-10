@@ -20,6 +20,7 @@
     "select",
     "combobox",
     "number-input",
+    "phone-input",
     "search-box",
     "checkbox",
     "radio",

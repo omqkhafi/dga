@@ -168,9 +168,9 @@ Rules for both parts:
 
 - [x] Header, Second Nav, Footer, Accordion, Digital Stamp, Rating, Slider, Breadcrumb, Tabs, Date Picker, Filtration and Textarea fixed against the findings; Chart is a DGA component. The separate RTL section is gone from every component page. What was checked, and which values are unverified, is in [docs/conformance/0.7.3.md](docs/conformance/0.7.3.md).
 
-## Patches 0.7.4 to 0.7.8: Header and Second Nav (done)
+## Patches 0.7.4 to 0.7.9: Header, Second Nav and Phone Input (done)
 
-- [x] 0.7.4: Header Menu Item bar, states and phone layout checked against the Figma frames. 0.7.5: Second Nav without the divider, smaller centred items, and an optional links menu at the start or in the centre. 0.7.6: the Header sub-menu item tag, label states and a full-width sub-menu (`submenuWidth`). 0.7.7: the Nav Drawer as a component of its own (parts for its header, items and footer, and the Item states, badge and divider) and the Header navigation as parts with a ready-made `HeaderLogo`. 0.7.8: an open sub-menu trigger for the current page keeps the selected look, and the full-width sub-menu opens from the middle; see [CHANGELOG.md](CHANGELOG.md).
+- [x] 0.7.4: Header Menu Item bar, states and phone layout checked against the Figma frames. 0.7.5: Second Nav without the divider, smaller centred items, and an optional links menu at the start or in the centre. 0.7.6: the Header sub-menu item tag, label states and a full-width sub-menu (`submenuWidth`). 0.7.7: the Nav Drawer as a component of its own (parts for its header, items and footer, and the Item states, badge and divider) and the Header navigation as parts with a ready-made `HeaderLogo`. 0.7.8: an open sub-menu trigger for the current page keeps the selected look, and the full-width sub-menu opens from the middle. 0.7.9: Phone Input, a Platform Code extension (a country list of every country with exclusion, suggested countries and search in both languages, and the number as an international value); see [CHANGELOG.md](CHANGELOG.md).
 
 ## Section blocks (0.8.0 to 0.13.0)
 
