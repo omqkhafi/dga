@@ -28,6 +28,56 @@ export const API_DESCRIPTIONS_AR_EXT_INPUTS: Record<string, string> = {
   "slider.Slider.largeStep": "خطوة Page Up وDown ومفتاح Shift مع السهم. الافتراضي 10.",
   "slider.Slider.disabled": disabled,
   "slider.Slider.locale": "لغة عرض القيمة ونطقها، مثل `ar-EG` للأرقام العربية الهندية.",
+  // Phone Input
+  "phone-input.PhoneInput":
+    "حقل رقم جوال: قائمة قابلة للبحث بكل دول العالم، يظهر فيها مفتاح الدولة في عمود ثابت العرض ثم اسمها في سطر واحد، ثم الرقم (امتداد من كود المنصات على Combobox وInput). يبقى الرقم من اليسار إلى اليمين في الصفحات العربية أيضًا، والأرقام العربية الهندية (٥) تتحول إلى غربية (5)، ويُجمَّع الرقم أثناء الكتابة، وقيمته هي الرقم الدولي (`+966512345678`) الجاهز للإرسال. لصق رقم يبدأ بـ `+` أو `00` يختار الدولة تلقائيًا. داخل Field.",
+  "phone-input.PhoneInput.size": "الارتفاع: `md` ‏32px، و`lg` ‏40px.",
+  "phone-input.PhoneInput.appearance": "نمط التعبئة. `lighter` و`darker` يُبقيان الحد.",
+  "phone-input.PhoneInput.value":
+    "الرقم بالصيغة الدولية، مثل `+966512345678` (متحكَّم به). نص فارغ يعني حقلًا فارغًا.",
+  "phone-input.PhoneInput.defaultValue": "الرقم الأولي بالصيغة الدولية (غير متحكَّم به).",
+  "phone-input.PhoneInput.onValueChange":
+    "يُستدعى عند كل تغيير بالرقم الدولي وتفاصيله: الدولة والأرقام الوطنية والتنسيق وصحة الطول.",
+  "phone-input.PhoneInput.country": "الدولة المختارة برمزها (`SA`) (متحكَّم بها).",
+  "phone-input.PhoneInput.defaultCountry":
+    "الدولة الأولية (غير متحكَّم بها). الافتراضي: أولى `preferredCountries`، وإلا `SA`.",
+  "phone-input.PhoneInput.onCountryChange":
+    "يُستدعى عند تغير الدولة، باختيارها من القائمة أو بكتابة رقم يبدأ بـ `+` أو لصقه.",
+  "phone-input.PhoneInput.excludeCountries":
+    "يستثني هذه الدول (برموزها) من القائمة. ولا يُتعرَّف على رقم يبدأ بمفتاح إحداها.",
+  "phone-input.PhoneInput.onlyCountries":
+    "يعرض هذه الدول فقط (برموزها). يجتمع مع `excludeCountries`.",
+  "phone-input.PhoneInput.preferredCountries":
+    "دول تُعرض أولًا بهذا الترتيب تحت `preferredLabel`، ولا تتكرر في بقية القائمة.",
+  "phone-input.PhoneInput.showFlag":
+    "يعرض العلم قبل مفتاح الدولة. مطفأ افتراضيًا لأن ويندوز يرسم أعلام الإيموجي حروفًا.",
+  "phone-input.PhoneInput.locale":
+    "لغة أسماء الدول (`en` أو `ar`). الافتراضي: `lang` الصفحة. البحث يطابق اللغتين دائمًا.",
+  "phone-input.PhoneInput.detectCountry":
+    "يتعرف على الدولة حين يُكتب أو يُلصق رقم يبدأ بـ `+` أو `00`. الافتراضي `true`.",
+  "phone-input.PhoneInput.stripTrunkPrefix":
+    "يحذف الصفر الذي يُطلب داخل الدولة نفسها (`05…` تصبح `5…`). الافتراضي `true`.",
+  "phone-input.PhoneInput.format": "يجمّع الأرقام أثناء الكتابة (`51 234 5678`). الافتراضي `true`.",
+  "phone-input.PhoneInput.examplePlaceholder":
+    "يعرض رقمًا نموذجيًا تلميحًا حتى تبدأ الكتابة. الافتراضي `true`، و`placeholder` يستبدله.",
+  "phone-input.PhoneInput.invalid":
+    "يعلّم الحقل بأنه خاطئ. الافتراضي: يصبح خاطئًا بعد مغادرته برقم طوله غير صحيح لدولته.",
+  "phone-input.PhoneInput.validate":
+    "دالة تستبدل فحص الطول المدمج. تستقبل التفاصيل وتعيد هل الرقم صحيح.",
+  "phone-input.PhoneInput.name": "اسم الحقل المخفي الذي يُرسل مع النموذج، وقيمته الرقم الدولي.",
+  "phone-input.PhoneInput.countryName": "اسم حقل مخفي ثانٍ يرسل رمز الدولة.",
+  "phone-input.PhoneInput.countryLabel":
+    "دالة تعيد اسم زر الدولة لقارئ الشاشة، وتستقبل اسم الدولة. ترجمها في الصفحات العربية.",
+  "phone-input.PhoneInput.searchPlaceholder":
+    "تلميح مربع البحث في القائمة. ترجمه في الصفحات العربية.",
+  "phone-input.PhoneInput.emptyText": "يظهر حين لا تطابق أي دولة. ترجمه في الصفحات العربية.",
+  "phone-input.PhoneInput.preferredLabel": "عنوان الدول المفضلة. ترجمه في الصفحات العربية.",
+  "phone-input.PhoneInput.allLabel":
+    "عنوان بقية الدول، ويظهر مع `preferredCountries` فقط. ترجمه في الصفحات العربية.",
+  "phone-input.PhoneInput.statusLabel": "النص الذي يُقرأ لقارئ الشاشة عند تغير عدد النتائج.",
+  "phone-input.PhoneInput.inputClassName": "أصناف خانة الرقم نفسها. أما `className` فللإطار حولها.",
+  "phone-input.PhoneInput.countryDisabled": "يعطّل قائمة الدول ويترك الرقم قابلًا للتحرير.",
+  "phone-input.PhoneInput.defaultOpen": "يفتح قائمة الدول من البداية.",
   // Input OTP
   "input-otp.InputOTP":
     "رمز لمرة واحدة في خانات منفصلة، مثل رمز الرسالة النصية (امتداد من كود المنصات على Base UI OTP Field). الكتابة تنقل إلى الخانة التالية، والحذف إلى السابقة، واللصق يملأها كلها. الأرقام العربية الهندية (٣) تتحول إلى غربية (3). تبقى الخانات من اليسار إلى اليمين في الصفحات العربية أيضًا لأن هذا ترتيب قراءة الأرقام وإرسالها. تتبع حالات Input وتعمل داخل Field.",

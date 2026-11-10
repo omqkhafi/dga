@@ -104,6 +104,7 @@ const EXTENSION_ITEMS = [
   "toggle-group",
   "combobox",
   "command",
+  "phone-input",
   "input-otp",
   "input-group",
   "button-group",
@@ -127,7 +128,8 @@ const EXTENSION_ITEMS_2 = [
 ];
 const PINNED_LIBS = { recharts: "3.8.0", "react-resizable-panels": "4.14.8" };
 const PHASE7_ITEMS = [...EXTENSION_ITEMS, ...PHASE7_DGA_ITEMS];
-const STOCK_PHASE7 = EXTENSION_ITEMS.concat("slider");
+// Phone Input has no stock shadcn version, so it is not in the collision fixture.
+const STOCK_PHASE7 = EXTENSION_ITEMS.filter((n) => n !== "phone-input").concat("slider");
 
 /** INSTALL_ITEMS narrows the run to the changed items; unset or "all" runs everything. */
 const only = process.env.INSTALL_ITEMS;

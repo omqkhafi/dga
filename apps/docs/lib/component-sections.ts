@@ -29,6 +29,7 @@ export const FORM_COMPONENTS = [
   "select",
   "combobox",
   "number-input",
+  "phone-input",
   "search-box",
   "checkbox",
   "radio",

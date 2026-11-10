@@ -105,6 +105,7 @@ test("the Arabic API descriptions have no English words", async () => {
     "toggle-group",
     "combobox",
     "command",
+    "phone-input",
     "input-otp",
     "input-group",
     "button-group",

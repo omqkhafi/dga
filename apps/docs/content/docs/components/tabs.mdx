@@ -88,7 +88,7 @@ By default an arrow key moves focus and selects the tab. Set `activateOnFocus={f
 ## Deviations from DGA
 
 - The More tab (DGA's overflow menu on horizontal tabs) is `overflow="menu"`. Scrolling sideways stays the default for lists that do not fit. Figma gives the Closed and Open More tab no sizes beyond a normal tab, so it uses the tab padding, a 16px chevron and the Menu component for the list.
-- Vertical tabs also show a neutral bar on hover and press (as in the DGA CSS); every tab shows the primary bar when selected.
+- The bar under the selected tab is one element (`TabsIndicator`, drawn by `TabsList`) that slides to the next tab. A tab that is not selected shows a faded primary bar on hover and a stronger one on press; vertical tabs show a neutral bar (as in the DGA CSS). The More tab draws its own bar while it is selected. With reduced motion the bar jumps.
 
 <ComponentDeviations component="tabs" />
 

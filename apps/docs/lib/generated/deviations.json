@@ -4381,6 +4381,15 @@
   },
   {
     "area": "Extensions",
+    "item": "Phone Input (new component)",
+    "original": "—",
+    "ours": "The Input box holding a country button (calling code in a fixed-width column) and the number, with the Combobox list and a search box on top.",
+    "reason": "New, no DGA source. DGA has no phone field. The box, states and fills are Input; the list is the Combobox popup. Every colour is an existing DGA token and no token was added. Validation is by length per country, not by operator prefix.",
+    "status": "fixed",
+    "component": "phone-input"
+  },
+  {
+    "area": "Extensions",
     "item": "Command (new component)",
     "original": "—",
     "ours": "Search Box over a Menu-style list of actions, with a dialog form.",

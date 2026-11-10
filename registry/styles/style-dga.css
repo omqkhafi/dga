@@ -1358,7 +1358,7 @@
     @apply flex min-w-0 items-stretch gap-0.75;
   }
   .cn-tabs-overflow-list {
-    @apply flex min-w-0 gap-0.75 overflow-hidden;
+    @apply relative flex min-w-0 gap-0.75 overflow-hidden;
   }
   .cn-tabs-more {
     @apply data-popup-open:bg-button-background-neutral-pressed data-popup-open:text-text-default;
@@ -1377,10 +1377,21 @@
     @apply data-active:font-bold data-active:text-text-default data-active:hover:bg-transparent data-active:active:bg-button-background-neutral-pressed;
     @apply data-disabled:cursor-not-allowed data-disabled:bg-transparent data-disabled:text-text-default-disabled data-disabled:hover:bg-transparent;
     @apply [&_svg]:size-(--tab-icon) [&_svg]:shrink-0 [&_svg]:text-unselected-tab-icon data-active:[&_svg]:text-icon-default data-disabled:[&_svg]:text-icon-default-disabled;
-    @apply after:pointer-events-none after:absolute after:rounded-full after:bg-border-primary after:opacity-0 after:transition-opacity data-active:after:opacity-100 motion-reduce:transition-none motion-reduce:after:transition-none;
+    @apply after:pointer-events-none after:absolute after:rounded-full after:bg-border-primary after:opacity-0 after:transition-opacity motion-reduce:transition-none motion-reduce:after:transition-none;
+    @apply not-data-active:not-data-disabled:hover:after:opacity-40 not-data-active:not-data-disabled:active:after:opacity-70 data-[slot=tabs-more]:data-active:after:opacity-100;
     @apply data-[orientation=horizontal]:after:inset-x-0 data-[orientation=horizontal]:after:bottom-0 data-[orientation=horizontal]:after:h-0.75;
     @apply data-[orientation=vertical]:justify-start data-[orientation=vertical]:after:inset-y-2 data-[orientation=vertical]:after:end-0 data-[orientation=vertical]:after:min-h-4 data-[orientation=vertical]:after:w-0.75;
-    @apply data-[orientation=vertical]:hover:after:bg-border-neutral-primary data-[orientation=vertical]:hover:after:opacity-100 data-[orientation=vertical]:active:after:opacity-100 data-[orientation=vertical]:data-active:after:bg-border-primary;
+    @apply data-[orientation=vertical]:not-data-active:not-data-disabled:hover:after:bg-border-neutral-primary data-[orientation=vertical]:not-data-active:not-data-disabled:hover:after:opacity-100 data-[orientation=vertical]:not-data-active:not-data-disabled:active:after:opacity-100;
+  }
+  /*
+   * The bar under the selected tab is one element that slides between tabs (Base UI sets
+   * --active-tab-left, -top, -width and -height on it). Hovering another tab shows a faded
+   * bar, the pressed tab a stronger one. The More tab draws its own bar while it is selected.
+   */
+  .cn-tabs-indicator {
+    @apply pointer-events-none absolute rounded-full bg-border-primary transition-[left,top,width,height] duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] motion-reduce:transition-none;
+    @apply data-[orientation=horizontal]:bottom-0 data-[orientation=horizontal]:left-(--active-tab-left) data-[orientation=horizontal]:h-0.75 data-[orientation=horizontal]:w-(--active-tab-width); /* logical-ok: measured from the left edge */
+    @apply data-[orientation=vertical]:end-0 data-[orientation=vertical]:top-[calc(var(--active-tab-top)+0.5rem)] data-[orientation=vertical]:h-[max(1rem,calc(var(--active-tab-height)-1rem))] data-[orientation=vertical]:w-0.75;
   }
   .cn-tabs-size-sm {
     @apply [--tab-icon:1rem] [--tab-px:var(--spacing-horizontal-tab-sm-button-h-padding)] [--tab-py:var(--spacing-horizontal-tab-sm-button-v-padding)] [--tab-text:var(--text-sm)];
@@ -2800,6 +2811,78 @@
   }
   .cn-combobox-separator {
     @apply -mx-1 my-1 h-px bg-border-neutral-secondary;
+  }
+
+  /* ------------------------------------------------------------------------------------
+   * Phone Input (Platform Code extension, no DGA spec). One Input box (cn-input) holding the
+   * country button, a divider and the number, so every Input state, size and fill applies. The
+   * button shows the calling code in a fixed-width column. The whole field, box and list, is always left to right, also on Arabic pages.
+   * The list is the Combobox popup (card surface, radius-sm, shadow-md, 32px items) with a search
+   * box on top. Each row is one line: calling code in a fixed-width column, then the name.
+   * ---------------------------------------------------------------------------------- */
+  .cn-phone {
+    @apply gap-0 ps-0;
+  }
+  .cn-phone-country {
+    @apply relative inline-flex h-full min-w-[4.75rem] shrink-0 cursor-pointer items-center gap-1 rounded-s-[calc(var(--radius-sm)-1px)] border-0 bg-transparent ps-3 pe-2 text-inherit transition-colors motion-reduce:transition-none;
+    @apply hover:bg-button-background-neutral-default active:bg-button-background-neutral-pressed;
+    @apply focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-solid focus-visible:outline-border-black;
+    @apply data-disabled:cursor-not-allowed data-disabled:text-text-default-disabled data-disabled:hover:bg-transparent;
+  }
+  .cn-phone-dial {
+    @apply min-w-[3.5ch] text-start tabular-nums [unicode-bidi:isolate];
+  }
+  .cn-phone-flag {
+    @apply shrink-0 text-lg leading-none;
+  }
+  .cn-phone-arrow {
+    @apply size-4 shrink-0 text-icon-default-500 transition-transform motion-reduce:transition-none;
+    @apply in-data-popup-open:rotate-180 in-data-disabled:text-icon-default-disabled;
+  }
+  .cn-phone-divider {
+    @apply me-3 h-5 w-px shrink-0 bg-border-neutral-primary;
+  }
+  .cn-phone-field {
+    @apply tabular-nums [unicode-bidi:isolate];
+  }
+  .cn-phone-positioner {
+    @apply z-50 outline-hidden select-none;
+  }
+  .cn-phone-content {
+    @apply flex max-h-(--available-height) w-(--anchor-width) min-w-72 origin-(--transform-origin) flex-col overflow-hidden rounded-sm border border-border-neutral-primary bg-background-card text-text-default shadow-md outline-hidden;
+    @apply transition-[scale,opacity] duration-100 data-starting-style:scale-95 data-starting-style:opacity-0 data-ending-style:scale-95 data-ending-style:opacity-0 motion-reduce:transition-none;
+  }
+  .cn-phone-search {
+    @apply flex h-10 shrink-0 items-center gap-2 border-b border-border-neutral-primary px-3 text-icon-default-500 [&_svg]:size-5 [&_svg]:shrink-0;
+  }
+  .cn-phone-search-input {
+    @apply h-full min-w-0 flex-1 border-0 bg-transparent p-0 text-sm text-field-text-filled [outline:0_none] placeholder:text-field-text-placeholder;
+  }
+  .cn-phone-list {
+    @apply relative max-h-[min(18rem,var(--available-height))] min-h-0 overflow-y-auto overscroll-contain p-1 outline-hidden empty:hidden;
+  }
+  .cn-phone-empty {
+    @apply flex items-center gap-2 px-3 py-3 text-sm text-text-primary-paragraph empty:hidden;
+  }
+  .cn-phone-group {
+    @apply flex flex-col;
+  }
+  .cn-phone-label {
+    @apply px-3 py-1.5 text-xs font-semibold text-field-text-helper;
+  }
+  .cn-phone-item {
+    @apply relative flex min-h-8 cursor-default items-center gap-2 rounded-xs px-3 py-1.5 text-sm text-text-default outline-hidden select-none;
+    @apply data-highlighted:bg-button-background-neutral-default data-highlighted:before:absolute data-highlighted:before:inset-y-1 data-highlighted:before:start-0 data-highlighted:before:w-0.5 data-highlighted:before:rounded-full data-highlighted:before:bg-border-black;
+    @apply data-selected:font-medium;
+  }
+  .cn-phone-item-dial {
+    @apply w-14 shrink-0 text-start whitespace-nowrap text-text-primary-paragraph tabular-nums [unicode-bidi:isolate];
+  }
+  .cn-phone-item-name {
+    @apply min-w-0 flex-1 truncate;
+  }
+  .cn-phone-item-indicator {
+    @apply inline-flex shrink-0 text-icon-primary [&_svg]:size-4;
   }
 
   /* ------------------------------------------------------------------------------------
