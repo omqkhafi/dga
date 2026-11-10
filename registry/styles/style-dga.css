@@ -2805,7 +2805,7 @@
   /* ------------------------------------------------------------------------------------
    * Phone Input (Platform Code extension, no DGA spec). One Input box (cn-input) holding the
    * country button, a divider and the number, so every Input state, size and fill applies. The
-   * button shows the calling code in a fixed-width column. The whole field, box and list, is always left to right, also on Arabic pages.
+   * button shows the calling code in a fixed-width column. The field (button and number) is always left to right, also on Arabic pages; the list follows the page.
    * The list is the Combobox popup (card surface, radius-sm, shadow-md, 32px items) with a search
    * box on top. Each row is one line: calling code in a fixed-width column, then the name.
    * ---------------------------------------------------------------------------------- */
@@ -2865,7 +2865,7 @@
     @apply data-selected:font-medium;
   }
   .cn-phone-item-dial {
-    @apply w-14 shrink-0 text-start whitespace-nowrap text-text-primary-paragraph tabular-nums [unicode-bidi:isolate];
+    @apply w-14 shrink-0 text-start whitespace-nowrap text-text-primary-paragraph tabular-nums [unicode-bidi:isolate] rtl:text-end;
   }
   .cn-phone-item-name {
     @apply min-w-0 flex-1 truncate;

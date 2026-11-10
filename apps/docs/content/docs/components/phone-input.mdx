@@ -44,7 +44,7 @@ The value is the international number, such as `+966512345678`: it is what `onVa
 
 The country button shows the calling code in a column of fixed width. Open it and the list is one line per country: the code in a fixed-width column, then the name, so the names line up. Search matches the name in English and in Arabic, the ISO code and the calling code, so `saudi`, `SA` and `966` find the same country as its Arabic name does, and diacritics and the spelling variants of alef, ya and ta marbuta are ignored.
 
-The whole field, the box and the list, is always left to right, also on Arabic pages: the country button on the left, then the number. Arabic country names keep their own reading direction inside their rows.
+The field itself, the country button and the number, is always left to right, also on Arabic pages: the code on the left, then the number. The country list follows the page: on Arabic pages it reads right to left, with the code at the start of each row.
 
 ## Anatomy
 
@@ -140,7 +140,7 @@ import { isValidPhoneNumber } from "libphonenumber-js/min";
 ## Deviations from DGA
 
 - There is no DGA phone field to deviate from. This lists where we departed from the components it is built on.
-- The whole field is left to right on Arabic pages, because phone numbers are read and dialled that way.
+- The country button and the number are left to right on Arabic pages, because phone numbers are read and dialled that way; the list follows the page direction.
 - The country list has a search box inside the popup, not in the field: the field shows the calling code, which is what people scan for.
 
 <ComponentDeviations component="phone-input" />
