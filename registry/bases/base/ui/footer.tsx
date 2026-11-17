@@ -68,7 +68,7 @@ type FooterProps = Omit<React.ComponentProps<"footer">, "children"> &
   VariantProps<typeof footerVariants> & {
     /** The entity's logo. */
     logo?: React.ReactNode;
-    /** Platform and partner logos (Vision 2030, national platforms), shown on a white tile. */
+    /** Platform and partner logos (Vision 2030, national platforms), at the end of the bottom row. Each child sits on its own white tile. */
     partnerLogos?: React.ReactNode;
     /** A short text under the logo. */
     description?: React.ReactNode;
@@ -160,7 +160,7 @@ function FooterToolButton({ tool }: { tool: FooterTool }) {
 }
 
 /**
- * The site footer (DGA: Footer): logos (platform logos on white), link groups, a Social Media
+ * The site footer (DGA: Footer): link groups, a Social Media
  * block, an Accessibility Tools block, a row of underlined links, and the legal row with the
  * copyright, terms and privacy. Contact details, a description and app badges are optional.
  * Default (gray) or dark green. Below `sm` the groups sit in two columns and the legal row is
@@ -194,7 +194,7 @@ function Footer({
   externalLabel = "(opens in a new tab)",
   ...props
 }: FooterProps) {
-  const hasBrand = logo || partnerLogos || description;
+  const hasBrand = logo || description;
   const hasAside =
     social.length > 0 || accessibilityTools.length > 0 || contact.length > 0 || badges;
   return (
@@ -209,11 +209,6 @@ function Footer({
           {hasBrand ? (
             <div data-slot="footer-brand" className="cn-footer-brand">
               {logo ? <div className="cn-footer-logos">{logo}</div> : null}
-              {partnerLogos ? (
-                <div data-slot="footer-partner-logos" className="cn-footer-partner-logos">
-                  {partnerLogos}
-                </div>
-              ) : null}
               {description ? <p className="cn-footer-description">{description}</p> : null}
             </div>
           ) : null}
@@ -342,19 +337,28 @@ function Footer({
           </nav>
         ) : null}
 
-        {legalLinks.length > 0 || copyright ? (
+        {legalLinks.length > 0 || copyright || partnerLogos ? (
           <div data-slot="footer-bottom" className="cn-footer-bottom">
-            {copyright ? <p className="cn-footer-copyright">{copyright}</p> : null}
-            {legalLinks.length > 0 ? (
-              <nav aria-label={legalLabel}>
-                <ul className="cn-footer-legal">
-                  {legalLinks.map((link) => (
-                    <li key={link.href}>
-                      <FooterAnchor link={link} externalLabel={externalLabel} />
-                    </li>
-                  ))}
-                </ul>
-              </nav>
+            {legalLinks.length > 0 || copyright ? (
+              <div className="cn-footer-legal-block">
+                {copyright ? <p className="cn-footer-copyright">{copyright}</p> : null}
+                {legalLinks.length > 0 ? (
+                  <nav aria-label={legalLabel}>
+                    <ul className="cn-footer-legal">
+                      {legalLinks.map((link) => (
+                        <li key={link.href}>
+                          <FooterAnchor link={link} externalLabel={externalLabel} />
+                        </li>
+                      ))}
+                    </ul>
+                  </nav>
+                ) : null}
+              </div>
+            ) : null}
+            {partnerLogos ? (
+              <div data-slot="footer-partner-logos" className="cn-footer-partner-logos">
+                {partnerLogos}
+              </div>
             ) : null}
           </div>
         ) : null}

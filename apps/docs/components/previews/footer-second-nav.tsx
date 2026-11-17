@@ -182,11 +182,11 @@ function PlatformLogos() {
   const d = useDigits();
   return (
     <>
-      <span className="inline-flex items-center gap-2 text-sm font-bold">
+      <span className="gap-2 text-sm font-bold">
         <span aria-hidden className="size-6 rounded-full bg-background-sa-flag" />
         {t("National platform", "المنصة الوطنية")}
       </span>
-      <span className="inline-flex items-center gap-2 text-sm font-bold">
+      <span className="gap-2 text-sm font-bold">
         <span aria-hidden className="size-6 rounded-sm bg-background-primary" />
         {t("Vision 2030", `رؤية ${d(2030)}`)}
       </span>
@@ -198,7 +198,6 @@ function useFooter(tone: "default" | "green" = "default") {
   const t = useBi();
   const digits = useDigits();
   return {
-    logo: <Logo onColor={tone === "green"} />,
     partnerLogos: <PlatformLogos />,
     columns: [
       {
@@ -290,6 +289,7 @@ export function FooterOptional() {
     <div className="-m-4">
       <Footer
         {...base}
+        logo={<Logo />}
         description={t(
           "The digital services of the government, in one place.",
           "الخدمات الرقمية للجهات الحكومية في مكان واحد.",

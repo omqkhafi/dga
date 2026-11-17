@@ -52,12 +52,12 @@ Every text is a prop, so translate the titles and `columnsLabel`, `socialLabel`,
 ## Anatomy
 
 - **Footer**: gray (neutral-100) or `tone="green"` (the DGA flag green with on-colour text). Padded 32px, content centred and 1280px wide unless `fullWidth`.
-- **Logos**: `logo`, and `partnerLogos` for the platform logos, which always sit on a white tile so they read on both tones.
-- **Link groups** (`columns`): a heading with a divider under it and a list of links; up to four across, two across below `sm`.
+- **Platform logos** (`partnerLogos`): at the end of the bottom row, each logo on its own white tile so it reads on both tones. An entity `logo` is optional and sits at the start of the top row.
+- **Link groups** (`columns`): a heading with a divider under it and a list of links; up to five across, two across below `sm`. Social Media and Accessibility Tools stack as one more column on desktop and sit side by side under the groups below `lg`.
 - **Social Media** (`social`, `socialTitle`): a titled block of bordered icon links.
 - **Accessibility Tools** (`accessibilityTools`, `accessibilityTitle`): a titled block of bordered icon buttons, for example zoom and contrast. A tool is a button, a link with `href`, or a toggle with `pressed`.
-- **Bottom links** (`bottomLinks`): a row of underlined links.
-- **Legal row** (`copyright`, `legalLinks`): the copyright, the terms and the privacy policy, under a line. Centred below `sm`.
+- **Bottom links** (`bottomLinks`): a row of underlined links, with no divider. Centred below `sm`.
+- **Legal row** (`copyright`, `legalLinks`): the copyright in bold with the terms and the privacy policy under it, and the platform logos at the end. Centred below `sm`.
 - **Optional**: `description`, `contact` and `badges` (app store badges) are not DGA parts and are off by default.
 - **Small screens**: the groups stay open in two columns. `collapsible` folds them into an Accordion, one section per group.
 
