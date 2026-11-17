@@ -3730,7 +3730,7 @@
   "footer": [
     {
       "name": "Footer",
-      "description": "The site footer (DGA: Footer): logos (platform logos on white), link groups, a Social Media block, an Accessibility Tools block, a row of underlined links, and the legal row with the copyright, terms and privacy. Contact details, a description and app badges are optional. Default (gray) or dark green. Below `sm` the groups sit in two columns and the legal row is centred; `collapsible` folds them into an Accordion instead. Every visible text is a prop, so translate it on Arabic pages.",
+      "description": "The site footer (DGA: Footer): link groups, a Social Media block, an Accessibility Tools block, a row of underlined links, and the legal row with the copyright, terms and privacy. Contact details, a description and app badges are optional. Default (gray) or dark green. Below `sm` the groups sit in two columns and the legal row is centred; `collapsible` folds them into an Accordion instead. Every visible text is a prop, so translate it on Arabic pages.",
       "descriptionAr": "تذييل الموقع (DGA: Footer): شعارات (شعارات المنصات على الأبيض)، ومجموعات روابط، وقسم وسائل التواصل الاجتماعي، وقسم أدوات الوصول، وصف روابط مسطّرة، والصف القانوني بحقوق النشر والشروط والخصوصية. النص الوصفي وبيانات التواصل وشارات التطبيق اختيارية. افتراضي (رمادي) أو أخضر داكن. تحت عرض `sm` تصير المجموعات عمودين ويتوسط الصف القانوني؛ و`collapsible` يطويها في أكورديون. كل نص ظاهر خاصية، فترجمه في الصفحات العربية.",
       "inherits": null,
       "props": [
@@ -3755,8 +3755,8 @@
           "type": "string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<AwaitedReactNode>",
           "default": null,
           "required": false,
-          "description": "Platform and partner logos (Vision 2030, national platforms), shown on a white tile.",
-          "descriptionAr": "شعارات المنصات والشركاء (رؤية 2030، المنصات الوطنية) على لوح أبيض."
+          "description": "Platform and partner logos (Vision 2030, national platforms), at the end of the bottom row. Each child sits on its own white tile.",
+          "descriptionAr": "شعارات المنصات والشركاء (رؤية 2030، المنصات الوطنية) في نهاية الصف السفلي، ويوضع كل شعار على لوح أبيض مستقل."
         },
         {
           "name": "description",

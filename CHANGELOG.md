@@ -5,6 +5,15 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
 
 ## [Unreleased]
 
+## [0.7.11] - 2026-11-17
+
+Patch: the Footer follows the Figma layout.
+
+### Changed
+
+- **Footer:** the divider lines above the bottom links and above the legal row are gone. The copyright is bold, with the terms and privacy links stacked under it (centred below `sm`). `partnerLogos` moved from the top brand block to the end of the bottom row, and each logo sits on its own white tile (they spread to both edges below `sm`). Social Media and Accessibility Tools stack as one more column next to the link groups on desktop, and sit side by side under the groups below `lg`. The bottom links have a 16px gap and are centred below `sm`. `logo` stays as an optional part at the start of the top row, and the default previews no longer show it.
+- Docs (English and Arabic) and the Arabic API description of `partnerLogos` updated.
+
 ## [0.7.10] - 2026-11-10
 
 Patch: the Tabs bar slides and shows on hover, and Phone Input goes back to a field and list that are both left to right.
