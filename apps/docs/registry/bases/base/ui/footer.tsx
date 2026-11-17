@@ -68,7 +68,7 @@ type FooterProps = Omit<React.ComponentProps<"footer">, "children"> &
   VariantProps<typeof footerVariants> & {
     /** The entity's logo. */
     logo?: React.ReactNode;
-    /** Platform and partner logos (Vision 2030, national platforms), shown on a white tile. */
+    /** Platform and partner logos (Vision 2030, national platforms), at the end of the bottom row. Each child sits on its own white tile. */
     partnerLogos?: React.ReactNode;
     /** A short text under the logo. */
     description?: React.ReactNode;
@@ -160,7 +160,7 @@ function FooterToolButton({ tool }: { tool: FooterTool }) {
 }
 
 /**
- * The site footer (DGA: Footer): logos (platform logos on white), link groups, a Social Media
+ * The site footer (DGA: Footer): link groups, a Social Media
  * block, an Accessibility Tools block, a row of underlined links, and the legal row with the
  * copyright, terms and privacy. Contact details, a description and app badges are optional.
  * Default (gray) or dark green. Below `sm` the groups sit in two columns and the legal row is
@@ -194,7 +194,7 @@ function Footer({
   externalLabel = "(opens in a new tab)",
   ...props
 }: FooterProps) {
-  const hasBrand = logo || partnerLogos || description;
+  const hasBrand = logo || description;
   const hasAside =
     social.length > 0 || accessibilityTools.length > 0 || contact.length > 0 || badges;
   return (
@@ -209,11 +209,6 @@ function Footer({
           {hasBrand ? (
             <div data-slot="footer-brand" className="flex flex-col gap-4 lg:w-80 lg:shrink-0">
               {logo ? <div className="flex flex-wrap items-center gap-4">{logo}</div> : null}
-              {partnerLogos ? (
-                <div data-slot="footer-partner-logos" className="flex w-fit max-w-full flex-wrap items-center gap-4 rounded-sm bg-white p-3 text-black">
-                  {partnerLogos}
-                </div>
-              ) : null}
               {description ? <p className="m-0 max-w-prose text-md">{description}</p> : null}
             </div>
           ) : null}
@@ -259,7 +254,7 @@ function Footer({
           ) : null}
 
           {hasAside ? (
-            <div data-slot="footer-aside" className="flex flex-col gap-6 lg:w-64 lg:shrink-0">
+            <div data-slot="footer-aside" className="grid grid-cols-2 gap-x-4 gap-y-6 lg:flex lg:w-56 lg:shrink-0 lg:flex-col lg:gap-6">
               {social.length > 0 ? (
                 <section className="flex min-w-0 flex-col gap-3">
                   {socialTitle ? <h2 className="m-0 border-b border-border-neutral-primary pb-2 text-md font-bold text-inherit in-data-[tone=green]:border-alpha-white-30">{socialTitle}</h2> : null}
@@ -332,7 +327,7 @@ function Footer({
 
         {bottomLinks.length > 0 ? (
           <nav aria-label={bottomLabel} data-slot="footer-bottom-links">
-            <ul className="m-0 flex list-none flex-wrap justify-center gap-x-6 gap-y-2 border-t border-border-neutral-primary p-0 pt-6 in-data-[tone=green]:border-alpha-white-30 sm:justify-start">
+            <ul className="m-0 mt-6 flex list-none flex-wrap justify-center gap-x-4 gap-y-2 p-0 sm:justify-start lg:mt-12">
               {bottomLinks.map((link) => (
                 <li key={link.href}>
                   <FooterAnchor link={link} externalLabel={externalLabel} className="underline" />
@@ -342,19 +337,28 @@ function Footer({
           </nav>
         ) : null}
 
-        {legalLinks.length > 0 || copyright ? (
-          <div data-slot="footer-bottom" className="flex flex-col items-center gap-4 border-t border-border-neutral-primary pt-6 text-center in-data-[tone=green]:border-alpha-white-30 sm:flex-row sm:justify-between sm:text-start">
-            {copyright ? <p className="m-0 text-md">{copyright}</p> : null}
-            {legalLinks.length > 0 ? (
-              <nav aria-label={legalLabel}>
-                <ul className="m-0 flex list-none flex-wrap justify-center gap-x-6 gap-y-2 p-0">
-                  {legalLinks.map((link) => (
-                    <li key={link.href}>
-                      <FooterAnchor link={link} externalLabel={externalLabel} />
-                    </li>
-                  ))}
-                </ul>
-              </nav>
+        {legalLinks.length > 0 || copyright || partnerLogos ? (
+          <div data-slot="footer-bottom" className="flex flex-col items-center gap-6 text-center sm:flex-row sm:items-end sm:justify-between sm:text-start">
+            {legalLinks.length > 0 || copyright ? (
+              <div className="flex flex-col items-center gap-2 sm:items-start">
+                {copyright ? <p className="m-0 text-md font-bold">{copyright}</p> : null}
+                {legalLinks.length > 0 ? (
+                  <nav aria-label={legalLabel}>
+                    <ul className="m-0 flex list-none flex-wrap justify-center gap-x-4 gap-y-2 p-0 sm:justify-start">
+                      {legalLinks.map((link) => (
+                        <li key={link.href}>
+                          <FooterAnchor link={link} externalLabel={externalLabel} />
+                        </li>
+                      ))}
+                    </ul>
+                  </nav>
+                ) : null}
+              </div>
+            ) : null}
+            {partnerLogos ? (
+              <div data-slot="footer-partner-logos" className="flex w-full items-center justify-between gap-4 text-black sm:w-auto sm:justify-end *:flex *:items-center *:rounded-xs *:bg-white *:p-2">
+                {partnerLogos}
+              </div>
             ) : null}
           </div>
         ) : null}
